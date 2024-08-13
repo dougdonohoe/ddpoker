@@ -2,9 +2,7 @@
 
 ## About
 
-<div style="display: flex; align-items: center;">
-  <img src="images/ddpoker-logo-750x978.png" alt="Image description" style="margin-right: 20px;" width="100"/>
-  <p>
+![dd-poker-3.jpg](images/dd-poker-3.jpg)
 
 This repository contains all the source code for the DD Poker
 computer game, the underlying game engine, the supporting 
@@ -13,8 +11,6 @@ a Java Swing-based desktop application that is capable of running
 on Mac, Linux and Windows.  The backend-server is essentially
 a Java Spring application that talks to MySQL.  The website 
 (aka "Online Portal") is built on the Apache Wicket framework.
-  </p>
-</div>
 
 ## Installers
 
