@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!--
+#*#*# Copyright 2003 Donohoe Digital LLC.  All rights reserved.
+#*# DONOHOE DIGITAL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
+#*#
+#*# MODIFICATION OF THIS FILE IS PROHIBITED AND COULD
+#*# RESULT IN SOFTWARE MALFUNCTION.
+#*#
+-->
+<HELPS xmlns="http://www.donohoedigital.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+		<helpdir>help</helpdir>
+		
+		<help name="mainmenu" display="Main Menu" location="mainmenu.html"/>
+			<help name="practice" display="Practice" location="practice.html" indent="1"/>
+                <help name="select" display="Select Tournament" location="select.html" indent="2"/>
+                <help name="settings"  display="Edit Tournament" location="settings.html" indent="2"/>
+				<help name="gameboard" display="Poker Table" location="gameboard.html" indent="2"/>
+                <help name="calculator" display="Calculator Tool" location="calculator.html" indent="2"/>
+                <help name="advisor" display="Advisor" location="advisor.html" indent="2"/>
+				<help name="chiprace" display="Chip Race" location="chiprace.html" indent="2"/>
+
+			<help name="online" display="Online" location="online.html" indent="1"/>
+                <help name="hostonline" display="Host Online" location="hostonline.html" indent="2"/>
+                <help name="joinonline" display="Join Online" location="joinonline.html" indent="2"/>
+				<help name="porthelp" display="Online Setup Help" location="porthelp.html" indent="2"/>
+			<help name="clockboard" display="Poker Clock" location="clockboard.html" indent="1"/>
+			<help name="simulator" display="Analysis" location="simulator.html" indent="1"/>
+			<help name="options" display="Options" location="options.html" indent="1"/>
+            <help name="options2" display="AI Options" location="options2.html" indent="1"/>
+			
+		<help name="intro"  display="Rank of Hands" location="intro.html"/>
+		<help name="whatsnew" display="What's New?" location="whatsnew.html"/>
+		<help name="shortcuts" display="Shortcuts" location="shortcuts.html"/>			
+		<help name="holdempoker" display="Hold'em Poker" location="holdempoker.html"/>
+			<help name="holdem" display="Texas Hold'em" location="holdem.html" indent="1"/>
+			<help name="hosting" display="Hosting Tips" location="hosting.html" indent="1"/>
+			<help name="glossary" display="Glossary" location="glossary.html" indent="1"/>
+			<help name="etiquette" display="Poker Etiquette" location="etiquette.html" indent="1"/>
+		
+		<help name="general"  display="General Info" location="general.html"/>
+			<help name="ddigital"  display="Donohoe Digital" location="ddigital.html" indent="1"/>                	
+			<help name="credits"  display="Credits &amp; Legal" location="credits.html" indent="1"/>
+			<help name="license"  display="License" location="license.html" indent="1"/>
+			<help name="faq"  display="FAQ" location="faq.html" indent="1"/>
+
+</HELPS>

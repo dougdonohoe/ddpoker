@@ -1,0 +1,534 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="225" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>
+            Glossary</strong></font></td>
+    </tr>
+</table>
+
+<br>
+<table border="1">
+<tr bgcolor="#1D4A07">
+    <td colspan="2" align="center">
+        <div align="center"><strong><font color="#FFFF00" size="+1">Glossary</font></strong></div>
+    </td>
+</tr>
+
+<tr>
+    <td align="center" valign="top"><strong>Action</strong></td>
+    <td> The action is on a player when it is that player's turn to play. Also, lots of betting activity is said to have
+        lots of action.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Add-on</strong></td>
+    <td> Some tournaments allow all players, regardless of chip count, to perform
+        one add-on. An add-on is an opportunity to buy additional chips and typically
+        happens at the end of the rebuy period.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Aggressive</strong></td>
+    <td valign="top">Describes a player that bets and raises more then the average player. All players can be classified
+        anywhere between aggressive and passive.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>AI</strong></td>
+    <td>AI stands for Artificial Intelligence, otherwise known as computer AI. The computer AI is the intelligence
+        computer program behind the decisions made by the different computer player types.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>All-in</strong></td>
+    <td>Betting all remaining chips. In table stakes games like No Limit Texas
+        Hold'em, a player may not go into his pocket for more money unless it is
+        during a rebuy or add-on. When a player is all-in, a side pot is created
+        for other players' bets that the original player cannot match. The all-in
+        player cannot win the side pot; however, the all-in player can still win
+        the main pot.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Ante</strong></td>
+    <td>A small bet contributed by each player to seed the pot at the beginning
+        of a poker hand. Most Texas Hold'em games do not have an ante; they use
+        rotating blinds to get initial money into the pot.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Bet</strong></td>
+    <td> To make a wager on a betting round (as opposed to an ante). The first person to make a wager in a round will be
+        the only one to make a bet, every other player must then call or raise your bet.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Big Blind</strong></td>
+    <td>A forced bet, typically two positions left of the dealer button, placed
+        before any cards are dealt. The big blind is approximately twice the amount of the small blind.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Big Slick </strong></td>
+    <td>An Ace King for your hole cards.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Bluff</strong></td>
+    <td> A bet intended to represent a hand better, or different, than you actually have.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Board Cards </strong></td>
+    <td> The five cards in the center of the table which include the flop, turn, and river. Otherwise known as community
+        cards.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Bubble</strong></td>
+    <td>The last player out in a standard tournament before a prize-winning spot. In a satellite tournament, all the
+        finishers all receive the same prize, an entry into the next &quot;big tournament&quot;, and the bubble is the
+        person whom doesn't receive the full prize, but receives what is left over due to rebuys and add-ons.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Bully Short Stacks </strong></td>
+    <td><font color="#000000">This is an AI settings that changes how likely the AI will bully a short stack. When a
+        player is short stacked, they are forced either fold or go all in on the best hand they can get. If you bully
+        them by raising and putting them all in, they are forced to fold with mediocre hands, this is especially
+        effective when the short stack is on the big blind. A player should bully the short stack when a loss will not
+        affect your tournament standings.</font></td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Burn Card</strong></td>
+    <td>A burn card is discarded into the muck once before the flop, once before the turn, and once before river cards
+        are turned over. DD Poker does this &quot;under the covers&quot;, meaning a card is burnt but the action is not
+        displayed.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Busted Out </strong></td>
+    <td>You have bet all your chips, and are out of the remainder of the tournament. If you have finished in the top
+        finishers within the payout structure then you still have placed &quot;In the money&quot;.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Button<br>
+        <img src="../images/button.png" width="46" height="44"> </strong></td>
+    <td valign="top">The button, or dealer button, is a small acrylic disk marked &quot;Dealer&quot; or &quot;D&quot; in
+        DD Poker
+        that is used to simulate a rotating house dealer. The player to the left
+        of the button is first to act and is also typically the small blind. The
+        player on the button is in the last position.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Buy-in</strong></td>
+    <td> The amount of money to enter the tournament.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Call</strong></td>
+    <td>To match the previous bet rather than raise.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Chaser</strong></td>
+    <td>AI player type. The chaser player type will stay in a hand &quot;chasing&quot; after incomplete Straights,
+        Flushes and Full houses. This person will lose 2 out of 3 times on average for these hands.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Chasing</strong></td>
+    <td valign="top"><font color="#000000">AI adjustment. Controls how likely the AI will stay in a hand &quot;chasing&quot;
+        after drawing hands like , Straights, Flushes, Full houses, etc.</font></td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Check</strong></td>
+    <td>Placing no bet when it is your turn to act in the betting round. The
+        check option may only be taken when no player before you has placed a bet.
+        If a player after you in the betting round places a bet, you will have the
+        option to call or raise.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Check Raise</strong></td>
+    <td valign="top"> To raise after checking earlier in the round.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Chip Race</strong></td>
+    <td>During color-up, players are dealt a card for each odd chip (where there is an insufficient quantity to change
+        up to the next chip denomination). The players with the highest cards win an extra chip, maximum of one chip per
+        player.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Color-up</strong></td>
+    <td>Removing the lowest denomination chips at the table by exchanging them
+        for chips of higher value. This activity is performed when the lowest denomination
+        chip is no longer needed for the blind structure.&nbsp;</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Community Cards </strong></td>
+    <td valign="top">The five cards in the center of the table which include the flop, turn, and river. Otherwise know
+        as board cards.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Connectors</strong></td>
+    <td>Two cards next to each other in rand, such as 8-9. If they are also the same suit, they are called Suited
+        Connectors.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Drawing Hand </strong></td>
+    <td valign="top">An incomplete hand that needs one card to make a straight, flush, or straight flush.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>EV</strong></td>
+    <td><font color="#FF0000"><font color="#000000">Expected value is the average amount of big bets one should expect
+        to make correctly playing a particular hand. Playing for EV means making decisions that should result in
+        receiving that many chips per hand in the long run. </font></font></td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Fifth Street</strong></td>
+    <td>The fifth and last community card placed face-up by the dealer and the
+        final round of betting.&nbsp; Also known as the River.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Fish</strong></td>
+    <td valign="top">An AI player type. A fish is a nickname given to an amateur player that plays poorly and loses a
+        lot of money.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Flop</strong></td>
+    <td>The first three community cards that are dealt face up at the same time
+        and the second round of betting.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Fourth Street</strong></td>
+    <td valign="top">The forth community card placed face-up by the dealer and the third round
+        of betting.&nbsp; Also known as the Turn.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Gutshot</strong></td>
+    <td>Having four-fifths of a straight, with the missing card being between two others.
+
+        A gutshot is a straight with one interior gap which would complete the straight, such as 4-6-7-8. Also called an
+        inside straight.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Heads-up</strong></td>
+    <td>A game or pot with only two players remaining.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Hole Cards</strong></td>
+    <td>These are the first two cards dealt face down to each player.&nbsp; In
+        DD Poker, your hole cards are dealt face up for easy viewing
+        on the computer screen; you can use the <strong>Hole Cards Face Down</strong>
+        setting to deal them face down. This is good practice for real poker tournaments
+        because it helps you practice memorizing your cards.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>K</strong></td>
+    <td>Represents a thousand dollars in the chip count.&nbsp; Example:&nbsp;
+        $1K is equal to $1,000 and $10K is equal to $10,000.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Kicker</strong></td>
+    <td>If two or more players have the same hand, the highest unpaired side
+        card (or kicker) determines the winner. Kickers only apply to four-of-a-kind,
+        three-of-a-kind, two pair, one pair and high card situations.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Limit</strong></td>
+    <td valign="top">A minimum or maximum amount to the allowed bets. A no-limit tournament has no maximum bets.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Limper</strong></td>
+    <td valign="top"> A Limper is the kind of player who will only bet the minimum amount to see the flop. This is
+        called &quot;limping in&quot;. Most Limpers will pay to see the flop then end up folding if the betting gets
+        stronger. What is nice about playing Limpers, is that they increase the pot without posing much of a threat
+        since they will usually give up on their less-than-monster hands.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Limping In</strong></td>
+    <td valign="top"> To call the blinds before the flop, or to make a similar call on a later round. Limping suggests
+        weakness, and is done by hands that need to see the flop, or slow-players that are trying to keep players in the
+        pot.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Loose</strong></td>
+    <td valign="top">Describes a player that plays more hands then the average player and inevitably is involved in more
+        pots. A loose player will many times will call the starting hands to at least see the flop. All players can be
+        classified anywhere between Loose and Tight. How tight a player is playing should not to be confused with their
+        aggressiveness or player type (i.e. Fish, Maniac, Rock, etc.).
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Maniac</strong></td>
+    <td valign="top">A maniac is a nickname given to a player that plays loose and very aggressive. They will be in for
+        more pots, raise aggressively, and call a lot.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Muck</strong></td>
+    <td>The pile of folded and burned cards in front
+        of the dealer. <br><br>
+        Note:&nbsp; To maximize space on the screen, the muck is tracked but
+        not displayed. To accurately simulate a real game, DD Poker
+        burns (or discards) the top card behind the scenes before the Flop, Turn
+        and River. Once a card is folded or burned, it is not used again until
+        the next hand.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Mucked Hands </strong></td>
+    <td>A mucked hand is a hand that went to the showdown, and folded after the winning hand was revealed before them.
+        The muck is the pile of folded and burned cards in front of the dealer. A player has the choice of not revealing
+        their losing cards, or &quot;mucking&quot; them at the showdown if the player before them shows a winning hand
+        they know beats theirs. Turn the <strong>Show Mucked Hands </strong>option ON if you wish to see the computer's
+        mucked hands.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Nut(s)</strong></td>
+    <td valign="top"> The best possible hand, given the cards in sight. It's been said that this term came from betting
+        the wagon wheel nuts. Rumor has it, long ago players would remove a wagon wheel and put the nuts into his pocket
+        so that his wagon would still be there when he returned from his gambling session. Risking the wagon wheel
+        &quot;nuts&quot; in a game meant there was no way he could lose, so he could risk his transportation home.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Off-suit</strong></td>
+    <td>Hole cards that are not the same suit.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Outs</strong></td>
+    <td valign="top">The number of Outs are the number of cards left in the deck that could yet be turned over on the
+        board that could improve your hand to the best hand. Example: If you are in an all-in showdown on the river with
+        a player with 3 queens, if there is no chance for a straight or flush and you have two kings, then the number of
+        outs are 2 because there are two kings left that could be turned over.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Outside Straight</strong></td>
+    <td valign="top"> Having four consecutive cards to a straight, such as 4-5-6-7. It's an outside straight because two
+        ranks of cards can complete the straight, compared to only one with an inside straight.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Overbet</strong></td>
+    <td> An overbet occurs when a player goes all-in and is called by someone
+        with fewer chips.&nbsp; The blue placard with the arrow is used to indicate
+        that a player lost the pot, but was returned the extra amount (or overbet)
+        after the showdown. If the player who overbet wins the hand, then the extra
+        amount is included in the amount won and displayed using the green placard.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Passive</strong></td>
+    <td valign="top">Describes a player who does not bet or raise a lot of money, also known as a weak player. All
+        players can be classified anywhere between aggressive and passive.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Pot Odds</strong></td>
+    <td>The amount of money in the pot versus the amount of money it will cost
+        you to call the hand. For example if there is $200 in the pot and you have
+        a $40 bet to call, you are getting 200 to 40 (or 5 to 1) pot odds. The larger the pot odds, the more worth while
+        it is for you to call even with mediocre hands because your potential gain is much higher then your call.
+        <p>It is often valuable to evaluate the amount in the pot when deciding
+            whether or not to call a bet. In a game with a large amount in the pot,
+            even a mediocre hand with a small chance of improvement may be worthwhile
+            to call. If the pot is small, even a fairly good hand may not be worth
+            a call because the amount of risk (the bet) is too large relative to the
+            potential gain (the pot).</p>
+
+        <p> If there is a bet that you may call, the pot odds are displayed both
+            as odds (N to 1) and a percentage. One concept in poker is that it is
+            sometimes appropriate to stay in the hand (hoping for a better hand) if
+            the total odds of improvement (as a percentage) are greater than the pot
+            odds (as a percentage). Thus if your total odds of improvement total 30%
+            and the pot odds show as 20%, it might make sense to call. Over the long
+            term, you are expected to win more money than you lose. Another way of putting it, you want enough money in
+            the pot to justify calling to see another card.</p>
+    </td>
+</tr>
+<tr valign="top">
+    <td align="center" valign="top"><strong>Pre-flop</strong></td>
+    <td> Before the flop, the first betting round.</td>
+</tr>
+<tr valign="top">
+    <td align="center" valign="top"><strong>Prize Pool</strong></td>
+    <td> The sum of the buy-ins, rebuys and add-ons (less any house cut or fees
+        for hosting the tournament) determines the prize pool.
+    </td>
+</tr>
+<tr valign="top">
+    <td align="center" valign="top"><strong>Raise</strong></td>
+    <td>An increase to the largest bet at the table. In No Limit Texas Hold'em,
+        the minimum amount of the raise must be at least equal to the largest bet placed
+        before you.&nbsp; If no one else has placed a bet, the minimum raise amount
+        is equal to the big blind.&nbsp;</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Rabbit Hunting</strong></td>
+    <td> In a typical game, if a player wins because all other players fold, any remaining community cards are not
+        dealt.&nbsp; With this option ON, these cards are displayed so the curious can see what those cards would have
+        been (not that it matters!).&nbsp; Note:&nbsp; This practice is known as &quot;rabbit hunting&quot; and is
+        typically prohibited in tournaments. DD Poker has this option and is called <strong>Show All Community
+            Cards</strong>.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Rebuy</strong></td>
+    <td> A Rebuy is an optional puchase of additional chips once the tournament has started. There are many different
+        variants of rebuys. Some tournaments allow rebuys only if you bust out or your current chip stack is less than
+        the original buy-in amount. Some have unlimited rebuys in this situation, other times the maximum number of
+        rebuys is fixed. Some allow only 1 rebuy but can be done regardless of your chip count. Other variations include
+        a rebuy dollar amount different than the buy-in, and receiving smaller stacks of chips for your rebuy. All
+        tournaments that do have rebuys have a cut off time to do so, typically the first hour, and always corresponding
+        to the end of a level.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>River</strong></td>
+    <td> The last card dealt on the board, also called fifth street.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Rock</strong></td>
+    <td>A rock is a nickname given to a tight-passive player. This player type will fold more then average and only
+        raises with the best hands and not aggressively. They are many times bullied out of pots by aggressive players.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Satellite</strong></td>
+    <td>A tournament where the winner receives a seat in a larger tournament. In a super satellite, all the top
+        finishers receive the same prize, a seat in a larger tournament. A super satellite with rebuys and add-ons will
+        award as many seats as possible to the larger tournament as the prize pool can payout. Any remaining money that
+        is not enough to offer a seat is given to the person on the bubble.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Semi Bluff</strong></td>
+    <td> To bet or raise with a drawing hand.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Showdown</strong></td>
+    <td>After the final round of betting, the point at which all remaining players
+        in the hand turn their cards over and determine who has the best hand. It is the resolution of all players that
+        bet or called after the last round of betting after the river card is revealed. The showdown order in which
+        players reveal their hands is as follows: You start with the last player to bet or raise, that person must show
+        their hand first. Then continuing in clockwise order from that player, each player can either show their hand,
+        or choose to muck it. See Mucked Hands.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Side Pot</strong></td>
+    <td>When a player is all-in, that player is only eligible to win the main
+        pot consisting of the bets they were able to match.&nbsp; Additional bets
+        are placed in a side pot and are contested among the remaining players.
+        <p>If there is a side pot, a green button will appear listing the number
+            of side pots. If you click on this button, a dialog is displayed showing
+            the amount in each side pot and which players are involved in it.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Slow Play </strong></td>
+    <td valign="top">To bet a small amount with a big hand, in the hopes of growing a bigger pot.</td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Small Blind</strong></td>
+    <td valign="top">A forced bet, typically the player left of the dealer button,
+        placed before any cards are dealt. This is usually about half the size of the big blind.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Steal Blinds </strong></td>
+    <td valign="top">On the first round, to raise enough so that you chase out every player who has put in an amount
+        equal to the big blind. The concept of &quot;steal&quot; conotates more than just raise though. It means, be
+        agressive, try and take advantage of a situation where, probably the player with the blinds doesn't defend them.
+        That can be a profitable strategy.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Suited</strong></td>
+    <td valign="top">With both hole cards having the same suit. Suited connectors are next to each other in rank and of
+        the same suit.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Tilt</strong></td>
+    <td valign="top">A player can go on Tilt when they are very upset by having just lost a lot of money or suffered a
+        bad beat. Their emotions take over and bet irrationally, often like a Maniac until they regain control of their
+        emotions.
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Tight</strong></td>
+    <td valign="top">Describes a conservative player that plays fewer hands then the average player. All players can be
+        classified anywhere between Loose and Tight. How tight a player is playing should not to be confused with their
+        aggressiveness or player type (i.e. Fish, Maniac, Rock, etc.).
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Trap</strong></td>
+    <td valign="top">To set up a player by slow-playing or giving off a false tell.
+        <p>A trap hand is any hand that is likely to become the second-best hand, costing you a lot of money to see the
+            flop. The most common trap hands are AT, AJ, KQ, KJ, KT, QJ and QT. Many players limp in from early position
+            and call or raise in middle to late position with this type of hand, just to find themselves having the
+            second best hand, losing the pot. A player with the best hand may try and Trap a player with these cards
+            making their opponent think they have won when they have not. </p>
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top"><strong>Turn</strong></td>
+    <td valign="top"> It is a players turn to act when the action is on them to make a decision. Or the fourth community
+        card, also called fourth street is known as the turn.
+    </td>
+</tr>
+</table>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+</BODY>

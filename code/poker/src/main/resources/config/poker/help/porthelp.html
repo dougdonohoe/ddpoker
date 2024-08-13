@@ -1,0 +1,286 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="347" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"> <strong>Online Setup Help </strong> </font></td>
+    </tr>
+</table>
+
+<br>
+This page contains additional help for setting up to play online. See <a href="hostonline.html">Host Online</a> and <a
+        href="joinonline.html">Join Online</a> for detailed step by step instructions.<br>
+<br>
+
+<div align="center">
+    <p><img src="../images/firewall.jpg" width="500" height="940"></p>
+
+    <p>&nbsp;</p>
+
+    <p><img src="../images/onlineexplanation.jpg" width="450" height="454"> <br>
+        <br>
+    </p>
+
+    <div align="center">
+        <table border="1">
+            <tr bgcolor="#1D4A07">
+                <td colspan="2" align="center">
+                    <div align="center"><strong><font color="#FFFF00" size="+1">Quick and Dirty Setup
+                        Help </font></strong></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top"><strong>I have a router and want to host a game</strong></td>
+                <td>If you have a router and you want to host a game you must configure your router to port forward with
+                    these two entries:<br>
+                    <ul>
+                        <li>Port Forward TCP range of ports from 11885 to 11889 to the local IP address of your
+                            computer.
+                        </li>
+                        <li> Port Forward UDP range of ports from 11885 to 11889 to the local IP address of your
+                            computer.
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top"><strong>I have security software</strong></td>
+                <td valign="top">If you have security software, you will need to configure it so that DD Poker can run
+                    correctly. Security software can include Norton Internet Security, Norton Personal Firewall, Zone
+                    Alarm, McAfee, CA EZ Products, firewall programs or other. Below is all the possible information you
+                    may need to configure.<br>
+                    <ul>
+                        <li>Allow the execution of ddpoker.exe (Windows)</li>
+                        <li>Allow DD Poker full TCP access over the range of ports from 11885 to 11889</li>
+                        <li>Allow DD Poker full UDP access over the range of ports from 11885 to 11889</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top"><strong>I want to play in public online games</strong></td>
+                <td valign="top">You must online-activate your profile to play in public online games. See Profiles
+                    under the <a href="mainmenu.html">main menu</a> help.
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div>
+</div>
+<table border="1" width="100%">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Understanding
+                Firewall's, Ports and Routers </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p>In order to host an online game, other computers on the Internet need to know
+    how to reach you. When you start (host) an online game, you will supply a <strong>Game
+        URL</strong> to the others wishing to join your game. This game URL is a single
+    line that consists of an IP address, a port number, game ID, and game password.
+</p>
+
+<p>An IP address stands for Internet Protocol address. Every computer on the Internet
+    is assigned one, typically by your Internet service provider; you can think
+    of it like the address on your house. If you don't have a router or firewall,
+    the process of hosting a game is pretty straightforward. You simply provide
+    your figurative house address, the entire game URL shown on your <strong>Setup
+        Online Tournament</strong> menu, to the others wishing to join your game for
+    a private game. You can copy this Game URL with the copy button to the right
+    of the game URL, and paste it into an email to invite the other players wishing
+    to join the game. Alternatively, you may paste the game URL into an instant
+    message or simply verbally read the number to someone via telephone. If you
+    wish to host or join a public game posted on the public games list, an additional
+    step is needed to online-activate your profile to list/join public games. If you do
+    not wish to host or join a game posted as a public game, this step is not needed
+    for private games between friends. </p>
+
+<p> If you have a firewall, a step may be needed in order to host any online game over the Internet. A firewall
+    separates your computer from the outside world to prevent hackers from being able to access your computer, think of
+    it as a figurative brick wall between your computer and the Internet. In order for the outside world to access your
+    computer to do things such as receiving email or downloading things from the Internet, <strong>ports</strong> are
+    used. A port can be thought of as removing a brick from your brick wall to allow incoming information to pass
+    through. Specific ports are pre-reserved for things like the Internet and email. Online games must use their own
+    port, removing their own brick from the wall in order to host online games. DD Poker uses TCP and UDP port numbers
+    11885-11889.</p>
+
+<p>If you are using an internet security or firewall program, you will need to allow &quot;ddpoker&quot; access to the
+    internet, or configure ddpoker access through TCP and UDP port numbers 11885-11889. Although your setup and version
+    may differ, here are some guidelines for some specific programs. Windows SP2 Firewall needs to Unblock the program
+    ddpoker. Norton Internet Security needs to add a modify rule to permit TCP and UDP over remote port 11885. If using
+    the Mac firewall, add a new incoming network communication to allow DD Poker add the ports. If using the Zone Alarm,
+    allow all internet and server access to ddpoker.exe. </p>
+
+<p>If you have a router, you will need to &quot;port forward&quot; or set up a
+    &quot;virtual server&quot;. A router allows several computers in your home to
+    share your connection to the Internet, it also supports its own built-in firewall.&nbsp;
+    Your router keeps the IP address assigned by your Internet service provider
+    as its own. The router then assigns local IP addresses to each computer in your
+    home or LAN (local area network). This internal IP address can not be seen by
+    the outside world. So in order for the computer hosting your poker game to receive
+    incoming game information from the Internet, your router uses <strong>Port Forwarding</strong>.&nbsp;
+    This allows game information sent to your router from the other player's computer
+    to communicate with the computer hosting the game behind your router. The router
+    must be setup to do this, by being told to forward anything entering TCP and UDP port numbers 11885-11889
+    to the local IP address of the computer that is hosting the poker game.</p>
+
+<p>Some DSL modems have their own built in firewalls. So someone could potentially have three firewalls, their DSL
+    modem, router, and software firewall. If the <strong>Test Connection</strong> button test failed, a firewall in any
+    of these three areas can be blocking incomming connections, and require TCP and UDP port numbers 11885-11889 to be
+    opened. Note: You may still Join online games without setting up any ports, you only need to configure your ports if
+    you wish to Host an online game. </p>
+
+<p>Specific examples to configure your firewall's, internet security, and routers
+    can be found on our website at: <a href="https://www.ddpoker.com/onlinesupplement">https://www.ddpoker.com/onlinesupplement</a><br>
+    &nbsp;
+</p>
+<table border="1" width="100%">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Setting Up Your Router </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p> There are many router companies, each having different ways of setting up Port Forwarding, please refer to your
+    router manual for specific instructions on how to access your router setup and port forward. Below is the typical
+    information that is needed to set up Port Forwarding once you have accessed your router setup.</p>
+
+<p>Although some router setups are accessed with software, most can be accessed using your web browser by typing in your
+    routers address in the web address field of your browser. Each router is different and you will need to look up
+    your's in your router manual. Belkin for example uses http://192.168.2.1 </p>
+
+<p> Enter <strong>DDPoker</strong> for the Service Name. The Service name may also be called Application Name,
+    Description or Virtual Server Name.</p>
+
+<p> DD Poker uses<strong>TCP and UDP port numbers 11885-11889. </strong>Enter <strong>11885 to 11889 </strong> in all
+    the places where the router asks for any and all of the following: Starting Port, Ending Port, Incoming Port,
+    Inbound Port, Public Port, Private Port, Forwarding Port. Do not use port <em>triggering</em>, that will not help.
+</p>
+
+<p> Enter the Local IP address displayed on your Setup Online Tournament (2 of
+    2) page under Host Online where the router asks for an IP address, server IP
+    address, private IP address, or forwarding IP address. Your IP address will
+    be the IP address of the computer you are going to use as the host computer
+    for your poker tournament. It will be in the form of <TT>XXX.XXX.XXX.XXX</TT>
+    which is four sets of 1 to 3 digits separated by a periods. An example may be
+    192.168.2.2 Note: If you reboot your host computer, your IP address may have
+    changed and you may need to re-enter your Port Forwarding IP address in your
+    router. You can confirm your ports are still set up properly by clicking the
+    Test Connection button.</p>
+
+<p> Enter <strong>TCP</strong> for the service type, also called protocol, type
+    or incoming protocol. DD Poker does not use UDP for hosting online games, so
+    you do not have to configure that.</p>
+
+<p>Specific examples to configure your firewall's, internet security, and routers
+    can be found on our website at: <a href="https://www.ddpoker.com/onlinesupplement">https://www.ddpoker.com/onlinesupplement</a>
+</p>
+<br> &nbsp;
+<table border="1">
+    <tr bgcolor="#1D4A07">
+        <td colspan="2" align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Glossary of Router Terms </font></strong></div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>DHCP</strong></td>
+        <td>A router by default assigns every computer on you home network an IP address. This IP address is known to be
+            dynamic. A dynamic IP address changes and may be re-assigned a different IP address the next time the
+            computer or router restarts. A Static IP address is assigned to a computer when one isn't automatically
+            assigned to it by the router using DHCP. This allows the same computer to act as the host of game every time
+            without the worry of needing to alter the host IP address for porting the game in the router settings.
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Firewall</strong></td>
+        <td valign="top">A firewall separates your computer from the outside world to prevent hackers from being able to
+            access your computer. Think of it as a figurative brick wall between your computer and the Internet
+            protecting your computer. A software firewall can be running on your computer such as Windows Firewall or
+            Norton Internet Security. Hardware firewalls are typically built into routers and sometimes even modems.
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Game URL</strong></td>
+        <td>URL is an acronym for Uniform Resource Locator. It is a web address to
+            a resource on the Internet. In your case, the resource is the person's computer
+            hosting the poker game. A game URL is this address with a game identification
+            number and game password tacked on. The entire URL needs to be used in order
+            to host or join games. You may notice when hosting, there are two different
+            types of URL's, one generated by your local area network, and one for the
+            internet. If your computer is connected directly to the internet, these
+            numbers will be the same. It uses the IP address of your computer, most
+            likely assigned by your internet service provider. In the case of a home
+            router, your LAN URL and internet URL will be slightly different, the IP
+            address is a different number. The internet URL will be the same as described
+            above. This is the Game URL you would give your friends if you wish to play
+            with them over the internet. The LAN Game URL uses the IP address assigned
+            by your router and can only be used by computers in your local area network.
+            This is good if you have computers on your LAN you wish to play with, but
+            they don't have internet access or the player profiles has not been online-activated
+            to join public games. In the case of a business LAN, it is possible that
+            no one will have an internet public Game URL, and are forced to use the
+            LAN URL.
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Port</strong></td>
+        <td>In order for the outside world to access your computer to do things such as receiving email or downloading
+            things from the Internet, ports are used. If your firewall is thought of as a brick wall, then a port can be
+            thought of as removing a brick from your brick wall to allow incoming information. Specific ports are
+            pre-reserved for things like the Internet and email. Online games must use their own port, removing their
+            own brick from the wall in order to host online games. DD Poker uses TCP and UDP port numbers 11885-11889.
+            Any firewall programs such as Windows XP firewall will need to be told to allow access through TCP and UDP
+            port numbers 11885-11889.
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Port Forwarding</strong></td>
+        <td>Port forwarding tells your router, if any poker information arrives over the internet on TCP and UDP port
+            numbers 11885-11889, to send it to the computer hosting your poker game. Some router companies refer to Port
+            Forwarding as Port Range Forward, or Virtual Server. You do NOT want to set up Port Triggering.&nbsp; </td>
+    </tr>
+</table>
+<p>See <a href="faq.html">FAQ</a> for Frequently Asked Questions about online
+    play.<strong><br>
+        <br>
+    </strong>Visit the <a href="https://www.ddpoker.com/support">DD Poker support</a>
+    or our <a href="https://www.ddpoker.com/onlinesupplement">DD Poker Online Help
+        on the web</a> for the most current troubleshooting information.</p>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+
+</BODY>
+</HTML>

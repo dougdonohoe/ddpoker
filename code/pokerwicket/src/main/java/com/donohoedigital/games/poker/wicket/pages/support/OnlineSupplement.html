@@ -1,0 +1,868 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker Online Supplement</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+<div class="title">Online Supplement</div>
+
+<div class="description" style="padding-bottom: 0;">
+    <p>This page is designed to help you with common problems trying to play or host online games.</p>
+
+    <ul>
+        <li><a href="/support/passwords">Password Help </a></li>
+
+        <li><a href="#quick">Quick and Dirty Setup Help</a></li>
+
+        <li><a href="#routers">Router Setup - Port Forwarding</a></li>
+
+        <li><a href="#security">Internet Security - Firewalls</a></li>
+
+        <li><a href="#hosting">Hosting Example </a></li>
+
+        <li><a href="#whats">What's what on the hosting screen? </a></li>
+
+        <li><a href="#understanding">Understanding Firewalls, Ports and Routers</a></li>
+
+        <li><a href="#glossary">Glossary of Router Terms</a></li>
+
+        <li><a href="#disconnections">Online Stability and Disconnections</a></li>
+
+        <li><a href="#outside">Disconnections Out Of Your Control</a></li>
+
+        <li><a href="#faq">Online FAQ</a></li>
+    </ul>
+</div>
+
+<div class="legacy-details" style="padding-top: 5px;">
+<a class="name" name="quick"/>
+
+<div class="title-banner">Quick and Dirty Setup Help</div>
+
+<div class="help-menu">
+    <table style="margin-top: 15px;">
+        <tr>
+            <td valign="top"><strong>I have a router and want to host a game</strong></td>
+            <td><p>If you have a router and you want to host a game you must configure your router to port forward with
+                these two entries:</p>
+                <ul>
+                    <li>Port Forward TCP range of ports from 11885 to 11889 to the local IP address of your computer.
+                    </li>
+                    <li> Port Forward UDP range of ports from 11885 to 11889 to the local IP address of your computer.
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>I have security software</strong></td>
+            <td valign="top"><p>If you have security software, you will need to configure it so that DD Poker can run
+                correctly. Security software can include Norton Internet Security, Norton Personal Firewall, Zone Alarm,
+                McAfee, CA EZ Products, firewall programs or other. Below is all the possible information you may need
+                to configure.</p>
+                <ul>
+                    <li>Allow the execution of ddpoker.exe (Windows)</li>
+                    <li>Allow DD Poker full TCP access over the range of ports from 11885 to 11889</li>
+                    <li>Allow DD Poker full UDP access over the range of ports from 11885 to 11889</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>I want to play in public online games</strong></td>
+            <td valign="top">You must online-activate your profile to play in public online games. See <a
+                    href="support/passwords">Password Help</a>.
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<a class="name" name="routers"/>
+
+<div class="title-banner">Router Setup - Port Forwarding</div>
+
+<div class="description">
+    <span class="bold">If you wish to host a game AND you have a router, you must configure your router.</span>
+</div>
+
+<div class="help-menu">
+    <table width="700" border="0" cellspacing="5" cellpadding="4">
+        <tr>
+            <td width="100" valign="top"><img src="images/num1.jpg" alt="num1" width="35" height="36"><br>
+                <strong>Get lP Address of Host Computer </strong></td>
+            <td><strong>What is your local IP address? </strong><br>
+                <br>
+                Your local IP address for your host computer is displayed on your Setup Online Tournament (2 of 2)
+                screen. You can view this without actually hosting. From the main menu, click Online, then Continue,
+                your local IP address is displayed there.<br>
+                <br>
+
+                <div><img src="images/hostip.jpg" alt="hostip" width="300" height="190"></div>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td width="100" valign="top"><img src="images/num2.jpg" alt="num2" width="35" height="36"><br>
+                <strong>Get Your Router Model </strong></td>
+            <td valign="top"><strong>What is your router model number?</strong><br>
+                <br>
+                Most routers have their model number printed on the bottom of the router, or look in your router
+                manual. <br>
+                <br>
+                <br></td>
+        </tr>
+        <tr>
+            <td width="100" valign="top"><img src="images/num3.jpg" alt="num3" width="35" height="36"> <br>
+                <strong>Instructions </strong>
+            </td>
+            <td><strong>Instructions:</strong><br>
+                <br>
+                PortForward.com is used to display the the configuration of the DD Poker ports for your specific
+                router by clicking the link below. <br>
+                <br>
+                <a href="http://www.portforward.com/english/applications/port_forwarding/DDTP/DDTPindex.htm">CLICK
+                    HERE</a> to link to the setup instructions to configure DD Poker for your router.<br>
+                <br>
+                Choose your router model number, enter the IP address of your host computer and the instructions
+                will be displayed.
+            </td>
+        </tr>
+        <tr>
+            <td width="120" valign="top"><img src="images/num4.jpg" alt="num4" width="35" height="36"><br>
+                <strong>Configure Your Router </strong></td>
+            <td><strong>Configure your router:</strong><br>
+                <br>
+
+                <p>
+                    Configure your router with the instructions in step 3 to Port Forward: </p>
+                <ul>
+                    <li>TCP ports 11885 to 11889 to the local IP address of your computer.</li>
+                    <li> UDP ports 11885 to 11889 to the local IP address of your computer.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<a class="name" name="security"/>
+
+<div class="title-banner">Internet Security - Firewalls</div>
+
+<p>A firewall prevents unauthorized communication with your computer. A firewall can be a hardware firewall such as
+    a home router.
+    See <a href="#routers">Router Setup</a> for information on configuring your router.</p>
+
+<p>Or a firewall can be a software firewall such as Norton Internet Security. In addition to
+    firewalls, Internet Security programs can also have application control, to prevent
+    unauthorized use of an application. The purpose of security software is to prevent
+    communication and disable applications. </p>
+
+<p class="spicy">If DD Poker does not run, can not play online, can not register, or
+    online-activate you MUST configure all your security and firewall software. </p>
+
+<div class="help-menu" style="padding-top: 10px;">
+    <table width="700" border="0" cellspacing="5" cellpadding="4">
+        <tr>
+            <td width="120" valign="top">
+                <div><strong>Configuration</strong></div>
+            </td>
+            <td><strong>Configuration of Your Security Software: </strong><br><br>
+                <ul>
+                    <li>Allow the execution of ddpoker.exe (Windows)</li>
+                    <li>Allow DD Poker full TCP access over the range of ports from 11885 to 11889</li>
+                    <li>Allow DD Poker full UDP access over the range of ports from 11885 to 11889</li>
+                    <li>Allow the execution of Java</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td width="120" valign="top"><strong>Firewalling.com</strong>
+            </td>
+            <td valign="top"><strong>Specific Instructions provided by Firewalling.com</strong><br><br>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/nortoninternetsecurity2005.htm">Norton
+                    Internet Security</a></p>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/nortonpersonalfirewall.htm">Norton Personal
+                    Firewall</a></p>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/ZoneAlarmPro.htm">Zone Alarm Pro </a></p>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/sygatepersonalfirewallpro.htm">Sygate
+                    Personal Firewall Pro </a></p>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/McAfeeV6.0FirewallPlus.htm">McAfee V6.0
+                    Firewall Plus</a></p>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/windowssp2.htm">Windows SP2 Firewall</a>
+                </p>
+
+                <p><a href="http://www.firewalling.com/personalfirewalls/f-secure/f-secure.htm">F-Secure</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="120" valign="top"><strong>Other Firewalls </strong></td>
+            <td><strong>Mac Firewall:</strong><br><br>
+
+                <p>To configure ddpoker to work with the Mac firewall: Click System Preferences, under Internet &amp;
+                    Network, click Sharing then the Firewall tab. Click New, then choose the port name Other, Port
+                    Number 11885 to 11889, and description ddpoker, click OK. Enter TCP ports 11885 to 11889 and UDP
+                    ports 11885 to 11889.</p>
+
+                <strong>Please consult your manual for the following products: </strong><br><br>
+
+                <p><a href="http://www.ca.com">CA eTrust</a></p>
+
+                <p><a href="http://www.anonymizer.com/home.html">Anonymizer</a></p>
+
+
+                <p><a href="http://www.intego.com/netbarrier/">Net Barrier X4</a></p>
+
+                <p><a href="http://www.trendmicro.com/en/products/desktop/pc-cillin/evaluate/overview.htm">PC-cillin
+                    Internet Security </a></p>
+
+                <p><a href="http://www.pcsecurityshield.com/webApp/90042-6.asp?trk=WTK&affid=650">The Shield
+                    Pro </a></p>
+
+                <p>
+                    <a href="http://www.digitalriver.com/htmlemails/bitdefender/bitdefender_standard/LandingPage_Standard.htm">Bit
+                        Defender </a></p>
+
+                <p><a href="http://www.digitalriver.com/dr/v2/ec_dynamic.main?SP=1&PN=10&sid=26412">Black Ice </a>
+                </p>
+
+                <p><a href="http://www.pandasecurity.com/cj-usa/">Panda Internet Security</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<a class="name" name="hosting"/>
+
+<div class="title-banner">Hosting Example</div>
+
+
+<p class="centered" style="padding: 15px;"><img src="images/firewall.jpg" alt="firewall" width="500" height="940"></p>
+
+
+<a class="name" name="whats"/>
+
+<div class="title-banner">What's what on the hosting screen?</div>
+
+<p class="centered" style="padding: 15px;"><img src="images/onlineexplanation.jpg" alt="onlineexp" width="450"
+                                                height="454"></p>
+
+
+<a class="name" name="understanding"/>
+
+<div class="title-banner">Understanding Firewalls, Ports and Routers</div>
+
+<p>In order to host an online game, other computers on the Internet need to know how to
+    reach you. When you start (host) an online game, you will supply a <span class="bold">Game URL</span>
+    to the others wishing to join your game. This game URL is a single line that consists of an
+    IP address, a port number, game ID, and game password. </p>
+
+<p>An IP address stands for Internet Protocol address. Every computer on the Internet is assigned
+    one, typically by your Internet service provider; you can think of it like the address on your
+    house. If you don't have a router or firewall, the process of hosting a game is pretty
+    straightforward. You simply provide your figurative house address, the entire game URL
+    shown on your <span class="bold">Setup Online Tournament</span> menu, to the others wishing to join your game for a
+    private
+    game. You can copy this Game URL with the copy button to the right of the game URL, and paste it into an email to
+    invite the other players wishing to join the game. Alternatively, you may paste the game URL into an instant message
+    or simply verbally read the number to someone via telephone. If you wish to host or join a public game posted on the
+    public games list, an additional step is needed to configure your profile to list/join public games. If you do not
+    wish to host or join a game posted as a public game, this step is not needed for private games between friends. </p>
+
+<p> If you have a firewall, a step may be needed in order to host any online game over the
+    Internet. A firewall separates your computer from the outside world to prevent hackers
+    from being able to access your computer, think of it as a figurative brick wall between
+    your computer and the Internet. In order for the outside world to access your computer to
+    do things such as receiving email or downloading things from the Internet, <span class="bold">ports</span>
+    are used. A port can be thought of as removing a brick from your brick wall to allow incoming
+    information to pass through. Specific ports are pre-reserved for things like the Internet and
+    email. Online games must use their own port, removing their own brick from the wall in order
+    to host online games. DD Poker uses port number 11885.</p>
+
+<p>If you are using an internet security or firewall program, you will need to allow
+    &quot;ddpoker&quot; access to the internet, or configure ddpoker access through port 11885.
+    Although your setup and version may differ, here are some guidelines for some specific programs.
+    Windows SP2 Firewall needs to Unblock the program ddpoker. Norton Internet Security needs to
+    add a modify rule to permit TCP and UDP over remote port 11885. If using the Mac firewall, add
+    a new incoming network communication to allow DD Poker on port 11885. If using the Zone Alarm,
+    allow all internet and server access to ddpoker.exe. </p>
+
+<p>If you have a router, you will need to &quot;port forward&quot; or set up a &quot;virtual
+    server&quot;. A router allows several computers in your home to share your connection to
+    the Internet, it also supports its own built-in firewall.&nbsp; Your router keeps the IP
+    address assigned by your Internet service provider as its own. The router then assigns local
+    IP addresses to each computer in your home or LAN (local area network). This internal IP
+    address can not be seen by the outside world. So in order for the computer hosting your poker
+    game to receive incoming game information from the Internet, your router uses <span class="bold">Port
+        Forwarding</span>.&nbsp; This allows game information sent to your router from the other
+    player's computer to communicate with the computer hosting the game behind your router. The
+    router must be setup to do this, by being told to forward anything entering either TCP or UDP
+    ports 11885 to 11889 to the local IP address of the computer that is hosting the poker game.</p>
+
+<p>Some DSL modems have their own built in firewalls. So someone could potentially have three
+    firewalls, their DSL modem, router, and software firewall. If the <span class="bold">Test Connection</span>
+    button test failed, a firewall in any of these three areas can be blocking incoming connections,
+    and require the ports to be opened. Note: You may still Join online games without setting up
+    any ports, you only need to configure your ports if you wish to Host an online game. </p>
+
+<a class="name" name="glossary"/>
+
+<div class="title-banner">Glossary of Router Terms</div>
+
+
+<div class="help-menu">
+
+    <table width="700" border="0" cellspacing="5" cellpadding="4">
+        <tr>
+            <td valign="top"><strong>DHCP</strong></td>
+            <td>A router by default assigns every computer on you home network an IP address. This IP address is
+                known to be dynamic. A dynamic IP address changes and may be re-assigned a different IP address
+                the next time the computer or router restarts. A Static IP address is assigned to a computer when
+                one isn't automatically assigned to it by the router using DHCP. This allows the same computer to act as
+                the
+                host of game every time without the worry of needing to alter the host IP address for porting the game
+                in
+                the router settings.
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Firewall</strong></td>
+            <td valign="top">A firewall separates your computer from the outside world to prevent hackers from being
+                able to
+                access your computer. Think of it as a figurative brick wall between your computer and the Internet
+                protecting your computer. A software firewall can be running on your computer such as Windows Firewall
+                or
+                Norton Internet Security. Hardware firewalls are typically built into routers and sometimes even modems.
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Game URL</strong></td>
+            <td>URL is an acronym for Uniform Resource Locator. It is a web address to a resource on the Internet. In
+                your
+                case, the resource is the person's computer hosting the poker game. A game URL is this address with a
+                game
+                identification number and game password tacked on. The entire URL needs to be used in order to host or
+                join
+                games. You may notice when hosting, there are two different types of URL's, one generated by your local
+                area
+                network, and one for the internet. If your computer is connected directly to the internet, these numbers
+                will be the same. It uses the IP address of your computer, most likely assigned by your internet service
+                provider. In the case of a home router, your LAN URL and internet URL will be slightly different, the IP
+                address is a different number. The internet URL will be the same as described above. This is the Game
+                URL
+                you would give your friends if you wish to play with them over the internet. The LAN Game URL uses the
+                IP
+                address assigned by your router and can only be used by computers in your local area network. This is
+                good
+                if you have computers on your LAN you wish to play with, but they don't have internet access or the
+                player
+                profiles has not been configured to join public games. In the case of a business LAN, it is possible
+                that no
+                one will have an internet public Game URL, and are forced to use the LAN URL.
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Port</strong></td>
+            <td>In order for the outside world to access your computer to do things such as receiving email or
+                downloading
+                things from the Internet, ports are used. If your firewall is thought of as a brick wall, then a port
+                can be
+                thought of as removing a brick from your brick wall to allow incoming information. Specific ports are
+                pre-reserved for things like the Internet and email. Online games must use their own port, removing
+                their
+                own brick from the wall in order to host online games. DD Poker uses port number 11885. Any
+                firewall programs such as Windows XP firewall will need to be told to allow access through TCP ports
+                11885
+                to 11889 and UDP ports 11885 to 11889.
+            </td>
+        </tr>
+        <tr>
+            <td valign="top"><strong>Port Forwarding</strong></td>
+            <td>Port forwarding tells your router, if any poker information arrives over the internet on TCP ports 11885
+                to
+                11889 or UDP ports 11885 to 11889, to send it to the computer hosting your poker game. Some router
+                companies
+                refer to Port Forwarding as Port Range Forward, or Virtual Server. You do NOT want to set up Port
+                Triggering.&nbsp; </td>
+        </tr>
+    </table>
+</div>
+
+
+<a class="name" name="disconnections"/>
+
+<div class="title-banner">Online Stability and Disconnections</div>
+
+<p>Disconnections and the stability of an online game is dependant on many things. Some are within your control to
+    improve and others are not. &nbsp;For those familiar with live action online gaming such as first person shooter
+    games, you will sometimes notice jumps in the action and the game will even pause occasionally to get all the
+    players back in sync. Although it can be irritating to skip to a new position due to a jump in action, the game will
+    continue. Good article <a href="http://www.xbox.com/en-US/live/connect/Article-LagFreeGame-pg1.htm">here</a> from
+    XBOX on lag-free games. A poker game does not need to communicate vast amounts of data such as the movement in a
+    first person shooter, but the data it does communicate is critical that it is not lost. If someone has a brief
+    disconnection, we can not simply assume they wanted to fold and not raise, the action must wait until the person
+    reconnects. By taking some preventative measures, you can reduce the number of disconnections that occur in a game.
+    Shown below are tips on Hosting, Adware, and Line Quality. </p>
+
+<p><span class="bold">Hosting -</span> DD Poker uses what is called as a peer to peer hosting method. Our central
+    server helps arrange public games, but once the game starts, it is the computer of the person hosting the game that
+    communicates to all joined guests. For this reason, it makes sense that the person hosting has a system and internet
+    connection that can handle this gracefully, especially if they are hosting a lot of people.</p>
+<ul>
+    <li><strong>Line quality - </strong>A good internet connection is probably the most important factor in reducing
+        disconnections. Although the user can not control all aspects of their internet connection, there are measures
+        that can be taken to clean up the signal and reduce disconnections. (see Line Quality below)
+    </li>
+    <li><strong>Recommended system requirements -</strong> For games with 11-30 guests, we recommend a computer with the
+        minimum of a 1 Gig processor and 512 Meg Ram.
+    </li>
+    <li><strong>Limit multitasking -</strong> Limit the amount of multi-tasking especially web surfing involving large
+        file transfers or streaming video.
+    </li>
+    <li><strong>Adware removal -</strong> Adware can use up valuable processing power and memory causing your computer
+        speed to crawl. (see Adware and Spyware below)
+    </li>
+    <li><strong>Reboot </strong>- If you are having connection issues, reboot your computer, modem and router before
+        hosting to clear the memory and buffers, and stop extra processes running running on your pc.
+    </li>
+</ul>
+
+<p><span class="bold">Adware and Spyware -</span> Adware and spyware are typically commercial
+    programs installed on your computer without your knowledge, and feed various things like pages visited and even
+    personal information to their clients. Then can use this information for things like pop up ads that are marketed
+    specifically to you. Unless you already actively run anti-adware and anti-spyware software, your computer is most
+    likely infected without your knowledge. Adware and spyware is commercial and not intended to destroy data as in some
+    viruses, but they will use up valuable processing power and memory. Although a few of these running on your computer
+    will not have much effect, once infected they can multiply where you could easily have dozens on your computer
+    running hundreds of processes to the point that your computer moves at a snails pace. We trust and recommend a free
+    reveal program called <a href="http://www.lavasoftusa.com/software/adaware/">Ad-Aware SE Personal from Lavasoft</a>.
+    <br>
+</p>
+
+<p><span class="bold">Line Quality - </span>Line quality and the stability of an online game is
+    dependant on several factors. The path your ISP takes to the host, server capacity, Internet traffic, your hardware,
+    processing ability due to adware, cable congestion in your neighborhood, or your wiring.</p>
+<ul>
+    <li><span class="bold">Broadband Tests  - </span> <a href="http://www.dslreports.com/tools">Broadband Reports</a>
+        is a great resource for information on improving your internet connection. They also provide users with free
+        tests to check their line speed and line quality. This is a good starting point to check out your internet
+        connection.<br>
+        <br>
+        <a href="http://www.dslreports.com/stest">Broadband Reports Speed Test</a> <br>
+        <a href="http://www.dslreports.com/linequality">Broadband Reports Line Quality Test
+        </a><br>
+        <a href="http://www.axencesoftware.com/index.php?action=FreeNT">Axence NetTools 2.0</a> Trace hops from you to
+        the host of a game. Displays latency and packet loss.<br>
+        <br>
+    </li>
+    <li><span class="bold">Wireless -</span> Your wireless connection to the internet can be compromised depending on
+        the path your wireless signal, and even some wireless router brands are known to cause occasional disconnects.
+        If your computer is connected to the internet via a wireless device such as a wireless router, see if your
+        connectivity improves by placing the computer within 5-10 feet of the wireless device. For an analogy, you
+        sometimes have trouble hearing people with a cordless phone when you are around walls or a long distance away,
+        although your wireless router has improved technology with things such as frequency hopping, don't think your
+        wireless router is immune to interference. Avoid obstacles between the wireless router and computer such as
+        large metal cabinets or appliances. Avoid interference such as cordless telephones or bluetooth devices in near
+        proximity to the wireless router or computer. Make sure your wireless device antenna is pointed vertically.
+        Interference can also be caused by things such as microwave ovens and amateur radio too.<br>
+        <br>
+    </li>
+    <li><span class="bold">Router -</span> It is possible that your router can cause your internet connection to
+        performing sluggishly, freeze unexpectedly or experience dropped connections. Every router contains its own
+        built in software that handles the network communication. This built in software is called firmware. Since your
+        router was manufactured, there are most likely firmware revisions released that improve your router's ability to
+        communicate with other network devices. Even a new router can contain firmware which is already several months
+        old before the router is sold. We advise you check your router manufacturer's web site to see if there are any
+        firmware updates for your router that addresses connectivity issues. Follow your router manufacture's
+        instructions to do this update. If you are still experiencing connectivity issues after updating your router
+        firmware, you may want to check to see if newer software is available for your network adapter, your network
+        adapter software is known as a &quot;driver&quot;. Updating your drivers is a bit more involved and we do not
+        recommend it without consulting a tech support engineer or contacting your PC manufacturer/network adapter
+        manufacturer for further assistance.
+    </li>
+</ul>
+<ul>
+    <li><span class="bold">Cable -</span> Your physical cable wiring and your cable provider's internet congestion
+        can cause issues with cable broadband.
+        <blockquote style="padding-left: 20px; padding-top:10px;">
+            <p><span class="bold">Wiring -</span> Original cable TV wiring was designed using RG-59 cable. A higher
+                quality RG-6
+                cable, will promote less loss and higher speeds. Cables should be replaced if a visual inspection of the
+                screw on connectors at the ends of the cable shows signs of loose connectors or especially frayed metal
+                shielding. This frayed metal shielding acts as an antenna causing interference which leeds to packet
+                loss and ultimately reduction in speed and game disconnections. Check with your broadband provider, they
+                may have a web interface that shows your signal to noise ratio. A low signal to noise ratio can cause
+                packet loss, re transmissions and slow speeds. From the point that your cable enters the house to every
+                TV, cable box, and modem, confirm there are not extra wires not connected to anything or splitters used
+                with an open terminal. This can cause an impedance mismatch leading to signal reflection and a low
+                signal to noise ratio. If your inside wiring looks good but your signal to noise ratio is low, your
+                cable from your house to the pole may be the culprit. Any exposed wire even caused from a squirrels
+                chewing on the cable can cause interference. If you have ever noticed a shadow watching a broadcast
+                station over cable such as channel 3, 5 or 8 is an indicator of this. <br>
+            </p>
+
+            <p><span class="bold">Congestion -</span> Cable has an advantage over DSL because it can offer higher
+                download
+                speeds. But cable's disadvantage is the narrow upstream bandwidth causing congestion during peak hours.
+                One of the most common complaints for cable modems is that of increased latency
+                and other problems as more subscribers in a given area come on line since cable users in the same
+                area share bandwidth. Cable companies are using a very narrow band for return signaling, otherwise
+                know as the upstream or return path. This is positioned below all the space allocated for TV
+                channels. This band is prone to RF interference and is very limited in capacity. Upstream
+                transmissions may therefore compete with others in the area, get delayed (suffer high latency)
+                due to noise fighting techniques, and cable TOS (Terms Of Service) typically prohibit any kind
+                of constant upstream use. Internet use is shifting away from central servers broadcasting to
+                many individuals and some interesting peer to peer applications like online gaming. These
+                applications need a strong upstream channel. <a
+                        href="http://www.dslreports.com/faq/129">From Broadband Reports FAQ </a></p>
+        </blockquote>
+    </li>
+    <li><span class="bold">DSL -</span> Original phone wiring used for DSL lines can be a source for line noise
+        causing packet loss and a reduction in speed. The cheapest and easiest way for a DSL provider to get broadband
+        into your home is to use existing phone wiring with line sharing. This potentially can cause problems in two
+        areas, your wiring and filtering.<br><br>
+
+        <p class="style13">A common misconception among computer users is that the telephone company and long-distance
+            switching network is a &quot;perfect system.&quot; The advent of error-correcting, high-speed modems which
+            mask
+            line-noise and push the data transfer tolerance window to the limit, has given us a false sense of belief
+            that
+            everything should work at top speed every time. Not so! There is that age old problem known as LINE NOISE.
+            Line
+            noise may or may not be apparent to your &quot;naked ear&quot;, however your modem can and will react to
+            this
+            annoying phenomenon. Some complaints which can be attributed to line noise are: &quot;The system was very
+            slow
+            in responding tonight.&quot; <a href="http://www.dslreports.com/faq/1703">From Broadband Reports FAQ</a></p>
+
+        <blockquote style="padding-left: 20px; padding-top:10px;">
+            <p><span class="bold">Wiring -</span> Unless you have a modern home, most home phone wiring was designed for
+                analog voice
+                not high speed digital. Also, since home owners are now responsible for their own wiring, many homes
+                have
+                all kinds of crazy wiring jobs. Every phone jack in the house should be checked to make sure there is no
+                corrosion, shorts with other wires, loose wires or loose splitter connections. Avoid running your modem
+                phone wire in parallel with power cables. Some people like to wrap all their cords together to be tidy,
+                but
+                it would be better to run your power wires separated from your data cables. Also, check for the same if
+                there is a common terminal in the basement where all your phones are connect to. One method of
+                troubleshooting is to disconnect all your other phone wires from the source and test your DSL. You may
+                even
+                want to test your modem wired directly to the gray NID, &quot;network interface device&quot; outside.
+                This
+                is either gray or black phone box on the outside of your home.<br>
+                <br>
+                The best way to reduce packet loss and increase speed is to run a new good quality line from your NID
+                phone
+                box to your modem. You will need an NID splitter/filter to split your phone line at the box. The
+                splitter
+                sends one line to your dedicated DSL modem, and the other filters all your original phone wiring at
+                once(see
+                filtering below). You can also pay to have your DSL provider or phone company put this whole house NID
+                splitter/filter in your NID box and run a dedicated DSL line to your modem. If you find you still have
+                trouble connected directly to your NID, the problem may be in your line from your house to the pole or
+                beyond to the &quot;CO&quot; where your DSL provider connects you to the internet. In these cases it is
+                the
+                phone companies problem. You should have your equipment or telephone line checked. You can call your
+                phone
+                company and ask them to have your line checked for noise on your telephone line. If their test does not
+                meet
+                the FCC requirement for line noise, they will come out and fix the issue even potentially replace the
+                phone
+                line from your house to the pole.<br>
+            </p>
+
+            <p><span class="bold">Filtering -</span> DSL line share wiring requires your phones to be filtered.
+                Filtering prevents
+                any interference from phones, cable boxes, satellite boxes, and fax machines. You have two choices to do
+                this filtering. You can install a filter on each phone and phone device or filter your entire home. The
+                DSL
+                company prefers to filter each phone individually because they do not need to send a technician to your
+                home, it is easier to simply send you an installation kit with enough filters for all your phones. This
+                is
+                not the best way since you have all the phone wires and devices in your house acting to add potential
+                interference and packet loss, due to line noise and reflection due to impedance mismatch. Or the best
+                method
+                is to filter all your phones at once with a whole house filter, otherwise known as an NID
+                splitter/filter,
+                and run a dedicated line from your NID box to your modem. This is the best way to achieve the fastest
+                speeds
+                with the best quality.</p>
+        </blockquote>
+    </li>
+</ul>
+<ul>
+    <li><span class="bold">Dial up -</span> You can easily connect to an online game using a dial up modem. But we
+        recommend that you do not use your bandwidth by surfing or downloading files at the same time. You are also
+        capable of hosting, although it would be better to join as a guest to someone else's hosted game using
+        broadband. Follow the same wiring suggestions described in the DSL section to improve your speed and reduce
+        disconnections. <br>
+    </li>
+</ul>
+<ul>
+    <li><p><span class="bold">Latency and Bandwidth -</span> Latency and Bandwidth are related.&nbsp; Latency(speed)
+        measures delays between each transmission and is measured with network tools like ping and trace-route.&nbsp;Bandwidth
+        refers to how much data can be transferred in a given amount of time and is often measured by timing how long it
+        takes to transmit a large file. Network latency delays may be due to signals passing through various routers and
+        proxies, or it may be due to distance, such as the propagation delays of satellite transmissions.&nbsp;
+        Applications that use voice conferencing are more sensitive to latency than to bandwidth, and you can hear the
+        delays when talking over a satellite or voice-over-IP network. If you have packet loss due to poor line quality,
+        packets may need to be resent and cause more latency.</p>
+
+        <p>You may verify your latency by doing a ping to determine your latency for the first hop to your internet
+            gateway.
+            Latency measured in milliseconds can be checked with a ping utility. A small packet of data is sent to a
+            host
+            and the round-trip time, time it takes for the packet to leave the source host, travel to the destination
+            host
+            and return back to the source host is measured in milliseconds. This figure is a snapshot in time and may
+            change
+            based on network traffic or other conditions even such as weather such as rainy days and ice storms can
+            affect
+            latency. Ideally, the measured time should be as low as possible. High latencies, despite your fast line,
+            may
+            indicate extensive hidden (tunneled) routing between you, and your internet gateway.</p>
+
+        <p>Bandwidth is normally expressed in bits per second. It's the amount of data that can be transferred during a
+            second. Solving bandwidth is easier than solving latency. To solve bandwidth, more pipes are added.
+            Bandwidth
+            and latency are connected. If the bandwidth is saturated then congestion occurs and latency is increased.
+            However, if the bandwidth of a circuit is not at peak, the latency will not decrease. Bandwidth can always
+            be
+            increased but latency cannot be decreased. Latency is the function of the electrical characteristics of the
+            circuit.</p>
+    </li>
+</ul>
+
+<a class="name" name="outside"/>
+
+<div class="title-banner">Disconnections Out Of Your Control</div>
+
+
+<p>
+    If you have done everything mentioned above in <a href="#disconnections">Online Stability and Disconnects</a> for
+    what is in your control at home, the problem may simply be an ISP issue out of your control.<br>
+</p>
+
+<p>Even switching ISP's is not guarantee to improve your internet connection. Typically since all DSL companies share
+    space at your local telephone company, the &quot;CO&quot; central office, if the issues are there the problems will
+    not go away. Switching from DSL to cable or vise/versa may solve some problems but create others.</p>
+
+<p>The perfect internet world would act more like a LAN and there would be no delay of packets causing latency and no
+    lost packets. Hosts with very good home connection with a very good service provider on a low congestion day can
+    have zero problems. </p>
+
+<p>On the other extreme is a host with a poor home connection to start with, on a day with an ice storm in a part of the
+    country where some of their packets are being sent through, on a Saturday night when the internet is at it's peak.
+    Now you have a situation where packets are being lost, and ones that do arrive are sometimes delayed due to
+    resending packets and latency due to congestion.</p>
+
+<p>If the host computer does not receive an alive signal from the guest, you may notice a &quot;Disconnected&quot;
+    placard appear over their cards. TCP, the protocol used by DD, must verify a packet is sent before the next arrives
+    in order. Depending on the severity of the delay and packet losses, you may notice the placard constantly turning on
+    and off or even turn on for a several seconds. If the packet loss is severe enough, TCP completely stops sending
+    lost packets as TCP test packets are sent out until a connection is re-established. This can explain why some people
+    have trouble re-connecting all together.</p>
+
+<p>People that play Xbox live games will also notice this on high congestion days or when ISP's are having trouble due
+    to weather or other. An example, players may notice their character in a first person shooter game jump or notice
+    other players jump to a new location to re-sync due to packet loss and latency. These types of game address this
+    problem by simply re-syncing the game. If the problem gets bad enough or the host quits, you will notice the game go
+    to a blue screen and allow everyone to re-sync or a new host is chosen. </p>
+
+<p>In a poker game, if it is your turn to act, you can not simply jump that person ahead and assume they have called. We
+    must wait until we have positive confirmation of their action. If some guests are having internet issues, the game
+    will still flow nicely, everyone will simply notice those players having trouble with disconnection placards. If the
+    host or host's ISP , or regional hub where the hosts packets are being transferred is having trouble, you may notice
+    large numbers of disconnects. </p>
+
+<p>Hopefully this offers some insight into internet packet loss and latency.</p>
+
+
+<a class="name" name="faq"/>
+
+<div class="title-banner">Online FAQ</div>
+
+<div class="help-menu">
+
+    <table width="700" border="0" cellspacing="5" cellpadding="4">
+        <tr>
+            <td width="206" valign="top">Do I need to need to configure my profile to online-activate my profile in
+                order to
+                play a private game with a friend over the internet?
+            </td>
+            <td width="491" valign="top">No, you only need to online-activate your profile to List/Join public games if
+                you
+                wish to either host a game to be posted on our public games list where strangers may join, or you wish
+                to
+                join a game already listed on our public games list. If you wish to play a private internet game with a
+                friend over the internet, have the host cut and paste their Internet Game URL to an email and send it to
+                you. Then just simply paste that Game URL in the Join Online screen.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Do you play with play money?</td>
+            <td valign="top">Yes, only play money is used in the game for both practice and online.</td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Is a credit card needed to play online?</td>
+            <td>No, we do not need a credit card or any financial information to play online. There is no cost for
+                online
+                play, and you can never lose any money playing online.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Can I have some people connect to the host over a LAN and others via the
+                internet
+                at the same time?
+            </td>
+            <td valign="top">Yes, the people joining over the LAN will use the host's LAN Game URL, and the people
+                joining
+                over the internet will use the Internet Game URL.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Do I need to do anything with my router to Join public games?</td>
+            <td valign="top">No, if you wish to join public game, you only need to configure your profile to List/Join
+                public games. You do not need to set up your ports or do anything with your router if you only wish to
+                Join
+                public games, only if you wish to Host one.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Do I need to set up my Internet Game URL, OR online-activate my profile to
+                List/Join Online, OR do anything with my router if I just want to play someone over my LAN?
+            </td>
+            <td valign="top">No, if you wish to only play someone over your LAN, there is no need to set up the Internet
+                Game URL, online-activate your profile, or do anything with your router. Simply host and open a lobby
+                with
+                only your LAN URL and other DD Poker games will automatically find your game on the LAN.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">
+                <div>I set up my ports and hosted a poker game in the past, but now people are unable to connect to my
+                    game
+                    over the internet and my <strong>Test Connection</strong> button says Test Failed.
+                </div>
+            </td>
+            <td valign="top">Your IP address for your host computer has most likely changed since you last hosted a
+                poker
+                game. From your Setup Online Tournament screen, click the Test Connection button. If the test fails, you
+                will need to edit your IP address in your router settings to match the Local IP Address shown at the top
+                of
+                your Setup Online Tournament (2 of 2) screen, when you Host Online. If you are using a standard router
+                with
+                the default settings, your router may assign a different IP address to your host computer if you reboot
+                or
+                lose power, thus needing to reconfigure your port forwarding or virtual server settings.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">
+                <div>I click on the <strong>Test Connection</strong> button on the Setup Online Tournament screen and it
+                    says the test failed.
+                </div>
+            </td>
+            <td valign="top">A firewall is blocking the incoming connection. DD Poker needs access on TCP ports 11885 to
+                11889 and UDP ports 11885 to 11889 in order to host a game. You can not host an online game until this
+                test
+                says Test Succeeded.<br>
+                <br>
+                DSL modems, routers, and PC software such as Windows Firewall and Norton Internet Security can each have
+                their own firewall. So someone could potentially have three firewalls, their DSL modem, router, and
+                software
+                firewall. If the <strong>Test Connection</strong> button test failed, a firewall in any of these three
+                areas
+                can be blocking incoming connections.Note: You may still Join online game without setting up any ports,
+                you
+                only need to configure your ports if you wish to Host an online game.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Do you use a central server or a peer to peer network?</td>
+            <td valign="top">We use a central server to list public games and post results on our web page. A peer to
+                peer
+                network is used for online games. In other words, the host computer handles all communication with all
+                the
+                players in the game. This allows games to be played in local area networks such as an office that does
+                not
+                allow for outside internet access.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Is it important that the host computer be fast?</td>
+            <td valign="top">It is not as critical as other games with real time action, but it is still a good
+                idea for the
+                person hosting an online game to have a fast computer with a stable internet connection.
+            </td>
+        </tr>
+        <tr>
+            <td width="150" valign="top">Can I use dialup to play online?</td>
+            <td valign="top">Yes, since the DD Poker does not require much bandwidth, dialup can be used. However, if
+                you
+                use too much bandwidth from other internet usage, like surfing the web, you may find yourself
+                temporarily
+                disconnected from the host of the game.
+            </td>
+        </tr>
+        <tr>
+            <td width="206" valign="top">Can I re-join a game if I have become disconnected?</td>
+            <td valign="top">Yes, if you are the host, click <strong>Load</strong> from the
+                Online Menu and choose the last game. If you are the guest, click <strong>Use
+                    Last URL</strong> button and click <strong>Join Game</strong>.
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+
+
+</wicket:extend>
+
+
+</body>
+</html>

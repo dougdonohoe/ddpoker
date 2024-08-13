@@ -1,0 +1,141 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker Admin - Online Profile Search</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+    <div class="title">
+        Ban List
+    </div>
+
+    <div class="description">Edit the banned list (key / email / online profile name).
+    </div>
+
+    <div class="search-form">
+        <form wicket:id="form">
+            <table>
+                <tr>
+                    <td>
+                        <label for="ban">Ban:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" id="ban" wicket:id="ban"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="until">Until:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" size="10" id="until" wicket:id="until"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="comment">Comment:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" id="comment" wicket:id="comment"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button" colspan="2">
+                        <input type="submit" value="Ban!">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button" colspan="2">
+                        <div wicket:id="error"><!-- error goes here --></div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <wicket:enclosure child="row">
+        <div class="search-player">
+
+            <table class="tournament-info">
+                <tr>
+                    <th>ID</th>
+                    <th>Banned</th>
+                    <th>Until</th>
+                    <th>Comment</th>
+                    <th>Created</th>
+                    <th>Unban</th>
+                </tr>
+                <tr wicket:id="row">
+                    <td class="top-left">
+                        <span wicket:id="id">assholes</span>
+                    </td>
+                    <td class="top-left">
+                        <span wicket:id="key">assholes</span>
+                    </td>
+                    <td class="top-left">
+                        <span wicket:id="until">2032-12-31</span>
+                    </td>
+                    <td class="top-left">
+                        <span wicket:id="comment">Dude, what a jerk!</span>
+                    </td>
+                    <td class="top-left">
+                        <span wicket:id="createDate">2009-01-05</span>
+                    </td>
+
+                    <td class="top-left">
+                        <form wicket:id="form">
+                            <input type="submit" value="Unban">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <wicket:enclosure>
+                <div class="no-results" wicket:id="none">
+                    No bans found.
+                </div>
+
+            </wicket:enclosure>
+        </div>
+    </wicket:enclosure>
+
+</wicket:extend>
+
+</body>
+</html>

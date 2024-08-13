@@ -1,0 +1,157 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<html>
+<body>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="274" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>Texas Hold'em</strong></font></td>
+    </tr>
+</table>
+<br>
+<table border="1" width="100%">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Texas Hold'em </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p><strong>Texas Hold'em</strong> is a game of poker where each player receives two cards face down
+    and then combines them with five face up community cards to make the best possible
+    five card hand.
+</p>
+
+<p>Texas Hold'em gets the betting started by forcing bets on two players called the blinds. Although antes are used in
+    some tournaments, these two blinds are typically the only forced bets in hold'em. The two players immediately to the
+    left of
+    the dealer post the blinds before anyone receive cards, they are called the small blinds and the big blind. The name
+    blind is used since these players have not yet seen their hole cars, they are betting &quot;blind&quot;. Two cards
+    are then dealt face down to each player; these
+    are called the &quot;hole cards.&quot; Play proceeds clockwise starting from the person after the big blind.
+    Each player then chooses to call the big blind, raise or fold. The player placing
+    the big blind is the last player to act and may raise, check the bet or fold.</p>
+
+<p>Three community cards are then dealt face up on the table; this is called the
+    &quot;Flop&quot; and all players share these cards. A round of betting takes
+    place, with the action this time starting to the dealer's immediate left; players again
+    choose to check, bet, raise or fold. Another community card is dealt face up;
+    this is called the &quot;Turn&quot; or &quot;Fourth Street.&quot; Another round
+    of betting takes place, also starting to the dealer's immediate left. The fifth and
+    final community card, called the &quot;River&quot; or &quot;Fifth Street,&quot;
+    is dealt face up and followed by the final round of betting (again starting
+    to the dealer's immediate left).</p>
+
+<p>The remaining players make the best five card hand possible using any of their
+    two hole cards and the five community cards. The winner is either the player with the
+    best hand or the player that is left after every other player has folded. In the case of a tie, a &quot;kicker&quot;
+    card determines the winner. And if both players have the same best five cards out of seven, the pot is split. </p>
+
+<p>In tournament play, all players start at the same time with an equal buy-in and do not leave the tournament until
+    either their chips are lost or they finish in first place. Some tournaments allow players to purchase additional
+    chips called rebuys or add-ons. Prizes are awarded based on the what place each person finished at when they lost
+    their final chip. This is the style of play that has been made so popular on television and is used in DD
+    Poker. </p>
+
+<br>
+
+<table border="1" width="100%">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">No Limit </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p><strong>No Limit</strong> means that there is no limit to the amount a player may
+    bet in any given round; up to the amount the player has in his stack of chips. A player
+    can choose to go &quot;all-in&quot; and bet everything they have, forcing the
+    other players to either match a very large bet or fold.</p>
+
+<p>No Limit Texas Hold'em is a table stakes game which means that players can not
+    go into their pockets for more money during a hand (if the tournament has rebuys,
+    they can replenish after the hand is over). Table stakes also means that if
+    they cannot match a bet, they can call with everything they have. For example,
+    if a player goes all-in for $500 and the next person only has $400, then the
+    first player's bet is effectively reduced to $400. The first player cannot win
+    more than the second player has in his stack and the second player cannot win
+    more than their remaining chips.</p>
+
+<p>It gets more complicated if multiple people go all-in. Let's say player #1
+    goes all-in for $500, player #2 calls all-in for $400 and player #3 calls for
+    the full amount. Assume for the sake of simplicity that these are the only bets
+    in the pot. The &quot;main pot&quot; is $1,200, representing 3 times the $400
+    all-in bet from player #2. Then there is a &quot;side pot&quot; for $200, between
+    player #1 and player #3. </p>
+
+<p>At the show down, the hands of the players with money in the pot are used to
+    determine the winner. All players' hands are considered when deciding the &quot;main
+    pot&quot; but only player #1 and player #3's cards are used to determine the
+    winner of the &quot;side pot.&quot;</p>
+
+<p>Of course, DD Poker takes care of all the math for you so you do
+    not have to worry about calculating side pots.</p>
+
+<p>&nbsp;</p>
+<table border="1" width="100%">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Limit</font></strong></div>
+        </td>
+    </tr>
+</table>
+<p><strong>Limit</strong> hold'em has fixed betting amounts, so if someone bets, raises, or calls the increments are
+    predefined. The first two betting rounds pre-flop and flop are at the lower limit, the last two rounds, the turn and
+    river, are at the higher limit. For example a 10-20 limit hold'em game. The big blind would be $10, and the small
+    blind would be half of that at $5. You bet and raise in increments of $10 for pre-flop and on the flop,&nbsp;then
+    $20 for the turn and river card. Each round of betting is capped at a maximum number of raises, depending on the
+    rules of the game, typically 3 or 4. </p>
+
+<p>&nbsp;</p>
+<table border="1" width="100%">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Pot Limit </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p><strong>Pot Limit</strong> allows players to bet up to the amount of money in the pot at the time of a player's bet.
+    Players must raise at least the amount of the previous bet. The player may bet up to the amount that is in the pot,
+    and may raise any amount up to the amount in the pot plus any bets they must call.&nbsp;There is no limitation on
+    the number of raises. Pot Limit games usually have a maximum buy-in to keep the game competitive. Limit and no limit
+    are popular in the United States, whereas pot limit is mainly played in Europe.</p>
+
+<p>&nbsp;</p>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker - Tournament History
+        <wicket:enclosure>
+            - <span wicket:id="titleName">Online Profile Name</span>
+        </wicket:enclosure>
+    </title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+    <div class="title">
+        Tournament History
+        <wicket:enclosure child="name">
+            - <span wicket:id="name">Online Profile Name</span>
+            <span class="retired" wicket:id="retired">(retired)</span>
+        </wicket:enclosure>
+    </div>
+    <wicket:enclosure>
+        <table class="aliases">
+            <tr>
+                <td class="label">
+                    Aliases:
+                </td>
+                <td class="names">
+                    <span wicket:id="aliases">Dexter, Zorro, Tahoe</span>
+                </td>
+            </tr>
+        </table>
+    </wicket:enclosure>
+    <div class="description" wicket:id="description">Description fragment goes here.</div>
+
+    <div wicket:id="history">History fragment goes here</div>
+
+    <!-- Fragments -->
+
+    <wicket:fragment wicket:id="notLoggedIn">
+        To display your <strong>Tournament History</strong>,
+        you must <a href="History.html#" wicket:id="loginLink">login</a> using a DD Poker online profile.
+        If you do not own a copy of DD Poker, you can
+        <a href="download">download</a> a copy for <span class="mild">Free</span>.
+    </wicket:fragment>
+    <wicket:fragment wicket:id="loggedIn">
+        Tournament results can be viewed by clicking on a tournament name.
+        Use the <strong>Start</strong> and <strong>End</strong> dates to
+        limit the list to a certain date range (e.g., to see games played in a particular year or month).
+        Use the <strong>Tournament</strong> field to limit the results to any games that match the name. To find an
+        exact
+        match, start your entry with an equal sign (e.g., <strong>=Palmetto</strong>).
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="table">
+
+        <wicket:container wicket:id="form"/>
+
+        <div class="tournament-history">
+            <div class="tournament-info-navigator" wicket:id="navigator">[dataview navigator]</div>
+            <table class="tournament-info">
+                <tr>
+                    <th>Tournament</th>
+                    <th>Buy-in</th>
+                    <th>Rebuys</th>
+                    <th>Add-ons</th>
+                    <th>Total</th>
+                    <th>Prize</th>
+                    <th>Net</th>
+                    <th>Finish</th>
+                    <th>DDR1</th>
+                </tr>
+                <tr wicket:id="row">
+                    <td class="left">
+                        <a href="History.html#" wicket:id="detailsLink"><strong><span wicket:id="tournamentName">DD World Championship</span></strong></a><br/>
+                            <span class="tiny">
+                                <span wicket:id="lastHand">Last hand:</span>
+                                <span wicket:id="endDate">December 12, 2012 at 12:12:00</span>
+                            </span>
+                    </td>
+                    <td class="number"><span wicket:id="buyin">$100,000</span></td>
+                    <td class="number"><span wicket:id="rebuy">$100,000</span></td>
+                    <td class="number"><span wicket:id="addon">$100,000</span></td>
+                    <td class="number"><span wicket:id="totalSpent">$100,000</span></td>
+                    <wicket:container wicket:id="finalColumns"></wicket:container>
+                </tr>
+            </table>
+            <wicket:enclosure child="player">
+                <div class="no-results">
+                    No games found for <span wicket:id="player">Tahoe</span> between
+                    <span wicket:id="begin">1/1/2005</span> and
+                    <span wicket:id="end">12/12/2012</span> with a tournament name
+                    matching "<span wicket:id="nameSearch">blah</span>".
+                </div>
+            </wicket:enclosure>
+        </div>
+
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="finished">
+        <td class="number"><span wicket:id="prize">$100,000</span></td>
+        <td class="number"><span wicket:id="net">$100,000</span></td>
+        <td class="center"><span wicket:id="place">1st</span> of <span wicket:id="numPlayers">100</span></td>
+        <td class="number"><span class="addpadding" wicket:id="ddr1">4,234</span></td>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="stopped-chips">
+        <td class="center" colspan="4">Stopped<br/>
+                <span class="tiny">
+                    In <span wicket:id="rank">1st</span> of <span wicket:id="numPlayers">20</span>
+                    with <span wicket:id="numChips">$42,000</span>
+                </span>
+        </td>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="stopped-busted">
+        <td class="center" colspan="4">Stopped<br/>
+                <span class="tiny">
+                    Busted out <span wicket:id="place">10th</span> of <span wicket:id="numPlayers">20</span>
+                    winning <span wicket:id="prize">$100,000</span>
+                </span>
+        </td>
+    </wicket:fragment>
+
+</wicket:extend>
+
+</body>
+</html>

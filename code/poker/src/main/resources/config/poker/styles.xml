@@ -1,0 +1,972 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<STYLES xmlns="http://www.donohoedigital.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!--        -->
+	<!-- COLORS -->
+	<!--        -->
+
+	<!-- SHARED COLORS -->
+	<color name="ignored" r="0" g="0" b="0"/>
+	<color name="grey" r="128" g="128" b="128"/>
+	<color name="darkgrey" r="25" g="25" b="25"/>
+	<color name="black" r="0" g="0" b="0"/>
+	<color name="blue" r="0" g="0" b="255"/>
+	<color name="white" r="255" g="255" b="255"/>
+	<color name="yellow" r="255" g="255" b="0"/>
+	<color name="greenbgpanel" r="0" g="70" b="00"/>
+	<color name="greenbgdark" r="0" g="30" b="00"/>
+	<color name="greenbg" r="0" g="60" b="00"/>
+	<color name="greenbglight" r="38" g="83" b="38"/>
+	<color name="greenbase" r="25" g="90" b="25"/>
+	<color name="primarywidget.bg" r="204" g="204" b="204"/>
+	<color name="primarywidget.fg" r="0" g="0" b="0"/>
+	<color name="primarywidget.error" r="233" g="186" b="186"/>
+	<color name="primarytable.fg" r="0" g="0" b="0"/>
+	<color name="primarylabelborder.fg" r="255" g="255" b="0"/>
+	<color name="primaryfont" r="255" g="255" b="255"/>
+	<color name="hilitefont" r="255" g="255" b="0"/>
+	<color name="rollover" r="255" g="255" b="255"/>
+	<color name="title" r="255" g="255" b="255"/>
+	<color name="text" r="255" g="255" b="255"/>
+	<!-- SHARED COLORS -->
+
+	<!-- GUI COLORS - MOVE TO SEP FILE? -->
+	<color name="gui.text.disabled.fg" r="88" g="88" b="88"/>
+	<color name="gui.scroll" copy="grey"/>
+	<!-- GUI COLORS -->
+
+	<!-- ENGINE FONTS/COLORS - MOVE TO SEP FILE? -->
+	<color name="engine.basepanel" copy="grey"/>
+	<color name="version.label.fg" copy="primaryfont"/>
+	<color name="version.label.bg" copy="ignored"/>
+	 <font name="version.label" fontname="Lucida Sans Regular" pointsize="11"/>
+        
+    <color name="gamepiece.quantity.shadow" r="255" g="255" b="255" a="123"/>
+	<color name="gamepiece.quantity.fg" r="0" g="0" b="0"/>
+	<color name="gamepiece.quantity.bg" r="255" g="255" b="255" a="175"/>
+	<color name="gamepiece.quantity.hilite.bg" r="0" g="255" b="255" a="255"/>
+	<color name="gamepiece.quantity.border" r="125" g="125" b="125"/>
+	 <font name="gamepiece.quantity" fontname="Lucida Sans Regular" pointsize="20"/>
+
+	<color name="modal.title" r="242" g="235" b="116"/>
+	<color name="modal.border" r="47" g="87" b="47"/>
+	<color name="primary1" r="47" g="87" b="47"/>
+	<color name="primary2" r="111" g="159" b="111"/>
+	<color name="primary3" r="143" g="199" b="143"/>
+	<color name="secondary1" r="111" g="111" b="111"/>
+	<color name="secondary2" r="159" g="159" b="159"/>
+	<color name="secondary3" r="183" g="231" b="183"/>
+        
+	<color name="SplashWrong.label.fg" copy="primaryfont"/>
+	<color name="SplashWrong.label.bg" copy="ignored"/>
+	 <font name="SplashWrong.label" fontname="Lucida Sans Regular" pointsize="18"/>
+
+	<color name="Splash.label.fg"  copy="primaryfont"/>
+	<color name="Splash.label.bg" r="0" g="0" b="0"/>
+	 <font name="Splash.label" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="territory.label.fg" r="255" g="255" b="255"/>
+	 <font name="territory.label" fontname="Lucida Sans Regular" pointsize="25"/>
+	<color name="territory.label.current" r="255" g="255" b="0"/>
+	 <font name="territory.label.current" fontname="Lucida Sans Regular" pointsize="25"/>
+	<color name="territory.label.pot" copy="hilitefont"/>
+	 <font name="territory.label.pot" fontname="Lucida Sans Regular" pointsize="26"/>
+	<color name="territory.label.shadow" r="00" g="40" b="00" a="33"/>
+
+	<color name="PopupMenu.menuitem.fg" copy="blue"/>
+	<color name="PopupMenu.menuitem.bg" copy="primarywidget.bg"/>
+     <font name="PopupMenu.menuitem" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<!-- ENGINE FONTS/COLORS -->
+	
+	<color name="pokerdialog" r="149" g="171" b="134"/>
+
+     <font name="chip.value" fontname="Lucida Sans Regular" pointsize="13"/>
+     <font name="card.value" fontname="Arial" pointsize="52"/>
+
+	<color name="clock.fg" copy="hilitefont"/>
+	<color name="clock.bg" copy="black"/>
+	<color name="clock.fg.flash" copy="clock.bg"/>
+	<color name="clock.bg.flash" copy="clock.fg"/>
+	<color name="poker.label" r="0" g="0" b="255" a="190"/>
+
+	<color name="card.shadow" r="00" g="40" b="00" a="33"/>
+	<color name="card.border" r="200" g="200" b="200" a="255"/>
+	<color name="card.stroke" r="50" g="50" b="50" a="255"/>
+	<color name="card.selected" r="0" g="255" b="255" a="170"/>
+	<color name="card.bg" copy="white"/>
+	<color name="card.bg.gray" r="200" g="200" b="200"/>
+	<color name="card.fg.gray" r="150" g="150" b="150"/>
+
+	<color name="DashboardHeader.checkbox.fg" copy="white"/>
+	<color name="DashboardHeader.checkbox.bg" copy="ignored"/>
+	<color name="DashboardHeader.pill.bg" copy="black"/>
+	<color name="DashboardHeader.pill.gradfrom" r="255" g="255" b="255" a="175"/>
+	<color name="DashboardHeader.pill.gradto" r="255" g="255" b="255" a="50"/>
+	 <font name="DashboardHeader.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="DashboardItem.panel.fg" copy="white"/>
+	<color name="DashboardItem.panel.bg" copy="ignored"/>
+
+	<color name="DashboardItem.label.fg" copy="white"/>
+	<color name="DashboardItem.label.bg" copy="ignored"/>
+	 <font name="DashboardItem.label" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="DashboardItem.htmlarea.fg" copy="white"/>
+	<color name="DashboardItem.htmlarea.bg" copy="ignored"/>
+	 <font name="DashboardItem.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="DashboardItem.checkbox.fg" copy="yellow"/>
+	<color name="DashboardItem.checkbox.check" copy="yellow"/>
+	<color name="DashboardItem.checkbox.bg" copy="grey"/>
+	 <font name="DashboardItem.checkbox" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="DashSmaller.checkbox.fg" copy="yellow"/>
+	<color name="DashSmaller.checkbox.check" copy="yellow"/>
+	<color name="DashSmaller.checkbox.bg" copy="grey"/>
+	 <font name="DashSmaller.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="DashboardItemBigger.label.fg" copy="white"/>
+	<color name="DashboardItemBigger.label.bg" copy="ignored"/>
+	 <font name="DashboardItemBigger.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="DashboardClock.label.fg" copy="hilitefont"/>
+	<color name="DashboardClock.label.bg" copy="black"/>
+	 <font name="DashboardClock.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="PokerBase.panel.fg" copy="greenbase"/>
+	<color name="PokerBase.panel.bg" copy="greenbase"/>
+
+	<color name="StartMenuBack.panel.fg" copy="black"/>
+	<color name="StartMenuBack.panel.bg" copy="grey"/>
+	<color name="StartMenuBack.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="StartMenuBack.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="StartMenuBack.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="StartMenuBack.scrollpane.bg" r="204" g="204" b="204"/>
+
+	<color name="StartMenu.panel.fg" copy="greenbg"/>
+	<color name="StartMenu.panel.bg" r="95" g="95" b="95" a="0"/>
+	<color name="StartMenu.textarea.fg" copy="primarywidget.fg"/>
+	<color name="StartMenu.textarea.bg" copy="primarywidget.bg"/>
+	<color name="StartMenu.textarea.error.bg" copy="primarywidget.error"/>
+	 <font name="StartMenu.textarea" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="StartMenu.htmlarea.fg" copy="primaryfont"/>
+	<color name="StartMenu.htmlarea.bg" copy="ignored"/>
+	 <font name="StartMenu.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+	<color name="StartMenu.title.fg" copy="title"/>
+	 <font name="StartMenu.title" fontname="Lucida Sans Regular" pointsize="24" bold="true"/>
+	<color name="StartMenu.textfield.fg" copy="primarywidget.fg"/>
+	<color name="StartMenu.textfield.bg" copy="primarywidget.bg"/>
+	<color name="StartMenu.textfield.error.bg" copy="primarywidget.error"/>
+	 <font name="StartMenu.textfield" fontname="Lucida Sans Regular" pointsize="20"/>
+	<color name="StartMenu.label.fg" copy="primaryfont"/>
+	<color name="StartMenu.label.bg" copy="greenbgpanel"/>
+	 <font name="StartMenu.label" fontname="Lucida Sans Regular" pointsize="20"/>
+	<color name="StartMenu.pill.bg" r="0" g="0" b="0"/>
+	<color name="StartMenu.pill.gradfrom" r="255" g="255" b="255" a="100"/>
+	<color name="StartMenu.pill.gradto" r="255" g="255" b="255" a="10"/>
+	<color name="StartMenu.tab.fg" r="0" g="0" b="0" />
+	<color name="StartMenu.tab.bg" r="204" g="204" b="204" a="150"/>
+	 <font name="StartMenu.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="StartMenu.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="StartMenu.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="StartMenu.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="StartMenu.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="StartMenu.labelborder.fg" copy="primarylabelborder.fg"/>
+	<color name="StartMenu.labelborder.bg" copy="grey"/>
+	 <font name="StartMenu.labelborder" fontname="Lucida Sans Regular" pointsize="19"/>
+
+	<color name="StartMenuSmall.label.fg" copy="primaryfont"/>
+	<color name="StartMenuSmall.label.bg" copy="greenbgpanel"/>
+	 <font name="StartMenuSmall.label" fontname="Lucida Sans Regular" pointsize="16"/>
+
+	<color name="TournamentSummaryBig.tab.fg" r="0" g="0" b="0" />
+	<color name="TournamentSummaryBig.tab.bg" r="204" g="204" b="204" a="150"/>
+	 <font name="TournamentSummaryBig.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="TournamentSummaryBig.htmlarea.fg" copy="primaryfont"/>
+	<color name="TournamentSummaryBig.htmlarea.bg" copy="ignored"/>
+	 <font name="TournamentSummaryBig.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+	<color name="TournamentSummaryBig.table.fg" copy="primarytable.fg"/>
+	<color name="TournamentSummaryBig.table.bg" copy="primarywidget.bg"/>
+	 <font name="TournamentSummaryBig.table" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="TournamentSummaryBig.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="TournamentSummaryBig.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="TournamentSummaryBig.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="TournamentSummaryBig.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="TournamentSummaryBig.label.fg" copy="white"/>
+	<color name="TournamentSummaryBig.label.bg" copy="ignored"/>
+	 <font name="TournamentSummaryBig.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="TournamentSummarySmall.tab.fg" r="0" g="0" b="0" />
+	<color name="TournamentSummarySmall.tab.bg" r="204" g="204" b="204" a="150"/>
+	 <font name="TournamentSummarySmall.tab" fontname="Lucida Sans Regular" pointsize="10"/>
+	<color name="TournamentSummarySmall.htmlarea.fg" copy="primaryfont"/>
+	<color name="TournamentSummarySmall.htmlarea.bg" copy="ignored"/>
+	 <font name="TournamentSummarySmall.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="TournamentSummarySmall.table.fg" copy="primarytable.fg"/>
+	<color name="TournamentSummarySmall.table.bg" copy="primarywidget.bg"/>
+	 <font name="TournamentSummarySmall.table" fontname="Lucida Sans Regular" pointsize="10"/>
+	<color name="TournamentSummarySmall.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="TournamentSummarySmall.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="TournamentSummarySmall.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="TournamentSummarySmall.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="TournamentSummarySmall.label.fg" copy="white"/>
+	<color name="TournamentSummarySmall.label.bg" copy="ignored"/>
+	 <font name="TournamentSummarySmall.label" fontname="Lucida Sans Regular" pointsize="10"/>
+
+	<color name="TournamentSummaryDialog.tab.fg" r="0" g="0" b="0" />
+	<color name="TournamentSummaryDialog.tab.bg" r="104" g="104" b="104" a="0"/>
+	 <font name="TournamentSummaryDialog.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="TournamentSummaryDialog.htmlarea.fg" copy="primaryfont"/>
+	<color name="TournamentSummaryDialog.htmlarea.bg" copy="ignored"/>
+	 <font name="TournamentSummaryDialog.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+	<color name="TournamentSummaryDialog.table.fg" copy="primarytable.fg"/>
+	<color name="TournamentSummaryDialog.table.bg" r="220" g="238" b="220"/>
+	 <font name="TournamentSummaryDialog.table" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="TournamentSummaryDialog.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="TournamentSummaryDialog.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="TournamentSummaryDialog.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="TournamentSummaryDialog.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="TournamentSummaryDialog.label.fg" copy="white"/>
+	<color name="TournamentSummaryDialog.label.bg" copy="ignored"/>
+	 <font name="TournamentSummaryDialog.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="TournamentSummaryName.label.fg" copy="white"/>
+	<color name="TournamentSummaryName.label.bg" copy="ignored"/>
+	 <font name="TournamentSummaryName.label" fontname="Lucida Sans Regular" pointsize="16"/>
+
+	<color name="Activation.htmlarea.fg" copy="primaryfont"/>
+	<color name="Activation.htmlarea.bg" copy="ignored"/>
+	 <font name="Activation.htmlarea" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="Registration.htmlarea.fg" copy="primaryfont"/>
+	<color name="Registration.htmlarea.bg" copy="ignored"/>
+	 <font name="Registration.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+        
+	<color name="UpdateInfo.htmlarea.fg" copy="primaryfont"/>
+	<color name="UpdateInfo.htmlarea.bg" copy="ignored"/>
+	 <font name="UpdateInfo.htmlarea" fontname="Lucida Sans Regular" pointsize="18"/>
+        
+	<color name="UpdateStatus.htmlarea.fg" copy="primaryfont"/>
+	<color name="UpdateStatus.htmlarea.bg" copy="ignored"/>
+	 <font name="UpdateStatus.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+
+	<color name="UpdateRequest.label.fg" copy="primaryfont"/>
+	<color name="UpdateRequest.label.bg" copy="ignored"/>
+	 <font name="UpdateRequest.label" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="UpdateRequest.labelborder.fg" copy="primarylabelborder.fg"/>
+	<color name="UpdateRequest.labelborder.bg" copy="grey"/>
+	 <font name="UpdateRequest.labelborder" fontname="Lucida Sans Regular" pointsize="19"/>
+	<color name="UpdateRequest.progress.fg" copy="greenbgpanel"/>
+	<color name="UpdateRequest.progress.bg" copy="ignored"/>
+	 <font name="UpdateRequest.progress" fontname="Lucida Sans Regular" pointsize="14"/>
+        
+    <color name="PlayerDetails.label.fg" copy="primaryfont"/>
+	<color name="PlayerDetails.label.bg" copy="ignored"/>
+     <font name="PlayerDetails.label" fontname="Lucida Sans Regular" pointsize="16"/>
+
+    <color name="ProfileSummary.label.fg" copy="primaryfont"/>
+	<color name="ProfileSummary.label.bg" copy="ignored"/>
+     <font name="ProfileSummary.label" fontname="Lucida Sans Regular" pointsize="14"/>
+        
+	<color name="HandGroupDetails.htmlarea.fg" copy="primaryfont"/>
+	<color name="HandGroupDetails.htmlarea.bg" copy="ignored"/>
+	 <font name="HandGroupDetails.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="HandGroupDetails.label.fg" copy="primaryfont"/>
+	<color name="HandGroupDetails.label.bg" copy="ignored"/>
+	 <font name="HandGroupDetails.label" fontname="Lucida Sans Regular" pointsize="14"/>
+        
+	<color name="ProfileDetails.htmlarea.fg" copy="primaryfont"/>
+	<color name="ProfileDetails.htmlarea.bg" copy="ignored"/>
+	 <font name="ProfileDetails.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="ProfileDetails.label.fg" copy="primaryfont"/>
+	<color name="ProfileDetails.label.bg" copy="ignored"/>
+	 <font name="ProfileDetails.label" fontname="Lucida Sans Regular" pointsize="14"/>
+        
+    <color name="SidePots.htmlarea.fg" copy="black"/>
+	<color name="SidePots.htmlarea.bg" copy="ignored"/>
+	 <font name="SidePots.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+
+    <color name="TourneyStats.htmlarea.fg" copy="black"/>
+	<color name="TourneyStats.htmlarea.bg" copy="ignored"/>
+	 <font name="TourneyStats.htmlarea" fontname="Lucida Sans Regular" pointsize="13"/>
+	<color name="TourneyStats.label.fg" copy="primaryfont"/>
+	<color name="TourneyStats.label.bg" copy="ignored"/>
+	 <font name="TourneyStats.label" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="Analysis.label.fg" copy="primaryfont"/>
+	<color name="Analysis.label.bg" copy="ignored"/>
+	 <font name="Analysis.label" fontname="Lucida Sans Regular" pointsize="20"/>
+
+	<color name="TableList.label.fg" copy="primaryfont"/>
+	<color name="TableList.label.bg" copy="ignored"/>
+	 <font name="TableList.label" fontname="Lucida Sans Regular" pointsize="15"/>
+
+    <color name="PrizePool.htmlarea.fg" copy="black"/>
+	<color name="PrizePool.htmlarea.bg" copy="ignored"/>
+	 <font name="PrizePool.htmlarea" fontname="Lucida Sans Regular" pointsize="18"/>
+    <color name="PrizePool.spinner.fg" copy="black"/>
+	<color name="PrizePool.spinner.bg" copy="text"/>
+	<color name="PrizePool.spinner.error.bg" copy="primarywidget.error"/>
+	 <font name="PrizePool.spinner" fontname="Lucida Sans Regular" pointsize="18"/>
+
+	<color name="Options.labelborder.fg" copy="primarylabelborder.fg"/>
+	<color name="Options.labelborder.bg" copy="grey"/>
+	 <font name="Options.labelborder" fontname="Lucida Sans Regular" pointsize="19"/>
+	<color name="Options.checkbox.fg" copy="primaryfont"/>
+	<color name="Options.checkbox.check" copy="black"/>
+	<color name="Options.checkbox.bg" copy="primarywidget.bg"/>
+	 <font name="Options.checkbox" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="Options.radio.bg"  copy="primarywidget.bg"/>
+	<color name="Options.radio.fg" copy="primaryfont"/>
+	<color name="Options.radio.dot" copy="black"/>
+	 <font name="Options.radio" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="Options.label.fg" copy="primaryfont"/>
+	<color name="Options.label.bg" copy="ignored"/>
+	 <font name="Options.label" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="Options.spinner.fg" copy="primarywidget.fg"/>
+	<color name="Options.spinner.bg" copy="primarywidget.bg"/>
+	<color name="Options.spinner.error.bg" copy="primarywidget.error"/>
+	 <font name="Options.spinner" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="Options.tab.fg" r="0" g="0" b="0" />
+	<color name="Options.tab.bg" r="204" g="204" b="204" a="150"/>
+	 <font name="Options.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="Options.panel.fg" copy="white"/>
+	<color name="Options.panel.bg" copy="ignored"/>
+	<color name="Options.htmlarea.fg" copy="primaryfont"/>
+	<color name="Options.htmlarea.bg" copy="primarywidget.bg"/>
+	 <font name="Options.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="Options.buttonpanel.mouseover.bg" r="255" g="255" b="255" a="70"/>
+	<color name="Options.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="70"/>
+	<color name="Options.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="Options.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="Options.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="Options.scrollpane.bg" r="204" g="204" b="204"/>
+
+	<color name="OptionsDialog.slider.fg" r="0" g="0" b="0" />
+	<color name="OptionsDialog.slider.bg" r="204" g="204" b="204"/>
+	<color name="OptionsDialog.slider.thumb.bg" r="128" g="128" b="128"/>
+	<color name="OptionsDialog.slider.thumb.focus" r="0" g="0" b="255" a="50"/>
+	<color name="OptionsDialog.tab.fg" r="0" g="0" b="0" />
+	<color name="OptionsDialog.tab.bg" r="104" g="104" b="104" a="0"/>
+	 <font name="OptionsDialog.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+    <color name="OptionsDialog.panel.fg" copy="ignored"/>
+	<color name="OptionsDialog.panel.bg" r="150" g="160" b="130"/>
+	<color name="OptionsDialog.labelborder.fg" r="0" g="50" b="0"/>
+	<color name="OptionsDialog.labelborder.bg" r="150" g="160" b="130"/>
+	 <font name="OptionsDialog.labelborder" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="OptionsDialog.checkbox.fg" copy="black"/>
+	<color name="OptionsDialog.checkbox.check" copy="black"/>
+	<color name="OptionsDialog.checkbox.bg" r="204" g="204" b="204"/>
+	 <font name="OptionsDialog.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.radio.bg"    r="204" g="204" b="204"/>
+	<color name="OptionsDialog.radio.fg" copy="black"/>
+	<color name="OptionsDialog.radio.dot" copy="black"/>
+	 <font name="OptionsDialog.radio" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.label.fg" copy="black"/>
+	<color name="OptionsDialog.label.bg" copy="black"/>
+	 <font name="OptionsDialog.label" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.filechooser.fg" copy="black"/>
+	<color name="OptionsDialog.filechooser.bg" copy="ignored"/>
+	 <font name="OptionsDialog.filechooser" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.spinner.fg" copy="black"/>
+	<color name="OptionsDialog.spinner.bg" copy="text"/>
+	<color name="OptionsDialog.spinner.error.bg" copy="primarywidget.error"/>
+	 <font name="OptionsDialog.spinner" fontname="Lucida Sans Regular" pointsize="12"/>
+    <color name="OptionsDialog.textfield.fg" copy="black"/>
+	<color name="OptionsDialog.textfield.bg" copy="text"/>
+	<color name="OptionsDialog.textfield.error.bg" copy="primarywidget.error"/>
+	 <font name="OptionsDialog.textfield" fontname="Lucida Sans Regular" pointsize="12"/>
+    <color name="OptionsDialog.textarea.fg" copy="black"/>
+	<color name="OptionsDialog.textarea.bg" copy="text"/>
+	<color name="OptionsDialog.textarea.error.bg" copy="primarywidget.error"/>
+	 <font name="OptionsDialog.textarea" fontname="Lucida Sans Regular" pointsize="14"/>
+    <color name="OptionsDialog.htmlarea.fg" copy="black"/>
+	<color name="OptionsDialog.htmlarea.bg" copy="text"/>
+	 <font name="OptionsDialog.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.buttonpanel.mouseover.bg" r="255" g="255" b="255" a="70"/>
+	<color name="OptionsDialog.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="70"/>
+	<color name="OptionsDialog.combobox.fg" copy="black"/>
+	<color name="OptionsDialog.combobox.bg" copy="white"/>
+	<color name="OptionsDialog.combobox.mouseover.fg" copy="ignored"/>
+	<color name="OptionsDialog.combobox.selection.bg" copy="black"/>
+	<color name="OptionsDialog.combobox.selection.fg" copy="white"/>
+	 <font name="OptionsDialog.combobox" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="OptionsDialog.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="OptionsDialog.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="OptionsDialog.scrollpane.bg" r="150" g="160" b="130"/>
+	<color name="OptionsDialog.table.fg" copy="primarytable.fg"/>
+	<color name="OptionsDialog.table.bg" r="220" g="238" b="220"/>
+	 <font name="OptionsDialog.table" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OptionsDialog.progress.fg" copy="greenbgpanel"/>
+	<color name="OptionsDialog.progress.bg" copy="ignored"/>
+	 <font name="OptionsDialog.progress" fontname="Lucida Sans Regular" pointsize="12"/>
+        
+	<color name="CardSelector.buttonpanel.mouseover.bg" r="0" g="255" b="255" a="128"/>
+	<color name="CardSelector.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="128"/>
+	<color name="CardSelector.panel.fg" r="0" g="0" b="0"/>
+	<color name="CardSelector.panel.bg" copy="white"/>
+
+    <color name="HandGroupGrid.buttonpanel.mouseover.bg" r="0" g="255" b="255" a="128"/>
+    <color name="HandGroupGrid.buttonpanel.mousedown.bg" r="0" g="255" b="255" a="255"/>
+    <color name="HandGroupGrid.panel.fg" r="0" g="0" b="0"/>
+    <color name="HandGroupGrid.panel.bg" copy="greenbglight"/>
+
+    <color name="HandGroupGrid.suited.button.fg" r="255" g="255" b="0"/>
+    <color name="HandGroupGrid.suited.button.bg" copy="greenbgpanel"/>
+    <color name="HandGroupGrid.suited.button.mouseover.fg" copy="white"/>
+	 <font name="HandGroupGrid.suited.button" fontname="Lucida Sans Regular" pointsize="12"/>
+
+    <color name="HandGroupGrid.pair.button.fg" r="255" g="255" b="0"/>
+    <color name="HandGroupGrid.pair.button.bg" copy="greenbglight"/>
+    <color name="HandGroupGrid.pair.button.mouseover.fg" copy="white"/>
+	 <font name="HandGroupGrid.pair.button" fontname="Lucida Sans Regular" pointsize="12"/>
+
+    <color name="HandGroupGrid.offsuit.button.fg" r="255" g="255" b="0"/>
+    <color name="HandGroupGrid.offsuit.button.bg" copy="greenbg"/>
+    <color name="HandGroupGrid.offsuit.button.mouseover.fg" copy="white"/>
+	 <font name="HandGroupGrid.offsuit.button" fontname="Lucida Sans Regular" pointsize="12"/>
+
+    <color name="OptionsDialogInfo.textfield.fg" copy="black"/>
+	<color name="OptionsDialogInfo.textfield.bg" copy="text"/>
+	<color name="OptionsDialogInfo.textfield.error.bg" copy="primarywidget.error"/>
+	 <font name="OptionsDialogInfo.textfield" fontname="Lucida Sans Regular" pointsize="12" bold="true"/>
+	<color name="OptionsDialogInfo.label.fg" copy="black"/>
+	<color name="OptionsDialogInfo.label.bg" copy="black"/>
+	 <font name="OptionsDialogInfo.label" fontname="Lucida Sans Regular" pointsize="12" bold="true"/>
+
+	<color name="PokerMetalTheme.primary3" r="17" g="61" b="227"/>
+	<color name="PokerMetalTheme.windowTitle.fg" r="218" g="176" b="65"/>
+
+	<color name="PokerInfo.selection" r="218" g="176" b="65"/>
+	<color name="PokerInfo.selection.local" r="255" g="255" b="255"/>
+	<color name="PokerInfo.label.local" r="255" g="255" b="255"/>
+	<color name="PokerInfo.label.fg" r="218" g="176" b="65"/>
+	<color name="PokerInfo.label.bg" r="0" g="0" b="0"/>
+	 <font name="PokerInfo.label" fontname="Lucida Sans Regular" pointsize="10"/>
+	<color name="PokerInfo.panel.fg" r="255" g="255" b="255"/>
+	<color name="PokerInfo.panel.bg" r="0" g="0" b="0"/>
+
+	<color name="NewGameLabel.label.fg" r="255" g="255" b="255"/>
+	<color name="NewGameLabel.label.bg" r="39" g="93" b="165"/>
+	 <font name="NewGameLabel.label" fontname="Lucida Sans Regular" pointsize="16"/>
+
+	<color name="OnlineLobby.label.fg" copy="primaryfont"/>
+	<color name="OnlineLobby.label.bg" copy="greenbg"/>
+	 <font name="OnlineLobby.label" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="OnlineLobby.htmlarea.fg" copy="primaryfont"/>
+	<color name="OnlineLobby.htmlarea.bg" copy="primarywidget.bg"/>
+	 <font name="OnlineLobby.htmlarea" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="PokerStandardSmall.label.fg" copy="primaryfont"/>
+	<color name="PokerStandardSmall.label.bg" copy="greenbg"/>
+	 <font name="PokerStandardSmall.label" fontname="Lucida Sans Regular" pointsize="16"/>
+
+	<color name="PokerStandard.labelborder.fg" copy="primarylabelborder.fg"/>
+	<color name="PokerStandard.labelborder.bg" copy="grey"/>
+	 <font name="PokerStandard.labelborder" fontname="Lucida Sans Regular" pointsize="19"/>
+	<color name="PokerStandard.spinner.fg" copy="primarywidget.fg"/>
+	<color name="PokerStandard.spinner.bg" copy="primarywidget.bg"/>
+	<color name="PokerStandard.spinner.error.bg" copy="primarywidget.error"/>
+	 <font name="PokerStandard.spinner" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandard.textfield.fg" copy="primarywidget.fg"/>
+	<color name="PokerStandard.textfield.bg" copy="primarywidget.bg"/>
+	<color name="PokerStandard.textfield.error.bg" copy="primarywidget.error"/>
+	 <font name="PokerStandard.textfield" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandard.textarea.fg" copy="primarywidget.fg"/>
+	<color name="PokerStandard.textarea.bg" copy="primarywidget.bg"/>
+	<color name="PokerStandard.textarea.error.bg" copy="primarywidget.error"/>
+	 <font name="PokerStandard.textarea" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandard.htmlarea.fg" copy="primaryfont"/>
+	<color name="PokerStandard.htmlarea.bg" copy="primarywidget.bg"/>
+	 <font name="PokerStandard.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+	<color name="PokerStandard.table.fg" copy="primarytable.fg"/>
+	<color name="PokerStandard.table.bg" copy="primarywidget.bg"/>
+	 <font name="PokerStandard.table" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="PokerStandard.label.fg" copy="primaryfont"/>
+	<color name="PokerStandard.label.bg" copy="greenbg"/>
+	 <font name="PokerStandard.label" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandard.panel.fg" copy="white"/>
+	<color name="PokerStandard.panel.bg" copy="greenbg"/>
+	<color name="PokerStandard.buttonpanel.mouseover.bg" r="255" g="255" b="255" a="70"/>
+	<color name="PokerStandard.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="70"/>
+	<color name="PokerStandard.checkbox.fg" copy="primaryfont"/>
+	<color name="PokerStandard.checkbox.check" copy="black"/>
+	<color name="PokerStandard.checkbox.bg" copy="primarywidget.bg"/>
+	 <font name="PokerStandard.checkbox" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandard.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="PokerStandard.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="PokerStandard.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="PokerStandard.scrollpane.bg" r="204" g="204" b="204"/>
+
+	<color name="PagingTable.table.fg" copy="primarytable.fg"/>
+	<color name="PagingTable.table.bg" copy="primarywidget.bg"/>
+	 <font name="PagingTable.table" fontname="Lucida Sans Regular" pointsize="10"/>
+	<color name="PagingTable.htmlarea.fg" copy="primaryfont"/>
+	<color name="PagingTable.htmlarea.bg" copy="ignored"/>
+	 <font name="PagingTable.htmlarea" fontname="Lucida Sans Regular" pointsize="11"/>
+	<color name="PagingTable.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="PagingTable.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="PagingTable.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="PagingTable.scrollpane.bg" r="204" g="204" b="204"/>
+    <color name="PagingTable.label.fg" copy="primaryfont"/>
+	<color name="PagingTable.label.bg" copy="ignored"/>
+     <font name="PagingTable.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="GameList.table.fg" copy="primarytable.fg"/>
+	<color name="GameList.table.bg" copy="primarywidget.bg"/>
+	 <font name="GameList.table" fontname="Lucida Sans Regular" pointsize="10"/>
+	<color name="GameList.htmlarea.fg" copy="primaryfont"/>
+	<color name="GameList.htmlarea.bg" copy="ignored"/>
+	 <font name="GameList.htmlarea" fontname="Lucida Sans Regular" pointsize="11"/>
+	<color name="GameList.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="GameList.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="GameList.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="GameList.scrollpane.bg" r="204" g="204" b="204"/>
+    <color name="GameList.label.fg" copy="primaryfont"/>
+	<color name="GameList.label.bg" copy="ignored"/>
+     <font name="GameList.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="PokerPrefsPlayerList.table.fg" copy="primarytable.fg"/>
+	<color name="PokerPrefsPlayerList.table.bg" copy="primarywidget.bg"/>
+	 <font name="PokerPrefsPlayerList.table" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="PokerPrefsPlayerList.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="PokerPrefsPlayerList.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="PokerPrefsPlayerList.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="PokerPrefsPlayerList.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="PokerPrefsPlayerList.checkbox.fg" copy="primaryfont"/>
+	<color name="PokerPrefsPlayerList.checkbox.check" copy="black"/>
+	<color name="PokerPrefsPlayerList.checkbox.bg" copy="primarywidget.bg"/>
+	 <font name="PokerPrefsPlayerList.checkbox" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="PokerPrefsPlayerList.label.fg" copy="primaryfont"/>
+	<color name="PokerPrefsPlayerList.label.bg" copy="primarywidget.bg"/>
+	 <font name="PokerPrefsPlayerList.label" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="PokerStatsHeader.htmlarea.fg" r="255" g="255" b="255"/>
+	<color name="PokerStatsHeader.htmlarea.bg" copy="ignored"/>
+	 <font name="PokerStatsHeader.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="PokerStats.htmlarea.fg" copy="black"/>
+	<color name="PokerStats.htmlarea.bg" copy="ignored"/>
+	 <font name="PokerStats.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="PokerStats.progress.fg" copy="greenbgpanel"/>
+	<color name="PokerStats.progress.bg" copy="ignored"/>
+	 <font name="PokerStats.progress" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="HandGroup.label.fg" copy="primaryfont"/>
+	<color name="HandGroup.label.bg" copy="greenbg"/>
+	 <font name="HandGroup.label" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="HandGroup.panel.fg" copy="white"/>
+	<color name="HandGroup.panel.bg" copy="greenbg"/>
+	<color name="HandGroup.buttonpanel.mouseover.bg" r="255" g="255" b="255" a="70"/>
+	<color name="HandGroup.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="70"/>
+
+	<color name="Profile.label.fg" copy="primaryfont"/>
+	<color name="Profile.label.bg" copy="greenbg"/>
+	 <font name="Profile.label" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="Profile.panel.fg" copy="white"/>
+	<color name="Profile.panel.bg" copy="greenbg"/>
+	<color name="Profile.buttonpanel.mouseover.bg" r="255" g="255" b="255" a="70"/>
+	<color name="Profile.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="70"/>
+	<color name="Profile.labelborder.fg" copy="primarylabelborder.fg"/>
+	<color name="Profile.labelborder.bg" copy="grey"/>
+	 <font name="Profile.labelborder" fontname="Lucida Sans Regular" pointsize="19"/>
+	<color name="Profile.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="Profile.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="Profile.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="Profile.scrollpane.bg" r="204" g="204" b="204"/>
+
+	<color name="SmallInfo.label.fg" r="218" g="176" b="65"/>
+	<color name="SmallInfo.label.bg" r="0" g="0" b="0"/>
+	 <font name="SmallInfo.label" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="SmallInfo.panel.fg" r="0" g="0" b="0"/>
+	<color name="SmallInfo.panel.bg" r="0" g="0" b="0"/>
+
+	<color name="PokerStandardDialog.innerShadow" r="50" g="90" b="50" a="175"/>
+	<color name="PokerStandardDialog.outerShadow" r="80" g="120" b="80" a="175"/>
+	<color name="PokerStandardDialog.innerHighlight" r="100" g="140" b="100" a="175"/>
+	<color name="PokerStandardDialog.outerHighlight" r="120" g="160" b="120" a="175"/>
+
+	<color name="OptionsDialog.innerShadow" r="50" g="90" b="50" a="175"/>
+	<color name="OptionsDialog.outerShadow" r="80" g="120" b="80" a="175"/>
+	<color name="OptionsDialog.innerHighlight" r="100" g="140" b="100" a="175"/>
+	<color name="OptionsDialog.outerHighlight" r="120" g="160" b="120" a="175"/>
+
+	<color name="BrushedMetal.innerShadow" r="65" g="65" b="65" a="150"/>
+	<color name="BrushedMetal.outerShadow" r="35" g="35" b="35" a="150"/>
+	<color name="BrushedMetal.innerHighlight" r="161" g="161" b="161" a="150"/>
+	<color name="BrushedMetal.outerHighlight" r="191" g="191" b="191" a="150"/>
+
+	<color name="testing.x.BrushedMetal.innerShadow" r="0" g="0" b="255" a="255"/>
+	<color name="testing.x.BrushedMetal.outerShadow" r="0" g="255" b="255" a="255"/>
+	<color name="testing.x.BrushedMetal.innerHighlight" r="0" g="255" b="0" a="255"/>
+	<color name="testing.x.BrushedMetal.outerHighlight" r="255" g="0" b="0" a="255"/>
+
+	<color name="GlassBig.button.fg" copy="black"/>
+	<color name="GlassBig.button.mouseover.fg" copy="black"/>
+	<color name="GlassBig.button.over.bg" r="24" g="117" b="232" a="140"/>
+	<color name="GlassBig.button.down.bg" r="52" g="233" b="227" a="140"/>
+	<color name="GlassBig.button.disable.bg" r="0" g="0" b="0" a="140"/>
+	<color name="GlassBig.button.focus.bg" r="255" g="255" b="0" a="140"/>
+	 <font name="GlassBig.button" fontname="Arial Bold" pointsize="16"/>
+
+	<color name="Glass.button.fg" copy="black"/>
+	<color name="Glass.button.mouseover.fg" copy="black"/>
+	<color name="Glass.button.over.bg" r="24" g="117" b="232" a="140"/>
+	<color name="Glass.button.down.bg" r="52" g="233" b="227" a="140"/>
+	<color name="Glass.button.disable.bg" r="0" g="0" b="0" a="140"/>
+	<color name="Glass.button.focus.bg" r="255" g="255" b="0" a="140"/>
+	 <font name="Glass.button" fontname="Arial Bold" pointsize="12"/>
+
+	<color name="GlassCombo.button.fg" copy="black"/>
+	<color name="GlassCombo.button.mouseover.fg" copy="black"/>
+	<color name="GlassCombo.button.over.bg" r="24" g="117" b="232" a="140"/>
+	<color name="GlassCombo.button.down.bg" r="52" g="233" b="227" a="140"/>
+	<color name="GlassCombo.button.disable.bg" r="0" g="0" b="0" a="140"/>
+	<color name="GlassCombo.button.focus.bg" r="255" g="255" b="0" a="140"/>
+	 <font name="GlassCombo.button" fontname="Lucicda Sans Regular" pointsize="12"/>
+
+	<color name="HelpText.textarea.fg" copy="primaryfont"/>
+	<color name="HelpText.textarea.bg" copy="ignored"/>
+	<color name="HelpText.textarea.error.bg" copy="ignored"/>
+	 <font name="HelpText.textarea" fontname="Lucida Sans Regular" pointsize="15"/>
+	<color name="HelpText.htmlarea.fg" copy="primaryfont"/>
+	<color name="HelpText.htmlarea.bg" copy="ignored"/>
+	 <font name="HelpText.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+
+	<color name="HelpTextDialog.htmlarea.fg" r="17" g="61" b="227"/>
+	<color name="HelpTextDialog.htmlarea.bg" r="0" g="0" b="0"/>
+	 <font name="HelpTextDialog.htmlarea" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="HelpText.htmlarea.fg" copy="primaryfont"/>
+	<color name="HelpText.htmlarea.bg" copy="ignored"/>
+	 <font name="HelpText.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+
+	<color name="Support.htmlarea.fg" copy="primaryfont"/>
+	<color name="Support.htmlarea.bg" copy="ignored"/>
+	 <font name="Support.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="Support.textarea.fg" copy="black"/>
+	<color name="Support.textarea.bg" copy="white"/>
+	<color name="Support.textarea.error.bg" copy="ignored"/>
+	 <font name="Support.textarea" fontname="Courier New" pointsize="12"/>
+
+	<color name="InitGame.label.fg" r="0" g="0" b="255" a="140"/>
+	<color name="InitGame.label.bg" copy="ignored"/>
+	 <font name="InitGame.label" fontname="Lucida Sans Regular" pointsize="32" italic="true"/>
+
+	<color name="PokerStandardDialog.panel.fg" r="0" g="0" b="0" />
+	<color name="PokerStandardDialog.panel.bg" r="0" g="0" b="0" />
+	<color name="PokerStandardDialog.tab.fg" r="0" g="0" b="0" />
+	<color name="PokerStandardDialog.tab.bg" r="104" g="104" b="104" a="0"/>
+	 <font name="PokerStandardDialog.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="PokerStandardDialog.label.fg" r="17" g="61" b="227"/>
+	<color name="PokerStandardDialog.label.bg" r="0" g="0" b="0"/>
+	 <font name="PokerStandardDialog.label" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandardDialog.checkbox.fg" r="17" g="61" b="227"/>
+	<color name="PokerStandardDialog.checkbox.check" r="17" g="61" b="227"/>
+	<color name="PokerStandardDialog.checkbox.bg" r="204" g="204" b="204"/>
+	 <font name="PokerStandardDialog.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="PokerStandardDialog.radio.fg" r="0" g="0" b="0"/>
+	<color name="PokerStandardDialog.radio.dot" copy="black"/>
+	<color name="PokerStandardDialog.radio.bg" r="204" g="204" b="204"/>
+	 <font name="PokerStandardDialog.radio" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="PokerStandardDialog.textarea.fg" r="0" g="0" b="0"/>
+	<color name="PokerStandardDialog.textarea.bg" r="0" g="0" b="0"/>
+	<color name="PokerStandardDialog.textarea.error.bg" r="0" g="0" b="0"/>
+	 <font name="PokerStandardDialog.textarea" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="PokerStandardDialog.htmlarea.fg" r="0" g="0" b="0"/>
+	<color name="PokerStandardDialog.htmlarea.bg" r="0" g="0" b="0"/>
+	 <font name="PokerStandardDialog.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="PokerStandardDialog.textfield.fg" r="0" g="0" b="0"/>
+	<color name="PokerStandardDialog.textfield.bg" r="225" g="225" b="225"/>
+	<color name="PokerStandardDialog.textfield.error.bg" copy="primarywidget.error"/>
+	 <font name="PokerStandardDialog.textfield" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandardDialog.spinner.fg" r="17" g="61" b="227"/>
+	<color name="PokerStandardDialog.spinner.bg" r="0" g="0" b="0"/>
+	<color name="PokerStandardDialog.spinner.error.bg" copy="primarywidget.error"/>
+	 <font name="PokerStandardDialog.spinner" fontname="Lucida Sans Regular" pointsize="18"/>
+	<color name="PokerStandardDialog.title.fg" r="17" g="61" b="227"/>
+	<color name="PokerStandardDialog.selection" r="17" g="61" b="227"/>
+	<color name="PokerStandardDialog.table.fg" copy="primarytable.fg"/>
+	<color name="PokerStandardDialog.table.bg" r="220" g="238" b="220"/>
+	 <font name="PokerStandardDialog.table" fontname="Lucida Sans Regular" pointsize="14"/>
+	<color name="PokerStandardDialog.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="PokerStandardDialog.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="PokerStandardDialog.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="PokerStandardDialog.scrollpane.bg" r="204" g="204" b="204"/>
+
+	<color name="Rejoin.label.fg" r="17" g="61" b="227"/>
+	<color name="Rejoin.label.bg" r="0" g="0" b="0"/>
+	 <font name="Rejoin.label" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="Help.htmlarea.fg" r="0" g="0" b="0"/>
+	<color name="Help.htmlarea.bg" r="255" g="255" b="255"/>
+	 <font name="Help.htmlarea" fontname="Lucida Sans Regular" pointsize="14"/>
+
+	<color name="DisplayMessage.label.fg" r="0" g="0" b="0"/>
+	<color name="DisplayMessage.label.bg" r="0" g="0" b="0"/>
+	 <font name="DisplayMessage.label" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="DisplayMessage.panel.fg" r="0" g="0" b="0"/>
+	<color name="DisplayMessage.panel.bg" r="0" g="0" b="0"/>
+	<color name="DisplayMessage.checkbox.fg" r="0" g="0" b="0"/>
+	<color name="DisplayMessage.checkbox.check" copy="black"/>
+	<color name="DisplayMessage.checkbox.bg" r="204" g="204" b="204"/>
+	 <font name="DisplayMessage.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="DisplayMessage.htmlarea.fg" r="0" g="0" b="0"/>
+	<color name="DisplayMessage.htmlarea.bg" r="0" g="0" b="0"/>
+	 <font name="DisplayMessage.htmlarea" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="DisplayMessage.radio.bg"    r="204" g="204" b="204"/>
+	<color name="DisplayMessage.radio.fg" copy="black"/>
+	<color name="DisplayMessage.radio.dot" copy="black"/>
+	 <font name="DisplayMessage.radio" fontname="Lucida Sans Regular" pointsize="16"/>
+
+	<color name="DisplayMessageMenu.label.fg" copy="primaryfont"/>
+	<color name="DisplayMessageMenu.label.bg" r="0" g="0" b="0"/>
+	 <font name="DisplayMessageMenu.label" fontname="Lucida Sans Regular" pointsize="16"/>
+	<color name="DisplayMessageMenu2.label.fg" copy="white"/>
+	<color name="DisplayMessageMenu2.label.bg" r="0" g="0" b="0"/>
+	 <font name="DisplayMessageMenu2.label" fontname="Lucida Sans Regular" pointsize="18"/>
+
+	<color name="DisplayTimedMessage.label.fg" r="0" g="0" b="255"/>
+	<color name="DisplayTimedMessage.label.bg" r="0" g="0" b="0"/>
+	 <font name="DisplayTimedMessage.label" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="PokerNightMessage.label.fg" r="0" g="0" b="0"/>
+	<color name="PokerNightMessage.label.bg" r="0" g="0" b="0"/>
+	 <font name="PokerNightMessage.label" fontname="Lucida Sans Regular" pointsize="36"/>
+	<color name="PokerNightMessage.panel.fg" r="0" g="0" b="0"/>
+	<color name="PokerNightMessage.panel.bg" r="0" g="0" b="0"/>
+
+	<color name="ErrorDetails.textarea.fg" r="0" g="0" b="0"/>
+	<color name="ErrorDetails.textarea.bg" r="0" g="0" b="0"/>
+	<color name="ErrorDetails.textarea.error.bg" r="0" g="0" b="0"/>
+	 <font name="ErrorDetails.textarea" fontname="Lucida Sans Regular" pointsize="12"/>
+
+    <color name="PokerTable.label.fg" copy="white"/>
+	<color name="PokerTable.label.bg" copy="greenbg"/>
+     <font name="PokerTable.label" fontname="Lucida Sans Regular" pointsize="12"/>
+    <color name="PokerTable.textarea.fg" copy="white"/>
+	<color name="PokerTable.textarea.bg" copy="greenbg"/>
+	<color name="PokerTable.textarea.error.bg" copy="greenbg"/>
+     <font name="PokerTable.textarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="PokerTable.spinner.fg" copy="primarywidget.fg"/>
+	<color name="PokerTable.spinner.bg" copy="primarywidget.bg"/>
+	<color name="PokerTable.spinner.error.bg" copy="primarywidget.error"/>
+     <font name="PokerTable.spinner" fontname="Lucida Sans Regular" pointsize="15"/>
+	<color name="PokerTable.menuitem.fg" copy="blue"/>
+	<color name="PokerTable.menuitem.bg" copy="primarywidget.bg"/>
+     <font name="PokerTable.menuitem" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="PokerTable.slider.fg" r="0" g="0" b="0" />
+	<color name="PokerTable.slider.bg" r="255" g="0" b="0" a="100"/>
+	<color name="PokerTable.slider.thumb.bg" r="150" g="25" b="25"/>
+	<color name="PokerTable.slider.thumb.focus" r="0" g="0" b="255" a="50"/>
+
+    <color name="PokerClock.label.fg" copy="clock.fg"/>
+	<color name="PokerClock.label.bg" copy="clock.bg"/>
+     <font name="PokerClock.label" fontname="lcd-bold.ttf" pointsize="12"/>
+
+    <color name="PokerClockBlind.label.fg" r="0" g="211" b="198"/>
+	<color name="PokerClockBlind.label.bg" copy="clock.bg"/>
+     <font name="PokerClockBlind.label" fontname="lcd-bold.ttf" pointsize="12"/>
+
+	<color name="PokerTablePill.label.bg" copy="black"/>
+	<color name="PokerTablePill.label.fg" copy="white"/>
+	<color name="PokerTablePill.label.gradfrom" r="255" g="255" b="255" a="100"/>
+	<color name="PokerTablePill.label.gradto" r="255" g="255" b="255" a="10"/>
+     <font name="PokerTablePill.label" fontname="Lucida Sans Regular" pointsize="12"/>
+
+    <color name="PokerResult.label.fg" copy="white"/>
+	<color name="PokerResult.label.bg" copy="ignored"/>
+     <font name="PokerResult.label" fontname="Arial" pointsize="15"/>
+    <color name="PokerResult.textarea.fg" copy="white"/>
+	<color name="PokerResult.textarea.bg" copy="ignored"/>
+	<color name="PokerResult.textarea.error.bg" copy="ignored"/>
+     <font name="PokerResult.textarea" fontname="Arial" pointsize="15"/>
+
+	<color name="ChatLobby.panel.fg" copy="black"/>
+	<color name="ChatLobby.panel.bg" r="255" g="255" b="255"/>
+	<color name="ChatLobby.buttonpanel.mouseover.bg" r="255" g="255" b="255"/>
+	<color name="ChatLobby.buttonpanel.mousedown.bg" r="255" g="255" b="255"/>
+	<color name="ChatLobby.textfield.fg" copy="black"/>
+	<color name="ChatLobby.textfield.bg" r="255" g="255" b="255"/>
+	<color name="ChatLobby.textfield.error.bg" copy="ChatLobby.textfield.bg"/>
+	 <font name="ChatLobby.textfield" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="ChatLobby.htmlarea.fg" r="0" g="0" b="0"/>
+	<color name="ChatLobby.htmlarea.bg" r="255" g="255" b="255"/>
+	 <font name="ChatLobby.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="ChatLobby.label.fg" copy="yellow"/>
+	<color name="ChatLobby.label.bg" copy="ignored"/>
+	 <font name="ChatLobby.label" fontname="Lucida Sans Regular" pointsize="25"/>
+	<color name="ChatLobby.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="ChatLobby.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="ChatLobby.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="ChatLobby.scrollpane.bg" r="255" g="255" b="255"/>
+	<color name="ChatLobby.table.fg" copy="yellow"/>
+	<color name="ChatLobby.table.bg" copy="black"/>
+	<color name="ChatLobby.table.grid" copy="black"/>
+	<color name="ChatLobby.table.select.fg" copy="black"/>
+	<color name="ChatLobby.table.select.bg" r="255" g="255" b="0" a="150"/>
+	 <font name="ChatLobby.table" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="UDPStatus.htmlarea.fg" copy="white"/>
+	<color name="UDPStatus.htmlarea.bg" copy="ignored"/>
+	 <font name="UDPStatus.htmlarea" fontname="Lucida Sans Regular" pointsize="13"/>
+
+	<color name="ChatInGame.panel.fg" copy="black"/>
+	<color name="ChatInGame.panel.bg" r="204" g="204" b="204"/>
+	<color name="ChatInGame.buttonpanel.mouseover.bg" r="204" g="204" b="204"/>
+	<color name="ChatInGame.buttonpanel.mousedown.bg" r="204" g="204" b="255"/>
+	<color name="ChatInGame.textfield.fg" copy="black"/>
+	<color name="ChatInGame.textfield.bg" r="204" g="204" b="204"/>
+	<color name="ChatInGame.textfield.error.bg" copy="ChatInGame.textfield.bg"/>
+	 <font name="ChatInGame.textfield" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="ChatInGame.htmlarea.fg" r="0" g="0" b="0"/>
+	<color name="ChatInGame.htmlarea.bg" r="204" g="204" b="204"/>
+	 <font name="ChatInGame.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="ChatInGame.scrollbar.bg" r="128" g="128" b="128"/>
+	<color name="ChatInGame.scrollbar.fg" r="64" g="64" b="64"/>
+	<color name="ChatInGame.scrollbar.focus" r="0" g="0" b="255" a="50"/>
+	<color name="ChatInGame.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="ChatInGame.tab.fg" r="0" g="0" b="0" />
+	<color name="ChatInGame.tab.bg" r="204" g="204" b="204" a="25"/>
+	<color name="ChatInGame.tab.selected" r="255" g="255" b="0" a="50"/>
+	 <font name="ChatInGame.tab" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="ChatInGame.split.bg" r="96" g="96" b="96"/>
+	<color name="ChatInGame.split.focus" r="0" g="0" b="255" a="50"/>
+
+	<color name="Chat.local" r="200" g="4" b="35"/>
+	<color name="Chat.remote" r="0" g="0" b="255"/>
+	<color name="Chat.remote.obs" r="125" g="10" b="215"/>
+	<color name="Chat.ddpoker" r="20" g="100" b="10"/>
+	<color name="Chat.director" copy="black"/>
+	<color name="Chat.directorbg" r="230" g="155" b="50"/>
+	<color name="Chat.admin" copy="black"/>
+    <color name="Chat.adminbg" r="255" g="210" b="90"/>
+	<color name="Chat.dealer" copy="black"/>
+	<color name="Chat.dealerbg" r="175" g="175" b="175"/>
+
+	<color name="LobbyURL.textfield.fg" copy="white"/>
+	<color name="LobbyURL.textfield.bg" copy="ignored"/>
+	<color name="LobbyURL.textfield.error.bg" copy="ignored"/>
+	 <font name="LobbyURL.textfield" fontname="Lucida Sans Regular" pointsize="12"/>
+    <color name="LobbyURL.label.fg" copy="primaryfont"/>
+	<color name="LobbyURL.label.bg" copy="ignored"/>
+	 <font name="LobbyURL.label" fontname="Lucida Sans Regular" pointsize="12"/>
+	<color name="LobbyURL.checkbox.fg" copy="primaryfont"/>
+	<color name="LobbyURL.checkbox.check" copy="primaryfont"/>
+	<color name="LobbyURL.checkbox.bg" copy="grey"/>
+	 <font name="LobbyURL.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="chip.rim.100K" r="236" g="234" b="32"/>
+	<color name="chip.mid.100K" r="197" g="196" b="27"/>
+	<color name="chip.rim.50K" r="42" g="57" b="249"/>
+	<color name="chip.mid.50K" r="100" g="111" b="251"/>
+	<color name="chip.rim.10K" r="233" g="86" b="196"/>
+	<color name="chip.mid.10K" r="168" g="62" b="141"/>
+	<color name="chip.rim.5K" r="147" g="147" b="147"/>
+	<color name="chip.mid.5K" r="111" g="111" b="111"/>
+	<color name="chip.rim.1K" r="241" g="130" b="0"/>
+	<color name="chip.mid.1K" r="175" g="95" b="0"/>
+	<color name="chip.rim.500" r="127" g="39" b="128"/>
+	<color name="chip.mid.500" r="159" g="93" b="160"/>
+	<color name="chip.rim.100" r="63" g="56" b="56"/>
+	<color name="chip.mid.100" r="98" g="93" b="93"/>
+	<color name="chip.rim.25" r="50" g="156" b="53"/>
+	<color name="chip.mid.25" r="34" g="106" b="36"/>
+	<color name="chip.rim.5" r="241" g="0" b="0"/>
+	<color name="chip.mid.5" r="173" g="0" b="0"/>
+	<color name="chip.rim.1" r="248" g="248" b="248"/>
+	<color name="chip.mid.1" r="212" g="212" b="212"/>
+	<color name="chip.white" r="255" g="255" b="255" a="255"/>
+	<color name="chip.black" r="0" g="0" b="0" a="255"/>
+
+	<color name="HandTacticPie.label.fg" copy="black"/>
+	<color name="HandTacticPie.label.bg" copy="ignored"/>
+	 <font name="HandTacticPie.label" fontname="Lucida Sans Regular" pointsize="9" bold="true"/>
+
+	<color name="AIConfig.labelborder.fg" copy="primarylabelborder.fg"/>
+	<color name="AIConfig.labelborder.bg" copy="grey"/>
+	 <font name="AIConfig.labelborder" fontname="Lucida Sans Regular" pointsize="19"/>
+
+	<color name="AIConfig.spinner.fg" copy="primarywidget.fg"/>
+	<color name="AIConfig.spinner.bg" copy="primarywidget.bg"/>
+	<color name="AIConfig.spinner.error.bg" copy="primarywidget.error"/>
+	 <font name="AIConfig.spinner" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.textfield.fg" copy="primarywidget.fg"/>
+	<color name="AIConfig.textfield.bg" copy="primarywidget.bg"/>
+	<color name="AIConfig.textfield.error.bg" copy="primarywidget.error"/>
+	 <font name="AIConfig.textfield" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.textarea.fg" copy="primarywidget.fg"/>
+	<color name="AIConfig.textarea.bg" copy="primarywidget.bg"/>
+	<color name="AIConfig.textarea.error.bg" copy="primarywidget.error"/>
+	 <font name="AIConfig.textarea" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.htmlarea.fg" copy="primaryfont"/>
+	<color name="AIConfig.htmlarea.bg" copy="primarywidget.bg"/>
+	 <font name="AIConfig.htmlarea" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.combobox.fg" copy="black"/>
+	<color name="AIConfig.combobox.bg" copy="white"/>
+	<color name="AIConfig.combobox.mouseover.fg" copy="ignored"/>
+	<color name="AIConfig.combobox.selection.bg" copy="black"/>
+	<color name="AIConfig.combobox.selection.fg" copy="white"/>
+	 <font name="AIConfig.combobox" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.table.fg" copy="primarytable.fg"/>
+	<color name="AIConfig.table.bg" copy="primarywidget.bg"/>
+	 <font name="AIConfig.table" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.label.fg" copy="primaryfont"/>
+	<color name="AIConfig.label.bg" copy="greenbg"/>
+	 <font name="AIConfig.label" fontname="Lucida Sans Regular" pointsize="12"/>
+
+	<color name="AIConfig.panel.fg" copy="white"/>
+	<color name="AIConfig.panel.bg" copy="greenbg"/>
+
+	<color name="AIConfig.button.mouseover.fg" copy="rollover"/>
+	<color name="AIConfig.buttonpanel.mouseover.bg" r="255" g="255" b="255" a="70"/>
+	<color name="AIConfig.buttonpanel.mousedown.bg" r="255" g="255" b="0" a="70"/>
+	<color name="AIConfig.checkbox.fg" copy="primaryfont"/>
+	<color name="AIConfig.checkbox.check" copy="black"/>
+	<color name="AIConfig.checkbox.bg" copy="primarywidget.bg"/>
+	 <font name="AIConfig.checkbox" fontname="Lucida Sans Regular" pointsize="12"/>
+    <color name="OptionsDialog.htmlarea.fg" copy="black"/>
+
+	<color name="AdvisorSummary.htmlarea.bg" copy="text"/>
+    <color name="AdvisorSummary.htmlarea.fg" copy="black"/>
+	<font name="AdvisorSummary.htmlarea" fontname="Lucida Sans Regular" pointsize="15"/>
+
+</STYLES>

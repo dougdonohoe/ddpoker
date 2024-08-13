@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.donohoedigital.com"
+            xmlns="http://www.donohoedigital.com"
+            elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="classpath:config/xml-schema/data-elements.xsd"/>
+
+<!-- ********************************** -->
+<!-- DEFINES TYPES                      -->
+<!-- ********************************** -->
+
+	<xsd:complexType name="image">
+		<xsd:attribute name="location" type="filename" use="required"/>
+		<xsd:attribute name="name" type="basicname" use="required"/>
+		<xsd:attribute name="cache" type="boolean" use="optional"/>
+		<xsd:attribute name="components" type="basicname" use="optional"/>
+		<xsd:attribute name="x" type="nonNegativeInteger" use="optional"/>
+		<xsd:attribute name="y" type="nonNegativeInteger" use="optional"/>
+	</xsd:complexType>
+
+<!-- ********************************** -->
+<!-- OBJECTS DEFINITION (FOR XML DOCS)  -->
+<!-- ********************************** -->
+
+    <xsd:element name="IMAGES">
+		<xsd:complexType mixed="true">
+			<xsd:sequence>
+
+				<xsd:element name="imagedir" 
+						type="filename" minOccurs="1" maxOccurs="1"/>
+
+				<xsd:element name="image" 
+						type="image" minOccurs="0" maxOccurs="unbounded"/>
+
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+  
+</xsd:schema>
+
+

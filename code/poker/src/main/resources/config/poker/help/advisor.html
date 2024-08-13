@@ -1,0 +1,771 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head></head>
+
+<body>
+<table border="0" cellpadding="5" cellspacing="0">
+  <tbody>
+    <tr align="left" valign="middle">
+      <td colspan="2" width="318"><img src="../images/ddspade48.png" height="48" width="48">&nbsp;&nbsp;<font color="#1d4a07" size="+2"><strong>Advisor</strong></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>The Advisor is a computer player that sits over your shoulder, providing advice 
+  on how to play your hand and why.&nbsp; The advisor can use the style of play 
+  defined by any Player Type, including those of your design.&nbsp; You can even 
+  use a Player Type as a starting point and customize it from there.&nbsp; By 
+  changing the advisor strategy during the game, you can see how different types 
+  of players would handle a given situation.&nbsp; The Advisor can be found in 
+  the DD Dashboard during practice games.&nbsp; By default, the Advisor will employ 
+  the strategy defined as 'Solid'.&nbsp; The Player Type used by the Advisor can 
+  be selected from the context menu that can be accessed by clicking on your cards.&nbsp; 
+  Advisor strategy can be further refined from the Advisor Information pop-up 
+  screen described below. </p>
+<p>See the opponents section in the <a href="options.html">Options</a> help for 
+  more information on Player Types.</p>
+<strong></strong>
+<p>When the Advisor dashboard item is <img src="../images/button-dasharrow-off.png" height="12" width="12">
+collapsed, the Advisor will simply display the action it suggests;
+Fold, Check, Bet, or Raise. When the dashboard item is <img src="../images/button-dasharrow-on.png" height="12" width="12">
+expanded, a more specific indication of the strategic move being
+suggested is displayed, along with a range of suggested appropriate bet
+amounts, if applicable.&nbsp; In addition, the expanded dashboard item
+contains two buttons: </p>
+<p>Click the <strong>Details</strong> button to bring up the Advisor
+Information pop-up screen. There are two tabs of details, Summary, and
+Strategy. See below. </p>
+<p>Click the <strong>Do It</strong> button to act upon the advice of the Advisor.<br>&nbsp;
+<table border="1" width="100%">
+  <tbody>
+    <tr bgcolor="#1d4a07">
+      <td align="center">
+      <div align="center"><strong><font color="#ffff00" size="+1">Dashboard
+Advice<br>
+      </font></strong></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<b><br>
+Bet Range</b><br>
+</p><p>The advice displayed in the
+expanded dashboard Advisor includes a range of suggested bet
+amounts.&nbsp; It is appropriate to vary your bet amounts in order to
+conceal your strategy;&nbsp; if your attempts to steal the blinds
+always involve a small raise and your raises for strength always
+involve a large raise, your opponents will quickly learn to call your
+small raises with weaker hands, and get out of the way when you bet big.<br>
+</p>
+<p>Bet sizes are expressed relative to one of several amounts,
+depending on the circumstances.<br>&nbsp;
+</p>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Big Blind<br>
+      </b> </td>
+      <td style="vertical-align: top;">Bet range is expressed in
+multiples of the big blind.&nbsp; This method of expressing bet size is
+used for initial betting before the flop, when the amount of
+information you have about your opponents' hands is limited.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Pot Size</b><br>
+      </td>
+      <td style="vertical-align: top;">Bet range is expressed as a
+percentage of the pot size.&nbsp; Pot-relative betting is important in
+pot and no limit games because by betting in terms of the pot size, you
+can control the odds your opponent has to call, and the pot odds you're
+giving yourself, given the chances your opponent will call.&nbsp; This
+method of expressing bet size is used primarily after the flop, but
+also before the flop late in a tournament when the blinds get large
+compared to the average number of chips each player has.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Stack Size</b><br>
+      </td>
+      <td style="vertical-align: top;">Bet range is expressed as a
+percentage of the number of chips in your stack.&nbsp; Stack relative
+bets are suggested in rare circumstances where special considerations
+apply, such as the need to keep enough chips to make a meaningful bet
+in a future round.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>All In</b><br>
+      </td>
+      <td style="vertical-align: top;">When you have so few chips that
+you are unable to place a minimum bet or raise, or doing so would
+effectively commit all of your chips, your only choice may be to push
+all your chips into the pot.&nbsp; The advisor may also suggest that
+you go all in with a very strong hand, or as an intimidating bluff.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>In all cases, the range is also translated for you into a range of actual chip 
+  values, and if you press the Do It button, a bet size is randomly selected from 
+  within the recommended range. </p><p>
+<b>Action</b>
+</p><p>In order to improve your play, it is important to understand the
+strategic motivation for the advisor's suggestions.&nbsp; For instance,
+if the advisor tells you to raise before the flop, it is helpful to
+know if this is because the advisor considers your hand to be strong,
+or if the advisor just thinks you have a good chance of stealing the
+blinds.&nbsp; As a result, the advisor dashboard item, when expanded,
+may be more specific than "Fold", "Check", "Bet", or "Raise" when
+indicating recommended actions.<br>
+&nbsp;
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Check-Raise</b><br>
+      </td>
+      <td style="vertical-align: top;">Check, hoping that another
+player will bet, so that you can then raise.&nbsp; This is most often
+suggested in situations when you have a very strong hand, and a
+reasonable expectation that one of your opponents will bet.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Slow-Play</b><br>
+      </td>
+      <td style="vertical-align: top;">Check, hoping that another
+player will bet, so that you can then call (keeping your opponent in
+the pot to bet into you again on the next round).&nbsp; Most often
+suggested in situations when you have an extremely strong hand, and a
+reasonable expectation that slow-playing is the best way to maximize
+your profit.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Limp</b><br>
+      </td>
+      <td style="vertical-align: top;">Call the big blind before the
+flop.&nbsp; Most often suggested with marginal or drawing hands at a
+table where the big blind is rarely raised before the flop, often in
+response to very favorable pot odds.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Open Pot</b><br>
+      </td>
+      <td style="vertical-align: top;">Enter the pot first before the
+flop, with a raise.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Steal</b><br>
+      </td>
+      <td style="vertical-align: top;">Bet or raise with the
+expectation that all of your opponents will fold.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Semi-Bluff</b><br>
+      </td>
+      <td style="vertical-align: top;">Bluff with a hand that is
+probably not the strongest, but has a reasonable chance of improving.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Trap</b><br>
+      </td>
+      <td style="vertical-align: top;">Make a small bet with a very
+strong hand, hoping that another player will make a large raise.<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" nowrap="nowrap" valign="top"><b>Continuation 
+        Bet</b><br>
+      </td>
+      <td style="vertical-align: top;">Bluff after the flop, having
+previously bet before the flop, even though the flop didn't help your
+hand.</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table border="1" width="100%">
+  <tbody>
+    <tr bgcolor="#1d4a07">
+      <td align="center">
+      <div align="center"><strong><font color="#ffff00" size="+1">Details
+- Summary Tab </font></strong></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</p><p>The Summary tab provides information regarding the motivations
+behind the advisor's suggestions.<br>
+</p>
+<p><b>Situation<br>
+</b></p>
+<p>This provides a brief description of some important aspects of the
+current situation: <br>&nbsp;
+<table border="0">
+  <tbody>
+    <tr valign="top"> 
+      <td align="left" nowrap="nowrap" width="100"><strong>First/Last</strong><br>
+      </td>
+      <td> 
+        <table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+        <tbody>
+          <tr>
+            <td align="center" valign="top" width="100"><strong>First
+to Act </strong></td>
+            <td>You are first to act when none of your opponents has
+entered the pot voluntarily this round, giving you the opportunity to
+be first to show strength.&nbsp; Before the flop, this means that all
+of the players to your right have folded rather than calling or raising
+the big blind.&nbsp; After the flop, it means that all of the players
+to your right have checked.&nbsp; Though being first to act is often a
+disadvantage, it may also provide opportunities for bluffing plays,
+when there are few players left to act after you, or none, and there is
+reason to believe that a bet will win the pot immediately.&nbsp; <br>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><strong>Last to
+Act </strong></td>
+            <td>You are last to act when your action can end the round
+of betting.&nbsp; If you are last to act then you can
+be sure that by calling a bet or raise, you will end the betting, and
+won't have to face the decision to put any more chips in the pot in
+this round.<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td align="left" nowrap="nowrap" width="100"><strong>Position</strong></td>
+      <td> 
+        <table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+        <tbody>
+          <tr>
+            <td align="center" valign="top" width="100"><b>Button<br>
+            </b><small><i>Pre-Flop</i></small> </td>
+            <td>The dealer button is in front of your seat, making you
+late to act before the flop, and last to act after the flop.&nbsp; This
+is a very good position, and weaker hands can be played due to the
+amount of information available before deciding to call before the
+flop, and the additional pot stealing opportunities after the flop.<br>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><b>Small Blind<br>
+            </b><small><i>Pre-Flop</i></small> </td>
+            <td>You posted the small blind, making you second-last to
+act before the flop, if none of your opponents raises.&nbsp; A call of
+the big blind may be tempting at half-price, but you will be first to
+act on each round after the flop, so conservative hand selection is
+wise. </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><b>Big Blind<br>
+            </b><small><i>Pre-Flop</i></small><br>
+            </td>
+            <td>You posted the big blind, and will be last to act
+before the flop, so you may have the opportunity to play a completely
+random hand without putting any chips in the pot voluntarily.&nbsp;
+This can provide opportunities to win large pots with unexpected
+holdings, if your opponents are not paying close attention.&nbsp; Good
+ones will be, and will rarely let you sneak into a hand this way.<br>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><strong>Early </strong></td>
+            <td>Being in early position is almost always a significant
+disadvantage, as it
+forces you to make a decision without any information about what your
+opponents will do. </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><strong>Middle<br>
+            </strong></td>
+            <td>In middle position, you have some information about the
+strength of your opponents, but with players left to act you must be
+careful, since a bet here might be answered with a raise, to which you
+might have to fold without a very strong hand.<br>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><strong>Late</strong>
+            </td>
+            <td>In late position, you are near to the end of the
+betting order, so you have a lot of information from your
+opponents.&nbsp; Players in late position can often bet weaker hands,
+with greater certainty that they are best, or steal pots from players
+who have showed weakness by checking.</td>
+          </tr>
+          <tr>
+            <td align="center" valign="top" width="100"><b>Last<br>
+            </b><small><i>Post-Flop</i></small><br>
+            </td>
+            <td>Being last to act is often a significant
+advantage.&nbsp; If all of your
+opponents check, you may be able to steal the pot.&nbsp; If one of your
+opponents places a bet, you have the opportunity to cheaply fold a
+marginal hand with which you might otherwise bet, only to be raised by
+the bettor.<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td align="center" nowrap="nowrap" width="100"> 
+        <div align="left"><strong>Hand Strength </strong></div>
+      </td>
+      <td> 
+        <table border="1" cellpadding="2" cellspacing="2" width="100%">
+        <tbody>
+          <tr>
+            <td valign="top"><b>Pre-Flop</b></td>
+            <td valign="top">The strength attributed to your hand
+before the flop is based
+on the hand selection scheme that is currently effective, given the
+Player Type you have selected to act as your advisor, and the number of
+players at the table.&nbsp; This strength also takes into account the
+position of various sliders in the advisor's Player Type.&nbsp; For
+instance, if your advisor is configured to strongly prefer suited aces,
+it might consider A8s a strong hand even if your hand selection scheme
+might otherwise consider it weak.&nbsp; See&nbsp; <a href="options.html">AI Options</a> for more information on hand
+selection and play style sliders.</td>
+          </tr>
+          <tr>
+            <td valign="top"><b>Post-Flop</b></td>
+            <td valign="top">After the flop, the strength of your hand
+is harder to quantify,
+and is estimated based mainly on:<br>
+            <ul>
+              <li>Cards on the board.</li>
+              <li>Number of players left.</li>
+              <li>Opponent betting activity.<br>
+              </li>
+            </ul>
+The behavior of other players is considered in order to determine the
+relative likelihood they hold a particular hand.&nbsp; For instance, a
+player who plays very few hands is more likely to be strong, and a
+player who didn't raise before the flop is less likely to be holding
+pocket aces.</td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Pot Status</b><br>
+      </td>
+      <td> 
+        <table border="1" cellpadding="2" cellspacing="2" width="100%">
+        <tbody>
+          <tr>
+            <td valign="top"><b>Big Blind has been called by <i>n</i>
+limper(s).</b><br>
+            </td>
+            <td valign="top">Before the flop, if there has been no
+raise, this indicates the number of players who have called the big
+blind in an attempt to see the flop cheaply.&nbsp; The more limpers,
+the higher the pot odds and, for example, the more likely a drawing
+hand like suited connectors is to be profitable.&nbsp; On the other
+hand, the more limpers, the larger the pot that can be stolen by a
+player in late position, from a bunch of players who have shown
+marginal strength at best.<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top"><b>Pot has been Raised.<br>
+            </b></td>
+            <td valign="top">Indicates there has been an opening bet
+(post-flop) or raise (pre-flop).<br>
+            </td>
+          </tr>
+          <tr>
+            <td valign="top"><b>Pot has been Re-Raised.</b><br>
+            </td>
+            <td valign="top">Indicates there has been a re-raise.<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td align="left" nowrap="nowrap" width="100"><strong>Players Left<br>
+      </strong></td>
+      <td> 
+        <table border="1" cellpadding="2" cellspacing="2" width="100%">
+        <tbody>
+          <tr>
+            <td valign="top">The number of players left in the hand,
+and how many of them
+are still to act after you.&nbsp; If any players are all-in, this is
+also indicated, as all-in players may still beat you for the portion of
+the pot they are eligible to win, potentially affecting the value of
+otherwise good pot odds. </td>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</p><p><b>Decision Factors</b></p>
+<p>When deciding what to recommend, the advisor considers a number of
+possible outcomes, described in the Dashboard Advice section.&nbsp; The
+outcomes that were considered are listed in
+descending order of "strength", so the final recommendation will be
+listed first. Outcome colors indicate relative strength, with bright
+green being the strongest, bright red being the weakest.&nbsp; Dim
+colors are more neutral in value.<br>
+</p>
+<p>Factors
+that influenced each outcome are also listed in descending order of
+"strength", with strong positives being bright green, and strong
+negatives being bright red.<br>
+</p>
+<p>It is not possible to enumerate here all the details of the process
+by which these factors are considered and scored. Many are influenced
+by past betting activity in the current hand and previous hands, the
+position of play style sliders in the advisor's Player Type definition,
+and other details of the situation.&nbsp; It is also beyond the scope
+of DD Poker to provide in-depth explanations of the reasons that these
+factors are important.&nbsp; We leave that to the excellent and
+ever-growing body of poker literature.<br>
+</p>
+<p>Below is a list of the factors that currently appear in support of
+the advisor's recommendations:<br>
+</p>
+<p><b>Situational Basics:<br>&nbsp;
+</b></p>
+<table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top"><b>Default Action</b><br>
+      </td>
+      <td valign="top">In most situations, there is an outcome that will be recommended unless
+there is sufficient reason to recommend another.&nbsp; For instance, by
+default the advisor will recommend that you fold before the flop,
+unless the situation and/or strength of your hand suports a decision to
+play.</td>
+    </tr>
+<tr valign="top"> 
+      <td><strong>Position</strong></td>
+      <td>Your position in the betting order.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>First Action</b></td>
+      <td>You are first to act.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Left To Act</b></td>
+      <td>Number of players left to act after you.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Players Left</b></td>
+      <td>Number of players left in the hand.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Bet to Call</b></td>
+      <td>Amount of the bet to call.</td>
+    </tr>
+    <tr valign="top"> 
+      <td align="left" width="100"><strong>Pot Odds<br>
+      </strong></td>
+      <td>Size of the pot in relation to the amount to call.<br>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Raw Hand Strength</b></td>
+      <td>Basic measure of the strength of your hand.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Biased Hand Strength</b></td>
+      <td>Adjustment to the strength of your hand considering the number of opponents 
+        and the hands they are likely to be holding.</td>
+    </tr>
+    <tr valign="top"> 
+      <td align="left" width="100"><strong>Hand Potential<br>
+      </strong></td>
+      <td>Estimated probability that your hand will improve to win.<br>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td align="left"><b>Risk of Being Outdrawn</b><br>
+      </td>
+      <td>Estimated probability that your opponent will draw out on your currently 
+        winning hand.<br>
+      </td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Implied Odds</b></td>
+      <td>Estimate of additional chips in the pot from future betting rounds.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Steal Potential</b></td>
+      <td>Estimated probability that you can steal the pot with a bet.</td>
+    </tr>
+    <tr valign="top"> 
+      <td><b>Probe Bet</b></td>
+      <td>Extent to which a probe bet to test the waters seems like a good idea.</td>
+    </tr>
+  </tbody>
+</table>
+<p><b>Tournament Strategy:<br>&nbsp;
+</b></p>
+<table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="100"><strong>Stack Size </strong><br>
+      </td>
+      <td valign="top">Size of your stack.&nbsp; When the blinds are
+large and your stack small, your strategy must change. </td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Blind Coming Soon</b></td>
+      <td valign="top">When short stacked, as the blinds get closer,
+you can't be as choosy about hands.</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Raiser Stack Size</b></td>
+      <td valign="top">Size of the raiser's stack.&nbsp; Short-stacked
+raisers are a small threat and have low credibility.</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<b>Tendencies:<br>
+<br>
+</b>
+<table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="100"><strong>Aggression</strong>
+      </td>
+      <td valign="top">Relative aggressiveness of the advisor, as
+defined by the Aggression slider.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" width="100"><strong>Tilt</strong> </td>
+      <td valign="top">Effect of steam from a recent bad beat, subject
+to influence by the Tilt slider.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Boredom</b><br>
+      </td>
+      <td valign="top">Extent to which hand selection is loosened up by
+cold cards.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Flush Draw</b><br>
+      </td>
+      <td valign="top">Effect of Drawing Hands sliders on the perceived
+value of flush draws.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Straight Draw</b><br>
+      </td>
+      <td valign="top">Effect of Drawing Hands sliders on the perceived
+value of straight draws.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<b>Continuation Betting:<br>
+<br>
+</b>
+<table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+  <tbody>
+    <tr>
+      <td align="left" valign="top"><b>Pre-Flop Position</b><br>
+      </td>
+      <td valign="top">Your position before the flop.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>First Pre-Flop Raiser</b><br>
+      </td>
+      <td valign="top">You were the first raiser before the flop.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Last Pre-Flop Raiser</b><br>
+      </td>
+      <td valign="top">You were the last raiser before the flop.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Only Pre-Flop Raiser</b><br>
+      </td>
+      <td valign="top">You were the only raiser before the flop.</td>
+    </tr>
+  </tbody>
+</table>
+<b><br>
+Opponent Play:<br>
+<br>
+</b>
+<table border="1" bordercolor="#000000" cellpadding="3" cellspacing="0">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="100"><strong>Steal Suspected
+      </strong></td>
+      <td valign="top">Extent to which the raiser is suspected of
+trying to steal the blinds. <br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" width="100"><strong>Opponent Bet
+Frequency</strong></td>
+      <td valign="top">Frequency with which the bettor has been
+observed opening the pot after the flop.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" width="100"><strong>Opponent Raise
+Frequency </strong><br>
+      </td>
+      <td valign="top">Frequency with which the raiser has been
+observed raising the pot.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Opponent Overbet Frequency</b><br>
+      </td>
+      <td valign="top">Frequency with which the raiser has been
+observed overbetting the pot after the flop.<br>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Opponent Bet-Fold Frequency</b></td>
+      <td valign="top">Frequency with which the bettor has been
+observed to bet after the flop but then fold to a raise.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Raiser Position</b><br>
+      </td>
+      <td valign="top">Position the raiser is in.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Re-Raiser Position</b><br>
+      </td>
+      <td valign="top">Position the re-raiser is in.<br>
+      </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><b>Checked Around Prior Round(s)</b><br>
+      </td>
+      <td valign="top">Extent to which one or more rounds with no
+action is considered a stealing opportunity, or indicates your marginal
+hand may be a winner.<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<table border="1" width="100%">
+  <tbody>
+    <tr bgcolor="#1d4a07">
+      <td align="center">
+      <div align="center"><strong><font color="#ffff00" size="+1">Details
+- Strategy Tab </font></strong></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The Strategy tab allows you to alter the current Player Type being
+used as the advisor and view the Recommendation Matrix of hands. The
+Recommendation Matrix shows you what the advice would be in the current
+situation for every hole card combination you
+could hold by mousing over each block in the matrix.&nbsp; The matrix
+is color coded, so that you can see at a glance the relative strength
+of your position, and what types of hand look good to the
+advisor.&nbsp; A general rule of thumb is that
+green means bet/raise, yellow means check/call, and red means fold,
+with the darker colors generally indicating deceptive moves.</p>
+<p>Before the flop, any pair, suited, or unsuited hand is equivalent to
+every other of the same rank, regardless of suit, so the matrix is
+broken into a 13x13 grid, with AA at the upper left, and 22 at the
+lower right.&nbsp; Blocks in the upper-right portion of the matrix
+represent suited hands, and blocks in the lower-right represent
+unsuited hands.<br>
+</p>
+<p>After
+the flop, it starts to matter which particular cards you're holding.
+For instance, if there are two hearts on the board and you have top
+pair, ace kicker, it makes a difference if your cards are both hearts.
+So on the upper right, or suited portion of the matrix, each block is
+broken into four squares, one for each suit. On the lower left, or
+unsuited portion of the matrix (including the pairs), each block is
+broken into sixteen squares, each representing a different combination
+of cards. Post-flop matrices are further complicated by black spaces
+for suited combinations on the unsuited portion of the matrix, pair
+combinations that would mean two of the same card, and hands that would
+include a card that's already on the board. <br>
+</p>
+<table border="0" cellpadding="2" cellspacing="2" height="220" width="100%">
+  <tbody>
+    <tr>
+      <td colspan="1" rowspan="1" align="center" valign="top">
+      <p>Example Pre-Flop Matrix<br>
+      <img alt="" src="../images/matrix1.jpg" height="180" width="180"></p>
+      </td>
+      <td colspan="1" rowspan="1" align="center" valign="top">
+      <p align="center">Example Post-Flop Matrix<br>
+      <img alt="" src="../images/matrix2.jpg" height="180" width="180"></p>
+      </td>
+    </tr>
+    <tr>
+    </tr>
+  </tbody>
+</table>
+<p align="left">Once a matrix is complete (instantaneous pre-flop), mouse-over 
+  will bring up the specific hands represented and the recommended play in the 
+  help area. The matrix is useful for seeing that a better kicker or suited cards 
+  would improve the value of your hand, for spotting strong hand possibilities 
+  you may have missed, and things like that. They're also useful for seeing how 
+  the sliders affect AI/Advisor play. They're mainly a rough visualization though; 
+  for getting a general sense of how the advisor would play in a situation.</p>
+<p align="center"> <strong><a href="https://www.ddpoker.com/"><font size="-1">DD Poker Website</font></a></strong></p>
+</body></html>

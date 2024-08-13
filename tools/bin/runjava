@@ -1,0 +1,106 @@
+#!/bin/bash
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# DD Poker - Source Code
+# Copyright (c) 2003-2024 Doug Donohoe
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# For the full License text, please see the LICENSE.txt file
+# in the root directory of this project.
+# 
+# The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+# graphics, text, and documentation found in this repository (including but not
+# limited to written documentation, website content, and marketing materials) 
+# are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+# 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+# without explicit written permission for any uses not covered by this License.
+# For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+# in the root directory of this project.
+# 
+# For inquiries regarding commercial licensing of this source code or 
+# the use of names, logos, images, text, or other assets, please contact 
+# doug [at] donohoe [dot] info.
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Script to run any java class
+
+# must have two params
+if [[ -z "$1" || -z "$2" ]]; then
+	echo "Usage: runjava [module] [class]"
+	exit 1
+fi
+
+# get module
+module=$1
+shift;
+
+# verify module dir
+#
+MODULE_DIR=${WORK}/ddpoker/code/$module
+
+if [ ! -d "$MODULE_DIR" ]; then
+	echo "Module dir not found: $MODULE_DIR"
+	exit 1
+fi
+
+# verify classes dir exists
+#
+MAIN_CLASSES=${MODULE_DIR}/target/classes
+if [ ! -d "$MAIN_CLASSES" ]; then
+	echo "Classes directory not found: $MAIN_CLASSES"
+	exit 1
+fi
+
+# verify jar file exists
+#
+#TODO: use this for production
+#MAIN_JAR=${MODULE_DIR}/target/$module-1.0-SNAPSHOT.jar
+#if [ ! -f $MODULE_JAR ]; then
+	#echo "Module jar not found: $MODULE_JAR"
+	#exit 1
+#fi
+
+# verify dependency files exist
+#
+DEP_LIST=${MODULE_DIR}/target/classpath.txt
+
+if [ ! -f "$DEP_LIST" ]; then
+	echo "Dependency list  not found: $DEP_LIST"
+	exit 1
+fi
+
+# build classpath (replace local jar files with class)
+if [ "${OSTYPE}" = "cygwin" ]; then
+	DEPENDENCIES=$(sed -e "s/target[^;]*/target\/classes/g" "$DEP_LIST")
+	CLASSPATH="${MAIN_CLASSES};${MAIN_JAR};${DEPENDENCIES};${EXTRA_CLASSPATH}"
+else
+	DEPENDENCIES=$(sed -e "s/target[^:]*/target\/classes/g" "$DEP_LIST")
+	CLASSPATH="${MAIN_CLASSES}:${MAIN_JAR}:${DEPENDENCIES}:${EXTRA_CLASSPATH}"
+fi
+#echo "CLASSPATH: $CLASSPATH"
+
+# run java
+OPTS="-Dfile.encoding=UTF-8"
+JAVA=$JAVA_HOME/bin/java
+
+# echo if this env var set (by calling script)
+if [ "$ECHO_JAVA" = "true" ]; then
+	echo "$JAVA" $OPTS -cp "$CLASSPATH" "$@"
+	exit 0
+fi
+
+# exec it if this env var set (by calling script)
+if [ "$EXEC_JAVA" = "true" ]; then
+	echo "Exec'ing java from pid $$"
+	exec $JAVA $OPTS -cp "$CLASSPATH" "$@"
+else
+	$JAVA $OPTS -cp "$CLASSPATH" "$@"
+fi

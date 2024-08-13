@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+>
+
+  <!-- Turn on processing for @Transactional annotations -->
+  <tx:annotation-driven transaction-manager="transactionManager"/>
+
+  <!-- Turn on auto scanning for DAOs (@Repository, @Service annotations) -->
+  <context:component-scan base-package="com.donohoedigital"/>
+
+  <!-- application properties -->
+  <context:property-placeholder location="classpath:application.properties"/>
+
+  <!-- single connection data source -->
+  <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+  <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+  <!--<property name="url" value="jdbc:mysql://localhost/poker?useSSL=false"/>-->
+  <!--<property name="username" value="poker"/>-->
+  <!--<property name="password" value="p0k3rdb!"/>-->
+  <!--</bean>-->
+
+  <!-- DESIGN note:
+    To start HSQLDB:
+      java -cp ../lib/hsqldb.jar org.hsqldb.Server -database.0 file:pokertest -dbname.0 pokertest
+
+    1) Change jdbcUrl, password.  Set dialect and auto-gen DDL (below)
+  -->
+
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    <property name="jdbcUrl" value="jdbc:mysql://${db.host}/poker?useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false"/>
+    <property name="user" value="poker"/>
+    <property name="password" value="p0k3rdb!"/>
+    <!--<property name="driverClass" value="org.hsqldb.jdbcDriver"/>-->
+    <!--<property name="jdbcUrl" value="jdbc:hsqldb:hsql://localhost/poker"/>-->
+    <!--<property name="user" value="sa"/>-->
+    <!--<property name="password" value=""/>-->
+    <property name="initialPoolSize" value="0"/>
+    <property name="minPoolSize" value="1"/>
+    <property name="maxPoolSize" value="5"/>
+    <property name="maxIdleTime" value="21600"/>
+    <!-- 6 hours -->
+    <property name="acquireIncrement" value="1"/>
+    <property name="acquireRetryAttempts" value="0"/>
+  </bean>
+
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="persistenceXmlLocation" value="${jpa.persistence.location}"/>
+    <property name="persistenceUnitName" value="${jpa.persistence.name}"/>
+    <property name="jpaVendorAdapter">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <!-- controlled via log4j -->
+        <property name="showSql" value="false"/>
+        <property name="generateDdl" value="false"/>
+        <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
+        <!--<property name="generateDdl" value="true"/>-->
+        <!--<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>-->
+      </bean>
+    </property>
+    <!-- how to specify hibernate specific settings -->
+    <!--<property name="jpaPropertyMap">-->
+    <!--<map>-->
+    <!--<entry key="foo" value="bar"/>-->
+    <!--</map>-->
+    <!--</property>-->
+  </bean>
+
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+  </bean>
+
+  <!-- post-process for @PersistenceContext and exception translation -->
+  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+  <!-- common beans -->
+  <bean name="regAnalyzer" class="com.donohoedigital.games.server.RegAnalyzer" lazy-init="true"/>
+  <bean name="banApp" class="com.donohoedigital.games.server.Ban" lazy-init="true"/>
+
+</beans>

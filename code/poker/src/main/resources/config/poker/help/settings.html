@@ -1,0 +1,701 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<html>
+
+<body>
+
+<!-- MAIN TOURNAMENT SETTINGS PAGE  HEADER *************************************************************************-->
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td colspan="2">&nbsp;<img src="../images/ddspade48.png" width="48" height="48">&nbsp;<font color="#1D4A07"
+                                                                                                    size="+2"><strong>Edit
+            Tournament Settings </strong></font><br></td>
+    </tr>
+</table>
+
+<p> Whether you are starting a <a href="practice.html">Practice</a>, <a href="online.html">Online</a>,
+    or <a href="clockboard.html">Poker Clock</a> tournament, you may modify the
+    tournament settings to your liking by clicking the <strong>Edit</strong> button.
+    The Edit Tournament window is divided into five tabs. </p>
+
+<p align="center"><br>
+    <img src="../images/edittournamentscreen.jpg" width="450" height="315"></p>
+
+<p> &nbsp;
+    <!-- DESCRIPTION TAB -->
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Description Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+<div align="center"><br>
+    <img src="../images/descriptionscreen.jpg" width="450" height="344">
+
+    <br>
+    <br>
+</div>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-1.png" width="35" height="36">
+        </td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Tournament Name </strong></td>
+                    <td valign="top">Define the name of your tournament.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Description</strong></td>
+                    <td>Describe your tournament in as much detail as you wish.</td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-2.png" width="35" height="36">
+        </td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Online Greeting </strong></td>
+                    <td>Enter an (optional) greeting from the host to each player that joins. The variable <font
+                            color="#000099">$name</font> will be replaced with the player's name. When you host a game,
+                        every time a player enters the poker lobby of your game, they will be sent a greeting
+                        pre-defined by you. The greeting will be further personalized to each player using their name.
+                        Example: Your greeting is &quot;Hello $name, welcome to my game.&quot; When the player Dave
+                        joins your game, the chat message printed will display &quot;Hello Dave, welcome to my game.&quot;
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-3.png" width="35" height="36">
+        </td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>OK</strong></td>
+                    <td valign="top">Click <strong>OK</strong> to save your tournament
+                        when you are finished. All tournament tabs will be saved. Note:
+                        The <strong>OK </strong>button is disabled when any entries are
+                        incorrect. For example: A big blind has a non-numeric value or the
+                        prize allocation does not add up to 100%. Incorrect tabs have a
+                        red exclamation mark in them. Incorrect entries can be found by
+                        looking for those with a light-red background.</p>
+                        <p>When you are done editing and click <strong>OK</strong>, the game
+                            will <strong>Verify</strong> the structure of your blinds and may
+                            automatically change the values if the &quot;rules&quot; are violated.
+                            Note: You may verify the tournament structure before clicking <strong>OK</strong>
+                            with the <strong>Verify</strong> button. The rules it uses are as
+                            follows: </p>
+                        <ul>
+                            <li>There must always be a small blind and a big blind if a level is defined.</li>
+                            <li>Blank levels are eliminated. Example: If you define levels 1, 3 and 4, this will be
+                                converted to levels 1, 2 and 3.
+                            </li>
+                            <li>The ante cannot be larger than the small blind and must be at least 5% of the small
+                                blind. This is done to ensure chip color-ups can occur at reasonable times. Example: It
+                                doesn't make sense to have a $3 ante with $10,000/$20,000 blinds.
+                            </li>
+                            <li>The small blind cannot be larger than the big blind.</li>
+                            <li> Blinds cannot be less than a prior level</li>
+                            <li>Antes can drop to zero, then raise again as long as they are higher then previous
+                                antes.
+                            </li>
+                            <li>Antes and blinds are rounded as follows:
+                                <ul>
+                                    <li>&nbsp;$1 to $100, rounded to nearest $1</li>
+                                    <li>&nbsp;$101 to $500, rounded to nearest $5</li>
+                                    <li>&nbsp;$501 to $1000, rounded to nearest $25</li>
+                                    <li>&nbsp;$1001 to $10,000, rounded to nearest $100</li>
+                                    <li>&nbsp;$10,001 to $100,000, rounded to nearest $1,000</li>
+                                    <li>&nbsp;$100,001 to $1,000,000, rounded to nearest $10,000</li>
+                                    <li>&nbsp;Over $1,000,000, rounded to nearest $100,000</li>
+                                </ul>
+                            </li>
+                            <li>Rounding is done to avoid blinds like $34,168 and to ensure chip color-ups can occur at
+                                reasonable times.
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Reset</strong></td>
+                    <td>Resets all the tournament settings to the values that existed when
+                        first opened the edit window.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Cancel</strong></td>
+                    <td>Cancels all changes and returns to the previous menu.</td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+</table>
+<p><br>
+
+
+    <!-- LEVELS & BLINDS TAB -->
+
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Levels &amp; Blinds Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+
+<p align="center"><img src="../images/levelscreen.jpg" width="450" height="345"></p>
+
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-1.png" width="35" height="36">
+        </td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Default Game </strong></td>
+                    <td>This selection sets the poker game to be played when the <strong>Game</strong>
+                        column is set to &quot;default&quot;. You may choose No Limit, Limit,
+                        or Pot Limit. See our <a href="holdem.html">Texas Hold'em</a> section
+                        to learn about Limit, No Limit and Pot Limit.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Default minutes </strong></td>
+                    <td>Specify how long levels last in the tournament. Hint: The pace of an online tournament moves
+                        quicker then a practice game simulating a tournament at an actual casino. Therefore the minutes
+                        should be decreased by at least half for an online tournament. <br><br>
+                        This is the time used for each level when entries in the <strong>Minutes</strong> column are
+                        left blank. You may override the default value for any level by typing a time in the <strong>Minutes</strong>
+                        column. The minimum is 1 minute and the maximum is 120 minutes (2 hours). The <strong>Hands per
+                            Hour</strong> preference on the options page is used to calculate how many hands are played
+                        during a level in practice.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Max Raises</strong></td>
+                    <td>Sets the maximum number of raises used in a Limit Poker Game. (Limit only)</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Ignore max raises when heads-up </strong></td>
+                    <td valign="top">If this checkbox is checked, the maximum number of raises
+                        in limit games is ignored when only two players are left in the hand.
+                        This means players may continue raising as long as they desire and
+                        have chips. (Limit only)
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-2.png" width="35" height="36">
+        </td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Ante</strong></td>
+                    <td>Enter the ante for the level. Most tournaments do not have an ante, and those that do, typically
+                        start at later levels.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Small Blind </strong></td>
+                    <td>Enter the small blind for the level. Except in the first few levels of a tournament, the small
+                        blind is typically 1/2 to 2/3 the size of the big blind.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Big Blind </strong></td>
+                    <td>Enter the big blind for the level.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Minutes</strong></td>
+                    <td>Change how long the levels last from one level to the next. Although it is not common for a
+                        tournament to change the time from one level to the next.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Game</strong></td>
+                    <td>Change the game type in mid-game from No Limit, Limit and Pot Limit.
+                        If default is left, the game displayed under <strong>Default Game</strong>
+                        will be played every level. It is not typical to use this option,
+                        although some tournaments begin with Limit, and end with No Limit.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Double Blinds Checkbox </strong></td>
+                    <td valign="top">This checkbox dictates what happens if the tournament
+                        is still ongoing after the last defined level expires. If it is selected,
+                        the blinds and antes double every new level, starting with the last
+                        defined level. If this checkbox is not selected, the blinds and antes
+                        remain as defined in the last level.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-3.png" width="35" height="36">
+        </td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Add Level </strong></td>
+                    <td>Add a level below the highlighted level.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Add Break </strong></td>
+                    <td>Add a timed break. Although only seen for a brief few seconds in
+                        practice mode, tournament formats with breaks will execute a timed
+                        break for online games and home tournaments using the Poker Clock.
+                        Note: A break will be assigned a level number.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Delete</strong></td>
+                    <td>Delete the highlighted level.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Verify</strong></td>
+                    <td>Run the logic to verify that the antes and blinds adhere to the
+                        DD Poker rules. See the <strong>OK</strong> button description above
+                        for the rules. By clicking the <strong>OK</strong> button, the verify
+                        check will automatically be run as you ok the tournament and exit
+                        the settings. The <strong>Verify</strong> button simply allows you
+                        to check your numbers without leaving the settings window.<br>
+                        <br>
+                        Example: Doing so will remove blank levels and round antes/blinds as described in the
+                        description tab above.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p><br>
+
+    <!-- MONEY & PRIZES TAB -->
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Number of Players / Money &amp; Prizes
+                Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+
+<p align="center"><img src="../images/moneyscreen.jpg" width="450" height="344"></p>
+
+<br>
+<table border="0">
+    <tr>
+        <td width="100" valign="top"><strong>Number of Players </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Number of Players </strong></td>
+                    <td>Enter the number of players to play in the tournament. (maximum of 5625 players) <br>
+                        <ul>
+                            <li>Online games can fill the table with AI opponents if enough
+                                human players are not available using the <strong>Fill With Computer
+                                    Players</strong> option in the online tab.
+                            </li>
+                            <li> The <strong>Host a Home Game</strong> tournament using the <strong>Poker
+                                Clock </strong>will use this number for the initial calculation of the prize pool.
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Max Per Table</strong></td>
+                    <td valign="top">Enter the maximum number of players at a table (2-10). This is useful for
+                        simulating short-handed or heads-up tournaments.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" valign="top"><strong>Buy-in</strong></td>
+        <td>The <strong>Buy-in, Rebuys and Add-ons</strong> area is
+            where you define how much it costs to play in the tournament. These costs
+            are used to track how much profit (or loss) you have in your tournament
+            history.<br>&nbsp;
+
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Buy-in</strong></td>
+                    <td>Specify the amount it costs to enter the tournament and the number of tournament chips with
+                        which you start. Some tournaments have a flat fee (like the $10,000 World Championship). Other
+                        tournaments charge a fee to cover the house costs. For example, a $100 + $10 tournament is a
+                        $100 buy-in plus a $10 fee. Enter $110 in the <strong>Buy-in</strong> field and account for the
+                        $10 house fee in the <strong>Prize Pool </strong>section. If the tournament you are emulating
+                        has a bonus chip purchase, add this into your buy-in amount also.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" valign="top"><strong>Rebuys</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Rebuys</strong></td>
+                    <td>If the tournament allows rebuys, check the <strong>Rebuys </strong>checkbox. Enter the rebuy
+                        cost and the number of chips it equals. Most tournaments only allow rebuys during the first part
+                        of a tournament (typically the first hour, and always corresponding to the end of a level).
+                        Enter the end of the level you wish to stop rebuys. <br>
+                        <br>
+                        The maximum number of rebuys is specified here. Enter zero (0) if the number of rebuys are
+                        unlimited.<br>
+                        <br>
+                        If a tournament has rebuys, you may enter the maximum value of chips the player may rebuy. Then
+                        set if the players chips can be less then the maximum chip value or less then or equal to the
+                        maximum chip value. Note: You can set the value to 999999 if there is no maximum chip value the
+                        player can have to rebuy. This is usually done when there is only 1 rebuy allowed.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" valign="top"><strong>Add-ons</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Add-ons</strong></td>
+                    <td>Some tournaments allow one more chip purchase at the end of a specified level. Add-ons are
+                        allowed regardless of your current chip count.<br>
+                        <br>
+                        If the tournament allows add-ons, check the <strong>Add-on</strong> checkbox. Enter the add-on
+                        cost and the number of chips it equals. Also specify at the end of which level the add-on is
+                        allowed (typically this is the same as the end of the rebuy period).
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" valign="top"><strong>Prize pool</strong></td>
+        <td>The <strong>Prize Pool and Prize Allocation </strong>area<strong>
+        </strong>is where you define how the payouts are calculated.<br>&nbsp;
+
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Payouts<br></strong></td>
+                    <td>You can specify one of 3 payout methods.
+                        <ul>
+                            <li>Prizes are paid to a fixed percentage of the number of players.
+                            </li>
+                            <li>Prizes are paid to a fixed number of spots.</li>
+                            <li>A Satellite Payout will pay as many spots as possible, each equal to the payout amount
+                                specified in the Prize Allocation section. Any money left over in the prize pool due to
+                                rebuys or add-ons is paid to the player on the &quot;bubble&quot;. <br>
+                                <br>
+                                The maximum number of spots is limited to 33% of the players up to a maximum of 560
+                                spots.
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>House Cut</strong></td>
+                    <td>To pay for hosting a tournament, the card room either takes a percentage of the total buy-in
+                        (rebuys and add-ons) or charges a fixed fee as part of the buy-in. To accurately reflect the
+                        prize pool, you can specify those values here.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+
+    <tr>
+        <td width="100" valign="top"><strong>Prize Allocation </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Prize Allocation</strong></td>
+                    <td>There is no &quot;official&quot; algorithm for calculating prize payouts - there are many
+                        opinions on this topic in the poker community. DD Poker allows you to specify the payouts in
+                        three ways:
+                        <p><strong>1. Donohoe Digital Automatic Algorithm - </strong>This algorithm automatically
+                            adjusts for changes to the number of players and payout spots. The algorithm is a close
+                            approximation to what you might see in major tournaments. It pays increasing multiples of
+                            the buy-in (starting at 1.5x and increasing by .5x) to tables outside of the final table.
+                            The final table is allocated using the &quot;golden ratio&quot; proportion derived from the
+                            Fibonacci sequence.</p>
+
+                        <p><strong>2. Percentage </strong>- With this option, you manually specify the percent of the
+                            prize pool each spot gets. The total percentage must equal 100%. This option is good for
+                            home tournaments because it is not impacted by a change in the number of players.</p>
+
+                        <p><strong>3. Fixed Amount - </strong>With this option, you specify a fixed dollar amount. The
+                            total amount must equal the prize pool. This is a good option for replicating historical
+                            tournaments where you know the actual payouts.</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+<br>
+
+<!-- OPPONENT MIX TAB -->
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Opponent Mix Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+
+<p align="center"><img src="../images/opponentmixscreen.jpg" width="450" height="345"></p>
+
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Opponent Mix </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>AI Opponent Mix </strong></td>
+                    <td valign="top">Set the percentage of the AI player type that will sit at your table. Since the
+                        total number of player must equal 100%, the Solid player automatically increases when decreasing
+                        other player types, and decreases as you increase other player types. See Opponents in the <a
+                                href="options2.html">AI Options</a> for more information on player types.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<p><br>
+    <!-- OPPONENT MIX TAB -->
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Online Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p align="center"><img src="../images/onlinetabscreen.jpg" width="450" height="344"></p>
+<br>
+<table border="0">
+
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Players</strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Invitation Only </strong></td>
+                    <td valign="top">If checked, only players on the invite list are allowed to join and play the game.
+                        When the Invitation Only checkbox is checked, the <strong>Invite List</strong> button will
+                        enable and turn white. Click the <strong>Invite List</strong> button to add player's names to
+                        the list. When the <strong> Public Observers Allowed</strong> checkbox is checked, any observer
+                        with your game url may join as an observer, otherwise only observers on the <strong>Invite
+                            List</strong> may join as an observer. <br>
+
+                        <p> You have two methods to add players to the invite list:<br>
+                            <br>
+                            Method 1: Click the <strong>Table</strong> tab to type in a single name, then click the
+                            <strong>Add</strong> button to add that player to the list. Repeat the process above until
+                            all the invited players are on the list. You may remove a player by highlighting the player
+                            name in the table with the mouse and clicking the <strong>Delete</strong> button. <br>
+                            <br>
+                            Method 2: The <strong>Text (CSV)</strong> tab gives you the ability to cut and paste an
+                            entire list of players to the invite list. This is handy for hosts whom already have a list
+                            of players saved elsewhere and wish to transfer them all in at once.<br>
+                            <br>
+                            Note: Players may still observe your game even if they are not on the invite list.<br>
+                            <br>
+                            Note: CSV is a standard format that stands for Comma Separated, Values. The entire invite
+                            list can be typed in here, with each player name separated by a comma.<br>
+                            <br>
+                            Hint: You can copy the entire invite list from the Text (CSV) tab by highlighting selected
+                            text with your mouse and pressing CTRL-C to copy on Windows, or Apple-C on mac. Once in the
+                            clipboard, you may paste the list by pressing CTRL-V on Windows, or Apple-V on mac. <br>
+                            <br>
+                            Hint: The Invite List is specific to only the tournament you are editing and will be
+                            permanently saved with that tournament when you edit it before opening the poker lobby. This
+                            allows you to save different invite lists with different types of tournaments. </p></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Enable Dashboard Items </strong></td>
+                    <td valign="top">If checked, the Calculator Tool, Pot Odds, Improve Hand, and Hand Strength DD
+                        Dashboard items are turned on for all players. This allows players to use the same tools that
+                        are available in practice mode.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Enable Dashboard Advisor and Playstyle </strong>
+                    </td>
+                    <td valign="top">If checked, the Advisor and Player Style dashboard items are turned on for all
+                        players. This allows players to use the advisor in game for advise or auto-pilot.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Fill With Computer Players </strong></td>
+                    <td valign="top">If checked, empty seats are filled with computer players (up to the number of
+                        players defined for this tournament, or the DD Poker online maximum).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Allow Players Using DD Poker Demo To
+                        Join</strong></td>
+                    <td valign="top">If checked, players running the demo version of DD Poker are allowed to participate
+                        in the tournament. Note that the demo players are only allowed to play 15 hands in a tournament
+                        and are forced to sit-out after that limit has been reached. See <strong>Sit-out</strong> in the
+                        <a href="gameboard.html">Poker Table</a> help. Note: You are permitted to host a private online
+                        tournament using the demo, although every game will be dealt the same cards.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Online Activated Players Only</strong></td>
+                    <td valign="top">If checked, requires that all
+                        players who join the game have Online Activated DD Poker profiles. This helps
+                        prevent 'impostors' from joining public games by typing in the connect URL directly.
+                        If not checked, allows
+                        any player to join a game (intended for use in LAN games where players on the local network
+                        may not necessarily be Online Activated).
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Observers</strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Maximum Observers </strong></td>
+                    <td valign="top">The maximum number of observers allowed to watch your tournament. Note: As players
+                        bust out of chips, they are automatically converted to observers. This does not count toward the
+                        Maximum Observer count.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Timeout Handling </strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Player Action Timeout </strong></td>
+                    <td valign="top">Amount of time in seconds a player has to act in an online tournament before their
+                        think bank timer is tapped. This clock resets each time the action reaches the player. The host
+                        may adjust this timer for everyone during the game in the online settings tab in the Info pop up
+                        by clicking the <strong>Info</strong> button during the game. Range is 5 to 60.<br><br>
+                        Hint: The host may adjust the Player Action Timeout and the Player Think Bank on the fly from
+                        the online settings tab of the Info button. </p></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Player Think Bank</strong></td>
+                    <td valign="top">Total amount of extra time for the tournament a player may use when considering
+                        what action to take over the course of a hand. After the time specified by <strong>Player Action
+                            Timeout</strong> has expired, then the time in the <strong>Think Bank</strong> is
+                        automatically used. Once all the seconds in the <strong>Think Bank</strong> have been used, your
+                        player sit-out box is automatically checked and your cards will be auto folded until you uncheck
+                        the sit-out box. The Player Think Bank resets after each hand. Range is 0 to 60.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Boot Rules</strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Boot after player disconnected for X
+                        hands </strong></td>
+                    <td valign="top">Turn ON if you (the host) wish to boot (remove) a player from an online game after
+                        being disconnected for too many hands (5-100). DD Poker tracks the total number of hands a
+                        player has been disconnected during the course of the game, whether they have disconnected
+                        intentionally or not. If a player has reached the set number they will be booted from the game.
+                        Booted player's chips are removed from the game and they finish as if they busted out that hand.
+                        Use the <strong>Player Info</strong> DD Dash Item on the <a href="gameboard.html">Poker
+                            Table</a> to track the total number of <strong>Disconnected Hands</strong>. Hint: The host
+                        may adjust the <strong>Boot Rules</strong> on the fly during the game by clicking the <strong>Info</strong>
+                        button on the poker table and navigating to the <strong>Online Settings</strong> Tab.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Boot after player sits-out for X hands </strong>
+                    </td>
+                    <td valign="top">Turn ON if you (the host) wish to boot (remove) a player from an online game after
+                        sitting out too many hands (5-100). DD Poker tracks the total number of hands a player has sat
+                        out during the course of the game. If a player has reached the set number they will be booted
+                        from the game. Booted player's chips are removed from the game and they finish as if they busted
+                        out that hand. Use the <strong>Player Info</strong> DD Dash Item on the <a
+                                href="gameboard.html">Poker Table</a> to track the total number of <strong>Sitting-out
+                            Hands</strong>. Hint: The host may adjust the <strong>Boot Rules</strong> on the fly during
+                        the game by clicking the <strong>Info</strong> button on the poker table and navigating to the
+                        <strong>Online Settings</strong> Tab.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+
+</body>
+</html>

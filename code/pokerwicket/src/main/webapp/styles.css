@@ -1,0 +1,1430 @@
+/*
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * DD Poker - Source Code
+ * Copyright (c) 2003-2024 Doug Donohoe
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * For the full License text, please see the LICENSE.txt file
+ * in the root directory of this project.
+ * 
+ * The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+ * graphics, text, and documentation found in this repository (including but not
+ * limited to written documentation, website content, and marketing materials) 
+ * are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+ * 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+ * without explicit written permission for any uses not covered by this License.
+ * For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+ * in the root directory of this project.
+ * 
+ * For inquiries regarding commercial licensing of this source code or 
+ * the use of names, logos, images, text, or other assets, please contact 
+ * doug [at] donohoe [dot] info.
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ */
+/**
+ * YUI reset
+ */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset, img {
+    border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+ol, ul {
+    list-style-type: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+tr {
+    vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+abbr, acronym {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/**
+* global settings
+*/
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background: white;
+    color: black;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.spicy {
+    font-style: italic;
+    font-weight: bold;
+    color: red;
+}
+
+.mild {
+    font-style: italic;
+    font-weight: bold;
+    color: green;
+}
+
+.caption {
+    font-size: 85%;
+    font-style: italic;
+}
+
+.spacer10 {
+    height: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/**
+ * Wicket feedback panel
+ */
+
+li.feedbackPanelERROR {
+    color: red;
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+/**
+ * common
+ */
+
+.tiny {
+    font-size: 75%;
+}
+
+.small {
+    font-size: 85%;
+}
+
+.large {
+    font-size: 1.2em;
+}
+
+div.table-caption {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 125%;
+}
+
+div.footnote {
+    font-size: 75%;
+    padding-top: 10px;
+}
+
+input.text {
+    border: 1px solid #336600;
+    color: blue;
+    font-size: 115%;
+}
+
+select {
+    border: 1px solid #336600;
+    color: blue;
+    font-size: 108%;
+}
+
+.exception {
+    font-family: courier, monospace;
+    font-size: 11px;
+    padding-left: 40px;
+    padding-top: 10px;
+}
+
+/**
+ * currency
+ */
+
+.poker-number-negative {
+    color: red;
+}
+
+.poker-number-positive {
+    color: black;
+}
+
+/**
+ * links (default and nav bar)
+ */
+
+a:link {
+    color: blue
+}
+
+a:visited {
+    color: blue
+}
+
+a:hover {
+    color: #FF9900
+}
+
+a:active {
+    color: #00FFFF
+}
+
+a.nav:link {
+    color: #FFFFFF
+}
+
+a.nav:visited {
+    color: #FFFFFF
+}
+
+a.nav:hover {
+    color: #FF9900
+}
+
+a.nav:active {
+    color: #00FFFF
+}
+
+a.box {
+    padding: 0.05em 0.3em 0.05em 0.3em;
+    outline-color: invert;
+    outline-style: none;
+    outline-width: medium;
+    border: 1px solid #9AAFE5;
+    background: #FFFFFF;
+    color: #000000;
+    font-weight: bold;
+    font-size: 95%;
+    vertical-align: .05em;
+}
+
+a.box:hover {
+    border-color: #2E6AB1;
+    background: #FFFFD0;
+}
+
+a.name:link {
+    color: inherit;
+}
+
+a.name:visited {
+    color: inherit;
+}
+
+a.name:hover {
+    color: inherit;
+}
+
+a.name:active {
+    color: inherit;
+}
+
+/**
+* Title bar settings
+*/
+#titlebar {
+    width: 775px;
+    height: 75px;
+
+    margin: 0;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 0;
+    border-collapse: collapse;
+
+    padding: 0;
+}
+
+.titlebar-home {
+    background: url( images/titlebar3-home.jpg ) no-repeat;
+}
+
+.titlebar-online {
+    background: url( images/titlebar3-online.jpg ) no-repeat;
+}
+
+.titlebar-store {
+    background: url( images/titlebar3-store.jpg ) no-repeat;
+}
+
+.titlebar-admin {
+    background: url( images/titlebar3-none.jpg ) no-repeat;
+}
+
+.titlebar-error {
+    background: url( images/titlebar3-none.jpg ) no-repeat;
+}
+
+.titlebar-about {
+    background: url( images/titlebar3-about.jpg ) no-repeat;
+}
+
+.titlebar-download {
+    background: url( images/titlebar3-download.jpg ) no-repeat;
+}
+
+.titlebar-forums {
+    background: url( images/titlebar3-forums.jpg ) no-repeat;
+}
+
+.titlebar-support {
+    background: url( images/titlebar3-support.jpg ) no-repeat;
+}
+
+.titlebar-home {
+    display: block;
+    width: 70px;
+    height: 75px;
+}
+
+.titlebar-tab {
+    display: block;
+    width: 100px;
+    height: 42px;
+}
+
+td.titlebar-subtabs {
+    height: 28px;
+    padding-left: 18px;
+    vertical-align: middle;
+    color: yellow;
+}
+
+td.titlebar-subtabs .nav {
+    display: block;
+    padding-right: 24px;
+    float: left;
+    position: relative;
+}
+
+td.titlebar-spacer-end {
+    width: 5px;
+}
+
+td.titlebar-spacer-bottom {
+    height: 5px;
+}
+
+/**
+* current-profile
+*/
+div.current-profile {
+
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    text-align: right;
+    font-size: 80%;
+}
+
+div.current-profile span.name {
+    font-weight: bold;
+}
+
+div.current-profile em {
+    color: red;
+}
+
+/**
+ * content box
+ */
+#content {
+    width: 773px; /* 775 less 2px for border on left/right */
+
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 1px solid black;
+    border-top-width: 0;
+    border-collapse: collapse;
+
+    padding-top: 2px;
+    padding-bottom: 10px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.description {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+}
+
+.description ul {
+    padding-bottom: .5em;
+}
+
+.description li {
+    margin-left: 2em;
+    padding-bottom: .5em;
+    list-style-type: disc;
+}
+
+.description p {
+    padding-bottom: 1em;
+}
+
+.title {
+    text-align: center;
+    padding-bottom: 10px;
+
+    color: #336600;
+    font-weight: bold;
+    font-size: 140%;
+}
+
+.sub-title {
+    font-size: 75%;
+    font-weight: normal;
+}
+
+.title-smaller {
+    text-align: center;
+    padding-bottom: 15px;
+
+    color: black;
+    font-weight: bold;
+    font-size: 115%;
+    font-style: italic;
+}
+
+.title-banner {
+    text-align: center;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid black;
+
+    background: #CCCCCC;
+
+    color: black;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.description strong {
+    color: #006600;
+    font-weight: normal;
+}
+
+p.callout {
+    width: 600px;
+    padding: 10px;
+    border: 1px solid black;
+    margin-bottom: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: palegoldenrod;
+    font-size: 105%;
+}
+
+/**
+ * site map table
+ */
+#site-map {
+    width: 660px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+#site-map td {
+    padding: 5px;
+    padding-bottom: 15px;
+}
+
+#site-map td.col1 {
+    width: 150px;
+    text-align: right;
+    padding-right: 0px;
+}
+
+#site-map td.col1x {
+    width: 15px;
+    text-align: left;
+    padding-right: 10px;
+}
+
+#site-map td.col2 {
+    width: 430px;
+}
+
+/**
+ * copyright settings
+ */
+div.copyright {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+p.copyright {
+    font-size: 65%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/**
+ * form settings
+ */
+
+div.form-panel {
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+div.form {
+    border: 2px solid black;
+    width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #999999;
+}
+
+div.form-title {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    color: white;
+}
+
+div.form td {
+    padding: 5px;
+    vertical-align: middle;
+}
+
+div.form td.label {
+    color: yellow;
+    text-align: right;
+}
+
+div.form td.sample {
+    color: white;
+    text-align: left;
+    font-family: courier, monospace;
+}
+
+div.form label {
+    color: white;
+}
+
+li.form-style1-ERROR {
+    background-color: red;
+    color: white;
+    text-align: left;
+    padding: 5px;
+}
+
+li.form-style2-ERROR {
+    color: red;
+    text-align: center;
+}
+
+li.form-style2-INFO {
+    color: green;
+    text-align: center;
+}
+
+li.form-style3-ERROR {
+    list-style: disc;
+    color: red;
+    text-align: left;
+}
+
+li.form-style3-INFO {
+    padding-top: 4px;
+    color: green;
+    text-align: center;
+    font-size: 120%;
+}
+
+li.form-style4-ERROR {
+    color: red;
+    text-align: center;
+    font-size: 120%;
+}
+
+li.form-style4-INFO {
+    padding-bottom: 15px;
+    color: green;
+    text-align: center;
+    font-size: 140%;
+}
+
+/**
+ * aliases settings
+ */
+table.aliases {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
+table.aliases td.label {
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+table.aliases td.names {
+    width: 450px;
+    font-weight: normal;
+    font-size: 80%;
+    vertical-align: middle;
+}
+
+.alias-names {
+    margin-right: .75em;
+}
+
+/**
+ * general tournament-info table/CSS
+ */
+
+div.tournament-info-navigator {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table.tournament-info {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border: 2px solid #333333;
+}
+
+table.tournament-info th {
+    background-color: #333333;
+    text-align: center;
+    color: yellow;
+    padding: 2px;
+    border: 1px solid white;
+    font-weight: normal;
+}
+
+table.tournament-info tr.even {
+    background-color: #BBBBBB;
+}
+
+table.tournament-info tr.odd {
+    background-color: #DDDDDD;
+}
+
+table.tournament-info tr.highlight {
+    background-color: khaki;
+}
+
+table.tournament-info td {
+    padding: 2px 4px;
+    border: 1px solid white;
+    color: black;
+    vertical-align: middle;
+    text-align: right;
+}
+
+table.tournament-info td.right {
+    text-align: right;
+}
+
+table.tournament-info td.left {
+    text-align: left;
+}
+
+table.tournament-info td.top-left {
+    text-align: left;
+    vertical-align: top;
+}
+
+table.tournament-info td.left-small {
+    text-align: left;
+    font-size: 80%;
+}
+
+table.tournament-info td.left-highlight {
+    text-align: left;
+    color: blue;
+}
+
+table.tournament-info td.center {
+    text-align: center;
+}
+
+table.tournament-info td.number {
+    text-align: right;
+    padding: 2px 2px;
+    padding-left: 4px;
+    font-family: courier, monospace;
+}
+
+table.tournament-info span.addpadding {
+    padding-right: .4em;
+}
+
+/**
+ * paging
+ */
+
+.pagenav {
+    padding-bottom: 10px;
+}
+
+.pages {
+    font-size: 75%;
+}
+
+.rowcount {
+    text-align: right;
+    font-size: 95%;
+    vertical-align: middle;
+}
+
+/* defaults - disabled links */
+.pages a.link, .pages a.pagelink, .pages span.link, .pages span.pagelink {
+    background: #EEEEEE;
+    color: #888888;
+    border: 1px solid #AAAAAA;
+    display: block;
+    float: left;
+    margin-right: 3px;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    outline-color: invert;
+    outline-style: none;
+    outline-width: medium;
+    font-weight: bold;
+}
+
+/* current page */
+.pages span.pagelink {
+    background: #2E6AB1;
+    border: 1px solid #2E6AB1;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+/* active link to another page */
+.pages a.link, .pages a.pagelink {
+    border: 1px solid #9AAFE5;
+    background: #FFFFFF;
+    color: #000000;
+    font-weight: bold;
+}
+
+.pages a:hover {
+    border-color: #2E6AB1;
+    background: #FFFFD0;
+}
+
+.pages span.dots {
+    color: #000000;
+    display: block;
+    float: left;
+    padding-left: 0.45em;
+    padding-right: 0.45em;
+    margin-right: 3px;
+}
+
+/**
+ * game url panel
+ */
+
+div.url {
+    text-align: center;
+}
+
+div.url a.join {
+    font-size: 125%;
+    padding-right: .75em;
+    padding-left: .75em;
+}
+
+/**
+* games list
+*/
+
+div.games-list {
+    width: 740px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.games-list td.players-list {
+    width: 200px;
+    text-align: left;
+    font-size: 80%;
+}
+
+div.games-list td.url {
+    font-size: 80%;
+}
+
+div.games-list table.tournament-info td {
+    vertical-align: top;
+}
+
+/**
+ * leaderboard
+ */
+
+div.leaderboard {
+    width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.leaderboard-form-gap {
+    height: 10px;
+    font-size: 1px;
+}
+
+div.leaderboard .ai {
+    color: forestgreen;
+    font-style: italic;
+}
+
+div.leaderboard .current {
+    font-weight: bold;
+}
+
+/**
+ * tournament history
+ */
+
+div.tournament-history {
+    width: 750px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.retired {
+    color: red;
+}
+
+/**
+ * tournament detail
+ */
+
+div.tournament-detail-url {
+    margin-bottom: 20px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    padding: 5px 4px;
+    background-color: #DDDDDD;
+}
+
+div.tournament-finish {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+div.tournament-details {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tournament-details-unbold {
+    font-weight: normal;
+}
+
+div.tournament-createdate {
+    font-size: 75%;
+    text-align: center;
+    padding-top: 5px;
+}
+
+div.tournament-details table.tournament-info td.header {
+    background-color: #333333;
+    color: yellow;
+    text-align: right;
+    vertical-align: top;
+}
+
+div.tournament-details table.tournament-info table.sub-table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+    margin-bottom: 6px;
+    border: 2px solid #333333;
+}
+
+/* override tournament-info defaults */
+
+div.tournament-details table.tournament-info {
+    width: 700px;
+}
+
+div.tournament-details table.tournament-info td {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+div.tournament-details table.tournament-info th {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+/**
+ * search
+ */
+
+div.search-player {
+    width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.search-form {
+    padding-top: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    width: 500px;
+
+    text-align: center;
+}
+
+div.search-form table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.search-form td {
+    vertical-align: middle;
+    text-align: right;
+    padding: 2px;
+}
+
+div.search-form td.space-after {
+    padding-right: 20px;
+    text-align: left;
+}
+
+div.search-form label {
+    padding-right: 10px;
+}
+
+div.search-form .button {
+    text-align: center;
+}
+
+span.search-highlight {
+    border: 1px dotted #444444;
+}
+
+div.search-player table.tournament-info td {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+div.no-results {
+    padding-top: 5px;
+}
+
+div.no-results span {
+    font-weight: bold;
+    color: green;
+}
+
+div.search-player table.profile-info td.profile-info {
+    text-align: left;
+    padding: 0;
+    padding-left: 10px;
+    vertical-align: top;
+}
+
+div.search-player table.profile-info td {
+    border: 0;
+    margin: 0;
+    padding: 0 0 4px 0;
+    vertical-align: top;
+}
+
+span.password {
+    color: red;
+}
+
+/**
+ * host search
+ */
+
+div.host-list {
+    width: 500px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.host-search {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+div.host-search span.gap {
+    margin-right: 20px;
+}
+
+/**
+ * Home page
+ */
+
+#homepage {
+    background: url( images/websitemenu3.jpg ) no-repeat;
+
+    width: 773px; /* two less to not override border */
+
+    margin: 0;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 0;
+    padding: 0;
+    padding-top: 120px;
+}
+
+#homedetails td.imagerow {
+    width: 265px;
+    padding-top: 12px;
+    vertical-align: top;
+    text-align: center;
+}
+
+#homedetails td.imagerow-last {
+    width: 243px;
+}
+
+#homedetails td.detailsrow {
+    padding-left: 60px;
+    padding-top: 15px;
+    font-size: 1.2em;
+}
+
+#homepage li {
+    background-image: url( images/spade.jpg );
+    background-repeat: no-repeat;
+    background-position: 0 -.2em;
+    padding-bottom: 3px;
+    padding-left: 25px;
+}
+
+.donate-form {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.donate-form table {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #DDDDDD;
+    border: 2px solid black;
+}
+
+.donate-form td {
+    vertical-align: middle;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.donate-note {
+    font-size: 85%;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/**
+ * download
+ */
+div.download {
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 675px;
+}
+
+div.download td {
+    width: 225px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid green;
+    border-collapse: collapse;
+}
+
+.download-os {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+
+    background: #333333;
+    color: white;
+}
+
+.download-file {
+    font-size: 1.2em;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.download-alt {
+    font-size: .8em;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.download-reqs-title {
+    border-top: 1px solid green;
+    margin-top: 14px;
+    padding-top: 2px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.download-reqs {
+    padding-top: 5px;
+    padding-left: 15px;
+    font-size: .8em;
+}
+
+.download-reqs li {
+    list-style-position: inside;
+}
+
+/**
+ * about/details pages
+ */
+
+.float-right-doug-greg {
+    float: right;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    margin-right: 20px;
+    margin-left: 20px;
+    text-align: center;
+}
+
+div.abouttable {
+    margin-left: auto;
+    margin-right: auto;
+    width: 650px;
+    padding-top: 20px;
+}
+
+div.abouttable td {
+    vertical-align: top;
+    text-align: left;
+}
+
+div.abouttable td.imagecol {
+    width: 150px;
+    text-align: center;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+div.abouttable p.titlelink {
+    padding-bottom: 10px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+div.abouttable p {
+    padding-bottom: 10px;
+}
+
+/**
+ * wrapper div to reduce cut/paste work as much as possible
+ */
+
+div.legacy-details {
+    width: 730px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+div.legacy-details td {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 25px;
+}
+
+div.legacy-details ol li {
+    list-style: decimal;
+    list-style-position: outside;
+    padding-bottom: .25em;
+    margin-left: 2em;
+}
+
+div.legacy-details li {
+    list-style: disc;
+    list-style-position: outside;
+    padding-bottom: .25em;
+    margin-left: 2em;
+}
+
+div.legacy-details li ul {
+    padding-top: .25em;
+}
+
+div.legacy-details li ul li {
+    list-style: circle;
+    margin-left: 2em;
+    list-style-position: outside;
+}
+
+div.legacy-details li strong {
+    font-weight: bold;
+}
+
+div.legacy-details p strong {
+    display: block;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+div.legacy-details p {
+    padding-bottom: .5em;
+}
+
+div.legacy-details ul {
+    padding-bottom: .5em;
+}
+
+div.legacy-details tt {
+    color: green;
+    font-size: 1.1em;
+}
+
+/**
+ * support
+ */
+
+table.issue-list {
+    width: 650px;
+    border: 1px solid green;
+    padding: 5px;
+    border-collapse: collapse;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table.issue-list td {
+    border: 1px solid green;
+    padding: 5px;
+}
+
+tr.issue-header {
+    background-color: #FFFFCC;
+}
+
+.help-menu {
+    width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.help-menu table {
+    width: 650px;
+    margin-bottom: 20px;
+}
+
+.help-menu td {
+    padding: 10px;
+    border: 1px solid green;
+    border-collapse: collapse;
+}
+
+.known-links {
+    padding-right: 20px;
+    padding-left: 20px;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+ul.extra-space {
+    padding-bottom: 1em;
+}
+
+ul.extra-space li {
+    padding-bottom: 1em;
+}
+
+div.faq {
+    padding-top: 15px;
+}
+
+div.faq-question {
+    border-top: 1px solid green;
+    padding-top: 4px;
+    padding-bottom: 15px;
+    font-weight: bold;
+}
+
+/**
+ * my profile
+ */
+
+div.myprofile {
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table.myprofile {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td.myprofile {
+    padding: 5px 30px;
+
+}
+
+.myprofile-desc {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+}
+
+.myprofile-desc p {
+    padding-bottom: 1em;
+}
+
+.myprofile-desc ul {
+    padding-top: 10px;
+}
+
+.myprofile-desc li {
+    padding-left: 10px;
+    padding-bottom: 4px;
+    list-style: disc;
+    list-style-position: inside;
+}
+
+div.pw-form {
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+
+div.pw-form table {
+    border: 2px solid black;
+    background-color: #DDDDDD;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.pw-form td {
+    vertical-align: middle;
+    text-align: right;
+    padding: 2px;
+    padding-left: 10px;
+    color: green;
+}
+
+div.pw-form td.space-after {
+    padding-right: 15px;
+    padding-left: 2px;
+    width: 100px;
+    text-align: left;
+}
+
+div.pw-form label {
+    padding-right: 10px;
+}
+
+div.pw-form .button {
+    padding: 8px;
+    text-align: center;
+}
+
+/**
+ * store
+ */
+
+.store-items {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.store-items td {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+    font-size: 85%;
+}
+
+.store-items img {
+    padding-bottom: .5em;
+}
+
+.store-item {
+    width: 125px;
+    float: left;
+}
+
+.clearboth {
+    clear: both;
+}

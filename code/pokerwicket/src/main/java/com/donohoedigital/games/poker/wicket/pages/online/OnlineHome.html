@@ -1,0 +1,141 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker Online Game Portal</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+    <div class="title">
+        DD Poker Online Games Portal
+        &nbsp;<a href="OnlineHome.html#" wicket:id="rssAll"><img style="vertical-align:-1px;"
+                                                                 src="images/feed-icon-16x16.jpg"
+                                                                 alt="RSS - all games"></a><br/>
+    </div>
+    <div>
+        <div class="description">With DD Poker's online game play, you can host a game
+            and post it on our public games list so other DD Poker players can
+            join the game. To use this free service, all you need to do is activate
+            your player profile for use online.
+        </div>
+        <table id="site-map">
+            <tr>
+                <wicket:link>
+                    <td class="col1"><a href="Leaderboard.html">Leaderboard</a></td>
+                    <td class="col1x">&nbsp;</td>
+                    <td class="col2">See who is at the top of the leader board.</td>
+                </wicket:link>
+            </tr>
+            <tr>
+                <td class="col1">
+                    <wicket:link>
+                        <a href="CurrentGames.html">Current Games</a>
+                    </wicket:link>
+                </td>
+                <td class="col1x">
+                    <a href="OnlineHome.html#" wicket:id="rssCurrent"><img style="vertical-align:-1px;"
+                                                                           src="images/feed-icon-12x12.jpg"
+                                                                           alt="RSS - current games"></a>
+                </td>
+                <td>View the combined list of games you can join and games currently in progress (sign in required
+                    to see Game URL). You can also see an individual list of
+                    <wicket:link>
+                        <a href="AvailableGames.html">Available Games</a>
+                    </wicket:link>
+
+                    <a href="OnlineHome.html#" wicket:id="rssAvailable"><img style="vertical-align:-1px;"
+                                                                             src="images/feed-icon-12x12.jpg"
+                                                                             alt="RSS - available games"></a>
+                    or
+                    <wicket:link>
+                        <a href="RunningGames.html">In Progress Games</a>
+                    </wicket:link>
+                    <a href="OnlineHome.html#" wicket:id="rssRunning"><img style="vertical-align:-1px;"
+                                                                           src="images/feed-icon-12x12.jpg"
+                                                                           alt="RSS - in-progress games"></a>.
+                </td>
+            </tr>
+            <tr>
+                <td class="col1">
+                    <wicket:link>
+                        <a href="RecentGames.html">Completed Games</a>
+                    </wicket:link>
+                </td>
+                <td class="col1x">
+                    <a href="OnlineHome.html#" wicket:id="rssRecent"><img style="vertical-align:-1px;"
+                                                                          src="images/feed-icon-12x12.jpg"
+                                                                          alt="RSS - completed games"></a>
+                </td>
+                <td>View the list of completed games and results.</td>
+            </tr>
+            <wicket:link>
+                <tr>
+                    <td class="col1"><a href="History.html">Tournament History</a></td>
+                    <td class="col1x">&nbsp;</td>
+                    <td>View the results of all your tournaments (sign in required).</td>
+
+                </tr>
+                <tr>
+                    <td class="col1"><a href="Search.html">Search</a></td>
+                    <td class="col1x">&nbsp;</td>
+                    <td>Search for players and aliases.</td>
+
+                </tr>
+                <tr>
+                    <td class="col1"><a href="HostList.html">Hosts</a></td>
+                    <td class="col1x">&nbsp;</td>
+                    <td>View a list of game hosts and get a list of the games the have hosted.</td>
+                </tr>
+                <tr>
+                    <td class="col1"><a href="MyProfile.html">My Profile</a></td>
+                    <td class="col1x">&nbsp;</td>
+                    <td class="col2">View your profile details, change your password and retire old aliases.</td>
+                </tr>
+            </wicket:link>
+
+        </table>
+        <wicket:link>
+            <p class="centered" style="padding-top: 5px; padding-bottom: 8px;">Use of the DD Poker Online Games Portal
+                is subject to our <a href="Terms.html">Terms
+                    of Use</a>.</p>
+        </wicket:link>
+    </div>
+
+</wicket:extend>
+
+</body>
+</html>

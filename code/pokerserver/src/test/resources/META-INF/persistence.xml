@@ -1,0 +1,80 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
+  <!--<persistence-unit name="manager1" transaction-type="JTA">-->
+  <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+  <!--<jta-data-source>java:/DefaultDS</jta-data-source>-->
+  <!--<mapping-file>ormap.xml</mapping-file>-->
+  <!--<jar-file>MyApp.jar</jar-file>-->
+  <!--<class>org.acme.Employee</class>-->
+  <!--<class>org.acme.Person</class>-->
+  <!--<class>org.acme.Address</class>-->
+  <!--<properties>-->
+  <!--<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>-->
+  <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+  <!--</properties>-->
+  <!--</persistence-unit>-->
+
+  <persistence-unit name="poker">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <!-- note: auto-detection works only if you specify the directory to look into -->
+    <!--      which is a pain in the ass in development/test -->
+    <!--<jar-file>file:/Users/donohoe/work/ddpoker/code/poker/target/classes</jar-file>-->
+    <!-- less of a pain with relative path, but not sure how that will work in production... -->
+    <!-- doesn't work in maven either -->
+    <!--<jar-file>./poker/target/classes</jar-file>-->
+
+    <!-- specify each class since the auto-detection is a pain -->
+    <class>com.donohoedigital.games.poker.model.OnlineProfile</class>
+    <properties>
+      <!--<property name="hibernate.archive.autodetection" value="class, hbm"/>-->
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.use_sql_comments" value="true"/>
+      <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+      <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1/pokertest?useSSL=false"/>
+      <property name="hibernate.connection.username" value="pokertest"/>
+      <property name="hibernate.connection.password" value="p0k3rdb!"/>
+      <property name="hibernate.c3p0.min_size" value="1"/>
+      <property name="hibernate.c3p0.max_size" value="5"/>
+      <property name="hibernate.c3p0.timeout" value="300"/>
+      <property name="hibernate.c3p0.max_statements" value="50"/>
+      <property name="hibernate.c3p0.idle_test_period" value="3000"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
+    </properties>
+  </persistence-unit>
+</persistence>

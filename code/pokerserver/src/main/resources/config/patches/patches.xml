@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<PATCHES xmlns="http://www.donohoedigital.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation= "http://www.donohoedigital.com
+                                ../xml-schema/gamedef.xsd">
+	<url>http://ddigital.cachefly.net</url>
+    <release version="2.5p3">
+        <os name="win">
+            <file>poker-2.5p3-win.jar</file>
+            <hash>b87a9d26a76a917c975308317ffedf04</hash>
+            <size>305951</size>
+            <dependency>2.5p2</dependency>
+        </os>
+        <os name="linux">
+            <file>poker-2.5p3-linux.jar</file>
+            <hash>283eb422bbb05045ce2e3acf97283a75</hash>
+            <size>305951</size>
+            <dependency>2.5p2</dependency>
+        </os>
+        <os name="mac">
+            <file>poker-2.5p3-mac.jar</file>
+            <hash>53840ea9e49e8fdfe0bdb04ed8c99b57</hash>
+            <size>305951</size>
+            <dependency>2.5p2</dependency>
+            <minimum>2.5</minimum>
+        </os>
+    </release>
+    <release version="2.5p2">
+        <os name="mac">
+            <file>poker-2.5p2-mac.jar</file>
+            <hash>2b818283255012a61d16b4208cd128af</hash>
+            <size>23756</size>
+            <dependency>2.5p1</dependency>
+            <minimum>2.5</minimum>
+        </os>
+        <os name="win">
+            <file>poker-2.5p2-win.jar</file>
+            <hash>f1b2a1018dbd9b4c897fde00436cca4d</hash>
+            <size>23756</size>
+            <dependency>2.5p1</dependency>
+        </os>
+        <os name="linux">
+            <file>poker-2.5p2-linux.jar</file>
+            <hash>af81f602c96d007b8dceaab33072f482</hash>
+            <size>23756</size>
+            <dependency>2.5p1</dependency>
+        </os>
+    </release>
+    <release version="2.5p1">
+        <os name="mac">
+            <file>poker-2.5p1-mac.jar</file>
+            <hash>6bb6dff46107a8111445ade1b481e34f</hash>
+            <size>1324949</size>
+            <minimum>2.5</minimum>
+        </os>
+        <os name="win">
+            <file>poker-2.5p1-win.jar</file>
+            <hash>b518a8c3ad1a3eb23ff59d412b6cff73</hash>
+            <size>1324949</size>
+            <dependency>2.5</dependency>
+        </os>
+        <os name="linux">
+            <file>poker-2.5p1-linux.jar</file>
+            <hash>8f42e2b5dabebd56457db5d0e2561538</hash>
+            <size>1324949</size>
+            <dependency>2.5</dependency>
+        </os>
+    </release>
+    <release version="2.5">
+        <os name="win">
+            <file>poker-2.5-win.jar</file>
+            <hash>f6bd9b3c7462a7667d59ef9994932d81</hash>
+            <size>4761338</size>
+        </os>
+        <os name="linux">
+            <file>poker-2.5-linux.jar</file>
+            <hash>8b0d4859f81c8c0164e0d6445075fcc6</hash>
+            <size>4761338</size>
+        </os>
+    </release>
+    <release version="2.1p2">
+        <os name="mac">
+            <file>poker-2.1p2-mac.jar</file>
+            <hash>8e9ed9a11c138c2e89f3d68609336809</hash>
+            <size>325870</size>
+            <dependency>2.1p1</dependency>
+        </os>
+    </release>
+    <release version="2.1p1">
+        <os name="mac">
+            <file>poker-2.1p1-mac.jar</file>
+            <hash>6812011350cf0c5348ec02d00b374fb0</hash>
+            <size>233517</size>
+            <dependency>2.1</dependency>
+        </os>
+    </release>
+    <release version="2.1">
+        <os name="mac">
+            <file>poker-2.1-mac.jar</file>
+            <hash>1b8d14ea41d3bf86b29cd3c943a37bbd</hash>
+            <size>2591236</size>
+        </os>
+    </release>
+</PATCHES>

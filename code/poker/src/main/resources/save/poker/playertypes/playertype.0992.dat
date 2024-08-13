@@ -1,0 +1,2 @@
+sVersion 1 - Low Skill:l1108773679403:b-:splayertype.0992.dat
+$strat.v1skill\=i1:$order\=i30:$aiclass\=scom.donohoedigital.games.poker.ai.V1Player:$desc\=sThis player type replicates the computer play from DD Poker version 1.  Low skill computer players are the easiest to beat.  In general, they play weak-tight, which is a classic \\\"fish\\\".:$hsfull\=l1109105712387:$hshup\=l1109105712387:$hsshort\=l1109105712387

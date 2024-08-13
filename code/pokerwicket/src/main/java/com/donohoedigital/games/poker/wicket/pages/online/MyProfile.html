@@ -1,0 +1,207 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker - My Profile
+        <wicket:enclosure>
+            - <span wicket:id="titleName">Online Profile Name</span>
+        </wicket:enclosure>
+    </title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+    <div class="title">
+        My Profile
+        <wicket:enclosure child="name">
+            - <span wicket:id="name">Online Profile Name</span><br/>
+            <span class="sub-title" wicket:id="email">foo@foo.com</span>
+        </wicket:enclosure>
+    </div>
+
+    <div class="description" wicket:id="description">Description fragment goes here.</div>
+
+    <div wicket:id="error"><!-- error/feedback goes here --></div>
+
+    <div wicket:id="history">Alias table fragment goes here</div>
+
+    <!-- Fragments -->
+
+    <wicket:fragment wicket:id="notLoggedIn">
+        To display <strong>My Profile</strong>,
+        you must <a href="History.html#" wicket:id="loginLink">login</a> using a DD Poker online profile.
+        If you do not own a copy of DD Poker, you can
+        <a href="download">download</a> a copy for <span class="mild">Free</span>.
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="loggedIn">
+        Welcome to your profile page, <span class="mild" wicket:id="name">Joe</span>. Use this page
+        to change your password and retire old aliases.
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="table">
+
+        <div class="myprofile">
+            <table class="myprofile">
+                <tr>
+                    <td style="width: 365px;">
+                        <div class="title-smaller">Change Your Password</div>
+                    </td>
+                    <td style="width: 385px;">
+                        <div class="title-smaller">Your Online Profiles</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 365px;">
+                        <div class="pw-form">
+                            <form wicket:id="form">
+                                <table>
+                                    <tr>
+                                        <td style="padding-top: 10px;">
+                                            <label for="old">Old Password:</label>
+                                        </td>
+                                        <td class="space-after" style="padding-top: 10px;">
+                                            <input class="text" type="password" id="old" size="10" wicket:id="old"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="nu">New Password:</label>
+                                        </td>
+                                        <td class="space-after">
+                                            <input class="text" type="password" id="nu" size="10" wicket:id="nu"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="confirm">Confirm New:</label>
+                                        </td>
+                                        <td class="space-after">
+                                            <input class="text" type="password" id="confirm" size="10"
+                                                   wicket:id="confirm"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="button" colspan="2">
+                                            <input type="submit" value="Change It!">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-bottom: 5px;">
+                                            <div wicket:id="pwerror"><!-- error/feedback goes here --></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="myprofile-desc">
+                            <div><span class="spicy">Note:</span>&nbsp; Remember to change your password in DD Poker
+                                so you can continue to join and host online games:
+                                <ul>
+                                    <li>From the main menu, click the <strong>Profile</strong> button</li>
+                                    <li>Select the <span class="mild" wicket:id="name2">XXX</span> profile</li>
+                                    <li>Click the <strong>Edit</strong> button to open the Edit Player dialog</li>
+                                    <li>Click the <strong>Sync Password</strong> button</li>
+                                    <li>Enter your new password and click OK</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td style="width: 385px;">
+                        <div class="myprofile-desc">
+                            <p>
+                                As of DD Poker 3, you are allowed a maximum of <span class="mild"><span wicket:id="max">#</span>
+                                Online Profiles</span> per email. If you are at the max, you can use the
+                                <strong>Retire</strong>
+                                button when you are finished with a profile. Retired profiles do not show up in your
+                                alias
+                                list.</p>
+
+                            <p>
+                                <span class="spicy">Note:&nbsp; Retirement is permanent.  It cannot be undone!</span>
+                            </p>
+
+                            <p>
+                                You may notice some people have more than <span class="mild"><span
+                                    wicket:id="max2">#</span>
+                                Online Profiles</span>. These were created prior to DD Poker 3 and have been
+                                grandfathered
+                                in. People in this situation are not allowed to create more until they retire their
+                                excess
+                                profiles.
+                            </p>
+
+                            <div style="padding-bottom:10px;">
+
+
+                                <table class="tournament-info" style="margin-bottom: 5px; width: 360px;">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Games</th>
+                                        <th>Retire</th>
+                                    </tr>
+                                    <tr wicket:id="row">
+                                        <td class="left"><a href="#" wicket:id="playerLink"><span
+                                                wicket:id="alias">Dexter</span></a></td>
+                                        <td class="number"><span wicket:id="count" class="addpadding">244</span></td>
+                                        <td class="center">
+                                            <form wicket:id="form">
+                                                <input wicket:id="button" type="submit" value="Retire">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="centered"><span class="caption">You cannot retire the profile you used to login</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+    </wicket:fragment>
+
+</wicket:extend>
+
+</body>
+</html>

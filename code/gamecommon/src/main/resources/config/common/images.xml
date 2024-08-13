@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<IMAGES xmlns="http://www.donohoedigital.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation=
+                          "http://www.donohoedigital.com
+                           ../xml-schema/images.xsd">
+
+		<imagedir>images</imagedir>
+
+        <image name="gui.icon" location="donohoedigital.gif"/>
+        <image name="splash" location="splashscreen.jpg"/>
+
+        <image name="cursor-move" location="cursor-move.gif" x="1" y="1"/>
+        <image name="cursor-delete" location="cursor-delete.gif" x="1" y="1"/>
+        <image name="cursor-select" location="cursor-select.gif" x="1" y="1"/>
+        <image name="cursor-empty" location="cursor-empty.gif" x="1" y="1"/>
+        <image name="cursor-xhair" location="cursor-xhair.gif" x="7" y="7"/>
+
+        <image name="cursor-move-mac" location="cursor-move.png" x="1" y="1"/>
+        <image name="cursor-delete-mac" location="cursor-delete.png" x="1" y="1"/>
+        <image name="cursor-select-mac" location="cursor-select.png" x="1" y="1"/>
+        <image name="cursor-empty-mac" location="cursor-empty.png" x="1" y="1"/>
+        <image name="cursor-xhair-mac" location="cursor-xhair.png" x="7" y="7"/>
+
+        <image name="cursor-allowed" location="cursor-allowed-big.gif" x="1" y="1"/>
+        <image name="cursor-prohibited" location="cursor-prohibited-big.gif" x="1" y="1"/>
+        <image name="cursor-allowed-mac" location="cursor-allowed-small.png" x="1" y="1"/>
+        <image name="cursor-prohibited-mac" location="cursor-prohibited-small.png" x="1" y="1"/>
+
+        <image name="cursor-move-allowed" location="cursor-move-allowed.gif" x="7" y="7"/>
+        <image name="cursor-move-prohibited" location="cursor-move-prohibited.gif" x="7" y="7"/>
+        <image name="cursor-move-allowed-mac" location="cursor-move-allowed-small.png" x="5" y="5"/>
+        <image name="cursor-move-prohibited-mac" location="cursor-move-prohibited-small.png" x="5" y="5"/>
+
+        <image name="cursor-hand" location="cursor-hand.gif" x="7" y="7"/>
+        <image name="cursor-hand-mac" location="cursor-hand-small.png" x="7" y="7"/>
+
+        <image name="cursor-scroll-up" location="cursor-scroll-up.gif" x="12" y="0"/>
+        <image name="cursor-scroll-down" location="cursor-scroll-down.gif" x="12" y="21"/>
+        <image name="cursor-scroll-right" location="cursor-scroll-right.gif" x="21" y="12"/>
+        <image name="cursor-scroll-left" location="cursor-scroll-left.gif" x="0" y="12"/>
+        <image name="cursor-scroll-up-left" location="cursor-scroll-up-left.gif" x="0" y="0"/>
+        <image name="cursor-scroll-up-right" location="cursor-scroll-up-right.gif" x="17" y="0"/>
+        <image name="cursor-scroll-down-left" location="cursor-scroll-down-left.gif" x="0" y="17"/>
+        <image name="cursor-scroll-down-right" location="cursor-scroll-down-right.gif" x="17" y="17"/>
+
+        <image name="cursor-scroll-up-mac" location="cursor-scroll-up-small.png" x="8" y="0"/>
+        <image name="cursor-scroll-down-mac" location="cursor-scroll-down-small.png" x="8" y="16"/>
+        <image name="cursor-scroll-right-mac" location="cursor-scroll-right-small.png" x="16" y="8"/>
+        <image name="cursor-scroll-left-mac" location="cursor-scroll-left-small.png" x="0" y="8"/>
+        <image name="cursor-scroll-up-left-mac" location="cursor-scroll-up-left-small.png" x="0" y="0"/>
+        <image name="cursor-scroll-up-right-mac" location="cursor-scroll-up-right-small.png" x="16" y="0"/>
+        <image name="cursor-scroll-down-left-mac" location="cursor-scroll-down-left-small.png" x="0" y="16"/>
+        <image name="cursor-scroll-down-right-mac" location="cursor-scroll-down-right-small.png" x="16" y="16"/>
+
+</IMAGES>

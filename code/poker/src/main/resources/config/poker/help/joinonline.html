@@ -1,0 +1,468 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<style type="text/css">
+    <!--
+    .style4 {
+        color: #FFFF00;
+        font-weight: bold;
+    }
+
+    .style5 {
+        color: #339900;
+        font-weight: bold;
+    }
+
+    .style6 {
+        color: #FF0000;
+        font-weight: bold;
+    }
+
+    -->
+</style>
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="295" colspan="2"><img src="../images/button-online-up.png" width="70">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>Join Online</strong></font></td>
+    </tr>
+</table>
+
+<br>
+<table border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Join Online </font></strong></div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">
+            <div align="left"> Join Online is used to
+                join a game on your local area network or over the internet. You may manually
+                type in or paste a LAN or internet Game URL given to you by a friend for
+                a private game. Or you may join a public game from the <strong>Public
+                    Games List</strong> if you profile is online-activated to join public games.
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+<p align="center"><img src="../images/onlinejoin.jpg" width="450" height="336"></p>
+
+<p>&nbsp; </p>
+
+
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-1.png" width="35"
+                                                         height="36"><br>
+            <strong>Join Game</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Game URL </strong></td>
+
+                    <td>The <strong>Game URL</strong> is used if you want to play other
+                        human opponents on other computers in your Local Area Network or over
+                        the internet. A LAN or Internet Game URL may be typed in here. You
+                        may also click the <strong>Paste</strong> button if you have already
+                        copied it to your clipboard. Click the <strong>Use Last</strong> button
+                        and then <strong>Join Game</strong> if you need to re-join a game
+                        you were disconnected from.
+                        <p>An example of a LAN can be two or more of your home computers all
+                            connected with a router. Another example may be an office LAN, depending
+                            on your company LAN setup and policies. In either case, each user
+                            is required to have their own licensed copy of DD Poker.</p>
+
+                        <p>In most cases, you will automatically find LAN based game in the
+                            <strong>Games Running On Your LAN</strong> table. If your computer
+                            can not automatically find any games due to network issues, you
+                            may still be able to join. You will need to obtain the entire <strong>Game
+                                URL</strong> from the host. </p>
+
+                        <p>If a friend has already sent you a Game URL via email, instant message or phone for their
+                            private internet game, you may copy the URL to the clipboard and paste it into the Game URL
+                            with the <strong>Paste</strong> button to the right of the Game URL entry.</p>
+
+                        <p>See <a href="porthelp.html">Online Setup Help</a> for additional information. </p></td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-2.png" width="35"
+                                                         height="36"><br>
+            <strong>Games Running </strong></td>
+        <td>
+            This list switches from <strong>Games Running On Your LAN</strong> to the <strong>DD Poker Public Games
+            List</strong> when you click the <strong>Find Public Games</strong> button.<br>
+            <br>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Games Running On Your Local Area Network
+                        (LAN) </strong></td>
+                    <td>Your computer should automatically detect everyone running DD Poker on your Local Area Network.
+                        Displayed are the players name, computer name, local IP address, and the status of their
+                        game.<br>&nbsp;
+                        <br>
+                        <strong>Game Status:
+                        </strong>
+                        <table cellspacing="2" cellpadding="2">
+                            <tr valign="top">
+                                <td><strong>Blank</strong></td>
+
+                                <td>DD Poker is simply running on another computer on your LAN.</td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td><strong>Soon</strong></td>
+
+                                <td>Soon is displayed if a host is opening a poker lobby.</td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td><strong>Open</strong></td>
+
+                                <td>Open is displayed if a game is open for you to join the lobby.
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td><strong>Playing</strong></td>
+
+                                <td>
+                                    <p>Indicates a game is underway and can no longer accept players.
+                                    </p>
+
+                                    <p><strong> Note: </strong>you may still join as an observer
+                                        if the hosts is allowing observers to join.</p>
+
+                                    <p><strong>Note</strong>: If you were a player in the game and
+                                        got disconnected, you may rejoin the game by highlighting the game and clicking
+                                        &quot;Join&quot;
+                                        to reconnect, or click the Use Last button, then Join Game. </p></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>DD Poker Public Games List </strong></td>
+
+                    <td>The DD Poker Public Games List displays all the public internet
+                        games that you can join. Click the <strong>Refresh</strong> button
+                        show the most current list of games available. Click the <strong>Previous</strong>
+                        or <strong>Next</strong> button to increment or decrement groups of
+                        public games displayed. In order to join public games, your <strong>Profile</strong>
+                        must be online-activated. See Profile
+                        in the <a href="mainmenu.html">Main Menu</a> help.<br>
+                        <br>
+                        The current profile in use is displayed. Click on the <strong>Profile</strong>
+                        button to change profiles and/or to online-activate your profile to list/join
+                        public games. If your profile is online-activated to join public games,
+                        <strong>Yes</strong> will be displayed. <br><br>
+                        <strong>Game Status: </strong>
+                        <table cellspacing="2" cellpadding="2">
+                            <tr valign="top">
+                                <td><strong>Open</strong></td>
+                                <td>Open is displayed if a game is open for you to join the lobby.</td>
+                            </tr>
+                            <tr valign="top">
+                                <td><strong>Invite</strong></td>
+                                <td>Indicates if the host has an invitation only list to join their game.</td>
+                            </tr>
+                            <tr valign="top">
+                                <td><strong>Playing</strong></td>
+                                <td><p>Indicates a game is underway and can no longer accept players. </p>
+
+                                    <p><strong> Note: </strong>you may still join as an observer if the hosts is
+                                        allowing observers to join.</p>
+
+                                    <p><strong>Note</strong>: If you were a player in the game and got disconnected, you
+                                        may rejoin the game by highlighting the game and clicking &quot;Join&quot; to
+                                        reconnect, or click the Use Last button from the first join screen, then Join
+                                        Game.</p></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-3.png" width="35"
+                                                         height="36"><br>
+            <strong>DD Poker Public Games List </strong></td>
+        <td valign="top">
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Find Public Games </strong></td>
+                    <td>Click <strong>Find Public Games</strong> to query the DD Poker Server for the list of games that
+                        other DD Poker players have posted on the DD Poker Public Games List. Your screen will switch
+                        from showing you LAN games available, and now show the <strong>DD Poker Public Games
+                            List</strong>. Click <strong>Cancel</strong> to return to the <strong>Games Running On Your
+                            Local Area Network</strong>.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-4.png" width="35"
+                                                         height="36"><br>
+            <strong>Buttons</strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Join Game </strong></td>
+
+                    <td>Click <strong>Join Game</strong> to join the online game you have
+                        chosen and enter the Poker Lobby shown below.
+                    </td>
+                </tr>
+
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Observe Game </strong></td>
+
+                    <td>Click <strong>Observe Game</strong> to join the online game as an
+                        observer. You will not play any poker hands as an observer.
+                    </td>
+                </tr>
+
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Help</strong></td>
+
+                    <td>Displays this Help screen.</td>
+                </tr>
+
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Cancel</strong></td>
+
+                    <td>Returns to the previous screen, the Online Tournaments menu.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Poker Lobby </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p align="center"><img src="../images/onlinejoinlobby.jpg" width="450" height="337"><br>
+    &nbsp;
+</p>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-1.png" width="35"
+                                                         height="36"><br>
+            <strong>Players
+            </strong><br></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Players</strong></td>
+                    <td><p>These are the other players in the Poker Lobby. You may chat with them in the chat window
+                        until the host starts the game. Note: The host has control over the tournament settings,
+                        although you can view them by clicking the <strong>Info</strong> button described below. The
+                        maximum number of players the host has set can be seen next to the Players title, and an
+                        indication of the game filling with computer players can be seen at the bottom of the player
+                        list.</p>
+
+                        <p> You may <img src="../images/menuicon-mute.png" width="17" height="17"> Mute any player by
+                            right clicking on thier name. You may also mark them to <img
+                                    src="../images/menuicon-ban.png" width="17" height="17"> Ban them from any of your
+                            hosted games. This will not affect them this game as you are not the host of this game. (See
+                            banning and muting players under the online tab in <a href="options.html">Options</a> for
+                            more information.)</p></td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-2.png" width="35"
+                                                         height="36"><br>
+            <strong>Observers</strong> <br></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Observers</strong></td>
+                    <td>This displays the list of all the people that have joined the game as observers, but will not
+                        actually play the game. Observers will appear in the chat window in purple with a [obs] next to
+                        their name to indicate they are an observer. The host may set the maximum number of observers
+                        able to join. Players that have busted out during the tournament do not count against this
+                        number. Note: The right click options shown above for Players also apply to observers.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-3.png" width="35"
+                                                         height="36"><br>
+            <strong>Host Connection Status
+            </strong><br></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><p><br>
+                        <font color="#FFFFFF"><img src="../images/led-red.png" width="20" height="20"><img
+                                src="../images/led-yellow.png" width="20" height="20"><img src="../images/led-green.png"
+                                                                                           width="20"
+                                                                                           height="20"></font></p>
+                    </td>
+                    <td>In online games, this displays your connnection status to the host computer. The <span
+                            class="style5">Green</span> LED indicates you are connected to the host. The <span
+                            class="style6">Red</span> LED indicates you are not connected to the host. A <span
+                            class="style4">Yellow</span> LED flashing every 5 seconds indicates you your game is
+                        actively trying to re-connect to the host. <br></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Details </strong></td>
+                    <td>If the status LED is <span class="style6">Red</span>, the Show Detail check box appears. If
+                        checked, a pop up window with an error message will appear.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-4.png" width="35"
+                                                         height="36"><br>
+            <strong>Chat</strong></td>
+        <td>
+            You can chat with others that have already joined the tournament as players or observers as you are waiting
+            for others to join before the tournament starts.
+            Observers will appear in the chat window in purple with a [obs] next to their name to indicate they are an
+            observer.
+            Demo users will appear in the chat window with a [demo]
+            next to their name to indicate they are a demo user.<br>&nbsp;
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Send</strong></td>
+                    <td>Use the text area to type your message, then hit Enter or click the <strong>Send </strong>button
+                        to send your message to everyone. Your message will be displayed in the chat window.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Clear</strong></td>
+                    <td>Click <strong>Clear</strong> to erase all the text in your chat window. This will not clear the
+                        text on anyone else's chat window.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Lobby</strong></td>
+                    <td>Click Lobby to start the chat lobby where you can talk with other players currently running DD
+                        Poker.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><img src="../images/gameboard-number-5.png" width="35" height="36"><br>
+            <strong>Buttons</strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Info</strong></td>
+                    <td>View the current tournament settings.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Options</strong></td>
+                    <td>Allows you to alter you personal options while you are waiting for the tournament to start.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Help</strong></td>
+                    <td>Displays this help screen</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Leave</strong></td>
+                    <td>Leave the poker lobby you are currently in and return to the Join Online menu.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p>Once the host starts the game, your screen with automatically change to the
+    poker table. The game may initially be paused by the host. Once the game starts,
+    you will be prompted with a choice to either play or sit-out. If you do not
+    choose to play within 10 seconds, you will automatically be sat-out until you
+    click your cards and choose Resume Playing. This is done just in case you ran
+    to the bathroom right before the tournament started. </p>
+
+<p>Once you bust out of the tournament, you will automatically change to an observer,
+    regardless of the maximum observers set by the host at the beginning. As a player,
+    you will always have the seat on the bottom center of the table. When you change
+    to an observer, the players may appear to move as the game always displays seat
+    5 in the bottom middle when you are an observer.<br>
+    &nbsp;
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Re-Join an Online Game </font></strong></div>
+        </td>
+    </tr>
+</table>
+If you lose your internet connection or the host has lost it's internet connection, the message appears, &quot;Attempting
+to Reconnect&quot;, and the number of attempts made is displayed at the bottom of the message. Do not exit the game if
+you can help it, once the internet connection is re-established, the game will automatically reconnect. <br>
+<br>
+If you become completely disconnected from an online game due to a power failure
+or by exiting the game, you may still re-join it with the methods shown below:<br>
+&nbsp;
+
+<table border="1" cellpadding="3" cellspacing="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Use Last<br>
+        </strong></td>
+        <td valign="top">Click the <strong>Use Last</strong> button in the Join Online
+            screen and click Join Game.
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">Type It</td>
+        <td valign="top">If you still have the Game URL in the email or instant message
+            type it in or paste it and click Join Game.
+        </td>
+    </tr>
+</table>
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+</BODY>
+</HTML>

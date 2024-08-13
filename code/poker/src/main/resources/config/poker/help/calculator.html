@@ -1,0 +1,328 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<html>
+
+<body>
+
+<!-- MAIN OPTIONS PAGE  HEADER *************************************************************************-->
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="297" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>Calculator Tool </strong></font>&nbsp;&nbsp;</td>
+    </tr>
+</table>
+
+
+<br>
+<!-- Intro and screen shot & showdown header -->
+Use the DD Poker Calculator Tool to run in depth hand analysis and calculate showdown
+outcomes. The Calculator Tool has many uses:
+<ul>
+    <li>Calculate full pre-flop showdown odds, like they show on poker TV shows.</li>
+    <li>Find out why winner of AK suited versus pocket two's heads-up is essentially
+        a coin flip (50/50).
+    </li>
+    <li>Find out all the ways your hand can improve after the turn and river cards
+        come.
+    </li>
+    <li>Measure how your hand stacks up against all possible opponent's hands.</li>
+</ul>
+<p>When you use the Calculator Tool from a game, it automatically loads
+    the current cards on the table each time you open the window. The exception
+    to this is if you change any of the cards or number of opponents to research
+    other scenarios. In this case, the Calculator Tool will leave your settings
+    as you left them. To reset the tool back to the current hand, click on any card
+    and choose the &quot;Load All Cards&quot;.</p>
+
+<p>Hint: You can drag the calculator window outside the DD Poker window so you can keep it open as you play. <br>
+    &nbsp;
+</p>
+
+<div align="center"><img src="../images/calculator.jpg" width="450" height="399"></div>
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Picking
+                Cards </font></strong></div>
+        </td>
+    </tr>
+</table>
+Click the left or right mouse button while the mouse pointer is over any card
+for the Change Card Pop-up to appear. <br>
+<br>
+Shortcut: You may CTRL click any face up card to clear it to a wild card &quot;?&quot;.
+<BR>
+&nbsp;
+<table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Clear All Cards </strong></td>
+        <td valign="top"> Click <strong>Clear All Cards</strong> start over and reset
+            all cards to a wild card <img src="../images/card_blank.png" width="20" height="26">.
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Clear Opponents Cards
+        </strong></td>
+        <td valign="top">Click <strong>Clear Opponents Cards</strong> to only clear
+            your opponents cards to a wild card <img src="../images/card_blank.png" width="20" height="26">.
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Clear Community Cards
+        </strong></td>
+        <td valign="top">Click <strong>Clear Community Cards</strong> to only clear
+            the community cards to a wild card <img src="../images/card_blank.png" width="20" height="26">.
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Load All Cards </strong></td>
+        <td valign="top">Click <strong>Load All Cards </strong>in Practice mode to
+            load your hole cards, all opponents hands and the community cards.
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Load My &amp; Community
+            Cards </strong></td>
+        <td valign="top">Click <strong>Load My &amp; Community Cards </strong>in Practice
+            mode to load your hole cards and the community cards.
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Opponents' Cards Face
+            Up </strong></td>
+        <td valign="top">In Practice mode, by default, the calculator tool loads all
+            opponents hands as wild cards. If you wish, you can toggle <strong>Opponents'
+                Cards Face Up</strong> so that the opponents' cards are displayed face up.
+            The calculator will have far fewer combinations to calculate since it does
+            not have to figure every possible hole cards your opponents can have. Be
+            careful using this because you will learn your opponents hands!<br>
+            (Only available in Practice)
+        </td>
+    </tr>
+</table>
+<BR>&nbsp;
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Showdown Calculator Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+This tab calculates the win/lose/tie percentage of each hand against each other
+using the defined community cards (blank cards are wild). There are two ways to
+calculate this: Running all possible combinations or simulating trials with random
+samplings. When in Practice mode, your current hand and the community cards will
+automatically appear. Click the Run button to start the calculator. <br>
+<br>
+
+
+<table border="0">
+    <tr>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Opponents</strong></td>
+                    <td>The calculator takes into account the number of players in the hand.
+                        This is important because the more people that are dealt a hand, the
+                        higher the odds more players will end up with a playable hand.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Simulate # Trials
+                    </strong></td>
+                    <td>This setting is used to get an approximate calculation based on
+                        random hand sampling when there are 6 or more wild cards not showing.
+                        The lowest setting of 25,000 gives only a rough estimation. You can
+                        increase the number samples for a more accurate calculation. (Range
+                        is twenty-five thousand to ten million).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>All Combinations
+                    </strong></td>
+                    <td>Choose this setting if you wish to calculate the exact percentage
+                        with 5 or less wild cards. It is not practical to use this setting
+                        with 6 or more wild cards because of the amount of time it would take
+                        to calculate the billions of possible combinations. Use the Simulate
+                        setting for 6 or more wild cards. By default, the selection will change
+                        from Simulate to All when the number of calculations is below 2,000,000.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Run / Stop </strong></td>
+                    <td>Click the <strong>Run</strong> button to start the calculator calculation.
+                        Click <strong>Stop</strong> to cancel the calculation (you may wish
+                        to do this in simulation mode once you see the percentages have stabilized
+                        and are only fluctuating by less than a percent). You may also click
+                        the <strong>Close</strong> button to stop the calculation and close
+                        the Calculator Tool window.
+                    </td>
+                </tr>
+            </table>
+            <p><strong>What do the number of combinations mean?</strong> Cards that
+                are unknown or not visible are called &quot;wild cards&quot;. These could
+                be community cards or your opponent's cards. When there is a wild card,
+                the calculator will calculate all the possible outcomes and display a
+                percentage for each player's chance to win, lose, or tie.</p>
+
+            <p> Note: The Showdown Calculator takes every possible hand combination
+                into account when calculating. It does not figure that your opponent would
+                have folded a poor hand like a 2 7 off suit, or that they would have more
+                likely stayed in with a pair of kings. See the note on &quot;uniform&quot;
+                distribution in the Hand Strength section below.</p>
+
+            <p>If there are no wild cards, there is only 1 combination, meaning everyone's
+                hand is showing and there is only one possible result.</p>
+
+            <p>If there are multiple wild cards, then DD Poker uses a branch of mathematics
+                called combinatorics to determine the number of combinations. We won't
+                get into the details of the equation used to determine this, but rest
+                assured DD Poker does the hard math for you.</p>
+
+            <p>As you add more wild cards in multiple hands, the number of possible
+                combinations grows exponentially. As an extreme example, calculating 10
+                hands of wild cards and 5 wild cards on the board would have
+                60,281,548,319,469,636,261,129,060,633,600,000
+                combinations and take longer than the age of the universe to calculate!
+                In cases like that, use the simulate option unless you have a really really
+                really large amount of free time on your hands.<br>
+                <br>
+            </p></td>
+    </tr>
+</table>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Flop Tab</font></strong></div>
+        </td>
+    </tr>
+</table>
+Once you specify your hole cards and zero to two of the community cards, the Flop
+tab calculates all the possible hands <strong>you could have</strong> after the
+full flop is displayed.<br>&nbsp;
+
+<!-- TURN HEADER -->
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Turn Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+Once you specify your hole cards and three of the community cards (i.e., the flop),
+the Turn tab calculates all the possible hands <strong>you could have</strong>
+on the turn. This will help you figure out how many 'outs' you have to make a
+straight or flush.<br>
+&nbsp;
+<!-- RIVER HEADER -->
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong> <font color="#FFFF00" size="+1">River Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+Once you specify your hole cards and three or four of the community cards (i.e.,
+the flop or turn), the River tab calculates all the possible hands <strong>you
+    could have</strong> on the river.<br>&nbsp;
+
+<!-- HAND LADDER HAND STRENGTH & SIMULATIONS HEADERS -->
+
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Hand Ladder Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+The Hand Ladder tab shows how your hand, together with the current board cards,
+ranks against all other possible opponents' hands.<br>
+<br>
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Hand Strength Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+
+Once you specify your hole cards and at least three of the community cards, this
+tab shows the odds that your hand, together with the current community cards,
+is the best possible hand. Because the odds a particular hand will win diminishes
+as you face more opponents, the Hand Strength tab shows the odds versus 1 through
+9 opponents. Using this you can see that pocket aces and a board of Kd 5s 10s
+wins 96.62% of the time against one opponent (heads-up) and only 87.16% against
+4 opponents.
+<p>The Hand Strength item in the DD Dash board shows the same value on this tab,
+    using the row for the number of opponents still left in the hand. The hand strength
+    calculations assume your opponents hands are equally likely to have a poor hand
+    as well as a good hand and the percentage is calculated based on all possible
+    hands remaining. This is known as a &quot;uniform&quot; distribution. In a future
+    version of DD Poker we will allow you to measure your hand strength against
+    what your opponents are &quot;likely&quot; to hold.<br>
+    &nbsp;
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Hand Group Simulations Tab </font></strong>
+            </div>
+        </td>
+    </tr>
+</table>
+
+This tab displays wins, loses, and tie percentages of your hand compared to
+the groups of hands defined in &quot;Hand Groups&quot; in <a href="options.html">Options</a>.
+<br>
+<br>
+With one or two board cards defined, this tab shows how your hand does against
+random hands and the hands in all defined hand groups (see Hand Groups tab in
+<a href="options.html">Options</a>) Because there are millions of possible 5-card
+board combinations, it simulates a random subset of them and tally's wins, loses
+and ties. </p>
+<p>With three, four or five board cards defined, this tab shows how your hand,
+    together with the current board cards, does against random hands and the hands
+    in all defined hand groups. It then calculates and<span class="style3"> tally's
+  wins, loses, and ties</span> based on all <span class="style3"> possible remaining 
+  board cards. (practice only) </span></p>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+
+</body>
+</html>

@@ -1,0 +1,919 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<style type="text/css">
+<!--
+.style4 {
+	color: #FFFF00;
+	font-weight: bold;
+}
+.style5 {
+	color: #339900;
+	font-weight: bold;
+}
+.style6 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+
+
+
+
+
+
+<BODY>
+
+<!-- MAIN HEADER -->
+<table border="0" cellpadding="5" cellspacing="0">
+  <tr align="left" valign="middle"> 
+    <td><span style="z-index: -1"><img src="../images/ddspade48.png" width="48" height="48"></span>&nbsp;&nbsp;<font color="#1D4A07" size="+2"><strong>Poker Table </strong></font>&nbsp;&nbsp;</td>
+  </tr>
+</table>
+
+<br>
+<!-- START A TOURNAMENT HEADER -->
+<!-- STEPS TO START A TOURNAMENT PARAGRAPH -->
+<!-- TOURNAMENT CONTROLS HEADER -->
+<table border="1">
+  <tr bgcolor="#1D4A07"> 
+    <td align="center"> <div align="center"><strong><font color="#FFFF00" size="+1">Poker Table
+        Controls</font></strong></div></td>
+  <tr>
+    <td>This section explains the features displayed during poker tournaments. 
+      The red numbered circles on the picture correspond to descriptions of each 
+      section of the game table.&nbsp;</td>
+  </tr> 
+</table>
+
+<!-- GAME BOARD PICTURE -->
+<div align="center">
+  <p><BR>
+    <img src="../images/tourn.jpg" width="450" height="315"><br>
+    <BR>
+          
+    <!-- TABLE START -->  
+  </p>
+  <table border="0" align="left" cellpadding="5" cellspacing="0">
+
+<!-- ROW 1 - Menu Buttons -->
+    <tr> 
+      <td valign="top"> <div align="center"><strong><img src="../images/gameboard-number-1.png" width="35" height="34"><br>
+          Menu<br>
+          Buttons</strong></div></td>
+      <td valign="top">The <strong>Menu Buttons</strong> at the top left of the screen 
+        access common game functions.<br> &nbsp;
+		
+		<!-- START OF TABLE INSIDE ROW 1 -->
+		  <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+            <tr>
+              <td width="100" align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-exit-up.png" width="40" height="55"></td>
+              <td valign="top">Quit the tournament - don't forget to save before you quit during practice. </td>
+            </tr>
+            <tr>
+              <td width="100" align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-save-up.png" width="40" height="55"></td>
+              
+            <td valign="top">Save the tournament. After you have saved a tournament 
+              in practice, if the <strong>Auto Save</strong> option is ON, the 
+              game will automatically be saved at the end of each hand. Note: 
+              The host in an online tournament is the only one that saves and 
+              loads. Online guests may re-join as long as they still have the 
+              Game URL used for that game. </td>
+            </tr>
+            <tr>
+              <td width="100" align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-info-up.png" width="40" height="55"></td>
+              <td valign="top">Brings up the Info dialog pop up window. The <strong>I </strong>key also brings up this dialog. The <strong>Arrow Keys</strong> can be used to cycle through the tabs.<strong> </strong>                <ul>
+                  <li><strong>Hand History</strong> -  Detailed hand and betting history for every hand dealt. <br>
+                    Click <strong>Newer</strong> to work back to the current hand. <br>
+                    Click <strong>Older</strong>                    to display the previous group of 9 hands played.<br>
+                    Click <strong>Show All Computer Cards</strong> to flip the computer cards over. (practice only) <br>
+                  Click <strong>Show  Reason</strong> as training tool to understand why actions were made. (practice only) </li>
+                </ul>
+                <ul>
+                  <li><strong>Leader Board </strong> - Shows the tournament player standings  as well as players that busted out. It also displays how you compare to the other players in the tournament. <br>
+                    <br>
+                  In an online game, a designation to the right of each players 
+                  name will indicate if they are an <strong>(ai)</strong> computer 
+                  player, <strong>(host)</strong> host of the game, <strong>(demo)</strong> 
+                  demo player, or be blank for a human online player. <br>
+                  </li>
+                  <li><strong>Table List -</strong> Displays all the players by table and seat number.<br>
+                    <br>
+                  A <strong>Show Player Type</strong> checkbox allows the user 
+                  of a practice game to see the ai type next to the players name. 
+                  (practice only) <br>
+                  </li>
+                  <li><strong>Tournament Settings</strong>  - View the settings for the current tournament such as levels, blinds and payouts.</li>
+                </ul>                
+                <ul>
+                  
+                <li><strong>Online Settings - </strong>Displays the current LAN 
+                  Game URL and Internet Game URL. The <strong>Copy</strong> button 
+                  can be used to copy the URL to your clipboard in order to give 
+                  someone the Game URL.<br> 
+                    <br>
+                  The <strong>Player Action Timeout</strong> can be adjusted on the fly by the host in this tab. 
+                The default is set by the host before the game starts in the <a href="settings.html">Edit Tournament</a> screen.  This is the amount of time in seconds a player has to act in an online tournament before their think bank timer is used. This timer resets each time the action reaches the player.  (host online only) <br>
+                <br>
+                The <strong>Player Think Bank</strong> can be adjusted on the fly by the host in this tab. The default is set by the host before the game starts in the <a href="settings.html">Edit Tournament</a> screen. This is the total amount of extra time a player may use when considering what action to take over the course of a hand. After the time specified by Player Action Timeout has expired, then the time in the Think Bank is automatically used. The think Bank is reset at the start of each hand. (host online only)<br>
+                <br>
+                  The  Boot
+  Rules can be adjusted on the fly by the host in this tab. See <strong>Boot Rules </strong>in the Online tab section on the <a href="settings.html">Edit Tournament</a> screen. </li>
+                </ul>                
+                <table cellpadding="2" cellspacing="2">
+                  <tr>
+                    <td align="center" valign="top"><img src="../images/menuicon-export.png" width="17" height="17"></td>
+                    
+                  <td><strong>Export Table</strong> to Microsoft Excel. Right 
+                    click (CTRL-click on Mac) any of the tables such as the Levels, 
+                    Prizes or Opponents to bring up the Table Menu pop up. The 
+                    Export Table menu item is used to export the table in a comma 
+                    delimited file format (.csv) that can be read by most popular 
+                    spreadsheet software. </td>
+                  </tr>
+                </table>                
+              </td>
+            </tr>
+            <tr>
+              <td width="100" align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-options-up.png" width="40" height="55" border="0"></a></td>
+              <td valign="top">Brings up the <a href="options.html">Options</a> screen, where you can specify over 50 game options and over 35 AI settings. </td>
+            </tr>
+            <tr>
+              <td width="100" align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-help-up.png" width="40" height="55"></td>
+              <td valign="top">Brings up this help window.</td>
+            </tr>
+        </table>
+		
+		<!-- END OF TABLE IN ROW 1 & START OF PARAGRAPH -->
+        <p align="center">&nbsp;</p>
+      </td>
+    </tr>
+	
+<!-- ROW 2 DD Dashboard -->	
+    <tr>
+      <td valign="top" align="center" ><strong><img src="../images/gameboard-number-2.png" width="35" height="36"></strong></td>
+      <td valign="top" bgcolor="#7c7c7c"><img src="../images/dashboard.png" width="180" height="28"></td>
+    </tr>
+    <tr>
+      <td valign="top" align="center"><strong>DD Dashboard </strong></td>
+      <td valign="top"><p>The DD Dashboard is a configurable display which can 
+          be personalized with the information you wish to see. By clicking the 
+          dashboard header or the icon to the left of each dash item name, you 
+          may <img src="../images/button-dasharrow-on.png" width="12" height="12"> 
+          maximize or <img src="../images/button-dasharrow-off.png" width="12" height="12"> 
+          minimize the display for each dashboard item. A maximized dash item 
+          will display the complete information, whereas the minimized mode will 
+          display a shorthand version. By clicking the <img src="../images/button-dashx-up.png" width="12" height="12"> 
+          to the right of the dash item, you remove it from the list. Click the 
+          <strong>Edit</strong> button to add/remove or change the position of 
+          dash items. </p>
+        <br>
+	    <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+          <tr>
+            <td width="100" align="center" valign="top"><strong>Edit</strong></td>
+            <td valign="top">Click <strong>Edit</strong> for the Dashboard Editor pop-up screen. Here you may add dash items with the <img src="../images/button-dashshown-on.png" width="12" height="12"> , or remove dash items with the <img src="../images/button-dashx-up.png" width="12" height="12">. You may also change the order of the dashboard items by clicking the arrow next to each dash item to move it up <img src="../images/button-dashup-up.png" width="12" height="12"> or down <img src="../images/button-dashdown-up.png" width="12" height="12">the list. </td>
+          </tr>
+        </table>    
+		
+		    
+        <p>&nbsp;</p>
+        <table border="0" cellpadding="3" cellspacing="0" bordercolor="#000000">
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Advisor</font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+                <p>Displays recommended advise on how to play your hand. See <a href="advisor.html">Advisor</a>.</p>
+                <p>Click the <strong>Details</strong> button to bring up the Advisor 
+                  Information pop-up menu. There are two tabs, Summary, and Strategy. 
+                  The Summary tab gives the rationale of the advice with the Situation 
+                  and Decision Factors. The Strategy tab allows you to alter the 
+                  current advisor and view the Recommendation Matrix of hands.</p>
+              <p>Click the <strong>Do It</strong> button to act upon the advice of the advisor.<br>
+                <br>
+                (Dash item always available in Practice, and Online when the host checks the Enable Dashboard Items checkbox in the online category of <a href="settings.html">Edit Tournament</a>.)</p>
+              </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Calculator Tool </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> Click the <strong>Open 
+                Calc Tool </strong> button to run in depth hand analysis and calculate 
+                showdown outcomes. See <a href="calculator.html">Calculator Tool</a>. <br>
+                (Dash item always available in Practice, and Online when the host checks the Enable Dashboard Items checkbox in the online category of <a href="settings.html">Edit Tournament</a>.)<br>
+              </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Hand Strength</font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              After the flop, your hand strength is shown. This is a calculation of how often your hole cards win against all the other possible hands.<br>
+    (Dash item always available in Practice, and Online when the host checks the Enable Dashboard Items checkbox in the online category of <a href="settings.html">Edit Tournament</a>.)</blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Host</font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              Host dash item has a <strong>Pause Game</strong> button in case an unscheduled break is needed. This button will pause all tables in the tournament and display the message <em>Director: The host has paused the tournament</em> in everyone's chat windows. The clock will pause and stop all action after the current player is done with their action. <br>
+    (Dash item available for the game Host in Online only)
+            </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Host Connection Status <img src="../images/led-red.png" width="20" height="20"> <img src="../images/led-yellow.png" width="20" height="20"> <img src="../images/led-green.png" width="20" height="20"></font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> In online games, your connection 
+                status to the host computer is displayed here. The <span class="style5">Green</span> 
+                LED indicates you are connected to the host. The <span class="style6">Red</span> 
+                LED indicates you are not connected to the host. A <span class="style4">Yellow</span> 
+                LED flashing every 5 seconds indicates you your game is actively 
+                trying to re-connect to the host. <br>
+    If the <strong>Show Details</strong> box is checked, a pop up window with an error message will appear. <br>
+    (Dash item available for a guest in Join Online only) 
+            </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Improve Hand</font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> Displays in percentage, 
+                the chance of your hand will improve to a better one when the 
+                turn and/or river cards come. It is often the case that your hand 
+                will improve to three of a kind, a straight, a flush, etc. If 
+                there is a chance of improvement, that chance is displayed as 
+                a percentage. For example, if it shows that you have a 27% chance 
+                of making a straight, then that means 27% of the time, the remaining 
+                board cards to come will complete your straight.<br>
+    (Dash item always available in Practice, and Online when the host checks the Enable Dashboard Items checkbox in the online category of <a href="settings.html">Edit Tournament</a>.)</blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> My Hand </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              Displays your hand and <a href="intro.html">Card Rank</a>. Your hand is always the best five cards, between your two hole cards and the five board cards.
+            </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> My Table </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> Displays the table you 
+                are sitting at, your seat, and hand number (how many hands have 
+                been dealt). From tournament to tournament, your seat will change, 
+                but your cards will always be in the bottom center of the screen. 
+                In an online tournament, your opponents computer will display 
+                you in the the proper seat number from their perspective. During 
+                a tournament with more then 10 people, multiple tables are used 
+                and as players are eliminated, any player including yourself may 
+                be moved to another table to even up the number of players at 
+                each table.<br>
+              <br>
+    When observing a tournament, either by busting our or joining as an observer, you may switch the table you are observing by clicking the <strong>Change Table</strong> button displayed under My Table 
+            </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Observers</font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              Displays all the observers currently watching the current table. Observers watching other tables are not shown. Note: When players are eliminated from the tournament, they become observers. Any user may right click on an observer to mute their chat or ban them from any future games they host. <br>
+    (Dash item available in Online only) 
+            </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Online</font></td>
+          </tr>
+          <tr>
+            <td align="center" valign="top"> 
+			<blockquote>
+			  
+			  </blockquote>			<table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+              <tr>
+                <td width="100" align="center" valign="top"><strong>Sit-out</strong></td>
+                  <td>Click the <strong>Sit-out</strong> checkbox to automatically 
+                    fold your cards during the tournament when away from the computer. 
+                    This prevents your Think Bank time from being used up and 
+                    avoids any unnecessary delays. If you exit the game, the <strong>Sit 
+                    out</strong> checkbox will automatically be checked. If you 
+                    lose connection, you think bank time will be used to give 
+                    you time to rejoin the game and not miss your current hand. 
+                    See <strong>Player Think Bank</strong> on the <a href="settings.html">Edit 
+                    Tournament</a> screen for more information. <strong>Hint</strong>: 
+                    You may click your cards and choose the sit-out menu item 
+                    as a shortcut. </td>
+              </tr>
+              <tr>
+                <td width="100" align="center" valign="top"><strong>Muck Losing Hands </strong></td>
+                  <td>Check the <strong>Muck Losing Hands</strong> checkbox to automatically muck 
+                    your losing hand. If the Muck Losing Hands is unchecked, a 
+                    pop-up screen will appear for 5 seconds at the end of a hand 
+                    asking you if you wish to show or muck your losing hand. If 
+                    you do not answer within 5 seconds, it will default to muck. 
+                    If you choose show, your cards will be flipped over and also 
+                    displayed in the chat window. <br>
+                  <p> Note: When you are called, you must show your hand and the 
+                      muck hands checkboxes are overridden. Normally you do not 
+                      want to show any of your hands to your opponents and give 
+                      any more information to the other players then you need 
+                      to. However, on occasion, you may feel the need to show 
+                      your opponents your cards. An example would be showing your 
+                      2-7 off suit cards to show your 
+                      opponents you don't just bet with good cards and you have 
+                      the ability to bluff. Or just the opposite, showing your 
+                      pocket aces to demonstrate you don't always bluff to keep 
+                  your opponents guessing. </p></td>
+              </tr>
+              <tr>
+                <td width="100" align="center" valign="top"><strong>Muck<br>Winning Hands </strong></td>
+                  <td>Check the Muck Winning Hands checkbox to automatically muck 
+                    your winning hand. If the Show Winning Hands is unchecked, 
+                    a pop-up screen will appear for 5 seconds at the end of a 
+                    hand asking you if you wish to show or muck your winning hand. 
+                    If you do not answer within 5 seconds, it will default to 
+                    muck. If you choose show, your cards will be flipped over 
+                    and also displayed in the chat window. </td>
+              </tr>
+            </table>
+              <div align="left">
+                <blockquote>
+                  <p>(Dash item available in Online only) </p>
+                </blockquote>
+            </div></td>
+          </tr>
+		  <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Player Info </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              When the mouse pointer is placed over any player at the table, the Player Info displays that player's rank in the tournament, how many total hands in the game they have been disconnected, how many total hands in the game they have been sitting-out, and how many rebuys they have left if applicable. Note: The host may boot a player from the game for being disconnected or sitting-out a set number of hands in the online tab of <a href="settings.html">Edit Tournament</a>. <br>
+                    (Dash item available in Online only)<br>
+            </blockquote></td>
+          </tr>
+		  
+		   <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Player Style </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              When the mouse pointer is placed over any player at the table, the Player Style dash header displays that player's name and displays a graph of their tightness and aggressiveness when maximized.<br>
+              <br>
+All players can be categorized in two ways. How few or how many hands they play determines how tight/loose they are. How little or how much a player bets determines how passive/aggressive they are.<br>
+<br>
+The graph is divided into four quadrants. The X axis ranges from <strong>Tight</strong> on the left to <strong>Loose</strong> on the right. The Y axis ranges from <strong>Passive</strong> on the top to <strong>Aggressive</strong> on the bottom. The closer the plotted point is to the edge of the graph, the more that player reflects that attribute.<br>
+<br>
+Example: A good solid poker player would be tight-aggressive and the point on the graph will be in the bottom left quadrant. Whereas poor poker player typically know as fish would be loose-passive and the point on the graph will be in the upper right quadrant. Several hands of data must be collected on a player before an average is shown. Otherwise &quot;Don't Know Yet&quot; will be displayed. <br>
+(Dash item available in Practice and Online if the <strong>Enable Dash Items</strong> option is on)</blockquote></td>
+          </tr>
+		  
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Poker Clock </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>
+              Displays the current level, current time left in the level, and current small and big blinds. Note: The clock in practice mode simulates real tournament play and will decrease based on the average time of a round of cards. This can be adjusted by the <strong>Hands Per Hour </strong>setting on the <a href="options.html">Options</a> page. The clock in online games will reflect actual time.
+            </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Pot Odds </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> If there is a bet that 
+                you may call, the pot odds are displayed both as odds (X to 1) 
+                and a percentage. One concept in poker is that it is sometimes 
+                appropriate to stay in the hand if the total odds of improvement 
+                (as a percentage) are greater than the pot odds (as a percentage). 
+                Thus if your odds of improvement total 30% and the pot odds 
+                show as 20%, it might make sense to call. Over the long term, 
+                you are expected to win more money than you lose. See the Chance 
+                of Improvement dash item for your odds of improving the hand. 
+                See Pot Odds in the <a href="glossary.html">Glossary</a> for additional 
+                information. <br>
+    (Dash item always available in Practice, and Online when the host checks the Enable Dashboard Items checkbox in the online category of <a href="settings.html">Edit Tournament</a>.)</blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="middle" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> 
+              Rank</font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> Displays your tournament 
+                rank (based on the chip count), the number of players left in 
+                the tournament, and how many tables are currently being used. 
+                Note: All chip leaders are displayed by clicking the <strong>Info</strong> 
+                button.</blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12">  Up Next </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> Displays the small and 
+                big blinds to be used  in used the next level when the poker clock reaches zero. </blockquote></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> When It's My Turn... </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote> 
+              <p>These are advance action 
+                  checkboxes to choose what to do with your hand before it is your 
+                  turn to act. You may wish to use these because many times, based 
+                  on your current hand, you know well in advance of your 
+                  turn to act what your action will be. This way you do not need 
+                  to wait until it is precisely your turn to act when waiting for 
+                  other players to make a decision. This will also speed up general 
+                  online game play. Although this dash item was designed for online 
+                  play, it can be used in practice if you wish, but typically the 
+                  computer play is so fast it is not needed. The checkboxes are 
+                  reset every time you act. </p>
+              </blockquote> 
+	          <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                  <td width="100" align="center" valign="top"><strong>Advisor Auto Pilot </strong></td>
+                  <td valign="top">If this checkbox is checked, the current advisor will automatically play for you. Note: This action is the equivalent  of the <strong>Do It</strong> button under the Advisor dashboard item automatically being clicked. Note2: The Auto Pilot takes over once you click a final action if it is your turn to act. You may uncheck this checkbox whenever you wish. Hint: You can change the advisor by clicking your cards and choose Set Advisor Type. We recommend the advisor &quot;Solid&quot;, although you can create your own from the Oppenents tab in <a href="options2.html">AI Options</a>. (This is available in Practice and only available online when the host checks the Enable Dash Items option in <a href="settings.html">Edit Tournament</a>. </td>
+                </tr>
+                <tr>
+                  <td width="100" align="center" valign="top"><strong>Check or Fold </strong></td>
+                  <td valign="top">If this checkbox is checked, you will fold 
+                    your hand when it is your turn to act unless you can stay 
+                    in the hand by checking. </td>
+                </tr>
+                <tr>
+                  <td width="100" align="center" valign="top"><strong>Call</strong></td>
+                  <td valign="top">If this checkbox is checked, you will call 
+                    the last bet or raise that was made at the time you checked 
+                    the box. If someone raises after you checked the box, the 
+                    box will reset, display the new call amount and allow you 
+                    to re-check it. The call box will be disabled if you only 
+                    need to check.</td>
+                </tr>
+                <tr>
+                  <td width="100" align="center" valign="top"><strong>Go All-in! </strong></td>
+                  <td valign="top">If this checkbox is checked, you will go All-In 
+                    when it is your turn to act. (No-limit) </td>
+                </tr>
+                <tr>
+                  <td width="100" align="center" valign="top"><strong>Bet</strong></td>
+                  <td valign="top">If this checkbox is checked, you will Bet the 
+                    limit for that round of betting when it is your turn to act. 
+                    Note: On pre-flop and flop the bet is equal to the big blind, 
+                    and the turn and river the bet is equal to double the big 
+                    blind (Bet is displayed for Limit only, Bet Pot is displayed 
+                    for Pot Limit) </td>
+                </tr>
+                <tr>
+                  <td width="100" align="center" valign="top"><strong>Raise</strong></td>
+                  <td valign="top">If this checkbox is checked, you will Raise 
+                    the limit for that round of betting when it is your turn to 
+                    act. (Raise is displayed for Limit only, Raise Pot is displayed 
+                    for Pot Limit).</td>
+                </tr>
+              </table>              
+	          <br></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top" bgcolor="#7c7c7c"><font color="#FFFFFF"><img src="../images/button-dasharrow-off.png" width="12" height="12"> Debug </font></td>
+          </tr>
+          <tr>
+            <td align="left" valign="top"><blockquote>This is used  to help Donohoe Digital troubleshoot a potential problem. This should only be used if instructed by a Donohoe Digital support person. For you techies, by clicking the <strong>Thread Dump</strong> button in the Debug dash item, you are dumping all the threads currently running to the log file that can be seen from the <strong>Support</strong> button on the <a href="mainmenu.html">Main Menu</a>. <br>
+              <br>
+            </blockquote> </td>
+          </tr>
+        </table>        
+      </td>
+    </tr>
+	
+<!-- ROW 3  Chat -->	
+	
+    <tr>
+      <td valign="top" align="center"><strong><img src="../images/gameboard-number-3.png" width="35" height="36"><br>
+        Status Display<br> 
+        &amp; &nbsp;Chat Window<br>
+      </strong></td>
+      <td valign="top">This area is used for displaying dealer messages, and player chat messages if playing online. <br><br>
+            Players have the choice in the general tab of the <a href="options.html">options</a> page to seperate dealer chat from player chat in a side by side format, tabbed format, or combined. <br><br>
+            Note: More detailed hand information can be found by clicking the <strong>Info</strong> button.
+    Observers will appear in the chat window in purple with a [obs] next to their name to indicate they are an observer.
+    Demo	users will appear in the chat window with a [demo]
+    next	to their name to indicate they are a demo user. </p>
+        <table  width="100%" border="1"cellpadding="3" cellspacing="0" bordercolor="#000000">
+          <tr>
+            <td width="100" align="center" valign="top"><strong>Send</strong></td>
+            <td>Use the text area to type your message, then hit Enter or click the <strong>Send </strong>button to send your message to everyone. Your message will be displayed in the chat window. (Online only) </td>
+          </tr>
+          <tr>
+            <td width="100" align="center" valign="top"><strong>Send All Send Host </strong></td>
+            <td>The host of an online game can type a chat message and click the <strong>Send All</strong> button to send their message to all the players at every table. As a guest in an online tournament, you may send a private message to the host by typing a chat message, then click the <strong>Send Host</strong> button. The host will then have the opportunity to send a private message back by typing a chat message and clicking the <strong>Reply</strong> button which appears in the chat window to the right of the private message. (Online only) </td>
+          </tr>
+          <tr>
+            <td width="100" align="center" valign="top"><strong>Clear</strong></td>
+            <td>Click <strong>Clear</strong> to erase all the text in your chat window. You may wish to do this to view the information easier when scrolling. This will not clear the text on anyone else's chat window. </td>
+          </tr>
+          <tr>
+            <td width="100" align="center" valign="top"><strong>Lobby</strong></td>
+            <td>Click <strong>Lobby</strong> to start the chat lobby where you can talk with other players currently running DD Poker.</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+	
+<!-- ROW 4  Buttons -->	
+    <tr> 
+      <td valign="top"> <div align="center"> <strong><img src="../images/gameboard-number-4.png" width="35" height="36"><br>
+          Action Buttons </strong></div></td>
+      <td valign="top">The <strong>Action Buttons</strong> control your action in the game.<br>        
+        <br> 
+        <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+          <tr>
+            <td align="center" valign="top"><strong><img src="../images/button-camera-up.png" width="24" height="28"></strong></td>
+            <td valign="top">The camera icon in the upper right allows you to 
+              take a photo of the screen. When you press it, it takes a picture 
+              at the moment you press the button and then display a file chooser 
+              to allow you to pick the name and where to save it. This is useful 
+              for sharing amazing hands with friends or on the DD Poker Forums.</td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"> <strong><img src="../images/resize.png" width="16" height="16"></strong> 
+            </td>
+            <td valign="top">The Resize Knob allows you to change the size of 
+              the DD Dashboard, chat area and poker table. This is a click and 
+              drag knob. Using the mouse, click and hold the left or right mouse 
+              button when the mouse cursor is over the Resize Knob. A <strong><img src="../images/resize-move.png" width="25" height="25"></strong> 
+              symbol will appear to show you where the intersection between the 
+              three areas will be once you release the mouse button. Double click 
+              the Resize Knob to restore the default size of the screen. </td>
+          </tr>
+          <tr> 
+            <td width="100" align="center" valign="top"><strong>Countdown Timer 
+              Bar </strong></td>
+            <td valign="top">If the <strong>Display Countdown Timer Bar</strong> 
+              option is ON, a thin color bar is displayed just above the action 
+              buttons when it is your turn to act displaying a countdown of your 
+              available player action time and think bank time. </td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><img src="../images/keyboardfocus-on.png" width="24" height="28">&nbsp;&nbsp;&nbsp; 
+              <img src="../images/keyboardfocus-off.png" width="24" height="28"></td>
+            <td valign="top">Keyboard focus ON/OFF indicator. When the focus is 
+              on the keyboard the indicator is yellow, when the focus is elsewhere 
+              on the poker table, the indicator is white. With the focus is on 
+              the keyboard, you may use keyboard <a href="shortcuts.html">Shortcuts</a> 
+              for the game actions like fold, call, or raise. <br> <br>
+              Use the Tab key to change focus between items on the poker table, 
+              or use the mouse to toggle keyboard focus by clicking on the indicator.</td>
+          </tr>
+          <tr> 
+            <td width ="100" align="center" valign="top"><strong>Deal</strong></td>
+            <td valign="top">Use the Deal button or the (<strong>D </strong>key) 
+              to start each hand.</td>
+          </tr>
+          <tr> 
+            <td width ="100" align="center" valign="top"><strong>Fold</strong></td>
+            <td valign="top">Use the Fold button or the (<strong>F</strong> key) 
+              to fold your hand. This button is disabled if you have another option 
+              besides folding (for example, when a check will suffice). This behavior 
+              can be changed via the <strong>Always Allow Fold</strong> option.</td>
+          </tr>
+          <tr> 
+            <td width ="100" align="center" valign="top"><strong>Check/<br>
+              Call</strong></td>
+            <td valign="top">This button displays Check (<strong>C</strong> key) 
+              when there is no bet for you to call. It displays Call if there 
+              is a bet in front of you that you can call. The amount you are calling 
+              is listed above your cards. The (<strong>C</strong> Key) is also 
+              used to continue during an all in showdown when the <strong>Pause 
+              When All-In</strong> option is ON, or during a chip color up when 
+              the <strong>Pause during Color Up</strong> option is ON. </td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><strong>Bet/<br>
+              Raise </strong></td>
+            <td valign="top">This button displays Bet (<strong>B</strong> key) 
+              when there is not a bet in the round yet. If there is already a 
+              bet, this button displays Raise. In either case, the amount you 
+              bet or raise is set in the amount text field.</td>
+          </tr>
+          <tr> 
+            <td width ="100" align="center" valign="top"><strong>Amount<br>
+              Spinner </strong></td>
+            <td valign="top">The Amount Spinner lets you type in the amount of 
+              a bet or raise. You have several options to change the bet/raise, 
+              the easiest is moving the slider with your mouse. You can also use 
+              the +/- buttons or <strong>Arrow Keys</strong> to increase/decrease 
+              the bet by the amount of the smallest chip denomination (represented 
+              by the chip icon above the spinner). If you use the <strong>CTRL-Arrow 
+              Keys</strong>, the amount is increased/decreased by 10 times the 
+              smallest chip denomination. Pressing the <strong>Enter</strong> 
+              key perform the bet/raise with the current amount in the spinner 
+              field. 
+              <p>The mouse wheel also alters the Amount Spinner by increments 
+                of the smallest chip denomination. By holding the <b>CTRL</b> 
+                <b>Key</b>, the mouse wheel alters the Amount Spinner by 10X increments 
+                of the smallest chip denomination.</p>
+              <p> Note: When entering a raise, the number specified is in addition 
+                to the amount needed to call (in other words, it is the amount 
+                of the raise, not the amount of the total bet). The amount text 
+                field will enforce the minimum bet or minimum raise. If you have 
+                more chips than everyone else still in the hand, it will enforce 
+                a maximum amount (basically the amount required to put any opponent 
+                still in the hand all-in).</p></td>
+          </tr>
+          <tr> 
+            <td width ="100" align="center" valign="top"><strong>All-in!</strong></td>
+            <td align="center" valign="top"><div align="left">The <strong>All-in!</strong> 
+                button or the (<strong>A</strong> key) is equivalent to betting 
+                or raising all your chips. (No Limit only) </div></td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><strong>Bet Pot! </strong></td>
+            <td align="left" valign="top">The <strong>Bet Pot!</strong> button 
+              or the (<strong>P</strong> key) bets the value of the current pot, 
+              plus the call amount. (Pot Limit only) </td>
+          </tr>
+          <tr> 
+            <td width ="100" align="center" valign="top"><strong>Rebuy</strong></td>
+            <td align="center" valign="top"><div align="left">The Rebuy button 
+                (<strong>E </strong>key) appears when you are in a rebuy tournament 
+                and the rebuy period is still active. You can only rebuy if you 
+                haven't exceeded the maximum rebuys defined for the tournament 
+                and your chip count is at the permitted level (as measured at 
+                the start of the hand). If you rebuy during a hand, the chips 
+                will be added to your stack at the end of the hand.</div></td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><img src="../images/chip5.png" width="32" height="32"></td>
+            <td align="center" valign="top"><div align="left">The smallest chip 
+                at the table. This is the lowest chip denomination being used 
+                at the table. The smallest chip increases as the tournament progresses 
+                and chips are colored-up in the <a href="chiprace.html">Chip Race</a>. 
+              </div></td>
+          </tr>
+        </table>
+        <br>
+    </tr>
+	
+<!-- ROW 5 Playing Area -->	
+    <tr> 
+      <td valign="top"> <div align="center"><strong><img src="../images/gameboard-number-5.png" width="35" height="36"><br>
+          Playing<br>
+          Area </strong></div></td>
+      <td valign="top"> The <strong>Playing Area</strong> displays the cards, 
+        player information, actions and pot.<br> <BR> <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+          <tr> 
+            <td align="center" valign="top"><strong>Player</strong></td>
+            <td valign="top">There are ten seats at the poker table. Each player's 
+              name and chip count is displayed in their area. Your seat number 
+              may vary, but from your perspective, you are always located on the 
+              bottom center of the table, holding slightly larger cards then the 
+              other players. In practice mode, with the <strong>Cheat Pop-up Menu 
+              </strong>option ON, by clicking on your opponents cards, you are 
+              able to change either hole card, the player type, chip count, or 
+              move the button to that position. Clicking on your cards allows 
+              you to change your advisor type also. </td>
+          </tr>
+          <tr>
+            <td wdith="100" align="center" valign="top"><strong>Player Pop-up/ Cheat Pop-up Menu</strong><br>              <br>
+            <img src="../images/playerpopup.jpg" width="100" height="56"></td>
+            <td valign="top">Player menus pop-up when you click on the poker table cards, players or observers. Online the pop up menus include feature such as sitting out and muting players. With the <strong>Cheat Pop-up Menu</strong> option ON in practice mode, by clicking on your opponents cards, you are able to change either hole card, the player type, player name, chip count,  move the button to that position, or remove the player.  By clicking on your cards, you are able to change either hole card, your advisor type, chip count, or move the button to your position. You may also change any of the board cards by clicking on them. <br>
+              <br>
+              <table cellpadding="2" cellspacing="2">
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-card.png" width="17" height="17"></td>
+                  <td><strong>Change Card</strong> allows you to change the card the mouse pointer is over to any card in the deck. If another player has the card you choose, the other players card will turn to another available card in the deck. Note: The option to change a card only appears in the pop up menu only when you can see the card face up, therefore the boards cards, an all-in showdown or the options <strong>Peak at Opponent's Cards</strong> or <strong>Computer Cards Face Up</strong> turned ON. </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-playertype.png" width="17" height="17"></td>
+                  <td><strong>Set Player Type </strong>allows you to change the AI computer player to any player type for the remainder of the game. See Player Types under opponents in <a href="options.html">Options</a>.</td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-rename.png" width="17" height="17"></td>
+                  <td><strong>Change Player Name</strong> allows you to change that player's name for the current tournament. </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-money.png" width="17" height="17"></td>
+                  <td><strong>Change Chip Count</strong> allows you to alter that players chip dollar amount to any desired value. </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-button.png" width="17" height="17"></td>
+                  <td><strong>Move Button Here</strong> allows you to move the position of the button to that players position. Note: You can also choose the <strong>Don't Move Button</strong> option in the <a href="options.html">Options</a> screen to keep the button in the same position. </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-remove.png" width="17" height="17"></td>
+                  <td><strong>Remove Player</strong> allows you to completely remove a computer AI from the tournament. Note: The remove player option only appears between hands when clicking on the computer opponents.</td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-advisor.png" width="17" height="17"></td>
+                  <td><strong>Set Advisor Type</strong> changes your advisor player type displayed in the DD Dashboard Advisor item. This icon only appears when clicking on your cards at the bottom of the poker table. </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-sitout.png" width="17" height="17"></td>
+                  <td>Sit-out / Resume Playing is a short cut to the Sit-Out Online DD Dashboard item. You may click your cards and click this button to toggle from sitting out or resuming play. (online only) </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-deal.png" width="17" height="17"></td>
+                  <td><strong>Deal</strong> gives you another alternative to clicking the Deal button when <strong>Auto Deal</strong> is Off by right clicking the center of the poker table at the end of a hand. </td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-mute.png" width="17" height="17"><br>
+                      <img src="../images/menuicon-unmute.png" width="17" height="17"><br></td>
+                  <td valign="top">Mute / Un-mute allows you to add or remove players to the muted player list. Chat from these players will no longer be displayed in the current game or any future  online games or lobbies. This is useful to turn text chat off for any players whose chat you find annoying or offensive. Muted players stay muted in all future chat until deleted from the list. Hint: You can manage your muted players and banned players lists from the online tab on the <a href="options.html">Options</a> screen.</td>
+                </tr>
+                <tr>
+                  <td align="center" valign="top"><img src="../images/menuicon-ban.png" width="17" height="17"><br>
+                  <img src="../images/menuicon-unban.png" width="17" height="17"></td>
+                  <td valign="top">Ban / Un-ban allows the host or any guest to add a player or observer to their ban list. This only affects  future games hosted by you and does not affect the current game. Exception: If the host bans an observer, that observer will also be immediately booted from the game. </td>
+                </tr>
+              </table>              
+            <p>&nbsp;</p></td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><strong>Hole<br>
+              Cards </strong></td>
+            <td valign="top">The computer players' cards are dealt face down. 
+              Your cards are dealt face up. You can use the <strong>Hole Cards 
+              Face Down</strong> option to deal them face down. This is good practice 
+              for real poker tournaments because it helps you practice memorizing 
+              your cards. In practice mode, with the <strong>Cheat Pop-up Menu</strong> option ON, by clicking on your hole cards, you are able to change either hole card, your advisor type, chip count, or move the button to your position.</td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><strong>Board<br>
+              Cards </strong></td>
+            <td valign="top">The community or board cards are displayed in the 
+              middle of the poker table. With the <strong>Cheat Pop-up Menu</strong> option ON, you can alter the board cards in practice mode by clicking on any board card. </td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><strong>Pot</strong></td>
+            <td valign="top">As bets are made, chips are displayed in the pot 
+              in the left center of the board. The total pot amount is displayed just 
+              below the chips. </td>
+          </tr>
+          <tr> 
+            <td align="center" valign="top"><strong>Side&nbsp;Pots<br>
+              <img src="../images/sidepot.jpg" width="94" height="19"> </strong></td>
+            <td valign="top">If there is a side pot, a  button will appear 
+              listing the number of side pots. If you click on this button, a 
+              dialog is displayed showing the amount in each side pot and which 
+              players are involved in it. The winner of the side pots will also be displayed in the chat window or can be seen in the hand history of the <strong>Info</strong> button. </td>
+          </tr>
+          <tr valign="top"> 
+            <td align="center"><strong>Player<br>
+              Actions </strong></td>
+            <td>The last action a player took is displayed next to his or her 
+              hole cards. The icons below are displayed to give a visual reference 
+              to each player's action. In addition, the total amount they have 
+              bet in the round is listed, as well as the current amount of a call. 
+              When dollar amounts are too large to display, the numbers are shortened and displayed using the 
+              thousands abbreviation, &quot;<strong>K</strong>&quot;. Example: $10K is the same as $10,000). 
+              <br> <table cellspacing="2" cellpadding="2">
+                <tr> 
+                  <td><img src="../images/icon-check.png" width="45" height="45"></td>
+                  <td>Check</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-small.png" width="45" height="45"></td>
+                  <td>Small Blind</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-bet.png" width="45" height="45"></td>
+                  <td>Big Blind (first round) or initial bet (subsequent rounds)</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-call.png" width="45" height="45"></td>
+                  <td>Call</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-raise.png" width="45" height="45"></td>
+                  <td>Raise</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-reraise.png" width="45" height="45"></td>
+                  <td>Re-raise</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-rereraise.png" width="45" height="45"></td>
+                  <td>3rd+ raise</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-allin.png" width="45" height="45"></td>
+                  <td>All-in</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-fold.png" width="45" height="45"></td>
+                  <td>Fold</td>
+                </tr>
+                <tr> 
+                  <td><img src="../images/icon-act.png" width="45" height="45"></td>
+                  <td>This player's turn to act</td>
+                </tr>
+              </table>
+              <p>&nbsp;</p></td>
+          </tr>
+          <tr valign="top"> 
+            <td align="center"><strong><img src="../images/button.png" width="50" height="50"><br>
+              Dealer<br>
+              Button </strong></td>
+            <td align="center"> <div align="left">The dealer button marks which 
+                player is acting as the dealer. In practice mode, with the <strong>Cheat Pop-up Menu</strong> ON option, you may move the position of the button by clicking on any players cards for the player pop-up and choosing <strong>Move Button Here</strong>. You may also choose to keep the button in the same position with the <strong>Don't Move Button</strong> option  if you wish to practice from the same position every hand. </div></td>
+          </tr>
+          <tr valign="top">
+            <td align="center"><img src="../images/results-win.jpg" width="100" height="54"></td>
+            <td align="left">The green placard with the check mark is used to indicate the player who won the pot (or part of the pot) and the amount won. This placard is also displayed if a player won part of a side pot.<br>
+                        <br>
+              The green placard is also displayed when the <strong>Pause When 
+              All-in</strong> option is on. It indicates the player currently 
+              the odds on favorite to win the hand. They could have a lesser hand 
+              than other players, but the odds favor them to improve.</td>
+          </tr>
+          <tr valign="top">
+            <td align="center"><img src="../images/results-lose.jpg" width="100" height="54"></td>
+            <td align="left">The red placard with the &quot;no&quot; symbol is used to indicate that a player lost the pot.</td>
+          </tr>
+          <tr valign="top">
+            <td align="center"><img src="../images/results-overbet.jpg" width="100" height="54"></td>
+            <td align="left">The light blue placard with the arrow is used to 
+              indicate that the player lost the pot, but an over bet was returned 
+              to the player. An over bet occurs when a player goes all-in and 
+              is called by someone with fewer chips. This extra amount is the 
+              &quot;over bet&quot; and is returned after the showdown. If the 
+              player who over bet wins the hand, then the over bet amount is included 
+              in the amount won and displayed using the green placard.</td>
+          </tr>
+          <tr valign="top">
+            <td align="center"><img src="../images/results-fold.jpg" width="100" height="54"></td>
+            <td align="left">The gray placard with the &quot;no&quot; symbol is used to indicate that the player folded his or her hand after calling, betting or raising. This is only displayed if the <strong>Show Folded Hands</strong> option is turned on.</td>
+          </tr>
+          <tr valign="top">
+            <td align="center"><img src="../images/results-allin.jpg" width="100" height="54"></td>
+            <td align="left"><p>The brown placard with the &quot;all-in&quot; 
+                symbol is used when the <strong>Pause When All-in</strong> option 
+                is turned on. It displays the current hand the player has and 
+                the odds that it will end up being the winner at the end of the 
+                hand. </p>
+              <p><strong>Note</strong>: the odds displayed before the flop are 
+                an approximation based on all possible flops (the first 3 cards). 
+                We do this because for the typical heads-up all-in hand, determining 
+                the precise odds requires calculating all possible five card boards 
+                (a total of 1,712,304 combinations!). This takes 9-18 seconds 
+                to calculate (depending on your CPU) which is too much of a delay. 
+                Thus pre-flop odds are displayed with a tilde (~), indicating 
+                &quot;approximate&quot;. Odds displayed after the flop are the 
+                precise odds that hand will end up winning.</p>
+              <p><strong>Note</strong>: If you wish to determine the true pre-flop 
+                odds, use the Calculator Tool's Showdown calculator.</p></td>
+          </tr>
+          <tr valign="top">
+            <td align="center"><img src="../images/results-info.png" width="100" height="55"></td>
+            <td align="left">Online games will display a dark blue placard to show when you are sitting-out, or when other players have been disconnected or are sitting-out. (online only) </td>
+          </tr>
+        </table></td>
+    </tr>
+	
+<!-- ROW 4 STEP 4 -->	
+    <tr> 
+      <td valign="top"> <div align="center"></div></td>
+      <td valign="top">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td colspan="2" valign="top"><div align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1"><br>
+          DD Poker Website</font></a></strong></div></td>
+    </tr>
+	
+<!-- END TABLE -->	
+  </table>
+  <p align="left">&nbsp;</p>
+</div>
+</BODY>
+</HTML>

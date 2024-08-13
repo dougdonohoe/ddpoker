@@ -1,0 +1,540 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="283" colspan="2"><img src="../images/button-online-up.png" width="70">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>Host Online</strong></font>&nbsp;&nbsp;</td>
+    </tr>
+</table>
+
+
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Host Online (LAN or Internet) Tournament </font></strong>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<p align="center"><img src="../images/onlinesetup1.jpg" width="450" height="335"></p>
+
+<p align="left">Click <a href="online.html">Online</a> from the <a href="mainmenu.html">Main Menu</a>, <a
+        href="select.html">Select a Tournament</a> and click <strong>Continue</strong> to continue to the Setup Online
+    Tournament (2 of 2) screen. </p>
+
+<p align="center"><img src="../images/onlinesetup2.jpg" width="450" height="336"><br>
+    <br>
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Setup Information </font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+    <tr>
+        <td align="center" valign="top"><strong>Router</strong></td>
+        <td>If you have a router, you must:
+            <ul>
+                <li>Port Forward TCP range of ports from 11885 to 11889 to the local IP address of your computer.</li>
+                <li> Port Forward UDP range of ports from 11885 to 11889 to the local IP address of your computer.</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Firewall and Security Programs </strong></td>
+        <td>If you have any security programs you may need to configure them to allow proper operation of the game.
+            <ul>
+                <li>Allow the execution of ddpoker.exe (Windows)</li>
+                <li>Allow DD Poker full LAN and internet access</li>
+                <li>Allow DD Poker full TCP access over the range of ports from 11885 to 11889</li>
+                <li>Allow DD Poker full UDP access over the range of ports from 11885 to 11889</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<p align="left">See <a href="porthelp.html">Online Setup Help</a> for additional information. <br>
+    See <a href="faq.html">FAQ</a> for common online questions.</p>
+
+<p>
+<table border="0">
+    <tr>
+        <td align="center" width="100" valign="top"><img src="../images/gameboard-number-1.png" width="35"
+                                                         height="36"><br>
+            <strong>Local Area Network (LAN) Connection</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Local IP Address </strong></td>
+                    <td>This text field displays your local IP address of your computer. This is the IP address that you
+                        will use to configure your router. <br></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Game URL </strong></td>
+
+                    <td>The LAN Connection Game URL is used if you want to play other human
+                        opponents on other computers in your local area network (LAN). An
+                        example of a LAN can be two or more of your home computers all connected
+                        with a router. Another example may be an office LAN, depending on
+                        your company LAN setup and policies. In either case, each user is
+                        required to have their own licensed copy of DD Poker.
+</p>
+<p>In most cases, other computers on your LAN will automatically find
+    the game you are hosting shown under <strong>Games Running On Your
+        LAN</strong> when they click the <strong>Join Online</strong> button.
+    If their computer can not automatically find the game you started
+    due to network issues on your LAN, they may still be able to join.
+    You will need to send the entire <strong>Game URL</strong> to these
+    people. You may do this by clicking the Copy button which copies
+    the Game URL to your clipboard and then pasting it into an email
+    or instant message. Another option is to simply yell over the cubicle
+    wall the Game URL. These players can either type the Game URL in
+    manually or can copy the Game URL and click the <strong>Paste</strong>
+    button next to Game URL on their Join Game screen.</p>
+
+<p> If you are behind a firewall, such as a router, your LAN Game
+    URL will use the IP address assigned by your router. Note: The game
+    can accept connections from both guests using the Game URL on your
+    local area network and others using your internet Game URL (see
+    below).<br>
+    &nbsp; </p>
+</td>
+</tr>
+</table></td>
+</tr>
+<tr>
+    <td width="100" align="center" valign="top"><img src="../images/gameboard-number-2.png" width="35" height="36"><br>
+        <strong>Internet Connection</strong></td>
+    <td><p><strong>Internet Connection</strong>: If you wish to allow friends
+        or other DD Poker users to participate in your poker tournament from the
+        internet, you must configure your Internet connection. </p>
+
+        <p>Click the <strong>Configure Internet Connection</strong> checkbox to
+            start. </p>
+
+        <p>Enter your public IP address (if you know it). Otherwise click <strong>Get
+            Public IP Address</strong> to automatically figure out what your IP address
+            your internet service provider (ISP) assigned to you. This will also automatically
+            generate your <strong>Game URL</strong> that will be used to host the
+            poker game over the internet. </p>
+
+        <p>Before you continue to the Poker Lobby, click <strong>Test Connection</strong>.
+            This will confirm you are able to receive message over then internet and
+            thus host a game. If you received a message saying that the test succeeded,
+            then click, <strong>OK</strong>, then <strong>Open Lobby</strong>, to
+            proceed to the Poker Lobby and open the tournament for players to join.
+        </p>
+
+        <p>If your test failed, likely due to router, firewall or internet security
+            software settings, your internet guests will not be able to join your
+            game. See <a href="porthelp.html">Online Setup Help</a> for additional
+            information on configuring your computer, routers and firewall to allow
+            in-bound internet connections.<br>
+            &nbsp;
+        </p>
+        <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Configure Internet Connection </strong></td>
+                <td>Check <strong>Configure Internet Connection</strong> if you wish
+                    to configure this game to allow players to connect from the internet.
+                    this is necessary if you have friends you want to play with, but they
+                    are at another location (e.g., not in your office and not on your
+                    home network). Note: You can typically only have one computer on a
+                    LAN hosting a public internet game at a time. This is because they
+                    share the same public IP address and you need to forward incoming
+                    poker information to the hosting computer. This is done by port forwarding
+                    to the LAN IP address of your hosting computer.
+                </td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Public IP Address</strong>
+                </td>
+                <td>Enter your pubic IP address or click on the <strong>Get Public IP Address</strong> button to
+                    determine it. This is the IP address that everyone on the internet or outside your firewall will see
+                    as your IP address. This IP address is used to create your internet Game URL.
+                </td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Get Public IP Address </strong></td>
+                <td>Query the DD Poker server to determine your public IP address. This is needed to create the internet
+                    Game URL needed for players connecting to the game from the internet.
+                </td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Game URL</strong></td>
+                <td>This is the Game URL that will be used for people to connect to your game on the internet or outside
+                    your firewall. It consists of your internet IP address with a game identification and game password
+                    tacked on. The Game URL can only be altered by manually adjusting the Public IP Address above due to
+                    unique network issues, otherwise the game ID and password can not be altered and the entire line
+                    must be used by anyone wishing to join your game.
+                </td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Test Connection</strong></td>
+                <td>Test whether the internet game URL is working via the DD Poker server.
+                    The server will attempt to contact your game with a test message similar
+                    to the way other players would connect to your game. This allows you
+                    to confirm that any required router or firewall settings have been
+                    correctly configured to allow in-bound connections. Your test <strong>must </strong>
+                    succeed in order to host a game over the internet.<br><br>
+                    If your Test Connection fails, for sure, you have a problem in one of two places:
+                    <ul>
+                        <li>Your firewall or security software is not configured</li>
+                        <li>Your router is not port forwarding to the IP address of your computer. (see above in Setup
+                            Inforamation)
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <br></td>
+</tr>
+<tr>
+    <td width="100" align="center" valign="top"><img src="../images/gameboard-number-3.png" width="35" height="36"><br>
+        <strong>DD Poker Public Game List </strong></td>
+
+    <td>
+        <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Current Profile </strong></td>
+                <td valign="top">Displays the current player profile in use. Click on
+                    the <strong>Profile</strong> button to change profiles or to online-activate
+                    your profile to list public games.
+                </td>
+            </tr>
+
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Online Activated</strong></td>
+                <td valign="top"><strong>'Yes'</strong> will be displayed if your
+                    profile is online-activated to List Public Games. This means you have
+                    gone through the process of registering with the DD Poker server
+                    and obtaining a password for your player name. This process is described
+                    in detail below.<br>
+                    <br>
+                    To online-activate and obtain a password for your player name, click the <strong>Profile</strong>
+                    button to go to the Player Profile screen. Choose the player you
+                    wish to use, then click the <strong>Edit</strong> button. The Edit
+                    Player window will pop-up, choose Activete Profile, where you can enter your email address and have
+                    the password sent to you.
+                    <br><br>
+                    <strong>Note</strong>: The player profile name is what other players
+                    see when you join public games and is what is listed on the public
+                    DD Poker website. You cannot change this name after it is created,
+                    so choose wisely. If you name is already taken, you will be notified
+                    and will have to choose another name.<br><br>
+                    Once you enter a valid email address format, click <strong>OK</strong>.
+                    An email from <em>ddpoker.com</em> will be sent to
+                    the address entered. It should arrive within seconds, but may take
+                    longer based on the email traffic of your internet service provider.
+                    If you do not receive the email within a reasonable amount of time,
+                    make sure your email provider or your email program is not filtering
+                    or blocking the delivery of above email address.<br><br>
+                    You can try sending the email again by clicking the <strong>Resend
+                        Password </strong> button. This button will only appear after your
+                    first attempt. The email will contain an 8 digit password. Type
+                    the lowercase password into the Password entry on the Edit Player
+                    pop-up window and click <strong>OK</strong>. After verifying your
+                    password, your Profile is now configured to <strong>List Public
+                        Games</strong>.<br><br>
+                    Once your Profile is online-activated, you may change your email on the
+                    Edit Player pop-up by clicking the <strong>Change Email</strong>
+                    button. Doing so requires re-activation and a new password will
+                    be sent to this address.<br><br>
+                    You may also change your password from the auto-generated one to
+                    one you can more easily remember, using the <strong>Change Password</strong>
+                    button.
+                </td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Post on Pubic Game List</strong></td>
+                <td valign="top">Once you have configured your game with <strong>Configure
+                    Internet Connection</strong>, and your profile is online-activated, you can choose to <strong>Post
+                    on
+                    Public Game List</strong> by clicking this checkbox. If you post
+                    your game on the public game list, your game will be listed as a
+                    public game that anyone in the world with the DD Poker
+                    version 2 software can join by clicking the <strong>Find Pubic Games</strong>
+                    button in the <strong>Join Online</strong> menu. <br><br>
+                    <strong>Note</strong>: Your game will not actually post until you
+                    click the <strong>Open Lobby</strong> button. If you do <em>not</em>
+                    post on the public game list and leave this checkbox blank. You
+                    will have a private game over the internet available only to your
+                    friends that you forward your Internet <strong>Game URL</strong>
+                    to via email, instant message, or telephone.
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td width="100" align="center" valign="top"><img src="../images/gameboard-number-4.png" width="35" height="36"><br>
+        <strong>Options</strong></td>
+    <td>
+        <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Host As Observer </strong></td>
+                <td>Check <strong>Host As Observer</strong> if you (the host) wish to just be an observer of the
+                    tournament rather than a player. Remember, you will not be playing in the tournament and must keep
+                    your game running until it finishes.
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td width="100" align="center" valign="top"><img src="../images/gameboard-number-5.png" width="35" height="36"><br>
+        <strong>Buttons</strong></td>
+    <td>
+        <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Open Lobby </strong></td>
+                <td>Continues to the Poker Lobby screen showing the players that have joined the tournament and a chat
+                    window.
+                </td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Help</strong></td>
+                <td>Displays this Help screen.</td>
+            </tr>
+            <tr>
+                <td width="100" align="center" valign="top"><strong>Cancel</strong></td>
+                <td>Return to the previous menu .</td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>
+<br>
+
+<div align="center"><img src="../images/onlinelobby.jpg" width="450" height="336">
+</div>
+<p align="center">&nbsp;</p>
+
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-1.png" width="35"
+                                                         height="36"><br>
+            <strong>Players</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Players</strong></td>
+                    <td>These are the players that have joined your hosted poker tournament. You may chat with them in
+                        the chat window until you are ready to start the tournament. You may <img
+                                src="../images/menuicon-ban.png" width="17" height="17"> Ban or <img
+                                src="../images/menuicon-mute.png" width="17" height="17"> Mute any player by right
+                        clicking on thier name. (See banning and muting players under the online tab in <a
+                                href="options.html">Options</a> for more information.)<br>
+                        <br>
+                        You may also right click a player to <img src="../images/menuicon-switch.png" width="17"
+                                                                  height="17">change them from an observer to a player
+                        or vise versa.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Fill With Computer Players </strong></td>
+
+                    <td valign="top">You may quickly change whether you wish to have computer
+                        players fill the table based on the maximum number of players you
+                        have set in the tournament settings.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><img src="../images/gameboard-number-2.png" width="35"
+                                                         height="36"><br>
+            <strong>Observers</strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Observers</strong></td>
+                    <td>This displays the list of all the people that have joined the game as observers, but will not
+                        actually play the game. The maximum number of observers is set in the <a href="settings.html">Tournament
+                            Settings</a>. Observers will appear in the chat window in purple with a [obs] next to their
+                        name to indicate they are an observer. Note: The right click band and mute options shown above
+                        for Players also apply to observers.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><img src="../images/gameboard-number-3.png" width="35" height="36"><br>
+            <strong>Game URL's </strong></td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>LAN</strong></td>
+                    <td>Give the LAN Game URL to others in your local area network or other computers on the same
+                        router. Click the <strong>Copy</strong> button to copy the address to the clipboard so you case
+                        paste it to an email or instant message. See the Game URL descriptions above under <strong>Setup
+                            Online Tournament</strong> for more information on Game URL's.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Internet</strong></td>
+                    <td>Give the Internet Game URL to others on the internet or outside your firewall. Click the
+                        <strong>Copy</strong> button to copy the address to the clipboard so you case paste it to an
+                        email or instant message. See the Game URL descriptions above under <strong>Setup Online
+                            Tournament</strong> for more information on Game URL's.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong><img src="../images/gameboard-number-4.png" width="35" height="36"><br>Chat</strong>
+        </td>
+        <td>
+            You can chat with others that have already joined the tournament as players or observers as you are waiting
+            for others to join before you start the tournament.
+            Observers will appear in the chat window in purple with an [obs] next to their name to indicate they are an
+            observer.
+            Demo users will appear in the chat window with a [demo]
+            next to their name to indicate they are a demo user. <BR>
+            &nbsp;
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Send</strong></td>
+                    <td>Use the text area to type your message, then hit Enter or click the <strong>Send </strong>button
+                        to send your message to everyone. Your message will be displayed in the chat window.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Clear</strong></td>
+                    <td>Click <strong>Clear</strong> to erase all the text in your chat window. This will not clear the
+                        text on anyone else's chat window.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Lobby</strong></td>
+                    <td>Click <strong>Lobby</strong> to start the chat lobby where you can talk with other players
+                        currently running DD Poker.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong><img src="../images/gameboard-number-5.png" width="35"
+                                                                 height="36"></strong><br>
+            <strong>Buttons</strong></p>
+        </td>
+        <td>
+            <table width="100%" border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Start!</strong></td>
+                    <td>Starts the game. No more players can join once you start the tournament.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Edit</strong></td>
+                    <td>Brings up the <a href="settings.html">Edit Tournament</a> pop-up screen to allow you to change
+                        tournament settings while you are in the lobby. Hint: This is a good place to change the number
+                        of players, or if you wish to have computer AI in the game. Note: Changes made to the tournament
+                        at this point are for the upcoming game only and are not saved permanently for the tournament.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Options</strong></td>
+                    <td>Brings up the <a href="options.html">Options</a> pop-up screen to allow you to change tournament
+                        settings while you are in the lobby.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Help</strong></td>
+                    <td>Displays this Help screen.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Cancel</strong></td>
+                    <td>Return to the previous menu, the second online setup screen.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<BR>&nbsp;
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Resume an
+                Online Game </font></strong></div>
+        </td>
+    </tr>
+</table>
+
+<br>
+If you stop an online game due to a power failure or by exiting the game, you
+may restart it with the method shown below:<br>
+&nbsp;
+
+<table border="1" cellpadding="3" cellspacing="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Host</strong></td>
+        <td>Click the <strong>Load</strong> button after clicking <strong>Online</strong>
+            from the main menu. Select the game at the top of the list (the most recent)
+            and click Load. This will reload the game the most recent online game. Note:
+            As the host, the other players might be waiting for you to restart so they
+            can reconnect and finish the tournament.
+        </td>
+    </tr>
+</table>
+<ul>
+    <li>If you are the host of a LAN game and your IP address changes, the new IP
+        address will be used, and the guests can rejoin by clicking your game in the
+        LAN game list. This could happen in an office if you play at lunch and wanted
+        to resume the next day but the LAN changed your computer IP overnight. <br>
+    </li>
+    <li>If you are the host on an internet game, you will not be able to resume
+        the tournament if your public IP address changes after a power failure. This
+        can happen if you ISP assigns a new IP address when re-establishing an internet
+        connection. This can also happen if your router loses power longer then a
+        brief interruption. In a future version of DD Poker, we will allow you to
+        reconfigure your public internet address while in-game.<br>
+    </li>
+    <li>Typically, routers try to re-assign the same local IP address to a computer
+        when re-connecting, but depending on the router, it may assign a different
+        number.
+    </li>
+</ul>
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+</BODY>
+</HTML>

@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<IMAGES xmlns="http://www.donohoedigital.com"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <imagedir>images</imagedir>
+
+  <image name="gui.icon" location="pokericon32.gif"/>
+  <image name="engine.basepanel" location="gray-rock.jpg"/>
+
+  <image name="splash" location="poker-splash.jpg" cache="false"/>
+  <image name="splash-nochoice" location="poker-splash-nochoice.jpg" cache="false"/>
+  <image name="splash-empty" location="poker-splash-installer.jpg" cache="false"/>
+
+  <image name="rating16_full" location="rating16_full.png"/>
+  <image name="rating16_half" location="rating16_half.png"/>
+  <image name="rating16_empty" location="rating16_empty.png"/>
+
+  <image name="ddspade48" location="ddspade48.png"/>
+  <image name="pokericon48" location="pokericon48.png"/>
+  <image name="pokericon32" location="pokericon32.gif"/>
+  <image name="pokericon32png" location="pokericon32.png"/>
+  <image name="pokericon16" location="pokericon16.gif"/>
+  <image name="pokericon16png" location="pokericon16.png"/>
+  <image name="blank16" location="blank16.png"/>
+  <image name="downarrow" location="downarrow.png"/>
+  <image name="downarrow-down" location="downarrow-down.png"/>
+  <image name="downarrow-over" location="downarrow-over.png"/>
+
+  <!-- help -->
+  <image name="tourn" location="tourn.jpg"/>
+  <image name="clock" location="clock.jpg"/>
+  <image name="selecttournamentscreen" location="selecttournamentscreen.jpg"/>
+  <image name="edittournamentscreen" location="edittournamentscreen.jpg"/>
+  <image name="descriptionscreen" location="descriptionscreen.jpg"/>
+  <image name="levelscreen" location="levelscreen.jpg"/>
+  <image name="moneyscreen" location="moneyscreen.jpg"/>
+  <image name="opponentmixscreen" location="opponentmixscreen.jpg"/>
+  <image name="onlinetabscreen" location="onlinetabscreen.jpg"/>
+  <image name="mainmenu" location="mainmenu.jpg"/>
+  <image name="onlinemenu" location="onlinemenu.jpg"/>
+  <image name="onlinesetup1" location="onlinesetup1.jpg"/>
+  <image name="onlinesetup2" location="onlinesetup2.jpg"/>
+  <image name="onlinelobby" location="onlinelobby.jpg"/>
+  <image name="onlinejoinlobby" location="onlinejoinlobby.jpg"/>
+  <image name="onlineexplanation" location="onlineexplanation.jpg"/>
+  <image name="onlinejoin" location="onlinejoin.jpg"/>
+  <image name="playerpopup" location="playerpopup.jpg"/>
+  <image name="handselection" location="handselection.jpg"/>
+  <image name="handgroup" location="handgroup.jpg"/>
+  <image name="tabledesign" location="tabledesign.jpg"/>
+  <image name="analysisscreen" location="analysisscreen.jpg"/>
+  <image name="analysisscreen2" location="analysisscreen2.jpg"/>
+  <image name="handhistory" location="handhistory.jpg"/>
+  <image name="exporthistory" location="exporthistory.jpg"/>
+  <image name="calculator" location="calculator.jpg"/>
+  <image name="firewall" location="firewall.jpg"/>
+  <image name="matrix1" location="matrix1.jpg"/>
+  <image name="matrix2" location="matrix2.jpg"/>
+  <image name="gameboard-number-1" location="gameboard-number-1.png"/>
+  <image name="gameboard-number-2" location="gameboard-number-2.png"/>
+  <image name="gameboard-number-3" location="gameboard-number-3.png"/>
+  <image name="gameboard-number-4" location="gameboard-number-4.png"/>
+  <image name="gameboard-number-5" location="gameboard-number-5.png"/>
+  <image name="card_As" location="card_As.png"/>
+  <image name="card_Ks" location="card_Ks.png"/>
+  <image name="card_Qs" location="card_Qs.png"/>
+  <image name="card_Js" location="card_Js.png"/>
+  <image name="card_Ts" location="card_Ts.png"/>
+  <image name="card_9s" location="card_9s.png"/>
+  <image name="card_8s" location="card_8s.png"/>
+  <image name="card_7s" location="card_7s.png"/>
+  <image name="card_Kh" location="card_Kh.png"/>
+  <image name="card_Kd" location="card_Kd.png"/>
+  <image name="card_Kc" location="card_Kc.png"/>
+  <image name="card_8h" location="card_8h.png"/>
+  <image name="card_Tc" location="card_Tc.png"/>
+  <image name="card_Jd" location="card_Jd.png"/>
+  <image name="card_blank" location="card_blank.png"/>
+  <!-- help -->
+
+  <image name="ddlogo" location="logo.png"/>
+  <image name="ddlogo20" location="dd-logo-20.png"/>
+  <image name="taberror" location="taberror.png"/>
+  <image name="tz" location="tz.jpg"/>
+
+  <image name="mainbg" location="stone01.jpg"/>
+
+  <image name="waiting" location="waiting.png"/>
+  <image name="okay" location="okay.png"/>
+  <image name="redx" location="redx.png"/>
+  <image name="redx-small" location="button-dashx-up.png"/>
+
+  <image name="led-red" location="led-red.png"/>
+  <image name="led-green" location="led-green.png"/>
+  <image name="led-yellow" location="led-yellow.png"/>
+
+  <image name="pokermenu" location="pokermenu.png"/>
+  <image name="pokermenu-demo" location="pokermenu-demo.png"/>
+  <image name="pokerdialog" location="pokerdialog.png"/>
+  <image name="pokerbannerwintitle" location="poker-banner-wintitle.png"/>
+  <image name="serverconnect" location="serverconnect.png"/>
+  <image name="info" location="info.png"/>
+  <image name="resize" location="resize.png"/>
+  <image name="resize-move" location="resize-move.png"/>
+
+  <image name="keyboardfocus-on" location="keyboardfocus-on.png"/>
+  <image name="keyboardfocus-off" location="keyboardfocus-off.png"/>
+
+  <image name="menuicon.blank" location="menuicon-blank.png"/>
+  <image name="menuicon.info" location="menuicon-info.png"/>
+  <image name="menuicon.removeplayer" location="menuicon-remove.png"/>
+  <image name="menuicon.playername" location="menuicon-rename.png"/>
+  <image name="menuicon.money" location="menuicon-money.png"/>
+  <image name="menuicon.button" location="menuicon-button.png"/>
+  <image name="menuicon.deal" location="menuicon-deal.png"/>
+  <image name="menuicon.checked" location="menuicon-checked.png"/>
+  <image name="menuicon.card" location="menuicon-card.png"/>
+  <image name="menuicon.playertype" location="menuicon-playertype.png"/>
+  <image name="menuicon.advisor" location="menuicon-advisor.png"/>
+  <image name="menuicon.sitout" location="menuicon-sitout.png"/>
+  <image name="menuicon.export" location="menuicon-export.png"/>
+  <image name="menuicon.mute" location="menuicon-mute.png"/>
+  <image name="menuicon.unmute" location="menuicon-unmute.png"/>
+  <image name="menuicon.ban" location="menuicon-ban.png"/>
+  <image name="menuicon.unban" location="menuicon-unban.png"/>
+  <image name="menuicon.switch" location="menuicon-switch.png"/>
+
+  <image name="button.nav.bak.over" location="button-nav-bak-over.png"/>
+  <image name="button.nav.bak.up" location="button-nav-bak-up.png"/>
+  <image name="button.nav.bak.down" location="button-nav-bak-down.png"/>
+  <image name="button.nav.bak.disable" location="button-nav-bak-disable.png"/>
+
+  <image name="button.nav.fwd.over" location="button-nav-fwd-over.png"/>
+  <image name="button.nav.fwd.up" location="button-nav-fwd-up.png"/>
+  <image name="button.nav.fwd.down" location="button-nav-fwd-down.png"/>
+  <image name="button.nav.fwd.disable" location="button-nav-fwd-disable.png"/>
+
+  <image name="button.exit.over" location="button-exit-over.png"/>
+  <image name="button.exit.up" location="button-exit-up.png"/>
+  <image name="button.exit.down" location="button-exit-down.png"/>
+  <image name="button.exit.disable" location="button-exit-disable.png"/>
+
+  <image name="button.quit.over" location="button-quit-over.png"/>
+  <image name="button.quit.up" location="button-quit-up.png"/>
+  <image name="button.quit.down" location="button-quit-down.png"/>
+  <image name="button.quit.disable" location="button-quit-disable.png"/>
+
+  <image name="button.order.over" location="button-order-over.png"/>
+  <image name="button.order.up" location="button-order-up.png"/>
+  <image name="button.order.down" location="button-order-down.png"/>
+  <image name="button.order.disable" location="button-order-disable.png"/>
+
+  <image name="button.info.over" location="button-info-over.png"/>
+  <image name="button.info.up" location="button-info-up.png"/>
+  <image name="button.info.down" location="button-info-down.png"/>
+  <image name="button.info.disable" location="button-info-disable.png"/>
+
+  <image name="button.save.over" location="button-save-over.png"/>
+  <image name="button.save.up" location="button-save-up.png"/>
+  <image name="button.save.down" location="button-save-down.png"/>
+  <image name="button.save.disable" location="button-save-disable.png"/>
+
+  <image name="button.options.over" location="button-options-over.png"/>
+  <image name="button.options.up" location="button-options-up.png"/>
+  <image name="button.options.down" location="button-options-down.png"/>
+  <image name="button.options.disable" location="button-options-disable.png"/>
+
+  <image name="button.register.over" location="button-register-over.png"/>
+  <image name="button.register.up" location="button-register-up.png"/>
+  <image name="button.register.down" location="button-register-down.png"/>
+  <image name="button.register.disable" location="button-register-disable.png"/>
+
+  <image name="button.updates.over" location="button-updates-over.png"/>
+  <image name="button.updates.up" location="button-updates-up.png"/>
+  <image name="button.updates.down" location="button-updates-down.png"/>
+  <image name="button.updates.disable" location="button-updates-disable.png"/>
+
+  <image name="button.calc.over" location="button-calc-over.png"/>
+  <image name="button.calc.up" location="button-calc-up.png"/>
+  <image name="button.calc.down" location="button-calc-down.png"/>
+  <image name="button.calc.disable" location="button-calc-disable.png"/>
+
+  <image name="button.profile.over" location="button-profile-over.png"/>
+  <image name="button.profile.up" location="button-profile-up.png"/>
+  <image name="button.profile.down" location="button-profile-down.png"/>
+  <image name="button.profile.disable" location="button-profile-disable.png"/>
+
+  <image name="button.help.over" location="button-help-over.png"/>
+  <image name="button.help.up" location="button-help-up.png"/>
+  <image name="button.help.down" location="button-help-down.png"/>
+  <image name="button.help.disable" location="button-help-disable.png"/>
+
+  <image name="button.support.over" location="button-support-over.png"/>
+  <image name="button.support.up" location="button-support-up.png"/>
+  <image name="button.support.down" location="button-support-down.png"/>
+  <image name="button.support.disable" location="button-support-disable.png"/>
+
+  <image name="button.edit.over" location="button-edit-over.png"/>
+  <image name="button.edit.up" location="button-edit-up.png"/>
+  <image name="button.edit.down" location="button-edit-down.png"/>
+  <image name="button.edit.disable" location="button-edit-disable.png"/>
+
+  <image name="button.prizepool.over" location="button-prizepool-over.png"/>
+  <image name="button.prizepool.up" location="button-prizepool-up.png"/>
+  <image name="button.prizepool.down" location="button-prizepool-down.png"/>
+  <image name="button.prizepool.disable" location="button-prizepool-disable.png"/>
+
+  <image name="checkbox.dashboard.on" location="button-dasharrow-on.png"/>
+  <image name="checkbox.dashboard.off" location="button-dasharrow-off.png"/>
+  <image name="checkbox.dashedit.on" location="button-dashshown-on.png"/>
+  <image name="checkbox.dashedit.off" location="button-dashshown-off.png"/>
+
+  <image name="button.camera.over" location="button-camera-over.png"/>
+  <image name="button.camera.up" location="button-camera-up.png"/>
+  <image name="button.camera.down" location="button-camera-down.png"/>
+  <image name="button.camera.disable" location="button-camera-down.png"/>
+
+  <image name="button.asc.up" location="button-asc-up.png"/>
+  <image name="button.asc.down" location="button-asc-down.png"/>
+
+  <image name="button.dsc.up" location="button-dsc-up.png"/>
+  <image name="button.dsc.down" location="button-dsc-down.png"/>
+
+  <image name="button.dashx.up" location="button-dashx-up.png"/>
+  <image name="button.dashx.down" location="button-dashx-down.png"/>
+
+  <image name="button.dashup.up" location="button-dashup-up.png"/>
+  <image name="button.dashup.down" location="button-dashup-down.png"/>
+  <image name="button.dashup.disable" location="button-dashup-disable.png"/>
+
+  <image name="button.dashdown.up" location="button-dashdown-up.png"/>
+  <image name="button.dashdown.down" location="button-dashdown-down.png"/>
+  <image name="button.dashdown.disable" location="button-dashdown-disable.png"/>
+
+  <image name="button.online.over" location="button-online-over.png" cache="false"/>
+  <image name="button.online.up" location="button-online-up.png" cache="false"/>
+  <image name="button.online.down" location="button-online-down.png" cache="false"/>
+
+  <image name="button.practice.over" location="button-practice-over.png" cache="false"/>
+  <image name="button.practice.up" location="button-practice-up.png" cache="false"/>
+  <image name="button.practice.down" location="button-practice-down.png" cache="false"/>
+
+  <image name="button.pokerclock.over" location="button-pokerclock-over.png" cache="false"/>
+  <image name="button.pokerclock.up" location="button-pokerclock-up.png" cache="false"/>
+  <image name="button.pokerclock.down" location="button-pokerclock-down.png" cache="false"/>
+
+  <image name="button.analysis.over" location="button-analysis-over.png" cache="false"/>
+  <image name="button.analysis.up" location="button-analysis-up.png" cache="false"/>
+  <image name="button.analysis.down" location="button-analysis-down.png" cache="false"/>
+
+  <image name="pokertable2" location="COMPOSITE"
+         components="pokertable2_01, pokertable2_02, pokertable2_03, pokertable2_05" x="1230" y="955"/>
+  <image name="pokertable2_01" location="pokertable2_01.png" x="0" y="0"/>
+  <image name="pokertable2_02" location="pokertable2_02.png" x="190" y="0"/>
+  <image name="pokertable2_03" location="pokertable2_03.png" x="1040" y="0"/>
+  <!-- pokertable2_04 is all transparent, so we skip -->
+  <image name="pokertable2_05" location="pokertable2_05.png" x="190" y="939"/>
+  <image name="pokertable2preview" location="pokertable2preview.png"/>
+  <image name="dashboard" location="dashboard.png"/>
+  <image name="card-back" location="card-back.jpg"/>
+  <image name="button" location="button.png"/>
+  <image name="results-win" location="results-win.jpg"/>
+  <image name="results-lose" location="results-lose.jpg"/>
+  <image name="results-overbet" location="results-overbet.jpg"/>
+  <image name="results-fold" location="results-fold.jpg"/>
+  <image name="results-allin" location="results-allin.jpg"/>
+  <image name="results-info" location="results-info.png"/>
+
+  <image name="icon-raise" location="icon-raise.png"/>
+  <image name="icon-reraise" location="icon-reraise.png"/>
+  <image name="icon-rereraise" location="icon-rereraise.png"/>
+  <image name="icon-fold" location="icon-fold.png"/>
+  <image name="icon-call" location="icon-call.png"/>
+  <image name="icon-check" location="icon-check.png"/>
+  <image name="icon-bet" location="icon-bet.png"/>
+  <image name="icon-small" location="icon-small.png"/>
+  <image name="icon-act" location="icon-act.png"/>
+  <image name="icon-blank" location="icon-blank.png"/>
+  <image name="icon-allin" location="icon-allin.png"/>
+
+  <image name="chip1" location="chip1.png"/>
+  <image name="chip5" location="chip5.png"/>
+  <image name="chip25" location="chip25.png"/>
+  <image name="chip100" location="chip100.png"/>
+  <image name="chip500" location="chip500.png"/>
+  <image name="chip1k" location="chip1k.png"/>
+  <image name="chip5k" location="chip5k.png"/>
+  <image name="chip10k" location="chip10k.png"/>
+  <image name="chip50k" location="chip50k.png"/>
+  <image name="chip100k" location="chip100k.png"/>
+
+  <image name="sidepot" location="sidepot.jpg"/>
+
+</IMAGES>

@@ -1,0 +1,228 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+  <tr align="left" valign="middle"> 
+    <td width="289" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font color="#1D4A07" size="+2"><strong>Credits &amp; Legal</strong></font></td>
+  </tr>
+</table>
+<br>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr valign="top"> 
+    <td align="center" valign="top"><strong>Software<br>
+      Development </strong></td>
+    <td align="center" bordercolor="1"> <img src="../images/logo.png" width="259" height="77"><br> 
+      <a href="http://www.donohoedigital.com/">http://www.donohoedigital.com/</a> 
+      <BR> <table cellpadding="2" cellspacing="2">
+        <tr valign="top"> 
+          <td><strong>Donohoe Digital Team&nbsp;&nbsp;<br>
+            <br>
+            </strong></td>
+          <td>Doug Donohoe<br>
+            Greg King</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center" valign="top"><strong>Dedication</strong></td>
+    <td><table cellspacing="2" cellpadding="2">
+        <tr> 
+          <td><strong>Doug:</strong> I dedicate version 3 to my wife Cindy, who 
+            would like to remind you to &quot;Have too much fun.&quot;</td>
+        </tr>
+        <tr> 
+          <td><strong>Greg:</strong> Dedicated to my nephews Branden, Taylor, 
+            Connor, and my niece Madeline.</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr valign="top">
+    <td align="center"><strong>Former Team Members</strong></td>
+    <td>Sam Neth and Brian Zak were on the DD Poker 2.0 development team.</td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center"><strong>2.0 Alpha/Beta Testers</strong> </td>
+    <td>A special thanks to the following people whom have volunteered their time 
+      and been exceptionally helpful:<br> <table align="center" cellpadding="2" cellspacing="2">
+        <tr> 
+          <td>Awais Butt</td>
+          <td>Rick Bivans</td>
+          <td>Paul LaBrier</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center"><strong>2.0 Beta Testers</strong></td>
+    <td>The following people volunteered their time to test this game <em>and</em> 
+      provided their feedback. With their contributions, they helped make this 
+      game truly excellent. Many thanks to the following people:<br> &nbsp;
+      <table align="center" cellpadding="2" cellspacing="2">
+        <tr> 
+          <td valign="top"> Aaron McDonald<br>
+            Andrei Freeman<br>
+            Anthony McGraw<br>
+            Bill Gillock<br>
+            Bill Ritter<br>
+            Bob Lord<br>
+            Brandon Clark<br>
+            Brian Marafino<br>
+            Bryan Kattler<br>
+            Chad Stoffel<br>
+            Chris Huddleston<br>
+            Chris Miller<br>
+            Chris Shepherd<br>
+            Cindy Donohoe <br>
+            Clark Bundy<br>
+            Dave Grand<br>
+            Dave Wilwert </p> </td>
+          <td valign="top" > David Lamson<br>
+            D. Gerardo Jones<br>
+            Geoffrey Wenger<br>
+            Hal Kirkwood<br>
+            Harvey Bundy <br>
+            Jeff Jewett<br>
+            Jeff Reel<br>
+            Jeff Wendt<br>
+            Jim Shaw<br>
+            Jim Williams<br>
+            Jimmy Mauzy<br>
+            Joe Slagle<br>
+            John Comey<br>
+            Jonathan Stirrup<br>
+            Kevin Dente<br>
+            Kevin Ream<br>
+            Lenny Gray </td>
+          <td valign="top"> Matthew Cole<br>
+            Mel Benes<br>
+            Michael Burch<br>
+            Mike Forehand<br>
+            Mike Selinker<br>
+            Nick Eck<br>
+            Paul Mischler<br>
+            Ray Eifler<br>
+            Rick Potter<br>
+            Rod Scala<br>
+            Ron Powell<br>
+            Scott Carlson<br>
+            Scott Petersen<br>
+            Seth Dimbert<br>
+            Stuart Pinnell<br>
+            Taylor Labrier<br>
+            Tim Robinson </td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center" valign="top"><strong>Music &amp;<br>
+      Sound Effects </strong></td>
+    <td valign="top"><table align="center" cellspacing="2" cellpadding="2">
+        <tr> 
+          <td align="center"><strong>Flashcracker Audio</strong><br> <a href="http://www.flashcracker.com">www.flashcracker.com</a> 
+          </td>
+        </tr>
+        <tr> 
+          <td align="center">Original music composed by Dave Fedorenko</td>
+        </tr>
+        <tr> 
+          <td align="center">Sound effects by Jeff Hill</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center" valign="top"><strong>Artwork</strong></td>
+    <td valign="top"><table align="center" cellspacing="2" cellpadding="2">
+        <tr> 
+          <td>Face card artwork by Matthew Coley</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center" valign="top"><strong>Components</strong></td>
+    <td><p>This product includes software developed by the Apache Software Foundation 
+        (http://www.apache.org/) and software developed by the JDOM Project (http://www.jdom.org/). 
+        The licenses for Apache 1.0 and JDOM are located in the installation directory 
+        of this product in the license subdirectory.</p>
+      <p> This product includes parts of the Spring Framework, licensed under 
+        the Apache 2.0 license. The license for Apache 2.0 is located in the installation 
+        directory of this product in the license subdirectory </p>
+      <p>This product is a work that uses the MersenneTwisterFast algorithm which 
+        is licensed under the BSD license. The source code to MersenneTwisterFast 
+        is Copyright (c) 2003 by Sean Luke. Portions copyright (c) 1993 by Michael 
+        Lecuyer. All rights reserved. See the full license in the installation 
+        directory of this product in the license subdirectory.</p>
+      <p>This product contains sound effects licensed from The Hollywood Edge 
+        (http://www.hollywoodedge.com/).</p>
+      <p>This product uses LCD fonts Copyright &copy; 1999 by Samuel Reynolds. 
+        (http://www.spinwardstars.com/scrfonts/) The license for the LCD font 
+        is located in the installation directory of this product in the license 
+        subdirectory. </p>
+      <p>This product uses the HSQLDB database. Copyright &copy; 1995-2000 by 
+        the Hypersonic SQL Group. All rights reserved. Copyright &copy; 2001-2005, 
+        The HSQL Development Group. All rights reserved. See the full license 
+        in the installation directory of this product in the license subdirectory.</p>
+      <p>This product is a work that uses the Explicit Layout which is licensed 
+        under the GNU LPGL license. The source code to Explicit Layout is Copyright 
+        &copy; 1991, 1999 Free Software Foundation, Inc. Per the conditions of 
+        this license, the text of the license is found in the installation of 
+        this product in the license subdirectory. The source code may be downloaded
+        from <a href="http://www.zookitec.com/explicitlayout.html">http://www.zookitec.com/explicitlayout.html</a>. 
+      </p></td>
+  </tr>
+  <tr valign="top"> 
+    <td align="center" valign="top"><strong>Legal</strong></td>
+    <td>DD Poker is Copyright &copy; 2004-2009 Donohoe Digital LLC. All rights 
+      reserved. DD Poker&#8482; and the black and red &quot;DD over a spade&quot; 
+      logo are trademarks of Donohoe Digital LLC.<BR> <BR>
+      The underlying software architecture, design, configuration file formats 
+      and source code used to create DD Poker is Copyright &copy; 2003-2009 Donohoe 
+      Digital LLC. All rights reserved. 
+      <p>Apple &reg; and Mac &reg; are trademarks of Apple Computer, Inc., registered 
+        in the U.S. and other countries.</p>
+      <p> Java&#8482; and all Java-based trademarks and logos are trademarks or 
+        registered trademarks of Sun Microsystems, Inc. in the U.S. and other 
+        countries.<br>
+        <br>
+        Microsoft Windows&reg; and Microsoft Excel&reg; are trademarks of Microsoft 
+        &reg; Corporation.</p>
+      <p>Poker Tracker is Copyright &copy; 2005 PJI, Inc. (http://www.pokertracker.com)</p>
+      <p>Paradise Poker is Copyright &copy; 1999-2005 ParadisePoker.com <br>
+      </p></td>
+  </tr>
+  <tr valign="top"> 
+    <td colspan="2"><div align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1"><br>
+        DD Poker Website</font></a></strong></div></td>
+  </tr>
+</table>
+</BODY>
+</HTML>

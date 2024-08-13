@@ -1,0 +1,232 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+
+<head>
+</head>
+
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="358">&nbsp;<img src="../images/button-pokerclock-up.png" width="70">&nbsp;<font color="#1D4A07"
+                                                                                                   size="+2"><strong>Poker
+            Clock</strong></font></td>
+    </tr>
+</table>
+
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center">
+                <strong><font color="#FFFF00" size="+1">Hosting Home Poker Tournaments</font></strong>
+            </div>
+        </td>
+</table>
+
+Many tournaments these days use computer programs to manage the tournament. After
+all, there are several things to track: the levels, clock, rebuys, add-ons, and
+payouts. DD Poker provides a similar feature to allow you to easily
+run a poker tournament at home.
+<p>All you have to do is select a pre-defined tournament (or define your own in
+    <a href="settings.html"><strong>Edit Tournament</strong></a>) and begin. DD
+    Poker counts down the clock for each level and breaks, then notifies
+    you audibly and visually when the level is about to end. If there are rebuys
+    and/or add-ons, you are reminded when they should occur. As the &quot;bank,&quot;
+    you track the buy-ins, rebuys and add-ons: Added together, this is tour prize
+    pool. DD Poker provides an easy way to determine the prize payouts.</p>
+
+<p> Tips on running your own home poker tournament can be found in the <a href="hosting.html"><strong>Hosting
+    Tips</strong></a> help topic.</p>
+
+<p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center">
+                <strong><font color="#FFFF00" size="+1">Poker Clock Controls</font></strong>
+            </div>
+        </td>
+    <tr>
+        <td>This section explains the features displayed for the Poker Clock. The red numbered circles on the picture
+            below correspond to descriptions
+            of each section of the game table.&nbsp;</td>
+    </tr>
+</table>
+<div align="center">
+    <BR>
+    <img src="../images/clock.jpg" width="450" height="347"> <BR>
+    <BR>
+    <table border="0" align="left" cellpadding="5" cellspacing="0">
+        <tr>
+            <td width="100" valign="top">
+                <div align="center"><strong><img src="../images/gameboard-number-1.png" width="35" height="34"><br>
+                    Menu Buttons
+                    <br>
+                </strong></div>
+            </td>
+            <td valign="top">The <strong>Menu Buttons</strong> at the top of the screen
+                access common game functions.<br> <br>
+                <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><strong><img
+                                src="../images/button-quit-up.png" width="40" height="55"></strong></td>
+                        <td valign="top">Quit the tournament - don't forget to <strong>Save</strong>
+                            before you quit.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><strong><img
+                                src="../images/button-save-up.png" width="40" height="55"></strong></td>
+                        <td valign="top">Save the current home tournament settings, blinds and time.</td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-info-up.png"
+                                                                               width="40" height="55"></td>
+                        <td valign="top">Displays Info on the current tournament settings.
+                            The <strong>I </strong>key also opens this dialog.<BR>&nbsp;
+                            <table cellpadding="2" cellspacing="2">
+                                <tr>
+                                    <td align="center" valign="top"><img src="../images/menuicon-export.png" width="17"
+                                                                         height="17"></td>
+                                    <td><strong>Export Table</strong> to Microsoft Excel. Right
+                                        click (CTRL-click on Mac) any of the tables such as the Levels,
+                                        Prizes or Opponents to bring up the Table Menu pop up. The
+                                        Export Table menu item is used to export the table in a comma
+                                        delimited file format (.csv) that can be read by most popular
+                                        spreadsheet software.
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c">
+                            <strong><img src="../images/button-options-up.png" width="40" height="55"></strong></td>
+                        <td valign="top">Opens the Poker Clock Options dialog, where you can specify options for the
+                            Poker Clock. Here you can disable the chip color up notification and choose to pause the
+                            clock at the end of each level.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-edit-up.png"
+                                                                               width="40" height="55"></td>
+                        <td valign="top"><a href="settings.html">Edit the Tournament Settings</a> once the home poker
+                            tournament has already begun. <strong>Note:</strong> Any alterations will not permanently
+                            change the original tournament profile. The <strong>E</strong> key also opens this dialog.
+                            <strong>Hint:</strong> You can use this screen to change
+                            any aspect of the home tournament while it is in progress.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-prizepool-up.png"
+                                                                               width="40" height="55"></td>
+                        <td valign="top">Opens the Prize Pool window. Enter the total amount of money collected from all
+                            buy-ins, rebuys, and add-ons. Based on your tournament settings, the payouts will then be
+                            calculated under Prize Allocation. The <strong>Z</strong> key also opens this dialog.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><img src="../images/button-calc-up.png"
+                                                                               width="40" height="55"></td>
+                        <td valign="top">Launch the DD Poker Calculator Tool to run in depth hand analysis and calculate
+                            showdown outcomes. This can be a fun way to calculate what the chances were that someone
+                            beat you on the river during your home tournament.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="top" bgcolor="#7c7c7c"><strong><img
+                                src="../images/button-help-up.png" width="40" height="55"></strong></td>
+                        <td valign="top">Opens the Help window.</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+        <tr>
+            <td width="100" align="center" valign="top"><p><strong><img src="../images/gameboard-number-2.png"
+                                                                        width="35" height="34"><br>
+            </strong><strong>Tournament Status Area</strong></p>
+            </td>
+            <td valign="top"><p>The <strong>Tournament Status Area</strong> displays the name of the tournament, the
+                time left in that level, current level, and the current ante/blinds. Below the main information the next
+                ante/blinds, and rebuy/add-on information is displayed. If rebuys and add-ons are allowed in the
+                tournament, it displays when the rebuy period ends
+                and after which level the add-on occurs.<br>
+                <br>
+                When the time in the level is below 10 seconds, a bell chimes and the time flashes to alert you that the
+                level is about to change.</p>
+
+                <p>&nbsp;</p></td>
+        </tr>
+        <tr>
+            <td width="100" valign="top">
+                <div align="center">
+                    <strong><img src="../images/gameboard-number-3.png" width="35" height="34"><br>
+                        Start/Pause<br>
+                        <br>
+                        Rewind<br>
+                        Forward<br>
+                    </strong><strong>Buttons</strong><strong><br>
+                    <br>
+                </strong>          </p>
+                    </p>
+                </div>
+            </td>
+            <td valign="top">The <strong>Start </strong>button
+                starts the clock. When the clock is running, it displays <strong>Pause</strong>, which can be used to
+                temporarily pause the tournament.
+                The <strong>Spacebar, S </strong> key, or <strong>P</strong> key also toggles the Start/Pause
+                button.</p>
+                <p>The <strong>&lt;&lt;</strong> Rewind&nbsp;button is used to rewind
+                    the tournament to the beginning of the current level. If you press it twice, time will rewind to the
+                    beginning of the previous level. The <strong>&gt;&gt;</strong> Forward&nbsp;button is used to
+                    advance the tournament to the beginning
+                    of the next level. These buttons are useful if you need to quickly advance
+                    to the next level (e.g., to speed things up or after editing the tournament
+                    settings). </p>
+
+                <div align="left"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" valign="top">
+                <div align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1"><br>
+                    DD Poker Website</font></a></strong></div>
+            </td>
+        </tr>
+    </table>
+    <p align="left">&nbsp;</p>
+</div>
+</BODY>
+</HTML>

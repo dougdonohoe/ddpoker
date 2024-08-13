@@ -1,0 +1,134 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title wicket:id="ddr1Title">DD Poker - Leaderboard by DDR1</title>
+    <title wicket:id="roiTitle">DD Poker - Leaderboard by ROI</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+    <div class="title">
+        <a href="Leaderboard.html#" wicket:id="ddr1Link">Leaderboard by DDR1</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="Leaderboard.html#" wicket:id="roiLink">Leaderboard by ROI</a>
+    </div>
+    <div class="description" wicket:id="description">Description fragment goes here.</div>
+
+    <wicket:container wicket:id="form"/>
+
+    <div class="leaderboard">
+        <div class="tournament-info-navigator" wicket:id="navigator">[dataview navigator]</div>
+        <table class="tournament-info">
+            <tr>
+                <th>Rank</th>
+                <th>%tile</th>
+                <th>Player</th>
+                <th>Games</th>
+                <th>Total Spent</th>
+                <th>Total Prizes</th>
+                <th>Net Winnings</th>
+                <th wicket:id="col7header">ROI</th>
+                <th wicket:id="col8header">DDR1</th>
+            </tr>
+            <tr wicket:id="row">
+                <td class="center"><span wicket:id="rank">1</span></td>
+                <td class="left"><span wicket:id="percentile">100th</span></td>
+                <td class="left"><a href="Leaderboard.html#" wicket:id="playerLink"><span
+                        wicket:id="playerName">Zorro</span></a><br/>
+                </td>
+                <td class="number"><span class="addpadding" wicket:id="gamesPlayed">100</span></td>
+                <td class="number"><span wicket:id="totalSpent">$100,000</span></td>
+                <td class="number"><span wicket:id="totalPrizes">$100,000</span></td>
+                <td class="number"><span wicket:id="net">$100,000</span></td>
+                <td class="number"><span class="addpadding" wicket:id="col7">381.2%</span></td>
+                <td class="number"><span class="addpadding" wicket:id="col8">4,186</span></td>
+            </tr>
+        </table>
+
+        <wicket:enclosure child="begin">
+            <div class="no-results">
+                No results found between
+                <span wicket:id="begin">1/1/2005</span> and
+                <span wicket:id="end">12/12/2012</span> with players
+                matching "<span wicket:id="nameSearch">blah</span>"
+                having played at least <span wicket:id="games">42</span> <span wicket:id="gamesLabel">games(s)</span>.
+            </div>
+        </wicket:enclosure>
+
+        <div class="footnote" wicket:id="footnote">
+            * <strong>DD Poker AI (best)</strong> calculates the DDR1 score based on the best finish of an AI in a game
+            (many games have multiple AI, so this uses only the highest finish). <strong>DD Poker AI (rest)</strong>
+            calculates the DDR1 score based on all AI finishes except the top AI placement. The "best"
+            calculation gives a better sense for how well the DD Poker AI plays (otherwise it is weighed down
+            by the other AI in the same tournament since they are all considered the same. As an example,
+            if you were allowed to place twice in the same tournament and finished 1st and last, your DDR1
+            score would be the average of the two instead of the higher of the two).
+        </div>
+    </div>
+
+    <!-- Fragments -->
+
+    <wicket:fragment wicket:id="ddr1Description">
+        This table lists players sorted by the DD Poker Rank 1 Algorithm (DDR1).
+        For each tournament you play in, you are awarded points using the
+        formula demonstrated in this <a href="https://static.ddpoker.com/DDPokerDDR1.xls">spreadsheet</a>.
+        <br/><br/>
+        The DDR1 algorithm rewards you for finishing higher than other players
+        and appropriately scales based on the number of opponents. The buy-in and prizes paid are
+        ignored since they are somewhat arbitrary in the free-money world of DD Poker. Games with
+        AI players are awarded slightly fewer points as the AI is a bit easier to beat, but that will
+        change as we continually improve its play. The average of your DDR1 for each finish is used
+        to calculate your ranking in this table.
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="roiDescription">
+        This table lists players sorted by the return on investment (ROI) generated in public
+        online DD Poker tournaments. The ROI is based on the total money spent (buy-ins + rebuys + addons)
+        and the total prize money won in those tournaments.
+        <br/><br/>
+        An ROI is an interesting way to do rankings (rather than gross dollars earned) because it
+        is impacted less by the size of the buy-in and rebuys (online play with DD Poker is not for
+        real money so the actual buy-in amounts are arbitrary). One issue with this ranking is that
+        it doesn't effectively average wins in big money tournaments versus low money tournaments.
+        The DDR1 ranking is intended to handle that.
+    </wicket:fragment>
+
+</wicket:extend>
+
+</body>
+</html>

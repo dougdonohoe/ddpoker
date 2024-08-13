@@ -1,0 +1,147 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<BODY>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="318" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>Chips
+            &amp; Chip Race</strong></font></td>
+    </tr>
+</table>
+
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Chips</font></strong></div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">
+            <div align="left">
+                <strong>DD Poker Chips:</strong> The chip denominations
+                used for DD Poker are as follows:</p>
+                <BR>
+                <table align="center" cellpadding="2" cellspacing="2">
+                    <tr>
+                        <td><img src="../images/chip1.png" width="32" height="32"></td>
+                        <td><img src="../images/chip5.png" width="32" height="32"></td>
+                        <td><img src="../images/chip25.png" width="32" height="32"></td>
+                        <td><img src="../images/chip100.png" width="32" height="32"></td>
+                        <td><img src="../images/chip500.png" width="32" height="32"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="../images/chip1k.png" width="32" height="32"></td>
+                        <td><img src="../images/chip5k.png" width="32" height="32"></td>
+                        <td><img src="../images/chip10k.png" width="32" height="32"></td>
+                        <td><img src="../images/chip50k.png" width="32" height="32"></td>
+                        <td><img src="../images/chip100k.png" width="32" height="32"></td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Color-up</font></strong></div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">
+            <div align="left">&quot;<strong>Color-up</strong>&quot;
+                is the process of removing the lowest denomination chips at the table.
+                This is done when the lowest denomination chip is no longer needed for
+                the blind or ante structure.&nbsp;It also reduces the size of the piles
+                of chips in front of the remaining players so they do not get in the way
+                and block the view of the players.&nbsp; Although this is not necessarily
+                required in a computer poker game, DD Poker does this to give
+                you the feel of actual tournament play.
+            </div>
+        </td>
+    </tr>
+</table>
+<p><strong>Simple Example:</strong>&nbsp; A tournament is using $5, $25, $100,
+    and $500 chips with starting blinds of 10-15. Once the blinds reach 25-50, there
+    is no longer a need for a $5 chip.&nbsp; If you have a quantity of five $5 chips,
+    they are exchanged (colored-up) for one $25 chip.&nbsp; If you have an odd quantity
+    of $5 chips, say 1 through 4, then the <b>Chip Race</b> method is used to determine
+    what happens to the odd chips.&nbsp;<br>
+</p>
+<table border="1">
+    <tr bgcolor="#1D4A07">
+        <td>
+            <div align="center"><strong><font color="#FFFF00" size="+1">Chip Race</font></strong></div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top">
+            <div align="left">The Chip Race is the method
+                used in the Color-up process for the odd chips left on the table that
+                are not of sufficient quantity to be changed up directly to the next highest
+                denomination chip.
+            </div>
+        </td>
+    </tr>
+</table>
+<p><strong>Chip Race method used in DD Poker</strong>:&nbsp; One card
+    is dealt for each odd chip that players are unable to change up to the next
+    value chip. Cards are dealt clockwise starting with the first seat, with each
+    player receiving all cards before moving to the next player.</p>
+
+<p>All the odd chips are colored-up and then divided between the players based
+    on the results of the Chip Race.&nbsp; The player with the highest card (ties
+    decided by suit rank) is awarded one chip, the second highest card is awarded
+    the next chip, and so forth, until all the lower denomination chips are exchanged
+    (each player may only receive one chip). For the purpose of the chip race, the
+    suit rank is spades (highest), hearts, diamonds and clubs. If an odd number
+    of lower denomination chips are left the player with the highest card remaining
+    receives a new chip if he or she has half or more of the quantity of lower denomination
+    chips needed, otherwise nothing.</p>
+
+<p>A player may not be eliminated from the event by the Chip Race process. If
+    a player has no chips after the race cards have been dealt, he is given a chip
+    of the higher denomination before anyone else is awarded a chip. </p>
+
+<p>If the <strong>Pause During Color-up</strong> option is ON, the action pauses when the color-up chip race occurs
+    after the cards are dealt and after the chips are awarded to the high cards. You must click the
+    <strong>Continue</strong> button (or <strong>C</strong> key) to see the next step. If this is off, the color-up
+    happens automatically with a slight pause after each step.</p>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+</BODY>
+</HTML>

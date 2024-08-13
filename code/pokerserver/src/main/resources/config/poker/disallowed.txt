@@ -1,0 +1,30 @@
+# Swear words
+ddpoker
+cunt
+fuck
+nigger
+bastard
+prick
+asshole
+whore
+twat
+piss
+shit
+dick
+balls
+crap
+tits
+bitch
+
+# DD Poker like name
+(ai)
+(h)
+(demo)
+(obs)
+[ai]
+[h]
+[demo]
+[obs]
+
+# Regular expressions
+:[\p{Punct}\p{Blank}]* # any name with all punctuation

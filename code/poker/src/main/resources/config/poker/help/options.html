@@ -1,0 +1,811 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<html>
+
+<body>
+
+<!-- MAIN OPTIONS PAGE  HEADER *************************************************************************-->
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="208" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font
+                color="#1D4A07" size="+2"><strong>Options</strong></font>&nbsp;&nbsp;</td>
+    </tr>
+</table>
+<br>
+<!-- GENERAL HEADER -->
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">General</font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>General</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Large Cards</strong></td>
+                    <td>If this option is ON, the cards are shown with an exaggerated upper-left
+                        corner that is easier to read. If this option is OFF, the cards are
+                        shown like standard playing cards, which may be harder to view on
+                        smaller monitors or DD Poker window sizes.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Use Four-Color
+                        Deck</strong></td>
+                    <td>If this option is ON, a four color deck is used, with clubs in green
+                        and diamonds in blue. This makes it easier to spot flush possibilities
+                        at a glance, preventing the costly mistake of misreading your hand
+                        or failing to recognize another player may have drawn out on you.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Use Stylized Face
+                        Cards </strong></td>
+                    <td valign="top">Tired of the same old face cards? Turn this option
+                        on to display DD Poker's stylized take on face cards, where we show
+                        only the crowns for the King, Queen and Jack.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Hole Cards Face
+                        Down</strong></td>
+                    <td>Normally your hole cards are dealt face up and are always visible
+                        in the computer game.&nbsp; If this option is ON, then your hole cards
+                        are face down (just like in a real tournament) and you need to pass
+                        the mouse over them to view them.&nbsp; This is good practice for
+                        real poker games where you need to be able to quickly memorize your
+                        cards!
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Always Allow Fold</strong></td>
+                    <td>You never want to fold a poker hand when you have the option of
+                        checking.&nbsp; Normally, the game prevents you from making this mistake.&nbsp;
+                        However, if this option is ON, you can fold whenever you wish, even
+                        if a check would suffice. You may also press the <B>F</B> key at any
+                        time to fold - even before it is your turn to act (this is a way to
+                        play even faster!)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Right Click Only
+                        Pop-up Menus </strong></td>
+                    <td>By default, the player pop-up menus in the poker table (in order
+                        to alter a players cards, chip count, button position, or player type)
+                        are triggered by either left or right mouse clicks. However, power
+                        users may wish to turn off the left-mouse trigger, which is a non-standard
+                        user interface convention. Turn ON this option to turn off left-click
+                        pop-up menu triggering.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Disable Keyboard
+                        Shortcuts</strong></td>
+                    <td valign="top">If this option is on, the keyboard shortcuts D F C
+                        B R A E and P, (otherwise known as 'Hot-Keys') are disabled for Deal,
+                        Fold, Check, Call, Bet, Raise, All-in, rEbuy and bet Pot (for pot
+                        limit). This is an added measure to help prevent accidental player
+                        actions when typing chat messages online.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Check For Updates</strong></td>
+                    <td valign="top">If this option is on, an update check will be performed
+                        at startup. If an update is available a message will be displayed
+                        with details on how to get the update.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Reset Hidden Dialogs
+                    </strong></td>
+                    <td>Reset all pop-up dialogs you have hidden via the &quot;do not display&quot;
+                        checkbox. If you click this button, all dialogs which were previously
+                        hidden will be displayed once again. You may, of course, hide selected
+                        dialogs again via the &quot;do not display&quot; checkbox.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Sound</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Sound Effects</strong></td>
+                    <td>Allows adjustment of the volume of the sound effects such as card
+                        and chip sounds from 5 to 100 when the option is checked.&nbsp; If
+                        the option is not checked, all sound effects are off.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Background Music</strong></td>
+                    <td>Allows adjustment of the volume of the background music from 5-100
+                        when the option is checked.&nbsp; If the option is not checked, the
+                        background music is turned off. Note: The background music does not
+                        play during a game.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Screen Shot</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Max Width</strong></td>
+                    <td>Screen shots (CTRL-P / CMD-P) are scaled from the current window
+                        size so as not to exceed this width.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Max Height</strong></td>
+                    <td>Ditto for the height.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Chat Messages </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Dealer Messages
+                    </strong></td>
+                    <td valign="top">Choose between three levels of dealer messages displayed
+                        in the dialog &quot;chat&quot; box. Show all dealer messages OR all
+                        dealer messages except player actions during a hand (call, check,
+                        bet, raise, fold) and community card messages OR show no dealer messages.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p><br>
+
+
+    <!-- PRACTICE HEADER -->
+
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Practice</font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Practice</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Deal</strong></td>
+                    <td>Automatically deal the next hand at the end of the current hand, after a brief delay (specified
+                        in the Time Delay section).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Pause<br>When<br>All-in</strong></td>
+                    <td>If this option is ON, the action pauses when you and any remaining players are all-in. The type
+                        of hand and odds of it winning is displayed. You must click the <strong>Continue </strong>button
+                        (<strong>C</strong> key) to show the flop, turn and river cards. If this is OFF, the board cards
+                        are displayed automatically.<br>
+                        <br>
+                        See the <a href="gameboard.html">Poker Table</a> help topic, section 3, for more information on
+                        what is displayed when this option is on.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Pause During Color-up</strong></td>
+                    <td>If this option is on, the action pauses when the <a href="chiprace.html">Color-up Chip Race</a>
+                        occurs after the cards are dealt and after the chips are awarded to the high cards. You must
+                        click the <strong>Continue</strong> button (or <strong>C</strong> key) to see the next step. If
+                        this is off, the color-up happens automatically with a slight pause after each step.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Jump To End After Fold</strong></td>
+                    <td valign="top">Normally, after you fold you have to watch the other players finish out the hand
+                        (just like in a real tournament).&nbsp; With this option ON, you automatically jump to the end
+                        of the hand after you fold.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Save</strong></td>
+                    <td> After you have saved a tournament (or resumed a saved tournament) and this option is ON, then
+                        the tournament is automatically saved at the end of each hand. In other words, the <strong>Auto
+                            Save </strong>option will continuously save your game once you saved your game the first
+                        time by clicking the <strong>Save</strong> button and naming your game.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>&quot;Cheat&quot; Options </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Cheat Pop-ups<br>
+                        <img src="../images/playerpopup.jpg" width="87" height="49"> </strong></td>
+                    <td valign="top">Allows you to click on any player to bring up the cheat
+                        pop-up menu. With the <strong>Cheat Pop-up Menu</strong> option ON
+                        in practice mode, click on any player to bring up the <strong>Cheat
+                            Pop-up Menu</strong>. By clicking on your opponents cards, you are
+                        able to change either hole card, the player type, player name, chip
+                        count, move the button to that position, or remove the player. By
+                        clicking on your cards, you are able to change either hole card, your
+                        advisor type, chip count, or move the button to your position. You
+                        may also change any of the board cards by clicking on them. See Cheat
+                        pop up menu under <a href="gameboard.html">Poker Table</a> for additional
+                        information about the menu.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Winning Hand</strong></td>
+                    <td valign="top">In a typical game, if a player wins because all other players fold, he or she does
+                        not have to show the winning hand.&nbsp; With this option ON, the winning hand is displayed face
+                        up at the end of the hand.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Folded Hands</strong></td>
+                    <td valign="top">In a real game you typically never see a folded hand.&nbsp;
+                        However, with this option ON, at the showdown you see your hand (if
+                        folded) and the hands of opponents who called, bet or raised and ultimately
+                        folded (you do not see hands of opponents who folded before the flop
+                        without calling the big blind).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Mucked Hands </strong></td>
+                    <td valign="top">In a typical game, if a player has a losing hand and
+                        acts after the winner during showdown, they do not have to show their
+                        hand (they can &quot;muck&quot;, or throw them away). With this option,
+                        any mucked hands are displayed face up at the end of the hand. A mucked
+                        hand is a hand that went to the showdown, and folded after the winning
+                        hand was revealed before them. The muck is the pile of folded and
+                        burned cards in front of the dealer. A player has the choice of not
+                        revealing their losing cards, or &quot;mucking&quot; them at the showdown
+                        if the player before them shows a winning hand they know beats theirs.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show All Community Cards</strong></td>
+                    <td valign="top">Also called &quot;Rabbit Hunting&quot;. In a typical
+                        game, if a player wins because all other players fold, any remaining
+                        community cards are not dealt.&nbsp; With this option ON, these cards
+                        are displayed so the curious can see what those cards would have been
+                        (not that it matters!).&nbsp; Note:&nbsp; This practice is known as
+                        &quot;rabbit hunting&quot; and is typically prohibited in tournaments.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Peek At Opponent's Cards</strong></td>
+                    <td valign="top">In a real game you never know what your opponent is holding
+                        - that is the crux of the game.&nbsp; However, with this option ON,
+                        you can view your opponent's hand by passing the mouse over the opponent's
+                        cards.&nbsp; We provide this as a way to learn from the computer players.&nbsp;
+                        Use it wisely!
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Computer Cards Face Up</strong></td>
+                    <td valign="top">If the &quot;Peek&quot; option isn't enough, you can
+                        simply deal all the computer player's cards face up as well. Another
+                        way to learn from the computer players.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Pause After Cards Dealt </strong></td>
+                    <td valign="top">If this option is ON, the action is paused after the
+                        hold, flop, turn, and river cards are dealt. This is useful if you
+                        want to change any of the cards before any players act. You can change
+                        a players cards, chip count, player type and button position by right
+                        clicking on the player you wish to change.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Don't Move Dealer
+                        Button</strong></td>
+                    <td valign="top">If this option is ON, the dealer button will not be
+                        moved between hands. This is useful if you want to place the dealer
+                        button (using the pop-up menus) and play several hands in a row from
+                        the same seat position.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Never Go Broke</strong></td>
+                    <td valign="top">If this option is ON, and you lose all of your chips,
+                        you automatically get one half of the chips of the tournament leader.
+                        This &quot;transfer&quot; occurs after the next deal is started (so
+                        don't forget to click Deal after you bust out). Of course this never
+                        happens in the real world, but it can make for some good fun - especially
+                        if you go all-in every hand!
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Time Delay </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Computer Player Pause</strong></td>
+                    <td valign="top">Amount of time to delay between computer player actions
+                        and after community cards are dealt, in 10ths of seconds. The range
+                        of delay is 0 to 40 (0 to 4 seconds). Use this to control the pace
+                        of the action.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Deal Pause After Hand</strong></td>
+                    <td valign="top">When Auto Deal is on, amount of time to delay before the next hand starts after a
+                        hand ends, in 10ths of seconds. The range of delay is 0 to 50 (0 to 5 seconds).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Deal Pause After Fold </strong></td>
+                    <td valign="top">When Auto Deal is on, amount of time to delay before the next hand starts after you
+                        fold, in 10ths of seconds. The range of delay is 0 to 50 (0 to 5 seconds).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Hands per Hour </strong></td>
+                    <td valign="top">The number of hands per hour controls how fast each time the small and big blinds
+                        increase.&nbsp; Because all of the other players are computer controlled, a round of poker can
+                        take less time than in a real game. Since the blinds are increased based on time, it is
+                        important to base the time clock on the average time of a round of cards to simulate real
+                        tournament play.&nbsp; For example, at 30 hands per hour, every 30 hands played equals an hour
+                        of elapsed tournament time.&nbsp; Thus, if you are playing a tournament with 30 minute levels,
+                        the level advances every 15 hands.&nbsp; Change this value to increase or decrease the number of
+                        hands played per level. Range is 10-250.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p><br>
+
+    <!-- ONLINE HEADER -->
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Online</font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Time Delay </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Deal Pause Online</strong></td>
+                    <td>During online games, auto deal is automatically on. This option specifies the amount of time to
+                        delay between hands, in 10th's of seconds. The range of delay is 0 to 50 (0 to 5 seconds).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Host Start Countdown </strong></td>
+                    <td valign="top">Number of seconds to countdown after the host presses the Start button before an
+                        online tournament starts. The range is 1 to 25 seconds. This countdown is seen in the chat
+                        window of the poker lobby before the game is started and the poker table is displayed.<br>
+                        Note:
+                        If a guest exits the game before the countdown is started, they are removed from the game, they
+                        may rejoin as a new guest if they wish before the countdown is started. Once the countdown
+                        starts, if a guest exits the game using the exit button, they are still in the game and may
+                        rejoin using the last used Game URL and will re-enter the game sitting out so that their think
+                        bank timer is not depleted. If the countdown starts and a guest loses their connection in a
+                        situation like their computer losing power, they may rejoin the game with the last used Game URL
+                        and the game will be waiting on them with the think bank timer counting down.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Miscellaneous</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td align="center" valign="top"><strong>Use UDP When Hosting <br>
+                        (beta testing) </strong></td>
+                    <td valign="top">If this option is ON, the game will use UDP for communication between host and
+                        guests. We are beta testing this featue as a possible replacement to the current method of
+                        TCP/IP.<br>
+
+                        <p> Note: If the host is using a router, they are required to Port Forward ports 11885 - 11889
+                            using UDP to the IP address of their host computer. Individuals using security software will
+                            need to allow communication on the same port range for UDP. </p></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Pause Tournament At Start (host) </strong></td>
+                    <td valign="top">If this option is ON, when you begin an online tournament, it will automatically be
+                        paused at the start. This allows time for all players to view their table and get ready before
+                        the cards are dealt. (host only) Note: The host has a DD Dashboard item that allows them to
+                        pause and resume the tournament.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Auto Pause Tournament If All Players
+                        Disconnected (host) </strong></td>
+                    <td valign="top">If this option is ON, the tournament will automatically
+                        be paused if all players become disconnected. This is typically a
+                        sign that the host has lost internet connectivity. The game will be
+                        un-paused when at least one player is reconnected. (host only)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Display Countdown Timer Bar </strong></td>
+                    <td valign="top">With this option ON, a thin color bar is displayed just below the poker table when
+                        it is your turn to act. It displays the amount of time left to act. The <font
+                                color="#00DD00"><strong>green</strong></font> Portion represents the standard game
+                        player action timeout. The <strong><font color="#FFFF00">yellow</font></strong> portion
+                        represents the amount of think bank time you have left. The bar will turn <font color="#FF5000"><strong>orange</strong></font>
+                        from left to right as the time counds down.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Play Sound When Your Turn To Act</strong></td>
+                    <td valign="top">If this option is ON, a bell will chime when it is your turn to act in an online
+                        game. This is helpful if you are multi-tasking and DD Poker is obscured or minimized.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Move Window to Front When Your Turn To
+                        Act</strong></td>
+                    <td valign="top">If this option is ON, the DD Poker window will be moved to the front of other
+                        windows on your screen when it is your turn to act. This is helpful if you are multi-tasking and
+                        DD Poker is obscured or minimized. (Windows only)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Banned Players<br>
+                    </strong> <strong>(host)</strong></td>
+                    <td valign="top"><p>Add or remove players to the banned player list. These players are prohibited
+                        from joining your online games. As host, you can use this to prevent disruptive players from
+                        joining your games. Banned players are banned from all future games until deleted from the list.<br>
+                        <br>
+                        You have two methods to add players to the banned player list:<br>
+                        <br>
+                        Method 1: Click the <strong>Table</strong> tab to type in a single name, then click the <strong>Add</strong>
+                        button to add that player to the list. Repeat the process above until all the players you wish
+                        to ban are on the list. You may remove a player by highlighting the player name in the table
+                        with the mouse and clicking the <strong>Delete</strong> button.<br>
+                        <br>
+                        Method 2: The <strong>Text (CSV)</strong> tab gives you the ability to cut and paste an entire
+                        list of players to the ban list. Note: CSV is a standard format that stands for Comma Separated,
+                        Values. The entire invite list can be typed in here, with each player name separated by a comma.<br>
+                        <br>
+                        Hint: You can copy the entire ban list from the Text (CSV) tab by highlighting selected text
+                        with your mouse and pressing CTRL-C to copy on Windows, or Apple-C on mac. Once in the
+                        clipboard, you may paste the list by pressing CTRL-V on Windows, or Apple-V on mac. <br>
+                        <br>
+                        Hint: The host can right click on a player's name in the poker lobby or the poker table and
+                        click <img src="../images/menuicon-ban.png" width="17" height="17"> ban to add them to the
+                        banned players list. This player will also be booted from the lobby but once the game once a
+                        game is underway, the ban will not take effect until the next game.<br>
+                        <br>
+                        Note: At any time <em>any</em> player may right click another player to add them to their own
+                        ban list to ban them from future games hosted by themselves. </p>
+
+                        <p>Note: All online profile aliases associated with a players activation number are affected in
+                            the poker lobby and the poker table when the right click <img
+                                    src="../images/menuicon-ban.png" width="17" height="17"> ban or <img
+                                    src="../images/menuicon-unban.png" width="17" height="17"> un-ban is used. </p>
+                        </p></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Muted Players</strong></td>
+                    <td valign="top">Add or remove players to the muted player list. Chat from these players is not
+                        displayed in online lobbies or games. This is useful to turn text chat off for any players whose
+                        chat you find annoying or offensive. Muted players stay muted for all future chat until deleted
+                        from the list.<br><br>
+                        You have two methods to add players to the muted player list:<br><br>
+                        Method 1: Click the <strong>Table</strong> tab to type in a single name, then click the <strong>Add</strong>
+                        button to add that player to the list. Repeat the process above until all the players you wish
+                        to mute are on the list. You may remove a player by highlighting the player name in the table
+                        with the mouse and clicking the <strong>Delete</strong> button. <br><br>
+                        Method 2: The <strong>Text (CSV)</strong> tab gives you the ability to cut and paste an entire
+                        list of players to the muted players list. Note: CSV is a standard format that stands for Comma
+                        Separated, Values. The entire list can be typed in here, with each player name separated by a
+                        comma.<br><br>
+                        Hint: You can immediately mute a player or observer and add them to the muted players list by
+                        right clicking their name in the poker lobby and click <img src="../images/menuicon-mute.png"
+                                                                                    width="17" height="17"> Mute or
+                        during a game by clicking the desired player's cards to bring up the player pop up menu and
+                        click <img src="../images/menuicon-mute.png" width="17" height="17"> Mute. You may also <img
+                                src="../images/menuicon-unmute.png" width="17" height="17"> un-mute them in the same
+                        fashion.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Chat Display</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Side By Side</strong></td>
+                    <td valign="top">Display dealer messages on one side and player/observer messages in the other side
+                        of a split pane.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Tabs</strong></td>
+                    <td valign="top">Display dealer messages in one tab and player/observer messages in another.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Together</strong></td>
+                    <td valign="top">Display dealer, player, and observer messages combined in the same area.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Chat Options</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Player Chat</strong></td>
+                    <td valign="top">Show chat messages from other players in online games. If you are playing an online
+                        game and do not wish to see all the other players chat messages, uncheck this box. Hint: You can
+                        still mute individual players. (online only)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Observer Chat </strong></td>
+                    <td valign="top">Show chat messages from observers in online games. If you have observers that have
+                        joined to watch the online game and you do not wish to see all their chat messages, uncheck this
+                        box. Hint: You can still mute individual observers. (online only)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Timeout Chat </strong></td>
+                    <td valign="top">Show Player Action timeout and Think Bank timeout chat messages in online games.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<br>
+<!-- POKER CLOCK HEADER -->
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1"> </font><font color="#FFFF00"
+                                                                                      size="+1">Clock</font></strong>
+            </div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Poker Clock </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Chip Color-up Notification</strong></td>
+                    <td>With this option on, the Poker Clock will automatically notify you, based on future
+                        antes/blinds, when the smallest chip on the table an be colored-up to the next highest chip. You
+                        may wish to turn this off if you are using nonstandard chip denominations (DD Poker uses $1, $5,
+                        $25, $100, $500, $1000 etc.)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Pause Clock At End of Each Level </strong></td>
+                    <td>With this option ON, the Poker Clock will automatically pause at the end of each level. You will
+                        have to manually start the clock in this case. Normally, the Poker Clock only pauses at the end
+                        of the rebuy level, when the add-on occurs and for Color-up Notification.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<br>
+<!-- DECK HEADER -->
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Deck</font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Deck Designs </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Add</strong></td>
+                    <td>Change the look of the card deck by picking one from the list, or add one of your own in .gif,
+                        .jpg or .png format with the Add button. Note, the image must be under 35K.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Delete</strong></td>
+                    <td>Deletes an added deck back.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<!-- COMPUTER PLAYER HEADER -->
+
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Table</font></strong></div>
+        </td>
+    </tr>
+</table>
+<br>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Table Designs </strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>New</strong></td>
+                    <td>Change the look of the poker table by picking one from the list, or add a <strong>New</strong>
+                        table design.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Copy</strong></td>
+                    <td><strong>Copy</strong> the selected table to use as a blueprint to create your own.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Edit</strong></td>
+                    <td><p><strong>Edit</strong> the selected poker table. Note: You can not edit a pre-defined table,
+                        instead, choose <strong>Copy</strong> to use a pre-defined table as a blueprint to create your
+                        own. </p>
+
+                        <p align="center"><img src="../images/tabledesign.jpg" width="300" height="180"></p>
+
+                        <p align="left">Be creative with your table design colors. By adjusting the slider controls of
+                            the primary colors red, green, and blue, you can create any table felt color you wish.
+                            Separate Top and Bottom controls allow you to create a color gradient between the top and
+                            bottom of the table. In addition, the opacity slider gives you the ability of seeing
+                            partially through the felt to reveal the metallic table below. By clicking the
+                            <strong>Swap</strong> button, you can quickly switch the colors you have set for the top and
+                            bottom. Name your new design then click <strong>OK</strong> to save your design or <strong>Cancel</strong>
+                            to return to the previous menu. </p></td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Delete</strong></td>
+                    <td><strong>Delete</strong> the selected poker table. Note: You can not delete a pre-defined table
+                        design.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p align="center">&nbsp;</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Opponents &amp; Hands </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p align="center"><a href="options2.html">Click here for AI Options </a></p>
+
+<p>&nbsp;</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1"><font color="#FFFF00">Groups</font>
+            </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p><font color="#000000">Hand Groups are groupings of hole cards you can use in the Hand Group Simulations tab of the <a
+        href="calculator.html">Calculator Tool</a> to generate win, lose, and tie percentages of your hand compared to
+    the groups of hands defined here. </font></p>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Hand Groups</strong></td>
+        <td>Displays sets of hand groups to be used in comparing the odds in the simulations tab in the Info button.
+        </td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Buttons</strong></td>
+        <td>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>New</strong></td>
+                    <td>Add a <strong>New</strong> hand group.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Copy</strong></td>
+                    <td><strong>Copy</strong> the selected hand group.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Edit</strong></td>
+                    <td>Pops-up the Edit Hand Group window shown below. Note: You can not edit a pre-defined group,
+                        instead, choose <strong>Copy</strong> to use a pre-defined group as a blueprint to create your
+                        own.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Delete</strong></td>
+                    <td><strong>Delete</strong> the selected hand group. Note: You can not delete a pre-defined hand
+                        group.
+                    </td>
+                </tr>
+            </table>
+            <br></td>
+    </tr>
+    <tr>
+        <td align="center" valign="top"><strong>Summary</strong></td>
+        <td>Summarizes the selected hand group.</td>
+    </tr>
+</table>
+<p>&nbsp;</p>
+
+<p align="center"><img src="../images/handgroup.jpg" width="440" height="407"></p>
+
+<p align="left">&nbsp;</p>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+
+</body>
+</html>

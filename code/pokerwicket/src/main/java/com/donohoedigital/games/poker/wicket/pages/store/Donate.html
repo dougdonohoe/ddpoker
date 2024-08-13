@@ -1,0 +1,148 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker Donation</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+    <div class="title">
+        Donate via PayPal
+    </div>
+
+    <div class="description">
+        Once upon a time, DD Poker was a full time business for founder Doug Donohoe and friend Greg King.
+        Things were promising for a while until our primary competition became free play-money poker rooms
+        funded by their real-money counterparts.<br>
+        <br>
+        As sales slowed, Doug and Greg took full time jobs and DD Poker transformed into a side-business.
+        The only
+        way to compete with free is <span class="mild">free</span>, so DD Poker 3 is now free. However, we
+        still incur expenses for:
+        <br><br>
+        <ul>
+            <li>Hosting our servers (website and the online games portal)</li>
+            <li>Bandwidth (downloads and the online games portal)</li>
+            <li>Development hardware</li>
+            <li>Development software (e.g., IntelliJ, Install4j, JProfiler, Photoshop, etc.)</li>
+            <li>Our time</li>
+        </ul>
+        <br>
+        If you enjoy DD Poker and wish to keep its community thriving, please consider donating to offset
+        these expenses. If you purchased DD Poker 2 recently, please think of it as a donation.
+
+
+        <div class="donate-form">
+
+            <form method="post" action="https://www.paypal.com/cgi-bin/webscr">
+
+                <input name="cmd" value="_donations" type="hidden">
+                <input name="business" value="TDAW9P7GAE76U" type="hidden">
+                <input name="item_name" value="Donation for DD Poker by Donohoe Digital" type="hidden">
+                <input name="page_style" value="PayPal" type="hidden">
+                <input name="no_shipping" value="1" type="hidden">
+
+                <input name="return" value="https://www.ddpoker.com/thankyou" type="hidden">
+                <input name="cancel_return" value="https://www.ddpoker.com/donate" type="hidden">
+                <input name="currency_code" value="USD" type="hidden">
+                <input name="tax" value="0" type="hidden">
+                <input name="lc" value="US" type="hidden">
+
+                <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">
+
+                <table>
+                    <tr>
+                        <td>
+                            <span class="mild" style="font-size: 110%">Amount</span>
+                        </td>
+                        <td>
+                            <input style="text-align: right;"
+                                   class="text" size="5" maxlength="10" name="amount" type="text" value="">
+
+                        </td>
+                        <td>
+                            <select style="display: inline;" name="currency_code">
+                                <option selected="selected" value="USD">$ (USD)</option>
+                                <option value="EUR">&#8364; (EUR)</option>
+                                <option value="GBP">&pound; (GBP)</option>
+                                <option value="CAD">$ (CAD)</option>
+                                <option value="AUD">$ (AUD)</option>
+                                <option value="JPY">&yen; (JPY)</option>
+                                <option value="CHF">SFr (CHF)</option>
+                            </select>
+
+                        </td>
+                        <td rowspan="1">
+                            <input type="image" src="images/btn_donateCC_LG.gif" width="122" height="47"
+                                   name="submit" alt="Donate">
+                            <!--<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
+
+                        </td>
+                    </tr>
+                </table>
+
+            </form>
+
+        </div>
+
+        We use <span class="mild">PayPal</span> to securely process your donations. Enter the amount you wish to donate,
+        choose your currency and click on the <span class="mild">Donate</span> button
+        (<span class="small">you do not need a PayPal account to donate</span>).
+        <br>
+        <br>
+
+        Thank you very much.
+        <br>
+        <br>
+
+        <div class="description"><span class="mild">-Doug and Greg</span></div>
+    </div>
+
+    <div class="centered">
+        <img src="images/douggreg.jpg" alt="Greg and Doug at the Independent Games Festival"/>
+        <br>
+        <span class="caption">
+            Doug (right) and Greg at the Independent Games Festival <br>
+            displaying our first game, War! Age of Imperialism.
+        </span>
+    </div>
+
+
+</wicket:extend>
+
+</body>
+</html>

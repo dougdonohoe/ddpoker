@@ -1,0 +1,402 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<HTML>
+<BODY>
+<table width="620" border="0" cellpadding="5" cellspacing="0">
+  <tr align="left" valign="middle"> 
+    <td width="610" colspan="2"><img src="../images/ddspade48.png" width="48" height="48">&nbsp;&nbsp;<font color="#1D4A07" size="+2"><strong>Chat, Mouse and Keyboard 
+       Shortcuts</strong></font>&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+</table>
+
+<br>
+<table border="1">
+  <tr bgcolor="#1D4A07">
+    <td colspan="3"><div align="center"><strong><font color="#FFFF00" size="+1">Chat Shortcuts </font></strong></div></td>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>CTRL-L<br>CMD-L</strong><br></td>
+    <td width="100" align="center" valign="top"><strong>Open Online Lobby</strong></td>
+    <td valign="top">Opens the online lobby chat window from any location from within DDPoker. </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>/8s</strong></td>
+    <td width="100" align="center" valign="top"><strong>Displays Card</strong> </td>
+    <td valign="top">When typed in any chat window, the card represented after the forward slash &quot;/&quot; will be printed in graphics.<br>
+      Example: Type /8s9s to display a <img src="../images/card_8s.png" width="20" height="26"><img src="../images/card_9s.png" width="20" height="26">.<br>
+    Use s for spades, h hearts, d diamonds, c clubs, T or 0 or 10 for 10, j jack, q queen, k king, a ace. </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>Mouse Double Click</strong> </td>
+    <td width="100" align="center" valign="top"><strong>Select  Word</strong> </td>
+    <td valign="top">Double click any word in the chat to select the entire word you wish to copy to the clipboard by then using CTRL-C. </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>CTRL-C<br>CMD-C</strong></td>
+    <td width="100" align="center" valign="top"><strong>Copy Chat</strong></td>
+    <td valign="top">To copy a section of chat, highlight the desired section with the mouse. To highlight, place the mouse cursor at the start of the selection, press and hold the left mouse button as you drag the mouse over the desired section and release the mouse button. While the section  is highlighted, press CTRL-C on Windows or CMD-C on mac to copy the selection to the clipboard.
+    </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>CTRL-A<br>CMD-A</strong></td>
+    <td width="100" align="center" valign="top"><strong>Copy All Chat</strong></td>
+    <td valign="top">Click anywhere in the chat text and press CTRL-A or CMD-A to copy the entire chat dialog to the clipboard. </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>CTRL-V<br>CMD-V</strong></td>
+    <td width="100" align="center" valign="top"><strong>Paste Chat</strong> </td>
+    <td valign="top">Left click the mouse cursor in the chat entry field or other application where you wish to paste the contents of the clipboard.<br>
+      Press CTRL-V on Windows or CMD-V on mac to paste.
+    </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>Mouse<br>Right Click </strong></td>
+    <td width="100" align="center" valign="top"><strong>Pop-up Menu </strong></td>
+    <td valign="top"><strong><img src="../images/menuicon-export.png" width="17" height="17"> Export:</strong> To export the last 500 lines of chat, right click anywhere in the chat text, then click export. Choose a location to save the chat.html file to. By double clicking the chat.html file you can automatically view the chat text with your web browser.<br>
+        <br>
+        This file can be sent to Donohoe Digital to report someone that has violated the Terms of Service.<br>
+        Note: Donohoe Digital can verify the if the file has been tampered with and therefore the entire file must be emailed unaltered or will not be considered valid. <br>
+        <br>
+        <strong><img src="../images/menuicon-info.png" width="17" height="17">Player Info:</strong> Right click a player name to choose the player info menu item to displays a player's aliases. </p>
+        <p><img src="../images/menuicon-mute.png" width="17" height="17"><img src="../images/menuicon-unmute.png" width="17" height="17">Mute / Un-mute Right click a player name to mute or un-mute a player's chat. It will automaticlly add or remove players to the muted player list.</p>
+        <p><img src="../images/menuicon-ban.png" width="17" height="17"><img src="../images/menuicon-unban.png" width="17" height="17">Ban / Un-ban Right click a player name to ban or un-ban a player's chat. It will automaticlly add or remove players to the banned player list for future games they host. </p></td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>Alt</strong></td>
+    <td width="100" align="center" valign="top"><strong>Allows Action in Chat</strong> </td>
+    <td valign="top">If the focus is in the in-game chat window, you may press the Alt key before any of the action keys to act. Example: You are typing a chat message, you may press Alt - C to call if it is your turn to act. This function does not work in the online lobby chat. Hint: You may wish to disable the Move Window to Front option to prevent an accidental action in the game. </td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="1">
+  <tr bgcolor="#1D4A07"> 
+    <td colspan="3"> <div align="center"><strong><font color="#FFFF00" size="+1">Mouse Shortcuts</font></strong></div></td>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Mouse<BR>Wheel</strong></td>
+    <td width="100" align="center" valign="top"><strong>Change Bet</strong> </td>
+    <td valign="top">Increase/decrease bet/raise amount by increments of the smallest 
+      chip denomination.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>CTRL<br>Mouse<BR>Wheel</strong></td>
+    <td width="100" align="center" valign="top"><strong>Change Bet X10</strong> </td>
+    <td valign="top">Increase/decrease bet/raise amount by increments of 10 times 
+      the smallest chip denomination. Hold the keyboard CTRL button while you move the mouse wheel if you have a wheel on your mouse. </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>Right</strong><strong><br>or Left<br>Mouse<br>Click</strong></td>
+    <td width="100" align="center" valign="top"><strong>Pop-up Menu</strong> </td>
+    <td valign="top">Select Player options upon mouse click when mouse pointer is over a players cards. By Default, the pop-up menus in the poker table are triggered by either left or right mouse clicks. However, power users may wish to turn off the left-mouse trigger, which is a non-standard user interface convention, turning ON the <strong>Right Click Only Pop-up Menus</strong> option.<br>
+      <br>
+          You may also export tables to Microsoft Excel by right clicking any of the tables such as the Tournament Levels or prizes, Analysis table, Leader Board, Table List, or Tournament Results, to bring up the Table Menu pop up in order to export the table in a .csv file type that can be read by popular spreadsheets. <br>
+    </td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>CTRL<br>Click</strong>
+    </td>
+    <td width="100" align="center" valign="top"><strong>Calculator Clear Card<br>&amp;<br>Analysis Select</strong> 
+    </td>
+    <td valign="top">The Showdown Calculator allows you to hold the keyboard CTRL button while you click a card to clear it and make it a wild card &quot;?&quot;. <br>
+      The Anaysis screen allows you to choose several sets of hands by individually CTRL clicking all the desired hands. <br></td>
+  </tr>
+  <tr>
+    <td width="100" align="center" valign="top"><strong>SHIFT<br>Click</strong>
+    </td>
+    <td width="100" align="center" valign="top"><strong>Alanysis<br>Select</strong></td>
+    <td valign="top">The Analysis screen allows you to choose a block of hands at one time by clicking the first hand set, then SHIFT clicking the last hand set of the block. </td>
+  </tr>
+</table>
+<br>
+<table border="1">
+  <tr bgcolor="#1D4A07"> 
+    <td colspan="3"> <div align="center"><strong><font color="#FFFF00" size="+1">Keyboard 
+        Shortcuts </font></strong></div></td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>A</strong></td>
+    <td width="100" align="center" valign="top"><strong>All-in</strong></td>
+    <td valign="top">All-in</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>B</strong></td>
+    <td width="100" align="center" valign="top"><strong>Bet</strong></td>
+    <td valign="top">Bet</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>C</strong></td>
+    <td width="100" align="center" valign="top"><strong>Call or Check </strong></td>
+    <td valign="top">Call or Check. Also used for Continue<br>
+      Also used during a <a href="chiprace.html">Chip Race</a> and all in showdown 
+      when the <strong>Pause When All In</strong> option is ON.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>D</strong></td>
+    <td width="100" align="center" valign="top"><strong>Deal</strong></td>
+    <td valign="top">Deal</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><b>E</b></td>
+    <td width="100" align="center" valign="top"><strong>Rebuy</strong></td>
+    <td valign="top">Rebuy</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>F</strong></td>
+    <td width="100" align="center" valign="top"><strong>Fold</strong></td>
+    <td valign="top">Fold. &nbsp;If the <strong>Always Allow Fold</strong> option 
+      is on, you can press <strong>F</strong> at any time after a new hand is 
+      begun, even before it is your turn to act. Use this carefully, because you 
+      might fold a good hand. However, this can be used to quickly move on from 
+      really bad starting hands like 7-2 off suit.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>I</strong></td>
+    <td width="100" align="center" valign="top"><strong>Info Dialog</strong> </td>
+    <td valign="top">Show <strong>Info</strong> dialog (as described in the Tournament 
+      Controls &nbsp;section of the <a href="settings.html">Edit Tournament</a> 
+      help topic).</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>R</strong></td>
+    <td width="100" align="center" valign="top"><strong>Raise</strong></td>
+    <td valign="top">Raise</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>S</strong></td>
+    <td width="100" align="center" valign="top"><strong>Poker Clock<br>
+      Start</strong></td>
+    <td valign="top">Start (Poker Night)</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>P</strong></td>
+    <td width="100" align="center" valign="top"><strong>Bet Pot</strong> </td>
+    <td valign="top">Bet the Pot in Pot Limit Games. Also used for Pause in Poker 
+      Night(Poker Night)</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Space</strong></td>
+    <td width="100" align="center" valign="top"><strong>Poker Clock<br>
+      Start/Pause<br>
+      &amp;<br>
+      Triggers Action</strong> </td>
+    <td valign="top">Start/Pause (Poker Night)<br> <br> <strong>Triggers any button 
+      with keyboard focus</strong> (denoted by the yellow rectangle around the 
+      text). </td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Up/Down<br>
+      Arrow Keys</strong></td>
+    <td width="100" align="center" valign="top"><strong>Change Bet</strong> </td>
+    <td valign="top">Increase/decrease bet/raise amount by increments of the smallest 
+      chip denomination.<br> <br>
+      When the keyboard focus is on scrollbars or lists, the arrow keys move the 
+      list up/down or scroll up/down.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>CTRL<br>
+      Up/Down<br>
+      Arrow Keys</strong></td>
+    <td width="100" align="center" valign="top"><strong>Change Bet<br>
+      X10 </strong></td>
+    <td valign="top"> Increase/decrease bet/raise amount by increments of 10 times 
+      the smallest chip denomination.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Enter</strong></td>
+    <td width="100" align="center" valign="top"><strong>Triggers<br>
+      Action</strong></td>
+    <td valign="top">Bet or raise by value currently in amount spinner field.<br> 
+      <br>
+      In dialog windows, the <strong>Enter</strong> key is equivalent to clicking 
+      the OK button.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Tab</strong></td>
+    <td width="100" align="center" valign="top"><strong>Focus Change</strong> 
+    </td>
+    <td valign="top">In most windows the <strong>Tab</strong> key navigates between 
+      fields, buttons, scrollbars and lists of items.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>F1</strong></td>
+    <td width="100" align="center" valign="top"><strong>Toggle Focus</strong> 
+    </td>
+    <td valign="top">Toggles between the chat window and keyboard focus for the 
+      action keys. </td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Alt-W<br>
+      CMD-W</strong> </td>
+    <td width="100" align="center" valign="top"><strong>Close Window</strong> 
+    </td>
+    <td valign="top">Alt-W or CTRL-W on Windows and CMD-W on Mac will close the 
+      current window that has focus. </td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>Alt-Q<br>
+      CMD-Q</strong> </td>
+    <td width="100" align="center" valign="top"><strong>Close Application </strong></td>
+    <td valign="top">Alt-Q or CTRL-Q on Windows and CMD-Q on Mac will close the 
+      application that has focus. </td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>CTRL-? <br>
+      CMD-? </strong></td>
+    <td width="100" align="center" valign="top"><strong>Open Help Window </strong></td>
+    <td valign="top">CTRL-? on Windows and CMD-? on Mac will open the Help Window. 
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top"><strong>CTRL-P<br>
+      CMD-P</strong></td>
+    <td align="center" valign="top"><strong>Take Photo</strong></td>
+    <td valign="top">CTRL-P on Windows and CMD-P on Mac will take a photo of the 
+      current window and open up a file dialog to allow you to choose where to 
+      save the picture.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>CTRL-T<br>
+      CMD-T </strong></td>
+    <td width="100" align="center" valign="top"><strong>Open Calculator Tool </strong></td>
+    <td valign="top">CTRL-T on Windows and CMD-T on Mac will open the Calculator 
+      Tool Window.</td>
+  </tr>
+  <tr> 
+    <td width="100" align="center" valign="top"><strong>CTRL-U<br>
+      CMD-U</strong> </td>
+    <td width="100" align="center" valign="top"><strong>Open UDP Connection Status 
+      Screen </strong></td>
+    <td valign="top">Opens the <strong>UDP Connection Status Screen</strong> to 
+      view real time communication data.<br> <br>
+      This troubleshooting screen can help to determine communications issues. 
+      The UDP communications displays the Chat Server when you have the online 
+      chat lobby open and your connection to a host computer if you have joined 
+      an online game. If you are hosting, all your guests connection status will 
+      also be displayed. This screen will not display connection status of the 
+      old TCP/IP game connections.<br> <br> <img src="../images/menuicon-export.png" width="17" height="17"> 
+      <strong>Export:</strong> You can right click the UDP Connection Status Screen 
+      to Export the statistics to a .csv file which can be read by Microsoft Excel. 
+      Hint: You may need to expand the size of the connection screen window in 
+      order to complete the export process. <br> <br>
+      Note: In order to host a game using the new UDP communications instead of 
+      the default TCP/IP protocol, check the <strong>Use UDP</strong> checkbox 
+      in the online tab of your options screen. If you have security software 
+      you will need to configure it to allow DD Poker all TCP and UDP communications 
+      from port 11885 to 11889. If you have a router you will need to Port Forward 
+      on both TCP and UDP from port 11885 to 11889 to the local IP address of 
+      your host computer. <br> <br> <table cellspacing="2" cellpadding="2">
+        <tr> 
+          <td valign="top" align="center"><strong>UDP Connection</strong> </td>
+          <td>Displays the DD Poker Chat Server and/or other DD Poker user(s) 
+            you are connected with using UDP. If you have joined an online game 
+            you will see the name of your host. If you are hosting, you will see 
+            the name of each guest that has joined your game. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Remote IP:Port </strong></td>
+          <td>Displays the public IP address of the specified UDP Connection, 
+            and the UDP port used. If you see a port number other then 11885-11889, 
+            this the the NAT network address translation by your router to a second 
+            computer behind your firewall. If you are connected to another computer 
+            behind your firewall, the IP address shown is the Local IP address 
+            of that computer assigned in most cases by your router. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>MTU</strong></td>
+          <td>Maximum Transmission Unit - This is the largest packet size that 
+            can be transferred between you and the chat server, or you and the 
+            specified user. When the connection is created, 576 is used and tests 
+            are made to determine how large a packet can be transferred up to 
+            1500. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Time</strong></td>
+          <td>The total uninterrupted time connected to the chat server or specified 
+            user in Days, Hours, Minutes, and Seconds. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Ping</strong></td>
+          <td>The round trip time in milliseconds of a packet of data to be sent 
+            from your computer to the chat server or specified user and back. 
+            This figure is a rolling average over the last 100 messages. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Send</strong></td>
+          <td>Number of data packets sent to the chat server or specified user. 
+            Data packets can be game data or a chat message. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Resend</strong></td>
+          <td>Number of data packets re-sent to the chat server or specified user 
+            if a data packet did not make it and was resent. It is normal for 
+            a small percentage of UDP packets to be lost and resent when compared 
+            to the total number of packets sent. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Rcvd</strong></td>
+          <td>Number of data packets you received from the chat server or specified 
+            user. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Dups</strong></td>
+          <td>Number of data packets sent twice from the chat server or specified 
+            user if they did not receive an acknowledgement of the original message 
+            from you. It is normal for a small percentage of UDP packets to not 
+            return an acknowledgment and resend the message when compared to the 
+            total number of packets received. </td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Bytes-In</strong></td>
+          <td>Number of UDP data bytes received from the chat server or specified 
+            user. This data should continously increase as the connection is kept 
+            alive.</td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Bytes-Out</strong></td>
+          <td>Number of UDP data bytes sent to the chat server or specified user. 
+            This data should continously increase as the connection is kept alive.</td>
+        </tr>
+        <tr> 
+          <td valign="top" align="center"><strong>Status Bar<br>
+            Bytes</strong> </td>
+          <td>The bytes in and bytes out displayed on the bottom status bar indicates 
+            the total current throughput of data bytes in and out of DD Poker 
+            at any particular moment. The number is a rolling average from the 
+            previous ten seconds. The high is the highest within that 10 second 
+            rolling window. The peak is the highest throughput in and out since 
+            DD Poker was launched. </td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD Poker Website</font></a></strong></p>
+</BODY>
+</HTML>

@@ -1,0 +1,144 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title wicket:id="headTitle">DD Poker Games Title Here</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+    <div class="title">
+        <span wicket:id="title">DD Poker Games Title Here</span>
+        <wicket:enclosure>
+            - <span wicket:id="hostName">Cindy</span>
+        </wicket:enclosure>
+        &nbsp;<a href="GamesList.html#" wicket:id="rss"><img style="vertical-align:-1px;"
+                                                             src="images/feed-icon-16x16.jpg" alt="RSS"></a><br/>
+        <span class="sub-title">as of <span wicket:id="date">12/12/2012 12:12:12</span>
+        <a class="box" href="GamesList.html#" wicket:id="refresh">refresh</a>
+
+        </span>
+    </div>
+    <div class="description" wicket:id="description">Description fragment goes here.</div>
+
+    <wicket:container wicket:id="form"/>
+
+    <div class="games-list">
+        <div class="tournament-info-navigator" wicket:id="navigator">[dataview navigator]</div>
+        <table class="tournament-info">
+            <tr>
+                <th>Tournament</th>
+                <th>Host</th>
+                <th wicket:id="playersJoinedHeader">Players Joined</th>
+                <th wicket:id="playersRemainingHeader">Players Remaining</th>
+                <th wicket:id="playersHeader">Players</th>
+                <th wicket:id="gameUrlHeader">Game URL</th>
+                <th wicket:id="endDateHeader">End Date</th>
+                <th wicket:id="statusHeader">Status</th>
+            </tr>
+            <tr wicket:id="row">
+                <td class="left">
+                    <a href="GamesList.html#" wicket:id="detailsLink"><strong><span wicket:id="tournament.name">DD World Championship</span></strong></a>
+                    <span class="tiny" wicket:id="invite-only">(invitation only)</span>
+                    <wicket:enclosure><span class="tiny"><br/>
+                        <img style="vertical-align: -4px;" src="images/menuicon-card.png" alt="started"> Started <span
+                                wicket:id="startDate">12/12/2012 12:12:12</span>
+                    </span></wicket:enclosure>
+                </td>
+                <td class="center"><a href="GamesList.html#" wicket:id="hostLink"><span
+                        wicket:id="hostPlayer">Zorro</span></a></td>
+                <wicket:enclosure>
+                    <td class="players-list"><span wicket:id="playerList">Dexter, Zorro</span></td>
+                </wicket:enclosure>
+                <td class="url" wicket:id="gameUrl">GameURL panel goes here</td>
+                <wicket:enclosure>
+                    <td class="center"><span wicket:id="endDate">12/12/2012 12:12:12</span></td>
+                </wicket:enclosure>
+                <wicket:enclosure>
+                    <td class="center"><span wicket:id="status">Ended</span></td>
+                </wicket:enclosure>
+            </tr>
+        </table>
+
+        <wicket:enclosure child="begin">
+            <div class="no-results">
+                No completed games found between
+                <span wicket:id="begin">1/1/2005</span> and
+                <span wicket:id="end">12/12/2012</span> <span wicket:id="nameSearch">host name =/matching</span>.
+            </div>
+        </wicket:enclosure>
+
+        <div class="no-results" wicket:id="none">No games found.</div>
+
+        <div class="footnote">
+            Note: Invitation only tournaments are created at the discretion of the host. Click on the
+            tournament name to see a list of invitees.
+        </div>
+    </div>
+
+    <!-- Fragments -->
+
+    <wicket:fragment wicket:id="recentGamesDescription">
+        Tournament details can be viewed by clicking on a tournament name. Games with a Status of
+        <strong>Stopped</strong> were stopped by the host and might be started again later. Games with a
+        Status of <strong>Ended</strong> were played to completion.
+        <br/><br/>
+        Use the <strong>Start</strong> and <strong>End</strong> dates to
+        limit the list to a certain date range (e.g., to see games played in a particular year or month).
+        Use the <strong>Host</strong> field to limit the results to any hosts that match the name. To find an exact
+        match, start your entry with an equal sign (e.g., <strong>=DKBroke</strong>).
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="currentGamesLoggedIn">
+        Tournament details can be viewed by clicking on a tournament name. To join a game, click <strong>Join</strong>
+        in the <strong>Game URL</strong> column or use the <strong>Join Game</strong> button on the DD Poker
+        <strong>Join Online Game</strong> screen. To observe a game, click <strong>Observe</strong> in the <strong>Game
+        URL</strong> column
+        or use the <strong>Observe Game</strong> button on the DD Poker <strong>Join Online Game</strong> screen.
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="currentGamesNotLoggedIn">
+        Tournament details can be viewed by clicking on a tournament name. To display the <strong>Game URL</strong>,
+        you must <a href="GamesList.html#" wicket:id="loginLink">login</a> using a DD Poker online profile.
+        If you do not own a copy of DD Poker, you can
+        <a href="download">download</a> a copy for <span class="mild">Free</span>.
+    </wicket:fragment>
+
+</wicket:extend>
+
+</body>
+</html>

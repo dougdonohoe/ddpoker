@@ -1,0 +1,88 @@
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# DD Poker - Source Code
+# Copyright (c) 2003-2024 Doug Donohoe
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For the full License text, please see the LICENSE.txt file
+# in the root directory of this project.
+#
+# The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
+# graphics, text, and documentation found in this repository (including but not
+# limited to written documentation, website content, and marketing materials)
+# are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+# 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
+# without explicit written permission for any uses not covered by this License.
+# For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+# in the root directory of this project.
+#
+# For inquiries regarding commercial licensing of this source code or
+# the use of names, logos, images, text, or other assets, please contact
+# doug [at] donohoe [dot] info.
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#
+# DD Poker Helpful environment vars and aliases
+#
+DDHOME=${1-$(git rev-parse --show-toplevel)}
+
+# Expected vars
+export WORK=$(dirname "${DDHOME}") # parent dir
+CODE="${DDHOME}/code"
+
+# Tools
+export PATH=${DDHOME}/tools/bin:${PATH}
+export PATH=${DDHOME}/tools/db:${PATH}
+
+# maven shortcuts
+alias mvn-install-notests='(cd $CODE;mvn install -Dmaven.test.skip.exec=true)'
+alias mvn-install='(cd $CODE;mvn install)'
+alias mvn-clean='(cd $CODE;mvn clean)'
+alias mvn-package-notests='(cd $CODE;mvn package -Dmaven.test.skip.exec=true)'
+alias mvn-package='(cd $CODE;mvn package)'
+alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
+
+# attempt to auto-set JAVA_HOME to 1.8 if on mac
+if [[ "${OSNAME:0:6}" == "darwin" ]]; then
+  JAVA_HOME_NEW="/usr/local/opt/openjdk@8" # intel macs only it seems
+  if [[ -d "${JAVA_HOME_NEW}" && "${JAVA_HOME_NEW}" != "${JAVA_HOME}" ]]; then
+	export JAVA_HOME="${JAVA_HOME_NEW}"
+	export PATH="${JAVA_HOME}/bin:${PATH}"
+	echo "JAVA_HOME changed, version now $(java -version 2>&1 | head -1)"
+  fi
+fi
+
+# See if java 1.8 is installed
+if ! test -x "$(command -v java)"; then
+  if [[ "${OSNAME:0:6}" == "darwin" ]]; then
+    echo "WARNING: Java 1.8 is not installed."
+    # TODO: print this for intel macs, figure out apple silicon
+    #  Have you run 'brew install openjdk@8'?
+  else
+    echo "WARNING: Java 1.8 is not installed."
+  fi
+else
+  # Java is installed, check version is 1.8
+  if ! java -version 2>&1 | head -1 | grep -q "1.8."; then
+    echo "WARNING: Java version is not 1.8 (which DD Poker requires).  Version is:"
+    java -version
+  fi
+fi
+
+
+# See if maven is installed
+if ! test -x "$(command -v mvn)"; then
+  if [[ "${OSNAME:0:6}" == "darwin" ]]; then
+    echo "WARNING: Maven is not installed.  Have you run 'brew install maven'?"
+  else
+    echo "WARNING: Maven is not installed."
+  fi
+fi

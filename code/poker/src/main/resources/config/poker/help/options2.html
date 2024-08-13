@@ -1,0 +1,936 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
+<!-- MAIN OPTIONS PAGE  HEADER *************************************************************************-->
+<table border="0" cellpadding="5" cellspacing="0">
+    <tbody>
+    <tr align="left" valign="middle">
+        <td colspan="2" width="262"><img src="../images/ddspade48.png"
+                                         height="48" width="48">&nbsp;&nbsp;<font color="#1d4a07" size="+2"><strong>AI
+            Options</strong></font>&nbsp;&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<table border="1" width="100%">
+    <tbody>
+    <tr bgcolor="#1d4a07">
+        <td align="center">
+            <div align="center"><strong><font color="#ffff00" size="+1">Opponents</font></strong></div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>Player types are nicknames given to the style of play of different
+    kinds of players.</p>
+
+<p>When you sit down at a poker table, you will typically find yourself
+    surrounded by a variety of different player styles. The location of a
+    poker game may change the mix of the type of players you play against.
+    For example, a home game may have a higher percentage of weak players,
+    or a casino a higher percentage of strong players. We have a different
+    mix of player types for the pre-defined tournaments the game shipped
+    with. You can change this mix of players by making a copy of a
+    tournament definition and then changing the options under the Opponent
+    Mix tab of the <a href="settings.html">Edit Tournament</a> window.</p>
+
+<p>We have designed the computer AI with player types that you will
+    most likely see and you may also create your own AI player types, with
+    their own starting hand selection and strategy adjustments. We recommend a mix of AI player types in your games as
+    it will be more difficult to identify individual player types and stratigies. <br>
+</p>
+<!-- Player Types Table *************************************************************************-->
+<table border="0">
+    <tbody>
+    <tr>
+        <td align="center" valign="top" width="100"><strong>Player Types </strong></td>
+        <td>
+            <table border="1" bordercolor="#000000" cellpadding="3"
+                   cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Solid </strong></td>
+                    <td valign="top">A basic solid <strong>tight-aggressive</strong>
+                        player. An average good player with a solid playing style(no extreme
+                        attributes). All of the adjustable strategy settings are at at their
+                        default positions.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top"><strong>Solid-Loose</strong></td>
+                    <td>A solid poker player that has loosened up its starting card requirements.</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Rock</strong></td>
+                    <td><strong>Excessively tight</strong> player, but
+                        otherwise a solid player.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Maniac</strong></td>
+                    <td>A <strong>loose-aggressive</strong> player. They will
+                        be in more pots, raise aggressively, and call a lot.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Fish</strong></td>
+                    <td>An amateur player that plays poorly. This player is <strong>loose-passive</strong>,
+                        and chases too much.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Weak-Tight</strong></td>
+                    <td>A <strong>tight-passive</strong> player. They will
+                        fold most of the time, but when they do stay in, they won't play
+                        agressively enough to be successful.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top"><strong>Calling Station</strong></td>
+                    <td valign="top">A Calling Station is an amateur player that plays poorly. They have no regard for
+                        table position and will call most bets before the flop just to see the flop.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Version
+                        1 <br>
+                        Low Skill</strong></td>
+                    <td valign="top">This is the computer AI from DD
+                        Poker version 1 set at low skill. You may not want to use this player type unless you are a
+                        beginner looking for a lot of action.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Version
+                        1<br>
+                        Medium Skill</strong></td>
+                    <td valign="top">This is the computer AI from DD
+                        Poker version 1 set at medium skill.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Version
+                        1<br>
+                        High Skill </strong></td>
+                    <td valign="top">This is the computer AI from DD
+                        Poker version 1 set at high skill. Since this AI player type uses very different logic then the
+                        new AI, it is a good idea to add 10-20% of this player type in your player mix to make it more
+                        difficult to identify the strategies of each AI.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="100"><strong>Summary</strong></td>
+        <td>Summarizes the selected player type.<br>
+            <table border="1" bordercolor="#000000" cellpadding="3"
+                   cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top"><strong>Roster</strong></td>
+                    <td>The roster is a personalized list of computer AI player
+                        names you wish to associate with the selected player type. Click the <strong>Roster</strong>
+                        button to open the Roster pop up screen. This name
+                        roster will be used in a practice game or online game you host first
+                        before random names are used. <br>
+                        <br>
+                        Hint: Once you create unique computer AI player types and name them,
+                        you can use them in games you host online with your friends. The player
+                        types you create and the names you give them will be the computer AI
+                        you and your friends play against once you configure the percent of each
+                        player type in <a href="settings.html">Edit Tournament</a>.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>Click the <strong>New, Copy, </strong>or <strong>Edit</strong>
+    buttons under Player Types to alter the setting shown below:<!-- Hand Selection -->
+    <br>
+</p>
+<table border="0">
+<tbody>
+<tr>
+    <td align="center" valign="top" width="100"><strong>Hand
+        Selection </strong></td>
+    <td> An experienced hold'em player will alter how they play
+        certain hands depending on how many players are at the table. You have
+        the ability to specify how the computer AI chooses hands to play for
+        four different situations, ranging from a full table to heads up play
+        against one opponent. <br>
+        <br>
+        Hand Selection Schemes of your design can be created in the <strong>Hands</strong>
+        tab of the <a href="options.html">Options</a> screen. <br>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Full
+                    Table </strong></td>
+                <td>Choose the hand selection used when playing at a full
+                    table with 7-10 players.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Short
+                    Handed </strong></td>
+                <td>Choose the hand selection used when playing short
+                    handed with 5-6 players.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Very
+                    Short Handed </strong></td>
+                <td>Choose the hand selection used when playing very short
+                    handed with 3-4 players.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Heads
+                    Up </strong></td>
+                <td>Choose the hand selection used when playing heads up
+                    against one opponent.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </td>
+</tr>
+<!-- End Hand Selection -->
+<tr>
+    <td align="center" valign="top" width="100"><strong>Play Style </strong></td>
+    <td>Each player type has dozens of unique characteristics that
+        define their playing style. By clicking the symbol to the left of each
+        play style category or sub category, you may <img
+                src="../images/button-dasharrow-on.png" height="12" width="12"> expand
+        or <img src="../images/button-dasharrow-off.png" height="12" width="12">
+        collapse the sub categories for each. You may adjust all the sliders in
+        the entire category at one time to the same value by adjusting the
+        slider when the category is <img
+                src="../images/button-dasharrow-off.png" height="12" width="12">
+        collapsed.
+        <p> Example: By adjusting the slider to the right of Hand
+            Selection when Hand Selection is <img
+                    src="../images/button-dasharrow-off.png" height="12" width="12">
+            collapsed, the player type becomes increasingly "Tight" as you adjust
+            to the slider to the left and increasingly "Loose" as you adjust to the
+            right. For more precise control, you may <img
+                    src="../images/button-dasharrow-on.png" height="12" width="12"> expand
+            the category to adjust how loose or tight this player type plays with
+            individual hand selections like Small Pairs 22 to 66.<br>
+            <br>
+        </p>
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top" width="100">
+        <p>&nbsp;</p>
+
+        <p>&nbsp; </p>
+    </td>
+    <td>
+        <table border="0" width="100%">
+            <tbody>
+            <tr>
+                <td align="left" bgcolor="#7c7c7c"><font color="#ffffff"><img
+                        src="../images/button-dasharrow-on.png" height="12" width="12">&nbsp;
+                    Hand Selection </font></td>
+            </tr>
+            </tbody>
+        </table>
+        This setting adjusts how loose or tight this player is before the flop.
+        <p>A loose player plays more hands then the average player and
+            inevitably is involved in more pots. They will many times will call the
+            starting hands to at least see the flop. A tight player is conservative
+            and plays fewer hands then the average player. All players can be
+            classified anywhere between Loose and Tight. How tight a player is
+            playing should not to be confused with their aggressiveness.</p>
+
+        <p>With sliders in the center at 50, the player plays in exact
+            accordance to the active Hand Selection Scheme based on the number of
+            players at the table chosen at the top of the Edit Player Type screen.
+            As you adjust the slider to the left, the player becomes increasingly
+            tight, with more hands being considered weak. When the slider is all
+            the way to the left at zero, the active hand selection will be ignored,
+            and the player will fold everything but the very strongest hands. As
+            you adjust the slider to the right, the player becomes increasingly
+            loose, with more hands being considered playable. When the slider is
+            all the way to the right at 100, every hand is played like it was
+            unbeatable.<br>
+        </p>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Big
+                    Pairs </strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt big pairs (AA-JJ)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Medium
+                    Pairs </strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt medium pairs (TT-77)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Small
+                    Pairs</strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt small pairs (66-22)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Suited<br>
+                    High Cards </strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt suited high cards (A-T)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Unsuited
+                    High Cards </strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt unsuited high cards (A-T)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Suited<br>
+                    Ace-Small </strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt an suited ace-small (A9-A2)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Unsuited<br>
+                    Ace-Small</strong></td>
+                <td valign="top">How loose or tight is this player when
+                    dealt an unsuited ace-small (A9-A2)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Suited
+                    Connectors </strong></td>
+                <td>How loose or tight is this player when dealt suited
+                    connectors (T9s-43s)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Unsuited
+                    Connectors </strong></td>
+                <td>How loose or tight is this player when dealt unsuited
+                    connectors (T9s-43s)?<br>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Other
+                    Hands</strong></td>
+                <td>How loose or tight is this player when dealt any other
+                    hands? (All other hands not including the ones above, which would be
+                    considered garbage hands.)
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top" width="100">
+        <p>&nbsp;</p>
+    </td>
+    <td>
+        <table border="0" width="100%">
+            <tbody>
+            <tr>
+                <td align="left" bgcolor="#7c7c7c"><font color="#ffffff"><img
+                        src="../images/button-dasharrow-on.png" height="12" width="12">&nbsp;
+                    Poker Basics </font></td>
+            </tr>
+            </tbody>
+        </table>
+        Poker Basics controls how well the player applies the basics of good
+        poker strategy, such as aggression, table position, pot odds, and
+        observation of opponent behavior. <br>
+
+        <p></p>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Aggression</strong></td>
+                <td valign="top">How aggressively does this player play?<br>
+                    All the way to the left plays a very passive game, they do not raise
+                    aggressively when they should.<br>
+                    Center plays with a moderate level of aggression.<br>
+                    All the way to the right plays like a complete maniac, they bet
+                    aggressively too much.<br>
+                    <br>
+                    Alters how passive or aggressive the AI will play their cards. A
+                    passive, or weak player, does not bet or raise big or often enough. An
+                    aggressive player bets and raises bigger and more often then the
+                    average player. And a maniac is too aggressive and will eventually be
+                    caught raising with poor cards. This setting does not alter how much the bet will be, only if they
+                    are more likely to limp in a hand or raise.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>
+                    Position </strong></td>
+                <td>To what extent does this player take position into
+                    account?<br>
+                    All the way to the left plays with no consideration of position.<br>
+                    Center plays with appropriate regard for position.<br>
+                    All the way to the right adjusts way too much for position.<br>
+                    <br>
+                    How likely the AI will consider their seat position relative to the
+                    dealer button. An inexperienced play will not consider seat position.
+                    Whereas a professional knows they must have a better hand in early seat
+                    position, and can play weaker hands in late position.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Pot
+                    Odds to Call </strong></td>
+                <td>To what extent does this player consider pot odds when
+                    pot odds are a factor in the decision to call? <br>
+                    All the way to the left the player will never call if pot odds are a
+                    factor even with good pot odds. <br>
+                    Center plays with appropriate regard for pot odds.<br>
+                    All the way to the right the player is too inclined to call even with
+                    mediocre pot odds when pot odds are a factor. <br>
+                    <br>
+                    See Pot Odds in the <a href="glossary.html">Glossary</a>.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Observation</strong></td>
+                <td><p>To what extent does this player observe the behavior of
+                    opponents, and adjust its play accordingly? <br>
+                    All the way to the left the player will make no adjustment for opponent
+                    style. <br>
+                    Center adjusts appropriately to opponent style.<br>
+                    All the way to the right the player over-adjusts to observed patterns
+                    in opponent style. </p>
+
+                    <p>As of version 2.1 this setting also adjusts for the overall table tightness. <br>
+                    </p></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top" width="100">&nbsp;</td>
+    <td>
+        <table border="0" width="100%">
+            <tbody>
+            <tr>
+                <td align="left" bgcolor="#7c7c7c"><font color="#ffffff"><img
+                        src="../images/button-dasharrow-on.png" height="12" width="12">&nbsp;
+                    Tournament Strategy </font></td>
+            </tr>
+            </tbody>
+        </table>
+        The tournament strategy adjusts play based on whether the player is
+        applying the basics of good tournament strategy. Tournament strategy
+        considers the amount of chips in front of them (their stack) or their
+        opponent's stack of chips. <br>
+        <br>
+        All the way to the left plays obliviously, they have no consideration
+        of their or their opponents stack size.<br>
+        Center adjusts well to tournament circumstances.<br>
+        All the way to the right severely over-compensates how they adjust to
+        the stack sizes. <br>
+        <br>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Stack
+                    Size </strong></td>
+                <td valign="top">How well does this player make strategy
+                    adjustments when short stacked?<br>
+                    All the way to the left plays without considering stack size.<br>
+                    Center adjusts well for stack size.<br>
+                    <br>
+                    All the way to the right severely over-compensates for stack size.<br>
+                    A skilled player with a short stack of chips will choose to just pick a
+                    half way decent hand and go all-in rather then let the blinds eat away
+                    at their remaining stack until they have nothing left.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>
+                    Opponent Stack Size </strong></td>
+                <td>How well does this player make strategy adjustments
+                    against short stacked opponents?<br>
+                    All the way to the left plays without considering opponent stack size.<br>
+                    Center adjusts well for opponent stack size.<br>
+                    <br>
+                    All the way to the right severely over-compensates for opponent stack
+                    size.<br>
+                    A skilled player will put more pressure on a short stack at the table
+                    by raising them in order to bully them into either folding or going
+                    all-in.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top">&nbsp;</td>
+    <td>
+        <table border="0" width="100%">
+            <tbody>
+            <tr>
+                <td align="left" bgcolor="#7c7c7c"><font color="#ffffff"><img
+                        src="../images/button-dasharrow-on.png" height="12" width="12">&nbsp;
+                    Drawing Hands </font></td>
+            </tr>
+            </tbody>
+        </table>
+        Drawing Hands adjusts how strongly inclined this player is to call bets
+        in order to see more community cards turned over for the chance that
+        their hand will improve to a straight or flush.<br>
+        All the way to the left significantly under-values straight and flush
+        draws.<br>
+        All the way to the left significantly over-values straight and flush
+        draws. <br>
+        <br>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td colspan="2" align="center" valign="top"><strong> </strong>
+                    <table border="0" width="100%">
+                        <tbody>
+                        <tr>
+                            <td align="left" bgcolor="#7c7c7c">&nbsp;&nbsp;&nbsp;&nbsp;<font
+                                    color="#ffffff"><img src="../images/button-dasharrow-on.png"
+                                                         height="12" width="12">&nbsp; Straight Draw </font></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div align="left">How strongly inclined is this player to
+                        pay for straight draws?<br>
+                        All the way to the left significantly under-values straight outs, the
+                        number of cards they could potentially improve their hand to a straight.<br>
+                        All the way to the left significantly over-values straight outs.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Nut</strong></td>
+                <td>How strongly inclined is this player to pay for nut
+                    straight draws? <br>
+                    All the way to the left significantly under-values nut-straight outs.<br>
+                    All the way to the right significantly over-values nut-straight outs.<br>
+                    <br>
+                    A nut straight is the best possible straight based on the board cards.
+                    A straight draw means that a straight has not yet been made, but is on
+                    the draw to get one if the right card is turned on the board. Therefore
+                    a nut straight draw is having the potential of getting the best
+                    possible straight with the remaining board cards not yet turned over.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>
+                    Non-Nut </strong></td>
+                <td>How strongly inclined is this player to pay for non-nut
+                    straight draws? <br>
+                    All the way to the left significantly under-values non-nut straight
+                    outs.<br>
+                    All the way to the right significantly over-values non-nut straight
+                    outs.<br>
+                    <br>
+                    A non-not straight draw is having the potential of getting a straight,
+                    but may not be the best possible straight.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td colspan="2" align="center" valign="top"><strong> </strong>
+                    <table border="0" width="100%">
+                        <tbody>
+                        <tr>
+                            <td align="left" bgcolor="#7c7c7c">&nbsp;&nbsp;&nbsp;&nbsp;<font
+                                    color="#ffffff"><img src="../images/button-dasharrow-on.png"
+                                                         height="12" width="12">&nbsp; Flush Draw </font></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div align="left"> How strongly inclined is this player to
+                        pay for flush draws?<br>
+                        All the way to the left significantly under-values flush outs, the
+                        number of cards they could potentially improve their hand to a flush.<br>
+                        All the way to the left significantly over-values flush outs.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Nut </strong><br>
+                </td>
+                <td>How strongly inclined is this player to pay for nut
+                    flush draws? <br>
+                    All the way to the left significantly under-values nut flush outs.<br>
+                    All the way to the right significantly over-values nut flush outs.<br>
+                    <br>
+                    A nut flush is the best possible flush based on the board cards. A
+                    flush draw means that a flush has not yet been made, but is on the draw
+                    to get one if the right card is turned on the board. Therefore a nut
+                    flush draw is having the potential of getting the best possible flush
+                    with the remaining board cards not yet turned over.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>Non-Nut
+                    <br>
+                </strong></td>
+                <td>How strongly inclined is this player to pay for non-nut
+                    flush draws? <br>
+                    All the way to the left significantly under-values non-nut flush outs.<br>
+                    All the way to the right significantly over-values non-nut flush outs.<br>
+                    <br>
+                    A non-not flush draw is having the potential of getting a flush, but
+                    may not be the best possible flush.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p><br>
+        </p>
+    </td>
+</tr>
+<tr>
+    <td align="center" valign="top" width="100"><br>
+    </td>
+    <td>
+        <table border="0" width="100%">
+            <tbody>
+            <tr>
+                <td align="left" bgcolor="#7c7c7c"><font color="#ffffff"><img
+                        src="../images/button-dasharrow-on.png" height="12" width="12">&nbsp;
+                    Discipline</font></td>
+            </tr>
+            </tbody>
+        </table>
+        Discipline adjusts how likely the player will play when they shouldn't
+        when boredom set in or become emotional after being beaten with a good
+        hand. <br>
+        All the way to the left the player does not play their poor cards
+        because they haven't played in a while and do not go on tilt. <br>
+        All the way to the right they play a sloppy, emotional game. <br>
+        <br>
+        <table border="1" bordercolor="#000000" cellpadding="3"
+               cellspacing="0">
+            <tbody>
+            <tr>
+                <td align="center" valign="top" width="100"><strong> Tilt </strong></td>
+                <td>How strongly inclined is this player to go on tilt
+                    after a bad beat?<br>
+                    All the way to the left never tilts.<br>
+                    All the way to the right goes nuts when drawn out on.<br>
+                    <br>
+                    Adjusts how likely the AI can go on tilt. A player can go on Tilt when
+                    they are very upset by having just lost a lot of money or suffered a
+                    bad beat. Their emotions take over and bet irrationally, often like a
+                    Maniac until they regain control of their emotions.
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="top" width="100"><strong>
+                    Boredom </strong></td>
+                <td>How quickly will this player start playing marginal
+                    hands when cards are cold?<br>
+                    All the way to the left plays without ever lowering starting
+                    requirements.<br>
+                    All the way to the right gets tired of folding every hand very quickly.<br>
+                    <br>
+                    Sometimes tight players get bored sitting long hours at a poker table
+                    with little or no action and bet a weaker hand that they would not
+                    normally play for pure folly to have some action to break the boredom.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table border="1" width="100%">
+    <tbody>
+    <tr bgcolor="#1d4a07">
+        <td align="center">
+            <div align="center"><strong><font color="#ffff00" size="+1"><font
+                    color="#ffff00">Hands</font> </font></strong></div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>The hand selection scheme controls how the AI reacts to their hole
+    cards. This tells only a small fraction of the whole story, as it
+    doesn't reflect any consideration of the other basic decision-making
+    factors, which can very significantly affect the outcome. However, the
+    hand selection is a critical starting point in the decision making
+    process. The Hand Selection Schemes here are used in the makeup of
+    player types in the Hand Selection of the Edit Player Type screen. <br>
+</p>
+<table border="0">
+    <tbody>
+    <tr>
+        <td align="center" valign="top" width="100"><strong>Hand
+            Selection Schemes </strong></td>
+        <td>
+            <table border="1" bordercolor="#000000" cellpadding="3"
+                   cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>New</strong></td>
+                    <td>Add a <strong>New</strong> hand selection scheme</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Copy</strong></td>
+                    <td><strong>Copy</strong> the selected hand selection
+                        scheme.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Edit</strong></td>
+                    <td>Pops-up the <strong>Edit</strong> Hand Selection
+                        Scheme window shown below. Note: You can not edit a pre-defined scheme,
+                        instead, choose <strong>Copy</strong> to use a pre-defined scheme as a
+                        blueprint to create your own.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Delete</strong></td>
+                    <td><strong>Delete</strong> the selected hand scheme. Note:
+                        You can not delete a pre-defined hand scheme.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="100"><strong>Summary</strong></td>
+        <td>Summarizes the selected hand scheme. The poker chips
+            represent the relative strength of each hand.
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p align="center"><img src="../images/handselection.jpg" height="403"
+                       width="450"></p>
+
+<p align="center">&nbsp;</p>
+<table border="0">
+    <tbody>
+    <tr>
+        <td align="center" valign="top" width="100"><strong>Edit Hand
+            Selection Scheme</strong></td>
+        <td>
+            <table border="1" bordercolor="#000000" cellpadding="3"
+                   cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Scheme
+                        Name</strong></td>
+                    <td>Enter the name of the hand selection scheme. This name
+                        will be used in the Hand Selection category for each player type in the
+                        Opponents tab of the <a href="options.html">Options</a> screen.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Description</strong></td>
+                    <td>Enter a description for your own notes on the hand
+                        selection.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Hand
+                        Selection </strong></td>
+                    <td>Think of hand selection as a way of expressing your
+                        initial reaction to your hole cards when you first look at them.
+                        Obviously if you peek at your cards and find two aces, you're going to
+                        feel pretty excited about it, regardless of anything else. If you find
+                        seven-deuce off suit, you're going to start waiting for your turn to
+                        fold. In between, things vary. If you're heads-up and have ace-nine
+                        suited, you're going to be pretty strongly inclined to play the hand.
+                        If you're at a full table, a good player will probably expect to fold.
+                        It's this basic confidence in your hand that is reflected in a hand
+                        selection scheme, and as such hand selection is a major factor in how
+                        loose or tight a particular computer player is. <br>
+
+                        <p>The hand selection scheme is used to set base "scores"
+                            for each possible outcome, which are then adjusted based on the value
+                            of the loose/tight slider, as well as many other factors, like
+                            position, etc. As the slider moves from the center, a weighted offset
+                            will be applied according to a set of canonical hand strengths for the
+                            selected level of tightness. Player types for which the slider is set
+                            to its loosest value will play every single hand like aces. With the
+                            slider set to its tightest value, a player will be *extremely* tight.
+                            At these extremes, the hand selection scheme will be effectively
+                            ignored. At the center, the hand selection scheme will be used
+                            unmodified. In between is in between. Some schemes will be better
+                            suited to full tables, some to short-handed games, and some to games
+                            with only two or three players, and each computer player has a
+                            particular scheme it uses for each of these three situations.<br>
+                        </p>
+
+                        <p>When definining a hand selection scheme, you create a
+                            set of hand groups, each of which is rated to indicate a basic measure
+                            of its raw strength. This rating is expressed in 'chips', with values
+                            ranging in increments of 1/2 chip up to 5 full chips. A rating of 5
+                            chips should be assigned to the strongest of hands, starting with
+                            pocket aces. The most absurdly tight of schemes might rate only pocket
+                            aces a full 5 chips. Looser schemes might include pocket kings, queens,
+                            or even jacks, as well as hands like ace-king suited. Hands that are
+                            essentially unplayable are not included in any group at all,
+                            effectively having a rating of zero chips. These are hands for which
+                            you would be unwilling to put money in the pot before the flop except
+                            in special circumstances (like for instance good pot odds from an
+                            all-in opponent). Hands in the middle should be rated using the
+                            Relative Strength chips keeping in mind; the most basic pre-flop
+                            strategy of every computer player in a seat not required to post a
+                            blind bet.<br>
+                            <br>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" width="100"><strong>Relative
+                        Strength </strong></td>
+                    <td>
+                        <table cellpadding="2" cellspacing="2">
+                            <tbody>
+                            <tr>
+                                <td align="left" valign="middle" width="100">
+                                    <div align="center"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"></div>
+                                </td>
+                                <td>5 chips - Very Strong<br>
+                                    Player will raise and re-raise under almost any circumstances.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="middle" width="100">
+                                    <div align="center"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"></div>
+                                </td>
+                                <td>4 chips -&nbsp; Strong<br>
+                                    Player will be equally inclined to raise or call, and only slightly to
+                                    fold.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="middle" width="100">
+                                    <div align="center"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"></div>
+                                </td>
+                                <td>3 chips - Marginal<br>
+                                    Player will is very likely to call, but is somewhat likely to raise or
+                                    fold.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="middle" width="100">
+                                    <div align="center"><img
+                                            src="../images/rating16_full.png" height="16" width="16"><img
+                                            src="../images/rating16_full.png" height="16" width="16"></div>
+                                </td>
+                                <td>2 chips - Weak<br>
+                                    Player will be equally inclined to call or fold.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" valign="middle" width="100">
+                                    <div align="center"><img
+                                            src="../images/rating16_full.png" height="16" width="16"></div>
+                                </td>
+                                <td>1 chip - Very Weak<br>
+                                    Player will fold under almost any circumstances, slightly inclined to
+                                    call.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p align="left">&nbsp;</p>
+
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font
+        size="-1">DD Poker Website</font></a></strong></p>
+</body>
+</html>

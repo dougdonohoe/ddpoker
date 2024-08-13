@@ -1,0 +1,537 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<html>
+
+<body>
+
+<!-- MAIN TOURNAMENT SETTINGS PAGE  HEADER *************************************************************************-->
+
+<table width="341" border="0" cellpadding="5" cellspacing="0">
+    <tr align="left" valign="middle">
+        <td width="331" colspan="2">&nbsp;&nbsp;<img src="../images/button-analysis-up.png" width="70"><font
+                color="#1D4A07" size="+2"><strong>Analysis</strong></font></td>
+    </tr>
+</table>
+
+<p>DD Poker gives you the ability to analyze how you play. The analysis
+    functionality collects statistics independently for each player profile. It
+    is therefore a good idea to use different profiles for each person playing so
+    that everyone has their own statistical data.</p>
+
+<p> Each and every hand dealt, in every game played by the player, practice and
+    online, is saved here and added to the statistical analysis. You can actually
+    view the entire hand history (all down cards, board cards, bets, everything)
+    of every hand you ever played. The statistics display how you play each hand
+    and how often you win or lose with it.</p>
+
+<p> Stats are shown for the current player profile, which can be changed with
+    the <strong>Change / Edit Player Profile... </strong>button. <BR>&nbsp;
+    <!-- OPPONENT MIX TAB -->
+    <!-- DESCRIPTION TAB -->
+</p>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Overall Tab </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p align="center"><img src="../images/analysisscreen.jpg" width="450" height="366"><br>&nbsp;
+</p>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Overall<br>
+            Tab
+        </strong></td>
+        <td>The overall tab displays a summary of each and every hand dealt to this
+            player, for every hand in every game ever played in practice and online,
+            regardless of game completion.<br>
+            <br>
+            Highlight a tournament by clicking on it in the list above to display the statistics for that tournament. By
+            choosing the Summary of All tournaments instead of an individual tournament, the statistics shown will be a
+            grand total of all tournaments played. <br>
+            <br>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Tournament Name </strong></td>
+                    <td valign="top">Displays the tournament name you have selected above. Note: (online) will be
+                        displayed next to all online tournaments. Computer cards can not be shown in the details for
+                        online games.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Buy-in</strong></td>
+                    <td valign="top">The amount of money to start the tournament.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Total Rebuys</strong></td>
+                    <td valign="top">The total amount of money spent on optional tournament rebuys.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><p><strong>Total<br>
+                    </strong><strong>Add-ons</strong></p>
+                    </td>
+                    <td valign="top">The total amount of money spent on an optional tournament add-on.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Total Buy-in </strong></td>
+                    <td valign="top">The grand total of money spent with the buy-in, rebuys, and add-on combined.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Hands Dealt </strong></td>
+                    <td valign="top">Total number of hands dealt.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Percent Won </strong></td>
+                    <td valign="top">What percentage of the time this player won a pot or
+                        a split pot. The total percentage of hands are divided into three (percent won, lose, and pass).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Lose</strong></td>
+                    <td valign="top">What percentage of the time this player lost a pot.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Pass</strong></td>
+                    <td valign="top">What percentage of the time this player did not call any bets and folded the
+                        hand.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Big Blinds Won or Lost</strong></td>
+                    <td valign="top">This is a measure of how profitable your play is, indicating the average increase
+                        or decrease in your stack per hand, relative to the size of the big blind. It is not the count
+                        of the number of times you actually won or stole someone's big blind. It is the change of the
+                        money in your stack averaged over the number of hands you have played in relation to the size of
+                        the big blind.<br>
+                        <br>
+                        Example: If this number is zero, averaging out the number of hands you have played, your
+                        productivity of your play has not made any ground. If this number is 100.00, means you win an
+                        average of 100 big blinds per hand. If the number is negative, on the average, you are losing
+                        ground.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Saw Flop </strong></td>
+                    <td valign="top">Percentage of time the player called to see the flop (still be in the hand when the
+                        flop was dealt).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Saw Turn </strong></td>
+                    <td valign="top">Percentage of time the player called to see the turn (still be in the hand when 4th
+                        street was dealt).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Saw River </strong></td>
+                    <td valign="top">Percentage of time the player called to see the river (still be in the hand when
+                        5th street was dealt).
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Showdown</strong></td>
+                    <td valign="top">Percentage of time the player stayed in the hand to the very end.</td>
+                </tr>
+            </table>
+            <br>
+            <table cellpadding="2" cellspacing="2">
+                <tr>
+                    <td align="center" valign="top"><img src="../images/menuicon-export.png" width="17" height="17">
+                    </td>
+                    <td><strong>Export Table</strong> to Microsoft Excel. Right click (CTRL-click
+                        on Mac) any of the tables such as the Overall, By Hand or Preflop
+                        through River tables to bring up the Table Menu pop up. The Export
+                        Table menu item is used to export the table in a comma delimited
+                        file format (.csv) that can be read by most popular spreadsheet
+                        software. </p>
+                    </td>
+                </tr>
+            </table>
+            &nbsp;
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Buttons</strong></td>
+        <td>
+            <table border="1" cellspacing="0" cellpadding="3" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center"><strong>Change / Edit Player Profile</strong></td>
+                    <td valign="top">Opens the Player Profile screen to change or edit the current player.</td>
+                </tr>
+                <tr>
+                    <td width="100" valign="top" align="center"><strong>Delete</strong></td>
+                    <td>Deletes the currently selected tournament from the player history of the player profile
+                        currently selected. If the Summary for All tournaments is selected, delete will remove all
+                        tournament history for the player currently selected.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" valign="top" align="center"><strong>Details</strong></td>
+                    <td>Opens the Hand History pop up screen with the tournament or hands currently selected. See Hand
+                        History Screen below.
+                    </td>
+                </tr>
+
+                <!--	Add when export button is added
+
+                      <tr>
+                        <td width="100" valign="top" align="center"><strong>Export</strong></td>
+                        <td>Opens the Export History pop up screen with the tournament or hands currently selected. See Export History Screen below. </td>
+                      </tr>
+
+                -->
+
+                <tr>
+                    <td width="100" align="center"><strong>Help</strong></td>
+                    <td>Displays this Help topic.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center"><strong>Done</strong></td>
+                    <td>Return to the main menu</td>
+                </tr>
+            </table>
+    </tr>
+</table>
+
+<br>
+
+<!-- LEVELS & BLINDS TAB -->
+
+
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">By Hand / Preflop / Flop / Turn / River
+                Tabs</font></strong></div>
+        </td>
+    </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<p align="center"><img src="../images/analysisscreen2.jpg" width="450" height="337"><br>&nbsp;
+</p>
+<table border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>By Hand Tab </strong></td>
+        <td> The <strong>By Hand</strong> tab displays a list of all hands dealt to this player for the selected
+            tournament(s) and selected player.<br>
+            Example: If you look at AA, you can see data including the number of times this player was dealt aces, and
+            what percentage of the time you won with with them. <br>
+            &nbsp;
+            <table border="1" cellspacing="0" cellpadding="3" bordercolor="#000000">
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Cards</strong></td>
+                    <td>Displays one set of hole cards you were dealt at least once during
+                        the tournament(s) selected. <br>
+                        <table cellspacing="2" cellpadding="2">
+                            <tr>
+                                <td><strong>s</strong></td>
+                                <td>Suited - The 's' next to the cards stands for Suited, meaning
+                                    both cards are of the same suit (i.e., both clubs).
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>o</strong></td>
+                                <td>Off-Suit - The 'o' next to the cards stands for Off-Suit,
+                                    meaning the cards are different suits (i.e., a club and a spade).
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Hands</strong></td>
+                    <td>Displays the number of times you were dealt these cards.</td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Win</strong></td>
+                    <td>Percentage of time you have played with these cards and won. The
+                        total percentage of hands are divided into three, percent won, lose,
+                        and pass.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Lose</strong></td>
+                    <td>Percentage of time you have played with these cards and lost.</td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Pass</strong></td>
+                    <td>Percentage of time you have played with these cards, not called
+                        a bet and folded.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="center"><strong>BB Won </strong></td>
+                    <td>For the times you have been dealt these cards, this is a measure
+                        of how profitable your play is, indicating the average increase or
+                        decrease in your stack per hand, relative to the size of the big blind.
+                        It is not the count of the number of times you actually won or stole
+                        someone's big blind. It is the change of the money in your stack averaged
+                        over the number of hands you have played in relation to the size of
+                        the big blind.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="center"><strong>Flop</strong></td>
+                    <td>Percentage of time you have played with these cards until at least
+                        the flop was dealt. You can then look at these times by clicking the
+                        <strong>Flop</strong> tab.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="center"><strong>Turn</strong></td>
+                    <td>Percentage of time you have played with these cards until at least
+                        the turn was dealt. You can then look at these times by clicking the
+                        <strong>Turn</strong> tab.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="center"><strong>River</strong></td>
+                    <td>Percentage of time you have played with these cards until at least
+                        the river was dealt. You can then look at these times by clicking
+                        the <strong>River</strong> tab.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="center"><strong>Showdown</strong></td>
+                    <td>Percentage of time you have played with these cards all the way
+                        to the showdown, which is after the final round of betting at which
+                        all remaining players turn their cards over to determine who wins.
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table cellpadding="2" cellspacing="2">
+                <tr>
+                    <td align="center" valign="top"><img src="../images/menuicon-export.png" width="17" height="17">
+                    </td>
+                    <td><strong>Export Table</strong> to Microsoft Excel. Right click (CTRL-click
+                        on Mac) any of the tables such as the Overall, By Hand or Preflop
+                        through River tables to bring up the Table Menu pop up. The Export
+                        Table menu item is used to export the table in a comma delimited file
+                        format (.csv) that can be read by most popular spreadsheet software.
+                        <p></p>
+                    </td>
+                </tr>
+            </table>
+            Hint: You may analyze several hands at one time by CTRL clicking to select multiple hands, or Shift Clicking
+            for several rows and clicking the details button. <br>
+            &nbsp;
+            </p></td>
+    </tr>
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Preflop<br>
+            Flop<br>
+            Turn<br>
+            River<br>
+            Tabs</strong></td>
+        <td valign="top">The <strong>Preflop, Flop, Turn </strong>and <strong>River</strong> tabs display how you did
+            with your hole cards from the pre-flop to the river, and only displays the cards that you played long enough
+            to reach the flop, turn and river.
+            <BR>&nbsp;
+            <table border="1" cellspacing="0" cellpadding="3" bordercolor="#000000">
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Cards</strong></td>
+                    <td>
+                        <p>Displays one set of hole cards you were dealt at this point in the deal for
+                            the the tournament(s) selected. </p>
+                        <table cellspacing="2" cellpadding="2">
+                            <tr>
+
+                                <td><strong>s</strong></td>
+                                <td>Suited - The 's' next to the cards stands for Suited, meaning both cards are of the
+                                    same suit like both clubs.
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td><strong>o</strong></td>
+                                <td>Off-Suit - The 'o' next to the cards stands for Off-Suit, meaning the cards are both
+                                    different suits, like club, spade.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Hands</strong></td>
+                    <td>Displays the number of times you played these cards to this point
+                        in the deal.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" height="27" align="center"><strong>Check, Call, Bet,
+                        Raise, Reraise, Fold </strong></td>
+                    <td>Displays what percent of the time you checked, called, bet, raised,
+                        reraised, or folded with these cards at this point in the deal.
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td width="100" align="center"><strong>Win</strong></td>
+                    <td>Percentage of time you have played with these cards to this point
+                        of the deal and won.
+                    </td>
+                </tr>
+            </table>
+            <p>&nbsp;</p></td>
+    </tr>
+</table>
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Hand History </font><font color="#FFFF00"
+                                                                                                  size="+1"><font
+                    color="#FFFF00"> Screen </font> </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p>The <strong>Details</strong> button opens the Hand History pop up window. The
+    hand history displays what you have selected when you click <strong>Details</strong>.
+    You may view all hands ever dealt by selecting the tournament Summary. All the
+    hands for an individual tournament will be displayed by selecting just one tournament.
+    Or you may choose an individual hand or group of hands from any of the screen
+    tabs.</p>
+
+<p align="center"><img src="../images/handhistory.jpg" width="400" height="357"><br>
+</p>
+<table width="100%" border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Hand History </strong></td>
+        <td>Displays the hand history for the selected hands chosen. <br>
+            <br>
+            The left column displays the selected hands chosen. Example: If you choose AA from the By Hand tab and click
+            <strong>Details</strong>, the left column displays every hand you had a pair of aces. You may then click on
+            any of these hands to see how you played them in the right column. <br>
+            <br>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Newer</strong></td>
+                    <td>Click <strong>Newer </strong>to work back to the current hand.
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Older</strong></td>
+                    <td>Click <strong>Older</strong> to display the previous group of 9 hands played.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Export</strong></td>
+                    <td>Click <strong>Export</strong> to export an individual hand to Poker Tracker.</td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show All Computer Cards </strong></td>
+                    <td valign="top">Click<strong> Show All Computer Cards</strong> to flip the computer cards over.
+                        (Practice games only)
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Show Reason</strong></td>
+                    <td>Click <strong>Show Reason</strong> as training tool to understand why actions were made.
+                        (Practice games only)
+                    </td>
+                </tr>
+            </table>
+            <p>Hint: You may choose All Tournaments then click <strong>Details</strong> to see every hand dealt to this
+                player, choose a single tournament, or pick individual rows from one of the other tabs with a click,
+                CTRL click or SHIFT click, then click the <strong>Details</strong> button. </p></td>
+    </tr>
+</table>
+<br>
+<table width="100%" border="1">
+    <tr bgcolor="#1D4A07">
+        <td align="center">
+            <div align="center"><strong><font color="#FFFF00" size="+1">Export History </font><font color="#FFFF00"
+                                                                                                    size="+1"><font
+                    color="#FFFF00"> Screen </font> </font></strong></div>
+        </td>
+    </tr>
+</table>
+<p>The <strong>Export</strong> button opens the Export History pop up window, from which you can export hand
+
+    <!-- Add when tournament summary is added
+       and/or tournament
+    -->
+
+    histories to a file. The format currently supported
+    for this file is compatible with the format used by Paradise Poker, and is suitable for import
+    into Poker Tracker. Other formats may be supported in the future; requests are welcome.
+    hand history displays what you have selected when you click <strong>Details</strong>.
+    You may export all hands ever dealt by selecting the tournament Summary. All the
+    hands for an individual tournament can be exported by selecting just one tournament.
+    Or you may choose an individual hand or group of hands from any of the screen
+    tabs.</p>
+
+<p align="center"><img src="../images/exporthistory.jpg" width="400" height="348"><br>
+</p>
+<table width="100%" border="0">
+    <tr>
+        <td width="100" align="center" valign="top"><strong>Export History </strong></td>
+        <td>Exports the history for the selected hands chosen. <br>
+            <br>
+            <table border="1" cellpadding="3" cellspacing="0" bordercolor="#000000">
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Hand Transcripts</strong></td>
+                    <td>Check <strong>Hand Transcripts</strong> to export detailed transcripts of each hand.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Tournament Summaries</strong></td>
+                    <td>This feature is not yet implemented, but in a future release, you will have the option to check
+                        <strong>Tournament Summaries</strong> to export summaries for the tournaments represented by the
+                        selected hand(s), allowing you to use additional Poker Tracker features with your DD Poker data.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="100" align="center" valign="top"><strong>Estimated Size</strong></td>
+                    <td valign="top">Provides a very rough estimate of the size of the resulting file.</td>
+                </tr>
+            </table>
+            <p>Hint: You may choose All Tournaments then click <strong>Export</strong> to export every hand dealt to
+                this player, choose a single tournament, or pick individual rows from one of the other tabs with a
+                click, CTRL click or SHIFT click, then click the <strong>Export</strong> button. </p>
+
+            <p>IMPORTANT: If you plan to import hands into Poker Tracker, especially if you also use Poker Tracker to
+                analyze your play on Paradise Poker, we recommend that you use a separate database, to avoid conflicts
+                with player names or game numbers from real Paradise Poker hands, and to protect your important hand
+                history data from any possible corruption by unforseen consequences of importing data from DD Poker.</p>
+        </td>
+    </tr>
+</table>
+<p align="center"><strong><a href="https://www.ddpoker.com/"><font size="-1">DD
+    Poker Website</font></a></strong></p>
+
+</body>
+</html>

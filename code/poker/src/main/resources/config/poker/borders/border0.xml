@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<BORDER xmlns="http://www.donohoedigital.com"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <border t1="EDGE" t2="Seat 1">
+        <point x="975" y="60"/>
+        <point x="735" y="60"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 10">
+        <point x="495" y="60"/>
+        <point x="735" y="60"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 2">
+        <point x="1229" y="502"/>
+        <point x="1229" y="0"/>
+        <point x="1228" y="466"/>
+        <point x="1218" y="382"/>
+        <point x="1181" y="199"/>
+        <point x="1165" y="171"/>
+        <point x="1131" y="110"/>
+        <point x="1067" y="60"/>
+        <point x="975" y="60"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 3">
+        <point x="975" y="942"/>
+        <point x="1083" y="942"/>
+        <point x="1082" y="954"/>
+        <point x="1084" y="941"/>
+        <point x="1118" y="906"/>
+        <point x="1155" y="852"/>
+        <point x="1184" y="775"/>
+        <point x="1208" y="682"/>
+        <point x="1221" y="614"/>
+        <point x="1229" y="502"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 4">
+        <point x="745" y="942"/>
+        <point x="975" y="942"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 5">
+        <point x="485" y="942"/>
+        <point x="745" y="942"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 6">
+        <point x="255" y="942"/>
+        <point x="485" y="942"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 7">
+        <point x="0" y="502"/>
+        <point x="8" y="636"/>
+        <point x="22" y="731"/>
+        <point x="39" y="786"/>
+        <point x="63" y="843"/>
+        <point x="93" y="901"/>
+        <point x="123" y="924"/>
+        <point x="158" y="942"/>
+        <point x="255" y="942"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 8">
+        <point x="255" y="60"/>
+        <point x="176" y="60"/>
+        <point x="141" y="75"/>
+        <point x="82" y="146"/>
+        <point x="51" y="202"/>
+        <point x="35" y="267"/>
+        <point x="14" y="353"/>
+        <point x="0" y="502"/>
+    </border>
+
+    <border t1="EDGE" t2="Seat 9">
+        <point x="255" y="60"/>
+        <point x="495" y="60"/>
+    </border>
+
+    <border t1="Flop" t2="Pot" enclosed="true">
+        <point x="245" y="403"/>
+        <point x="404" y="403"/>
+        <point x="404" y="616"/>
+        <point x="245" y="616"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 1">
+        <point x="975" y="370"/>
+        <point x="735" y="370"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 10">
+        <point x="495" y="370"/>
+        <point x="735" y="370"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 2">
+        <point x="975" y="370"/>
+        <point x="1000" y="406"/>
+        <point x="1000" y="482"/>
+        <point x="1030" y="502"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 3">
+        <point x="1030" y="502"/>
+        <point x="1000" y="522"/>
+        <point x="1000" y="591"/>
+        <point x="975" y="635"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 4">
+        <point x="975" y="635"/>
+        <point x="745" y="635"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 5">
+        <point x="745" y="635"/>
+        <point x="485" y="635"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 6">
+        <point x="485" y="635"/>
+        <point x="255" y="635"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 7">
+        <point x="255" y="635"/>
+        <point x="242" y="615"/>
+        <point x="242" y="502"/>
+    </border>
+
+    <border t1="Flop" t2="Seat 8">
+        <point x="242" y="502"/>
+        <point x="242" y="387"/>
+        <point x="255" y="370"/>
+    </border>
+
+</BORDER>

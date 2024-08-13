@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<GAMEBOARD xmlns="http://www.donohoedigital.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <gamename>DD Poker</gamename>
+
+    <image>pokertable2</image>
+
+    <width>1230</width>
+
+    <height>955</height>
+
+    <scale>1.0</scale>
+
+    <area name="NONE"/>
+    <area name="table"/>
+
+    <territory id="6000" name="EDGE" area="NONE" type="edge"/>
+    <territory id="6001" name="Flop" area="table" type="land" scaleimages="44">
+        <point x="468" y="503" type="flop1"/>
+        <point x="586" y="503" type="flop2"/>
+        <point x="704" y="503" type="flop3"/>
+        <point x="822" y="503" type="flop4"/>
+        <point x="940" y="503" type="flop5"/>
+    </territory>
+
+    <territory id="6012" name="Pot" area="table" type="land">
+        <point x="324" y="600" type="label"/>
+    </territory>
+
+    <territory id="6002" name="Seat 1" area="table" type="land" scaleimages="40">
+        <point x="834" y="195" type="hole1"/>
+        <point x="849" y="90" type="label"/>
+        <point x="917" y="270" type="button"/>
+        <point x="795" y="289" type="bet"/>
+        <point x="775" y="304" type="icon"/>
+    </territory>
+
+    <territory id="6003" name="Seat 10" area="table" type="land" scaleimages="40">
+        <point x="599" y="195" angle="7" type="hole1"/>
+        <point x="614" y="90" type="label"/>
+        <point x="681" y="270" type="button"/>
+        <point x="560" y="289" type="bet"/>
+        <point x="540" y="304" type="icon"/>
+    </territory>
+
+    <territory id="6004" name="Seat 2" area="table" type="land" scaleimages="40">
+        <point x="1058" y="330" type="hole1"/>
+        <point x="1073" y="220" type="label"/>
+        <point x="1029" y="397" type="button"/>
+        <point x="1037" y="425" type="bet"/>
+        <point x="1017" y="440" type="icon"/>
+    </territory>
+
+    <territory id="6005" name="Seat 3" area="table" type="land" scaleimages="42">
+        <point x="1058" y="673" type="hole1"/>
+        <point x="1072" y="788" type="label"/>
+        <point x="1133" y="614" type="button"/>
+        <point x="1037" y="542" type="bet"/>
+        <point x="1017" y="557" type="icon"/>
+    </territory>
+
+    <territory id="6006" name="Seat 4" area="table" type="land" scaleimages="43">
+        <point x="839" y="795" type="hole1"/>
+        <point x="857" y="910" type="label"/>
+        <point x="928" y="730" type="button"/>
+        <point x="805" y="662" type="bet"/>
+        <point x="785" y="677" type="icon"/>
+    </territory>
+
+    <territory id="6007" name="Seat 5" area="table" type="land" scaleimages="50">
+        <point x="595" y="785" type="hole1"/>
+        <point x="615" y="910" type="label"/>
+        <point x="698" y="730" type="button"/>
+        <point x="550" y="642" type="bet"/>
+        <point x="530" y="657" type="icon"/>
+    </territory>
+
+    <territory id="6008" name="Seat 6" area="table" type="land" scaleimages="43">
+        <point x="353" y="795" type="hole1"/>
+        <point x="368" y="910" type="label"/>
+        <point x="442" y="730" type="button"/>
+        <point x="320" y="662" type="bet"/>
+        <point x="300" y="677" type="icon"/>
+    </territory>
+
+    <territory id="6009" name="Seat 7" area="table" type="land" scaleimages="42">
+        <point x="135" y="673" type="hole1"/>
+        <point x="149" y="788" type="label"/>
+        <point x="212" y="617" type="button"/>
+        <point x="90" y="542" type="bet"/>
+        <point x="70" y="557" type="icon"/>
+    </territory>
+
+    <territory id="6010" name="Seat 8" area="table" type="land" scaleimages="40">
+        <point x="135" y="330" type="hole1"/>
+        <point x="157" y="220" type="label"/>
+        <point x="203" y="405" type="button"/>
+        <point x="90" y="425" type="bet"/>
+        <point x="70" y="440" type="icon"/>
+    </territory>
+
+    <territory id="6011" name="Seat 9" area="table" type="land" scaleimages="40">
+        <point x="363" y="195" type="hole1"/>
+        <point x="374" y="90" type="label"/>
+        <point x="443" y="270" type="button"/>
+        <point x="320" y="289" type="bet"/>
+        <point x="300" y="304" type="icon"/>
+    </territory>
+
+
+    <numborderfiles>2</numborderfiles>
+
+
+</GAMEBOARD>

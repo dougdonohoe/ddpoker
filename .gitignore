@@ -1,0 +1,8 @@
+# Misc
+target
+*.sparseimage
+Thumbs.db
+
+# /runtime/
+/runtime/data
+/runtime/log

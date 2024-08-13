@@ -1,0 +1,129 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker Admin - Registration Search</title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+
+    <div class="title">
+        Registration Search
+    </div>
+
+    <div class="description">Search for Registration by Name, Email, Key or Address. To find an exact
+        match, start any of these with an equal sign (e.g., <strong>=2200-0000-0000-0000</strong>).
+        Emails that start with <strong>mailto:</strong> are converted to start with <strong>=</strong>.
+    </div>
+
+    <div class="search-form">
+        <form wicket:id="form">
+            <table>
+                <tr>
+                    <td>
+                        <label for="name">Name:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" id="name" wicket:id="name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="email">Email:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" id="email" wicket:id="email"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="key">Key:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" id="key" wicket:id="key"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="address">Address:</label>
+                    </td>
+                    <td class="space-after">
+                        <input class="text" type="text" id="address" wicket:id="address"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="button" colspan="2">
+                        <input type="submit" value="Search">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <wicket:enclosure child="row">
+        <div class="search-player">
+            <div class="tournament-info-navigator" wicket:id="navigator">[dataview navigator]</div>
+            <table class="tournament-info">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Key</th>
+                    <th>Address</th>
+                </tr>
+                <tr wicket:id="row">
+                    <td class="top-left"><span wicket:id="name">Zorro</span></td>
+                    <td class="top-left"><span wicket:id="email">foo@bar.com</span></td>
+                    <td class="top-left"><span wicket:id="licenseKey">1111-2222-3333-4444</span></td>
+                    <td class="top-left">
+                        <span wicket:id="address">12 Elm St</span><br>
+                        <span wicket:id="city">Wayzata</span>, <span wicket:id="state">MN</span>
+                        <span wicket:id="postal">55391</span> <span wicket:id="country">55391</span>
+                    </td>
+                </tr>
+            </table>
+            <wicket:enclosure>
+                <div class="no-results" wicket:id="no-match">
+                    No matching registrations found.
+                </div>
+            </wicket:enclosure>
+        </div>
+    </wicket:enclosure>
+
+</wicket:extend>
+
+</body>
+</html>

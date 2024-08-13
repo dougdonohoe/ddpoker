@@ -1,0 +1,100 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+  
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials) 
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+  
+  For inquiries regarding commercial licensing of this source code or 
+  the use of names, logos, images, text, or other assets, please contact 
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+
+<wicket:head>
+    <title>DD Poker - Tournament Detail - <span wicket:id="titleTournamentName">Tournament Name Here</span>
+    </title>
+</wicket:head>
+
+<body>
+
+<wicket:extend>
+    <div class="title">
+        <span wicket:id="tournamentName">DD World Championship</span>
+        <span class="tournament-details-unbold">hosted by</span>
+        <a href="GameDetail.html#" wicket:id="hostLink"><span wicket:id="hostName">Dexter</span></a><br/>
+            <span class="sub-title">
+                <span wicket:id="status">registered, running, ended or stopped</span> <span
+                    wicket:id="date">12/12/2012</span>
+            </span>
+    </div>
+    <div class="tournament-detail-url" wicket:id="gameUrl">poker://111.222.33.44/n-1</div>
+    <div>
+        <div wicket:id="tournamentFinish">player finishes goes here</div>
+        <div class="table-caption">Tournament Format</div>
+        <div class="tournament-details" wicket:id="tournamentProfile">tournament details goes here</div>
+    </div>
+
+    <wicket:fragment wicket:id="table">
+        <div class="tournament-finish">
+            <table class="tournament-info">
+                <tr>
+                    <th>Place</th>
+                    <th>Player</th>
+                    <th>Prize</th>
+                    <th wicket:id="col-ddr1">DDR1</th>
+                    <th wicket:id="col-chips">Chips at Stop</th>
+                </tr>
+                <tr wicket:id="row">
+                    <wicket:enclosure>
+                        <td class="center"><span wicket:id="place">$100,000</span></td>
+                    </wicket:enclosure>
+                    <wicket:enclosure>
+                        <td class="center"><span wicket:id="rank">$100,000</span></td>
+                    </wicket:enclosure>
+
+                    <td class="center">
+                        <a href="GameDetail.html#" wicket:id="playerLink"><span wicket:id="playerName">DD World Championship</span></a>
+                        <span wicket:id="ai">(ai)</span>
+                    </td>
+                    <td class="number"><span wicket:id="prize">$100,000</span></td>
+                    <wicket:enclosure>
+                        <td class="number"><span class="addpadding" wicket:id="ddr1">1,234</span></td>
+                    </wicket:enclosure>
+                    <wicket:enclosure>
+                        <td class="number"><span class="addpadding" wicket:id="numChips">$100,000</span></td>
+                    </wicket:enclosure>
+                    <wicket:enclosure>
+                        <td><span class="addpadding" wicket:id="bustedOut">Busted out</span></td>
+                    </wicket:enclosure>
+                </tr>
+            </table>
+        </div>
+
+    </wicket:fragment>
+</wicket:extend>
+
+</body>
+</html>
