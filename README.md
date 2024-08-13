@@ -22,7 +22,10 @@ There are still the [old installers](https://static.ddpoker.com/download/), whic
 were built many years ago, but may still work.
 
 Maybe somebody can help with this in the future.  For now, you can build and
-run it from source, as explained in Developer Notes.
+run it from source, as explained in [Developer Notes](README-DEV.md).
+
+There is also an option to distribute a jar file, which the _Installers_ section of
+the Developer Notes explains.
 
 ## Developer Notes
 

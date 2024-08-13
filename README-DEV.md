@@ -377,6 +377,28 @@ Mac installer used `PackageMaker`, which has since been deprecated.  The `instal
 have some Mac-specific files that were used to build the installer, which might be useful to
 someone in the future.
 
+A possible workaround is to distribute an all-in-one `.jar` file by doing this:
+
+```shell
+mvn-install-notests
+cd code/poker
+mvn package assembly:single -Dmaven.test.skip.exec=true
+```
+
+This creates a `poker-3.0-jar-with-dependencies.jar` in the `target` directory.  You can then
+distribute this `.jar` file and run it like so:
+
+```shell
+java -jar poker-3.0-jar-with-dependencies.jar
+```
+
+For Mac users, if you also distribute the `installer/mac/poker/poker-app/Contents/Resources/macicon.icns` file,
+you can get a dock icon:
+
+```shell
+java -Xdock:icon=macicons.icns -jar poker-3.0-jar-with-dependencies.jar
+```
+
 ### Questionable Features
 
 When a player registers a profile for online play, the server sends an email with a password
