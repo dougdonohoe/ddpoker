@@ -49,8 +49,11 @@ source ddpoker.rc
 [Brew](https://brew.sh/) is useful to install Java and Maven:
 
 ```shell
-# Java - this may only work for Intel-based Macs (Apple silicon solution coming soon)
+# Java - Intel
 brew install openjdk@8 
+
+# Java - Apple Silicon (M1,M2,M3,...)
+brew install temurin@8
 
 # Maven
 brew install maven

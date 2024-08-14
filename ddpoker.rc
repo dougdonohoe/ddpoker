@@ -52,20 +52,26 @@ alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
 
 # attempt to auto-set JAVA_HOME to 1.8 if on mac
 if [[ "${OSNAME:0:6}" == "darwin" ]]; then
-  JAVA_HOME_NEW="/usr/local/opt/openjdk@8" # intel macs only it seems
-  if [[ -d "${JAVA_HOME_NEW}" && "${JAVA_HOME_NEW}" != "${JAVA_HOME}" ]]; then
-	export JAVA_HOME="${JAVA_HOME_NEW}"
-	export PATH="${JAVA_HOME}/bin:${PATH}"
-	echo "JAVA_HOME changed, version now $(java -version 2>&1 | head -1)"
-  fi
+  # look in apple silicon/intel brew locations
+  for home in /Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home /usr/local/opt/openjdk@8; do
+    if [[ -d "${home}" && "${home}" != "${JAVA_HOME}" ]]; then
+      export JAVA_HOME="${home}"
+      export PATH="${home}/bin:${PATH}"
+      echo "JAVA_HOME changed, version now $(java -version 2>&1 | head -1)"
+    fi
+  done
 fi
 
 # See if java 1.8 is installed
 if ! test -x "$(command -v java)"; then
   if [[ "${OSNAME:0:6}" == "darwin" ]]; then
-    echo "WARNING: Java 1.8 is not installed."
-    # TODO: print this for intel macs, figure out apple silicon
-    #  Have you run 'brew install openjdk@8'?
+    arch=$(uname -m)
+    if [[ "${arch}" == "arm64" ]]; then
+      brew=temurin@8
+    else
+      brew=openjdk@8
+    fi
+    echo "WARNING: Java 1.8 is not installed. Have your run 'brew install $brew'"
   else
     echo "WARNING: Java 1.8 is not installed."
   fi
