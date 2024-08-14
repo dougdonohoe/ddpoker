@@ -246,6 +246,9 @@ just set `settings.online.enabled=false`.
 Otherwise, you'll need to change these locally when running your own server.  During development,
 you can override these using `.properties` override files, described below.
 
+[Issue #1](https://github.com/dougdonohoe/ddpoker/issues/1) discusses adding UI features
+to set the server.
+
 ## Code Notes
 
 This section is meant to help developers understand the code base, and it contains random
