@@ -51,7 +51,7 @@ alias mvn-package='(cd $CODE;mvn package)'
 alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
 
 # attempt to auto-set JAVA_HOME to 1.8 if on mac
-if [[ "${OSNAME:0:6}" == "darwin" ]]; then
+if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
   # look in apple silicon/intel brew locations
   for home in /Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home /usr/local/opt/openjdk@8; do
     if [[ -d "${home}" && "${home}" != "${JAVA_HOME}" ]]; then
@@ -64,7 +64,7 @@ fi
 
 # See if java 1.8 is installed
 if ! test -x "$(command -v java)"; then
-  if [[ "${OSNAME:0:6}" == "darwin" ]]; then
+  if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
     arch=$(uname -m)
     if [[ "${arch}" == "arm64" ]]; then
       brew=temurin@8
@@ -86,7 +86,7 @@ fi
 
 # See if maven is installed
 if ! test -x "$(command -v mvn)"; then
-  if [[ "${OSNAME:0:6}" == "darwin" ]]; then
+  if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
     echo "WARNING: Maven is not installed.  Have you run 'brew install maven'?"
   else
     echo "WARNING: Maven is not installed."
