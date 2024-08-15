@@ -15,13 +15,16 @@ history, games by player, etc.
 ## Mac vs Linux vs Windows (a note from Doug)
 
 These instructions are admittedly Mac centric, largely because that is what I have used
-for the last 15 years.  Things should work on Linux, but I no longer have a Linux box
-running at home, so I haven't tested it.  Even though DD Poker was originally developed 
+for the last 15 years.  I've done cursory testing on Linux (see Appendix B for testing tips
+on Ubuntu from Docker/Mac).
+
+Even though DD Poker was originally developed 
 mainly on Windows (with Cygwin), I haven't used Windows for development in a 
 very long time, so apologies to Windows developers for the lack of instructions.
 Cygwin worked back in the day and I imagine that the Windows Subsystem for Linux (WSL) 
-should be helpful here, too.  Feel free to submit a PR with any changes to these docs that
-would help Linux or Windows users.
+should be helpful here, too.  
+
+Feel free to submit a PR with any changes to these docs that would help Linux or Windows users.
 
 ## Prerequisites
 
@@ -518,3 +521,50 @@ mysql -h 127.0.0.1 -u root
 ```
 
 Follow the instructions above to create the database tables (via `reset_db.sh`).
+
+## Appendix B: Testing on Ubuntu via Docker
+
+It is possible to run DD Poker in Ubuntu in Docker and display on your Mac, but
+it can be a little finicky.  Here's what I got to work with help from
+[this helpful gist](https://gist.github.com/cschiewek/246a244ba23da8b9f0e7b11a68bf3285).
+
+First Install XQuartz from [www.xquartz.org/](https://www.xquartz.org/) and then launch it from `Applications` or
+from the command line:
+
+```shell
+open -a XQuartz
+```
+
+Next, got to _XQuartz -> Settings -> Security_ and ensure **Allow connections 
+from network clients** is checked.
+
+<img src="images/quartz-settings.png" alt="Quartz Settings" width="400px">
+
+Then logout and log back in to ensure these settings are in effect (a reboot
+may also be necessary).
+
+Next, follow these steps:
+
+```shell
+# Tell X to allow connections
+xhost + localhost
+
+# Build docker image
+docker build -f Dockerfile.ubuntu.docker -t pokerubuntu .
+
+# Run it, mapping ddpoker dir and maven .m2 dir to the image
+docker run -it -v $(pwd):$(pwd) -v $HOME/.m2:/root/.m2 \
+  -w $(pwd) -e DISPLAY=host.docker.internal:0 pokerubuntu
+```
+
+You can test X is working by running `xeyes`.  It should display the iconic X app that
+follows your cursor with big oval eyes.  If you encounter problems, the gist mentioned above
+has good troubleshooting tips.
+
+Next, you should be able to build and run poker from in Ubuntu:
+
+```shell
+source ddpoker.rc
+mvn-package-no-tests
+poker
+```
