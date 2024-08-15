@@ -295,6 +295,15 @@ means the later modules are dependent on one or more of the earlier modules.
 * `pokerwicket` - DD Poker website and Online Portal
 * `proto` - prototype code used for experiments and proof of concept code
 
+### Unit Tests (a note from Doug)
+
+There is some test coverage, but it is sorely lacking in the core poker logic.  This actually
+bit me once when I had to solve a multiple-split pots bug.  I didn't get religion
+on good test coverage until I worked at a high-frequency trading company writing code
+to trade on the US stock markets with my boss's money.
+
+I apologize for the lack of tests.
+
 ### Properties Files
 
 Properties files are used for two primary purposes
@@ -415,6 +424,11 @@ email the user their current password!).  I have no idea why we went down this p
 it was just a game after all, and this probably reduced our support costs.
 
 Yes, this is embarrassing in retrospect.
+
+### Computer AI
+
+While not "AI" by today's standards, there is a white paper in `docs/AI_Whitepaper.rtf` that
+explains the design of DD Poker's computer opponents.
 
 ### Database Host
 
