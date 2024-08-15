@@ -63,23 +63,27 @@
   </dependencies>
 
   <profiles>
-    <!-- Use our fake apple.jar so we can compile on non-mac platforms -->
     <profile>
-
-      <id>Apple Integration</id>
+      <id>mac</id>
       <activation>
         <os>
           <family>!mac</family>
         </os>
       </activation>
-
-      <dependencies>
-        <dependency>
-          <groupId>apple</groupId>
-          <artifactId>ui</artifactId>
-          <version>1.4.1</version>
-        </dependency>
-      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <!-- only compile on Mac (loaded by name in BaseApp.java) -->
+                <exclude>**/com/donohoedigital/gui/mac/MacApplication.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
