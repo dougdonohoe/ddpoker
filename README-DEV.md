@@ -167,7 +167,7 @@ use maven.  This version skips the tests, which you can
 run separately (see below).
 
 ```shell
-mvn-package-no-tests
+mvn-package-notests
 ```
 
 After you have run this, any of the scripts discussed below should just work.
@@ -528,7 +528,7 @@ It is possible to run DD Poker in Ubuntu in Docker and display on your Mac, but
 it can be a little finicky.  Here's what I got to work with help from
 [this helpful gist](https://gist.github.com/cschiewek/246a244ba23da8b9f0e7b11a68bf3285).
 
-First Install XQuartz from [www.xquartz.org/](https://www.xquartz.org/) and then launch it from `Applications` or
+First Install XQuartz from [www.xquartz.org](https://www.xquartz.org/) and then launch it from `Applications` or
 from the command line:
 
 ```shell
@@ -546,6 +546,9 @@ may also be necessary).
 Next, follow these steps:
 
 ```shell
+# Start XQuartz again
+open -a XQuartz
+
 # Tell X to allow connections
 xhost + localhost
 
@@ -565,6 +568,6 @@ Next, you should be able to build and run poker from in Ubuntu:
 
 ```shell
 source ddpoker.rc
-mvn-package-no-tests
+mvn-package-notests
 poker
 ```
