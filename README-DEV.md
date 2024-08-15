@@ -226,28 +226,28 @@ Once started, you can visit [http://localhost:8080/online](http://localhost:8080
 
 ## PokerGame
 
-To run the desktop poker game, either run `PokerMain` in
-IntelliJ or use the script:
+To run the desktop poker game, either run `PokerMain` in IntelliJ or use the script:
 
 ```shell
 poker
 ```
 
 **NOTE**:  the `client.properties` file currently hard-codes the old DD Poker
-server host.  Since these don't exist anymore, you may see a delay on
-startup as a connection attempt is made and will time out.
+server host.  Since these don't exist anymore, the `settings.online.enable`
+flag is set to `false`, which disables online game functionality.
 
 ```properties
-settings.online.enabled= true
+settings.online.enabled= false
 settings.online.server=  http://free.ddpoker.com:80/poker/servlet/
 settings.online.chat=	 free.ddpoker.com:11886
 ```
 
-If you want to run the game locally without online server functionality,
-just set `settings.online.enabled=false`.
+If you want to run the game using your personal servers, you'll need to set the
+flag to `true` and update the `server` and `chat` entries.  During development,
+you can set these via personal `.properties` override files, described below.
 
-Otherwise, you'll need to change these locally when running your own server.  During development,
-you can override these using `.properties` override files, described below.
+If you start `poker` with `enabled=true`, but your servers are not running, you may see a 
+several second delay on startup as a connection attempt is made and freezes the UI until it times out.
 
 [Issue #1](https://github.com/dougdonohoe/ddpoker/issues/1) discusses adding UI features
 to set the server.
