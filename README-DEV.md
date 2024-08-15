@@ -564,7 +564,7 @@ You can test X is working by running `xeyes`.  It should display the iconic X ap
 follows your cursor with big oval eyes.  If you encounter problems, the gist mentioned above
 has good troubleshooting tips.
 
-Next, you should be able to build and run poker from in Ubuntu:
+Next, you should be able to build and run poker from the Ubuntu container:
 
 ```shell
 source ddpoker.rc
