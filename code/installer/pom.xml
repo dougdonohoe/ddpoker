@@ -10,7 +10,6 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <groupId>com.donohoedigital</groupId>
   <artifactId>installer</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>

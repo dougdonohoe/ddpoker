@@ -42,7 +42,6 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <groupId>com.donohoedigital</groupId>
   <artifactId>pokerwicket</artifactId>
   <packaging>war</packaging>
   <version>3.0</version>
