@@ -70,10 +70,10 @@ _DD Tournament Poker No Limit Texas Hold'em_ and
 later re-released in early 2005 as _DD Tournament Poker 2005 Collector's 
 Edition_, featuring Annie Duke on the box.  The game featured 
 Limit, Pot-Limit and No-Limit Texas Hold'em against computer
-components.  There was no online play.
+components, a poker clock, but no online play.
 
 DD Poker 2.0 added the ability to play online against other
-human opponents, a poker clock, a hand simulator and dozens
+human opponents, a sophisticated hand calculator, a brand-new UI, and dozens
 of other new features.  It was originally released in August
 2005 as _DD No Limit Texas Hold'em Tournament Edition_, featuring 
 Phil Gordon on the box.  To support online play, a back-end
