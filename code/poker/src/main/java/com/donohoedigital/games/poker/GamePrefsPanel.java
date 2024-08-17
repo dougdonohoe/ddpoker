@@ -39,11 +39,15 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.*;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.comms.DMTypedHashMap;
 import com.donohoedigital.config.*;
+import com.donohoedigital.games.comms.EngineMessage;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.ai.gui.*;
 import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.online.GetPublicIP;
 import com.donohoedigital.gui.*;
 import org.apache.log4j.*;
 
@@ -76,6 +80,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
     private OptionText onlineServer_;
     private OptionText chatServer_;
     private OptionBoolean onlineEnabled_;
+    private GlassButton test_;
 
     private final String NODE;
     private int GRIDADJUST2;
@@ -357,7 +362,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             rightbase.add(spacer);
 
             ///
-            /// SCREEEN SHOT
+            /// SCREENSHOT
             ///
 
             OptionInteger oi;
@@ -607,6 +612,17 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             serversTable.add(chatServer_);
             serverBorder.add(serversTable, BorderLayout.CENTER);
 
+            // test button
+            test_ = new GlassButton("testonline", "Glass");
+            serverBorder.add(GuiUtils.CENTER(test_), BorderLayout.EAST);
+            test_.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                    testConnection();
+                }
+            });
+
             // update text fields based on pref
             doOnlineEnabled();
         }
@@ -615,6 +631,17 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             boolean enabled = onlineEnabled_.getCheckBox().isSelected();
             onlineServer_.setEnabled(enabled);
             chatServer_.setEnabled(enabled);
+            test_.setEnabled(enabled);
+        }
+    }
+
+    private void testConnection() {
+        DMTypedHashMap params = new DMTypedHashMap();
+        params.setBoolean(GetPublicIP.PARAM_TEST_SERVER, true);
+        SendMessageDialog dialog = (SendMessageDialog) context_.processPhaseNow("GetPublicIP", params);
+        if (dialog.getStatus() == DDMessageListener.STATUS_OK)
+        {
+            dialog.getReturnMessage().getString(EngineMessage.PARAM_IP);
         }
     }
 
