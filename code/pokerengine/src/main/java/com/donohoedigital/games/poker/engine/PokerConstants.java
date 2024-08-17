@@ -153,6 +153,9 @@ public class PokerConstants
     public static final String OPTION_ONLINE_PAUSE_ALL_DISCONNECTED = "onlinepauseall";
     public static final String OPTION_ONLINE_UDP = "onlineudp";
     public static final String OPTION_ONLINE_COUNTDOWN = "countdown";
+    public static final String OPTION_ONLINE_ENABLED = "onlineenabled";
+    public static final String OPTION_ONLINE_SERVER = "onlineserver";
+    public static final String OPTION_ONLINE_CHAT = "onlinechat";
     public static final String OPTION_SCREENSHOT_MAX_WIDTH = "screenshotmaxw";
     public static final String OPTION_SCREENSHOT_MAX_HEIGHT = "screenshotmaxh";
 

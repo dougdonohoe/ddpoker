@@ -174,12 +174,29 @@ public class GuiUtils
     }
 
     /**
+     * Set preferred height of a component, keeping preferred width
+     */
+    public static void setPreferredHeight(JComponent c, int height)
+    {
+        c.setPreferredSize(new Dimension((int) c.getPreferredSize().getWidth(), height));
+    }
+
+    /**
+     * Set preferred width of a component, keeping preferred height
+     */
+    public static void setPreferredWidth(JComponent c, int width)
+    {
+        c.setPreferredSize(new Dimension(width, (int) c.getPreferredSize().getHeight()));
+    }
+
+    /**
      * Print container and all the children of the container
      */
     public static void printChildren(Container container, int nIndent)
     {
-        if (nIndent == 0)
-        logger.debug("===============================================================================================");
+        if (nIndent == 0) {
+            logger.debug("===============================================================================================");
+        }
         logger.debug(indent(nIndent) + "Container: " + container);
         Component[] children = container.getComponents();
         for (Component aChildren : children)
