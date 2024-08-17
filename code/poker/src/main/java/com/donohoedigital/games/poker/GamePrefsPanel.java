@@ -39,11 +39,15 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.*;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.comms.DMTypedHashMap;
 import com.donohoedigital.config.*;
+import com.donohoedigital.games.comms.EngineMessage;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.ai.gui.*;
 import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.online.GetPublicIP;
 import com.donohoedigital.gui.*;
 import org.apache.log4j.*;
 
@@ -66,15 +70,19 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
     public static final Integer ICHEIGHT = 30;
 
 
-    private TypedHashMap map_ = new TypedHashMap();
-    private GameEngine engine_;
-    private GameContext context_;
-    private String OSTYLE;
-    private String BSTYLE;
+    private final TypedHashMap map_ = new TypedHashMap();
+    private final GameEngine engine_;
+    private final GameContext context_;
+    private final String OSTYLE;
+    private final String BSTYLE;
     private DDTabbedPane tabs_;
-    private GuiUtils.CheckListener checkListeners_;
+    private final GuiUtils.CheckListener checkListeners_;
+    private OptionText onlineServer_;
+    private OptionText chatServer_;
+    private OptionBoolean onlineEnabled_;
+    private GlassButton test_;
 
-    private String NODE;
+    private final String NODE;
     private int GRIDADJUST2;
     private int GRIDADJUST1;
     private int GRIDADJUST3;
@@ -154,7 +162,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             tabs_.addTab("msg.options.handgroups", ic, error, new HandGroups());
         }
 
-        // select pertinent tab for circumstance, which happens to be tab at position 1
+        // select pertinent tab if in a game, which happens to be the tab at position 1
         if (bDialog && game != null && tabs_.getTabCount() > 1)
         {
             DDTabPanel tp = (DDTabPanel) tabs_.getComponent(1);
@@ -176,7 +184,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
      */
     private abstract class OptionTab extends DDTabPanel
     {
-        private List<DDOption> localOptions = new ArrayList<DDOption>();
+        private final List<DDOption> localOptions = new ArrayList<DDOption>();
 
         OptionTab()
         {
@@ -354,7 +362,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             rightbase.add(spacer);
 
             ///
-            /// SCREEEN SHOT
+            /// SCREENSHOT
             ///
 
             OptionInteger oi;
@@ -463,6 +471,9 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
      */
     private class OnlineOptions extends OptionTab
     {
+        public static final int ONLINE_SERVER_LIMIT = 50;
+        public static final String ONLINE_SERVER_REGEXP = // server.domain.com:port or ip:port
+           "^(?:(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}|\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b):\\d{1,5}$";
 
         @Override
         protected void createUILocal()
@@ -541,7 +552,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             buttonbase.add(mutedplayers);
             misc.add(GuiUtils.CENTER(buttonbase), BorderLayout.SOUTH);
 
-            // display
+            // chat display
             DDLabelBorder dispbase = new DDLabelBorder("chatdisplay", OSTYLE);
             dispbase.setLayout(new GridLayout(0, 1, 0, GRIDADJUST1));
             ButtonGroup chatgroup2 = new ButtonGroup();
@@ -549,7 +560,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             OptionMenu.add(new OptionRadio(NODE, PokerConstants.OPTION_CHAT_DISPLAY, OSTYLE, map_, "display.tab", chatgroup2, PokerConstants.DISPLAY_TAB), dispbase);
             OptionMenu.add(new OptionRadio(NODE, PokerConstants.OPTION_CHAT_DISPLAY, OSTYLE, map_, "display.one", chatgroup2, PokerConstants.DISPLAY_ONE), dispbase);
 
-
+            // chat options
             DDLabelBorder detailbase = new DDLabelBorder("chatdetails", OSTYLE);
             detailbase.setLayout(new GridLayout(0, 1, 0, GRIDADJUST1));
             OptionMenu.add(new OptionBoolean(NODE, PokerConstants.OPTION_CHAT_PLAYERS, OSTYLE, map_, true), detailbase);
@@ -562,6 +573,75 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             rightbase.add(dispbase);
             rightbase.add(detailbase);
             base.add(GuiUtils.NORTH(rightbase), BorderLayout.EAST);
+
+            //
+            // online server section
+            //
+
+            DDLabelBorder serverBorder = new DDLabelBorder("onlineserver", OSTYLE);
+            serverBorder.setLayout(new BorderLayout());
+            base.add(serverBorder, BorderLayout.SOUTH);
+
+            // online enabled checkbox
+            onlineEnabled_ = new OptionBoolean(NODE, EngineConstants.OPTION_ONLINE_ENABLED, OSTYLE, map_, true);
+            serverBorder.add(GuiUtils.NORTH(onlineEnabled_), BorderLayout.WEST);
+            onlineEnabled_.addChangeListener(new ChangeListener()
+            {
+                public void stateChanged(ChangeEvent e)
+                {
+                    doOnlineEnabled();
+                }
+            });
+
+            // servers list (online, chat)
+            DDPanel serversTable = new DDPanel();
+            serversTable.setLayout(new VerticalFlowLayout(VerticalFlowLayout.LEFT, 10, 2));
+
+            onlineServer_ = new OptionText(NODE, EngineConstants.OPTION_ONLINE_SERVER, OSTYLE, map_,
+                    ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
+            chatServer_ = new OptionText(NODE, PokerConstants.OPTION_ONLINE_CHAT, OSTYLE, map_,
+                    ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
+            int maxLabelWidth = Math.max(onlineServer_.getLabelComponent().getPreferredSize().width,
+                    chatServer_.getLabelComponent().getPreferredSize().width);
+
+            // adjust labels so same size (doing this since not using a GridBag layout)
+            GuiUtils.setPreferredWidth(onlineServer_.getLabelComponent(), maxLabelWidth);
+            GuiUtils.setPreferredWidth(chatServer_.getLabelComponent(), maxLabelWidth);
+
+            serversTable.add(onlineServer_);
+            serversTable.add(chatServer_);
+            serverBorder.add(serversTable, BorderLayout.CENTER);
+
+            // test button
+            test_ = new GlassButton("testonline", "Glass");
+            serverBorder.add(GuiUtils.CENTER(test_), BorderLayout.EAST);
+            test_.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                    testConnection();
+                }
+            });
+
+            // update text fields based on pref
+            doOnlineEnabled();
+        }
+
+        private void doOnlineEnabled() {
+            boolean enabled = onlineEnabled_.getCheckBox().isSelected();
+            onlineServer_.setEnabled(enabled);
+            chatServer_.setEnabled(enabled);
+            test_.setEnabled(enabled);
+        }
+    }
+
+    private void testConnection() {
+        DMTypedHashMap params = new DMTypedHashMap();
+        params.setBoolean(GetPublicIP.PARAM_TEST_SERVER, true);
+        SendMessageDialog dialog = (SendMessageDialog) context_.processPhaseNow("GetPublicIP", params);
+        if (dialog.getStatus() == DDMessageListener.STATUS_OK)
+        {
+            dialog.getReturnMessage().getString(EngineMessage.PARAM_IP);
         }
     }
 
@@ -664,7 +744,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
         }
         catch (BackingStoreException bse)
         {
-            logger.warn("Unabled to clear prefs for node: " + EnginePrefs.NODE_DIALOG_PHASE);
+            logger.warn("Unable to clear prefs for node: " + EnginePrefs.NODE_DIALOG_PHASE);
         }
         EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.resetdialog"));
     }

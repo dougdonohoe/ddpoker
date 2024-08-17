@@ -373,6 +373,10 @@
 	<color name="Options.scrollbar.fg" r="64" g="64" b="64"/>
 	<color name="Options.scrollbar.focus" r="0" g="0" b="255" a="50"/>
 	<color name="Options.scrollpane.bg" r="204" g="204" b="204"/>
+	<color name="Options.textfield.fg" copy="primarywidget.fg"/>
+	<color name="Options.textfield.bg" copy="primarywidget.bg"/>
+	<color name="Options.textfield.error.bg" copy="primarywidget.error"/>
+	<font name="Options.textfield" fontname="Lucida Sans Regular" pointsize="15"/>
 
 	<color name="OptionsDialog.slider.fg" r="0" g="0" b="0" />
 	<color name="OptionsDialog.slider.bg" r="204" g="204" b="204"/>

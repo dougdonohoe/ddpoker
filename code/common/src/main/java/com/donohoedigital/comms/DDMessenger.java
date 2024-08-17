@@ -142,7 +142,7 @@ public class DDMessenger
         try 
         {
             if (isDisabled(url.toString())) {
-                nStatus = DDMessageListener.STATUS_SHUTDOWN;
+                nStatus = DDMessageListener.STATUS_DISABLED;
             } else {
                 getURL(url, send, DDMessage.CONTENT_TYPE, ret, listener, null);
                 if (ret.getCategory() == DDMessage.CAT_ERROR)

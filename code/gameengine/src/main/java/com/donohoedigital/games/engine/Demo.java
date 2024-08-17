@@ -114,7 +114,7 @@ public class Demo extends BasePhase
         {
             boolean bOkay = false;
 
-            Preferences prefs = engine_.getPrefsNode();
+            EnginePrefs prefs = engine_.getPrefsNode();
             if (!prefs.getBoolean(PREF_DEMO_LICENSE_DISPLAYED, false))
             {
                 engine_.setBDemo(false); // temp

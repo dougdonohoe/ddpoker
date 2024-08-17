@@ -71,7 +71,7 @@ public class EngineMessenger extends DDMessenger
     /**
      * Create the messenger, get url
      */
-    private EngineMessenger()
+    protected EngineMessenger()
     {
         serverurl_ = PropertyConfig.getRequiredStringProperty("settings.online.server");
     }
@@ -145,16 +145,5 @@ public class EngineMessenger extends DDMessenger
     public DDMessage createNewMessage()
     {
         return new EngineMessage();
-    }
-
-    /**
-     * 2020: Disabled if attempting to reach old DD Poker server.
-     */
-    @Override
-    public boolean isDisabled(String url) {
-        if (!PropertyConfig.getBooleanProperty("settings.online.enabled", false, false)) {
-            return url.startsWith(serverurl_);
-        }
-        return false;
     }
 }

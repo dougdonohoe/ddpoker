@@ -54,7 +54,7 @@ public interface DDMessageListener
     public static final int STATUS_UNKNOWN_ERROR = 4;
     public static final int STATUS_DNS_TIMEOUT = 5;
     public static final int STATUS_APPL_ERROR = 6;
-    public static final int STATUS_SHUTDOWN = 7;
+    public static final int STATUS_DISABLED = 7;
 
     public static final int STATUS_OK = 10;
     

@@ -276,7 +276,7 @@ public class OnlineServer
      */
     private void sendEngineMessage(EngineMessage reqMsg)
     {
-        EngineMessage resMsg = EngineMessenger.SendEngineMessage(null, reqMsg, null);
+        EngineMessage resMsg = GameMessenger.SendEngineMessage(null, reqMsg, null);
 
         if (resMsg.getStatus() == DDMessageListener.STATUS_APPL_ERROR)
         {

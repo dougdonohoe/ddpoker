@@ -372,7 +372,7 @@ public class CardPiece extends PokerGamePiece
      */
     protected String getDeckPref()
     {
-        Preferences prefs = GameEngine.getGameEngine().getPrefsNode();
+        EnginePrefs prefs = GameEngine.getGameEngine().getPrefsNode();
         String sName = prefs.get(sPrefName_, null);
         if (sName == null)
         {
@@ -931,7 +931,7 @@ public class CardPiece extends PokerGamePiece
     {
         if (card.isFaceCard())
         {
-            Preferences prefsNode = GameEngine.getGameEngine().getPrefsNode();
+            EnginePrefs prefsNode = GameEngine.getGameEngine().getPrefsNode();
             boolean fourColorDeck = prefsNode.getBoolean(PokerConstants.OPTION_FOUR_COLOR_DECK, false);
             boolean stylized = prefsNode.getBoolean(PokerConstants.OPTION_STYLIZED_FACE_CARDS, true);
 

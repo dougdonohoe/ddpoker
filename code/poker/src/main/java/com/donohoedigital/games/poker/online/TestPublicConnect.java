@@ -195,7 +195,7 @@ public class TestPublicConnect extends SendMessageDialog implements OnlineMessag
     }
 
     /**
-     * Over-ride to change done step message
+     * Override to change done step message
      */
     @Override
     public void updateStep(int nStep)
@@ -208,7 +208,7 @@ public class TestPublicConnect extends SendMessageDialog implements OnlineMessag
     }
 
     /**
-     * Over-ride to set icon upon failure
+     * Override to set icon upon failure
      */
     @Override
     protected void displayError(int nStatus)

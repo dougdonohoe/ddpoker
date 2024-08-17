@@ -1077,7 +1077,7 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         if (engine == null) return;
         
         // get prefs and check them
-        Preferences prefs = engine.getPrefsNode();
+        EnginePrefs prefs = engine.getPrefsNode();
         if (prefs.getBoolean(EngineConstants.PREF_AUTOSAVE, false) && getLastGameState() != null)
         {
             //logger.debug("Auto saving...");

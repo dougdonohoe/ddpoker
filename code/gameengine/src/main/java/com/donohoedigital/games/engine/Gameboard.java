@@ -600,7 +600,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     public void getFillSetting()
     {
         if (engine_ == null) return;
-        Preferences prefs = engine_.getPrefsNode();
+        EnginePrefs prefs = engine_.getPrefsNode();
         boolean bFillOld = bFill_;
         bFill_ = prefs.getBoolean(EngineConstants.PREF_FILL, true);
         if (bFillOld != bFill_)

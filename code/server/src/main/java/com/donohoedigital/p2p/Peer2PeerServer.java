@@ -48,7 +48,7 @@ import java.nio.channels.*;
  */
 public class Peer2PeerServer extends GameServer
 {
-    private Peer2PeerControllerInterface controller_;
+    private final Peer2PeerControllerInterface controller_;
 
     /**
      * Constructor
@@ -56,6 +56,7 @@ public class Peer2PeerServer extends GameServer
     public Peer2PeerServer(Peer2PeerControllerInterface controller)
     {
         setAppName("Peer2PeerServer");
+        setPortKey("settings.p2p.server.port");
         setConfigLoadRequired(false);
         setServlet(new Peer2PeerServlet());
         setLogStatus(false);

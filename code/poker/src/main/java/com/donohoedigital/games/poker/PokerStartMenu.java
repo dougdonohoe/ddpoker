@@ -42,6 +42,7 @@ import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.Prefs;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.PokerConstants;
@@ -275,8 +276,8 @@ public class PokerStartMenu extends StartMenu
             firstTimeMusic = false;
         }
 
-        // 2020: no server to check messages
-        boolean enabled = PropertyConfig.getBooleanProperty("settings.online.enabled", false, false);
+        // Only do server code if enabled
+        boolean enabled = engine_.getPrefsNode().getBooleanOption(EngineConstants.OPTION_ONLINE_ENABLED);
 
         // Preform message check the first time the start menu is displayed.
         if (enabled && messageCheck && profile_ != null && engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_AUTO_CHECK_UPDATE, true))

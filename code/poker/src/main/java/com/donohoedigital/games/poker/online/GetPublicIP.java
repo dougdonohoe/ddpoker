@@ -38,6 +38,8 @@
 
 package com.donohoedigital.games.poker.online;
 
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.comms.*;
 import com.donohoedigital.games.engine.*;
 
@@ -47,32 +49,54 @@ import com.donohoedigital.games.engine.*;
  */
 public class GetPublicIP extends SendMessageDialog
 {
-    //static Logger logger = Logger.getLogger(GetPublicIP.class);
-    
-    /** 
+    public static final String PARAM_TEST_SERVER = "testServer";
+
+    /**
+     * Indicates using this test to verify server connectivity for GamePrefsPanel
+     */
+    private boolean testServer_;
+
+    /**
      * message to send to server
      */
     protected EngineMessage getMessage()
     {
-        EngineMessage msg = new EngineMessage(EngineMessage.GAME_NOTDEFINED,
-                                            EngineMessage.PLAYER_NOTDEFINED, 
+        testServer_ = gamephase_.getBoolean(PARAM_TEST_SERVER, false);
+        return new EngineMessage(EngineMessage.GAME_NOTDEFINED,
+                                            EngineMessage.PLAYER_NOTDEFINED,
                                             EngineMessage.CAT_PUBLIC_IP);
-        return msg;
     }
-    
+
     /**
      * Message to display to user
      */
     protected String getMessageKey()
     {
-        return "msg.getPublicIP";
+        return "msg.testConnection";
     }
-    
+
+    /**
+     * Override to change done step message
+     */
+    @Override
+    public void updateStep(int nStep)
+    {
+        if (nStep == DDMessageListener.STEP_DONE && testServer_)
+        {
+            setStatusText(PropertyConfig.getMessage("msg.p2p.testserver.done"));
+        }
+        else super.updateStep(nStep);
+    }
+
     /**
      * Don't do server redirect query
      */
     protected boolean doServerQuery()
     {
         return false;
+    }
+
+    protected boolean isAutoClose() {
+        return !testServer_;
     }
 }

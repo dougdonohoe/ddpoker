@@ -227,7 +227,7 @@ public class ConfigUtils
             if (!dir.mkdirs())
             {
                 //logger.error("Unable to create dir " + dir.getAbsolutePath());
-                throw new ApplicationError(ErrorCodes.ERROR_CREATE, "Unabled to create directory",
+                throw new ApplicationError(ErrorCodes.ERROR_CREATE, "Unable to create directory",
                                            dir.getAbsolutePath(), "Check permissions on parent directories");
             }
         }
@@ -256,7 +256,7 @@ public class ConfigUtils
         {
             if (!file.createNewFile())
             {
-                //logger.error("Unabled to create file: " + file.getAbsolutePath());
+                //logger.error("Unable to create file: " + file.getAbsolutePath());
                 throw new ApplicationError(ErrorCodes.ERROR_CREATE, "Unable to create file",
                                            file.getAbsolutePath(), "Check permissions");
             }

@@ -95,7 +95,7 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
             format.add(displayBorder_);
             format.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         
-            choose_ = new DDFileChooser("deckimage", STYLE, engine_.getPrefsNode());
+            choose_ = new DDFileChooser("deckimage", STYLE, engine_.getPrefsNode().getPrefs());
             choose_.addChoosableFileFilter(new DeckProfile.DeckFilter());
             choose_.setAccessory(format);
             choose_.addPropertyChangeListener(this);
@@ -153,7 +153,7 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
                 bResult = Boolean.TRUE;
                 
             } catch (Exception e) {
-                logger.error("Unabled to copy " + selected_.getAbsolutePath() + " to " +
+                logger.error("Unable to copy " + selected_.getAbsolutePath() + " to " +
                                     dir.getAbsolutePath());
                 logger.error(Utils.formatExceptionText(e));
                 EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.deck.copyfailed",selected_.getName(),

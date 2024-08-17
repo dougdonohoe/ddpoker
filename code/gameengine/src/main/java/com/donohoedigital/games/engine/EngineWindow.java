@@ -91,7 +91,7 @@ public class EngineWindow extends BaseFrame
 
         // check size
         DisplayMode mode = getDisplayMode();
-        Preferences prefs = engine_.getPrefsNode();
+        EnginePrefs prefs = engine_.getPrefsNode();
 
         // size from prefs
         boolean bMaximized = prefs.getBoolean(EngineConstants.PREF_MAXIMIZED+"-"+getName(), false);
@@ -388,7 +388,7 @@ public class EngineWindow extends BaseFrame
             // store whether we are maximized
             boolean bMax = (e.getNewState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH;
 
-            Preferences prefs = engine_.getPrefsNode();
+            EnginePrefs prefs = engine_.getPrefsNode();
             prefs.putBoolean(EngineConstants.PREF_MAXIMIZED+"-"+getName(), bMax);
         }
 
@@ -403,7 +403,7 @@ public class EngineWindow extends BaseFrame
             // logger.debug("Window size changed: "+ size_+ " is Max: "+ isMaximized());
 
             // save
-            Preferences prefs = engine_.getPrefsNode();
+            EnginePrefs prefs = engine_.getPrefsNode();
             prefs.putInt(EngineConstants.PREF_W+"-"+getName(), size_.width);
             prefs.putInt(EngineConstants.PREF_H+"-"+getName(), size_.height);
         }
@@ -422,8 +422,8 @@ public class EngineWindow extends BaseFrame
 
             // save
             DisplayMode mode = getDisplayMode();
-            Preferences prefs = engine_.getPrefsNode();
-            // store if top corner is visible (more or less) and it isn't too far off screen at bottom/right
+            EnginePrefs prefs = engine_.getPrefsNode();
+            // store if top corner is visible (more or less) and it isn't too far off-screen at bottom/right
             if (location_.x >= -50 && location_.x < (mode.getWidth() - (DESIRED_MIN_WIDTH/2))) prefs.putInt(EngineConstants.PREF_X+"-"+getName(), location_.x);
             if (location_.y >= -50 && location_.y < (mode.getHeight() - (DESIRED_MIN_HEIGHT/2))) prefs.putInt(EngineConstants.PREF_Y+"-"+getName(), location_.y);
         }
