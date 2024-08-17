@@ -79,7 +79,7 @@ public class SocketThread extends Thread
     {
         pool_ = pool;
         servlet_ = servlet;
-        // matches Jboss and client.properties entry "settings.online.server"
+        // matches tomcat and client.properties entry "settings.online.server"
         DD_URI_STARTS_WITH = '/' + pool.getServer().getAppName() + "/servlet/";
         DD_URI_STARTS_WITH = DD_URI_STARTS_WITH.toLowerCase();
     }
