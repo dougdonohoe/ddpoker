@@ -2,27 +2,26 @@
 
 ## Introduction
 
-Welcome to the DD Poker source code. This page tells you (hopefully) 
+Welcome to the DD Poker source code. This page tells you (hopefully)
 everything you need to know to run the three main programs that
 make up DD Poker:
 
 * **DD Poker Game** - the poker game itself, a Java Swing desktop application
 * **Poker Server** - the backend API server that the game talks to for online games
 * **Poker Web** - the old Apache Wicket-based DD Poker website, including the "Online Game Portal", which
-shows various information about online games like current games,
-history, games by player, etc.
+  shows various information about online games like current games, history, games by player, etc.
 
 ## Mac vs Linux vs Windows (a note from Doug)
 
 These instructions are admittedly Mac centric, largely because that is what I have used
-for the last 15 years.  I've done cursory testing on Linux (see Appendix B for testing tips
+for the last 15 years.  I've done cursory testing on Linux (see Appendix D for testing tips
 on Ubuntu from Docker/Mac).
 
-Even though DD Poker was originally developed 
-mainly on Windows (with Cygwin), I haven't used Windows for development in a 
+Even though DD Poker was originally developed
+mainly on Windows (with Cygwin), I haven't used Windows for development in a
 very long time, so apologies to Windows developers for the lack of instructions.
-Cygwin worked back in the day and I imagine that the Windows Subsystem for Linux (WSL) 
-should be helpful here, too.  
+Cygwin worked back in the day and I imagine that the Windows Subsystem for Linux (WSL)
+should be helpful here, too.
 
 Feel free to submit a PR with any changes to these docs that would help Linux or Windows users.
 
@@ -34,10 +33,10 @@ Required software:
 * Maven 3 - [See Apache Maven](https://maven.apache.org/install.html)
 * Docker (optional, but useful to run some things) - [See Docker](https://docs.docker.com/engine/install/)
 
-Both `java` and `mvn` must be on your `PATH`.  
+Both `java` and `mvn` must be on your `PATH`.
 
 We provide the `ddpoker.rc` file, which sets some environment variables required by the scripts in
-`tools/bin` and `tools/db`, adds these script directories to the `PATH`, creates some useful 
+`tools/bin` and `tools/db`, adds these script directories to the `PATH`, creates some useful
 `mvn` aliases (used below) and performs some sanity checks.
 
 **NOTE**: all commands below assume you have sourced `ddpoker.rc`, have `mvn` and `java` installed and are
@@ -62,91 +61,33 @@ brew install temurin@8
 brew install maven
 ```
 
-## Database
+## Compile Code
 
-DD Poker's server uses MySQL.  You can easily run an instance locally using Docker.
-
-```shell
-# Create and run in background.  Data is persisted across restarts
-docker run --name my-mysql -e MYSQL_ROOT_PASSWORD='d@t@b@s3' \
-  -d -p 3306:3306 -v mysql_data:/var/lib/mysql mysql:latest
- 
-# Start/Stop
-docker stop my-mysql
-docker start my-mysql
- 
-# Remove
-docker stop my-mysql && docker rm my-mysql && docker volume rm mysql_data
- 
-# Poke around on instance
-docker exec -it my-mysql bash
-
-# Test database access
-export MYSQL_PWD='d@t@b@s3'
-mysql -h 127.0.0.1 -u root
-```
-
-You can also run MySQL directly on your machine. See _Appendix A_ below for Mac instructions.
-
-Once you have it running you need to create the `pokertest` and `poker` databases which are used 
-for unit tests and the backend servers respectively.
+To compile the code and create the `.jar` and `.war` files,
+use maven.  This version skips the tests, which you can
+run separately (see below).
 
 ```shell
-reset_dbs.sh poker
-reset_dbs.sh pokertest
+mvn-package-notests
 ```
 
-The password for these local databases is `p0k3rdb!`. You can connect to them directly:
+After you have run this, any of the scripts discussed below should just work.
+
+## Poker Game
+
+To run the desktop poker game, either run `PokerMain` in IntelliJ or use the script:
 
 ```shell
-mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!
-mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!
+poker
 ```
 
-**NOTE**:  Yes, it is bad practice to store database passwords in `git`, but keep the database
-and servers all used to run on the same machine and in production, the MySQL installation only
-allowed access from localhost, so it wasn't a huge risk.  For development purposes, this
-is also fine.
+If you want to run the game using your personal servers, you'll need to set go
+to _Options -> Online -> Public Online Servers_ and check the **Enabled** checkbox and
+enter the server information in the two fields.  See below for details on running the
+servers.
 
-## Email
-
-DD Poker's backend server and website are configured to send emails during
-the Online Profile setup process (a password is emailed to the user).  It is
-also used in response to registering the game and "I forgot my password" 
-functionality.
-
-The "from" email addresses are set in `poker/server.properties`.  If you run the server,
-you ought to use a different email than these.
-
-```shell
-settings.server.profilefrom= no-reply@ddpoker.com
-settings.server.regfrom=     no-reply@ddpoker.com
-```
-
-To enable the `postfix` smtp mail server on a Mac:
-
-```shell
-# turn on
-sudo postfix start
- 
-# turn off
-sudo postfix stop
- 
-# status
-sudo postfix status
- 
-# test (may go to spam), will generate a response report
-echo "Test email body" | sendmail -v your_email@your_domain.com
- 
-# to view response reports, use cmd line 'mail' tool
-mail
-1 # to view msg
-d # to delete
-q # to quit
-```
-
-**NOTE**: Emails sent this way typically go to spam because they are coming from a random machine,
-so check your spam folder and mark as "not spam".
+If you start `poker` with `enabled=true`, but your servers are not running, you may see a
+several second delay on startup as a connection attempt is made and freezes the UI until it times out.
 
 ## Development
 
@@ -160,17 +101,14 @@ the `code/pom.xml` file and prompt you to load it:
 Go to _File -> Project Structure... -> Project Settings -> Project -> SDK_ and
 set to Java 1.8 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
 
-## Compile Code
+## Server Dependencies
 
-To compile the code and create the `.jar` and `.war` files,
-use maven.  This version skips the tests, which you can
-run separately (see below).
+To run server code, you need to have MySql running and an SMTP server.  See the
+appendices below for more details:
 
-```shell
-mvn-package-notests
-```
-
-After you have run this, any of the scripts discussed below should just work.
+* `Appendix A` Setup Database via Docker
+* `Appendix B` Setup Email SMTP server on Mac
+* `Appendix C` Setup Database directly on a Mac
 
 ## Run Tests
 
@@ -183,9 +121,8 @@ mvn-test
 
 ## Poker Server
 
-To run the DD Poker server, which is what the game talks to,
-you can run `PokerServer` in IntelliJ or use the 
-`pokerserver` script:
+To run the DD Poker server and chat server, which is what the game talks to,
+you can run `PokerServer` in IntelliJ or use the `pokerserver` script:
 
 ```shell
 pokerserver
@@ -224,25 +161,6 @@ docker exec -it $CONTAINER bash
 
 Once started, you can visit [http://localhost:8080/online](http://localhost:8080/online).
 
-## PokerGame
-
-To run the desktop poker game, either run `PokerMain` in IntelliJ or use the script:
-
-```shell
-poker
-```
-
-By default, the game's "public game" and "online lobby" functionality is
-disabled since it requires a backend server to be running.  You can
-still play online with friends, but you need to manually share game URLs.
-
-If you want to run the game using your personal servers, you'll need to set go
-to _Options -> Online -> Public Online Servers_ and check the **Enabled** checkbox and
-enter the server information in the two fields.
-
-If you start `poker` with **Enabled** checked, but your servers are not running, you may see a 
-several second delay on startup as a connection attempt is made and freezes the UI until it times out.
-
 ## Code Notes
 
 This section is meant to help developers understand the code base, and it contains random
@@ -254,8 +172,8 @@ This code base was originally written over 20 years ago, beginning in 2002.  The
 of DD Poker was written from 2004-2007, with sporadic updates after that.  The original
 JDK was 1.5.
 
-While some things were upgraded to get the code to work with Java 1.8, our maven dependencies 
-still largely date from this time frame too.  We are currently on ancient versions of 
+While some things were upgraded to get the code to work with Java 1.8, our maven dependencies
+still largely date from this time frame too.  We are currently on ancient versions of
 Swing, Wicket, log4j, junit, etc.  In fact the `SpringHack` class had to be added to fool Spring
 2.5.6 to actually work on JDK 1.8 (it only supports up to 1.7).
 
@@ -335,7 +253,7 @@ to turn on logging to the console or to change logging level for a particular li
 #### PropertyConfig
 
 Similar to logging config, each `apptype` has its own properties file, which are loaded in this order:
- 
+
 * `config/[appname]/common.properties` - properties for application named `appname`, shared across all types
 * `config/[appname]/[apptype].properties.[locale]` - properties for `apptype` for `appname` for given locale
 * `config/[appname]/[apptype].properties` - properties for `apptype` for `appname` (if no locale provided)
@@ -446,8 +364,8 @@ territorymgr -module poker
 bordermgr -module poker
 ```
 
-These edited the corresponding `gameboard.xml` and `border*.xml`  files, but remembering 
-the keyboard shortcuts and how to save requires looking at the 
+These edited the corresponding `gameboard.xml` and `border*.xml`  files, but remembering
+the keyboard shortcuts and how to save requires looking at the
 code (`GameboardTerritoryManager`, `GameboardBorderManager` and base `GameManager`).
 
 ### Preferences
@@ -460,7 +378,7 @@ cd ~/Library/Preferences
 plutil -convert xml1 com.donohoedigital.poker3.plist -o -
 ```
 
-Default values for items in Options dialog are set in 
+Default values for items in Options dialog are set in
 `code/poker/src/main/resources/config/poker/client.properties`, and actual values
 set by the user are stored in the `.plist` file.
 
@@ -474,7 +392,93 @@ rm -f com.donohoedigital.poker3.plist
 killall -u $USER cfprefsd
 ```
 
-## Appendix A: Mac MySQL Install
+## Appendix A - Database via Docker
+
+DD Poker's server uses MySQL.  You can easily run an instance locally using Docker.
+
+```shell
+# Create and run in background.  Data is persisted across restarts
+docker run --name my-mysql -e MYSQL_ROOT_PASSWORD='d@t@b@s3' \
+  -d -p 3306:3306 -v mysql_data:/var/lib/mysql mysql:latest
+ 
+# Start/Stop
+docker stop my-mysql
+docker start my-mysql
+ 
+# Remove
+docker stop my-mysql && docker rm my-mysql && docker volume rm mysql_data
+ 
+# Poke around on instance
+docker exec -it my-mysql bash
+
+# Test database access
+export MYSQL_PWD='d@t@b@s3'
+mysql -h 127.0.0.1 -u root
+```
+
+You can also run MySQL directly on your machine. See _Appendix C_ below for Mac instructions.
+
+Once you have it running you need to create the `pokertest` and `poker` databases which are used
+for unit tests and the backend servers respectively.
+
+```shell
+reset_dbs.sh poker
+reset_dbs.sh pokertest
+```
+
+The password for these local databases is `p0k3rdb!`. You can connect to them directly:
+
+```shell
+mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!
+mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!
+```
+
+**NOTE**:  Yes, it is bad practice to store database passwords in `git`, but keep the database
+and servers all used to run on the same machine and in production, the MySQL installation only
+allowed access from localhost, so it wasn't a huge risk.  For development purposes, this
+is also fine.
+
+## Appendix B - Email
+
+DD Poker's backend server and website are configured to send emails during
+the Online Profile setup process (a password is emailed to the user).  It is
+also used in response to registering the game and "I forgot my password"
+functionality.
+
+The "from" email addresses are set in `poker/server.properties`.  If you run the server,
+you ought to use a different email than these.
+
+```shell
+settings.server.profilefrom= no-reply@ddpoker.com
+settings.server.regfrom=     no-reply@ddpoker.com
+```
+
+To enable the `postfix` SMTP mail server on a Mac:
+
+```shell
+# turn on
+sudo postfix start
+ 
+# turn off
+sudo postfix stop
+ 
+# status
+sudo postfix status
+ 
+# test (may go to spam), will generate a response report
+echo "Test email body" | sendmail -v your_email@your_domain.com
+ 
+# to view response reports, use cmd line 'mail' tool
+mail
+1 # to view msg
+d # to delete
+q # to quit
+```
+
+**NOTE**: Emails sent this way typically go to spam because they are coming from a random machine,
+so check your spam folder and mark as "not spam".
+
+## Appendix C: Database via Mac MySQL Install
 
 To run MySQL directly on your Mac instead of via Docker:
 
@@ -513,7 +517,7 @@ mysql -h 127.0.0.1 -u root
 
 Follow the instructions above to create the database tables (via `reset_db.sh`).
 
-## Appendix B: Testing on Ubuntu via Docker
+## Appendix D: Testing on Ubuntu via Docker
 
 It is possible to run DD Poker in Ubuntu in Docker and display on your Mac, but
 it can be a little finicky.  Here's what I got to work with help from
@@ -526,7 +530,7 @@ from the command line:
 open -a XQuartz
 ```
 
-Next, got to _XQuartz -> Settings -> Security_ and ensure **Allow connections 
+Next, got to _XQuartz -> Settings -> Security_ and ensure **Allow connections
 from network clients** is checked.
 
 <img src="images/quartz-settings.png" alt="Quartz Settings" width="400px">
