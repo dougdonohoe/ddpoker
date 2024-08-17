@@ -578,7 +578,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             base.add(serverBorder, BorderLayout.SOUTH);
 
             // online enabled checkbox
-            onlineEnabled_ = new OptionBoolean(NODE, PokerConstants.OPTION_ONLINE_ENABLED, OSTYLE, map_, true);
+            onlineEnabled_ = new OptionBoolean(NODE, EngineConstants.OPTION_ONLINE_ENABLED, OSTYLE, map_, true);
             serverBorder.add(GuiUtils.NORTH(onlineEnabled_), BorderLayout.WEST);
             onlineEnabled_.addChangeListener(new ChangeListener()
             {
@@ -592,7 +592,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             DDPanel serversTable = new DDPanel();
             serversTable.setLayout(new VerticalFlowLayout(VerticalFlowLayout.LEFT, 10, 2));
 
-            onlineServer_ = new OptionText(NODE, PokerConstants.OPTION_ONLINE_SERVER, OSTYLE, map_,
+            onlineServer_ = new OptionText(NODE, EngineConstants.OPTION_ONLINE_SERVER, OSTYLE, map_,
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
             chatServer_ = new OptionText(NODE, PokerConstants.OPTION_ONLINE_CHAT, OSTYLE, map_,
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);

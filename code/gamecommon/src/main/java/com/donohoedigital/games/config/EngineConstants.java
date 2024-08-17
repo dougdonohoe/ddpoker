@@ -94,4 +94,8 @@ public class EngineConstants
     public static final String PREF_W = "w";
     public static final String PREF_H = "h";
     public static final String PREF_MAXIMIZED = "maximized";
+
+    // common options
+    public static final String OPTION_ONLINE_ENABLED = "onlineenabled";
+    public static final String OPTION_ONLINE_SERVER = "onlineserver";
 }

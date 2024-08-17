@@ -237,7 +237,7 @@ disabled since it requires a backend server to be running.  You can
 still play online with friends, but you need to manually share game URLs.
 
 If you want to run the game using your personal servers, you'll need to set go
-to _Options -> Online -> Online Servers_ and check the **Enabled** checkbox and
+to _Options -> Online -> Public Online Servers_ and check the **Enabled** checkbox and
 enter the server information in the two fields.
 
 If you start `poker` with **Enabled** checked, but your servers are not running, you may see a 

@@ -44,7 +44,6 @@ import com.donohoedigital.comms.DDMessageListener;
 import com.donohoedigital.config.ImageConfig;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.comms.EngineMessage;
-import com.donohoedigital.games.comms.EngineMessenger;
 import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
 import org.apache.log4j.Logger;
@@ -142,7 +141,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
                 PropertyConfig.getMessage("msg.msgerror." + DDMessageListener.STATUS_UNKNOWN_ERROR + MOD),
                 PropertyConfig.getMessage("msg.msgerror." + DDMessageListener.STATUS_DNS_TIMEOUT + MOD),
                 PropertyConfig.getMessage("msg.msgerror." + DDMessageListener.STATUS_APPL_ERROR),
-                PropertyConfig.getMessage("msg.msgerror." + DDMessageListener.STATUS_SHUTDOWN)
+                PropertyConfig.getMessage("msg.msgerror." + DDMessageListener.STATUS_DISABLED)
         };
 
         // get sleep amount
@@ -222,11 +221,11 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
     {
         if (doSynchronousSend())
         {
-            messageReceived(EngineMessenger.SendEngineMessage(sURL, msg, null));
+            messageReceived(GameMessenger.SendEngineMessage(sURL, msg, null));
         }
         else
         {
-            EngineMessenger.SendEngineMessageAsync(sURL, msg, this);
+            GameMessenger.SendEngineMessageAsync(sURL, msg, this);
         }
     }
 

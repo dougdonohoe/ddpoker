@@ -116,6 +116,10 @@ public abstract class GameEngine extends BaseApp
         sMainModule_ = sMainModule;
     }
 
+    public String name() {
+        return super.sAppName;
+    }
+
     /**
      * primary initialization
      */
