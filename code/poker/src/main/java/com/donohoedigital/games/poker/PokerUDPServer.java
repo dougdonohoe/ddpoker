@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.games.poker;
 
+import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.udp.*;
 import com.donohoedigital.games.poker.online.*;
@@ -177,16 +178,32 @@ public class PokerUDPServer extends UDPServer implements PokerConnectionServer, 
 
         if (chatLink_ == null || chatLink_.isDone())
         {
+            ChatHandler handler = main_.getChatLobbyHandler();
+
+            // if not enabled, just show same message we show in the SendMessageDialog
+            if (!GameEngine.getGameEngine().getPrefsNode().getBooleanOption(EngineConstants.OPTION_ONLINE_ENABLED)) {
+                // msg.msgerror.7
+                if (handler != null)
+                {
+                    OnlineMessage chat = new OnlineMessage(OnlineMessage.CAT_CHAT_ADMIN);
+                    chat.setChat(PropertyConfig.getMessage("msg.msgerror.7"));
+                    handler.chatReceived(chat);
+                }
+                return false;
+            }
+
             // make sure addr is resolved
             InetSocketAddress addr = _getChatServer();
-            ChatHandler handler = main_.getChatLobbyHandler();
-            if (addr.isUnresolved())
+            if (addr == null || addr.isUnresolved())
             {
                 if (handler != null)
                 {
                     OnlineMessage chat = new OnlineMessage(OnlineMessage.CAT_CHAT_ADMIN);
-                    chat.setChat(PropertyConfig.getMessage("msg.chat.lobby.unresolved",
-                                                           addr.getHostName()));
+                    if (addr == null) {
+                        chat.setChat(PropertyConfig.getMessage("msg.chat.lobby.notset"));
+                    } else {
+                        chat.setChat(PropertyConfig.getMessage("msg.chat.lobby.unresolved", addr.getHostString()));
+                    }
                     handler.chatReceived(chat);
                 }
                 return false;

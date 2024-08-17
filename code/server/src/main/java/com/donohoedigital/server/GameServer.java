@@ -388,7 +388,7 @@ public abstract class GameServer extends Thread
         // store first port as preferred
         if (!channels_.isEmpty())
         {
-            logger.info("Preferred TCP address set to " + Utils.getLocalAddressPort(getDefaultChannel()));
+            logger.info("Preferred TCP (online server) address set to " + Utils.getLocalAddressPort(getDefaultChannel()));
         }
 
         // create pool

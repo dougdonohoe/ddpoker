@@ -303,7 +303,7 @@ public class UDPServer extends Thread
         // store first port as preferred
         if (!channels_.isEmpty())
         {
-            logger.info("Preferred UDP address set to " + Utils.getLocalAddressPort(getDefaultChannel()));
+            logger.info("Preferred UDP (chat) address set to " + Utils.getLocalAddressPort(getDefaultChannel()));
         }
 
         // create dispatch queue
