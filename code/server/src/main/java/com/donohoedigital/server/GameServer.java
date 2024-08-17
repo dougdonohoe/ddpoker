@@ -57,6 +57,7 @@ public abstract class GameServer extends Thread
     private long nNum_ = 0;
 
     // config stuff
+    private String sPortKey_ = "settings.server.port";
     private boolean exceptionOnNoPortsBound = true;
     private boolean bindLoopback = false;
     private boolean configLoadRequired = true;
@@ -100,6 +101,13 @@ public abstract class GameServer extends Thread
     {
         setName(appName); // set thread name too
         this.appName = appName;
+    }
+
+    /**
+     * allow override of the properties key used to lookup our port
+     */
+    public final void setPortKey(String portKey) {
+        sPortKey_ = portKey;
     }
 
     /**
@@ -251,7 +259,7 @@ public abstract class GameServer extends Thread
         LOG_UNAVAIL = PropertyConfig.getRequiredIntegerProperty("settings.server.noworker.log.millis");
         LOG_STATUS = PropertyConfig.getRequiredIntegerProperty("settings.server.status.log.seconds") * 1000;
         int nThreads = PropertyConfig.getRequiredIntegerProperty("settings.server.threads");
-        sPort_ = PropertyConfig.getRequiredStringProperty("settings.server.port");
+        sPort_ = PropertyConfig.getRequiredStringProperty(sPortKey_);
         String ip = PropertyConfig.getStringProperty("settings.server.ip", null, false);
         bBindFailover_ = PropertyConfig.getBooleanProperty("settings.server.failover", false, false);
         nFailoverAttempts_ = PropertyConfig.getIntegerProperty("settings.server.failover.attempts", 2);
