@@ -232,25 +232,16 @@ To run the desktop poker game, either run `PokerMain` in IntelliJ or use the scr
 poker
 ```
 
-**NOTE**:  the `client.properties` file currently hard-codes the old DD Poker
-server host.  Since these don't exist anymore, the `settings.online.enable`
-flag is set to `false`, which disables online game functionality.
+By default, the game's "public game" and "online lobby" functionality is
+disabled since it requires a backend server to be running.  You can
+still play online with friends, but you need to manually share game URLs.
 
-```properties
-settings.online.enabled= false
-settings.online.server=  http://free.ddpoker.com:80/poker/servlet/
-settings.online.chat=	 free.ddpoker.com:11886
-```
+If you want to run the game using your personal servers, you'll need to set go
+to _Options -> Online -> Online Servers_ and check the **Enabled** checkbox and
+enter the server information in the two fields.
 
-If you want to run the game using your personal servers, you'll need to set the
-flag to `true` and update the `server` and `chat` entries.  During development,
-you can set these via personal `.properties` override files, described below.
-
-If you start `poker` with `enabled=true`, but your servers are not running, you may see a 
+If you start `poker` with **Enabled** checked, but your servers are not running, you may see a 
 several second delay on startup as a connection attempt is made and freezes the UI until it times out.
-
-[Issue #1](https://github.com/dougdonohoe/ddpoker/issues/1) discusses adding UI features
-to set the server.
 
 ## Code Notes
 

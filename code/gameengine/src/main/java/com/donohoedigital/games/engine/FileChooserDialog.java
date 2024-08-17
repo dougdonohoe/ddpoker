@@ -92,7 +92,7 @@ public class FileChooserDialog extends DialogPhase implements PropertyChangeList
         GuiManager.setLabelAsMessage(name, params);
         base.add(name, BorderLayout.NORTH);
 
-        choose_ = new DDFileChooser(sName, STYLE, engine_.getPrefsNode());
+        choose_ = new DDFileChooser(sName, STYLE, engine_.getPrefsNode().getPrefs());
         choose_.addChoosableFileFilter(new ChooserFilter(EXT));
         //choose_.setAcceptAllFileFilterUsed(true);
         choose_.addPropertyChangeListener(this);

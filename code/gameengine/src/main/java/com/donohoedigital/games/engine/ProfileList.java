@@ -82,7 +82,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
     private boolean bFileMode_ = true;
     private DDPanel buttons_;
     private DDPanel top_;
-    private Preferences prefs_;
+    private EnginePrefs prefs_;
     private String sPrefName_;
     private boolean bUIMode_ = true;
 
@@ -114,7 +114,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
      */
     public static String getStoredProfile(String sMsgName)
     {
-        Preferences prefs = GameEngine.getGameEngine().getPrefsNode();
+        EnginePrefs prefs = GameEngine.getGameEngine().getPrefsNode();
         return prefs.get(getPrefsName(sMsgName), null);        
     }
     
@@ -123,7 +123,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
      */
     public static void setStoredProfile(BaseProfile profile, String sMsgName)
     {
-        Preferences prefs = GameEngine.getGameEngine().getPrefsNode();
+        EnginePrefs prefs = GameEngine.getGameEngine().getPrefsNode();
         rememberProfile(profile, prefs, getPrefsName(sMsgName));
         
     }
@@ -139,8 +139,8 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
     /**
      * remember profile
      */
-    private static void rememberProfile(BaseProfile profile, 
-                        Preferences prefs, String sPrefName)
+    private static void rememberProfile(BaseProfile profile,
+                                        EnginePrefs prefs, String sPrefName)
     {
         if (profile != null)
             prefs.put(sPrefName, profile.getFileName());

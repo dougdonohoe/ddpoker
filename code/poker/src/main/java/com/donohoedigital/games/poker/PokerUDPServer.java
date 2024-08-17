@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.games.poker;
 
+import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.udp.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.model.*;
@@ -70,7 +71,10 @@ public class PokerUDPServer extends UDPServer implements PokerConnectionServer, 
     {
         if (chatServer_ == null)
         {
-            String sChatServer = PropertyConfig.getRequiredStringProperty("settings.online.chat");
+            String sChatServer = GameEngine.getGameEngine().getPrefsNode().getStringOption(PokerConstants.OPTION_ONLINE_CHAT);
+            if (sChatServer == null || sChatServer.isEmpty()) {
+                return null;
+            }
             P2PURL url = new P2PURL("chat://"+sChatServer+'/'); // easy parsing
             chatServer_ = new InetSocketAddress(url.getHost(), url.getPort());
         }

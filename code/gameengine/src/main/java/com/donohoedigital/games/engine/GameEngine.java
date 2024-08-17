@@ -87,7 +87,7 @@ public abstract class GameEngine extends BaseApp
     private String sHeadlessKey_;
     private String sLastReal_ = null;
     private String sLastGen_ = null;
-    private Preferences prefNode_;
+    private EnginePrefs prefNode_;
     private String sPrefNode_;
     private String sKeyNode_;
     private boolean bSkipSplashChoice_ = false;
@@ -391,9 +391,9 @@ public abstract class GameEngine extends BaseApp
     /**
      * Get Node used for prefs
      */
-    public Preferences getPrefsNode()
+    public EnginePrefs getPrefsNode()
     {
-        if (prefNode_ == null) prefNode_ = DDOption.getOptionPrefs(sPrefNode_);
+        if (prefNode_ == null) prefNode_ = new EnginePrefs(DDOption.getOptionPrefs(sPrefNode_));
         return prefNode_;
     }
 
@@ -748,21 +748,15 @@ public abstract class GameEngine extends BaseApp
      */
     private void setAudioPrefs()
     {
-        Preferences prefs = getPrefsNode();
+        EnginePrefs prefs = getPrefsNode();
 
-        AudioConfig.setFXGain(prefs.getInt(EngineConstants.PREF_FX_VOL,
-                                           PropertyConfig.getRequiredIntegerProperty(DDOption.GetDefaultKey(EngineConstants.PREF_FX_VOL))));
-        AudioConfig.setMusicGain(prefs.getInt(EngineConstants.PREF_MUSIC_VOL,
-                                              PropertyConfig.getRequiredIntegerProperty(DDOption.GetDefaultKey(EngineConstants.PREF_MUSIC_VOL))));
-        AudioConfig.setBGMusicGain(prefs.getInt(EngineConstants.PREF_BGMUSIC_VOL,
-                                                PropertyConfig.getRequiredIntegerProperty(DDOption.GetDefaultKey(EngineConstants.PREF_BGMUSIC_VOL))));
+        AudioConfig.setFXGain(prefs.getIntOption(EngineConstants.PREF_FX_VOL));
+        AudioConfig.setMusicGain(prefs.getIntOption(EngineConstants.PREF_MUSIC_VOL));
+        AudioConfig.setBGMusicGain(prefs.getIntOption(EngineConstants.PREF_BGMUSIC_VOL));
 
-        AudioConfig.setMuteFX(!prefs.getBoolean(EngineConstants.PREF_FX,
-                                                PropertyConfig.getRequiredBooleanProperty(DDOption.GetDefaultKey(EngineConstants.PREF_FX))));
-        AudioConfig.setMuteMusic(!prefs.getBoolean(EngineConstants.PREF_MUSIC,
-                                                   PropertyConfig.getRequiredBooleanProperty(DDOption.GetDefaultKey(EngineConstants.PREF_MUSIC))));
-        AudioConfig.setMuteBGMusic(!prefs.getBoolean(EngineConstants.PREF_BGMUSIC,
-                                                     PropertyConfig.getRequiredBooleanProperty(DDOption.GetDefaultKey(EngineConstants.PREF_BGMUSIC))));
+        AudioConfig.setMuteFX(!prefs.getBooleanOption(EngineConstants.PREF_FX));
+        AudioConfig.setMuteMusic(!prefs.getBooleanOption(EngineConstants.PREF_MUSIC));
+        AudioConfig.setMuteBGMusic(!prefs.getBooleanOption(EngineConstants.PREF_BGMUSIC));
     }
 
     // sizes

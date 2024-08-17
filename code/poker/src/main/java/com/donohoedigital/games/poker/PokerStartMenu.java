@@ -275,8 +275,8 @@ public class PokerStartMenu extends StartMenu
             firstTimeMusic = false;
         }
 
-        // 2020: no server to check messages
-        boolean enabled = PropertyConfig.getBooleanProperty("settings.online.enabled", false, false);
+        // Only do server code if enabled
+        boolean enabled = engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_ONLINE_ENABLED);
 
         // Preform message check the first time the start menu is displayed.
         if (enabled && messageCheck && profile_ != null && engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_AUTO_CHECK_UPDATE, true))

@@ -203,7 +203,7 @@ public class ScrollGameboard extends JViewport implements
      */
     private void toggleColor()
     {
-        Preferences prefs = engine_.getPrefsNode();
+        EnginePrefs prefs = engine_.getPrefsNode();
         boolean bFill = prefs.getBoolean(EngineConstants.PREF_FILL, true);
         prefs.putBoolean(EngineConstants.PREF_FILL, !bFill);
         board_.getFillSetting();
@@ -392,7 +392,7 @@ public class ScrollGameboard extends JViewport implements
     public void getClickToScroll()
     {
         if (engine_ == null) return;
-        Preferences prefs = engine_.getPrefsNode();
+        EnginePrefs prefs = engine_.getPrefsNode();
         CLICKTOSCROLL = prefs.getBoolean(EngineConstants.PREF_SCROLL, true);
     }
     
