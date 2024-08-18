@@ -51,7 +51,7 @@ public class GuiManager implements MouseListener
 {
     //static Logger logger = Logger.getLogger(GuiManager.class);
 
-    private static GuiManager manager_ = new GuiManager();
+    private static final GuiManager manager_ = new GuiManager();
     public static final String DEFAULT = "default";
 
     /**

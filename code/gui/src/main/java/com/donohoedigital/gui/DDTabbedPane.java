@@ -39,7 +39,6 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -53,9 +52,9 @@ import java.awt.event.*;
 public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, ChangeListener,
                                                          MouseMotionListener, MouseListener
 {
-    static Logger logger = Logger.getLogger(DDTabbedPane.class);
+    //static Logger logger = Logger.getLogger(DDTabbedPane.class);
 
-    private static Color DEFAULT_SELECTED = new Color(255,255,255,175);
+    private static final Color DEFAULT_SELECTED = new Color(255,255,255,175);
     private Color cSelectedTab_ = DEFAULT_SELECTED;
 
     public DDTabbedPane(String sStyle, int nPlacement)
@@ -66,16 +65,17 @@ public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, Ch
     public DDTabbedPane(String sStyle, String sBevelStyle, int nPlacement)
     {
         super(nPlacement);
-        init(GuiManager.DEFAULT, sStyle, sBevelStyle);
+        init(sStyle, sBevelStyle);
     }
 
-    private void init(String sName, String sStyle, String sBevelStyle)
+    private void init(String sStyle, String sBevelStyle)
     {        
-        GuiManager.init(this, sName, sStyle);
+        GuiManager.init(this, GuiManager.DEFAULT, sStyle);
         setUI(new DDTabbedPaneUI(this, sBevelStyle));
         addChangeListener(this);
         addMouseMotionListener(this);
         addMouseListener(this);
+        setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
     }
 
     public void addTab(String sTitleKey, Icon icon, Icon error, DDTabPanel tab)
@@ -146,7 +146,7 @@ public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, Ch
     public void setText(String s) {
     }
 
-    // always anti alias?
+    // always anti-alias?
     private boolean bAlwaysAntiAlias_ = true;
 
     public Color getSelectedTabColor()

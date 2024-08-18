@@ -155,7 +155,9 @@ public class SimulatorDialog extends BasePhase implements ChangeListener
 
         DDLabelBorder mycards = new DDLabelBorder("myhand", STYLE);
         top.add(mycards, BorderLayout.WEST);
-        mycards.add(new SimHandPanel(this, table_, my_.getHand()));
+        SimHandPanel myhand = new SimHandPanel(this, table_, my_.getHand());
+        myhand.setPreferredWidth(myhand.getPreferredSize().width + 4); // need to make it a bit wider for label to show
+        mycards.add(myhand);
 
         DDLabelBorder boardcards = new DDLabelBorder("community", STYLE);
         top.add(boardcards);
