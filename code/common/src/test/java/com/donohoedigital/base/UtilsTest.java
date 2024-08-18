@@ -59,4 +59,9 @@ public class UtilsTest extends TestCase
         assertFalse(Utils.isWindows("linux"));
         assertFalse(Utils.isWindows("mac os x"));
     }
+
+    public void testJoin()
+    {
+        assertEquals("a | b", Utils.joinWithDelimiter(" | ", "a", null, "b"));
+    }
 }

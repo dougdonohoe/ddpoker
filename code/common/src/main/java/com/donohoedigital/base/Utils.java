@@ -643,6 +643,23 @@ public class Utils
         return sb.toString();
     }
 
+    public static String joinWithDelimiter(String delimiter, String... strings) {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (String str : strings) {
+            if (str != null && !str.isEmpty()) {
+                if (!first) {
+                    result.append(delimiter);
+                } else {
+                    first = false;
+                }
+                result.append(str);
+            }
+        }
+
+        return result.toString();
+    }
     /**
      * Convert byte to a hex string of the form 0xXX
      */

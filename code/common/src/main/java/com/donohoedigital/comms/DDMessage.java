@@ -384,7 +384,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     }
 
     /**
-     * Get appliation error string
+     * Get application error string
      */
     public String getApplicationErrorMessage()
     {

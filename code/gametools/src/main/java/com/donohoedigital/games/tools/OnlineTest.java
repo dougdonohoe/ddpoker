@@ -46,8 +46,10 @@ import org.apache.log4j.*;
 import com.donohoedigital.p2p.*;
 
 /**
- *
- * @author  donohoe
+ * Tool which was used to develop online messaging architecture.  I think this was
+ * used mainly during development, so not sure that it is even useful anymore.
+ * I was able to start a pokerserver and run the bTestDDMessenger_=true.
+ * I'm not sure that the bTestP2P_=true was used for.
  */
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class OnlineTest implements DDMessageListener
@@ -59,9 +61,12 @@ public class OnlineTest implements DDMessageListener
     private String[] steps_;    
     private String[] errors_;
     
-    // options
-    private boolean bTestDDMessenger_ = false;
-    private boolean bTestP2P_ = !bTestDDMessenger_;
+    // Options (switch from true to false to decide what to test) TODO: make parameter driven
+    // testDDMessenger_: test connecting to poker server using EngineMessenger
+    // bTestP2P_: a bit rusty on what this was testing
+    private final boolean bTestDDMessenger_ = true;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final boolean bTestP2P_ = !bTestDDMessenger_;
     
     /**
      * Init
@@ -119,7 +124,6 @@ public class OnlineTest implements DDMessageListener
                     }
                     Peer2PeerMessage reply = p2pClient.sendGetReply(p2p);
                     logger.debug("REPLY " +i+": " + reply);
-        
                 }
                 
             } 
@@ -152,7 +156,7 @@ public class OnlineTest implements DDMessageListener
                                             );
     }
     
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         if (args.length == 0) usage();
         
@@ -191,17 +195,20 @@ public class OnlineTest implements DDMessageListener
         }
         else
         {
-            logger.debug("*** ERROR: " + errors_[nStatus] + " - " + message.getApplicationErrorMessage());
+            String msg = message.getApplicationErrorMessage();
+            String exception = message.getException();
+            String ddException = message.getDDException();
+
+            logger.debug("*** ERROR: " + errors_[nStatus] + " :: " + Utils.joinWithDelimiter(" | ",
+                    msg, exception, ddException));
         }
     }
     
-    /** Called at various times during the connection so the UI can update the
-     * status
-     *
+    /**
+     * Called at various times during the connection so the UI can update the status
      */
     public void updateStep(int nStep) {
         long now = System.currentTimeMillis();
         logger.debug(steps_[nStep]+" - " + (now-start) + " millis");
     }
-    
 }

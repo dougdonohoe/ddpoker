@@ -11,21 +11,22 @@ import com.donohoedigital.games.config.EngineConstants;
  */
 public class GameMessenger extends EngineMessenger {
 
-    /**
-     * Default instance to use for messaging
-     */
-    private static final GameMessenger GAME_MESSENGER;
+    // Lazy initialization via classloading magic means the messenger won't be created until
+    // getGameMessengerInstance() is called
+    private static class Holder {
+        private static final GameMessenger INSTANCE = new GameMessenger();
+    }
 
-    // Create sole engine messenger
-    static {
-        GAME_MESSENGER = new GameMessenger();
+    private static GameMessenger getGameMessengerInstance() {
+        return GameMessenger.Holder.INSTANCE;
     }
 
     public GameMessenger() {
-        super();
+        // parent doesn't need to lookup URL since we fetch from preferences
+        super(false);
     }
 
-    private static String getServerURL(String url) {
+    private static String getBaseServerUrl(String url) {
         if (url != null) return url;
         GameEngine engine = GameEngine.getGameEngine();
         EnginePrefs prefs = engine.getPrefsNode();
@@ -41,10 +42,10 @@ public class GameMessenger extends EngineMessenger {
     }
 
     public static EngineMessage SendEngineMessage(String url, EngineMessage send, DDMessageListener listener) {
-        return GAME_MESSENGER.sendEngineMessage(getServerURL(url), send, listener);
+        return getGameMessengerInstance().sendEngineMessage(getBaseServerUrl(url), send, listener);
     }
 
     public static void SendEngineMessageAsync(String url, EngineMessage send, DDMessageListener listener) {
-        GAME_MESSENGER.sendEngineMessageAsync(getServerURL(url), send, listener);
+        getGameMessengerInstance().sendEngineMessageAsync(getBaseServerUrl(url), send, listener);
     }
 }

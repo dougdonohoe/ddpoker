@@ -53,40 +53,42 @@ import java.net.URL;
  */
 public class EngineMessenger extends DDMessenger
 {
-    //static Logger logger = Logger.getLogger(EngineMessenger.class);
-    
-    /**
-     * Default instance to use for messaging
-     */
-    private static final EngineMessenger EMESSENGER;
+    // Lazy initialization via classloading magic means the messenger won't be created until
+    // getEngineMessengerInstance() is called
+    private static class Holder {
+        private static final EngineMessenger INSTANCE = new EngineMessenger(true);
+    }
 
-    // Create sole engine messenger
-    static {
-        EMESSENGER = new EngineMessenger();
+    private static EngineMessenger getEngineMessengerInstance() {
+        return Holder.INSTANCE;
     }
 
     // url we send to
-    private final String serverurl_;
+    private final String baseServerUrl_;
     
     /**
-     * Create the messenger, get url
+     * Create the messenger, get url from properties if requested.
      */
-    protected EngineMessenger()
+    protected EngineMessenger(boolean lookupServerUrl)
     {
-        serverurl_ = PropertyConfig.getStringProperty("settings.online.server", "missing.ddpoker.com", false);
+        if (lookupServerUrl) {
+            baseServerUrl_ = PropertyConfig.getStringProperty("settings.online.server",
+                    "http://server.not.defined:8877/undefined/servlet/", true);
+        } else {
+            baseServerUrl_ = null;
+        }
     }
     
     /**
-     * Get URL to connect to for sending this message
-     * and set version in message
+     * Get URL to connect to for sending this message and set version in message
      */
-    private final StringBuilder sb_ = new StringBuilder(100); // reuse
+    private final StringBuilder sb_ = new StringBuilder(100); // reuse (note: not threadsafe)
     private URL getServerUrl(String sURL, EngineMessage msg)
     {
         URL url;
         sb_.setLength(0);
         try {
-            if (sURL == null) sURL = serverurl_;
+            if (sURL == null) sURL = baseServerUrl_;
             sb_.append(sURL);
             sb_.append(msg.getGameID());
             sb_.append("/v");
@@ -113,16 +115,15 @@ public class EngineMessenger extends DDMessenger
     }
     
     /**
-     * Static version of sendEngineMethod (note case difference) - uses
-     * EMESSENGER
+     * Static version of sendEngineMethod
      */
     public static EngineMessage SendEngineMessage(String url, EngineMessage send, DDMessageListener listener)
     {
-        return EMESSENGER.sendEngineMessage(url, send, listener);
+        return getEngineMessengerInstance().sendEngineMessage(url, send, listener);
     }
     
     /**
-     * Send enginer message and receive one in return (via DDMessageListener)
+     * Send engine message and receive one in return (via DDMessageListener)
      */
     public void sendEngineMessageAsync(String url, EngineMessage send, DDMessageListener listener)
     {
@@ -130,12 +131,11 @@ public class EngineMessenger extends DDMessenger
     }
     
     /**
-     * Static version of sendEngineMethod (note case difference) - uses
-     * EMESSENGER
+     * Static version of sendEngineMethod
      */
     public static void SendEngineMessageAsync(String url, EngineMessage send, DDMessageListener listener)
     {
-        EMESSENGER.sendEngineMessageAsync(url, send, listener);
+        getEngineMessengerInstance().sendEngineMessageAsync(url, send, listener);
     }
     
     /**

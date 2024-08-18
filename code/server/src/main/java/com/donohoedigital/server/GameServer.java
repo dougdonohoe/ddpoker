@@ -261,6 +261,7 @@ public abstract class GameServer extends Thread
         int nThreads = PropertyConfig.getRequiredIntegerProperty("settings.server.threads");
         sPort_ = PropertyConfig.getRequiredStringProperty(sPortKey_);
         String ip = PropertyConfig.getStringProperty("settings.server.ip", null, false);
+        bindLoopback = PropertyConfig.getBooleanProperty("settings.server.bind.loopback", false, false);
         bBindFailover_ = PropertyConfig.getBooleanProperty("settings.server.failover", false, false);
         nFailoverAttempts_ = PropertyConfig.getIntegerProperty("settings.server.failover.attempts", 2);
         String sSocketThreadClass = PropertyConfig.getStringProperty("settings.server.thread.class", SocketThread.class.getName(), false);
