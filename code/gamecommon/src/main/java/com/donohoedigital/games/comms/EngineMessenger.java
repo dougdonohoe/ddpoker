@@ -73,7 +73,7 @@ public class EngineMessenger extends DDMessenger
      */
     protected EngineMessenger()
     {
-        serverurl_ = PropertyConfig.getRequiredStringProperty("settings.online.server");
+        serverurl_ = PropertyConfig.getStringProperty("settings.online.server", "missing.ddpoker.com", false);
     }
     
     /**
