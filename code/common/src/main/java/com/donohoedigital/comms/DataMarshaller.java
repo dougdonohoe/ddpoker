@@ -41,8 +41,6 @@ package com.donohoedigital.comms;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 
-import java.io.*;
-import java.net.*;
 import java.util.*;
 
 /**
@@ -68,10 +66,7 @@ public class DataMarshaller
     {
         ApplicationError.assertNotNull(dm, "DataMarshal must not be null");
         char TYPE = getTypeForCoder(dm);
-        StringBuilder sb = new StringBuilder();
-        sb.append(TYPE);
-        sb.append(dm.marshal(state));
-        return sb.toString();
+        return TYPE + dm.marshal(state);
     }
 
     /**
@@ -104,16 +99,15 @@ public class DataMarshaller
     ////
     //// Registered demarshallers 
     ////
-    private static final Map<Character, Class<? extends DataMarshal>> typeToCoder_ = new HashMap<Character, Class<? extends DataMarshal>>();
-    private static final Map<Class<? extends DataMarshal>, Character> coderToType_ = new HashMap<Class<? extends DataMarshal>, Character>();
+    private static final Map<Character, Class<? extends DataMarshal>> typeToCoder_ = new HashMap<>();
+    private static final Map<Class<? extends DataMarshal>, Character> coderToType_ = new HashMap<>();
 
-    /**
+    /*
      * Find coders upon class initialization
      */
     static
     {
         scanForCoders();
-        loadFromFile();
     }
 
     /**
@@ -125,38 +119,7 @@ public class DataMarshaller
         Set<Class<?>> codes = resources.getAnnotatedMatches(DataCoder.class);
         for (Class<?> c : codes)
         {
-            registerCoder(c, false);
-        }
-    }
-
-    /**
-     * Load coders from "datacoder.txt" file (used in production due to use of *.ssalc files)
-     */
-    private static void loadFromFile()
-    {
-        URL url = new MatchingResources("classpath*:datacoder.txt").getSingleResourceURL();
-
-        if (url != null)
-        {
-            Reader reader = ConfigUtils.getReader(url);
-
-            try
-            {
-                BufferedReader buf = new BufferedReader(reader);
-                String className;
-                while ((className = buf.readLine()) != null)
-                {
-                    registerCoder(ConfigUtils.getClass(className), true);
-                }
-            }
-            catch (IOException ioe)
-            {
-                throw new ApplicationError(ioe);
-            }
-            finally
-            {
-                ConfigUtils.close(reader);
-            }
+            registerCoder(c);
         }
     }
 
@@ -164,7 +127,7 @@ public class DataMarshaller
      * Register given class
      */
     @SuppressWarnings({"unchecked"})
-    private static void registerCoder(Class<?> c, boolean ignoreDups)
+    private static void registerCoder(Class<?> c)
     {
         if (!(DataMarshal.class.isAssignableFrom(c)))
         {
@@ -174,7 +137,6 @@ public class DataMarshaller
         DataCoder dc = dm.getAnnotation(DataCoder.class);
 
         //logger.info("Found DataCoder (" + dc.value() + ") for "+ dm.getName());
-        if (ignoreDups && typeToCoder_.containsKey(dc.value())) return;
         registerCoderForType(dc.value(), dm);
     }
 
@@ -216,7 +178,7 @@ public class DataMarshaller
     //// marshaller wrapper classes
     ////
 
-    public static interface DMWrapper extends DataMarshal
+    public interface DMWrapper extends DataMarshal
     {
         Object value();
     }
@@ -232,6 +194,7 @@ public class DataMarshaller
         /**
          * Empty constructor needed for demarshalling
          */
+        @SuppressWarnings("unused")
         public DMInteger()
         {
         }
@@ -307,6 +270,7 @@ public class DataMarshaller
         /**
          * Empty constructor needed for demarshalling
          */
+        @SuppressWarnings("unused")
         public DMString()
         {
         }
@@ -349,6 +313,7 @@ public class DataMarshaller
         /**
          * Empty constructor needed for demarshalling
          */
+        @SuppressWarnings("unused")
         public DMBoolean()
         {
         }
@@ -399,6 +364,7 @@ public class DataMarshaller
         /**
          * Empty constructor needed for demarshalling
          */
+        @SuppressWarnings("unused")
         public DMDouble()
         {
         }
@@ -453,6 +419,7 @@ public class DataMarshaller
         /**
          * Empty constructor needed for demarshalling
          */
+        @SuppressWarnings("unused")
         public DMLong()
         {
         }

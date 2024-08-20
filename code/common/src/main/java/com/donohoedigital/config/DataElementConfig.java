@@ -38,22 +38,23 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.xerces.impl.dv.ValidatedInfo;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import org.apache.log4j.Logger;
 import org.apache.xerces.impl.dv.XSSimpleType;
-import org.apache.xerces.impl.validation.ValidationState;
-import org.apache.xerces.xs.StringList;
+import org.apache.xerces.impl.xs.SchemaGrammar;
+import org.apache.xerces.impl.xs.XMLSchemaLoader;
+import org.apache.xerces.xni.XNIException;
+import org.apache.xerces.xni.grammars.Grammar;
+import org.apache.xerces.xni.parser.XMLErrorHandler;
+import org.apache.xerces.xni.parser.XMLInputSource;
+import org.apache.xerces.xni.parser.XMLParseException;
+import org.apache.xerces.xs.XSNamedMap;
+import org.apache.xerces.xs.XSObject;
+import org.apache.xerces.xs.XSTypeDefinition;
 
-import org.apache.xerces.impl.dv.*;
-import org.apache.xerces.impl.xs.*;
-import org.apache.xerces.xni.*;
-import org.apache.xerces.xni.grammars.*;
-import org.apache.xerces.xni.parser.*;
-import org.apache.xerces.xs.*;
-import org.apache.log4j.*;
-
-import java.net.*;
-import java.util.*;
+import java.net.URL;
+import java.util.HashMap;
 
 /**
  * Loads data-elements.xsd file defined in the appconfig file
@@ -66,21 +67,13 @@ public class DataElementConfig extends HashMap<String, DataElement> implements X
 
     private static DataElementConfig dataConfig = null;
 
-    private SchemaGrammar sgrammar_;
+    private final SchemaGrammar sgrammar_;
     private int nWarn_ = 0;
     private int nError_ = 0;
     private int nFatal_ = 0;
 
     /**
-     * DataElements for app
-     */
-    public DataElementConfig(String sAppName)
-    {
-        this(sAppName, null);
-    }
-
-    /**
-     * DataElemens for app unless elements from given module exist
+     * DataElements for app unless elements from given module exist
      */
     @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod"})
     public DataElementConfig(String sAppName, String sOverrideModule)
@@ -136,7 +129,7 @@ public class DataElementConfig extends HashMap<String, DataElement> implements X
     }
 
     /**
-     * Return DataElement for request dataelement name from
+     * Return DataElement for request data element name from
      * global list of data elements
      */
     public static DataElement getDataElement(String sName)
@@ -155,12 +148,6 @@ public class DataElementConfig extends HashMap<String, DataElement> implements X
         XMLSchemaLoader loader = new XMLSchemaLoader();
         loader.setErrorHandler(this);
         loader.setEntityResolver(CachedEntityResolver.instance());
-        // 2020 update: likely not needed, but don't have linux to test
-        // Java 1.6.0_65 bug workaround - manually set a security manager
-        // ARG:  Needed on Mac, doesn't compile on Linux
-        //       loader.setProperty(org.apache.xerces.impl.Constants.SECURITY_MANAGER,
-        //                          new XMLSecurityManager(true));
-
         XMLInputSource source = new XMLInputSource("Donohoe Digital data-elements", sURLpath, null);
         try
         {
