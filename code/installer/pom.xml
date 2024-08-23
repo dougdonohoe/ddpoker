@@ -1,3 +1,35 @@
+<!--
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  DD Poker - Source Code
+  Copyright (c) 2003-2024 Doug Donohoe
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  For the full License text, please see the LICENSE.txt file
+  in the root directory of this project.
+
+  The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
+  graphics, text, and documentation found in this repository (including but not
+  limited to written documentation, website content, and marketing materials)
+  are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+  4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
+  without explicit written permission for any uses not covered by this License.
+  For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+  in the root directory of this project.
+
+  For inquiries regarding commercial licensing of this source code or
+  the use of names, logos, images, text, or other assets, please contact
+  doug [at] donohoe [dot] info.
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
@@ -21,15 +53,12 @@
       <artifactId>common</artifactId>
       <version>3.0</version>
     </dependency>
-<!-- August 2024: commenting out this Install4j dependency since we don't currently make installers,
-     but you never know for the future.
--->
-<!--    <dependency>-->
-<!--      <groupId>com.install4j</groupId>-->
-<!--      <artifactId>install4j-runtime</artifactId>-->
-<!--      <version>8.0.6</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>com.install4j</groupId>
+      <artifactId>install4j-runtime</artifactId>
+      <version>10.0.8</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -38,12 +67,11 @@
     </dependency>
   </dependencies>
 
-<!-- August 2024: ditto -->
-<!--  <repositories>-->
-<!--    <repository>-->
-<!--      <id>ej-technologies</id>-->
-<!--      <url>https://maven.ej-technologies.com/repository/</url>-->
-<!--    </repository>-->
-<!--  </repositories>-->
+  <repositories>
+    <repository>
+      <id>ej-technologies</id>
+      <url>https://maven.ej-technologies.com/repository/</url>
+    </repository>
+  </repositories>
 
 </project>

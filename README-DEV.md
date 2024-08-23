@@ -319,11 +319,11 @@ distribute this `.jar` file and run it like so:
 java -jar poker-3.0-jar-with-dependencies.jar
 ```
 
-For Mac users, if you also distribute the `installer/mac/poker/poker-app/Contents/Resources/macicon.icns` file,
+For Mac users, if you also distribute the `installer/install4j/custom/ddpokericon.icns` file,
 you can get a dock icon:
 
 ```shell
-java -Xdock:icon=macicons.icns -jar poker-3.0-jar-with-dependencies.jar
+java -Xdock:icon=ddpokericon.icns -jar poker-3.0-jar-with-dependencies.jar
 ```
 
 ### Questionable Features

@@ -44,7 +44,7 @@ JAVAOPTS=""
 
 # Mac only options
 if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
-  JAVAOPTS="-Xdock:icon="$DDHOME/installer/mac/poker/poker-app/Contents/Resources/macicon.icns""
+  JAVAOPTS="-Xdock:icon="$DDHOME/installer/install4j/custom/ddpokericon.icns""
 fi
 
 runjava poker \

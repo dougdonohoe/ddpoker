@@ -30,15 +30,28 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #
-# Script to run a bash command from perl, with basedir change
+# Script to run buildall.pl command, then scp at end if directed to do so
 #
-# runbash basedir [cmd]
+# Current way we typically run this: buildall -dev (in current tree)
+#
+buildall.pl "$@"
+RESULT=$?
 
-source ~/.bashrc QUIET $1
-shift
-echo
-echo "------------------------------------------------------------------------------------------------"
-echo "Executing '$@' in `pwd`"
-echo
-eval $@
-# last line is eval so we return the status code from that command
+# if -scp was passed, the perl script will create this temp file
+# for us to execute.  We do this so the scp progress meter is 
+# displayed
+#
+if [ -f /tmp/buildall.scp ]
+then
+	echo
+	echo "------------------------------------------------------------------------------------------------"
+	echo "COPY: scp to ${AWS_APACHE} ..."
+	echo
+	source /tmp/buildall.scp
+	rm /tmp/buildall.scp
+fi
+
+if [ "$RESULT" = "0" ]; then
+	echo 
+	echo Done.
+fi

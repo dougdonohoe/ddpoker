@@ -162,11 +162,9 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             tabs_.addTab("msg.options.handgroups", ic, error, new HandGroups());
         }
 
-        // select pertinent tab if in a game, which happens to be the tab at position 1
+        // select practice tab if in a game, which happens to be the tab at position 1
         if (bDialog && game != null && tabs_.getTabCount() > 1)
         {
-            DDTabPanel tp = (DDTabPanel) tabs_.getComponent(1);
-            tp.initUI();
             tabs_.setSelectedIndex(1);
         }
     }

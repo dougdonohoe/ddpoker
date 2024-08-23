@@ -34,11 +34,10 @@
 FROM ubuntu
 
 # Install helpful tools, java, maven
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     x11-apps \
     iputils-ping nmap telnet \
-    git \
+    git vim tree \
     openjdk-8-jdk maven
 
 # Start bash

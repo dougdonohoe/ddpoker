@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<install4j version="10.0.8" transformSequenceNumber="10">
+  <directoryPresets config="../../build" />
+  <application name="DD Poker 3" applicationId="5571-3951-3041-7888" mediaDir="../builds" mediaFilePattern="ddpoker${compiler:sys.version}" shortName="ddpoker3" publisher="DD Poker" publisherWeb="http://www.ddpoker.com/" version="3.1" allPathsRelative="true" macVolumeId="d24c5a0cf4cff0ab" javaMinVersion="1.8" javaMaxVersion="1.8">
+    <languages>
+      <principalLanguage id="en" customLocalizationFile="./custom/override.messages.utf8" />
+    </languages>
+    <jreBundles jdkProviderId="Corretto" release="8/8.422.05.1" />
+  </application>
+  <files>
+    <mountPoints>
+      <mountPoint id="1" overrideMode="true" />
+    </mountPoints>
+    <entries>
+      <fileEntry mountPoint="1" file="./index.html" overwriteMode="3" overrideFileMode="true" overrideOverwriteMode="true" overrideUninstallMode="true" />
+      <dirEntry mountPoint="1" file="../../release" overwriteMode="3" fileMode="666" overrideFileMode="true" overrideOverwriteMode="true" overrideUninstallMode="true" dirMode="777" overrideDirMode="true" />
+    </entries>
+  </files>
+  <launchers>
+    <launcher name="poker" id="2" menuName="${compiler:sys.fullName}" icnsFile="./custom/ddpokericon.icns" useCustomMacosExecutableName="true" customMacosExecutableName="${compiler:sys.fullName}">
+      <executable name="ddpoker" iconSet="true" iconFile="./custom/pokericon16to64.ico" executableDir="." redirectStderr="false" stderrFile="log/err.txt" stdoutFile="log/out.txt" failOnStderrOutput="false" executableMode="gui">
+        <versionInfo include="true" fileVersion="3.0.0.0" fileDescription="http://www.ddpoker.com/" legalCopyright="Copyright © 2004-2009. Donohoe Digital LLC." internalName="DD Poker" />
+      </executable>
+      <java mainClass="com.donohoedigital.games.poker.PokerMain" vmParameters="&quot;-Dcom.donohoedigital.classpath=${launcher:sys.launcherDirectory}&quot; -Dsun.java2d.noddraw=true  -Xms32m -Xmx68m" preferredVM="client">
+        <classPath>
+          <directory location="." failOnError="false" />
+          <scanDirectory location="." failOnError="false" />
+        </classPath>
+        <nativeLibraryDirectories>
+          <directory name="." />
+        </nativeLibraryDirectories>
+      </java>
+      <vmOptionsFile mode="none" />
+      <iconImageFiles>
+        <file path="./custom/pokericon16.png" />
+        <file path="./custom/pokericon32.png" />
+        <file path="./custom/pokericon48.png" />
+        <file path="./custom/pokericon64.png" />
+        <file path="./custom/pokericon128.png" />
+      </iconImageFiles>
+    </launcher>
+  </launchers>
+  <installerGui>
+    <customCode>
+      <file location="../../build/com/donohoedigital/config/Prefs.class" />
+      <file location="../../build/com/donohoedigital/base/ApplicationError.class" />
+      <file location="../../build/com/donohoedigital/base/ErrorCodes.class" />
+      <file location="../../build/com/donohoedigital/base/Utils.class" />
+      <file location="../../build/com/donohoedigital/base/Format.class" />
+      <file location="../../build/com/donohoedigital/config/DefaultRuntimeDirectory.class" />
+      <file location="../../build/com/donohoedigital/config/RuntimeDirectory.class" />
+      <archive location="../../build/installer-3.0.jar" />
+    </customCode>
+    <applications>
+      <application id="installer" beanClass="com.install4j.runtime.beans.applications.InstallerApplication" styleId="122" customIcnsFile="./custom/ddpokericon.icns" customIcoFile="./custom/pokericon16to64installer.ico">
+        <serializedBean>
+          <property name="customIconImageFiles">
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon16installer.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon32installer.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon64installer.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon128installer.png</string>
+              </object>
+            </add>
+          </property>
+          <property name="frameSizeClientArea" type="boolean" value="false" />
+          <property name="resizable" type="boolean" value="false" />
+          <property name="useCustomIcon" type="boolean" value="true" />
+        </serializedBean>
+        <styleOverrides>
+          <styleOverride name="Customize title bar" enabled="true">
+            <group id="136" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+              <serializedBean>
+                <property name="backgroundColor">
+                  <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                    <object class="java.awt.Color">
+                      <int>255</int>
+                      <int>255</int>
+                      <int>255</int>
+                      <int>255</int>
+                    </object>
+                    <object class="java.awt.Color">
+                      <int>49</int>
+                      <int>52</int>
+                      <int>53</int>
+                      <int>255</int>
+                    </object>
+                  </object>
+                </property>
+                <property name="imageAnchor" type="enum" class="com.install4j.api.beans.Anchor" value="NORTHEAST" />
+                <property name="imageFile">
+                  <object class="com.install4j.api.beans.ExternalFile">
+                    <string>./custom/pokericon60installer.png</string>
+                  </object>
+                </property>
+              </serializedBean>
+            </group>
+          </styleOverride>
+          <styleOverride name="Custom watermark" enabled="true">
+            <formComponent name="Watermark" id="126" beanClass="com.install4j.runtime.beans.formcomponents.SeparatorComponent" />
+          </styleOverride>
+        </styleOverrides>
+        <startup>
+          <screen id="4" beanClass="com.install4j.runtime.beans.screens.StartupScreen" rollbackBarrierExitCode="0">
+            <actions>
+              <action id="177" beanClass="com.install4j.runtime.beans.actions.misc.RequestPrivilegesAction" actionElevationType="none" />
+            </actions>
+          </screen>
+        </startup>
+        <screens>
+          <screen id="5" beanClass="com.install4j.runtime.beans.screens.WelcomeScreen" styleId="128">
+            <styleOverrides>
+              <styleOverride name="Customize banner image" enabled="true">
+                <group id="129" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+                  <serializedBean>
+                    <property name="imageEdgeBackgroundColor">
+                      <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                        <object class="java.awt.Color">
+                          <int>25</int>
+                          <int>143</int>
+                          <int>220</int>
+                          <int>255</int>
+                        </object>
+                        <object class="java.awt.Color">
+                          <int>0</int>
+                          <int>74</int>
+                          <int>151</int>
+                          <int>255</int>
+                        </object>
+                      </object>
+                    </property>
+                    <property name="imageFile">
+                      <object class="com.install4j.api.beans.ExternalFile">
+                        <string>./custom/banner-installer.png</string>
+                      </object>
+                    </property>
+                  </serializedBean>
+                </group>
+              </styleOverride>
+            </styleOverrides>
+            <actions>
+              <action id="178" beanClass="com.install4j.runtime.beans.actions.misc.LoadResponseFileAction" multiExec="true">
+                <condition>context.getBooleanVariable("sys.confirmedUpdateInstallation")</condition>
+              </action>
+            </actions>
+            <formComponents>
+              <formComponent id="12" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent">
+                <serializedBean>
+                  <property name="labelText" type="string">${form:welcomeMessage}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="13" beanClass="com.install4j.runtime.beans.formcomponents.ConsoleHandlerFormComponent">
+                <serializedBean>
+                  <property name="consoleScript">
+                    <object class="com.install4j.api.beans.ScriptProperty">
+                      <property name="value" type="string">String message = context.getMessage("ConsoleWelcomeLabel", context.getApplicationName());
+return console.askOkCancel(message, true);
+</property>
+                    </object>
+                  </property>
+                </serializedBean>
+              </formComponent>
+              <formComponent id="14" beanClass="com.install4j.runtime.beans.formcomponents.UpdateAlertComponent" useExternalParametrization="true" externalParametrizationName="Update Alert" externalParametrizationMode="include">
+                <externalParametrizationPropertyNames>
+                  <propertyName>updateCheck</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+              <formComponent id="15" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetTop="20">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:ClickNext}</property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="6" beanClass="com.install4j.runtime.beans.screens.InstallationDirectoryScreen">
+            <condition>!context.getBooleanVariable("sys.confirmedUpdateInstallation")</condition>
+            <formComponents>
+              <formComponent id="18" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetBottom="25">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:SelectDirLabel(${compiler:sys.fullName})}</property>
+                </serializedBean>
+              </formComponent>
+              <formComponent id="19" beanClass="com.install4j.runtime.beans.formcomponents.InstallationDirectoryChooserComponent" useExternalParametrization="true" externalParametrizationName="Installation Directory Chooser" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="requestFocus" type="boolean" value="true" />
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>suggestAppDir</propertyName>
+                  <propertyName>validateApplicationId</propertyName>
+                  <propertyName>existingDirWarning</propertyName>
+                  <propertyName>checkWritable</propertyName>
+                  <propertyName>manualEntryAllowed</propertyName>
+                  <propertyName>checkFreeSpace</propertyName>
+                  <propertyName>showRequiredDiskSpace</propertyName>
+                  <propertyName>showFreeDiskSpace</propertyName>
+                  <propertyName>allowSpacesOnUnix</propertyName>
+                  <propertyName>validationScript</propertyName>
+                  <propertyName>standardValidation</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="7" beanClass="com.install4j.runtime.beans.screens.ComponentsScreen">
+            <formComponents>
+              <formComponent id="22" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:SelectComponentsLabel2}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="23" beanClass="com.install4j.runtime.beans.formcomponents.ComponentSelectorComponent" useExternalParametrization="true" externalParametrizationName="Installation Components" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="fillVertical" type="boolean" value="true" />
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>selectionChangedScript</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="8" beanClass="com.install4j.runtime.beans.screens.StandardProgramGroupScreen">
+            <serializedBean>
+              <property name="programGroupName" type="string">${compiler:sys.fullName}</property>
+            </serializedBean>
+            <condition>!context.getBooleanVariable("sys.confirmedUpdateInstallation")</condition>
+          </screen>
+          <screen id="46" beanClass="com.install4j.runtime.beans.screens.AdditionalConfirmationsScreen">
+            <formComponents>
+              <formComponent id="28" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetBottom="10">
+                <serializedBean>
+                  <property name="labelText" type="string">${form:confirmationMessage}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent name="Add a desktop link" id="47" beanClass="com.install4j.runtime.beans.formcomponents.CheckboxComponent">
+                <serializedBean>
+                  <property name="checkboxText" type="string">${i18n:CreateDesktopIcon}</property>
+                  <property name="initiallySelected" type="boolean" value="true" />
+                  <property name="variableName" type="string">createDesktopLinkAction</property>
+                </serializedBean>
+              </formComponent>
+              <formComponent name="Create a quick launch icon" id="49" beanClass="com.install4j.runtime.beans.formcomponents.CheckboxComponent">
+                <serializedBean>
+                  <property name="checkboxText" type="string">${i18n:CreateQuickLaunchIcon}</property>
+                  <property name="initiallySelected" type="boolean" value="true" />
+                  <property name="variableName" type="string">createQuicklaunchIconAction</property>
+                </serializedBean>
+                <initScript>component.setVisible(Util.isWindows());</initScript>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="9" beanClass="com.install4j.runtime.beans.screens.FileAssociationsScreen">
+            <formComponents>
+              <formComponent id="31" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:SelectAssociationsLabel}</property>
+                </serializedBean>
+              </formComponent>
+              <formComponent id="32" beanClass="com.install4j.runtime.beans.formcomponents.FileAssociationsComponent" useExternalParametrization="true" externalParametrizationName="File Associations" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="fillVertical" type="boolean" value="true" />
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>showSelectionButtons</propertyName>
+                  <propertyName>selectionButtonPosition</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="10" beanClass="com.install4j.runtime.beans.screens.DefaultInfoScreen">
+            <formComponents>
+              <formComponent id="35" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:InfoBeforeClickLabel}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="36" beanClass="com.install4j.runtime.beans.formcomponents.HtmlDisplayFormComponent" useExternalParametrization="true" externalParametrizationName="HTML or text display" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="displayedTextFile" id="LocalizedExternalFile0">
+                    <property name="languageIdToExternalFile">
+                      <entry>
+                        <string>en</string>
+                        <object class="com.install4j.api.beans.ExternalFile">
+                          <string>./custom/i4j-preinstall.html</string>
+                        </object>
+                      </entry>
+                    </property>
+                  </property>
+                  <property name="fillVertical" type="boolean" value="true" />
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>textSource</propertyName>
+                  <propertyName>displayedText</propertyName>
+                  <propertyName>displayedTextFile</propertyName>
+                  <propertyName>variableName</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+              <formComponent id="37" beanClass="com.install4j.runtime.beans.formcomponents.ConsoleHandlerFormComponent">
+                <serializedBean>
+                  <property name="consoleScript">
+                    <object class="com.install4j.api.beans.ScriptProperty">
+                      <property name="value" type="string">console.waitForEnter();
+return true;
+</property>
+                    </object>
+                  </property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="11" beanClass="com.install4j.runtime.beans.screens.InstallationScreen" rollbackBarrier="true">
+            <actions>
+              <action id="12" beanClass="com.install4j.runtime.beans.actions.InstallFilesAction" failureStrategy="quit" errorMessage="${i18n:FileCorrupted}" />
+              <action id="13" beanClass="com.install4j.runtime.beans.actions.desktop.CreateProgramGroupAction" actionElevationType="elevated">
+                <serializedBean>
+                  <property name="addUninstaller" type="boolean" value="true" />
+                  <property name="uninstallerMenuName" type="string">${i18n:UninstallerMenuEntry(${compiler:sys.fullName})}</property>
+                </serializedBean>
+                <condition>!context.getBooleanVariable("sys.programGroupDisabled")</condition>
+              </action>
+              <action id="50" beanClass="com.install4j.runtime.beans.actions.desktop.CreateStartMenuEntryAction" actionElevationType="elevated">
+                <serializedBean>
+                  <property name="entryName" type="string">${installer:sys.programGroupDir}/DD Poker 3 Help</property>
+                  <property name="file">
+                    <object class="java.io.File">
+                      <string>index.html</string>
+                    </object>
+                  </property>
+                  <property name="programGroupName" type="string" />
+                </serializedBean>
+                <condition>!context.getBooleanVariable("sys.programGroupDisabled")</condition>
+              </action>
+              <action id="45" beanClass="com.install4j.runtime.beans.actions.desktop.CreateDesktopLinkAction" actionElevationType="elevated">
+                <serializedBean>
+                  <property name="file">
+                    <object class="java.io.File">
+                      <string>ddpoker</string>
+                    </object>
+                  </property>
+                  <property name="name" type="string">${compiler:sys.fullName}</property>
+                </serializedBean>
+                <condition>context.getBooleanVariable("createDesktopLinkAction")</condition>
+              </action>
+              <action id="14" beanClass="com.install4j.runtime.beans.actions.desktop.RegisterAddRemoveAction">
+                <serializedBean>
+                  <property name="itemName" type="string">${compiler:sys.fullName} ${compiler:sys.version}</property>
+                </serializedBean>
+              </action>
+              <action id="15" beanClass="com.install4j.runtime.beans.actions.desktop.CreateFileAssociationAction" actionElevationType="elevated">
+                <serializedBean>
+                  <property name="description" type="string">DD Poker Save File</property>
+                  <property name="extension" type="string">ddpokersave</property>
+                  <property name="launcherId" type="string">2</property>
+                  <property name="windowsIconFile">
+                    <object class="com.install4j.api.beans.ExternalFile">
+                      <string />
+                    </object>
+                  </property>
+                </serializedBean>
+              </action>
+              <action id="16" beanClass="com.install4j.runtime.beans.actions.desktop.CreateFileAssociationAction" actionElevationType="elevated">
+                <serializedBean>
+                  <property name="description" type="string">DD Poker Online Game URL</property>
+                  <property name="extension" type="string">ddpokerjoin</property>
+                  <property name="launcherId" type="string">2</property>
+                  <property name="windowsIconFile">
+                    <object class="com.install4j.api.beans.ExternalFile">
+                      <string />
+                    </object>
+                  </property>
+                </serializedBean>
+              </action>
+            </actions>
+            <formComponents>
+              <formComponent id="47" beanClass="com.install4j.runtime.beans.formcomponents.ProgressComponent">
+                <serializedBean>
+                  <property name="initialStatusMessage" type="string">${i18n:WizardPreparing}</property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="17" beanClass="com.install4j.runtime.beans.screens.DefaultInfoScreen">
+            <formComponents>
+              <formComponent id="50" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:InfoBeforeClickLabel}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="51" beanClass="com.install4j.runtime.beans.formcomponents.HtmlDisplayFormComponent" useExternalParametrization="true" externalParametrizationName="HTML or text display" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="displayedTextFile" id="LocalizedExternalFile0">
+                    <property name="languageIdToExternalFile">
+                      <entry>
+                        <string>en</string>
+                        <object class="com.install4j.api.beans.ExternalFile">
+                          <string>./custom/i4j-postinstall.html</string>
+                        </object>
+                      </entry>
+                    </property>
+                  </property>
+                  <property name="fillVertical" type="boolean" value="true" />
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>textSource</propertyName>
+                  <propertyName>displayedText</propertyName>
+                  <propertyName>displayedTextFile</propertyName>
+                  <propertyName>variableName</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+              <formComponent id="52" beanClass="com.install4j.runtime.beans.formcomponents.ConsoleHandlerFormComponent">
+                <serializedBean>
+                  <property name="consoleScript">
+                    <object class="com.install4j.api.beans.ScriptProperty">
+                      <property name="value" type="string">console.waitForEnter();
+return true;
+</property>
+                    </object>
+                  </property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="18" beanClass="com.install4j.runtime.beans.screens.FinishedScreen" styleId="128" finishScreen="true">
+            <styleOverrides>
+              <styleOverride name="Customize banner image" enabled="true">
+                <group id="129" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+                  <serializedBean>
+                    <property name="imageEdgeBackgroundColor">
+                      <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                        <object class="java.awt.Color">
+                          <int>25</int>
+                          <int>143</int>
+                          <int>220</int>
+                          <int>255</int>
+                        </object>
+                        <object class="java.awt.Color">
+                          <int>0</int>
+                          <int>74</int>
+                          <int>151</int>
+                          <int>255</int>
+                        </object>
+                      </object>
+                    </property>
+                    <property name="imageFile">
+                      <object class="com.install4j.api.beans.ExternalFile">
+                        <string>./custom/banner-installer.png</string>
+                      </object>
+                    </property>
+                  </serializedBean>
+                </group>
+              </styleOverride>
+            </styleOverrides>
+            <actions>
+              <action id="109" beanClass="com.install4j.runtime.beans.actions.finish.ExecuteLauncherAction">
+                <serializedBean>
+                  <property name="launcherId" type="string">2</property>
+                </serializedBean>
+                <condition>context.getBooleanVariable("executeLauncherAction") &amp;&amp; (!context.isUnattended())</condition>
+              </action>
+            </actions>
+            <formComponents>
+              <formComponent id="57" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetBottom="10">
+                <serializedBean>
+                  <property name="labelText" type="string">${form:finishedMessage}</property>
+                </serializedBean>
+              </formComponent>
+              <formComponent name="Execute launcher" id="110" beanClass="com.install4j.runtime.beans.formcomponents.CheckboxComponent">
+                <serializedBean>
+                  <property name="checkboxText" type="string">${i18n:RunEntryExec("${compiler:sys.fullName}")}</property>
+                  <property name="initiallySelected" type="boolean" value="true" />
+                  <property name="variableName" type="string">executeLauncherAction</property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+        </screens>
+      </application>
+      <application id="uninstaller" beanClass="com.install4j.runtime.beans.applications.UninstallerApplication" styleId="122" customIcnsFile="./custom/ddpokericon.icns" customIcoFile="./custom/pokericon16to64uninstaller.ico">
+        <serializedBean>
+          <property name="customIconImageFiles">
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon16uninstaller.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon32uninstaller.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>./custom/pokericon64uninstaller.png</string>
+              </object>
+            </add>
+          </property>
+          <property name="customMacosExecutableName" type="string">${i18n:UninstallerMenuEntry(${compiler:sys.fullName})}</property>
+          <property name="frameSizeClientArea" type="boolean" value="false" />
+          <property name="resizable" type="boolean" value="false" />
+          <property name="useCustomIcon" type="boolean" value="true" />
+          <property name="useCustomMacosExecutableName" type="boolean" value="true" />
+        </serializedBean>
+        <styleOverrides>
+          <styleOverride name="Customize title bar" enabled="true">
+            <group id="136" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+              <serializedBean>
+                <property name="backgroundColor">
+                  <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                    <object class="java.awt.Color">
+                      <int>255</int>
+                      <int>255</int>
+                      <int>255</int>
+                      <int>255</int>
+                    </object>
+                    <object class="java.awt.Color">
+                      <int>49</int>
+                      <int>52</int>
+                      <int>53</int>
+                      <int>255</int>
+                    </object>
+                  </object>
+                </property>
+                <property name="imageAnchor" type="enum" class="com.install4j.api.beans.Anchor" value="NORTHEAST" />
+                <property name="imageFile">
+                  <object class="com.install4j.api.beans.ExternalFile">
+                    <string>./custom/pokericon60uninstaller.png</string>
+                  </object>
+                </property>
+              </serializedBean>
+            </group>
+          </styleOverride>
+          <styleOverride name="Custom watermark" enabled="true">
+            <formComponent name="Watermark" id="126" beanClass="com.install4j.runtime.beans.formcomponents.SeparatorComponent" />
+          </styleOverride>
+        </styleOverrides>
+        <startup>
+          <screen id="20" beanClass="com.install4j.runtime.beans.screens.StartupScreen" rollbackBarrierExitCode="0">
+            <actions>
+              <action id="179" beanClass="com.install4j.runtime.beans.actions.misc.LoadResponseFileAction" />
+              <action id="180" beanClass="com.install4j.runtime.beans.actions.misc.RequireInstallerPrivilegesAction" actionElevationType="none" />
+            </actions>
+          </screen>
+        </startup>
+        <screens>
+          <screen id="21" beanClass="com.install4j.runtime.beans.screens.UninstallWelcomeScreen" styleId="128">
+            <styleOverrides>
+              <styleOverride name="Customize banner image" enabled="true">
+                <group id="129" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+                  <serializedBean>
+                    <property name="imageEdgeBackgroundColor">
+                      <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                        <object class="java.awt.Color">
+                          <int>25</int>
+                          <int>143</int>
+                          <int>220</int>
+                          <int>255</int>
+                        </object>
+                        <object class="java.awt.Color">
+                          <int>0</int>
+                          <int>74</int>
+                          <int>151</int>
+                          <int>255</int>
+                        </object>
+                      </object>
+                    </property>
+                    <property name="imageFile">
+                      <object class="com.install4j.api.beans.ExternalFile">
+                        <string>./custom/banner-uninstaller.png</string>
+                      </object>
+                    </property>
+                  </serializedBean>
+                </group>
+              </styleOverride>
+            </styleOverrides>
+            <formComponents>
+              <formComponent id="66" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetBottom="10">
+                <serializedBean>
+                  <property name="labelText" type="string">${form:welcomeMessage}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="67" beanClass="com.install4j.runtime.beans.formcomponents.ConsoleHandlerFormComponent">
+                <serializedBean>
+                  <property name="consoleScript">
+                    <object class="com.install4j.api.beans.ScriptProperty">
+                      <property name="value" type="string">String message = context.getMessage("ConfirmUninstall", context.getApplicationName());
+return console.askYesNo(message, true);
+</property>
+                    </object>
+                  </property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="137" beanClass="com.install4j.runtime.beans.screens.AdditionalConfirmationsScreen">
+            <formComponents>
+              <formComponent id="73" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetBottom="10">
+                <serializedBean>
+                  <property name="labelText" type="string">${form:confirmationMessage}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="140" beanClass="com.install4j.runtime.beans.formcomponents.MultilineHtmlLabelComponent">
+                <serializedBean>
+                  <property name="labelHtml" type="string">&lt;html&gt;
+Choose whether you want to completely uninstall DD Poker.  If you are
+going to re-install, you may wish to keep your &lt;strong&gt;personal files&lt;/strong&gt; 
+(player profiles, custom tournaments, saved games, etc.) 
+and/or 
+&lt;strong&gt;preferences&lt;/strong&gt; 
+(options settings, window size/position, dismissed dialogs, etc.).
+&lt;br&gt;
+&lt;br&gt;
+If you want to &lt;strong&gt;Completely Remove All Things DD Poker Created&lt;/strong&gt;,
+then check the two boxes below.
+&lt;/html&gt;</property>
+                </serializedBean>
+              </formComponent>
+              <formComponent id="141" beanClass="com.install4j.runtime.beans.formcomponents.SeparatorComponent" />
+              <formComponent id="138" beanClass="com.install4j.runtime.beans.formcomponents.CheckboxComponent">
+                <serializedBean>
+                  <property name="checkboxText" type="string">Delete personal files (player profiles, tournament formats, saved games, etc.)</property>
+                  <property name="variableName" type="string">deleteFiles</property>
+                </serializedBean>
+              </formComponent>
+              <formComponent id="139" beanClass="com.install4j.runtime.beans.formcomponents.CheckboxComponent">
+                <serializedBean>
+                  <property name="checkboxText" type="string">Delete preferences (options settings, window size and position, etc.)</property>
+                  <property name="variableName" type="string">deletePrefs</property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="176" beanClass="com.install4j.runtime.beans.screens.DefaultInfoScreen">
+            <formComponents>
+              <formComponent id="76" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent">
+                <serializedBean>
+                  <property name="labelText" type="string">${i18n:InfoBeforeClickLabel}</property>
+                </serializedBean>
+                <visibilityScript>!context.isConsole()</visibilityScript>
+              </formComponent>
+              <formComponent id="77" beanClass="com.install4j.runtime.beans.formcomponents.HtmlDisplayFormComponent" useExternalParametrization="true" externalParametrizationName="HTML or text display" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="displayedTextFile" id="LocalizedExternalFile0">
+                    <property name="languageIdToExternalFile">
+                      <entry>
+                        <string>en</string>
+                        <object class="com.install4j.api.beans.ExternalFile">
+                          <string>./custom/i4j-preuninstall.html</string>
+                        </object>
+                      </entry>
+                    </property>
+                  </property>
+                  <property name="fillVertical" type="boolean" value="true" />
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>textSource</propertyName>
+                  <propertyName>displayedText</propertyName>
+                  <propertyName>displayedTextFile</propertyName>
+                  <propertyName>variableName</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+              <formComponent id="78" beanClass="com.install4j.runtime.beans.formcomponents.ConsoleHandlerFormComponent">
+                <serializedBean>
+                  <property name="consoleScript">
+                    <object class="com.install4j.api.beans.ScriptProperty">
+                      <property name="value" type="string">console.waitForEnter();
+return true;
+</property>
+                    </object>
+                  </property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="22" beanClass="com.install4j.runtime.beans.screens.UninstallationScreen">
+            <actions>
+              <action id="23" beanClass="com.install4j.runtime.beans.actions.UninstallFilesAction" />
+              <action id="88" beanClass="com.donohoedigital.installer.FileCleanup" />
+            </actions>
+            <formComponents>
+              <formComponent id="83" beanClass="com.install4j.runtime.beans.formcomponents.ProgressComponent">
+                <serializedBean>
+                  <property name="initialStatusMessage" type="string">${i18n:UninstallerPreparing}</property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+          <screen id="24" beanClass="com.install4j.runtime.beans.screens.UninstallFailureScreen" finishScreen="true" />
+          <screen id="25" beanClass="com.install4j.runtime.beans.screens.UninstallSuccessScreen" styleId="128" finishScreen="true">
+            <styleOverrides>
+              <styleOverride name="Customize banner image" enabled="true">
+                <group id="129" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+                  <serializedBean>
+                    <property name="imageEdgeBackgroundColor">
+                      <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                        <object class="java.awt.Color">
+                          <int>25</int>
+                          <int>143</int>
+                          <int>220</int>
+                          <int>255</int>
+                        </object>
+                        <object class="java.awt.Color">
+                          <int>0</int>
+                          <int>74</int>
+                          <int>151</int>
+                          <int>255</int>
+                        </object>
+                      </object>
+                    </property>
+                    <property name="imageFile">
+                      <object class="com.install4j.api.beans.ExternalFile">
+                        <string>./custom/banner-uninstaller.png</string>
+                      </object>
+                    </property>
+                  </serializedBean>
+                </group>
+              </styleOverride>
+            </styleOverrides>
+            <formComponents>
+              <formComponent id="87" beanClass="com.install4j.runtime.beans.formcomponents.MultilineLabelComponent" insetBottom="10">
+                <serializedBean>
+                  <property name="labelText" type="string">${form:successMessage}</property>
+                </serializedBean>
+              </formComponent>
+            </formComponents>
+          </screen>
+        </screens>
+      </application>
+    </applications>
+    <styles defaultStyleId="122">
+      <style name="Standard" id="122" beanClass="com.install4j.runtime.beans.styles.FormStyle">
+        <formComponents>
+          <formComponent name="Header" id="123" beanClass="com.install4j.runtime.beans.styles.NestedStyleComponent" insetTop="0" insetBottom="0">
+            <serializedBean>
+              <property name="styleId" type="string">135</property>
+            </serializedBean>
+          </formComponent>
+          <group name="Main" id="124" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup">
+            <beans>
+              <formComponent id="125" beanClass="com.install4j.runtime.beans.styles.ContentComponent" insetTop="10" insetLeft="20" insetBottom="10" insetRight="20" />
+              <formComponent name="Watermark" id="126" beanClass="com.install4j.runtime.beans.formcomponents.SeparatorComponent" insetTop="0" insetLeft="5" insetBottom="0" useExternalParametrization="true" externalParametrizationName="Custom watermark" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="enabledTitleText" type="boolean" value="false" />
+                  <property name="labelText" type="string">install4j</property>
+                </serializedBean>
+                <externalParametrizationPropertyNames>
+                  <propertyName>labelText</propertyName>
+                </externalParametrizationPropertyNames>
+              </formComponent>
+              <formComponent name="Footer" id="127" beanClass="com.install4j.runtime.beans.styles.NestedStyleComponent" insetTop="0" insetBottom="0">
+                <serializedBean>
+                  <property name="styleId" type="string">139</property>
+                </serializedBean>
+              </formComponent>
+            </beans>
+          </group>
+        </formComponents>
+      </style>
+      <style name="Banner" id="128" beanClass="com.install4j.runtime.beans.styles.FormStyle">
+        <formComponents>
+          <group id="129" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup" useExternalParametrization="true" externalParametrizationName="Customize banner image" externalParametrizationMode="include">
+            <serializedBean>
+              <property name="backgroundColor">
+                <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                  <object class="java.awt.Color">
+                    <int>255</int>
+                    <int>255</int>
+                    <int>255</int>
+                    <int>255</int>
+                  </object>
+                  <object class="java.awt.Color">
+                    <int>49</int>
+                    <int>52</int>
+                    <int>53</int>
+                    <int>255</int>
+                  </object>
+                </object>
+              </property>
+              <property name="borderSides">
+                <object class="com.install4j.runtime.beans.formcomponents.BorderSides">
+                  <property name="bottom" type="boolean" value="true" />
+                </object>
+              </property>
+              <property name="imageEdgeBackgroundColor">
+                <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                  <object class="java.awt.Color">
+                    <int>25</int>
+                    <int>143</int>
+                    <int>220</int>
+                    <int>255</int>
+                  </object>
+                  <object class="java.awt.Color">
+                    <int>0</int>
+                    <int>74</int>
+                    <int>151</int>
+                    <int>255</int>
+                  </object>
+                </object>
+              </property>
+              <property name="imageEdgeBorder" type="boolean" value="true" />
+              <property name="imageFile">
+                <object class="com.install4j.api.beans.ExternalFile">
+                  <string>${compiler:sys.install4jHome}/resource/styles/wizard.png</string>
+                </object>
+              </property>
+              <property name="insets">
+                <object class="java.awt.Insets">
+                  <int>5</int>
+                  <int>10</int>
+                  <int>10</int>
+                  <int>10</int>
+                </object>
+              </property>
+            </serializedBean>
+            <beans>
+              <formComponent id="130" beanClass="com.install4j.runtime.beans.styles.ScreenTitleComponent" insetTop="0">
+                <serializedBean>
+                  <property name="labelFontSizePercent" type="int" value="130" />
+                  <property name="labelFontStyle" type="enum" class="com.install4j.runtime.beans.formcomponents.FontStyle" value="BOLD" />
+                  <property name="labelFontType" type="enum" class="com.install4j.runtime.beans.formcomponents.FontType" value="DERIVED" />
+                </serializedBean>
+              </formComponent>
+              <formComponent id="131" beanClass="com.install4j.runtime.beans.formcomponents.SeparatorComponent" />
+              <formComponent id="132" beanClass="com.install4j.runtime.beans.styles.ContentComponent" insetTop="10" insetBottom="0" />
+            </beans>
+            <externalParametrizationPropertyNames>
+              <propertyName>imageAnchor</propertyName>
+              <propertyName>imageEdgeBackgroundColor</propertyName>
+              <propertyName>imageFile</propertyName>
+            </externalParametrizationPropertyNames>
+          </group>
+          <formComponent id="133" beanClass="com.install4j.runtime.beans.styles.NestedStyleComponent" insetBottom="0">
+            <serializedBean>
+              <property name="styleId" type="string">139</property>
+            </serializedBean>
+          </formComponent>
+        </formComponents>
+      </style>
+      <group name="Style components" id="134" beanClass="com.install4j.runtime.beans.groups.StyleGroup">
+        <beans>
+          <style name="Standard header" id="135" beanClass="com.install4j.runtime.beans.styles.FormStyle">
+            <serializedBean>
+              <property name="fillVertical" type="boolean" value="false" />
+              <property name="standalone" type="boolean" value="false" />
+              <property name="verticalAnchor" type="enum" class="com.install4j.api.beans.Anchor" value="NORTH" />
+            </serializedBean>
+            <formComponents>
+              <group id="136" beanClass="com.install4j.runtime.beans.groups.VerticalFormComponentGroup" useExternalParametrization="true" externalParametrizationName="Customize title bar" externalParametrizationMode="include">
+                <serializedBean>
+                  <property name="backgroundColor">
+                    <object class="com.install4j.runtime.beans.LightOrDarkColor">
+                      <object class="java.awt.Color">
+                        <int>255</int>
+                        <int>255</int>
+                        <int>255</int>
+                        <int>255</int>
+                      </object>
+                      <object class="java.awt.Color">
+                        <int>49</int>
+                        <int>52</int>
+                        <int>53</int>
+                        <int>255</int>
+                      </object>
+                    </object>
+                  </property>
+                  <property name="borderSides">
+                    <object class="com.install4j.runtime.beans.formcomponents.BorderSides">
+                      <property name="bottom" type="boolean" value="true" />
+                    </object>
+                  </property>
+                  <property name="imageAnchor" type="enum" class="com.install4j.api.beans.Anchor" value="NORTHEAST" />
+                  <property name="imageEdgeBorderWidth" type="int" value="2" />
+                  <property name="imageFile">
+                    <object class="com.install4j.api.beans.ExternalFile">
+                      <string>icon:${installer:sys.installerApplicationMode}_header.png</string>
+                    </object>
+                  </property>
+                  <property name="imageInsets">
+                    <object class="java.awt.Insets">
+                      <int>0</int>
+                      <int>5</int>
+                      <int>1</int>
+                      <int>1</int>
+                    </object>
+                  </property>
+                  <property name="insets">
+                    <object class="java.awt.Insets">
+                      <int>0</int>
+                      <int>20</int>
+                      <int>0</int>
+                      <int>10</int>
+                    </object>
+                  </property>
+                </serializedBean>
+                <beans>
+                  <formComponent name="Title" id="137" beanClass="com.install4j.runtime.beans.styles.ScreenTitleComponent">
+                    <serializedBean>
+                      <property name="labelFontStyle" type="enum" class="com.install4j.runtime.beans.formcomponents.FontStyle" value="BOLD" />
+                      <property name="labelFontType" type="enum" class="com.install4j.runtime.beans.formcomponents.FontType" value="DERIVED" />
+                    </serializedBean>
+                  </formComponent>
+                  <formComponent name="Subtitle" id="138" beanClass="com.install4j.runtime.beans.styles.ScreenTitleComponent" insetLeft="8">
+                    <serializedBean>
+                      <property name="titleType" type="enum" class="com.install4j.runtime.beans.styles.TitleType" value="SUB_TITLE" />
+                    </serializedBean>
+                  </formComponent>
+                </beans>
+                <externalParametrizationPropertyNames>
+                  <propertyName>backgroundColor</propertyName>
+                  <propertyName>foregroundColor</propertyName>
+                  <propertyName>imageAnchor</propertyName>
+                  <propertyName>imageFile</propertyName>
+                  <propertyName>imageOverlap</propertyName>
+                </externalParametrizationPropertyNames>
+              </group>
+            </formComponents>
+          </style>
+          <style name="Standard footer" id="139" beanClass="com.install4j.runtime.beans.styles.FormStyle">
+            <serializedBean>
+              <property name="fillVertical" type="boolean" value="false" />
+              <property name="standalone" type="boolean" value="false" />
+              <property name="verticalAnchor" type="enum" class="com.install4j.api.beans.Anchor" value="SOUTH" />
+            </serializedBean>
+            <formComponents>
+              <group id="140" beanClass="com.install4j.runtime.beans.groups.HorizontalFormComponentGroup">
+                <serializedBean>
+                  <property name="alignFirstLabel" type="boolean" value="false" />
+                  <property name="insets">
+                    <object class="java.awt.Insets">
+                      <int>3</int>
+                      <int>5</int>
+                      <int>8</int>
+                      <int>5</int>
+                    </object>
+                  </property>
+                </serializedBean>
+                <beans>
+                  <formComponent id="141" beanClass="com.install4j.runtime.beans.formcomponents.SpringComponent" />
+                  <formComponent name="Back button" id="142" beanClass="com.install4j.runtime.beans.styles.StandardControlButtonComponent">
+                    <serializedBean>
+                      <property name="buttonText" type="string">&lt; ${i18n:ButtonBack}</property>
+                      <property name="controlButtonType" type="enum" class="com.install4j.api.context.ControlButtonType" value="PREVIOUS" />
+                    </serializedBean>
+                  </formComponent>
+                  <formComponent name="Next button" id="143" beanClass="com.install4j.runtime.beans.styles.StandardControlButtonComponent">
+                    <serializedBean>
+                      <property name="buttonText" type="string">${i18n:ButtonNext} &gt;</property>
+                      <property name="controlButtonType" type="enum" class="com.install4j.api.context.ControlButtonType" value="NEXT" />
+                    </serializedBean>
+                  </formComponent>
+                  <formComponent name="Cancel button" id="144" beanClass="com.install4j.runtime.beans.styles.StandardControlButtonComponent" insetLeft="5">
+                    <serializedBean>
+                      <property name="buttonText" type="string">${i18n:ButtonCancel}</property>
+                      <property name="controlButtonType" type="enum" class="com.install4j.api.context.ControlButtonType" value="CANCEL" />
+                    </serializedBean>
+                  </formComponent>
+                </beans>
+              </group>
+            </formComponents>
+          </style>
+        </beans>
+      </group>
+    </styles>
+  </installerGui>
+  <mediaSets>
+    <windows name="Windows" id="4" installDir="ddpoker3" failOnPostProcessorError="true" architecture="64" />
+    <unixInstaller name="Unix Installer" id="15" installDir="ddpoker3" customInstallBaseDir="/usr/local/games">
+      <excludedBeans>
+        <bean refId="13" />
+        <bean refId="50" />
+      </excludedBeans>
+    </unixInstaller>
+    <macosFolder name="macOS Folder" id="182" volumeName="${compiler:sys.fullName}" architecture="universal" />
+    <macosArchive name="macOS Single Bundle Archive" id="201" volumeName="${compiler:sys.fullName}" architecture="universal" launcherId="2">
+      <topLevelFiles>
+        <symlink name="&quot; &quot;" target="/Applications" />
+        <file name=".DS_Store" file="./custom/DS_Store" />
+        <file name=".background/mac-installer-bg.jpg" file="./custom/mac-installer-bg.jpg" />
+      </topLevelFiles>
+    </macosArchive>
+  </mediaSets>
+  <buildIds buildAll="false">
+    <mediaSet refId="4" />
+    <mediaSet refId="15" />
+    <mediaSet refId="201" />
+  </buildIds>
+</install4j>

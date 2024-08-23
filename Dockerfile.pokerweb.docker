@@ -37,9 +37,7 @@ RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
 RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
 # Install necessary dependencies including Java 8
-RUN yum -y update
-RUN yum -y remove java
-RUN yum install -y \
+RUN yum -y update && yum -y remove java && yum install -y \
        java-1.8.0-openjdk \
        java-1.8.0-openjdk-devel \
        wget
