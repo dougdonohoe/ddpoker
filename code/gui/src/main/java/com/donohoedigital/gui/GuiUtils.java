@@ -792,14 +792,6 @@ public class GuiUtils
             if (e.getEventType() != HyperlinkEvent.EventType.ACTIVATED) return;
             String sURL = e.getDescription();
             Utils.openURL(sURL);
-
-            // Pre-DD Poker 3 way
-//          String sMsg = Utils.fixHtmlTextFor15(PropertyConfig.getMessage("msg.support.confirm", sURL));
-//          if (EngineUtils.displayConfirmationDialog(context_, sMsg))
-//          {
-//              context_.getFrame().setExtendedState(Frame.ICONIFIED);
-//              Utils.openURL(sURL);
-//          }
         }
     }
 

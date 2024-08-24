@@ -27,20 +27,9 @@
                 <LI>You may change the password to something else by clicking the "Edit" button
                     then the "Change Password" button.</LI>
             </OL>
-            <P>
-                If you have any questions or issues playing DD Poker,
-                you may look for
-                answers at our support page:<BR>
-            <UL>
-                <a href="http://www.ddpoker.com/support">http://www.ddpoker.com/support</a>
-            </UL>
-            You may also discuss DD Poker at our forums: <BR>
-            <UL>
-                <a href="http://www.ddpoker.com/forums">http://www.ddpoker.com/forums</a>
-            </UL>
             Thanks again and enjoy the game!<BR>
             <BR>
-            - Donohoe Digital
+            - DD Poker Team
         </TD>
     </TR>
 </TABLE>

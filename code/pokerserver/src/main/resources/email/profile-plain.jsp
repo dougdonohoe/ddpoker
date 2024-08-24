@@ -15,15 +15,6 @@ Please follow these steps to activate your profile:
 4. You may change the password to something else by clicking the "Edit" button
    then the "Change Password" button.
 
-If you have any questions or issues playing DD Poker,
-you may look for answers at our support page:
-
-http://www.ddpoker.com/support
-
-You may also discuss DD Poker at our forums:
-
-http://www.ddpoker.com/forums
-
 Thanks again and enjoy the game!
 
-- Donohoe Digital
+- DD Poker Team
