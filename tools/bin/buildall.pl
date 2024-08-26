@@ -295,12 +295,16 @@ sub build
 		# determine installer file name
 		$install4j = $PRODUCT . ".install4j";
 
-		# run install4j
+		# run install4j - will ask for macOS Keystore password for Developer Application ID,
+		# choose "Always Allow" so subsequent builds don't need it. In future, to automate
+		# by fetching secrets, use:
+		# --win-keystore-password    Set private key password for Windows code signing.
+        # --mac-keystore-password    Set private key password for macOS code signing.
         $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --build-selected $install4j\n";
         runIndented($cmd);
 
-        # Set icons in Mac installer
-        runIndented("${DEVDIR}/tools/bin/mac-set-volume-icon.sh");
+        # Set icons in Mac installer and notarize # TODO: version should be a param
+        runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh");
 
         print("Installers are in $DESTDIR\n")
 	}

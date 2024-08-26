@@ -34,6 +34,8 @@
 # since we can't do it through the tool.
 #
 
+# TODO: pass in version
+
 set -e
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -92,5 +94,8 @@ Rez -append "$TMP_RSRC" -o "$DST_ALT"
 SetFile -a C "$DST_ALT"
 
 # Copy new one back over original, backing up original
-mv "$SRC" "$BAK"
-mv "$DST_ALT" "$SRC"
+mv -v "$SRC" "$BAK"
+mv -v "$DST_ALT" "$SRC"
+
+# Sign and notarize new one
+~/work/donohoe/ddpoker/mac-sign-notarize.sh "$SRC"
