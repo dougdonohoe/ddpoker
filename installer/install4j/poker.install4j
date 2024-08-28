@@ -5,6 +5,7 @@
     <languages>
       <principalLanguage id="en" customLocalizationFile="./custom/override.messages.utf8" />
     </languages>
+    <codeSigning macEnabled="true" macPkcs12File="../../target/developerID_application.p12" />
     <jreBundles jdkProviderId="Corretto" release="8/8.422.05.1" />
   </application>
   <files>

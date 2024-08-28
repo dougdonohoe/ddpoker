@@ -118,6 +118,7 @@ if (!$builtsomething && !$scp)
 	print ("   -noinstaller     skip install4j build step\n");
 	print ("   -scp             scp all installers to remote machine\n");
 	print ("   -github          copy all installers to github\n");
+	print ("   -exitearly       just print env vars\n");
 	print ("\n");
 	exit(1);
 }
@@ -188,6 +189,8 @@ sub build
 	print("  INSDIR:      $INSDIR\n");
 	print("  $DESTDIR:    $DESTDIR\n");
 	print("\n");
+
+	exit(0) if ($exitearly);
 
 	# git update
 	if (!$nogit)
@@ -304,12 +307,16 @@ sub build
 		# determine installer file name
 		$install4j = $PRODUCT . ".install4j";
 
-		# run install4j - will ask for macOS Keystore password for Developer Application ID,
-		# choose "Always Allow" so subsequent builds don't need it. In future, to automate
-		# by fetching secrets, use:
-		# --win-keystore-password    Set private key password for Windows code signing.
-        # --mac-keystore-password    Set private key password for macOS code signing.
-        $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION --build-selected $install4j\n";
+		# copy cert
+        runIndented("~/work/donohoe/ddpoker/cp-certs.sh '$DEVDIR/target'");
+
+        # get password
+        $mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
+        chop $mac_pw;
+
+		# run install4j
+		#   TODO: --win-keystore-password    Set private key password for Windows code signing.
+        $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION --mac-keystore-password='$mac_pw' --build-selected $install4j\n";
         runIndented($cmd);
 
         # Set icons in Mac installer and notarize
@@ -321,6 +328,7 @@ sub build
 	# push installers to GitHub
 	if ($github)
 	{
+	    # TODO: hashes in notes?
 	    $notes="DD Poker release $VERSION";
         my $files = join " ", map { "$DESTDIR/ddpoker$VERSION_FILE$_" } (".dmg", ".exe", ".sh");
 	    runIndented("gh release create $VERSION --title 'DD Poker $VERSION' --draft --notes '$notes' $files");
