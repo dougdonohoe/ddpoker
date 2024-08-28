@@ -77,9 +77,6 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         // forget why I set this
         System.setProperty("sun.java2d.noddraw", "true");
 
-        // turn off grow box (TODO: this is probably not needed anymore)
-        System.setProperty("apple.awt.showGrowBox", "false");
-
         // Mac: Menu Name
         System.setProperty("com.apple.mrj.application.apple.menu.about.name", "DD Poker"); // TODO + version?
         System.setProperty("apple.awt.application.name", "DD Poker"); // TODO + version?

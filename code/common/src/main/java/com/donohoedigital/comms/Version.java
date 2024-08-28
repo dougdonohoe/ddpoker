@@ -101,7 +101,7 @@ public class Version implements DataMarshal
         }
 
         if (endIndex == length) return;
-        if (c == 'p')
+        if (c == 'p' || c == '.') // old style is 3.1p2, new is 3.1.2
         {
             beginIndex = endIndex + 1;
             while ((++endIndex < length) && (Character.isDigit(c = s.charAt(endIndex))))
@@ -324,7 +324,7 @@ public class Version implements DataMarshal
     public String toString()
     {
         return nMajor_ + "." + nMinor_ + (bAlpha_ | bBeta_ ? (bAlpha_ ? "a" : "b") + nAlphaBetaVersion_ : "") +
-               (nPatch_ > 0 ? "p" + nPatch_ : "") +
+               (nPatch_ > 0 ? "." + nPatch_ : "") +
                (bDemo_ ? "d" : "") +
                (sLocale_ != null ? "_" + sLocale_ : "");
     }

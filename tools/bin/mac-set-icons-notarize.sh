@@ -34,18 +34,23 @@
 # since we can't do it through the tool.
 #
 
-# TODO: pass in version
-
 set -e
+
+# Verify we have a version
+VERSION=$1
+if [[ -z "$VERSION" ]]; then
+  echo "mac-set-icons-notarize.sh [version]"
+  exit 1
+fi
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPTDIR"
 DDHOME="$(git rev-parse --show-toplevel)"
 
-SRC="$DDHOME/installer/builds/ddpoker3_1.dmg"
-BAK="$DDHOME/installer/builds/ddpoker3_1.bak.dmg"
-DST_RW="$DDHOME/installer/builds/ddpoker3_1_rw.dmg"
-DST_ALT="$DDHOME/installer/builds/ddpoker3_1_alt.dmg"
+SRC="$DDHOME/installer/builds/ddpoker${VERSION}.dmg"
+BAK="$DDHOME/installer/builds/ddpoker${VERSION}.bak.dmg"
+DST_RW="$DDHOME/installer/builds/ddpoker${VERSION}_rw.dmg"
+DST_ALT="$DDHOME/installer/builds/ddpoker${VERSION}_alt.dmg"
 DST_MNT="/Volumes/dd_poker_dst"
 
 # make read/write copy of installer

@@ -68,7 +68,7 @@ $INSTALL="ddpoker3";
 $INSTALLER_START="ddpoker";
 $PRODUCT="poker";
 $MAIN_MVN_MODULE="poker";
-$VERSION="3.0"; # current version (should match PokerConstants.java and poker maven module version)
+$MVN_VERSION="3.0"; # current version (should match poker maven module version)
 $BUILDDIR="poker3.x";
 $BASEDIR="builds/$BUILDDIR";
 
@@ -117,6 +117,7 @@ if (!$builtsomething && !$scp)
 	print ("   -nobuildrelease  skip buildrelease step\n");
 	print ("   -noinstaller     skip install4j build step\n");
 	print ("   -scp             scp all installers to remote machine\n");
+	print ("   -github          copy all installers to github\n");
 	print ("\n");
 	exit(1);
 }
@@ -174,16 +175,18 @@ sub build
 	# make sure dev parent dir exists
 	`mkdir -vp $DEVPARENT`;
 
-	print("  OSTYPE:     $OSTYPE\n");
-	print("  OSNAME:     $OSNAME\n");
-	print("  BASELOC:    $BASELOC\n");
-	print("  BASEDIR:    $BASEDIR\n");
-	print("  DEVPARENT:  $DEVPARENT\n");
-	print("  DEVDIR:     $DEVDIR\n");
-	print("  MVNDIR:     $MVNDIR\n");
-	print("  STAGINGDIR: $STAGINGDIR\n");
-	print("  RELEASEDIR: $RELEASEDIR\n");
-	print("  INSDIR:     $INSDIR\n");
+	print("  OSTYPE:      $OSTYPE\n");
+	print("  OSNAME:      $OSNAME\n");
+	print("  MVN_VERSION: $MVN_VERSION\n");
+	print("  BASELOC:     $BASELOC\n");
+	print("  BASEDIR:     $BASEDIR\n");
+	print("  DEVPARENT:   $DEVPARENT\n");
+	print("  DEVDIR:      $DEVDIR\n");
+	print("  MVNDIR:      $MVNDIR\n");
+	print("  STAGINGDIR:  $STAGINGDIR\n");
+	print("  RELEASEDIR:  $RELEASEDIR\n");
+	print("  INSDIR:      $INSDIR\n");
+	print("  $DESTDIR:    $DESTDIR\n");
 	print("\n");
 
 	# git update
@@ -220,6 +223,12 @@ sub build
 		runIndented("mvn install -Dmaven.test.skip=true", $indent);
 	}
 
+	# get version
+	$VERSION=`runjava pokerengine com.donohoedigital.games.poker.engine.PrintVersion`;
+	chop $VERSION;
+	$VERSION_FILE = $VERSION =~ s/\./_/gr;
+	print("\nVERSION is '$VERSION', file extension is '$VERSION_FILE'\n");
+
 	# unpack jars and generate config files
 	if (!$nounpack)
 	{
@@ -247,7 +256,7 @@ sub build
 			@jars = split($DELIM, $classpath);
 
 			# add main jar (not in classpath.txt)
-			push @jars, "$targetdir/$MAIN_MVN_MODULE-$VERSION.jar";
+			push @jars, "$targetdir/$MAIN_MVN_MODULE-$MVN_VERSION.jar";
 
 			# loop and extract Donohoe Digital jars, copy rest
 			for $jar (@jars) {
@@ -262,7 +271,7 @@ sub build
 		close(CP);
 
 		# copy installer jar
-		$jar = "$MVNDIR/installer/target/installer-$VERSION.jar";
+		$jar = "$MVNDIR/installer/target/installer-$MVN_VERSION.jar";
 		runIndented("cp $jar .", $indent);
 
 		# remove META-INF from jars
@@ -300,13 +309,21 @@ sub build
 		# by fetching secrets, use:
 		# --win-keystore-password    Set private key password for Windows code signing.
         # --mac-keystore-password    Set private key password for macOS code signing.
-        $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --build-selected $install4j\n";
+        $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION --build-selected $install4j\n";
         runIndented($cmd);
 
-        # Set icons in Mac installer and notarize # TODO: version should be a param
-        runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh");
+        # Set icons in Mac installer and notarize
+        runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
 
         print("Installers are in $DESTDIR\n")
+	}
+
+	# push installers to GitHub
+	if ($github)
+	{
+	    $notes="DD Poker release $VERSION";
+        my $files = join " ", map { "$DESTDIR/ddpoker$VERSION_FILE$_" } (".dmg", ".exe", ".sh");
+	    runIndented("gh release create $VERSION --title 'DD Poker $VERSION' --draft --notes '$notes' $files");
 	}
 }
 
