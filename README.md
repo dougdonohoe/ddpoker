@@ -12,23 +12,6 @@ on Mac, Linux and Windows.  The backend-server is essentially
 a Java Spring application that talks to MySQL.  The website 
 (aka "Online Portal") is built on the Apache Wicket framework.
 
-## TL;DR Running DD Poker
-
-If you are impatient and just want to run the DD Poker game without
-reading all the [developer documentation](README-DEV.md) or worrying
-about servers and databases, follow these steps:
-
-1. Clone this repo
-2. Install [Java 1.8](https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot)
-and [Maven 3](https://maven.apache.org/install.html)
-3. Run these commands in the `ddpoker` directory:
-
-```shell
-source ddpoker.rc
-mvn-package-notests
-poker
-```
-
 ## Installers
 
 See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for all installers.  Please note that only
@@ -43,6 +26,23 @@ We are grateful that they provided us an open-source license.
 
 There is also an option to distribute a jar file, which the _Installers_ section of
 the [Developer Notes](README-DEV.md) explains.
+
+## TL;DR Running DD Poker From Source
+
+If you are impatient and just want to run the DD Poker game without
+reading all the [developer documentation](README-DEV.md) or worrying
+about servers and databases, follow these steps:
+
+1. Clone this repo
+2. Install [Java 1.8](https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot)
+   and [Maven 3](https://maven.apache.org/install.html)
+3. Run these commands in the `ddpoker` directory:
+
+```shell
+source ddpoker.rc
+mvn-package-notests
+poker
+```
 
 ## Developer Notes
 
