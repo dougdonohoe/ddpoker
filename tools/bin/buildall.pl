@@ -117,6 +117,7 @@ if (!$builtsomething && !$scp)
 	print ("   -nobuildrelease  skip buildrelease step\n");
 	print ("   -noinstaller     skip install4j build step\n");
 	print ("   -scp             scp all installers to remote machine\n");
+	print ("   -nobuild         nobuild steps (often used like -dev -scp -nobuild)\n");
 	print ("   -github          copy all installers to github\n");
 	print ("   -exitearly       just print env vars\n");
 	print ("\n");
@@ -124,14 +125,15 @@ if (!$builtsomething && !$scp)
 }
 else
 {
-	# scp to remote machine TODO: github releases
+	# scp to remote machine
 	if ($scp)
 	{
 	    # create script to be executed by 'buildall'
+	    getVersion();
 		open(SCP, ">/tmp/buildall.scp") || die "Couldn't open /tmp/buildall.scp";
 		print (SCP "cd $DESTDIR\n");
-		print (SCP "echo Copying: *.*\n");
-		print (SCP "scp *.* $ENV{AWS_APACHE}:/home/donohoe/junk/$PRODUCT\n");
+		print (SCP "echo Copying: ddpoker$VERSION_FILE.* in $DESTDIR...\n");
+		print (SCP "scp ddpoker$VERSION_FILE.dmg ddpoker$VERSION_FILE.exe ddpoker$VERSION_FILE.sh $ENV{AWS_APACHE}:/home/donohoe/staging\n");
 		close(SCP);
 	}
 
@@ -191,6 +193,7 @@ sub build
 	print("\n");
 
 	exit(0) if ($exitearly);
+	return if ($nobuild);
 
 	# git update
 	if (!$nogit)
@@ -227,10 +230,7 @@ sub build
 	}
 
 	# get version
-	$VERSION=`runjava pokerengine com.donohoedigital.games.poker.engine.PrintVersion`;
-	chop $VERSION;
-	$VERSION_FILE = $VERSION =~ s/\./_/gr;
-	print("\nVERSION is '$VERSION', file extension is '$VERSION_FILE'\n");
+	getVersion();
 
 	# unpack jars and generate config files
 	if (!$nounpack)
@@ -347,7 +347,17 @@ sub runIndented
 		print($indent . "  " . $_);
 	}
 	close OUTPUT || die "\n*** Error code ($?) running '$command' $!\n\n";
-}	
+}
+
+# set VERSION and VERSION_FILE (assumes mvn has been run)
+sub getVersion
+{
+    return if ($VERSION);
+	$VERSION=`runjava pokerengine com.donohoedigital.games.poker.engine.PrintVersion`;
+	chop $VERSION;
+	$VERSION_FILE = $VERSION =~ s/\./_/gr;
+	print("\nVERSION is '$VERSION', file extension is '$VERSION_FILE'\n");
+}
 
 # chdir with error checking
 sub cd

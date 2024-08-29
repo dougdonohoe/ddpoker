@@ -298,13 +298,8 @@ find the constants and then find usages of those constants.
 
 ### Installers
 
-There once existed code to build installers for Windows, Mac and Linux, but it has been deleted.  The Windows/Linux
-installers relied on [install4j](https://www.ej-technologies.com/install4j), which requires a license.  The
-Mac installer used `PackageMaker`, which has since been deprecated.  The `installer` directory does
-have some Mac-specific files that were used to build the installer, which might be useful to
-someone in the future.
-
-A possible workaround is to distribute an all-in-one `.jar` file by doing this:
+An alternative to using the installers found in [Releases](https://github.com/dougdonohoe/ddpoker/releases)
+is to distribute an all-in-one `.jar` file by doing this:
 
 ```shell
 mvn-install-notests

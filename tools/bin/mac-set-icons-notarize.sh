@@ -89,7 +89,8 @@ rm -f "$DST_ALT"
 hdiutil convert "$DST_RW" -format UDBZ -o "$DST_ALT"
 rm -rf "$DST_RW"
 
-# attach icon to new dmg
+# attach icon to new dmg  (this apparently only works on local mac; doesn't stick after download,
+# but keeping around since I like it locally and it was a pain to figure out)
 TMP_ICN=/tmp/icons_copy.icns
 TMP_RSRC=/tmp/icons_copy.rsrc
 cp "${DDHOME}/installer/install4j/custom/ddpokerinstaller.icns" "$TMP_ICN"

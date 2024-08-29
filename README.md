@@ -31,18 +31,18 @@ poker
 
 ## Installers
 
-Unfortunately, there are currently no new installers for DD Poker, mainly because
-the Windows and Linux installers were built with software that requires
-a paid license and the Mac version used a tool that has since been removed.
+See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for all installers.  Please note that only
+the Mac installer is signed.  On Windows, you will get an _unknown publisher_ warning.  We are working
+on getting code signing certificates to fix this.  The [old installers](https://static.ddpoker.com/download/) are
+still available, which should work on Windows, but doesn't have recent updates.
 
-There are still the [old installers](https://static.ddpoker.com/download/), which
-were built many years ago, but may still work.
-
-Maybe somebody can help with this in the future.  For now, you can build and
-run it from source, as explained in [Developer Notes](README-DEV.md).
+[<img src="images/install4j_small.png">](https://www.ej-technologies.com/install4j)
+Installers are built courtesy of ej-technologies' 
+[multi-platform installer builder, install4j](https://www.ej-technologies.com/install4j).
+We are grateful that they provided us an open-source license.
 
 There is also an option to distribute a jar file, which the _Installers_ section of
-the Developer Notes explains.
+the [Developer Notes](README-DEV.md) explains.
 
 ## Developer Notes
 
