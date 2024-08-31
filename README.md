@@ -12,7 +12,21 @@ on Mac, Linux and Windows.  The backend-server is essentially
 a Java Spring application that talks to MySQL.  The website 
 (aka "Online Portal") is built on the Apache Wicket framework.
 
-## TL;DR Running DD Poker
+## Installers
+
+See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for Mac and Linux installers.  Windows is coming soon (we
+are waiting on code signing certificates).  The [old installers](https://static.ddpoker.com/download/) are
+still available, which should work on Windows, but doesn't have recent updates.
+
+[<img src="images/install4j_small.png">](https://www.ej-technologies.com/install4j)
+Installers are built courtesy of ej-technologies' 
+[multi-platform installer builder, install4j](https://www.ej-technologies.com/install4j).
+We are grateful that they provided us an open-source license.
+
+There is also an option to distribute a jar file, which the _Installers_ section of
+the [Developer Notes](README-DEV.md) explains.
+
+## TL;DR Running DD Poker From Source
 
 If you are impatient and just want to run the DD Poker game without
 reading all the [developer documentation](README-DEV.md) or worrying
@@ -20,7 +34,7 @@ about servers and databases, follow these steps:
 
 1. Clone this repo
 2. Install [Java 1.8](https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot)
-and [Maven 3](https://maven.apache.org/install.html)
+   and [Maven 3](https://maven.apache.org/install.html)
 3. Run these commands in the `ddpoker` directory:
 
 ```shell
@@ -28,21 +42,6 @@ source ddpoker.rc
 mvn-package-notests
 poker
 ```
-
-## Installers
-
-Unfortunately, there are currently no new installers for DD Poker, mainly because
-the Windows and Linux installers were built with software that requires
-a paid license and the Mac version used a tool that has since been removed.
-
-There are still the [old installers](https://static.ddpoker.com/download/), which
-were built many years ago, but may still work.
-
-Maybe somebody can help with this in the future.  For now, you can build and
-run it from source, as explained in [Developer Notes](README-DEV.md).
-
-There is also an option to distribute a jar file, which the _Installers_ section of
-the Developer Notes explains.
 
 ## Developer Notes
 
