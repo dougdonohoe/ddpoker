@@ -107,10 +107,6 @@ public class ConfigManager
             // gui stuff (images/styles)
             loadGuiConfig();
         }
-        else if (type == SERVER)
-        {
-            new PatchConfig();
-        }
     }
 
     public void loadAudioConfig()

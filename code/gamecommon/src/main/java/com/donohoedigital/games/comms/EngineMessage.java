@@ -71,7 +71,7 @@ public class EngineMessage extends DDMessage
     public static final int CAT_USER_REG = 11;
     public static final int CAT_VERIFY_KEY = 12;
     public static final int CAT_PUBLIC_IP = 13;
-    public static final int CAT_CHECK_PATCH = 14;
+    // deprecated - public static final int CAT_CHECK_PATCH = 14;
     public static final int CAT_CHECK_DDMSG = 15;
 
     // Return messages to client
@@ -123,8 +123,6 @@ public class EngineMessage extends DDMessage
                 return "verify key";
             case CAT_PUBLIC_IP:
                 return "public ip";
-            case CAT_CHECK_PATCH:
-                return "check patch";
             case CAT_CHECK_DDMSG:
                 return "check DD msg";
 
@@ -195,13 +193,6 @@ public class EngineMessage extends DDMessage
     public static final String PARAM_IP = "ipaddr";             // IP address return for P2P
 
     public static final String PARAM_PATCH_OS = "patchos";
-    public static final String PARAM_PATCH_RELEASES = "patchrels";
-
-    // game update types
-    public static final int UPDATE_TYPE_NONE = 0;
-    public static final int UPDATE_TYPE_SENDER_UNITS = 1;       // replace all units in each territory
-    public static final int UPDATE_TYPE_ALL_UNITS = 2;          // replace only units belonging to sender of messsage
-    public static final int UPDATE_TYPE_PLAYERS = 3;            // only update players
 
     /**
      * empty constructor

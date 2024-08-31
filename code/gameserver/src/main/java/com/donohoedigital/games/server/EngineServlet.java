@@ -287,9 +287,6 @@ public abstract class EngineServlet extends BaseServlet
             case EngineMessage.CAT_PUBLIC_IP:
                 return getPublicIP(request);
 
-            case EngineMessage.CAT_CHECK_PATCH:
-                return checkPatch(received);
-
             case EngineMessage.CAT_CHECK_DDMSG:
                 return checkDDmsg(received);
 
@@ -1263,56 +1260,6 @@ public abstract class EngineServlet extends BaseServlet
                                               EngineMessage.PLAYER_SERVER,
                                               EngineMessage.CAT_PUBLIC_IP);
         ret.setString(EngineMessage.PARAM_IP, request.getRemoteAddr());
-        return ret;
-    }
-
-    //
-    // Patch update additions
-    //
-
-    /**
-     * Return the patch release for the given version
-     */
-    protected EngineMessage checkPatch(DDMessage ddreceived)
-    {
-        EngineMessage ret = new EngineMessage(EngineMessage.GAME_NOTDEFINED,
-                                              EngineMessage.PLAYER_SERVER,
-                                              EngineMessage.CAT_CHECK_PATCH);
-
-        String os = ddreceived.getString(EngineMessage.PARAM_PATCH_OS);
-        Version version = ddreceived.getVersion();
-
-        PatchConfig config = PatchConfig.getPatchConfig();
-        PatchRelease release = config.getUpdate(os, version);
-
-        logger.info("Update check from " + ddreceived.getKey() + " on version " + version + " for " + os);
-
-        if (release != null)
-        {
-            // Create a list of releases that includes all uninstalled dependencies.
-            DMArrayList<PatchRelease> releases = new DMArrayList<>();
-            releases.add(release);
-
-            Version dependency = release.getDependency();
-
-            while ((dependency != null) && (dependency.isAfter(version)))
-            {
-                release = config.getRelease(os, dependency);
-
-                if (release == null)
-                {
-                    // Configuration contains a dependency without any associated release information.
-                    ret.setApplicationErrorMessage(PropertyConfig.getRequiredStringProperty("msg.update.invalidRelease"));
-                    return ret;
-                }
-
-                releases.add(release);
-                dependency = release.getDependency();
-            }
-
-            ret.setObject(EngineMessage.PARAM_PATCH_RELEASES, releases);
-        }
-
         return ret;
     }
 

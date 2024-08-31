@@ -195,7 +195,6 @@
     <param name="help.phase" strvalue="Help:mainmenu"/>
     <param name="register.phase" strvalue="UserRegistration"/>
     <param name="order.phase" strvalue="Order"/>
-    <param name="updates.phase" strvalue="DDMessageCheck"/>
     <param name="support.phase" strvalue="Support"/>
     <param name="exit.phase" strvalue="Exit"/>
   </phase>
@@ -793,43 +792,9 @@
     <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.validateProfile"/>
   </phase>
 
-  <phase name="UpdateAssistant" class="com.donohoedigital.games.engine.UpdateAssistant" history="true"
-         extends="PlayerProfileOptions" cache="false">
-    <param name="menubox-title-prop" strvalue="msg.title.UpdateAssistant"/>
-    <param name="text-border-style" strvalue="BrushedMetal"/>
-    <param name="default-button" strvalue="checkupdate"/>
-    <paramlist name="buttons">
-      <strvalue>checkupdate</strvalue>
-      <strvalue>installupdate</strvalue>
-      <strvalue>closegame</strvalue>
-      <strvalue>returnmain:PreviousPhase</strvalue>
-      <strvalue>cancel:PreviousPhase</strvalue>
-    </paramlist>
-  </phase>
-
-  <phase name="UpdateCheck" class="com.donohoedigital.games.engine.UpdateCheck" extends="UserRegistrationSend"
-         cache="false">
-    <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.updateCheck"/>
-  </phase>
-
   <phase name="DDMessageCheck" class="com.donohoedigital.games.engine.DDMessageCheck" extends="UserRegistrationSend"
          cache="false">
     <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.ddmsgCheck"/>
-  </phase>
-
-  <phase name="UpdateDialog" class="com.donohoedigital.games.engine.UpdateDialog">
-    <param name="style" strvalue="PokerStandardDialog"/>
-    <param name="dialog-minwidth" intvalue="350"/>
-    <param name="dialog-windowtitle-image" strvalue="pokerbannerwintitle"/>
-    <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.updateDialog"/>
-    <param name="dialog-style" strvalue="PokerStandardDialog"/>
-    <param name="dialog-modal" boolvalue="true"/>
-    <param name="dialog-help-name" strvalue="empty"/>
-    <param name="dialog-background-image" strvalue="pokerdialog"/>
-    <param name="default-button" strvalue="okay"/>
-    <paramlist name="buttons">
-      <strvalue>okay</strvalue>
-    </paramlist>
   </phase>
 
   <phase name="InitializeGame" class="com.donohoedigital.games.engine.InitializeGame">

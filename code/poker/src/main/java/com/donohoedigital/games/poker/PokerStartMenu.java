@@ -128,7 +128,6 @@ public class PokerStartMenu extends StartMenu
         if (!engine_.isDemo())
         {
             addControlButton(ctrlbuttonbase, "register");
-            //addControlButton(ctrlbuttonbase, "updates"); // Turn off for DD Poker 3
         }
         else
         {

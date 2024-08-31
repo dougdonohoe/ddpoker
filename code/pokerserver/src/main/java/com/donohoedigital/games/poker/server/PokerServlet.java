@@ -1026,19 +1026,4 @@ public class PokerServlet extends EngineServlet
                          sPlainText, sHtmlText,
                          null, null);
     }
-
-    ///
-    /// override patch lookup - this feature no longer used - just notify user of free download
-    ///
-
-    @Override
-    protected EngineMessage checkPatch(DDMessage ddreceived)
-    {
-        EngineMessage ret = new EngineMessage(EngineMessage.GAME_NOTDEFINED,
-                                              EngineMessage.PLAYER_SERVER,
-                                              EngineMessage.CAT_APPL_ERROR);
-
-        ret.setApplicationErrorMessage(PropertyConfig.getRequiredStringProperty("msg.update.ddpoker3"));
-        return ret;
-    }
 }

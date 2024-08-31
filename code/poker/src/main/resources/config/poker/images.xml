@@ -202,11 +202,6 @@
   <image name="button.register.down" location="button-register-down.png"/>
   <image name="button.register.disable" location="button-register-disable.png"/>
 
-  <image name="button.updates.over" location="button-updates-over.png"/>
-  <image name="button.updates.up" location="button-updates-up.png"/>
-  <image name="button.updates.down" location="button-updates-down.png"/>
-  <image name="button.updates.disable" location="button-updates-disable.png"/>
-
   <image name="button.calc.over" location="button-calc-over.png"/>
   <image name="button.calc.up" location="button-calc-up.png"/>
   <image name="button.calc.down" location="button-calc-down.png"/>
