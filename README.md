@@ -14,9 +14,8 @@ a Java Spring application that talks to MySQL.  The website
 
 ## Installers
 
-See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for all installers.  Please note that only
-the Mac installer is signed.  On Windows, you will get an _unknown publisher_ warning.  We are working
-on getting code signing certificates to fix this.  The [old installers](https://static.ddpoker.com/download/) are
+See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for Mac and Linux installers.  Windows is coming soon (we
+are waiting on code signing certificates).  The [old installers](https://static.ddpoker.com/download/) are
 still available, which should work on Windows, but doesn't have recent updates.
 
 [<img src="images/install4j_small.png">](https://www.ej-technologies.com/install4j)

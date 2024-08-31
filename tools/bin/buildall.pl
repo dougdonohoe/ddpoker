@@ -330,7 +330,7 @@ sub build
 	{
 	    # TODO: hashes in notes?
 	    $notes="DD Poker release $VERSION";
-        my $files = join " ", map { "$DESTDIR/ddpoker$VERSION_FILE$_" } (".dmg", ".exe", ".sh");
+        my $files = join " ", map { "$DESTDIR/ddpoker$VERSION_FILE$_" } (".dmg", ".sh"); // TODO: ".exe",
 	    runIndented("gh release create $VERSION --title 'DD Poker $VERSION' --draft --notes '$notes' $files");
 	}
 }
