@@ -67,6 +67,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>4.13.2</junit.version>
+    <spring.version>3.2.18.RELEASE</spring.version>
   </properties>
 
   <build>
