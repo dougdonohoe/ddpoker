@@ -174,8 +174,7 @@ JDK was 1.5.
 
 While some things were upgraded to get the code to work with Java 1.8, our maven dependencies
 still largely date from this time frame too.  We are currently on ancient versions of
-Swing, Wicket, log4j, junit, etc.  In fact the `SpringHack` class had to be added to fool Spring
-2.5.6 to actually work on JDK 1.8 (it only supports up to 1.7).
+Swing, Wicket, log4j, junit, etc.
 
 That said, amazingly, it all still seems to work.  If anybody wants to start upgrading dependencies,
 we are happy to take PRs.
@@ -342,8 +341,7 @@ explains the design of DD Poker's computer opponents.
 Back when this code was originally written and deployed, the code ran on the same machine
 as the database, so using the MySQL host of `localhost` or `127.0.0.1` was sufficient.  To allow
 use from within Docker, we needed more flexibility here, so I added use of the `DB_HOST` environment
-variable.  It's kind of a hack due to lack of features in Spring (see also `SpringHack`).
-The use of `host.docker.internal` in the `Dockerfile.pokerweb.docker` is likely Mac-specific.
+variable. The use of `host.docker.internal` in the `Dockerfile.pokerweb.docker` is likely Mac-specific.
 
 ### Game Engine Tools
 

@@ -39,6 +39,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,7 @@ import static org.junit.Assert.*;
  * <p/>
  * Test items in OnlineProfileService that are more than pass-throughs to the OnlineProfile DAO
  */
-@RunWith(HackRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @TransactionConfiguration(defaultRollback = false)
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})

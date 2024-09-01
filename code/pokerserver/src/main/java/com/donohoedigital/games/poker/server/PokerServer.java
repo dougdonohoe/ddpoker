@@ -40,7 +40,6 @@ package com.donohoedigital.games.poker.server;
 
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.games.server.EngineServer;
-import com.donohoedigital.config.SpringHack;
 import com.donohoedigital.udp.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -62,9 +61,6 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
      */
 	public static void main(String[] argv)
     {
-        // Fool spring into thinking this is Java 5
-        SpringHack.initialize();
-
         // create application context
         ApplicationContext ctx = new ClassPathXmlApplicationContext("app-context-pokerserver.xml");
 

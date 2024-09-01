@@ -41,6 +41,7 @@ import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Log4jConfigurer;
 
 import java.io.FileNotFoundException;
@@ -53,7 +54,7 @@ import java.io.FileNotFoundException;
  *
  * Simple Spring test - configure logging, load app context, get a bean
  */
-@RunWith(HackRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class SpringCreatedServiceTest extends TestCase
 {
