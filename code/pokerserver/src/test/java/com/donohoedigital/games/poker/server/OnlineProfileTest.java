@@ -69,9 +69,6 @@ public class OnlineProfileTest
     @Autowired
     private OnlineProfileDao dao;
 
-    private static OnlineProfile profile = null;
-
-
     @Test
     @Rollback
     public void shouldPersist()
@@ -95,19 +92,15 @@ public class OnlineProfileTest
         assertEquals("key should match", key, updated.getLicenseKey());
     }
 
-    @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod"})
     @Test
+    @Rollback
     public void saveBeforeDelete()
     {
-        profile = PokerTestData.createOnlineProfile("TEST saveBeforeDelete");
+        OnlineProfile profile = PokerTestData.createOnlineProfile("TEST saveBeforeDelete");
         dao.save(profile);
         assertNotNull(profile.getId());
         logger.info(profile.getName() + " saved with id " + profile.getId());
-    }
 
-    @Test
-    public void shouldDelete()
-    {
         OnlineProfile lookup = dao.get(profile.getId());
         dao.delete(lookup);
         logger.info("Should have deleted profile with id " + lookup.getId());
@@ -170,7 +163,7 @@ public class OnlineProfileTest
 
         for (OnlineProfile p : list3)
         {
-            assertFalse(p.getName().equals(nameFetch));
+            assertNotEquals(p.getName(), nameFetch);
         }
 
         // test none found returns empty list

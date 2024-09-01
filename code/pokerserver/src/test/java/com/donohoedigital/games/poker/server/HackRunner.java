@@ -33,7 +33,7 @@
 package com.donohoedigital.games.poker.server;
 
 import com.donohoedigital.config.SpringHack;
-import org.junit.internal.runners.InitializationError;
+import org.junit.runners.model.InitializationError;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
