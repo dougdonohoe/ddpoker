@@ -79,8 +79,6 @@ public class TournamentHistoryTest
     @Autowired
     private OnlineProfileDao profileDao;
 
-    private static TournamentHistory history = null;
-
     @Test
     @Rollback
     public void shouldPersist()
@@ -103,27 +101,26 @@ public class TournamentHistoryTest
         assertEquals("prize should match", prize, updated.getPrize());
     }
 
-    @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod"})
     @Test
+    @Rollback
     public void saveBeforeDelete()
     {
-        history = PokerTestData.createTournamentHistory("saveBeforeDelete", 10, "BBB-888");
+        TournamentHistory history = PokerTestData.createTournamentHistory("saveBeforeDelete", 10, "BBB-888");
         gameDao.save(history.getGame());
         profileDao.save(history.getProfile());
         histDao.save(history);
+        gameDao.refresh(history.getGame());
         assertNotNull(history.getId());
         logger.info(history.getPlayerName() + " saved with id " + history.getId());
-    }
 
-    @Test
-    public void shouldDelete()
-    {
         // deleting via cascade from OnlineGame
         OnlineGame game = gameDao.get(history.getGame().getId());
+        List<TournamentHistory> histories = game.getHistories();
+        assertEquals(histories.size(), 1);
+        assertEquals(histories.get(0).getId(), history.getId());
         gameDao.delete(game);
 
         logger.info("Should have deleted profile with id " + history.getId());
-
         TournamentHistory delete = histDao.get(history.getId());
         assertNull(delete);
 
@@ -277,7 +274,7 @@ public class TournamentHistoryTest
         // no remaining history should match game 1
         for (TournamentHistory hist : hists)
         {
-            assertFalse(hist.getGame().getId().equals(game1.getId()));
+            assertNotEquals(hist.getGame().getId(), game1.getId());
         }
     }
 

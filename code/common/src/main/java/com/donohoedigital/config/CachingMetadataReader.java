@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.config;
 
+import org.springframework.core.io.Resource;
 import org.springframework.core.type.*;
 import org.springframework.core.type.classreading.*;
 
@@ -48,6 +49,7 @@ class CachingMetadataReader implements MetadataReader
     private final MetadataReader reader;
     private ClassMetadata classmeta;
     private AnnotationMetadata annometa;
+    private Resource resource;
 
     public CachingMetadataReader(MetadataReader reader)
     {
@@ -64,5 +66,10 @@ class CachingMetadataReader implements MetadataReader
     {
         if (annometa == null) annometa = reader.getAnnotationMetadata();
         return annometa;
+    }
+
+    public Resource getResource() {
+        if (resource == null) resource = reader.getResource();
+        return resource;
     }
 }
