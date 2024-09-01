@@ -39,6 +39,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +52,7 @@ import static org.junit.Assert.*;
  * Time: 2:52:25 PM
  * Test items in OnlineGameService that are more than pass-throughs to the OnlineGame DAO
  */
-@RunWith(HackRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @TransactionConfiguration(defaultRollback = false)
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
@@ -74,7 +75,7 @@ public class OnlineGameServiceTest
         OnlineGame dupGame = PokerTestData.createOnlineGame("dupGame", 1, "XXX-333");
         dupGame.setLicenseKey(sKey);
         service.saveOnlineGame(dupGame);
-        assertFalse(newGame.getId().equals(dupGame.getId()));
+        assertNotEquals(newGame.getId(), dupGame.getId());
 
         // first game should be deleted
         assertNull(service.getOnlineGameById(newGame.getId()));

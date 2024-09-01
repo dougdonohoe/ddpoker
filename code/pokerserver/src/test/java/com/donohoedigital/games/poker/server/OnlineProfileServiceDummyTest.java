@@ -32,12 +32,11 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import com.donohoedigital.games.poker.service.OnlineProfileService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,18 +48,16 @@ import org.springframework.transaction.annotation.Transactional;
  * <p/>
  * Test items in OnlineProfileService that are more than pass-throughs to the OnlineProfile DAO
  */
-@RunWith(HackRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @TransactionConfiguration(defaultRollback = false)
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class OnlineProfileServiceDummyTest
 {
-    @Autowired
-    private OnlineProfileService service;
-
     /**
-     * Do in own test since rollback invalidates the dummys (and they aren't reloaded since cached)
+     * Do in own test since rollback invalidates the dummy's (and they aren't reloaded since cached)
      */
+    @SuppressWarnings("CommentedOutCode")
     @Test
     @Rollback
     public void testDummy()

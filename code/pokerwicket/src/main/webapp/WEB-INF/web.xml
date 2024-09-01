@@ -50,7 +50,7 @@
 
   <!-- Spring initialization -->
   <listener>
-    <listener-class>com.donohoedigital.wicket.DDContextLoaderListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
   <!-- Spring Parameters -->
