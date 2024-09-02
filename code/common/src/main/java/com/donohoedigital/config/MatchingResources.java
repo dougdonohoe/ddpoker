@@ -44,15 +44,6 @@ import java.net.*;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: donohoe
- * Date: Oct 13, 2008
- * Time: 10:16:47 AM
- * To change this template use File | Settings | File Templates.
- */
-
-
-/**
  * Class to get matching resources - uses Spring's {@link PathMatchingResourcePatternResolver}.
  *
  * @author Doug Donohoe
@@ -62,7 +53,7 @@ public class MatchingResources
 {
     private static final Logger logger = Logger.getLogger(MatchingResources.class);
 
-    private Resource[] resources;
+    private final Resource[] resources;
     private final String pattern;
 
     /**
@@ -100,11 +91,11 @@ public class MatchingResources
     /**
      * Get all matching resources as URLs.
      *
-     * @return {@link URL} array detemined by calling {@link #getURL(Resource)} on each resource.
+     * @return {@link URL} array determined by calling {@link #getURL(Resource)} on each resource.
      */
     public URL[] getAllMatchesURL()
     {
-        URL urls[] = new URL[resources.length];
+        URL[] urls = new URL[resources.length];
         for (int i = 0; i < resources.length; i++)
         {
             urls[i] = getURL(resources[i]);
@@ -116,11 +107,11 @@ public class MatchingResources
      * Get all matching classes that are annotated with the given Annotation.
      *
      * @param annotation an annotation class
-     * @return List of all classes that have the given annotation.  List is empty if non matches found.
+     * @return Set of all classes that have the given annotation.  List is empty if non matches found.
      */
     public Set<Class<?>> getAnnotatedMatches(Class<? extends Annotation> annotation)
     {
-        Set<Class<?>> matches = new HashSet<Class<?>>();
+        Set<Class<?>> matches = new HashSet<>();
         for (Resource r : resources)
         {
             MetadataReader meta = getMetadataReader(r);
@@ -138,11 +129,11 @@ public class MatchingResources
      * Get all matching classes that implement given interface
      *
      * @param iclass an interface class
-     * @return List of all classes that implement given interface.  List is empty if non matches found.
+     * @return Set of all classes that implement given interface.  List is empty if non matches found.
      */
     public Set<Class<?>> getImplementingMatches(Class<?> iclass)
     {
-        Set<Class<?>> matches = new HashSet<Class<?>>();
+        Set<Class<?>> matches = new HashSet<>();
         for (Resource r : resources)
         {
             // Get meta data
@@ -150,7 +141,7 @@ public class MatchingResources
             ClassMetadata classmeta = meta.getClassMetadata();
 
             // get all interfaces this class implements
-            String interfaces[] = classmeta.getInterfaceNames();
+            String[] interfaces = classmeta.getInterfaceNames();
             for (String i : interfaces)
             {
                 if (i.equals(iclass.getName()))
@@ -178,17 +169,18 @@ public class MatchingResources
      * Get all subclasses of given class
      *
      * @param clazz a class
-     * @return List of all classes that subclass given class.  List is empty if non matches found.
+     * @return Set of all classes that subclass given class.  List is empty if non matches found.
      */
     public Set<Class<?>> getSubclasses(Class<?> clazz)
     {
-        Set<Class<?>> matches = new HashSet<Class<?>>();
+        Set<Class<?>> matches = new HashSet<>();
         for (Resource r : resources)
         {
             MetadataReader meta = getMetadataReader(r);
             ClassMetadata classmeta = meta.getClassMetadata();
 
-            if (classmeta.getSuperClassName().equals(clazz.getName()))
+            String superClassName = classmeta.getSuperClassName();
+            if (superClassName != null && superClassName.equals(clazz.getName()))
             {
                 Class<?> sub = ConfigUtils.getClass(classmeta.getClassName());
                 matches.add(sub);
@@ -229,7 +221,7 @@ public class MatchingResources
     {
         if (resources.length > 1)
         {
-            throw new RuntimeException("Found more than one resource in classpath for " + pattern + ": " + toString());
+            throw new RuntimeException("Found more than one resource in classpath for " + pattern + ": " + this);
         }
 
         if (resources.length == 0) return null;
@@ -260,15 +252,14 @@ public class MatchingResources
     {
         if (resources.length == 0)
         {
-            throw new RuntimeException("Cound not find required resource for " + pattern);
+            throw new RuntimeException("Could not find required resource for " + pattern);
         }
 
         if (resources.length > 1)
         {
-            throw new RuntimeException("Found more than one resource in classpath for " + pattern + ": " + toString());
+            throw new RuntimeException("Found more than one resource in classpath for " + pattern + ": " + this);
         }
 
-        if (resources.length == 0) return null;
         return resources[0];
     }
 
@@ -306,7 +297,7 @@ public class MatchingResources
     }
 
     /**
-     * @return string representing all matching resouces as URLs
+     * @return string representing all matching resources as URLs
      */
     @Override
     public String toString()

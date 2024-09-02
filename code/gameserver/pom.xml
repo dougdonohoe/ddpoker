@@ -128,7 +128,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>3.3.2.GA</version>
+      <version>4.3.11.Final</version>
       <exclusions>
         <exclusion>
           <!-- avoid java.lang.NoClassDefFoundError: org/w3c/dom/ElementTraversal -->
@@ -146,7 +146,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
-      <version>3.3.2.GA</version>
+      <version>4.3.11.Final</version>
       <exclusions>
         <exclusion>
           <!-- avoid java.lang.NoClassDefFoundError: org/w3c/dom/ElementTraversal -->
