@@ -54,6 +54,7 @@ import java.util.*;
  *
  * @author  donohoe
  */
+@SuppressWarnings("CommentedOutCode")
 public class DDHttpClient
 {
     static Logger logger = Logger.getLogger(DDHttpClient.class);
@@ -61,17 +62,17 @@ public class DDHttpClient
     private static final String CRLF = "\r\n";
     private static final int HEADER_BUFFER = 512;
     
-    private static boolean DEBUG_DETAILS = false;
-    private static boolean DEBUG_LISTENER = false;
+    private static final boolean DEBUG_DETAILS = false;
+    private static final boolean DEBUG_LISTENER = false;
     
     // timeout control
-    private static int WAITMILLIS = 100; // time to wait while looping
+    private static final int WAITMILLIS = 100; // time to wait while looping
     private static final int DNSTIMEOUT;
     private static final int CONNECTTIMEOUT;
     private static final int SOCKETTIMEOUT;
     
-    /**
-     * Create static messanger for default usage
+    /*
+     * Create static messenger for default usage
      */
     static 
     {
@@ -83,21 +84,21 @@ public class DDHttpClient
     }
     
     // cache dns lookups
-    private static Map<String, InetSocketAddress> DNSCACHE = Collections.synchronizedMap(new HashMap<String, InetSocketAddress>());
+    private static final Map<String, InetSocketAddress> DNSCACHE = Collections.synchronizedMap(new HashMap<>());
 
     // initialization members
     private InetSocketAddress addr_;
-    private URL url_;
-    private SocketChannel sc_;
+    private final URL url_;
+    private final SocketChannel sc_;
     
     // members used during read/write
     private InputStream is_;
     private int nContentLength_ = -1;
     private String sContentType_ = null;
     private int nResponseCode_ = 0;
-    private DDMessageListener listener_;
-    private HttpOptions options_;
-    private DDByteArrayOutputStream buffer_ = new DDByteArrayOutputStream(1000);
+    private final DDMessageListener listener_;
+    private final HttpOptions options_;
+    private final DDByteArrayOutputStream buffer_ = new DDByteArrayOutputStream(1000);
     
     /** 
      * Creates a new instance of DDHttpClient 
@@ -163,6 +164,7 @@ public class DDHttpClient
         }
         catch (ClosedByInterruptException cbie)
         {
+            //noinspection ResultOfMethodCallIgnored
             Thread.interrupted();
             SocketException se = new SocketException("Interrupted - connect()");
             se.initCause(cbie);
@@ -183,6 +185,7 @@ public class DDHttpClient
                                    "establishing connection to " + addr_.getAddress().getHostAddress() + ':' +addr_.getPort());
         
         // loop and sleep until connected
+        //noinspection DuplicatedCode
         while (!sc_.finishConnect())
         {
             if (nWait > CONNECTTIMEOUT) {
@@ -230,16 +233,14 @@ public class DDHttpClient
                 writeProxyConnectHeaders(data, options_.sConnectDestViaProxy);
             }
             // proxy pass thru
-            else if (bProxyPassThru)
-            {
-                // no headers
-            }
-            // regular post
             else
             {
-                writeHeaders(data, "POST", sPostContentType, sUserAgent, post.size());
+                if (!bProxyPassThru) {
+                    // regular post
+                    writeHeaders(data, "POST", sPostContentType, sUserAgent, post.size());
+                } // no headers if proxy
             }
-            
+
             data.write(post.getBuffer(), 0, post.size());
         }
         // normal get
@@ -268,14 +269,14 @@ public class DDHttpClient
     {
         StringBuilder sb = new StringBuilder(HEADER_BUFFER).append(sMethod).append(' ');
         String file = url_.getFile();
-        if (file == null | file.length() == 0) file = "/";
+        if (file == null || file.isEmpty()) file = "/";
         sb.append(file);
         sb.append(" HTTP/1.1").append(CRLF);
         sb.append("host: ").append(url_.getHost()).append(CRLF); // need for http 1.1
         if (sUserAgent != null) sb.append("user-agent: ").append(sUserAgent).append(CRLF);
         //sb.append("Accept: text/html, image/gif, image/jpeg, image/png, *; q=.2, */*; q=.2").append(CRLF);
         if (sContentType != null) sb.append("Content-Type: ").append(sContentType).append(CRLF);
-        if (nLength > 0) sb.append("Content-Length: ").append(Integer.toString(nLength)).append(CRLF);
+        if (nLength > 0) sb.append("Content-Length: ").append(nLength).append(CRLF);
         if (options_ != null)
         {
             if (options_.sUsername != null && options_.sPassword != null)
@@ -304,11 +305,8 @@ public class DDHttpClient
      */
     public void writeProxyConnectHeaders(OutputStream os, String sDestHostAndPort) throws IOException
     {
-        StringBuilder sb = new StringBuilder(HEADER_BUFFER).append("CONNECT ");
-        sb.append(sDestHostAndPort);
-        sb.append(" HTTP/1.0").append(CRLF);
-        sb.append(CRLF);
-        os.write(Utils.encodeBasic(sb.toString()));
+        String sb = "CONNECT " + sDestHostAndPort + " HTTP/1.0" + CRLF + CRLF;
+        os.write(Utils.encodeBasic(sb));
     }
     
     /**
@@ -464,7 +462,7 @@ public class DDHttpClient
     }
     
     /**
-     * Class to lookup a host in a thread so
+     * Class to look up a host in a thread so
      * we can timeout if takes too long
      */
     private static class LookupHost implements Runnable
@@ -485,6 +483,7 @@ public class DDHttpClient
                 t.join(DNSTIMEOUT);
             }
             catch (InterruptedException ie) {
+                //noinspection ResultOfMethodCallIgnored
                 Thread.interrupted();
             }
             
@@ -518,9 +517,9 @@ public class DDHttpClient
             }
         }
         
-        /**
+        /*
          * Returns true if address defined or exception occurred
-         * Not used, but keep it incase I remember why here in first place
+         * Not used, but keep it in case I remember why here in first place
          */
 //        private boolean isDone()
 //        {
@@ -528,13 +527,13 @@ public class DDHttpClient
 //        }
         
         /**
-         * Returns address, or if exception occured, throws that
+         * Returns address, or if exception occurred, throws that
          */
         private InetAddress getAddress() throws UnknownHostException
         {
             if (uhe != null) throw uhe;
             
-            // unsure that this will ever happen, but i put this here
+            // unsure that this will ever happen, but I put this here
             // to ensure this method never returns null
             if (addr == null) throw new UnknownHostException("Lookup returned no result for " + host);
             
@@ -559,7 +558,7 @@ public class DDHttpClient
         public String sPassword;
         
         /**
-         * If non null, set to a host or IP,
+         * If non-null, set to a host or IP,
          * means the URL given is the proxy
          * and this host is the ultimate destination,
          * via the CONNECT method
