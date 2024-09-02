@@ -42,7 +42,7 @@
 >
 
   <!-- Turn on processing for @Transactional annotations -->
-  <tx:annotation-driven transaction-manager="transactionManager"/>
+  <tx:annotation-driven/>
 
   <!-- Turn on auto scanning for DAOs (@Repository, @Service annotations) -->
   <context:component-scan base-package="com.donohoedigital"/>
@@ -74,7 +74,7 @@
     <!--<property name="jdbcUrl" value="jdbc:hsqldb:hsql://localhost/poker"/>-->
     <!--<property name="user" value="sa"/>-->
     <!--<property name="password" value=""/>-->
-    <property name="initialPoolSize" value="0"/>
+    <property name="initialPoolSize" value="1"/>
     <property name="minPoolSize" value="1"/>
     <property name="maxPoolSize" value="5"/>
     <property name="maxIdleTime" value="21600"/>

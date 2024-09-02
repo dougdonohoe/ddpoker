@@ -41,7 +41,6 @@ package com.donohoedigital.games.poker.server;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.games.server.EngineServer;
 import com.donohoedigital.udp.*;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;
@@ -61,11 +60,8 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
      */
 	public static void main(String[] argv)
     {
-        // create application context
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("app-context-pokerserver.xml");
-
-        // get the server bean - spring creates everything and calls init()
-        ctx.getBean("server");
+        // create application context (spring creates everything, including this "server" bean, calling init())
+        new ClassPathXmlApplicationContext("app-context-pokerserver.xml");
 	}
 
     /**
@@ -77,7 +73,7 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
         super.init();
         udp_.manager().addMonitor(this);
         udp_.start();
-        run();
+        start();
     }
 
     /**
@@ -102,14 +98,6 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
     public void setChatServer(ChatServer chat)
     {
         chat_ = chat;
-    }
-
-    /**
-     * Get chat server
-     */
-    public ChatServer getChatServer()
-    {
-        return chat_;
     }
 
     ////
