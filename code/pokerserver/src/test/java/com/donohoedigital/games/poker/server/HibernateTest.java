@@ -54,9 +54,6 @@ public class HibernateTest extends TestCase
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public void testHibernate() throws FileNotFoundException
     {
-        //log4j looks in base of classpath by default.  Alternative is to initLogging as such:
-        //      we can use the resources directory which is intellij copies to build dir
-        //Log4jConfigurer.initLogging("classpath:"+ConfigTest.CONFIG_CLASSPATH+"log4j.properties");
         Logger logger = Logger.getLogger(HibernateTest.class);
 
         // "poker" is from persistence.xml (aka the persistence unit)

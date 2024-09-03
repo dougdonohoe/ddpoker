@@ -50,7 +50,7 @@ import java.util.*;
 public class UpgradedKey implements BaseModel<Long>
 {
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "upg_id", nullable = false)
     private Long id;
 

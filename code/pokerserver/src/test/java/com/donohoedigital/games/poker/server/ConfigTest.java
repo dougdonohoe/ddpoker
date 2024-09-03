@@ -54,7 +54,6 @@ public class ConfigTest extends TestCase
      */
     public void testSpring() throws FileNotFoundException
     {
-        Log4jConfigurer.initLogging("classpath:log4j.properties");
         String[] contextPaths = new String[] {"app-context-configtest.xml"};
         ApplicationContext ctx = new ClassPathXmlApplicationContext(contextPaths);
         String test = (String) ctx.getBean("test");

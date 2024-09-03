@@ -58,7 +58,7 @@ public class Registration implements BaseModel<Long>
     }
 
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reg_id", nullable = false)
     private Long id;
 

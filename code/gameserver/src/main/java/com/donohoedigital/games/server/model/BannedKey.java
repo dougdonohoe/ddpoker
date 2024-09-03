@@ -50,10 +50,10 @@ import java.util.*;
 @Table(name = "banned_key")
 public class BannedKey implements BaseModel<Long>, Comparable<BannedKey>
 {
-    public static final Date DEFAULT_UNTIL = new GregorianCalendar(2032, 11, 31).getTime();  // 12/31/2032
+    public static final Date DEFAULT_UNTIL = new GregorianCalendar(2099, Calendar.DECEMBER, 31).getTime();  // 12/31/2099
 
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ban_id", nullable = false)
     private Long id;
 
