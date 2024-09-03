@@ -55,7 +55,7 @@ public class TournamentHistory implements BaseModel<Long>, DataMarshal, SimpleXM
 {
     // members
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "whi_id", nullable = false)
     private Long id;
 

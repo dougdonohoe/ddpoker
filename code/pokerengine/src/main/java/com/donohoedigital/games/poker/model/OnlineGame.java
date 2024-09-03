@@ -120,7 +120,7 @@ public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
     }
 
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wgm_id", nullable = false)
     public Long getId()
     {

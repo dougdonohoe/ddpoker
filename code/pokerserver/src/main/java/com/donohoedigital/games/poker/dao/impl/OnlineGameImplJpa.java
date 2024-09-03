@@ -54,7 +54,7 @@ public class OnlineGameImplJpa extends JpaBaseDao<OnlineGame, Long> implements O
 {
     //private static final Logger logger = Logger.getLogger(OnlineGameImplJpa.class);
 
-    private static final Date END_OF_TIME = new GregorianCalendar(2030, 12, 31, 23, 23, 59).getTime();
+    private static final Date END_OF_TIME = new GregorianCalendar(2099, Calendar.DECEMBER, 31, 23, 23, 59).getTime();
     private static final Date BEGINNING_OF_TIME = new Date(0);
 
     @SuppressWarnings({"unchecked"})
@@ -231,7 +231,7 @@ public class OnlineGameImplJpa extends JpaBaseDao<OnlineGame, Long> implements O
      */
     private String getDateColumn(Integer[] modes)
     {
-        String dateColumn = null;
+        String dateColumn;
 
         // earliest type determines sort order (because start/end date can be null
         // for games not started/not ended)
@@ -276,8 +276,6 @@ public class OnlineGameImplJpa extends JpaBaseDao<OnlineGame, Long> implements O
 
     /**
      * Online game summary
-     *
-     * @return
      */
     @SuppressWarnings({"unchecked"})
     public PagedList<HostSummary> getHostSummary(Integer count, int offset, int pagesize, String nameSearch, Date begin, Date end)
@@ -310,7 +308,7 @@ public class OnlineGameImplJpa extends JpaBaseDao<OnlineGame, Long> implements O
         List<Object[]> results = (List<Object[]>) query.getResultList();
 
         // create summary list, set size and translate results
-        PagedList<HostSummary> list = new PagedList<HostSummary>();
+        PagedList<HostSummary> list = new PagedList<>();
         list.setTotalSize(count);
         for (Object[] a : results)
         {

@@ -42,7 +42,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Log4jConfigurer;
 
 import java.io.FileNotFoundException;
 
@@ -51,23 +50,21 @@ import java.io.FileNotFoundException;
  * User: donohoe
  * Date: Feb 17, 2008
  * Time: 9:08:21 PM
- *
  * Simple Spring test - configure logging, load app context, get a bean
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class SpringCreatedServiceTest extends TestCase
 {
-    private Logger logger = Logger.getLogger(SpringCreatedServiceTest.class);
+    private final Logger logger = Logger.getLogger(SpringCreatedServiceTest.class);
 
     /**
      * Load app config
      */
     @Test
-    public void testSpring() throws FileNotFoundException
+    public void testSpring()
     {
         // TODO: auto-wire service instead?
-        Log4jConfigurer.initLogging("classpath:log4j.properties");
         String[] contextPaths = new String[] {"app-context-jpatests.xml"};
         ApplicationContext ctx = new ClassPathXmlApplicationContext(contextPaths);
 

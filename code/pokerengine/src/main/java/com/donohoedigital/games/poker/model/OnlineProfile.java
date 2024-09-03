@@ -121,7 +121,7 @@ public class OnlineProfile implements BaseModel<Long>
     }
 
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wpr_id", nullable = false)
     public Long getId()
     {
