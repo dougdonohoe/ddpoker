@@ -173,8 +173,8 @@ of DD Poker was written from 2004-2007, with sporadic updates after that.  The o
 JDK was 1.5.
 
 While some things were upgraded to get the code to work with Java 1.8, our maven dependencies
-still largely date from this time frame too.  We are currently on ancient versions of
-Swing, Wicket, log4j, junit, etc.
+still largely date from this time frame too.  We are currently on older/ancient versions of
+Swing, Wicket, log4j, junit, etc. (although we are upgrading some as the mood strikes).
 
 That said, amazingly, it all still seems to work.  If anybody wants to start upgrading dependencies,
 we are happy to take PRs.
