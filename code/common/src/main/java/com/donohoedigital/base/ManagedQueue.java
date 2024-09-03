@@ -43,6 +43,7 @@ import java.util.concurrent.*;
  * Time: 3:15:11 PM
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public abstract class ManagedQueue<T>
 {
     private static final Logger logger = Logger.getLogger(ManagedQueue.class);
@@ -165,7 +166,7 @@ public abstract class ManagedQueue<T>
         {
             // wait for thread to end.  If finishing queue,
             // wait indefinitely (e.g., until quitItem is processed).
-            // Otherwise only wait a little bit.
+            // Otherwise, only wait a little bit.
             processor.join(finishQueue ? 0 : WAIT_FOR_THREAD_FINISH);
         }
         catch (InterruptedException e)
@@ -280,7 +281,7 @@ public abstract class ManagedQueue<T>
     }
 
     /**
-     * Is done?
+     * Are we done?
      */
     public boolean isDone()
     {
