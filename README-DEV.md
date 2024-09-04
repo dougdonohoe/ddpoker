@@ -388,18 +388,27 @@ killall -u $USER cfprefsd
 ### Classpath and Dependency Tree
 
 We override the `mvn dependency:tree` to create `target/classpath.txt` in each module, which
-is used by the `buildall.pl` and `runjava` scripts to determine the jar files needed to
+is used by the `runjava` and `buildall.pl` scripts to determine the jar files needed to
 run a program.
 
-To get the default tree output, to diagose dependency issues, run this in `code` or in a particular
+To get the default tree output, to diagnose dependency issues, run this in `code` or in a particular
 module, like `code/wicket`.
 
 ```shell
+# Need to "install" to get proper trees when doing it in sub-tree (for reasons I'm not clear on)
+mvn-install-no-tests
+
+# cd to a module
+cd code/pokerwicket
+
 # output to console, with other maven INFO
-mvn dependency:tree -q -Ddependency.classpath.outputFile=
+mvn dependency:tree -Ddependency.classpath.outputFile=
 
 # just the tree
-mvn dependency:tree -q -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm /tmp/t
+mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t
+
+# ddpoker.rc has alias for this previous one
+mvn-tree
 ```
 
 ## Appendix A - Database via Docker

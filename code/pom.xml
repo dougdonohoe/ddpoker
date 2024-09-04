@@ -109,7 +109,7 @@
               <goal>build-classpath</goal>
             </goals>
             <configuration>
-              <outputFile>target/classpath.txt</outputFile>
+              <outputFile>${dependency.classpath.outputFile}</outputFile>
               <includeScope>runtime</includeScope>
             </configuration>
           </execution>

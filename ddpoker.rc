@@ -49,6 +49,7 @@ alias mvn-clean='(cd $CODE;mvn clean)'
 alias mvn-package-notests='(cd $CODE;mvn package -Dmaven.test.skip.exec=true)'
 alias mvn-package='(cd $CODE;mvn package)'
 alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
+alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t'
 
 # attempt to auto-set JAVA_HOME to 1.8 if on mac
 if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
