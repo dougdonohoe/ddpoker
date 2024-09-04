@@ -40,7 +40,7 @@ package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
 import org.apache.log4j.*;
-import org.jdom.*;
+import org.jdom2.*;
 
 import javax.sound.midi.*;
 import java.net.*;

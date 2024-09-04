@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import org.apache.log4j.*;
 import com.donohoedigital.config.*;
 
-import org.jdom.*;
+import org.jdom2.*;
 import java.util.*;
 
 

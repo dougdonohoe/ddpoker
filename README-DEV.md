@@ -385,6 +385,23 @@ rm -f com.donohoedigital.poker3.plist
 killall -u $USER cfprefsd
 ```
 
+### Classpath and Dependency Tree
+
+We override the `mvn dependency:tree` to create `target/classpath.txt` in each module, which
+is used by the `buildall.pl` and `runjava` scripts to determine the jar files needed to
+run a program.
+
+To get the default tree output, to diagose dependency issues, run this in `code` or in a particular
+module, like `code/wicket`.
+
+```shell
+# output to console, with other maven INFO
+mvn dependency:tree -q -Ddependency.classpath.outputFile=
+
+# just the tree
+mvn dependency:tree -q -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm /tmp/t
+```
+
 ## Appendix A - Database via Docker
 
 DD Poker's server uses MySQL.  You can easily run an instance locally using Docker.

@@ -40,7 +40,7 @@ package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.jdom.*;
+import org.jdom2.*;
 
 import java.net.*;
 

@@ -40,8 +40,8 @@ package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
 import org.apache.log4j.*;
-import org.jdom.*;
-import org.jdom.input.*;
+import org.jdom2.*;
+import org.jdom2.input.*;
 import org.xml.sax.*;
 
 import java.net.*;

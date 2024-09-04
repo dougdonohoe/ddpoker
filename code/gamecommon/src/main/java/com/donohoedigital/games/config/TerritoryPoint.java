@@ -33,17 +33,15 @@
 /*
  * TerritoryPoint.java
  *
- * Created on Novemeber 10, 2002, 4:49 PM
+ * Created on November 10, 2002, 4:49 PM
  */
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import org.apache.log4j.*;
-import com.donohoedigital.config.*;
-
-import org.jdom.*;
-import java.util.*;
+import com.donohoedigital.base.ApplicationError;
+import org.apache.log4j.Logger;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  *
@@ -87,9 +85,9 @@ public class TerritoryPoint extends MapPoint
         return myTerritory_;
     }
     
-    ///
-    /// UI helper methods
-    ///
+    //
+    // UI helper methods
+    //
     
     /**
      * Return nearest point to this one.  Used by GUIs
@@ -127,7 +125,7 @@ public class TerritoryPoint extends MapPoint
     private TerritoryPoint getNavPoint(int nType)
     {
         if (myTerritory_ == null) {
-            logger.warn("myTerritory_ is null in TerritoryPoint.getNavXPoint() " + toString());
+            logger.warn("myTerritory_ is null in TerritoryPoint.getNavXPoint() " + this);
             return null;
         }
         int nSize = myTerritory_.size();
