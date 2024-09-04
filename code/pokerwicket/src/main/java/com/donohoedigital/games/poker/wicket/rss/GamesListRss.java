@@ -35,7 +35,7 @@ package com.donohoedigital.games.poker.wicket.rss;
 import com.donohoedigital.base.*;
 import com.donohoedigital.games.poker.model.util.*;
 import com.donohoedigital.games.poker.service.*;
-import com.sun.syndication.io.*;
+import com.rometools.rome.io.*;
 import org.apache.wicket.markup.html.*;
 import org.apache.wicket.request.target.resource.*;
 import org.apache.wicket.spring.injection.annot.*;
@@ -50,11 +50,10 @@ public abstract class GamesListRss extends WebPage
 {
     private static final long serialVersionUID = 42L;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
+    @SuppressWarnings({"NonSerializableFieldInSerializableClass", "unused"})
     @SpringBean
-    private OnlineGameService gameService;
+    protected OnlineGameService gameService;
 
-    @SuppressWarnings({"AbstractMethodCallInConstructor"})
     public GamesListRss()
     {
         Date end = new Date();
@@ -66,7 +65,7 @@ public abstract class GamesListRss extends WebPage
         // encode it
         GamesListFeed feed = new GamesListFeed(getTitle(), getUrl(), games);
         WireFeedOutput out = new WireFeedOutput();
-        String xml = null;
+        String xml;
         try
         {
             xml = out.outputString(feed);
@@ -90,7 +89,7 @@ public abstract class GamesListRss extends WebPage
     protected abstract Integer[] getModes();
 
     /**
-     * Get URL for assocciated page
+     * Get URL for associated page
      */
     protected abstract String getUrl();
 

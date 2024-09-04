@@ -30,13 +30,16 @@
  * doug [at] donohoe [dot] info.
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
-package com.donohoedigital.proto.tests;
+package com.donohoedigital.games.poker.wicket.rss;
 
-import com.sun.syndication.feed.rss.Category;
-import com.sun.syndication.feed.rss.*;
-import com.sun.syndication.io.*;
+import com.rometools.rome.feed.rss.Category;
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Description;
+import com.rometools.rome.feed.rss.Item;
+import com.rometools.rome.feed.rss.Source;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.WireFeedOutput;
 import junit.framework.*;
-import org.apache.log4j.*;
 
 import java.util.*;
 
@@ -45,8 +48,11 @@ import java.util.*;
  */
 public class RssTest extends TestCase
 {
-    private static Logger logger = Logger.getLogger(RssTest.class);
+    //private static final Logger logger = Logger.getLogger(RssTest.class);
 
+    /**
+     * This test basically verifies dependencies for rome (rss) are working
+     */
     public void testRSS()
     {
         Channel channel = new Channel("rss_2.0");
@@ -58,10 +64,9 @@ public class RssTest extends TestCase
         channel.setLanguage("en");
         channel.setCopyright("Copyright (c) 2004-2008.  Donohoe Digital LLC.");
 
-
         Category cat = new Category();
         cat.setValue("Available Games");
-        List<Category> cats = new ArrayList<Category>();
+        List<Category> cats = new ArrayList<>();
         cats.add(cat);
 
         Item item = new Item();
@@ -76,18 +81,20 @@ public class RssTest extends TestCase
         source.setValue("Available Games");
         item.setSource(source);
 
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         items.add(item);
         channel.setItems(items);
 
         WireFeedOutput out = new WireFeedOutput();
         try
         {
-            logger.debug("Feed: \n" + out.outputString(channel));
+            assertNotNull(out);
+            assertNotNull(out.outputString(channel));
+            //logger.debug("Feed: \n" + out.outputString(channel));
         }
         catch (FeedException e)
         {
-            logger.error(e);
+            fail(e.getMessage());
         }
     }
 

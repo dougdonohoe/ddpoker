@@ -37,7 +37,7 @@ import com.donohoedigital.config.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.model.util.*;
 import com.donohoedigital.games.poker.wicket.pages.online.*;
-import com.sun.syndication.feed.rss.*;
+import com.rometools.rome.feed.rss.*;
 
 import java.util.*;
 
@@ -46,8 +46,6 @@ import java.util.*;
  */
 public class GamesListFeed extends Channel
 {
-    //private static Logger logger = Logger.getLogger(GamesListFeed.class);
-
     private static final long serialVersionUID = 42L;
 
     public GamesListFeed(String title, String url, OnlineGameList list)
@@ -71,7 +69,7 @@ public class GamesListFeed extends Channel
         setTtl(30); // time to live
 
         // category
-        List<Category> cats = new ArrayList<Category>();
+        List<Category> cats = new ArrayList<>();
         setCategories(cats);
 
         // image
@@ -85,7 +83,7 @@ public class GamesListFeed extends Channel
         setImage(image);
 
         // items
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         for (OnlineGame game : list)
         {
             Item item = new Item();
@@ -117,7 +115,7 @@ public class GamesListFeed extends Channel
             // category
             Category itemcat = new Category();
             itemcat.setValue(getCategory(game.getMode()));
-            List<Category> icats = new ArrayList<Category>();
+            List<Category> icats = new ArrayList<>();
             icats.add(itemcat);
             item.setCategories(icats);
 
