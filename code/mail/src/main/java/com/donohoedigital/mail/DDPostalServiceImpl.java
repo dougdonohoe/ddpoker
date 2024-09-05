@@ -40,35 +40,37 @@ package com.donohoedigital.mail;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
 import org.apache.log4j.*;
 
-import javax.activation.*;
-import javax.mail.*;
-import javax.mail.internet.*;
 import java.io.*;
 import java.util.*;
 
 /**
  * @author donohoe
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class DDPostalServiceImpl implements Runnable, DDPostalService
 {
-    private static Logger logger = Logger.getLogger(DDPostalServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(DDPostalServiceImpl.class);
 
-    private static boolean DEBUG = false;
+    private static final boolean DEBUG = false;
 
     // one mail queue needed
     private Thread threadQ_ = null;
 
     // instance info
-    private boolean bInitMailQ_;
-    private List<Message> mailQ_ = new ArrayList<Message>();
+    private final boolean bInitMailQ_;
+    private List<Message> mailQ_ = new ArrayList<>();
     private boolean bDone_ = false;
     private Properties props_;
     private DDAuthenticator auth_;
     private int nWait_;
     private boolean bLoopAtEnd_;
-    private Map<String, DDMailErrorHandler> errorHandlers_ = new HashMap<String, DDMailErrorHandler>();
+    private final Map<String, DDMailErrorHandler> errorHandlers_ = new HashMap<>();
     private boolean bSleeping_ = false;
     private final Object SLEEPCHECK = new Object();
     public static final String HEADER_ERRORINFO = "X-DDMail-ErrorInfo";
@@ -162,7 +164,7 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
             // in a bit)
             synchronized (SLEEPCHECK)
             {
-                List<Message> list = null;
+                List<Message> list;
                 boolean bSuccess = true;
                 while (bSuccess && (list = getMessageQueue()) != null)
                 {
@@ -172,14 +174,14 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
         }
 
         logger.info("Shutting down DD Postal Service...");
-        List<Message> list = null;
+        List<Message> list;
         while ((list = getMessageQueue()) != null)
         {
             boolean bSuccess = sendMessages(list);
             if (!bSuccess || !bLoopAtEnd_) break;
         }
         list = getMessageQueue();
-        if (list != null && list.size() > 0)
+        if (list != null && !list.isEmpty())
         {
             logger.error("Unable to send " + list.size() + " emails");
         }
@@ -275,10 +277,10 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
      */
     private synchronized List<Message> getMessageQueue()
     {
-        if (mailQ_.size() == 0) return null; // avoid new object if empty
+        if (mailQ_.isEmpty()) return null; // avoid new object if empty
 
         List<Message> list = mailQ_;
-        mailQ_ = new ArrayList<Message>();
+        mailQ_ = new ArrayList<>();
         return list;
     }
 
@@ -353,7 +355,7 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
         catch (SendFailedException sfex)
         {
             String sMsg = Utils.getExceptionMessage(sfex);
-            if (sMsg != null) sMsg = sMsg.replace('\n', ' ');
+            sMsg = sMsg.replace('\n', ' ');
             logger.error("Error sending mail: " + sMsg);
 
             if (DEBUG)
@@ -406,7 +408,9 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
     /**
      * Basic api for sending email
      */
-    private void sendMail(InternetAddress[] to, InternetAddress[] cc,
+    @SuppressWarnings("SameParameterValue")
+    private void sendMail(InternetAddress[] to,
+                          InternetAddress[] cc,
                           InternetAddress[] bcc,
                           String sFrom, String sReplyTo,
                           String sSubject,
@@ -557,7 +561,7 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
      */
     private static class HtmlSource implements DataSource
     {
-        String sHtml = null;
+        String sHtml;
 
         public HtmlSource(String sHtml)
         {
@@ -569,8 +573,7 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
             return "text/html; charset=" + Utils.CHARSET_NAME;
         }
 
-        public InputStream getInputStream() throws IOException
-        {
+        public InputStream getInputStream() {
             return new ByteArrayInputStream(Utils.encode(sHtml));
         }
 
@@ -590,7 +593,7 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
      */
     private static class PlainSource implements DataSource
     {
-        String sPlain = null;
+        String sPlain;
 
         public PlainSource(String sPlain)
         {
@@ -602,8 +605,7 @@ public class DDPostalServiceImpl implements Runnable, DDPostalService
             return "text/plain; charset=" + Utils.CHARSET_NAME;
         }
 
-        public InputStream getInputStream() throws IOException
-        {
+        public InputStream getInputStream() {
             return new ByteArrayInputStream(Utils.encode(sPlain));
         }
 

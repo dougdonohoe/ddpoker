@@ -37,8 +37,8 @@
 package com.donohoedigital.mail;
 
 import com.donohoedigital.base.*;
+import jakarta.activation.DataSource;
 
-import javax.activation.*;
 import java.io.*;
 
 public class DDAttachment implements DataSource
@@ -67,7 +67,7 @@ public class DDAttachment implements DataSource
         return sContentType_;
     }
 
-    public java.io.InputStream getInputStream() throws java.io.IOException {
+    public java.io.InputStream getInputStream() {
         return new ByteArrayInputStream(data_);
     }
 
