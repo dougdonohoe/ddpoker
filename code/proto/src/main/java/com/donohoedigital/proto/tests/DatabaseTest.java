@@ -46,12 +46,12 @@ public class DatabaseTest {
     public static void main (String[] args)
     { 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             try {
                 Connection conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost/test?useSSL=false", "test", null);
+                        "jdbc:mysql://127.0.0.1/pokertest?useSSL=false", "pokertest", "p0k3rdb!");
                 Statement stmt= conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * from testac");
+                ResultSet rs = stmt.executeQuery("SELECT * from wan_profile");
 
                 SQLWarning warn = rs.getWarnings();
                 while (warn != null) {
