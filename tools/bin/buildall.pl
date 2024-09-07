@@ -310,13 +310,15 @@ sub build
 		# copy cert
         runIndented("~/work/donohoe/ddpoker/cp-certs.sh '$DEVDIR/target'");
 
-        # get password
+        # get passwords
         $mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
         chop $mac_pw;
+        $win_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
+        chop $win_pw;
 
 		# run install4j
-		#   TODO: --win-keystore-password    Set private key password for Windows code signing.
-        $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION --mac-keystore-password='$mac_pw' --build-selected $install4j\n";
+        $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION " .
+                "--mac-keystore-password='$mac_pw' --win-keystore-password='$win_pw' --build-selected $install4j\n";
         runIndented($cmd);
 
         # Set icons in Mac installer and notarize

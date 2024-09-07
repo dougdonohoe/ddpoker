@@ -5,7 +5,9 @@
     <languages>
       <principalLanguage id="en" customLocalizationFile="./custom/override.messages.utf8" />
     </languages>
-    <codeSigning macEnabled="true" macPkcs12File="../../target/developerID_application.p12" />
+    <codeSigning macEnabled="true" macPkcs12File="../../target/developerID_application.p12" windowsEnabled="true" windowsKeySource="pkcs11" windowsPkcs11Library="/usr/local/lib/libeTPkcs11.dylib">
+      <windowsPkcs11Identifier issuer="Sectigo Public Code Signing CA R36" serial="b188553e484920219014bcbae1b277c5" subject="Donohoe Digital LLC" />
+    </codeSigning>
     <jreBundles jdkProviderId="Corretto" release="8/8.422.05.1" />
   </application>
   <files>
@@ -53,7 +55,7 @@
       <archive location="../../build/installer-3.0.jar" />
     </customCode>
     <applications>
-      <application id="installer" beanClass="com.install4j.runtime.beans.applications.InstallerApplication" styleId="122" customIcnsFile="./custom/ddpokericon.icns" customIcoFile="./custom/pokericon16to64installer.ico">
+      <application id="installer" beanClass="com.install4j.runtime.beans.applications.InstallerApplication" actionElevationType="elevated" styleId="122" customIcnsFile="./custom/ddpokericon.icns" customIcoFile="./custom/pokericon16to64installer.ico">
         <serializedBean>
           <property name="customIconImageFiles">
             <add>
@@ -117,7 +119,11 @@
         <startup>
           <screen id="4" beanClass="com.install4j.runtime.beans.screens.StartupScreen" rollbackBarrierExitCode="0">
             <actions>
-              <action id="177" beanClass="com.install4j.runtime.beans.actions.misc.RequestPrivilegesAction" actionElevationType="none" />
+              <action id="177" beanClass="com.install4j.runtime.beans.actions.misc.RequestPrivilegesAction" actionElevationType="none">
+                <serializedBean>
+                  <property name="obtainIfNormalWin" type="boolean" value="true" />
+                </serializedBean>
+              </action>
             </actions>
           </screen>
         </startup>
@@ -988,7 +994,6 @@ return true;
         <bean refId="50" />
       </excludedBeans>
     </unixInstaller>
-    <macosFolder name="macOS Folder" id="182" volumeName="${compiler:sys.fullName}" architecture="universal" />
     <macosArchive name="macOS Single Bundle Archive" id="201" volumeName="${compiler:sys.fullName}" architecture="universal" launcherId="2">
       <topLevelFiles>
         <symlink name="&quot; &quot;" target="/Applications" />
