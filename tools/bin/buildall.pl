@@ -90,7 +90,18 @@ if ($dev)
 }
 
 # place to copy installers
-$DESTDIR="$BASELOC/ddpoker/installer/builds";
+
+#
+# if github, skip git, mvn, unpack, buildrelease, installer (assumes done previously).
+# The idea is that you first build (and verify) then upload to github
+#
+if ($github) {
+ $nogit = 1;
+ $nomvn = 1;
+ $nobuildrelease = 1;
+ $nounpack = 1;
+ $noinstaller = 1;
+}
 
 #
 # builds
@@ -117,8 +128,7 @@ if (!$builtsomething && !$scp)
 	print ("   -nobuildrelease  skip buildrelease step\n");
 	print ("   -noinstaller     skip install4j build step\n");
 	print ("   -scp             scp all installers to remote machine\n");
-	print ("   -nobuild         nobuild steps (often used like -dev -scp -nobuild)\n");
-	print ("   -github          copy all installers to github\n");
+	print ("   -github          create a release at github with all installers\n");
 	print ("   -exitearly       just print env vars\n");
 	print ("\n");
 	exit(1);
@@ -131,8 +141,8 @@ else
 	    # create script to be executed by 'buildall'
 	    getVersion();
 		open(SCP, ">/tmp/buildall.scp") || die "Couldn't open /tmp/buildall.scp";
-		print (SCP "cd $DESTDIR\n");
-		print (SCP "echo Copying: ddpoker$VERSION_FILE.* in $DESTDIR...\n");
+		print (SCP "cd $INSTALLERDIR\n");
+		print (SCP "echo Copying: ddpoker$VERSION_FILE.* in $INSTALLERDIR...\n");
 		print (SCP "scp ddpoker$VERSION_FILE.dmg ddpoker$VERSION_FILE.exe ddpoker$VERSION_FILE.sh $ENV{AWS_APACHE}:/home/donohoe/staging\n");
 		close(SCP);
 	}
@@ -163,8 +173,9 @@ sub build
 	$DEVDIR = "$DEVPARENT/ddpoker";
 	$STAGINGDIR = "$DEVDIR/build";
 	$MVNDIR = "$DEVDIR/code";
-	$INSDIR = "$DEVDIR/installer/install4j";
     $RELEASEDIR="$DEVDIR/release";
+	$INS4JDIR = "$DEVDIR/installer/install4j";
+	$INSTALLERDIR="$DEVDIR/installer/builds";
 
 	print ("\nBUILDING $module ($displayname)\n\n");
 
@@ -178,22 +189,21 @@ sub build
 	# make sure dev parent dir exists
 	`mkdir -vp $DEVPARENT`;
 
-	print("  OSTYPE:      $OSTYPE\n");
-	print("  OSNAME:      $OSNAME\n");
-	print("  MVN_VERSION: $MVN_VERSION\n");
-	print("  BASELOC:     $BASELOC\n");
-	print("  BASEDIR:     $BASEDIR\n");
-	print("  DEVPARENT:   $DEVPARENT\n");
-	print("  DEVDIR:      $DEVDIR\n");
-	print("  MVNDIR:      $MVNDIR\n");
-	print("  STAGINGDIR:  $STAGINGDIR\n");
-	print("  RELEASEDIR:  $RELEASEDIR\n");
-	print("  INSDIR:      $INSDIR\n");
-	print("  $DESTDIR:    $DESTDIR\n");
+	print("  OSTYPE:       $OSTYPE\n");
+	print("  OSNAME:       $OSNAME\n");
+	print("  MVN_VERSION:  $MVN_VERSION\n");
+	print("  BASELOC:      $BASELOC\n");
+	print("  BASEDIR:      $BASEDIR\n");
+	print("  DEVPARENT:    $DEVPARENT\n");
+	print("  DEVDIR:       $DEVDIR\n");
+	print("  MVNDIR:       $MVNDIR\n");
+	print("  STAGINGDIR:   $STAGINGDIR\n");
+	print("  RELEASEDIR:   $RELEASEDIR\n");
+	print("  INS4JDIR:     $INS4JDIR\n");
+	print("  INSTALLERDIR: $INSTALLERDIR\n");
 	print("\n");
 
 	exit(0) if ($exitearly);
-	return if ($nobuild);
 
 	# git update
 	if (!$nogit)
@@ -215,7 +225,7 @@ sub build
     # make sure various dir exist (need to do this after git otherwise clone will fail)
 	`mkdir -vp $RELEASEDIR`;
 	`mkdir -vp $STAGINGDIR`;
-    `mkdir -vp $DESTDIR`;
+    `mkdir -vp $INSTALLERDIR`;
 
 	# compile
 	if (!$nomvn)
@@ -302,7 +312,7 @@ sub build
 	# run installer
 	if (!$noinstaller)
 	{
-		cd($INSDIR);
+		cd($INS4JDIR);
 
 		# determine installer file name
 		$install4j = $PRODUCT . ".install4j";
@@ -311,29 +321,32 @@ sub build
         runIndented("~/work/donohoe/ddpoker/cp-certs.sh '$DEVDIR/target'");
 
         # get passwords
-        $mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
+        #$mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
         chop $mac_pw;
-        $win_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
+        #$win_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
         chop $win_pw;
 
 		# run install4j
         $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION " .
                 "--mac-keystore-password='$mac_pw' --win-keystore-password='$win_pw' --build-selected $install4j\n";
-        runIndented($cmd);
+        #runIndented($cmd);
 
         # Set icons in Mac installer and notarize
-        runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
+        #runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
 
-        print("Installers are in $DESTDIR\n")
+        # Create md5sums.txt
+        cd($INSTALLERDIR);
+        runIndented("md5 ddpoker$VERSION_FILE.* > md5sums.txt");
+
+        print("Installers are in $INSTALLERDIR\n");
 	}
 
 	# push installers to GitHub
 	if ($github)
 	{
-	    # TODO: hashes in notes?
-	    $notes="DD Poker release $VERSION";
-        my $files = join " ", map { "$DESTDIR/ddpoker$VERSION_FILE$_" } (".dmg", ".sh"); # TODO: ".exe",
-	    runIndented("gh release create $VERSION --title 'DD Poker $VERSION' --notes '$notes' $files");
+	    cd($INSTALLERDIR);
+        my $files = join " ", map { "ddpoker$VERSION_FILE$_" } (".dmg", ".sh", ".exe");
+	    runIndented("gh release create $VERSION --title 'DD Poker $VERSION' --notes-file md5sums.txt $files");
 	}
 }
 

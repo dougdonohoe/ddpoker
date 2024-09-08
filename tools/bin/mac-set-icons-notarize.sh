@@ -48,7 +48,7 @@ cd "$SCRIPTDIR"
 DDHOME="$(git rev-parse --show-toplevel)"
 
 SRC="$DDHOME/installer/builds/ddpoker${VERSION}.dmg"
-BAK="$DDHOME/installer/builds/ddpoker${VERSION}.bak.dmg"
+BAK="/tmp/ddpoker${VERSION}.bak.dmg"
 DST_RW="$DDHOME/installer/builds/ddpoker${VERSION}_rw.dmg"
 DST_ALT="$DDHOME/installer/builds/ddpoker${VERSION}_alt.dmg"
 DST_MNT="/Volumes/dd_poker_dst"
@@ -99,7 +99,7 @@ DeRez -only icns "$TMP_ICN" > "$TMP_RSRC"
 Rez -append "$TMP_RSRC" -o "$DST_ALT"
 SetFile -a C "$DST_ALT"
 
-# Copy new one back over original, backing up original
+# Copy new one back over original, backing up original to /tmp
 mv -v "$SRC" "$BAK"
 mv -v "$DST_ALT" "$SRC"
 

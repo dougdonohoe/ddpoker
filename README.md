@@ -14,13 +14,12 @@ a Java Spring application that talks to MySQL.  The website
 
 ## Installers
 
-See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for Mac and Linux installers.  Windows is coming soon (we
-are waiting on code signing certificates).  The [old installers](https://static.ddpoker.com/download/) are
-still available, which should work on Windows, but doesn't have recent updates.
+See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for the latest Mac, Linux and Windows installers.
 
 [<img src="images/install4j_small.png">](https://www.ej-technologies.com/install4j)
-Installers are built courtesy of ej-technologies' 
-[multi-platform installer builder, install4j](https://www.ej-technologies.com/install4j).
+Installers are built by [Donohoe Digital LLC](https://www.donohoedigital.com/) 
+courtesy of a license to ej-technologies' 
+[excellent multi-platform installer builder, install4j](https://www.ej-technologies.com/install4j).
 We are grateful that they provided us an open-source license.
 
 There is also an option to distribute a jar file, which the _Installers_ section of
@@ -96,8 +95,8 @@ sharing game URLs.  There was a minor revival during the
 2020 pandemic and sporadic inquiries have come in over the
 years.
 
-While Donohoe Digital LLC no longer exists and cannot
-run the old servers, there might be folks out there that
+While Donohoe Digital LLC can no longer
+run the old DD Poker servers, there might be folks out there that
 want to run servers for their own local poker communities.
 Releasing the code allows them to do this.
 
