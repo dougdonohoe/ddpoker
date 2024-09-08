@@ -599,7 +599,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
             chatServer_ = new OptionText(NODE, PokerConstants.OPTION_ONLINE_CHAT, OSTYLE, map_,
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
-            int maxLabelWidth = Math.max(onlineServer_.getLabelComponent().getPreferredSize().width,
+            int maxLabelWidth = 2 + Math.max(onlineServer_.getLabelComponent().getPreferredSize().width,
                     chatServer_.getLabelComponent().getPreferredSize().width);
 
             // adjust labels so same size (doing this since not using a GridBag layout)

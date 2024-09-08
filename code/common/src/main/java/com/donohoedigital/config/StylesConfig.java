@@ -271,13 +271,6 @@ public class StylesConfig extends XMLConfigFileLoader
             ApplicationError.assertNotNull(sFontname, "'fontname' missing in font entry " + sName);
             ApplicationError.assertNotNull(nPointSize, "'pointsize' missing in font entry " + sName);
 
-            // Java 1.5.0_19 on Mac makes Lucida Sans look like crap.  A decent mac-specific replacement
-            // is Lucida Grande per http://www.ampsoft.net/webdesign-l/WindowsMacFonts.html
-            if (sFontname.equalsIgnoreCase("Lucida Sans Regular") && Utils.ISMAC)
-            {
-                sFontname = "Lucida Grande";
-            }
-
             boolean bItalic = BItalic == null ? false : BItalic;
             boolean bBold = BBold == null ? false : BBold;
 
