@@ -250,7 +250,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             }
 
             // screen mode
-            // Turned off screen mode in DD Poker 3 since no one uses it and it doesn't work on Vista
+            // Turned off screen-mode in DD Poker 3 since no one uses it, and it doesn't work on Vista
 //            if (!Utils.ISLINUX && !Utils.ISMAC) // no window options on linux or mac
 //            {
 //                DDLabelBorder modebase = null;
@@ -481,7 +481,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             base.setBorderLayoutGap(0, 10);
 
             DDPanel leftbase = new DDPanel();
-            leftbase.setLayout(new VerticalFlowLayout(VerticalFlowLayout.TOP, 0, 10, VerticalFlowLayout.LEFT));
+            leftbase.setLayout(new VerticalFlowLayout(VerticalFlowLayout.TOP, 0, 0, VerticalFlowLayout.LEFT));
             base.add(leftbase, BorderLayout.CENTER);
 
             // delay
@@ -567,7 +567,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
 
             // put right side together
             DDPanel rightbase = new DDPanel();
-            rightbase.setLayout(new VerticalFlowLayout(VerticalFlowLayout.TOP, 0, 10, VerticalFlowLayout.LEFT));
+            rightbase.setLayout(new VerticalFlowLayout(VerticalFlowLayout.TOP, 0, 0, VerticalFlowLayout.LEFT));
             rightbase.add(dispbase);
             rightbase.add(detailbase);
             base.add(GuiUtils.NORTH(rightbase), BorderLayout.EAST);

@@ -1,3 +1,4 @@
 # See all messages in /Applications/install4j.app/Contents/Resources/app/resource/messages/messages_en.utf8
 SetupWindowTitle=Setup - ${compiler:sys.fullName}
 UninstallAppFullTitle=${compiler:sys.fullName} Uninstall
+StatusUninstalling=Uninstalling ${compiler:sys.fullName} ...
