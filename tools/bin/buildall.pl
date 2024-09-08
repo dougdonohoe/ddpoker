@@ -321,18 +321,18 @@ sub build
         runIndented("~/work/donohoe/ddpoker/cp-certs.sh '$DEVDIR/target'");
 
         # get passwords
-        #$mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
+        $mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
         chop $mac_pw;
-        #$win_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
+        $win_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
         chop $win_pw;
 
 		# run install4j
         $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION " .
                 "--mac-keystore-password='$mac_pw' --win-keystore-password='$win_pw' --build-selected $install4j\n";
-        #runIndented($cmd);
+        runIndented($cmd);
 
         # Set icons in Mac installer and notarize
-        #runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
+        runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
 
         # Create md5sums.txt
         cd($INSTALLERDIR);
