@@ -660,7 +660,7 @@
 	<color name="GlassCombo.button.down.bg" r="52" g="233" b="227" a="140"/>
 	<color name="GlassCombo.button.disable.bg" r="0" g="0" b="0" a="140"/>
 	<color name="GlassCombo.button.focus.bg" r="255" g="255" b="0" a="140"/>
-	 <font name="GlassCombo.button" fontname="Lucicda Sans Regular" pointsize="12"/>
+	 <font name="GlassCombo.button" fontname="Lucida Sans Regular" pointsize="12"/>
 
 	<color name="HelpText.textarea.fg" copy="primaryfont"/>
 	<color name="HelpText.textarea.bg" copy="ignored"/>
