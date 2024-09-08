@@ -259,12 +259,9 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
     private void center()
     {
         Dimension size = getSize();
-        DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
-        int nScreenWidth = dm.getWidth();
-        int nScreenHeight = dm.getHeight();
-
-        int nX = (nScreenWidth - size.width) / 2;
-        int nY = (nScreenHeight - size.height) / 2;
+        Point center = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+        int nX = center.x - (size.width / 2);
+        int nY = center.y - (size.height / 2);
         setLocation(nX, nY);
     }
 }

@@ -81,12 +81,9 @@ public class BaseFrame extends JFrame implements DDWindow
     public void center()
     {
         Dimension size = getSize();
-        DisplayMode dm = getDisplayMode();
-        int nScreenWidth = dm.getWidth();
-        int nScreenHeight = dm.getHeight();
-
-        int nX = (nScreenWidth - size.width) / 2;
-        int nY = (nScreenHeight - size.height) / 2;
+        Point center =  GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+        int nX = center.x - (size.width / 2);
+        int nY = center.y - (size.height / 2);
         setLocation(nX, nY);
     }
 

@@ -653,7 +653,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         
         if (!frame_.isFullScreen())
         {
-            // TODO: get programatically
+            // TODO: get programmatically
             nY -= 15; // account for windows title bar
         }
         
