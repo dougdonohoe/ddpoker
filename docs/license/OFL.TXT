@@ -8,6 +8,8 @@ are in the file noted in parenthesis.
 + Yantramanav-Bold.ttf (Yantramanav-OFL.txt)
 + Yantramanav-Regular.ttf (Yantramanav-OFL.txt)
 
+NOTE: Fonts found at https://fonts.google.com/
+
 ==========================================================================
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
