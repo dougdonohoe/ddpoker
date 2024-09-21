@@ -2828,13 +2828,15 @@ public class HoldemHand implements DataMarshal
     /**
      * store history for this hand in the DB
      */
-    public void storeHandHistory()
+    public int storeHandHistory()
     {
         if (!table_.isAllComputer())
         {
-            PokerDatabase.storeHandHistory(this);
+            int id = PokerDatabase.storeHandHistory(this);
             bStoredInDatabase_ = true;
+            return id;
         }
+        return -1;
     }
 
     /**

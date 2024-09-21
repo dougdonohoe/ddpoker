@@ -92,9 +92,17 @@ public class PokerDatabase
     }
 
     /**
-     * Perform intialization.
+     * Perform initialization
      */
     public static void init(PlayerProfile profile)
+    {
+        init(profile, null);
+    }
+
+    /**
+     * Perform initialization (testing version, pass in saveDir)
+     */
+    static void init(PlayerProfile profile, File saveDir)
     {
         if ((profile_ != null) && (!profile_.equals(profile)))
         {
@@ -115,7 +123,7 @@ public class PokerDatabase
         //logger.debug("init database");
 
         // Initialize the logical database object(s).
-        initDatabase(CLIENT_DATABASE_NAME, profile);
+        initDatabase(profile, saveDir);
 
         // Create the database, schema, etc.
         Database database = getDatabase();
@@ -134,7 +142,7 @@ public class PokerDatabase
             {
                 conn.close();
             }
-            catch (SQLException e)
+            catch (SQLException ignore)
             {
             }
         }
@@ -292,7 +300,7 @@ public class PokerDatabase
         File saveDir = GameConfigUtils.getSaveDir();
         File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
 
-        final String databaseName = getActualDatabaseName(CLIENT_DATABASE_NAME, profile);
+        final String databaseName = getActualDatabaseName(profile);
 
         File[] files = databaseDir.listFiles(new FilenameFilter()
         {
@@ -338,7 +346,7 @@ public class PokerDatabase
         }
     }
 
-    public static void storeHandHistory(HoldemHand hhand)
+    public static int storeHandHistory(HoldemHand hhand)
     {
 /*
         for (int i = 0; i < 100; ++i)
@@ -356,11 +364,11 @@ public class PokerDatabase
 
         int numPlayers = hhand.getNumPlayers();
 
-        byte act[][] = new byte[PokerConstants.SEATS][4];
+        byte[][] act = new byte[PokerConstants.SEATS][4];
 
         boolean bRaised = false;
 
-        int lastRound[] = new int[PokerConstants.SEATS];
+        int[] lastRound = new int[PokerConstants.SEATS];
 
         byte communityCardsDealt = 0;
 
@@ -600,7 +608,7 @@ public class PokerDatabase
                     "PLH_CARDS_EXPOSED\n" +
                     ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            int playerID[] = new int[PokerConstants.SEATS];
+            int[] playerID = new int[PokerConstants.SEATS];
 
             try
             {
@@ -686,6 +694,7 @@ public class PokerDatabase
             }
 
             game.setLastHandSaved(handID);
+            return handID;
         }
         catch (SQLException e)
         {
@@ -698,7 +707,7 @@ public class PokerDatabase
             {
                 conn.close();
             }
-            catch (SQLException e)
+            catch (SQLException ignore)
             {
             }
         }
@@ -2454,7 +2463,7 @@ public class PokerDatabase
             {
                 handHTML = hand.toHTML();
 
-                if (community.size() > 0)
+                if (!community.isEmpty())
                 {
                     info.getScore(hand, community);
                     handShown = "&nbsp;-&nbsp;" + info.toString(", ", false);
@@ -2502,29 +2511,27 @@ public class PokerDatabase
         return DatabaseManager.getDatabase(CLIENT_DATABASE_NAME);
     }
 
-    private static String getActualDatabaseName(String databaseName, PlayerProfile profile)
+    private static String getActualDatabaseName(PlayerProfile profile)
     {
         GameEngine gameEngine = GameEngine.getGameEngine();
+        String uniqueKey = (gameEngine == null) ? "no-engine" : gameEngine.getPublicUseKey();
 
-        String uniqueKey = gameEngine.getPublicUseKey();
-
-        return databaseName +
+        return CLIENT_DATABASE_NAME +
                ((profile == null) ? "" : ("-" + profile.getFileNum())) +
-               ((uniqueKey == null) ? "" : ("-" + Integer.toString(Math.abs(uniqueKey.hashCode()))));
+               ((uniqueKey == null) ? "" : ("-" + Math.abs(uniqueKey.hashCode())));
     }
 
     /**
      * Initialize a logical database object.
-     *
-     * @param databaseName database name
      */
-    private static void initDatabase(String databaseName, PlayerProfile profile)
+    private static void initDatabase(PlayerProfile profile, File saveDir)
     {
         // Format the driver URL using a unique database name.
-        File saveDir = GameConfigUtils.getSaveDir();
+        if (saveDir == null) {
+            saveDir = GameConfigUtils.getSaveDir();
+        }
         File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
-
-        databaseName = getActualDatabaseName(databaseName, profile);
+        String databaseName = getActualDatabaseName(profile);
 
         File clientPath = new File(databaseDir, databaseName);
         String driverURL = DATABASE_DRIVER_URL_PREFIX + clientPath.getAbsolutePath();
@@ -2563,7 +2570,7 @@ public class PokerDatabase
             {
                 conn.close();
             }
-            catch (SQLException e)
+            catch (SQLException ignore)
             {
             }
         }
@@ -2586,7 +2593,7 @@ public class PokerDatabase
             {
                 conn.close();
             }
-            catch (SQLException e)
+            catch (SQLException ignore)
             {
             }
         }
@@ -2703,7 +2710,7 @@ public class PokerDatabase
             {
                 conn.close();
             }
-            catch (SQLException e)
+            catch (SQLException ignore)
             {
             }
         }
@@ -2798,7 +2805,7 @@ public class PokerDatabase
             {
                 handHTML = hand.toHTML();
 
-                if (community.size() > 0)
+                if (!community.isEmpty())
                 {
                     info.getScore(hand, community);
                     handShown = "&nbsp;-&nbsp;" + info.toString(", ", false);

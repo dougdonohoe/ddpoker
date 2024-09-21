@@ -612,8 +612,6 @@ public abstract class GameEngine extends BaseApp
      */
     void setActivationNeeded(boolean b)
     {
-        //noinspection ThrowableInstanceNeverThrown
-        logger.debug("Activation set to " + b + " from ", new Throwable());
         activationNeeded = b;
     }
 

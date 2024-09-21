@@ -32,8 +32,6 @@
  */
 package com.donohoedigital.games.poker;
 
-// This class must not use *any* other donohoe digital classes, due to class encryption in production builds.
-
 /**
  * Stored procedures for calling from SQL.
  */
