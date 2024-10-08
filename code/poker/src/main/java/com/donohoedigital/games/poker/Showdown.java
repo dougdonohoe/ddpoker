@@ -43,7 +43,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class Showdown extends ChainPhase
 {
-    static Logger logger = Logger.getLogger(Showdown.class);
+    static Logger logger = LogManager.getLogger(Showdown.class);
 
     private HoldemHand hhand_;
     private TournamentDirector td_;

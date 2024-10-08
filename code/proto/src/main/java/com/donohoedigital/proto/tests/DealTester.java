@@ -40,7 +40,7 @@ package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.udp.*;
 import com.donohoedigital.games.poker.engine.*;
 
@@ -101,7 +101,7 @@ public class DealTester extends BaseCommandLineApp
         ConfigManager.getConfigManager().loadGuiConfig();
 
         // init
-        logger = Logger.getLogger(getClass());
+        logger = LogManager.getLogger(getClass());
 
         // write cards
         testCards();

@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import javax.swing.*;
@@ -46,7 +46,7 @@ import javax.swing.*;
  */
 public class DDImageCheckBox extends DDCheckBox
 {
-   static Logger logger = Logger.getLogger(DDImageCheckBox.class);
+   static Logger logger = LogManager.getLogger(DDImageCheckBox.class);
 
     public DDImageCheckBox() {
         super();

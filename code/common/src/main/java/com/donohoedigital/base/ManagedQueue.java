@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.base;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.concurrent.*;
 
@@ -46,7 +46,7 @@ import java.util.concurrent.*;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public abstract class ManagedQueue<T>
 {
-    private static final Logger logger = Logger.getLogger(ManagedQueue.class);
+    private static final Logger logger = LogManager.getLogger(ManagedQueue.class);
 
     protected final int capacity;
     protected final long waitLimitWarningMillis;

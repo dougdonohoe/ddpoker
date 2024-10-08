@@ -39,7 +39,7 @@
 package com.donohoedigital.jsp;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import javax.servlet.descriptor.JspConfigDescriptor;
@@ -53,7 +53,7 @@ import java.util.*;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class EmbeddedServletContext implements ServletContext
 {
-    static Logger logger = Logger.getLogger(EmbeddedServletContext.class);
+    static Logger logger = LogManager.getLogger(EmbeddedServletContext.class);
 
     private String jspResourceDir;
     private HashMap<String, Object> attributes = new HashMap<>(10);

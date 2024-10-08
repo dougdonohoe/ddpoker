@@ -48,7 +48,7 @@ import javax.swing.*;
  */
 public class GamePrefs extends OptionMenu
 {
-    //static Logger logger = Logger.getLogger(GamePrefs.class);
+    //static Logger logger = LogManager.getLogger(GamePrefs.class);
     
     GamePrefsPanel panel_;
 

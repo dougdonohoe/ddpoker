@@ -40,7 +40,7 @@ package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.udp.*;
 
 /**
@@ -96,7 +96,7 @@ public class SoundTest extends BaseCommandLineApp
         ConfigManager.getConfigManager().loadAudioConfig();
 
         // init
-        logger = Logger.getLogger(getClass());
+        logger = LogManager.getLogger(getClass());
 
         // test
         test();

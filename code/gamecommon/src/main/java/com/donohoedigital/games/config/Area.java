@@ -39,7 +39,7 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import java.util.*;
@@ -51,7 +51,7 @@ import org.jdom2.*;
  */
 public class Area 
 { 
-    static Logger logger = Logger.getLogger(Area.class);
+    static Logger logger = LogManager.getLogger(Area.class);
     
     /**
      * Name of area representing no area

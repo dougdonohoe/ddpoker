@@ -34,7 +34,7 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 import java.io.*;
@@ -48,7 +48,7 @@ import java.io.*;
  */
 public class TableExporter implements DDTable.Exporter
 {
-    static Logger logger = Logger.getLogger(TableExporter.class);
+    static Logger logger = LogManager.getLogger(TableExporter.class);
 
     private GameContext context_;
     private String sName_;

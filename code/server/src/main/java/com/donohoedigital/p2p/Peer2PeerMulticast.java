@@ -40,7 +40,7 @@ package com.donohoedigital.p2p;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.comms.*;
 
 import java.net.*;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class Peer2PeerMulticast implements Runnable
 {
-    static Logger logger = Logger.getLogger(Peer2PeerMulticast.class);
+    static Logger logger = LogManager.getLogger(Peer2PeerMulticast.class);
     
     private static int PACKET_SIZE = 49152; // 64K max, including overhead
     

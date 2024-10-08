@@ -50,7 +50,7 @@ import java.awt.event.*;
  */
 public class DDSpinner extends JSpinner implements DDTextVisibleComponent
 {
-    //static Logger logger = Logger.getLogger(DDSpinner.class);
+    //static Logger logger = LogManager.getLogger(DDSpinner.class);
     
     /** 
      * Creates a new instance of DDSpinner 

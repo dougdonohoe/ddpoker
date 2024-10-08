@@ -37,7 +37,7 @@
  */
 package com.donohoedigital.games.poker;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.games.poker.engine.*;
 
@@ -46,7 +46,7 @@ import java.awt.*;
 
 public class DDCardView extends DDView
 {
-    static Logger logger = Logger.getLogger(DDCardView.class);
+    static Logger logger = LogManager.getLogger(DDCardView.class);
 
     private static CardThumbnail piece_ = new CardThumbnail();
 

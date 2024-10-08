@@ -46,7 +46,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +56,7 @@ import java.awt.*;
  */
 public class TestPublicConnect extends SendMessageDialog implements OnlineMessageListener
 {
-    static Logger logger = Logger.getLogger(TestPublicConnect.class);
+    static Logger logger = LogManager.getLogger(TestPublicConnect.class);
 
     public static final String PARAM_URL = "url";
 

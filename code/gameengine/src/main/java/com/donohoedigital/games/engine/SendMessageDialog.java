@@ -46,7 +46,7 @@ import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.comms.EngineMessage;
 import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +58,7 @@ import java.awt.event.ActionListener;
  */
 public abstract class SendMessageDialog extends DialogPhase implements DDMessageListener, ActionListener
 {
-    private static Logger sLogger = Logger.getLogger(SendMessageDialog.class);
+    private static Logger sLogger = LogManager.getLogger(SendMessageDialog.class);
 
     // params
     public static final String PARAM_SLEEP_MILLIS = "sleep";

@@ -44,7 +44,7 @@ import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -55,7 +55,7 @@ import java.util.*;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class DDPostalServiceImpl implements Runnable, DDPostalService
 {
-    private static final Logger logger = Logger.getLogger(DDPostalServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(DDPostalServiceImpl.class);
 
     private static final boolean DEBUG = false;
 

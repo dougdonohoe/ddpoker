@@ -34,13 +34,13 @@ package com.donohoedigital.games.poker.ai;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
 public class AIStrategyNode
 {
-    protected static Logger logger = Logger.getLogger(AIStrategyNode.class);
+    protected static Logger logger = LogManager.getLogger(AIStrategyNode.class);
 
     private PlayerType playerType_;
     private String name_;

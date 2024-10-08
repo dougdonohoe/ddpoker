@@ -46,7 +46,7 @@ import com.donohoedigital.config.*;
  */
 public class QuitGame extends BasePhase 
 {
-    //static Logger logger = Logger.getLogger(QuitGame.class);
+    //static Logger logger = LogManager.getLogger(QuitGame.class);
     
     public void start()
     {

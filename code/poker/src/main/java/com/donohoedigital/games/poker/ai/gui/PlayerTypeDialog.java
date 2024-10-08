@@ -39,7 +39,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,7 @@ import java.util.*;
 
 public class PlayerTypeDialog extends OptionMenuDialog implements PropertyChangeListener, FocusListener
 {
-    static Logger logger = Logger.getLogger(PlayerTypeDialog.class);
+    static Logger logger = LogManager.getLogger(PlayerTypeDialog.class);
 
     private PlayerType profile_;
     private TypedHashMap dummy_ = new TypedHashMap();

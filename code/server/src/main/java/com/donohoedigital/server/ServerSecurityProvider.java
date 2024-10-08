@@ -33,7 +33,7 @@
 package com.donohoedigital.server;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.net.*;
 import java.security.*;
@@ -62,7 +62,7 @@ public class ServerSecurityProvider extends com.donohoedigital.base.SecurityProv
         }
         catch (UnknownHostException e)
         {
-            Logger.getLogger(ServerSecurityProvider.class).warn("ServerSecurityProvider unable to determine ip address: " +
+            LogManager.getLogger(ServerSecurityProvider.class).warn("ServerSecurityProvider unable to determine ip address: " +
                                                                 e.getMessage());
             id = Utils.encode("0.0.0.0");
         }

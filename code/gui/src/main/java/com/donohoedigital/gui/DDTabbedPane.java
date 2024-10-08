@@ -52,7 +52,7 @@ import java.awt.event.*;
 public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, ChangeListener,
                                                          MouseMotionListener, MouseListener
 {
-    //static Logger logger = Logger.getLogger(DDTabbedPane.class);
+    //static Logger logger = LogManager.getLogger(DDTabbedPane.class);
 
     private static final Color DEFAULT_SELECTED = new Color(255,255,255,175);
     private Color cSelectedTab_ = DEFAULT_SELECTED;

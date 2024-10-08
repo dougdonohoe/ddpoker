@@ -35,7 +35,7 @@ package com.donohoedigital.games.poker.server;
 import com.donohoedigital.base.*;
 import com.donohoedigital.games.poker.model.*;
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.persistence.*;
 import java.io.*;
@@ -54,7 +54,7 @@ public class HibernateTest extends TestCase
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public void testHibernate() throws FileNotFoundException
     {
-        Logger logger = Logger.getLogger(HibernateTest.class);
+        Logger logger = LogManager.getLogger(HibernateTest.class);
 
         // "poker" is from persistence.xml (aka the persistence unit)
         // emf is a singleton (thread-safe)

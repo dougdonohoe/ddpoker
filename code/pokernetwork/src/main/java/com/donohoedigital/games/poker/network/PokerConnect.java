@@ -37,7 +37,7 @@ import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.p2p.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,7 +48,7 @@ import org.apache.log4j.*;
  */
 public class PokerConnect implements UDPLinkMonitor
 {
-    static Logger logger = Logger.getLogger(PokerConnect.class);
+    static Logger logger = LogManager.getLogger(PokerConnect.class);
 
     // timeout
     private static final int TIMEOUT = PropertyConfig.getRequiredIntegerProperty("settings.poker.connect.timeout.millis");

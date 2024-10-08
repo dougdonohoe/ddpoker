@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.XNIException;
 import org.apache.xerces.xni.parser.XMLEntityResolver;
@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class CachedEntityResolver implements EntityResolver, XMLEntityResolver
 {
-    private static Logger logger = Logger.getLogger(XMLConfigFileLoader.class);
+    private static Logger logger = LogManager.getLogger(XMLConfigFileLoader.class);
 
     private Map<String, URL> matches = new HashMap<String, URL>();
 

@@ -52,7 +52,7 @@ import java.util.*;
 @Repository
 public class OnlineGameImplJpa extends JpaBaseDao<OnlineGame, Long> implements OnlineGameDao
 {
-    //private static final Logger logger = Logger.getLogger(OnlineGameImplJpa.class);
+    //private static final Logger logger = LogManager.getLogger(OnlineGameImplJpa.class);
 
     private static final Date END_OF_TIME = new GregorianCalendar(2099, Calendar.DECEMBER, 31, 23, 23, 59).getTime();
     private static final Date BEGINNING_OF_TIME = new Date(0);

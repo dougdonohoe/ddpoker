@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.poker;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.poker.engine.*;
 
@@ -48,7 +48,7 @@ import com.donohoedigital.games.poker.engine.*;
  */
 public class HandInfoFast 
 {
-    static Logger logger = Logger.getLogger(HandInfoFast.class);
+    static Logger logger = LogManager.getLogger(HandInfoFast.class);
     
     // num cards
     private static final int NUM_CARDS = 5;

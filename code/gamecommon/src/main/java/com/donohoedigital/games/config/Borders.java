@@ -39,7 +39,7 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import java.io.*;
@@ -52,7 +52,7 @@ import java.net.*;
  */
 public class Borders extends TreeSet<Border> {
     
-    private static Logger logger = Logger.getLogger(Borders.class);
+    private static Logger logger = LogManager.getLogger(Borders.class);
     
     private MapPoints allPoints_;
     private static final String BORDER_TAG = "BORDER";

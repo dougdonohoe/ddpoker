@@ -34,7 +34,7 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.games.server.dao.UpgradedKeyDao;
 import com.donohoedigital.games.server.model.UpgradedKey;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class UpgradedKeyTest
 {
-    private final Logger logger = Logger.getLogger(UpgradedKeyTest.class);
+    private final Logger logger = LogManager.getLogger(UpgradedKeyTest.class);
 
     @Autowired
     private UpgradedKeyDao dao;

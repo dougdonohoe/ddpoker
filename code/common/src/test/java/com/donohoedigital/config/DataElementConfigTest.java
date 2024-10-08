@@ -33,7 +33,7 @@
 package com.donohoedigital.config;
 
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ import java.util.*;
  */
 public class DataElementConfigTest extends TestCase
 {
-    private static Logger logger = Logger.getLogger(DataElementConfigTest.class);
+    private static Logger logger = LogManager.getLogger(DataElementConfigTest.class);
 
     @SuppressWarnings({"SuspiciousMethodCalls"})
     public void testLoad()

@@ -46,7 +46,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.dashboard.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 
@@ -56,7 +56,7 @@ import javax.swing.*;
  */
 public class DealCommunity extends ChainPhase implements PlayerActionListener
 {
-    static Logger logger = Logger.getLogger(DealCommunity.class);
+    static Logger logger = LogManager.getLogger(DealCommunity.class);
 
     private TournamentDirector td_;
     private PokerGame game_;

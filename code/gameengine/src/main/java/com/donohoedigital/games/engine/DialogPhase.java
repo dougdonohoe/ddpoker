@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -56,7 +56,7 @@ import java.util.prefs.*;
  */
 public abstract class DialogPhase extends BasePhase implements InternalDialog.DialogOpened, InternalDialog.DialogClosed
 {
-    static Logger logger = Logger.getLogger(DialogPhase.class);
+    static Logger logger = LogManager.getLogger(DialogPhase.class);
 
     /**
      * "dialog-modal" prop value

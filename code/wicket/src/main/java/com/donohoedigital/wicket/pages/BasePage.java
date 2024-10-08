@@ -42,7 +42,7 @@ import org.apache.wicket.model.*;
  */
 public class BasePage<T> extends WebPage
 {
-    //private static Logger logger = Logger.getLogger(BasePage.class);
+    //private static Logger logger = LogManager.getLogger(BasePage.class);
 
     private static final long serialVersionUID = 42L;
 

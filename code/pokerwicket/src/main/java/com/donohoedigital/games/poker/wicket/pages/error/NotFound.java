@@ -45,7 +45,7 @@ import org.wicketstuff.annotation.mount.*;
 @MountPath(path = "notfound")
 public class NotFound extends ErrorPokerPage
 {
-    //private static final Logger logger = Logger.getLogger(NotFound.class);
+    //private static final Logger logger = LogManager.getLogger(NotFound.class);
 
     public NotFound()
     {

@@ -36,7 +36,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.service.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.context.*;
 import org.springframework.context.support.*;
 
@@ -49,7 +49,7 @@ import java.util.*;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class OnlineGamePurger extends BaseCommandLineApp
 {
-    private static Logger logger = Logger.getLogger(OnlineGamePurger.class);
+    private static Logger logger = LogManager.getLogger(OnlineGamePurger.class);
 
     private static final int DEFAULT_PERIOD_SECS = (60 * 60 * 24 * 7); // one week
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd", Locale.US);

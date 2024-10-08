@@ -34,7 +34,7 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 
@@ -43,7 +43,7 @@ import java.awt.*;
 
 public class PokerStatsPanel extends DDTabPanel
 {
-    static Logger logger = Logger.getLogger(PokerStatsPanel.class);
+    static Logger logger = LogManager.getLogger(PokerStatsPanel.class);
 
     public static final int FLOP = 1;
     public static final int TURN = 2;

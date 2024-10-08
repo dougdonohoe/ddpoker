@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.p2p.*;
 
 /**
@@ -55,7 +55,7 @@ import com.donohoedigital.p2p.*;
 public class OnlineTest implements DDMessageListener
 {
  
-    static Logger logger = Logger.getLogger(OnlineTest.class);
+    static Logger logger = LogManager.getLogger(OnlineTest.class);
 
     // display
     private String[] steps_;    

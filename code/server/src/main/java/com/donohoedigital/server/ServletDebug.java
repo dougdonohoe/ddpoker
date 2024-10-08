@@ -32,14 +32,14 @@
  */
 package com.donohoedigital.server;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.http.*;
 import java.util.*;
 
 public class ServletDebug
 {
-    static Logger logger = Logger.getLogger(ServletDebug.class);
+    static Logger logger = LogManager.getLogger(ServletDebug.class);
     
     public static boolean bVerbose_ = true; // extra output
     public static boolean bDebug_ = true; // print URL

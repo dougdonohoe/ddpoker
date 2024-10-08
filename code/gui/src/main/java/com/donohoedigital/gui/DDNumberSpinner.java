@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -55,7 +55,7 @@ public class DDNumberSpinner extends JPanel implements ActionListener,
                                             DDTextVisibleComponent, 
                                             PropertyChangeListener                                            
 {
-    static Logger logger = Logger.getLogger(DDNumberSpinner.class);
+    static Logger logger = LogManager.getLogger(DDNumberSpinner.class);
 
     private int nMin_, nMax_, nStep_, nBigStep_, nValue_;
     private SpinText text_;

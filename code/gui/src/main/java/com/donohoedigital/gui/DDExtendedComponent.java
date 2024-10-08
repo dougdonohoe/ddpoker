@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import java.awt.*;

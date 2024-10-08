@@ -42,7 +42,7 @@ import com.donohoedigital.xml.*;
  */
 public class OnlineGameList extends PagedList<OnlineGame> implements SimpleXMLEncodable
 {
-    //static Logger logger = Logger.getLogger(OnlineGameList.class);
+    //static Logger logger = LogManager.getLogger(OnlineGameList.class);
 
     /**
      * Return this list as a DMArrayList to allow for data marshalling

@@ -49,7 +49,7 @@ import com.donohoedigital.games.config.*;
 @DataCoder('R')
 public class PlayersDieRoll6x2 implements DataMarshal
 {
-    //static Logger logger = Logger.getLogger(PlayersDieRoll6x2.class);
+    //static Logger logger = LogManager.getLogger(PlayersDieRoll6x2.class);
     
     int nIndex_;
     DMArrayList dieRolls_[];

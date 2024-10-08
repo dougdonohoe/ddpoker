@@ -34,7 +34,7 @@ package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.*;
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.apache.wicket.util.convert.converters.*;
 import org.springframework.core.io.*;
 import org.springframework.core.io.support.*;
@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class Experiments extends TestCase
 {
-    private Logger logger = Logger.getLogger(Experiments.class);
+    private Logger logger = LogManager.getLogger(Experiments.class);
 
     public void testNullEquals()
     {

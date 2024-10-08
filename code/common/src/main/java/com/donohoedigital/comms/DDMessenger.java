@@ -55,7 +55,7 @@ import java.net.URL;
  */
 public class DDMessenger
 {
-    //static Logger logger = Logger.getLogger(DDMessenger.class);
+    //static Logger logger = LogManager.getLogger(DDMessenger.class);
 
     /**
      * User agent for our requests

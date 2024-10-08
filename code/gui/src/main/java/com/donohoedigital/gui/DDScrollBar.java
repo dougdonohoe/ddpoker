@@ -45,7 +45,7 @@ import java.awt.event.*;
  */
 public class DDScrollBar extends JScrollBar implements DDComponent, FocusListener, MouseListener
 {
-    //static Logger logger = Logger.getLogger(DDScrollBar.class);
+    //static Logger logger = LogManager.getLogger(DDScrollBar.class);
 
     // our ui
     private DDScrollBarUI ui_;

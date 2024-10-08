@@ -35,7 +35,7 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.base.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.udp.*;
 import com.donohoedigital.config.*;
 
@@ -54,7 +54,7 @@ import java.util.Timer;
  */
 public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
 {
-    static Logger logger = Logger.getLogger(UDPStatus.class);
+    static Logger logger = LogManager.getLogger(UDPStatus.class);
 
     private DDPanel base_;
 

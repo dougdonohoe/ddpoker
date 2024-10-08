@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -60,7 +60,7 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
                                             PropertyChangeListener,
                                             ActionListener
 {
-    static Logger logger = Logger.getLogger(GameListPanel.class);
+    static Logger logger = LogManager.getLogger(GameListPanel.class);
     
     // file extensions
     public static final String SAVE_EXT = PropertyConfig.getRequiredStringProperty("settings.save.ext");

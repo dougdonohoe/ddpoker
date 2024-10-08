@@ -34,7 +34,7 @@ package com.donohoedigital.server;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -44,7 +44,7 @@ import java.util.*;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public abstract class GameServer extends Thread
 {
-    protected static Logger logger = Logger.getLogger(GameServer.class);
+    protected static Logger logger = LogManager.getLogger(GameServer.class);
 
     static boolean DEBUG_ONLINE = false;
     public static final boolean DEBUG_POOL = false;

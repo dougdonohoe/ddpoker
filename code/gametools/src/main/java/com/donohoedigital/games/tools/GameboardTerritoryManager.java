@@ -43,7 +43,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +57,7 @@ import java.awt.geom.*;
 public class GameboardTerritoryManager extends GameManager implements CustomTerritoryDrawer
 {
     
-    static Logger logger = Logger.getLogger(GameboardTerritoryManager.class);
+    static Logger logger = LogManager.getLogger(GameboardTerritoryManager.class);
     
     // UI Components
     private TerritoryBoard board_;

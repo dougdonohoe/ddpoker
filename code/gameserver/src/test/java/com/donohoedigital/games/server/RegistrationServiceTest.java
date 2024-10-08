@@ -34,7 +34,7 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.games.server.model.Registration;
 import com.donohoedigital.games.server.service.RegistrationService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class RegistrationServiceTest
 {
-    private final Logger logger = Logger.getLogger(RegistrationServiceTest.class);
+    private final Logger logger = LogManager.getLogger(RegistrationServiceTest.class);
 
     @Autowired
     private RegistrationService service;

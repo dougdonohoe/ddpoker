@@ -41,7 +41,7 @@ package com.donohoedigital.games.comms;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -52,7 +52,7 @@ import java.util.*;
 @DataCoder('A')
 public class ActionItem extends DMTypedHashMap
 {   
-    static Logger logger = Logger.getLogger(ActionItem.class);
+    static Logger logger = LogManager.getLogger(ActionItem.class);
     
     // use _ so as not to conflict with Phase params we might use in action
     public static final String PARAM_ACTION_ID = "_id";

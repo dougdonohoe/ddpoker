@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ import java.awt.*;
  */
 public class DDLabel extends JLabel implements DDHasLabelComponent, DDText, DDCustomHelp//, ComponentListener
 {
-    static Logger logger = Logger.getLogger(DDLabel.class);
+    static Logger logger = LogManager.getLogger(DDLabel.class);
 
     private boolean bOpaque_ = false;
     private Insets ignoreInsets_ = null;

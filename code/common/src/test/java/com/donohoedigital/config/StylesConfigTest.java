@@ -46,7 +46,7 @@ import java.awt.*;
  */
 public class StylesConfigTest extends TestCase
 {
-    //private static Logger logger = Logger.getLogger(StylesConfigTest.class);
+    //private static Logger logger = LogManager.getLogger(StylesConfigTest.class);
 
     public void testLoad()
     {

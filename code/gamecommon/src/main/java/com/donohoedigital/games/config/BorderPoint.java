@@ -39,7 +39,7 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import org.jdom2.*;
@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class BorderPoint extends MapPoint
 {
-    static Logger logger = Logger.getLogger(BorderPoint.class);
+    static Logger logger = LogManager.getLogger(BorderPoint.class);
     
     private BorderArrayList myBorders_ = new BorderArrayList(1);
 

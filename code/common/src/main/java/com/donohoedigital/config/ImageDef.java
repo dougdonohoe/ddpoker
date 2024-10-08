@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.imageio.*;
 import javax.swing.*;
@@ -56,7 +56,7 @@ import java.util.List;
  */
 public class ImageDef 
 {
-    static Logger logger = Logger.getLogger(ImageDef.class);
+    static Logger logger = LogManager.getLogger(ImageDef.class);
 
     private static boolean DEBUG = false;
 

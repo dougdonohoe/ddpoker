@@ -54,7 +54,7 @@ import java.awt.*;
  */
 public class ChangeChipCountDialog extends DialogPhase
 {
-    //static Logger logger = Logger.getLogger(ChangeChipCountDialog.class);
+    //static Logger logger = LogManager.getLogger(ChangeChipCountDialog.class);
 
     public static final String PARAM_PLAYER = "player";
 

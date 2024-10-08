@@ -47,7 +47,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +59,7 @@ import java.beans.*;
  */
 public class PlayerProfileDialog extends DialogPhase implements PropertyChangeListener
 {
-    static Logger logger = Logger.getLogger(PlayerProfileDialog.class);
+    static Logger logger = LogManager.getLogger(PlayerProfileDialog.class);
 
     public static final int PLAYER_NAME_LIMIT = 15;
     public static final String PLAYER_NAME_REGEXP = "^.+$";

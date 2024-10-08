@@ -39,7 +39,7 @@
 package com.donohoedigital.udp;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -54,7 +54,7 @@ import java.util.zip.*;
  */
 public class UDPMessage 
 {
-    static Logger logger = Logger.getLogger(UDPMessage.class);
+    static Logger logger = LogManager.getLogger(UDPMessage.class);
     
     // timeout
     private static final int WRITE_TIMEOUT_MILLIS = 1000;

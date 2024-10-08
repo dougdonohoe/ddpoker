@@ -39,7 +39,7 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import org.jdom2.*;
@@ -50,7 +50,7 @@ import org.jdom2.*;
  */
 public class MapPoint 
 {
-    //static Logger logger = Logger.getLogger(MapPoint.class);
+    //static Logger logger = LogManager.getLogger(MapPoint.class);
     
     public int x_ = 0;
     public int y_ = 0;

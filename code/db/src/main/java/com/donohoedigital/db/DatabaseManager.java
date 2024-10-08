@@ -34,7 +34,7 @@ package com.donohoedigital.db;
 
 import com.donohoedigital.base.*;
 import static com.donohoedigital.config.DebugConfig.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.lang.reflect.*;
 import java.sql.*;
@@ -47,7 +47,7 @@ import java.util.*;
  */
 public class DatabaseManager
 {
-    private static Logger logger = Logger.getLogger(DatabaseManager.class);
+    private static Logger logger = LogManager.getLogger(DatabaseManager.class);
 
     private static final String PROPERTY_PREFIX = "settings.database.";
 

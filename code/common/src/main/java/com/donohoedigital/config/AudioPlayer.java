@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.sound.sampled.*;
 import java.io.*;
@@ -50,7 +50,7 @@ import java.io.*;
  */
 public class AudioPlayer implements Runnable, LineListener
 {
-    static Logger logger = Logger.getLogger(AudioPlayer.class);
+    static Logger logger = LogManager.getLogger(AudioPlayer.class);
     
     private AudioDef def_;
     private AudioDef loopdef_;

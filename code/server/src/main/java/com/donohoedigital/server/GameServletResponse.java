@@ -39,7 +39,7 @@
 package com.donohoedigital.server;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class GameServletResponse implements HttpServletResponse
 {
-    static Logger logger = Logger.getLogger(GameServletResponse.class);
+    static Logger logger = LogManager.getLogger(GameServletResponse.class);
     
     String sContentType_;
     SocketChannel channel_;

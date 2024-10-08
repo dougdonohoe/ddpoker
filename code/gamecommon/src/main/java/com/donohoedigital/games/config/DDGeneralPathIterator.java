@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.config;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.geom.*;
 import java.util.*;
@@ -49,7 +49,7 @@ import java.util.*;
  */
 public class DDGeneralPathIterator implements PathIterator 
 {
-    //static Logger logger = Logger.getLogger(DDGeneralPathIterator.class);
+    //static Logger logger = LogManager.getLogger(DDGeneralPathIterator.class);
     
     private GeneralPath path_;
     private static final int curvesize[] = {2, 2, 4, 6, 0};

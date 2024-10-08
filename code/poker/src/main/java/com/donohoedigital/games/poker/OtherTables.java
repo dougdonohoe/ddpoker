@@ -39,7 +39,7 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.config.*;
@@ -55,7 +55,7 @@ public class OtherTables
     @SuppressWarnings({"NonFinalStaticVariableUsedInClassInitialization"})
     private static boolean DEBUG = TournamentDirector.DEBUG_CLEANUP_TABLE;
     
-    static Logger logger = Logger.getLogger(OtherTables.class);
+    static Logger logger = LogManager.getLogger(OtherTables.class);
 
     /**
      * Remove broke players, consolidate tables.

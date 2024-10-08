@@ -36,7 +36,7 @@ import com.donohoedigital.games.poker.dao.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.model.util.*;
 import com.donohoedigital.games.poker.service.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;

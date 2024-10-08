@@ -41,7 +41,7 @@ package com.donohoedigital.games.poker;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.p2p.*;
 
 import javax.swing.*;
@@ -57,7 +57,7 @@ import java.beans.*;
  */
 public class PlayerListDialog extends DialogPhase implements PropertyChangeListener, ListSelectionListener
 {
-    static Logger logger = Logger.getLogger(PlayerListDialog.class);
+    static Logger logger = LogManager.getLogger(PlayerListDialog.class);
 
     public static final String PARAM_PLAYER_LIST = "playerlist";
 

@@ -38,7 +38,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.ai.gui.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -47,7 +47,7 @@ import java.util.*;
 
 public class ProfileManagerPanel extends DDPanel implements ChangeListener
 {
-    static Logger logger = Logger.getLogger(HandSelectionManager.class);
+    static Logger logger = LogManager.getLogger(HandSelectionManager.class);
 
     private DDHtmlArea summaryHTML_;
     protected DDLabelBorder summaryBorder_;

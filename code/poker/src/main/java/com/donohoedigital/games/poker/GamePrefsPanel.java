@@ -49,7 +49,7 @@ import com.donohoedigital.games.poker.ai.gui.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.online.GetPublicIP;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -64,7 +64,7 @@ import java.util.prefs.*;
  */
 public class GamePrefsPanel extends DDPanel implements ActionListener
 {
-    static Logger logger = Logger.getLogger(GamePrefsPanel.class);
+    static Logger logger = LogManager.getLogger(GamePrefsPanel.class);
 
     public static final Integer ICWIDTH = 20;
     public static final Integer ICHEIGHT = 30;

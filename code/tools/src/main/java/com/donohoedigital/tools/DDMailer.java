@@ -41,7 +41,7 @@ package com.donohoedigital.tools;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.mail.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -53,7 +53,7 @@ import java.util.*;
 public class DDMailer extends BaseCommandLineApp
 {
     // logging
-    private Logger logger = Logger.getLogger(DDMailer.class);
+    private Logger logger = LogManager.getLogger(DDMailer.class);
 
     // members
     private String sKey_;

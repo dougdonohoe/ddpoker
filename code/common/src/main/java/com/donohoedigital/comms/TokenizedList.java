@@ -39,7 +39,7 @@
 package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -51,7 +51,7 @@ import java.util.*;
 @DataCoder('t')
 public class TokenizedList implements DataMarshal
 {
-    static Logger logger = Logger.getLogger(TokenizedList.class);
+    static Logger logger = LogManager.getLogger(TokenizedList.class);
     
     // these must be escaped
     public static final char TOKEN_DELIM = ':';

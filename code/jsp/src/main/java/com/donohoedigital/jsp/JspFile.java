@@ -43,7 +43,7 @@ import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.config.ConfigUtils;
 import com.donohoedigital.config.DefaultRuntimeDirectory;
 import org.apache.jasper.servlet.JspServlet;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.apache.tomcat.InstanceManager;
 import org.apache.tomcat.SimpleInstanceManager;
 
@@ -59,7 +59,7 @@ import java.io.Writer;
  */
 public class JspFile
 {
-    static Logger logger = Logger.getLogger(JspFile.class);
+    static Logger logger = LogManager.getLogger(JspFile.class);
 
     static {
         Jsp.init();

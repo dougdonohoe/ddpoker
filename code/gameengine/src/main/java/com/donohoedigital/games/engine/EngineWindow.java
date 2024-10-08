@@ -37,7 +37,7 @@ import com.donohoedigital.config.*;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.udp.*;
 
 import javax.swing.*;
@@ -54,7 +54,7 @@ import java.util.prefs.*;
  */
 public class EngineWindow extends BaseFrame
 {
-    protected static Logger logger = Logger.getLogger(EngineWindow.class);
+    protected static Logger logger = LogManager.getLogger(EngineWindow.class);
 
     private GameEngine engine_;
     private GameContext context_;

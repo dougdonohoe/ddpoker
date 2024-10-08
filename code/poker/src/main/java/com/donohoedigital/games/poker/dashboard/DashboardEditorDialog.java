@@ -48,7 +48,7 @@ import java.awt.event.*;
  */
 public class DashboardEditorDialog extends DialogPhase
 {
-    //static Logger logger = Logger.getLogger(DashboardEditorDialog.class);
+    //static Logger logger = LogManager.getLogger(DashboardEditorDialog.class);
 
     public static final String PARAM_DASHMGR = "dashmgr";
 

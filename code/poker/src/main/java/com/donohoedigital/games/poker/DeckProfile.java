@@ -40,7 +40,7 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class DeckProfile extends BaseProfile
 {
-    static Logger logger = Logger.getLogger(DeckProfile.class);
+    static Logger logger = LogManager.getLogger(DeckProfile.class);
     
     // defines
     public static final String PROFILE_BEGIN = "deck";

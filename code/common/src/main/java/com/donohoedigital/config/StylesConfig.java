@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import java.awt.*;
@@ -56,7 +56,7 @@ import java.util.List;
  */
 public class StylesConfig extends XMLConfigFileLoader
 {
-    private static Logger sLogger = Logger.getLogger(StylesConfig.class);
+    private static Logger sLogger = LogManager.getLogger(StylesConfig.class);
 
     private static final String STYLE_CONFIG = "styles.xml";
     private static final boolean DEBUG_FONT = false;

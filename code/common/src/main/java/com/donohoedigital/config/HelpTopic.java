@@ -47,7 +47,7 @@ import java.net.*;
  */
 public class HelpTopic
 {
-    //static Logger logger = Logger.getLogger(HelpTopic.class);
+    //static Logger logger = LogManager.getLogger(HelpTopic.class);
     
     String sName_;
     String sDisplay_;

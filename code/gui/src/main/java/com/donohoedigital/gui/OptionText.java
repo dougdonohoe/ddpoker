@@ -50,7 +50,7 @@ import java.beans.*;
  */
 public class OptionText extends DDOption implements PropertyChangeListener
 {
-    //static Logger logger = Logger.getLogger(OptionText.class);
+    //static Logger logger = LogManager.getLogger(OptionText.class);
     private DDLabel label_;
     private DDTextField text_;
     private String sDefault_;

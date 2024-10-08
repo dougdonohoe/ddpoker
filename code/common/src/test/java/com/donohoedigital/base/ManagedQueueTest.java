@@ -33,7 +33,7 @@
 package com.donohoedigital.base;
 
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -47,7 +47,7 @@ import java.util.concurrent.*;
  */
 public class ManagedQueueTest extends TestCase
 {
-    private static final Logger logger = Logger.getLogger(ManagedQueueTest.class);
+    private static final Logger logger = LogManager.getLogger(ManagedQueueTest.class);
 
     private Thread mainThread;
     private final List<SampleItem> messages = new ArrayList<SampleItem>();

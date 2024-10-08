@@ -44,7 +44,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.dashboard.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -60,7 +60,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
                                                         MouseListener, PokerTableInput,
                                                         ActionListener, PokerGameboardDelegate
 {
-    static Logger logger = Logger.getLogger(ShowPokerTable.class);
+    static Logger logger = LogManager.getLogger(ShowPokerTable.class);
 
     // UI Components
     protected ImageComponent base_;

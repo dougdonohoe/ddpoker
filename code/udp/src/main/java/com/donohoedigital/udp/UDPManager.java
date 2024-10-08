@@ -33,7 +33,7 @@
 package com.donohoedigital.udp;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.html.*;
 
 import java.net.*;
@@ -49,7 +49,7 @@ import java.util.concurrent.*;
  */
 public class UDPManager extends Thread implements Comparator<UDPLink>
 {
-    static Logger logger = Logger.getLogger(UDPManager.class);
+    static Logger logger = LogManager.getLogger(UDPManager.class);
 
     // wake up every X millis to send acks or resend
     static int ACK_SEND_MILLIS = 333;

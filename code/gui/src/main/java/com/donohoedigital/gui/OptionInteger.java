@@ -51,7 +51,7 @@ import java.awt.*;
  */
 public class OptionInteger extends DDOption implements ChangeListener
 {
-    //static Logger logger = Logger.getLogger(OptionInteger.class);
+    //static Logger logger = LogManager.getLogger(OptionInteger.class);
     
     private DDLabel label_;
     private DDLabel leftlabel_;

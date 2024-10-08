@@ -35,7 +35,7 @@ package com.donohoedigital.games.server;
 import com.donohoedigital.games.server.model.Registration;
 import com.donohoedigital.games.server.service.RegistrationService;
 import junit.framework.TestCase;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
@@ -56,7 +56,7 @@ import java.io.FileNotFoundException;
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class SpringCreatedServiceTest extends TestCase
 {
-    private final Logger logger = Logger.getLogger(SpringCreatedServiceTest.class);
+    private final Logger logger = LogManager.getLogger(SpringCreatedServiceTest.class);
 
     /**
      * Load app config

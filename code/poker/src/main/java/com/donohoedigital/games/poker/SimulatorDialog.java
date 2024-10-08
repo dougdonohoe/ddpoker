@@ -38,7 +38,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -54,7 +54,7 @@ import java.awt.event.*;
  */
 public class SimulatorDialog extends BasePhase implements ChangeListener
 {
-    static Logger logger = Logger.getLogger(SimulatorDialog.class);
+    static Logger logger = LogManager.getLogger(SimulatorDialog.class);
 
     private static ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
     private static ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");

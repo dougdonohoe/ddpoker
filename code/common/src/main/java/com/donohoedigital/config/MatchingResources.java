@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.core.io.*;
 import org.springframework.core.io.support.*;
 import org.springframework.core.type.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class MatchingResources
 {
-    private static final Logger logger = Logger.getLogger(MatchingResources.class);
+    private static final Logger logger = LogManager.getLogger(MatchingResources.class);
 
     private final Resource[] resources;
     private final String pattern;

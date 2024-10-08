@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.wicket;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.wicket.*;
 import org.apache.wicket.protocol.http.*;
 
@@ -45,7 +46,7 @@ import javax.servlet.http.*;
  */
 public class BaseRequestCycle extends WebRequestCycle
 {
-    private static Logger logger = Logger.getLogger(BaseRequestCycle.class);
+    private Logger logger = LogManager.getLogger(BaseRequestCycle.class);
         
     /**
      * Constructor which simply passes arguments to superclass for storage there. This instance will

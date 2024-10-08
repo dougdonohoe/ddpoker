@@ -39,7 +39,7 @@ import com.donohoedigital.xml.*;
 import com.donohoedigital.base.*;
 //import com.thoughtworks.xstream.*;
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class XMLExportTest extends TestCase
 {
-    private static Logger logger = Logger.getLogger(XMLExportTest.class);
+    private static Logger logger = LogManager.getLogger(XMLExportTest.class);
 
 //    public void testXML()
 //    {

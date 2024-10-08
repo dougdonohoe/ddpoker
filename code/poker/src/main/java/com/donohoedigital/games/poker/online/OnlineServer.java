@@ -40,7 +40,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.model.*;
 import static com.donohoedigital.games.poker.model.TournamentHistory.*;
 import com.donohoedigital.games.poker.network.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class OnlineServer
 {
-    private static Logger logger = Logger.getLogger(OnlineServer.class);
+    private static Logger logger = LogManager.getLogger(OnlineServer.class);
 
     private static OnlineServer manager_ = new OnlineServer();
 

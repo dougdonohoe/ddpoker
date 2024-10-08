@@ -47,7 +47,7 @@ import com.donohoedigital.games.config.*;
  */
 public class GamePlayerLoopPhase extends BasePhase 
 {
-    //static Logger logger = Logger.getLogger(GamePlayerLoopPhase.class);
+    //static Logger logger = LogManager.getLogger(GamePlayerLoopPhase.class);
     
     protected Game game_;
     public static final String PARAM_STARTING_INDEX = "idx";

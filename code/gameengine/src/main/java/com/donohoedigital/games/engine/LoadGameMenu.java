@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class LoadGameMenu extends BasePhase
 {
-    //static Logger logger = Logger.getLogger(LoadGameMenu.class);
+    //static Logger logger = LogManager.getLogger(LoadGameMenu.class);
     
     private ButtonBox buttonbox_;
     private MenuBackground menu_;

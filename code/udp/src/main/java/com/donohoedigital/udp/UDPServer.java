@@ -34,7 +34,7 @@ package com.donohoedigital.udp;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -53,7 +53,7 @@ import java.util.prefs.*;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr", "PublicField"})
 public class UDPServer extends Thread
 {
-    static Logger logger = Logger.getLogger(UDPServer.class);
+    static Logger logger = LogManager.getLogger(UDPServer.class);
 
     // UDP debug control
     static boolean DEBUG_UDP_DETAIL = false;

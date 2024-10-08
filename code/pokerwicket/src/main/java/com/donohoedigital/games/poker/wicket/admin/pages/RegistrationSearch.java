@@ -61,7 +61,7 @@ public class RegistrationSearch extends AdminPokerPage
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(Search.class);
+    //private static Logger logger = LogManager.getLogger(Search.class);
 
     public static final int ITEMS_PER_PAGE = 10;
 

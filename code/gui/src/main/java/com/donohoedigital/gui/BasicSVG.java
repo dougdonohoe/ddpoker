@@ -33,7 +33,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class BasicSVG
 {
-    static Logger logger = Logger.getLogger(BasicSVG.class);
+    static Logger logger = LogManager.getLogger(BasicSVG.class);
 
     ArrayList paths_ = new ArrayList();
     Rectangle2D bounds_;

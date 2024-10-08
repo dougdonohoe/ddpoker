@@ -47,7 +47,7 @@ import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +61,7 @@ import java.util.*;
  */
 public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHandler
 {
-    static Logger logger = Logger.getLogger(ChatPanel.class);
+    static Logger logger = LogManager.getLogger(ChatPanel.class);
 
     private boolean bOnlineInGame_;
     private int nDisplayOpt_ = -1;

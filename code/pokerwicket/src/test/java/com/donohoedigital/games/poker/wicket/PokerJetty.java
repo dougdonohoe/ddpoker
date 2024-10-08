@@ -33,7 +33,7 @@
 package com.donohoedigital.games.poker.wicket;
 
 import com.donohoedigital.base.Utils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.bio.SocketConnector;
@@ -44,7 +44,7 @@ import org.mortbay.jetty.webapp.WebAppContext;
  */
 public class PokerJetty 
 {
-    private static final Logger logger = Logger.getLogger(PokerJetty.class);
+    private static final Logger logger = LogManager.getLogger(PokerJetty.class);
 
     public static void main(String[] args) {
 

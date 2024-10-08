@@ -38,7 +38,7 @@
 
 package com.donohoedigital.p2p;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class LanClientList
 {
-    static Logger logger = Logger.getLogger(LanClientList.class);
+    static Logger logger = LogManager.getLogger(LanClientList.class);
 
     public static final int LAN_HELLO = 10000;
     public static final int LAN_ALIVE = 10001;

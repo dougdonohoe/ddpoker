@@ -46,7 +46,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.*;
 import java.awt.image.*;
@@ -60,7 +60,7 @@ import java.util.List;
  */
 public class PokerUtils extends EngineUtils
 {
-    private static final Logger logger = Logger.getLogger(PokerUtils.class);
+    private static final Logger logger = LogManager.getLogger(PokerUtils.class);
 
     private static final BigInteger factorial_[] = new BigInteger[53];
 

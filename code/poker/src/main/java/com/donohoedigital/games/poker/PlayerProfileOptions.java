@@ -45,7 +45,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -62,7 +62,7 @@ import java.text.*;
  */
 public class PlayerProfileOptions extends BasePhase implements ChangeListener
 {
-    static Logger logger = Logger.getLogger(PlayerProfileOptions.class);
+    static Logger logger = LogManager.getLogger(PlayerProfileOptions.class);
     
     public static final String PROFILE_NAME = "player";
     

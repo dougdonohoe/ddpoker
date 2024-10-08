@@ -47,7 +47,7 @@ import java.awt.geom.*;
 import java.awt.font.*;
 import java.beans.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.gui.*;

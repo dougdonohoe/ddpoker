@@ -33,7 +33,7 @@
 package com.donohoedigital.config;
 
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 /**
@@ -45,7 +45,7 @@ import com.donohoedigital.base.*;
  */
 public class HelpConfigTest extends TestCase
 {
-    private static Logger logger = Logger.getLogger(HelpConfigTest.class);
+    private static Logger logger = LogManager.getLogger(HelpConfigTest.class);
     public void testLoad()
     {
         if (Utils.ISMAC) return; // doesn't play nicely on mac

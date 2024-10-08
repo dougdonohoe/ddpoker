@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 /**
@@ -51,7 +51,7 @@ import com.donohoedigital.config.*;
  */
 public class HandStrength 
 {
-    static Logger logger = Logger.getLogger(HandStrength.class);
+    static Logger logger = LogManager.getLogger(HandStrength.class);
     
     // debug output
     private static boolean DEBUG = false;

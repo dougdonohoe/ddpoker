@@ -47,7 +47,7 @@ import com.donohoedigital.games.poker.ai.gui.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -63,7 +63,7 @@ import static com.donohoedigital.config.DebugConfig.*;
  */
 public class TournamentProfileDialog extends OptionMenuDialog implements PropertyChangeListener, ActionListener, FocusListener
 {
-    static Logger logger = Logger.getLogger(TournamentProfileDialog.class);
+    static Logger logger = LogManager.getLogger(TournamentProfileDialog.class);
 
     static com.donohoedigital.base.Format fPerc = new com.donohoedigital.base.Format("%1.3f");
     private javax.swing.border.Border empty_ = null;

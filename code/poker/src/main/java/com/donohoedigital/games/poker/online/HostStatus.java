@@ -39,7 +39,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +54,7 @@ import java.awt.event.*;
  */
 public class HostStatus extends DDPanel implements HostConnectionListener, Runnable
 {
-    static Logger logger = Logger.getLogger(HostStatus.class);
+    static Logger logger = LogManager.getLogger(HostStatus.class);
 
     // LEDs
     private static ImageIcon REDLED = ImageConfig.getImageIcon("led-red");

@@ -40,7 +40,7 @@ package com.donohoedigital.p2p;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 
@@ -50,7 +50,7 @@ import java.io.*;
  */
 public class Peer2PeerMessenger
 {
-    static Logger logger = Logger.getLogger(Peer2PeerMessenger.class);
+    static Logger logger = LogManager.getLogger(Peer2PeerMessenger.class);
     
     Thread thread_ = null;
     Peer2PeerClient conn_ = null;

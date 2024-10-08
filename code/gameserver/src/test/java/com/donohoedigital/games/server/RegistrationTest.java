@@ -37,7 +37,7 @@ import com.donohoedigital.games.server.dao.RegistrationDao;
 import com.donohoedigital.games.server.model.BannedKey;
 import com.donohoedigital.games.server.model.Registration;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class RegistrationTest
 {
-    private final Logger logger = Logger.getLogger(RegistrationTest.class);
+    private final Logger logger = LogManager.getLogger(RegistrationTest.class);
 
     @Autowired
     private RegistrationDao dao;

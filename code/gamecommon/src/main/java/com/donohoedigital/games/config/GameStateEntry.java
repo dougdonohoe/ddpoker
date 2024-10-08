@@ -52,7 +52,7 @@ import java.io.*;
 @DataCoder('e')
 public class GameStateEntry extends TokenizedList
 {
-    //static Logger logger = Logger.getLogger(GameStateEntry.class);
+    //static Logger logger = LogManager.getLogger(GameStateEntry.class);
 
     private char cType_;
     private Object o_;

@@ -38,7 +38,7 @@
 
 package com.donohoedigital.jsp;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import java.util.*;
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class EmbeddedServletConfig implements ServletConfig
 {
-    static Logger logger = Logger.getLogger(EmbeddedServletConfig.class);
+    static Logger logger = LogManager.getLogger(EmbeddedServletConfig.class);
 
     ServletContext context_;
     String scratch_;

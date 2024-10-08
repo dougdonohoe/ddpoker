@@ -41,7 +41,7 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.base.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -55,7 +55,7 @@ import java.util.List;
  */
 public class ButtonBox extends DDPanel implements AncestorListener
 {
-    static Logger logger = Logger.getLogger(ButtonBox.class);
+    static Logger logger = LogManager.getLogger(ButtonBox.class);
     
     public static final String PARAM_DEFAULT_BUTTON = "default-button";
     private HashMap buttons_ = new HashMap();

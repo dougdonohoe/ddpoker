@@ -42,7 +42,7 @@ import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.p2p.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.net.*;
 
@@ -51,7 +51,7 @@ import java.net.*;
  */
 public class PokerUDPServer extends UDPServer implements PokerConnectionServer, ChatLobbyManager
 {
-    private static Logger logger = Logger.getLogger(PokerUDPServer.class);
+    private static Logger logger = LogManager.getLogger(PokerUDPServer.class);
 
     private PokerMain main_;
     private UDPLink chatLink_;

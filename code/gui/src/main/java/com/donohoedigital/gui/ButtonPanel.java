@@ -50,7 +50,7 @@ import java.awt.event.*;
  */
 public class ButtonPanel extends DDPanel implements MouseListener
 {
-    //static Logger logger = Logger.getLogger(ButtonPanel.class);
+    //static Logger logger = LogManager.getLogger(ButtonPanel.class);
     
     // ui controls for mouse movement
     protected boolean bSelected_ = false;

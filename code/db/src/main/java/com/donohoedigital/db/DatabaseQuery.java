@@ -34,7 +34,7 @@ package com.donohoedigital.db;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.sql.*;
@@ -46,7 +46,7 @@ import java.util.*;
 @SuppressWarnings({"JDBCResourceOpenedButNotSafelyClosed"})
 public class DatabaseQuery
 {
-    private static Logger logger = Logger.getLogger(DatabaseQuery.class);
+    private static Logger logger = LogManager.getLogger(DatabaseQuery.class);
 
     private Database database_ = null;
     private Connection conn_ = null;

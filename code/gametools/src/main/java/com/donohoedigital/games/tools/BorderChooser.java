@@ -52,7 +52,7 @@ import java.awt.event.*;
  */
 public class BorderChooser extends InternalDialog implements ActionListener
 {
-    //static Logger logger = Logger.getLogger(BorderChooser.class);
+    //static Logger logger = LogManager.getLogger(BorderChooser.class);
     
     Territories territories_;
     TerritoryTableModel model_;

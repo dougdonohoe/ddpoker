@@ -48,7 +48,7 @@ import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.event.*;
 import com.donohoedigital.games.poker.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -64,7 +64,7 @@ public class HoldemHand implements DataMarshal
     // unit tests!
     //
 
-    static Logger logger = Logger.getLogger(HoldemHand.class);
+    static Logger logger = LogManager.getLogger(HoldemHand.class);
 
     private boolean bStoredInDatabase_ = false;
 

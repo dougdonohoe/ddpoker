@@ -33,7 +33,7 @@
 package com.donohoedigital.config;
 
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.core.io.*;
 
 import java.lang.annotation.*;
@@ -49,7 +49,7 @@ import java.util.*;
  */
 public class MatchingResourcesTest extends TestCase
 {
-    Logger logger = Logger.getLogger(MatchingResourcesTest.class);
+    Logger logger = LogManager.getLogger(MatchingResourcesTest.class);
 
     public void testFindResources()
     {

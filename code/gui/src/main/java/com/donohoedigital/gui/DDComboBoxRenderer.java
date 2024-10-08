@@ -48,7 +48,7 @@ import java.awt.*;
  */
 public class DDComboBoxRenderer extends BasicComboBoxRenderer 
 {
-    //static Logger logger = Logger.getLogger(DDComboBoxRenderer.class);
+    //static Logger logger = LogManager.getLogger(DDComboBoxRenderer.class);
     DDComboBox list_;
     
     /** 

@@ -49,7 +49,7 @@ import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -59,7 +59,7 @@ import java.util.*;
  */
 public class PokerTable implements ObjectID
 {
-    static Logger logger = Logger.getLogger(PokerTable.class);
+    static Logger logger = LogManager.getLogger(PokerTable.class);
 
     // no seat
     public static final int NO_SEAT = -1;

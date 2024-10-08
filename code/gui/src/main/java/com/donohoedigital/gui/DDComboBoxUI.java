@@ -54,7 +54,7 @@ import java.beans.*;
  */
 public class DDComboBoxUI extends BasicComboBoxUI 
 {
-    //static Logger logger = Logger.getLogger(DDComboBoxUI.class);
+    //static Logger logger = LogManager.getLogger(DDComboBoxUI.class);
 
     public static ComponentUI createUI(JComponent c) {
         return new DDComboBoxUI();

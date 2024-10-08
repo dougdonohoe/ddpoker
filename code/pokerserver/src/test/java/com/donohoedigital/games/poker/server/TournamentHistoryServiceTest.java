@@ -39,7 +39,7 @@ import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
 import com.donohoedigital.games.poker.service.OnlineGameService;
 import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.service.TournamentHistoryService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class TournamentHistoryServiceTest
 {
-    private static final Logger logger = Logger.getLogger(TournamentHistoryServiceTest.class);
+    private static final Logger logger = LogManager.getLogger(TournamentHistoryServiceTest.class);
 
     @Autowired
     private TournamentHistoryService histService;

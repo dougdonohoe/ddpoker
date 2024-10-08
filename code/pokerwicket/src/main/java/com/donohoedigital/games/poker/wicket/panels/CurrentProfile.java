@@ -51,7 +51,7 @@ import org.apache.wicket.markup.html.link.*;
  */
 public class CurrentProfile extends VoidPanel
 {
-    //private static Logger logger = Logger.getLogger(CurrentProfile.class);
+    //private static Logger logger = LogManager.getLogger(CurrentProfile.class);
 
     private static final long serialVersionUID = 42L;
 

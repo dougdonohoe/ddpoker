@@ -46,7 +46,7 @@ import com.donohoedigital.games.comms.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.jsp.*;
 import com.donohoedigital.mail.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 
 import java.io.*;
@@ -58,7 +58,7 @@ import java.util.*;
  */
 public class ServerSideGame extends ServerDataFile implements GameInfo
 {
-    static Logger logger = Logger.getLogger(ServerSideGame.class);
+    static Logger logger = LogManager.getLogger(ServerSideGame.class);
 
 
     // FIX: this file is from WarAOI and probably should be deleted.  Added this postalservice so it will compile

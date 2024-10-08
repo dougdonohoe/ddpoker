@@ -40,7 +40,7 @@ package com.donohoedigital.games.poker.engine;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.security.*;
 import java.util.*;
@@ -51,7 +51,7 @@ import java.util.*;
 @DataCoder('K')
 public class Deck extends DMArrayList<Card>
 {
-    static Logger logger = Logger.getLogger(Deck.class);
+    static Logger logger = LogManager.getLogger(Deck.class);
 
     // random for normal shuffles - changed to secure random in 3.0
     private static SecureRandom random = new SecureRandom();

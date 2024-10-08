@@ -45,7 +45,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.server.*;
 
 import java.io.*;
@@ -58,7 +58,7 @@ import java.util.*;
  */
 public class OnlineManagerQueue implements Runnable
 {
-    static Logger logger = Logger.getLogger(OnlineManagerQueue.class);
+    static Logger logger = LogManager.getLogger(OnlineManagerQueue.class);
 
     // settings
     private static int SLEEP_UNAVAIL = 25; // millis to sleep when no worker thread available

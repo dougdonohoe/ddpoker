@@ -41,7 +41,7 @@ package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -53,7 +53,7 @@ import java.beans.*;
  */
 public class GamePlayer implements ObjectID
 {
-    protected static Logger logger = Logger.getLogger(GamePlayer.class);
+    protected static Logger logger = LogManager.getLogger(GamePlayer.class);
     
     /** by convention, host is 1st player added (id 0) */
     public static final int HOST_ID = 0;

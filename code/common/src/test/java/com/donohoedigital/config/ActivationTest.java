@@ -33,7 +33,7 @@
 package com.donohoedigital.config;
 
 import junit.framework.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +44,7 @@ import org.apache.log4j.*;
  */
 public class ActivationTest extends TestCase
 {
-    private static final Logger logger = Logger.getLogger(ActivationTest.class);
+    private static final Logger logger = LogManager.getLogger(ActivationTest.class);
 
     public void testGuid()
     {

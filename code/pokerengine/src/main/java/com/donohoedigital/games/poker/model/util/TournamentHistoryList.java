@@ -34,7 +34,7 @@ package com.donohoedigital.games.poker.model.util;
 
 import com.donohoedigital.comms.*;
 import com.donohoedigital.games.poker.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -43,7 +43,7 @@ import java.util.*;
  */
 public class TournamentHistoryList extends DMArrayList<TournamentHistory>
 {
-    static Logger logger = Logger.getLogger(TournamentHistoryList.class);
+    static Logger logger = LogManager.getLogger(TournamentHistoryList.class);
 
     private int totalSize_ = 0;
 

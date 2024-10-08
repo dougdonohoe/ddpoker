@@ -44,7 +44,7 @@ import com.donohoedigital.games.comms.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.p2p.*;
 
 /**
@@ -53,7 +53,7 @@ import com.donohoedigital.p2p.*;
  */
 public class PokerP2PDialog extends SendMessageDialog implements OnlineMessageListener
 {
-    static Logger logger = Logger.getLogger(PokerP2PDialog.class);
+    static Logger logger = LogManager.getLogger(PokerP2PDialog.class);
 
     public static final String P2P_ERROR_MSG_MODIFIER = "p2p";
     public static final String PARAM_MSG = "online-msg";

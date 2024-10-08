@@ -49,7 +49,7 @@ import com.donohoedigital.games.poker.network.*;
  */
 public class GetWanList extends SendMessageDialog
 {
-    // private static Logger logger = Logger.getLogger(GetWanList.class);
+    // private static Logger logger = LogManager.getLogger(GetWanList.class);
 
     public static final String PARAM_OFFSET = "offset";
     public static final String PARAM_COUNT = "count";

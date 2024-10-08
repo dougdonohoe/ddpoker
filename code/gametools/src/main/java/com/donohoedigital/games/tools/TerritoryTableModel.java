@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.tools;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 
 import javax.swing.table.*;
@@ -53,7 +53,7 @@ import java.util.*;
 public class TerritoryTableModel extends AbstractTableModel 
 {
     
-    //static Logger logger = Logger.getLogger(TerritoryTableModel.class);
+    //static Logger logger = LogManager.getLogger(TerritoryTableModel.class);
     
     
     Territories territories_;

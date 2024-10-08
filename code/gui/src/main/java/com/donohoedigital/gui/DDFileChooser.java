@@ -48,7 +48,7 @@ import java.util.prefs.*;
  */
 public class DDFileChooser extends JFileChooser implements DDTextVisibleComponent, PropertyChangeListener
 {
-    //static Logger logger = Logger.getLogger(DDFileChooser.class);
+    //static Logger logger = LogManager.getLogger(DDFileChooser.class);
 
     private Preferences prefs_;
     private String sPrefName_;

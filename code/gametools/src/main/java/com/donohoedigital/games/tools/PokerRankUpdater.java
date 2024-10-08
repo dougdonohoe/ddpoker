@@ -38,7 +38,7 @@ import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.model.util.*;
 import com.donohoedigital.games.poker.service.*;
 import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.context.*;
 import org.springframework.context.support.*;
 
@@ -52,7 +52,7 @@ import org.springframework.context.support.*;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class PokerRankUpdater extends BaseCommandLineApp
 {
-    private static Logger logger = Logger.getLogger(PokerRankUpdater.class);
+    private static Logger logger = LogManager.getLogger(PokerRankUpdater.class);
 
     private OnlineGameService gameService;
     private TournamentHistoryService histService;

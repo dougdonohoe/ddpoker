@@ -45,7 +45,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 
@@ -55,7 +55,7 @@ import javax.swing.*;
  */
 public class ColorUpFinish extends ChainPhase implements PlayerActionListener, Runnable
 {
-    static Logger logger = Logger.getLogger(ColorUpFinish.class);
+    static Logger logger = LogManager.getLogger(ColorUpFinish.class);
     
     private PokerGame game_;
     private boolean bPhase1Done_ = false;

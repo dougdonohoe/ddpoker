@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import javax.swing.*;
@@ -57,7 +57,7 @@ import java.net.*;
  */
 public class ImageConfig extends XMLConfigFileLoader
 {
-    private static Logger iLogger = Logger.getLogger(ImageConfig.class);
+    private static Logger iLogger = LogManager.getLogger(ImageConfig.class);
     
     private static final String IMAGE_CONFIG = "images.xml";
 

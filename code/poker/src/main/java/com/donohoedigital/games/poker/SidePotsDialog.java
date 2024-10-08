@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class SidePotsDialog extends DialogPhase
 {
-    //static Logger logger = Logger.getLogger(SidePotsDialog.class);
+    //static Logger logger = LogManager.getLogger(SidePotsDialog.class);
     
     private JScrollPane scroll_;
     private DDHtmlArea html_;

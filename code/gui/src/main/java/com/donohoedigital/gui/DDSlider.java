@@ -47,7 +47,7 @@ import java.awt.*;
  */
 public class DDSlider extends JSlider implements DDComponent 
 {
-    //static Logger logger = Logger.getLogger(DDSlider.class);
+    //static Logger logger = LogManager.getLogger(DDSlider.class);
 
     private Color thumbFocusOverlay_=  null;
     private Color thumbBg_ = null;

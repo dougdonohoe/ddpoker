@@ -40,7 +40,7 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +54,7 @@ import java.util.*;
 public class ImageComponent extends JComponent implements Icon
 {
 
-    static Logger logger = Logger.getLogger(ImageComponent.class);
+    static Logger logger = LogManager.getLogger(ImageComponent.class);
 
     protected String sName_;
     protected BufferedImage bimage_;

@@ -72,7 +72,7 @@ public class Leaderboard extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(Leaderboard.class);
+    //private static Logger logger = LogManager.getLogger(Leaderboard.class);
 
     private static boolean DEBUG_ZERO_RESULTS = false;
 

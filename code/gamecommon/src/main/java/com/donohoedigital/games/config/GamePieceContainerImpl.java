@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class GamePieceContainerImpl implements GamePieceContainer 
 {
-    //static Logger logger = Logger.getLogger(GamePieceContainerImpl.class);
+    //static Logger logger = LogManager.getLogger(GamePieceContainerImpl.class);
     
     Map pieces_ = Collections.synchronizedSortedMap(new TreeMap());
     GamePlayer player_;

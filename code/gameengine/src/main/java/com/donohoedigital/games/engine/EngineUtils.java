@@ -55,7 +55,7 @@ import java.util.List;
  */
 public class EngineUtils 
 {  
-    //static Logger logger = Logger.getLogger(EngineUtils.class);
+    //static Logger logger = LogManager.getLogger(EngineUtils.class);
     
     private static JTextComponent msg_;
     protected static Gameboard gameboard_;

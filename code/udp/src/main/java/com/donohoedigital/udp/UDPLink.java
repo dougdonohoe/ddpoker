@@ -33,7 +33,7 @@
 package com.donohoedigital.udp;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.net.*;
 import java.util.*;
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class UDPLink
 {
-    static Logger logger = Logger.getLogger(UDPLink.class);
+    static Logger logger = LogManager.getLogger(UDPLink.class);
 
     // default timeout
     public static final int DEFAULT_TIMEOUT = 7500;

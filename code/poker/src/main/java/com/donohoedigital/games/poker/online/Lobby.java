@@ -47,7 +47,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.p2p.*;
 
 import javax.swing.*;
@@ -63,7 +63,7 @@ import java.beans.*;
  */
 public class Lobby extends BasePhase implements ChangeListener, PropertyChangeListener, DDTable.TableMenuItems
 {
-    static Logger logger = Logger.getLogger(Lobby.class);
+    static Logger logger = LogManager.getLogger(Lobby.class);
     
     private DDHtmlArea text_;
     private ButtonBox buttonbox_;

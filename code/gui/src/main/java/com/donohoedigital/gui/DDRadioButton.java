@@ -47,7 +47,7 @@ import java.awt.*;
  */
 public class DDRadioButton extends JRadioButton implements DDHasLabelComponent
 {
-    //static Logger logger = Logger.getLogger(DDRadioButton.class);
+    //static Logger logger = LogManager.getLogger(DDRadioButton.class);
     private Color cDotColor_ = null;
     
     /** 

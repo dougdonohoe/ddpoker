@@ -49,7 +49,7 @@ import java.awt.event.*;
  */
 public class GuiManager implements MouseListener
 {
-    //static Logger logger = Logger.getLogger(GuiManager.class);
+    //static Logger logger = LogManager.getLogger(GuiManager.class);
 
     private static final GuiManager manager_ = new GuiManager();
     public static final String DEFAULT = "default";

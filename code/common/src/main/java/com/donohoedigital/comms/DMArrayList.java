@@ -38,7 +38,7 @@
 
 package com.donohoedigital.comms;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -52,7 +52,7 @@ import java.util.*;
 @DataCoder('a')
 public class DMArrayList<E> extends ArrayList<E> implements DataMarshal
 {    
-    static Logger logger = Logger.getLogger(DMArrayList.class);
+    static Logger logger = LogManager.getLogger(DMArrayList.class);
 
     /** 
      * Creates a new instance of DMArrayList 

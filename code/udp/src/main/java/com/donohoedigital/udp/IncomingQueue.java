@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -45,7 +45,7 @@ import java.util.*;
  */
 public class IncomingQueue
 {
-    static Logger logger = Logger.getLogger(IncomingQueue.class);
+    static Logger logger = LogManager.getLogger(IncomingQueue.class);
 
     // message comparator
     private static UDPMessageComparator comparator_ = new UDPMessageComparator();

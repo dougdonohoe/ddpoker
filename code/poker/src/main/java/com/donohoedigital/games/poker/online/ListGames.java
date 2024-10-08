@@ -43,7 +43,7 @@ import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -61,7 +61,7 @@ import java.beans.*;
  */
 public abstract class ListGames extends BasePhase implements PropertyChangeListener, ListSelectionListener
 {
-    static Logger logger = Logger.getLogger(ListGames.class);
+    static Logger logger = LogManager.getLogger(ListGames.class);
 
     protected PlayerProfile profile_;
 

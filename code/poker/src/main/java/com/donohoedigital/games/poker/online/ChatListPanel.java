@@ -38,7 +38,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListener, FocusListener
 {
-    static Logger logger = Logger.getLogger(ChatListPanel.class);
+    static Logger logger = LogManager.getLogger(ChatListPanel.class);
 
     private static ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
     private static final String WHITESPACE = "[\\s\\xA0]+";

@@ -41,7 +41,7 @@ package com.donohoedigital.games.poker;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  *
@@ -49,7 +49,7 @@ import org.apache.log4j.*;
  */
 public class HandFutures 
 {
-    static Logger logger = Logger.getLogger(HandFutures.class);
+    static Logger logger = LogManager.getLogger(HandFutures.class);
 
     static boolean DEBUG = false;
     

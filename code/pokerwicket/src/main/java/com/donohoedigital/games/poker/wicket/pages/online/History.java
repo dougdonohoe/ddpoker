@@ -72,7 +72,7 @@ public class History extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(History.class);
+    //private static Logger logger = LogManager.getLogger(History.class);
 
     public static final String PARAM_NAME = "name";
     public static final String PARAM_BEGIN = "b";

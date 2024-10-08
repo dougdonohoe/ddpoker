@@ -45,7 +45,7 @@ import java.util.List;
 
 public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyListener, FocusListener
 {
-    //static Logger logger = Logger.getLogger(HandGroupGridPanel.class);
+    //static Logger logger = LogManager.getLogger(HandGroupGridPanel.class);
 
     private HandButton handButtons[][] = new HandButton[Card.ACE + 1][Card.ACE + 1];
     private DDLabel summaryLabel_;

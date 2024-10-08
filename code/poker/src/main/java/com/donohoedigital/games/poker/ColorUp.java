@@ -42,7 +42,7 @@ import com.donohoedigital.config.*;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 
@@ -52,7 +52,7 @@ import javax.swing.*;
  */
 public class ColorUp extends ChainPhase 
 {
-    static Logger logger = Logger.getLogger(ColorUp.class);
+    static Logger logger = LogManager.getLogger(ColorUp.class);
 
     PokerGame game_;
     PokerTable table_;

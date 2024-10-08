@@ -44,7 +44,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,7 @@ import java.io.*;
 
 public class CreateTestCase extends DialogPhase
 {
-    static Logger logger = Logger.getLogger(CreateTestCase.class);
+    static Logger logger = LogManager.getLogger(CreateTestCase.class);
 
     private PokerGame game_;
     private PokerTable table_;

@@ -41,7 +41,7 @@ package com.donohoedigital.games.tools;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * @author donohoe
@@ -50,7 +50,7 @@ import org.apache.log4j.*;
 public class WhatIsMyIp implements DDMessageListener
 {
 
-    static Logger logger = Logger.getLogger(WhatIsMyIp.class);
+    static Logger logger = LogManager.getLogger(WhatIsMyIp.class);
 
     // display
     private String[] errors_;

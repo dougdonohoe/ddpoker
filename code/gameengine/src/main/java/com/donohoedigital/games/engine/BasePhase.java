@@ -41,7 +41,7 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 /**
@@ -50,7 +50,7 @@ import com.donohoedigital.config.*;
  */
 public abstract class BasePhase implements Phase 
 {
-    static Logger logger = Logger.getLogger(GameEngine.class);
+    static Logger logger = LogManager.getLogger(GameEngine.class);
     
     protected GameEngine engine_;
     protected GameContext context_;

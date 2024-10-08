@@ -46,7 +46,7 @@ import java.awt.image.*;
  */
 public class ImageConfigTest extends TestCase
 {
-    //private static Logger logger = Logger.getLogger(ImageConfigTest.class);
+    //private static Logger logger = LogManager.getLogger(ImageConfigTest.class);
 
     public void testLoad()
     {

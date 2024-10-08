@@ -50,7 +50,7 @@ import java.awt.event.*;
  */
 public class OptionCombo extends DDOption implements ItemListener
 {
-    //static Logger logger = Logger.getLogger(OptionCombo.class);
+    //static Logger logger = LogManager.getLogger(OptionCombo.class);
     private DDLabel label_;
     private DDComboBox combo_;
     private String sDefault_;

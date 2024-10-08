@@ -41,7 +41,7 @@ import com.donohoedigital.games.comms.*;
  */
 public class DDMessageCheck extends SendMessageDialog
 {
-    //static Logger logger = Logger.getLogger(UpdateCheck.class);
+    //static Logger logger = LogManager.getLogger(UpdateCheck.class);
 
     /**
      * return message for registering online game

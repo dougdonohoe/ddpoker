@@ -51,7 +51,7 @@ import java.awt.event.*;
  */
 public class OptionBoolean extends DDOption implements ActionListener, ChangeListener
 {
-    //static Logger logger = Logger.getLogger(OptionBoolean.class);
+    //static Logger logger = LogManager.getLogger(OptionBoolean.class);
     
     private DDCheckBox box_;
     private boolean bDefault_;

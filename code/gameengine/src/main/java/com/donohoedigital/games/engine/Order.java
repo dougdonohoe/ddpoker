@@ -49,7 +49,7 @@ import java.awt.*;
  */
 public class Order extends BasePhase 
 {
-    //static Logger logger = Logger.getLogger(Order.class);
+    //static Logger logger = LogManager.getLogger(Order.class);
     
     public void start()
     {

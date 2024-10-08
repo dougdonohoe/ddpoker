@@ -44,7 +44,7 @@ import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.xml.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.text.*;
@@ -58,7 +58,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 @DataCoder('X')
 public class TournamentProfile extends BaseProfile implements DataMarshal, SimpleXMLEncodable
 {
-    static Logger logger = Logger.getLogger(TournamentProfile.class);
+    static Logger logger = LogManager.getLogger(TournamentProfile.class);
 
     // defines
     public static final String PROFILE_BEGIN = "tourney";

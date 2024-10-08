@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -57,7 +57,7 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
                                                                 FocusListener, MouseListener,
                                                                 DDCustomHelp
 {
-    static Logger logger = Logger.getLogger(DDTextField.class);
+    static Logger logger = LogManager.getLogger(DDTextField.class);
 
     // default border used for all text fields
     public static final Border TEXTBORDER = createTextBorder(null);

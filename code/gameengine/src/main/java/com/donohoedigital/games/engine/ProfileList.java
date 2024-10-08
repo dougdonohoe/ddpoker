@@ -43,7 +43,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -60,7 +60,7 @@ import java.util.prefs.*;
 public abstract class ProfileList extends DDPanel implements AWTEventListener, FocusListener,
                                                              AncestorListener
 {
-    static Logger logger = Logger.getLogger(ProfileList.class);
+    static Logger logger = LogManager.getLogger(ProfileList.class);
     
     public static final String PARAM_PROFILE = "profile";
     public static final String PROFILE_PREFIX = "profilelist-";

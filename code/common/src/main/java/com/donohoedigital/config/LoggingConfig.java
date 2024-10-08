@@ -32,33 +32,38 @@
  */
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.ApplicationType.*;
-import org.apache.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.properties.PropertiesConfiguration;
+import org.apache.logging.log4j.core.config.properties.PropertiesConfigurationFactory;
 
 import java.io.*;
-import java.net.*;
-import java.text.*;
-import java.util.*;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+
+import static com.donohoedigital.config.ApplicationType.*;
 
 /**
  * Class to initiate logging
  */
-@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class LoggingConfig
 {
-    private static final Logger logger = Logger.getLogger(LoggingConfig.class);
+    private static Logger logger = LogManager.getLogger(LoggingConfig.class);
 
     private final String appName;
     private final ApplicationType type;
     private final RuntimeDirectory runtimeDirectory;
     private final boolean allowUserOverrides;
 
+    private LoggerContext loggerContext;
     private File logDir = null;
     private File logFile = null;
-
-    private static PrintStream origStdErr = null;
-    private static RedirectStream stdErr = null;
 
     /**
      * Construct
@@ -75,10 +80,9 @@ public class LoggingConfig
     /**
      * Initialize logging based on specified application type.
      */
-    @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod"})
     public void init()
     {
-        ApplicationError.warnNotNull(logDir, "LoggingConfig already initialized");
+        ApplicationError.warnNotNull(loggerContext, "LoggingConfig already initialized");
 
         boolean useDefault = false;
         String configStub = null;
@@ -87,19 +91,19 @@ public class LoggingConfig
         {
             case CLIENT:
             case HEADLESS_CLIENT:
-                configStub = "log4j.client";
+                configStub = "log4j2.client";
                 break;
 
             case WEBAPP:
-                configStub = "log4j.webapp";
+                configStub = "log4j2.webapp";
                 break;
 
             case SERVER:
-                configStub = "log4j.server";
+                configStub = "log4j2.server";
                 break;
 
             case COMMAND_LINE:
-                configStub = "log4j.cmdline";
+                configStub = "log4j2.cmdline";
                 break;
         }
 
@@ -109,7 +113,7 @@ public class LoggingConfig
 
         // look for user override
         if (allowUserOverrides) {
-            sName = ConfigUtils.getUserName() + ".log4j.properties";
+            sName = ConfigUtils.getUserName() + ".log4j2.properties";
             useroverride = new MatchingResources("classpath*:config/override/" + sName).getSingleResourceURL();
 
             sName = ConfigUtils.getUserName() + '.' + configStub + ".properties";
@@ -123,17 +127,17 @@ public class LoggingConfig
         // get type-specific log4j file
         URL url = new MatchingResources("classpath*:config/common/" + sConfigName).getSingleResourceURL();
 
-        // if not there, look for default log4j.properties
+        // if not there, look for default log4j2.properties
         if (url == null)
         {
-            sName = "log4j.properties";
+            sName = "log4j2.properties";
             url = new MatchingResources("classpath*:" + sName).getSingleResourceURL();
 
             if (url != null)
             {
                 useDefault = true;
-                logger.warn("Log4j configuration file not found: " + sConfigName);
-                logger.warn("Using default log4j configuration file " + url);
+                logger.warn("Log4j configuration file not found: {}", sConfigName);
+                logger.warn("Using default log4j configuration file {}", url);
             }
         }
 
@@ -142,10 +146,10 @@ public class LoggingConfig
         {
             if (type != WEBAPP)
             {
-                BasicConfigurator.resetConfiguration();
-                BasicConfigurator.configure();
+                LogManager.shutdown();
+                loggerContext = Configurator.initialize(null);
             }
-            logger.warn("Log4j configuration file not found: " + sConfigName);
+            logger.warn("Log4j configuration file not found: {}", sConfigName);
             logger.warn("Log4j set to basic configuration (console)");
         }
         else
@@ -169,9 +173,9 @@ public class LoggingConfig
             }
             catch (ApplicationError o)
             {
-                BasicConfigurator.configure();
-                logger.warn("Log4j log directory not found: " + logDir.getAbsolutePath(), o);
-                BasicConfigurator.resetConfiguration();
+                LogManager.shutdown();
+                logger.warn("Log4j log directory not found: {}", logDir.getAbsolutePath(), o);
+                loggerContext = Configurator.initialize(null);
             }
 
             // specify log file name
@@ -181,7 +185,7 @@ public class LoggingConfig
             else sFileName = appName + "-server.log";
             logFile = new File(logDir, sFileName);
 
-            // set properties - ${log4j-XXXXX} are referenced in the configuration file(s)
+            // set properties - ${sys:log4j-*} are referenced in the configuration file(s)
             System.setProperty("log4j-logfile", logFile.getAbsolutePath());
             System.setProperty("log4j-logpath", logDir.getAbsolutePath());
             System.setProperty("log4j-appname", appName);
@@ -192,53 +196,16 @@ public class LoggingConfig
             // configure log4j based on config file
             if (!useDefault)
             {
-                configure(url, appoverride, useroverride, useroverride2);
-                if (type != COMMAND_LINE) logger.info("Log4j configured using: " + url);
-                if (appoverride != null) logger.info("Log4j app override file used: " + appoverride);
-                if (useroverride != null) logger.info("Log4j user override file used: " + useroverride);
-                if (useroverride2 != null) logger.info("Log4j user override file 2 used: " + useroverride2);
-            }
-
-            // Redirect stderr/stdout through log4j
-            if (type != WEBAPP)
-            {
-                // only set once (to avoid issues during testing)
-                if (origStdErr == null)
-                {
-                    //noinspection NonThreadSafeLazyInitialization
-                    origStdErr = System.err;
-
-                    // standard error is easy
-                    stdErr = new RedirectStream("STDERR ", true);
-                    System.setErr(new PrintStream(stdErr.getStream(), true));
-                }
-
-//                // TODO: standard out is hard if Console appender is on ... can't quite get this to work properly
-//                Enumeration<?> e = Logger.getRootLogger().getAllAppenders();
-//                while (e.hasMoreElements()) {
-//                    Appender a = (Appender) e.nextElement();
-//                    logger.debug("Appender: "+ a);
-//                    if (a instanceof ConsoleAppender) {
-//                        ConsoleAppender consoleAppender = (ConsoleAppender) a;
-//                        if (consoleAppender.getFollow()) {
-//                            consoleAppender.setFollow(false);
-//                            consoleAppender.activateOptions();
-//                        }
-//                        //Logger.getRootLogger().removeAppender(a);
-//                    }
-//                }
-//
-//                System.setOut(new PrintStream(new DebugStream("STDOUT ", false), true));
-
+                loggerContext = configure(url, appoverride, useroverride, useroverride2);
+                if (type != COMMAND_LINE) logger.info("Log4j configured using: {}", url);
+                if (appoverride != null) logger.info("Log4j app override file used: {}", appoverride);
+                if (useroverride != null) logger.info("Log4j user override file used: {}", useroverride);
+                if (useroverride2 != null) logger.info("Log4j user override file 2 used: {}", useroverride2);
             }
         }
     }
 
-    /**
-     * Load all properties files, then configure log4j
-     */
-    private void configure(URL... urls)
-    {
+    private InputStream loadProperties(URL ...urls) {
         Properties props = new Properties();
         URL url = null;
         try
@@ -252,12 +219,49 @@ public class LoggingConfig
         }
         catch (java.io.IOException e)
         {
-            logger.error("Could not read configuration file from URL [" + url + "].", e);
-            logger.error("Ignoring configuration file [" + url + "].");
+            logger.error("Could not read configuration file from URL [{}].", url, e);
+            logger.error("Ignoring configuration file [{}].", url);
         }
-        PropertyConfigurator.configure(props);
+
+        // Write the merged properties to the output stream
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            props.store(outputStream, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
+    /**
+     * Load all properties files, then configure log4j
+     */
+    private LoggerContext configure(URL... urls) {
+        // Need to shut down any log4j config already loaded
+        LogManager.shutdown();
+
+        // merge all properties files
+        ConfigurationSource source;
+        try {
+            source = new ConfigurationSource(loadProperties(urls));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        PropertiesConfiguration config = new PropertiesConfigurationFactory().getConfiguration(null, source);
+        LoggerContext ctx = Configurator.initialize(config);
+
+        // we have a new context, recreate our logger
+        logger = LogManager.getLogger(LoggingConfig.class);
+
+        return ctx;
+    }
+
+    public void shutdown() {
+        if (loggerContext != null) {
+            loggerContext.close();
+            loggerContext = null;
+        }
+    }
     /**
      * Get application name
      */
@@ -275,14 +279,6 @@ public class LoggingConfig
     }
 
     /**
-     * Get runtime directory
-     */
-    public RuntimeDirectory getConfigDir()
-    {
-        return runtimeDirectory;
-    }
-
-    /**
      * Return logging dir
      */
     public File getLogDir()
@@ -296,13 +292,5 @@ public class LoggingConfig
     public File getLogFile()
     {
         return logFile;
-    }
-
-    /**
-     * Get stderr redirect stream
-     */
-    public static RedirectStream getStdErr()
-    {
-        return stdErr;
     }
 }

@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class GameButton extends TypedHashMap
 {
-    //static Logger logger = Logger.getLogger(GameButton.class);
+    //static Logger logger = LogManager.getLogger(GameButton.class);
 
     public static final String PARAM_GENERIC = "generic";
     public static final String DELIM = ":";

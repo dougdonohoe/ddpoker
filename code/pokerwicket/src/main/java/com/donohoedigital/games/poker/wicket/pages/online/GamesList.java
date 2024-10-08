@@ -74,7 +74,7 @@ public abstract class GamesList extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(GamesList.class);
+    //private static Logger logger = LogManager.getLogger(GamesList.class);
 
     public static final String PARAM_BEGIN = "b";
     public static final String PARAM_END = "e";

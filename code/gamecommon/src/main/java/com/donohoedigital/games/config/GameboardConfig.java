@@ -40,7 +40,7 @@ package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import java.awt.*;
@@ -54,7 +54,7 @@ import java.net.*;
  */
 public class GameboardConfig extends XMLConfigFileLoader
 {
-    static Logger logger = Logger.getLogger(GameboardConfig.class);
+    static Logger logger = LogManager.getLogger(GameboardConfig.class);
     
     static final String GAMEBOARD_CONFIG = "gameboard.xml";
     private static final String GAMEBOARD_TAG = "GAMEBOARD";

@@ -40,7 +40,7 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.*;
 
@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class PokerChip implements ImageComponent.CustomImage
 {
-    static Logger logger = Logger.getLogger(PokerChip.class);
+    static Logger logger = LogManager.getLogger(PokerChip.class);
     
     boolean bDrawFont_ = true;
     int nValue_;

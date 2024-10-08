@@ -48,7 +48,7 @@ import java.awt.event.*;
  */
 public class EngineButtonListener implements ActionListener
 {
-    //static Logger logger = Logger.getLogger(EngineButtonListener.class);
+    //static Logger logger = LogManager.getLogger(EngineButtonListener.class);
 
     GameContext context_;
     GameButton button_;

@@ -48,7 +48,7 @@ import java.util.*;
  */
 public abstract class PageableServiceProvider<T> implements IDataProvider<T>
 {
-    //private static Logger logger = Logger.getLogger(PageableServiceProvider.class);
+    //private static Logger logger = LogManager.getLogger(PageableServiceProvider.class);
 
     private static final long serialVersionUID = 42L;
 

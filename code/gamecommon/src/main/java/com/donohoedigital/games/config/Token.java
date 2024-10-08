@@ -40,7 +40,7 @@ package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class Token 
 {
-    static Logger logger = Logger.getLogger(Token.class);
+    static Logger logger = LogManager.getLogger(Token.class);
     
     GamePiece piece_;
     ArrayList actionHistory_ = new ArrayList();

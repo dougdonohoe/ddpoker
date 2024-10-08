@@ -48,7 +48,7 @@ import java.awt.event.*;
  */
 public class StartMenu extends MenuPhase
 {
-    //static Logger logger = Logger.getLogger(StartMenu.class);
+    //static Logger logger = LogManager.getLogger(StartMenu.class);
 
     static final String PARAM_EXPIRED = "expired";
 
