@@ -44,7 +44,7 @@ import com.donohoedigital.games.server.model.*;
 import com.donohoedigital.games.server.model.util.*;
 import com.donohoedigital.games.server.service.*;
 import com.donohoedigital.jsp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.*;
 import org.springframework.context.support.*;
@@ -60,7 +60,7 @@ import java.util.*;
 public class RegAnalyzer
 {
     // logging
-    private static Logger logger = Logger.getLogger(RegAnalyzer.class);
+    private static Logger logger = LogManager.getLogger(RegAnalyzer.class);
 
     // option names
     public static final String OPTION_KEY_START = "keystart";

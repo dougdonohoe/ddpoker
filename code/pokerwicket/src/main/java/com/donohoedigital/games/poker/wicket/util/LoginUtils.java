@@ -42,7 +42,7 @@ import com.donohoedigital.games.server.model.*;
 import com.donohoedigital.games.server.service.*;
 import com.donohoedigital.wicket.*;
 import com.donohoedigital.wicket.pages.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.http.*;
 import java.text.*;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class LoginUtils
 {
-    private static Logger logger = Logger.getLogger(LoginUtils.class);
+    private static Logger logger = LogManager.getLogger(LoginUtils.class);
 
     private static final String LOGIN = "login";
 

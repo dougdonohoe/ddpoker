@@ -50,7 +50,7 @@ public class BookmarkablePagingNavigator extends BoxPagingNavigator
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(BookmarkablePagingNavigator.class);
+    //private static Logger logger = LogManager.getLogger(BookmarkablePagingNavigator.class);
 
     protected String pageParamName;
     protected PageParameters linkToParams;

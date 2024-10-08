@@ -40,7 +40,8 @@ package com.donohoedigital.config;
 
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.xerces.impl.dv.XSSimpleType;
 import org.apache.xerces.impl.xs.SchemaGrammar;
 import org.apache.xerces.impl.xs.XMLSchemaLoader;
@@ -63,7 +64,7 @@ import java.util.HashMap;
  */
 public class DataElementConfig extends HashMap<String, DataElement> implements XMLErrorHandler
 {
-    static Logger logger = Logger.getLogger(DataElementConfig.class);
+    static Logger logger = LogManager.getLogger(DataElementConfig.class);
 
     private static DataElementConfig dataConfig = null;
 

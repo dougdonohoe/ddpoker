@@ -37,7 +37,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.comms.Servlet;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import java.io.*;
@@ -47,7 +47,7 @@ import java.util.*;
 
 public class SocketThread extends Thread
 {
-    static Logger logger = Logger.getLogger(SocketThread.class);
+    static Logger logger = LogManager.getLogger(SocketThread.class);
     private static boolean DEBUG = false;
     
     protected static final int READ_TIMEOUT_MILLIS = PropertyConfig.getRequiredIntegerProperty("settings.server.readtimeout.millis");

@@ -40,7 +40,7 @@ import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.wicket.pages.online.Search;
 import com.donohoedigital.games.server.service.BannedKeyService;
 import junit.framework.TestCase;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.apache.wicket.spring.injection.annot.test.AnnotApplicationContextMock;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
@@ -59,7 +59,7 @@ import static org.easymock.EasyMock.*;
  */
 public class ApplicationTest extends TestCase
 {
-    Logger logger = Logger.getLogger(ApplicationTest.class);
+    Logger logger = LogManager.getLogger(ApplicationTest.class);
 
     private WicketTester tester;
 

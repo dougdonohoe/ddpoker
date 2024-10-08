@@ -38,7 +38,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -47,7 +47,7 @@ public class RuleEngine implements AIConstants
     public boolean USE_CONFIDENCE = false;
     public boolean NEWCODE = true;
 
-    static Logger logger = Logger.getLogger(RuleEngine.class);
+    static Logger logger = LogManager.getLogger(RuleEngine.class);
 
     private static ArrayList outcomeNames_ = new ArrayList();
     private static ArrayList factorNames_ = new ArrayList();

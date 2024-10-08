@@ -38,7 +38,7 @@
 
 package com.donohoedigital.jsp;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class StringHttpServletResponse implements HttpServletResponse
 {
-    static Logger logger = Logger.getLogger(StringHttpServletResponse.class);
+    static Logger logger = LogManager.getLogger(StringHttpServletResponse.class);
     
     StringWriter writer_;
     PrintWriter pwriter_;

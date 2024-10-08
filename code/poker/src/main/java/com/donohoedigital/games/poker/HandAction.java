@@ -39,7 +39,7 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.base.*;
 
@@ -50,7 +50,7 @@ import com.donohoedigital.base.*;
 @DataCoder('?')
 public class HandAction implements DataMarshal
 {    
-    static Logger logger = Logger.getLogger(HandAction.class);
+    static Logger logger = LogManager.getLogger(HandAction.class);
     
     public static final int ACTION_NONE = -1;
     public static final int ACTION_FOLD = 0;

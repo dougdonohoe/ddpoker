@@ -46,7 +46,7 @@ import com.donohoedigital.config.*;
  */
 public class QuitPokerGame extends ExitPoker
 {
-    //static Logger logger = Logger.getLogger(QuitPokerGame.class);
+    //static Logger logger = LogManager.getLogger(QuitPokerGame.class);
 
     protected String getActionDisplay()
     {

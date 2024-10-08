@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.plaf.*;
@@ -54,7 +54,7 @@ import java.awt.event.*;
  */
 public class DDButtonUI extends MetalButtonUI 
 {
-    static Logger logger = Logger.getLogger(DDButtonUI.class);
+    static Logger logger = LogManager.getLogger(DDButtonUI.class);
     
     private final static DDButtonUI ddButtonUI = new DDButtonUI(); 
  

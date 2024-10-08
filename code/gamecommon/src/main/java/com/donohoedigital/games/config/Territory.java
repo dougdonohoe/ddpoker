@@ -41,7 +41,7 @@ package com.donohoedigital.games.config;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import java.awt.*;
@@ -55,7 +55,7 @@ import java.util.List;
  */
 public class Territory implements GamePieceContainer, ObjectID, Comparable
 { 
-    static Logger logger = Logger.getLogger(Territory.class);
+    static Logger logger = LogManager.getLogger(Territory.class);
     
     // helper for game piece container logic
     GamePieceContainerImpl impl_;

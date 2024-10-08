@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,7 +122,7 @@ public class DDPanel extends JPanel implements DDComponent
     }
 
     Rectangle bounds_ = new Rectangle();
-    private static final Logger logger = Logger.getLogger(DDPanel.class);
+    private static final Logger logger = LogManager.getLogger(DDPanel.class);
     private static int CNT = 0;
 
     /**

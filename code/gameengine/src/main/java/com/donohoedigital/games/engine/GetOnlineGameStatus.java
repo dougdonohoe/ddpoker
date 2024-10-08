@@ -42,7 +42,7 @@ import com.donohoedigital.gui.*;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.comms.*;
 
@@ -63,7 +63,7 @@ import javax.swing.text.*;
  */
 public class GetOnlineGameStatus extends SendMessageDialog
 {
-    //static Logger logger = Logger.getLogger(GetOnlineGameStatus.class);
+    //static Logger logger = LogManager.getLogger(GetOnlineGameStatus.class);
     
     /** 
      * return message for registering online game

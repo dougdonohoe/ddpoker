@@ -39,7 +39,7 @@
 package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -51,7 +51,7 @@ import java.util.*;
 @DataCoder('$')
 public class NameValueToken implements DataMarshal
 {
-    static Logger logger = Logger.getLogger(NameValueToken.class);
+    static Logger logger = LogManager.getLogger(NameValueToken.class);
     
     // token types
     public static final char TOKEN_NVT_SEP = '=';

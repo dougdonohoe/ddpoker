@@ -40,7 +40,7 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  *
@@ -48,7 +48,7 @@ import org.apache.log4j.*;
  */
 public class CommunityCardPiece extends CardPiece
 {    
-    static Logger cclogger = Logger.getLogger(CommunityCardPiece.class);
+    static Logger cclogger = LogManager.getLogger(CommunityCardPiece.class);
     
     private PokerTable table_;
     /**

@@ -39,7 +39,7 @@ import com.donohoedigital.games.poker.dao.OnlineProfileDao;
 import com.donohoedigital.games.poker.model.HostSummary;
 import com.donohoedigital.games.poker.model.OnlineGame;
 import com.donohoedigital.games.poker.model.util.OnlineGameList;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class OnlineGameTest
 {
-    private final Logger logger = Logger.getLogger(OnlineGameTest.class);
+    private final Logger logger = LogManager.getLogger(OnlineGameTest.class);
 
     @Autowired
     private OnlineGameDao dao;

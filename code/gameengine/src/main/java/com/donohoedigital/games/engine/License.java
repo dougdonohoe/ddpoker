@@ -52,7 +52,7 @@ import java.awt.event.*;
  */
 public class License extends DialogPhase
 {
-    //static Logger logger = Logger.getLogger(License.class);
+    //static Logger logger = LogManager.getLogger(License.class);
 
     private JScrollPane scroll_;
     

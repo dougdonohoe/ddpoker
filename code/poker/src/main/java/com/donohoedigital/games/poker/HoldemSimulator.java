@@ -37,14 +37,14 @@ import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.math.*;
 import java.util.*;
 
 public class HoldemSimulator
 {
-    static Logger logger = Logger.getLogger(HoldemSimulator.class);
+    static Logger logger = LogManager.getLogger(HoldemSimulator.class);
 
     // defines
     private static final int DEFAULT_PRECISION = 4; // TODO: this should be replaced by an option

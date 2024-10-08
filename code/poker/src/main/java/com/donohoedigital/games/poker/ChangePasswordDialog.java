@@ -44,7 +44,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +55,7 @@ import java.beans.*;
  */
 public class ChangePasswordDialog extends DialogPhase implements PropertyChangeListener
 {
-    static Logger logger = Logger.getLogger(ChangePasswordDialog.class);
+    static Logger logger = LogManager.getLogger(ChangePasswordDialog.class);
 
     private PlayerProfile profile_;
 

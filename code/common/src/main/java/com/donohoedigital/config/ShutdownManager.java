@@ -33,7 +33,7 @@
 package com.donohoedigital.config;
 
 import static com.donohoedigital.config.ShutdownManager.Type.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ import java.util.*;
  */
 public class ShutdownManager implements Thread.UncaughtExceptionHandler
 {
-    private static final Logger logger = Logger.getLogger(ShutdownManager.class);
+    private static final Logger logger = LogManager.getLogger(ShutdownManager.class);
 
     // the manager
     private static ShutdownManager manager = null;

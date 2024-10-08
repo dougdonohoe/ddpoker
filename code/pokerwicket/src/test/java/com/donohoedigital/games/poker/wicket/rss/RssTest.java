@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class RssTest extends TestCase
 {
-    //private static final Logger logger = Logger.getLogger(RssTest.class);
+    //private static final Logger logger = LogManager.getLogger(RssTest.class);
 
     /**
      * This test basically verifies dependencies for rome (rss) are working

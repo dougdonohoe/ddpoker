@@ -39,7 +39,7 @@
 package com.donohoedigital.games.tools;
 
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.FocusManager;
 import java.awt.*;
@@ -53,7 +53,7 @@ import java.awt.event.*;
 public class XPoints extends XConnectorLines implements KeyListener,
                                                 DrawingUtilInterface {
     
-    static Logger logger = Logger.getLogger(XPoints.class);
+    static Logger logger = LogManager.getLogger(XPoints.class);
     protected MapPoints allPoints_;
     private GameboardConfig gameconfig_;
     private GameboardBorderManager manager_;

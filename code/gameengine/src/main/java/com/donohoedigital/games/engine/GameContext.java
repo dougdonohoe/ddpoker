@@ -37,7 +37,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -55,7 +55,7 @@ import java.util.*;
  */
 public class GameContext
 {
-    protected static Logger logger = Logger.getLogger(GameContext.class);
+    protected static Logger logger = LogManager.getLogger(GameContext.class);
 
     // engine
     private GameEngine engine_;

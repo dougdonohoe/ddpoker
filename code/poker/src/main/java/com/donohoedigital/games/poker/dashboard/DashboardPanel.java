@@ -34,7 +34,7 @@ package com.donohoedigital.games.poker.dashboard;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.zookitec.layout.*;
 
 import javax.swing.*;
@@ -51,7 +51,7 @@ import java.awt.event.*;
  */
 public class DashboardPanel extends DDPanel
 {
-    static Logger logger = Logger.getLogger(DashboardPanel.class);
+    static Logger logger = LogManager.getLogger(DashboardPanel.class);
 
     private DashboardManager mgr_;
     private DDPanel dashitems_;

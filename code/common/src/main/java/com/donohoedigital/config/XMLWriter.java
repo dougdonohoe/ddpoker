@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 
@@ -50,7 +50,7 @@ import java.io.*;
  */
 public class XMLWriter extends PrintWriter {
     
-    static Logger logger = Logger.getLogger(XMLWriter.class);
+    static Logger logger = LogManager.getLogger(XMLWriter.class);
     
     private int nIndentSize_ = 4;
     

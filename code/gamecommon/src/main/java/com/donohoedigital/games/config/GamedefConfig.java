@@ -50,7 +50,7 @@ import java.net.*;
  */
 public class GamedefConfig extends XMLConfigFileLoader
 {
-    //static Logger logger = Logger.getLogger(GamedefConfig.class);
+    //static Logger logger = LogManager.getLogger(GamedefConfig.class);
     static final String GAMEDEF_CONFIG = "gamedef.xml";
 
     private String sStartPhase_;

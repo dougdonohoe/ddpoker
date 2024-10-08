@@ -44,7 +44,7 @@ import org.wicketstuff.annotation.mount.*;
 @MountPath(path = "expired")
 public class ExpiredPage extends ErrorPokerPage
 {
-    //private static Logger logger = Logger.getLogger(ExpiredPage.class);
+    //private static Logger logger = LogManager.getLogger(ExpiredPage.class);
 
     private static final long serialVersionUID = 42L;
 

@@ -53,7 +53,7 @@ import java.util.prefs.*;
  */
 public abstract class DDOption extends DDPanel implements MouseListener
 {
-    //static Logger logger = Logger.getLogger(DDOption.class);
+    //static Logger logger = LogManager.getLogger(DDOption.class);
     
     protected String sName_;
     protected String sOrigName_;

@@ -38,7 +38,7 @@
 
 package com.donohoedigital.server;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.http.*;
 import java.io.*;
@@ -51,7 +51,7 @@ import java.util.*;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class GameServletRequest implements HttpServletRequest
 {
-    static Logger logger = Logger.getLogger(GameServletRequest.class);
+    static Logger logger = LogManager.getLogger(GameServletRequest.class);
 
     // needed to handle request
     Map<String, Object> headers_ = new TreeMap<String, Object>(new CaseInsensitiveCompare());

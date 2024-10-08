@@ -39,7 +39,7 @@
 package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.nio.channels.*;
@@ -52,7 +52,7 @@ import java.util.*;
 @DataCoder('M')
 public class DDMessage extends TypedHashMap implements PostWriter, PostReader, DataMarshal
 {
-    private static Logger logger = Logger.getLogger(DDMessage.class);
+    private static Logger logger = LogManager.getLogger(DDMessage.class);
 
     public static final String CONTENT_TYPE = "application/x-donohoedigital-msg";
 

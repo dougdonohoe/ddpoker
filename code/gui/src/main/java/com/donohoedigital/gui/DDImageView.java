@@ -38,7 +38,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.text.*;
 import javax.swing.text.html.*;
@@ -54,7 +54,7 @@ public class DDImageView extends DDView
     public static final String YADJ = "yadj";
 
     BufferedImage image_;
-    static Logger logger = Logger.getLogger(DDImageView.class);
+    static Logger logger = LogManager.getLogger(DDImageView.class);
     int nWidth_ = 0;
     int nHeight_= 0;
     int nYadj_ = 0;

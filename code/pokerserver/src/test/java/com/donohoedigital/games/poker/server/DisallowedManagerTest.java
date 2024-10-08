@@ -47,7 +47,7 @@ import java.net.*;
  */
 public class DisallowedManagerTest extends TestCase
 {
-    //private static final Logger logger = Logger.getLogger(DisallowedManagerTest.class);
+    //private static final Logger logger = LogManager.getLogger(DisallowedManagerTest.class);
 
     DisallowedManager manager = new DisallowedManager();
 

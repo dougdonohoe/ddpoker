@@ -43,7 +43,7 @@ import com.donohoedigital.comms.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.p2p.*;
 
 /**
@@ -52,7 +52,7 @@ import com.donohoedigital.p2p.*;
  */
 public class PokerP2PHeadless implements OnlineMessageListener, DDMessageListener
 {
-    static Logger logger = Logger.getLogger(PokerP2PHeadless.class);
+    static Logger logger = LogManager.getLogger(PokerP2PHeadless.class);
 
     // members
     private PokerGame game_;

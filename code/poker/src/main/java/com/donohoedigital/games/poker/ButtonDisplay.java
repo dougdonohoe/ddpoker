@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 
@@ -52,7 +52,7 @@ import javax.swing.*;
  */
 public class ButtonDisplay extends ChainPhase implements Runnable
 {
-    static Logger logger = Logger.getLogger(ButtonDisplay.class);
+    static Logger logger = LogManager.getLogger(ButtonDisplay.class);
     
     private PokerGame game_;
     private PokerTable table_;

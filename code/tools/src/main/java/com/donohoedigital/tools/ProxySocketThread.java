@@ -40,7 +40,7 @@ package com.donohoedigital.tools;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.server.*;
 
 import javax.servlet.*;
@@ -64,7 +64,7 @@ import java.net.*;
  */
 public class ProxySocketThread extends SocketThread implements PostWriter, DDMessageListener
 {
-    static Logger logger = Logger.getLogger(ProxySocketThread.class);
+    static Logger logger = LogManager.getLogger(ProxySocketThread.class);
     
     private DDHttpClient.HttpOptions options_;
     private URL proxy_;

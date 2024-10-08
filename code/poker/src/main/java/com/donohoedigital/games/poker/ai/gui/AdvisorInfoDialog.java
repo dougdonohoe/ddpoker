@@ -48,7 +48,7 @@ import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.games.poker.event.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 import javax.swing.*;
@@ -59,7 +59,7 @@ import java.util.*;
 
 public class AdvisorInfoDialog extends DialogPhase
 {
-    static Logger logger = Logger.getLogger(AdvisorInfoDialog.class);
+    static Logger logger = LogManager.getLogger(AdvisorInfoDialog.class);
     
     // members
     private PokerGame game_;

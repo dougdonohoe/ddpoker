@@ -54,7 +54,7 @@ import java.awt.*;
  */
 public class PrizePoolDialog extends DialogPhase implements ChangeListener
 {
-    //static Logger logger = Logger.getLogger(PrizePoolDialog.class);
+    //static Logger logger = LogManager.getLogger(PrizePoolDialog.class);
     
     private DDNumberSpinner amount_;
     private JScrollPane scroll_;

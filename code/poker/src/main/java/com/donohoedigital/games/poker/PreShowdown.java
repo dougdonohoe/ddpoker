@@ -49,7 +49,7 @@ import com.donohoedigital.comms.*;
  */
 public class PreShowdown extends ChainPhase
 {
-    //static Logger logger = Logger.getLogger(PreShowdown.class);
+    //static Logger logger = LogManager.getLogger(PreShowdown.class);
 
     public static final String PARAM_WINNERS = "winners";
 

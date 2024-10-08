@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class InitializeGame extends ChainPhase
 {
-    //static Logger logger = Logger.getLogger(InitializeGame.class);
+    //static Logger logger = LogManager.getLogger(InitializeGame.class);
     
     private InitLabel label_;
     private boolean bNextPhaseCalled_;

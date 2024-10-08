@@ -50,7 +50,7 @@ import java.beans.*;
 
 public class ChangePlayerNameDialog extends DialogPhase implements PropertyChangeListener
 {
-    //static Logger logger = Logger.getLogger(ChangeChipCountDialog.class);
+    //static Logger logger = LogManager.getLogger(ChangeChipCountDialog.class);
 
     public static final String PARAM_PLAYER = "player";
 

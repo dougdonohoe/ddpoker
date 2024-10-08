@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class HandInfo implements Comparable
 {
-    //static Logger logger = Logger.getLogger(HandInfo.class);
+    //static Logger logger = LogManager.getLogger(HandInfo.class);
 
     // types of hands
     public static final int ROYAL_FLUSH = 10;

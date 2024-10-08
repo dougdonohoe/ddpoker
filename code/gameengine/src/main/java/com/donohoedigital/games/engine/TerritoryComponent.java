@@ -53,7 +53,7 @@ import java.awt.image.*;
  */
 public class TerritoryComponent extends DDPanel
 {
-    //static Logger logger = Logger.getLogger(TerritoryComponent.class);
+    //static Logger logger = LogManager.getLogger(TerritoryComponent.class);
     
     Territory territory_;
     boolean bLabelDrawn_ = false;

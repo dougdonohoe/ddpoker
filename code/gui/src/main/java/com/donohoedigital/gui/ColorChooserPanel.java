@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -47,7 +47,7 @@ import java.awt.*;
  */
 public class ColorChooserPanel extends DDPanel
 {
-    static Logger logger = Logger.getLogger(ColorChooserPanel.class);
+    static Logger logger = LogManager.getLogger(ColorChooserPanel.class);
 
     private static final int RED = 0;
     private static final int GREEN = 1;

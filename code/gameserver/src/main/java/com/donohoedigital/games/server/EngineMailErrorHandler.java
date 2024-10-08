@@ -51,7 +51,7 @@ import java.io.*;
  */
 public class EngineMailErrorHandler implements DDMailErrorHandler
 {
-    //static Logger logger = Logger.getLogger(EngineMailErrorHandler.class);
+    //static Logger logger = LogManager.getLogger(EngineMailErrorHandler.class);
     
     private EngineServlet servlet_;
     /** 

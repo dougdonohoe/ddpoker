@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class WicketUtils
 {
-    //private static Logger logger = Logger.getLogger(WicketUtils.class);
+    //private static Logger logger = LogManager.getLogger(WicketUtils.class);
 
     /**
      * remove wicket:interface parameter from params

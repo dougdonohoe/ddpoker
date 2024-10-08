@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.plaf.*;
@@ -48,7 +48,7 @@ import java.awt.geom.*;
  */
 public class GlassButtonUI extends DDButtonUI
 {
-    static Logger logger = Logger.getLogger(DDButtonUI.class);
+    static Logger logger = LogManager.getLogger(DDButtonUI.class);
 
     private static final String SVG_HIGHLIGHT_PATH = "M52,14c-11.25,0-28.75,0-40,0c-8.092,0-10.999,2.547-12,4V0h64v10C62.999,11.453,60.092,14,52,14z";
     private static final GeneralPath HIGHLIGHT_PATH = GuiUtils.drawSVGpath(SVG_HIGHLIGHT_PATH, true);

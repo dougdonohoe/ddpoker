@@ -40,11 +40,11 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 public class HandGroupManager extends ProfileManagerPanel
 {
-    static Logger logger = Logger.getLogger(HandGroupManager.class);
+    static Logger logger = LogManager.getLogger(HandGroupManager.class);
     
     public HandGroupManager(GameEngine engine, GameContext context, String sStyle)
     {

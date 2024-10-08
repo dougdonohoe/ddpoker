@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.apache.xerces.impl.dv.ValidatedInfo;
 import org.apache.xerces.impl.dv.XSSimpleType;
 import org.apache.xerces.impl.validation.ValidationState;
@@ -53,7 +53,7 @@ import java.util.*;
 public class DataElement
 {
 
-    static Logger logger = Logger.getLogger(DataElement.class);
+    static Logger logger = LogManager.getLogger(DataElement.class);
 
     XSSimpleType xsType_;
     List<?> values_;

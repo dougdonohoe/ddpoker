@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.plaf.*;
@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class GlassButton extends DDButton
 {
-    static Logger logger = Logger.getLogger(GlassButton.class);
+    static Logger logger = LogManager.getLogger(GlassButton.class);
 
     Color cDown_;
     Color cOver_;

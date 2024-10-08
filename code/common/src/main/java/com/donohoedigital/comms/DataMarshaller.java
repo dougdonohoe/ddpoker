@@ -49,7 +49,7 @@ import java.util.*;
 @SuppressWarnings({"PublicInnerClass"})
 public class DataMarshaller
 {
-    //private static Logger logger = Logger.getLogger(DataMarshaller.class);
+    //private static Logger logger = LogManager.getLogger(DataMarshaller.class);
 
     /**
      * Marshal given DataMarshal to string

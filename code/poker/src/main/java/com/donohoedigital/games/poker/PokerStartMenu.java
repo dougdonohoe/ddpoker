@@ -62,7 +62,7 @@ import java.util.prefs.Preferences;
 @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod"})
 public class PokerStartMenu extends StartMenu
 {
-    //private static final Logger logger = Logger.getLogger(PokerStartMenu.class);
+    //private static final Logger logger = LogManager.getLogger(PokerStartMenu.class);
 
     private static boolean messageCheck = true;
     private static boolean firstTimeMusic = true;

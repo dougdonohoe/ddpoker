@@ -35,7 +35,7 @@ package com.donohoedigital.games.poker.ai;
 import com.donohoedigital.base.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ import java.util.*;
  */
 public class PocketWeights
 {
-    static Logger logger = Logger.getLogger(PocketWeights.class);
+    static Logger logger = LogManager.getLogger(PocketWeights.class);
 
     // string representing outcome-affecting state
     private String signature_ = null;

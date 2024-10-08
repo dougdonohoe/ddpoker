@@ -49,7 +49,7 @@ import java.util.prefs.*;
  */
 public class Demo extends BasePhase
 {
-    //static Logger logger = Logger.getLogger(Demo.class);
+    //static Logger logger = LogManager.getLogger(Demo.class);
 
     private DDHtmlArea text_;
     private MenuBackground menu_;

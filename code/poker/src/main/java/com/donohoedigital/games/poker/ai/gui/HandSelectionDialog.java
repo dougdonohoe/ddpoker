@@ -40,7 +40,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.ai.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -52,7 +52,7 @@ import java.util.List;
 public class HandSelectionDialog extends OptionMenuDialog
         implements PropertyChangeListener, FocusListener, ListSelectionListener
 {
-    static Logger logger = Logger.getLogger(HandSelectionDialog.class);
+    static Logger logger = LogManager.getLogger(HandSelectionDialog.class);
 
     private HandSelectionScheme profile_;
     private TypedHashMap dummy_ = new TypedHashMap();

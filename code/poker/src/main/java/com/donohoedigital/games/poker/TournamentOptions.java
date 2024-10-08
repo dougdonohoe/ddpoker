@@ -47,7 +47,7 @@ import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -60,7 +60,7 @@ import java.util.List;
  */
 public class TournamentOptions extends BasePhase implements ChangeListener, AncestorListener
 {
-    static Logger logger = Logger.getLogger(TournamentOptions.class);
+    static Logger logger = LogManager.getLogger(TournamentOptions.class);
 
     private DDHtmlArea text_;
     private MenuBackground menu_;

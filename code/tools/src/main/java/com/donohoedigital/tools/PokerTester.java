@@ -43,7 +43,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.online.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  *
@@ -53,7 +53,7 @@ import org.apache.log4j.*;
 public class PokerTester extends PokerMain implements ChatHandler, OnlineMessageListener
 {
     // logging
-    private static Logger logger = Logger.getLogger(PokerTester.class);
+    private static Logger logger = LogManager.getLogger(PokerTester.class);
 
     private PokerGame game_;
 

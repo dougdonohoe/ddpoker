@@ -43,7 +43,7 @@ import com.donohoedigital.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 
@@ -53,7 +53,7 @@ import javax.swing.*;
  */
 public class PokerNight extends BasePhase implements GameClockListener
 {
-    static Logger logger = Logger.getLogger(PokerNight.class);
+    static Logger logger = LogManager.getLogger(PokerNight.class);
 
     public static int DEMO_MAX = 3;
     private PokerGame game_;

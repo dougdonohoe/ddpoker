@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +54,7 @@ import java.awt.event.*;
  */
 public abstract class GameManager extends BaseApp implements KeyListener, StatusDisplay
 {
-    private Logger logger = Logger.getLogger(GameManager.class);
+    private Logger logger = LogManager.getLogger(GameManager.class);
     
     // debugging settings
     private boolean bDoSave = true;

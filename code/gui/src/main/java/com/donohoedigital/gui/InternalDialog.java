@@ -40,7 +40,7 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -58,7 +58,7 @@ import java.util.*;
 @SuppressWarnings({"PublicInnerClass"})
 public class InternalDialog extends JInternalFrame implements DDWindow
 {
-    static Logger logger = Logger.getLogger(InternalDialog.class);
+    static Logger logger = LogManager.getLogger(InternalDialog.class);
     
     protected BaseFrame frame_;
     private boolean bModal_ = false;

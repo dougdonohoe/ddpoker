@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.FocusManager;
@@ -58,7 +58,7 @@ public class DDTextArea extends JTextArea implements DDTextVisibleComponent,
                                                      DocumentListener, KeyListener,
                                                      FocusListener, MouseListener
 {
-    static Logger logger = Logger.getLogger(DDTextArea.class);
+    static Logger logger = LogManager.getLogger(DDTextArea.class);
 
     private Caret cNormal_;
     private Caret cNothing_ = new DoNothingCaret();

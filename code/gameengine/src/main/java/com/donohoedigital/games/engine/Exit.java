@@ -46,7 +46,7 @@ import com.donohoedigital.config.*;
  */
 public class Exit extends BasePhase
 {
-    //static Logger logger = Logger.getLogger(Exit.class);
+    //static Logger logger = LogManager.getLogger(Exit.class);
     
     public void start()
     {

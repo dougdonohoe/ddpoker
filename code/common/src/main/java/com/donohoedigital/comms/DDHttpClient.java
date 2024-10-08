@@ -41,7 +41,7 @@ package com.donohoedigital.comms;
 import com.donohoedigital.base.*;
 import com.donohoedigital.base.Base64;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -57,7 +57,7 @@ import java.util.*;
 @SuppressWarnings("CommentedOutCode")
 public class DDHttpClient
 {
-    static Logger logger = Logger.getLogger(DDHttpClient.class);
+    static Logger logger = LogManager.getLogger(DDHttpClient.class);
     
     private static final String CRLF = "\r\n";
     private static final int HEADER_BUFFER = 512;

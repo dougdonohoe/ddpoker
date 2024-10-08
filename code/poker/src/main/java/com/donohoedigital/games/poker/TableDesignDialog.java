@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -56,7 +56,7 @@ import java.beans.*;
  */
 public class TableDesignDialog extends DialogPhase implements ChangeListener, PropertyChangeListener
 {
-    static Logger logger = Logger.getLogger(TableDesignDialog.class);
+    static Logger logger = LogManager.getLogger(TableDesignDialog.class);
     
     private TableDesign profile_;
     private DDTextField name_;

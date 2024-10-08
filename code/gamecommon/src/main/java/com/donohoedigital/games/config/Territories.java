@@ -40,7 +40,7 @@ package com.donohoedigital.games.config;
 
 import java.util.*;
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import org.jdom2.*;
@@ -52,7 +52,7 @@ import java.awt.geom.*;
  */
 public class Territories extends TreeMap {
     
-    //static Logger logger = Logger.getLogger(Territories.class);
+    //static Logger logger = LogManager.getLogger(Territories.class);
     
     /** 
      * Creates a new Territories from XML element

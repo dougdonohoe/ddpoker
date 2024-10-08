@@ -58,7 +58,7 @@ import java.util.prefs.*;
  */
 public class UserRegistration extends BasePhase implements PropertyChangeListener
 {
-    //static Logger logger = Logger.getLogger(UserRegistration.class);
+    //static Logger logger = LogManager.getLogger(UserRegistration.class);
     
     private DDHtmlArea text_;
     private ButtonBox buttonbox_;

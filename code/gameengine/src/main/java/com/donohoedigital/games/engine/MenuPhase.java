@@ -51,7 +51,7 @@ import java.awt.*;
  */
 public class MenuPhase extends BasePhase 
 {
-    //static Logger logger = Logger.getLogger(MenuPhase.class);
+    //static Logger logger = LogManager.getLogger(MenuPhase.class);
     
     protected DDHtmlArea helptext_;
     protected ButtonBox buttonbox_;

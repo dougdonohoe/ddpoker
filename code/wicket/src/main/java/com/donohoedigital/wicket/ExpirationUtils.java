@@ -42,7 +42,7 @@ import javax.servlet.http.*;
  */
 public class ExpirationUtils
 {
-    //private static Logger logger = Logger.getLogger(ExpirationUtils.class);
+    //private static Logger logger = LogManager.getLogger(ExpirationUtils.class);
 
     private static final String LAST_PATH = "last-path";
 

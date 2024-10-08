@@ -49,7 +49,7 @@ import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -64,7 +64,7 @@ import static com.donohoedigital.config.DebugConfig.*;
  */
 public class OnlineConfiguration extends BasePhase implements PropertyChangeListener
 {
-    static Logger logger = Logger.getLogger(OnlineConfiguration.class);
+    static Logger logger = LogManager.getLogger(OnlineConfiguration.class);
 
     private DDHtmlArea text_;
     private MenuBackground menu_;

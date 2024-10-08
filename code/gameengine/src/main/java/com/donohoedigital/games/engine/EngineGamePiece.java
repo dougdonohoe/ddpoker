@@ -43,7 +43,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -52,7 +52,7 @@ import java.awt.geom.*;
  * @author  Doug Donohoe
  */
 public abstract class EngineGamePiece extends GamePiece {
-    static Logger logger = Logger.getLogger(EngineGamePiece.class);
+    static Logger logger = LogManager.getLogger(EngineGamePiece.class);
     
     protected String tpName_;
     

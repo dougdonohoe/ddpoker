@@ -46,7 +46,7 @@ import java.net.*;
  */
 public class AudioDef
 {
-    //static Logger logger = Logger.getLogger(AudioDef.class);
+    //static Logger logger = LogManager.getLogger(AudioDef.class);
     
     String name;
     URL url;

@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class GamePhases extends HashMap<String, GamePhase> {
     
-    //static Logger logger = Logger.getLogger(GamePhases.class);
+    //static Logger logger = LogManager.getLogger(GamePhases.class);
     
     MapPoints allPoints_;
     

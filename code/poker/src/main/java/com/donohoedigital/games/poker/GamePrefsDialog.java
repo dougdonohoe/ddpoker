@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class GamePrefsDialog extends OptionMenuDialog
 {
-    //static Logger logger = Logger.getLogger(GamePrefsDialog.class);
+    //static Logger logger = LogManager.getLogger(GamePrefsDialog.class);
     
     private GamePrefsPanel panel_;
     

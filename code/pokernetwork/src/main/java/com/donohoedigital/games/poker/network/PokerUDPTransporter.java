@@ -35,7 +35,7 @@ package com.donohoedigital.games.poker.network;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 
@@ -48,7 +48,7 @@ import java.io.*;
  */
 public class PokerUDPTransporter implements DDMessageTransporter
 {
-    static Logger logger = Logger.getLogger(PokerUDPTransporter.class);
+    static Logger logger = LogManager.getLogger(PokerUDPTransporter.class);
 
     private DDMessage msg_;
     private boolean bKeepAlive_;

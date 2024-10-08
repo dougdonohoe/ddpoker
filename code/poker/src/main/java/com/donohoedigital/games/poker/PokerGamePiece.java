@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  *
@@ -50,7 +50,7 @@ import org.apache.log4j.*;
  */
 public class PokerGamePiece extends EngineGamePiece
 {
-    static Logger logger = Logger.getLogger(PokerGamePiece.class);
+    static Logger logger = LogManager.getLogger(PokerGamePiece.class);
     
     private String icName_;
     private ImageComponent ic_ = null;

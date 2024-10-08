@@ -43,7 +43,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -58,7 +58,7 @@ import java.util.List;
  */
 public class DeckProfilePanel extends DDPanel implements ChangeListener
 {
-    static Logger logger = Logger.getLogger(DeckProfilePanel.class);
+    static Logger logger = LogManager.getLogger(DeckProfilePanel.class);
     
     private static final String COMMON_NAME = "deckback";
     public static final String DECK_PROFILE = "deck";

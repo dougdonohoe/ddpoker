@@ -34,7 +34,7 @@ package com.donohoedigital.server;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -46,7 +46,7 @@ import java.io.*;
  */
 public abstract class BaseServlet extends HttpServlet 
 {
-    protected static Logger logger = Logger.getLogger(BaseServlet.class);
+    protected static Logger logger = LogManager.getLogger(BaseServlet.class);
 
     // our server
     private GameServer server;

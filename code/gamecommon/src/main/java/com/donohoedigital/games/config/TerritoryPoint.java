@@ -39,7 +39,7 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.ApplicationError;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -49,7 +49,7 @@ import org.jdom2.Namespace;
  */
 public class TerritoryPoint extends MapPoint
 {
-    static Logger logger = Logger.getLogger(TerritoryPoint.class);
+    static Logger logger = LogManager.getLogger(TerritoryPoint.class);
     
     Territory myTerritory_;
 

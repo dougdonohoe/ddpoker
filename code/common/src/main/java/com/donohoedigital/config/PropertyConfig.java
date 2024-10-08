@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class PropertyConfig extends Properties
 {
-    private static Logger logger = Logger.getLogger(PropertyConfig.class);
+    private static Logger logger = LogManager.getLogger(PropertyConfig.class);
 
     // config file names
     private static final String PROPS_CONFIG_COMMON = "common.properties";

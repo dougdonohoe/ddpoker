@@ -44,7 +44,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
 
@@ -56,7 +56,7 @@ import com.donohoedigital.gui.*;
 public class Crosshair extends JComponent
 {
     
-    //static Logger logger = Logger.getLogger(Crosshair.class);
+    //static Logger logger = LogManager.getLogger(Crosshair.class);
     
     private XYConstraints xyConstraints_; // constraints used to manage this point
     

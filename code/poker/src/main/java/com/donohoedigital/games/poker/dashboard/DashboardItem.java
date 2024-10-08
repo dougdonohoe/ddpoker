@@ -39,7 +39,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.event.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -59,7 +59,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
                                       AncestorListener, PokerTableListener,
                                       PropertyChangeListener
 {
-    static Logger logger = Logger.getLogger(DashboardItem.class);
+    static Logger logger = LogManager.getLogger(DashboardItem.class);
 
     // statics
     public static final int NOT_SET = -1;

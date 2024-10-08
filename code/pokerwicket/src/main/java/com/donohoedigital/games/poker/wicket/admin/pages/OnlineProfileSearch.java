@@ -62,7 +62,7 @@ import java.util.*;
 @MountPath(path = "admin/online-profile-search")
 public class OnlineProfileSearch extends AdminPokerPage
 {
-    //private static Logger logger = Logger.getLogger(Search.class);
+    //private static Logger logger = LogManager.getLogger(Search.class);
 
     private static final long serialVersionUID = 42L;
 

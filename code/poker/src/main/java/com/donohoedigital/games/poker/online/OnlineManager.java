@@ -51,7 +51,7 @@ import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.p2p.*;
 import com.donohoedigital.server.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.io.*;
@@ -65,7 +65,7 @@ import static com.donohoedigital.config.DebugConfig.*;
  */
 public class OnlineManager implements ChatManager
 {
-    static Logger logger = Logger.getLogger(OnlineManager.class);
+    static Logger logger = LogManager.getLogger(OnlineManager.class);
 
     static boolean DEBUG = false; // msgs sent/rcvd
 

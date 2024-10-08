@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.lang.reflect.*;
@@ -55,7 +55,7 @@ import java.util.*;
 @SuppressWarnings({"ChannelOpenedButNotSafelyClosed", "RawUseOfParameterizedType"})
 public class ConfigUtils
 {
-    static Logger logger = Logger.getLogger(ConfigUtils.class);
+    static Logger logger = LogManager.getLogger(ConfigUtils.class);
 
     ///
     /// Convenience functions for loading classes

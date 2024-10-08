@@ -41,7 +41,7 @@ package com.donohoedigital.games.poker;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.comms.*;
@@ -62,7 +62,7 @@ import java.beans.*;
  */
 public class DescriptionDialog extends DialogPhase
 {
-    //static Logger logger = Logger.getLogger(DescriptionDialog.class);
+    //static Logger logger = LogManager.getLogger(DescriptionDialog.class);
     
     public static String PARAM_DESC = "desc";
     

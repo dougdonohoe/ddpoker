@@ -41,7 +41,7 @@ package com.donohoedigital.p2p;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.net.*;
@@ -55,7 +55,7 @@ import java.util.zip.*;
  */
 public class Peer2PeerMessage implements DDMessageTransporter
 {
-    static Logger logger = Logger.getLogger(Peer2PeerMessage.class);
+    static Logger logger = LogManager.getLogger(Peer2PeerMessage.class);
     
     // debug
     private static boolean DEBUG = false;

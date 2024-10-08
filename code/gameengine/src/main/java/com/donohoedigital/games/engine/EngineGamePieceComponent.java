@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class EngineGamePieceComponent extends JComponent 
 {
-    //static Logger logger = Logger.getLogger(EngineGamePieceComponent.class);
+    //static Logger logger = LogManager.getLogger(EngineGamePieceComponent.class);
 
     EngineGamePiece piece_;
     double dScale_;

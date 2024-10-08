@@ -45,7 +45,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +57,7 @@ import java.awt.geom.*;
  */
 public class PokerGameboard extends Gameboard
 {
-    static Logger logger = Logger.getLogger(PokerGameboard.class);
+    static Logger logger = LogManager.getLogger(PokerGameboard.class);
 
     private static final GeneralPath FELT = GuiUtils.drawSVGpath("M180,0c90,1,760,1,850,0c90,1,180,184,180,443.5c0,260.5-90,442.5-180,442.5s-760,0-850,0S0,704,0,443.5C0,184,90,1,180,0z", false);
     private static Rectangle FBOUNDS = FELT.getBounds();

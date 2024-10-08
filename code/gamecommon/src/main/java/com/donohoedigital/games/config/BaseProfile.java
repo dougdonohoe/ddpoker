@@ -41,7 +41,7 @@ package com.donohoedigital.games.config;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public abstract class BaseProfile extends BaseDataFile implements SaveFile, Comparable<BaseProfile>, NamedObject
 {
-    private static Logger logger = Logger.getLogger(BaseProfile.class);
+    private static Logger logger = LogManager.getLogger(BaseProfile.class);
 
     // defines
     public static final String PROFILE_EXT = "dat";

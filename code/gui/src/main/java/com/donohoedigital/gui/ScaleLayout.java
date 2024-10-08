@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class ScaleLayout implements LayoutManager2, Cloneable 
 {
-    static Logger logger = Logger.getLogger(ScaleLayout.class);
+    static Logger logger = LogManager.getLogger(ScaleLayout.class);
 
     
     private static final ScaleConstraints defaultConstraints = new ScaleConstraints();

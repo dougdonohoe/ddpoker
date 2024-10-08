@@ -44,7 +44,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 import java.util.*;
@@ -55,7 +55,7 @@ import java.util.*;
  */
 public class CheckEndHand extends ChainPhase
 {
-    static Logger logger = Logger.getLogger(CheckEndHand.class);
+    static Logger logger = LogManager.getLogger(CheckEndHand.class);
 
     private boolean bGameOver_ = false;
     private PokerGame game_;

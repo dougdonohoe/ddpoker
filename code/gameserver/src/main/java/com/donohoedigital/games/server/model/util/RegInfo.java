@@ -39,7 +39,7 @@
 package com.donohoedigital.games.server.model.util;
 
 import com.donohoedigital.games.server.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.text.*;
 import java.util.*;
@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class RegInfo implements Comparable<RegInfo>
 {
-    static Logger logger = Logger.getLogger(RegInfo.class);
+    static Logger logger = LogManager.getLogger(RegInfo.class);
     
     // info
     private String sKey_;

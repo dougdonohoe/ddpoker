@@ -34,7 +34,7 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.games.server.dao.BannedKeyDao;
 import com.donohoedigital.games.server.model.BannedKey;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ import static org.junit.Assert.*;
 @Transactional
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class BannedKeyTest {
-    private final Logger logger = Logger.getLogger(BannedKeyTest.class);
+    private final Logger logger = LogManager.getLogger(BannedKeyTest.class);
 
     @Autowired
     private BannedKeyDao dao;

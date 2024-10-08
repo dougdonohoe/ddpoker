@@ -67,7 +67,7 @@ public class Search extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(Search.class);
+    //private static Logger logger = LogManager.getLogger(Search.class);
 
     public static final String PARAM_SEARCH = "search";
     public static final String PARAM_PAGE = "page";

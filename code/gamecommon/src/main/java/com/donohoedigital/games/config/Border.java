@@ -39,7 +39,7 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import org.jdom2.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class Border 
 {
-    static Logger logger = Logger.getLogger(Border.class);
+    static Logger logger = LogManager.getLogger(Border.class);
     
     private static Territories t_ = null;
     private static MapPoints allPoints_ = null;

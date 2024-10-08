@@ -51,7 +51,7 @@ import java.awt.event.*;
  */
 public class TerritoryPointChooser extends InternalDialog implements ActionListener
 {
-    //static Logger logger = Logger.getLogger(TerritoryPointChooser.class);
+    //static Logger logger = LogManager.getLogger(TerritoryPointChooser.class);
     
     String sChoice_;
     

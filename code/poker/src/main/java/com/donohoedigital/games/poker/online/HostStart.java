@@ -43,7 +43,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.event.*;
 
@@ -53,7 +53,7 @@ import java.awt.event.*;
  */
 public class HostStart extends ChainPhase implements ActionListener
 {
-    static Logger logger = Logger.getLogger(HostStart.class);
+    static Logger logger = LogManager.getLogger(HostStart.class);
     
     public static final String PHASE_CLIENT_INIT = "InitializeOnlineGameClient";
     private static final int ONE_SEC = 1000;

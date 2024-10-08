@@ -52,7 +52,7 @@ import java.util.*;
 @Repository
 public class OnlineProfileImplJpa extends JpaBaseDao<OnlineProfile, Long> implements OnlineProfileDao
 {
-    //private static Logger logger = Logger.getLogger(OnlineProfileImplJpa.class);
+    //private static Logger logger = LogManager.getLogger(OnlineProfileImplJpa.class);
 
     @SuppressWarnings({"unchecked"})
     public OnlineProfile getByName(String sName)

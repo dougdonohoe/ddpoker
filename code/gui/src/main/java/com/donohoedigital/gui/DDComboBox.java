@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +54,7 @@ import java.util.List;
 public class DDComboBox extends JComboBox implements 
             DDTextVisibleComponent,DDExtendedComponent,DDListComponent 
 {    
-    static Logger logger = Logger.getLogger(DDComboBox.class);
+    static Logger logger = LogManager.getLogger(DDComboBox.class);
 
     DataElement elem_;
     DefaultComboBoxModel model_;

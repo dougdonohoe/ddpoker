@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.engine;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.comms.*;

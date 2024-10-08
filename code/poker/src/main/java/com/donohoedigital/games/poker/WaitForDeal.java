@@ -42,7 +42,7 @@ import com.donohoedigital.config.*;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  *
@@ -50,7 +50,7 @@ import org.apache.log4j.*;
  */
 public class WaitForDeal extends ChainPhase
 {
-    static Logger logger = Logger.getLogger(WaitForDeal.class);
+    static Logger logger = LogManager.getLogger(WaitForDeal.class);
 
     /**
      * process

@@ -49,7 +49,7 @@ import java.awt.*;
  */
 public class DDTabbedPaneUI extends MetalTabbedPaneUI 
 {
-    //static Logger logger = Logger.getLogger(DDTabbedPaneUI.class);
+    //static Logger logger = LogManager.getLogger(DDTabbedPaneUI.class);
     
     DDTabbedPane tab_;
     DDBevelBorder bevel_;

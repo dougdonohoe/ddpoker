@@ -38,7 +38,7 @@
 
 package com.donohoedigital.jsp;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -52,7 +52,7 @@ import java.util.*;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class StringHttpServletRequest implements HttpServletRequest
 {
-    static Logger logger = Logger.getLogger(StringHttpServletRequest.class);
+    static Logger logger = LogManager.getLogger(StringHttpServletRequest.class);
     StringHttpSession session_;
     Map params_  = new HashMap();
     String sServletPath_ = null;

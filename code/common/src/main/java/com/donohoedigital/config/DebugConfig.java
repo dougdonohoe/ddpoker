@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -45,7 +45,7 @@ import java.util.*;
  */
 public class DebugConfig
 {
-    private static Logger logger = Logger.getLogger(DebugConfig.class);
+    private static Logger logger = LogManager.getLogger(DebugConfig.class);
     private static Boolean TESTING_ENABLED = null;
     private static final Map<String, Boolean> cache = new HashMap<String, Boolean>();
 

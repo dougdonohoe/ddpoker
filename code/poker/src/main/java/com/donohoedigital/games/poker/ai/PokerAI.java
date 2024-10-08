@@ -41,7 +41,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.event.*;
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.beans.*;
 
@@ -51,7 +51,7 @@ import java.beans.*;
 @DataCoder('%')
 public class PokerAI extends EngineGameAI implements PokerTableListener, PropertyChangeListener
 {
-    static Logger logger = Logger.getLogger(PokerAI.class);
+    static Logger logger = LogManager.getLogger(PokerAI.class);
 
     private OpponentModel opponentModel_ = new OpponentModel();
 

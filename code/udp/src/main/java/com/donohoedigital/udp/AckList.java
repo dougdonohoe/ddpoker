@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 import java.nio.*;
@@ -46,7 +46,7 @@ import java.nio.*;
  */
 public class AckList
 {
-    static Logger logger = Logger.getLogger(AckList.class);
+    static Logger logger = LogManager.getLogger(AckList.class);
 
     // ping ack ids are in a different "space" than regular messages -
     // they are primarily used for debugging - to see how many are

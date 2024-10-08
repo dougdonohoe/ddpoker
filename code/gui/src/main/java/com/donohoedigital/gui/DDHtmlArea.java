@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -51,7 +51,7 @@ import java.awt.*;
  */
 public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
 {
-    static Logger logger = Logger.getLogger(DDHtmlArea.class);
+    static Logger logger = LogManager.getLogger(DDHtmlArea.class);
 
     private DDHtmlEditorKit htmlKit_;
     private Caret cNormal_;

@@ -50,7 +50,7 @@ import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.p2p.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.security.*;
@@ -61,7 +61,7 @@ import java.util.*;
  */
 public class PokerGame extends Game implements PlayerActionListener
 {
-    static Logger logger = Logger.getLogger(PokerGame.class);
+    static Logger logger = LogManager.getLogger(PokerGame.class);
 
     public static final int ACTION_FOLD = 1;
     public static final int ACTION_CHECK = 2;

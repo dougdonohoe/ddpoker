@@ -41,7 +41,7 @@ package com.donohoedigital.proto.tests;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * @author Doug Donohoe
@@ -122,7 +122,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
         super(sConfigName, args);
 
         // init
-        logger = Logger.getLogger(getClass());
+        logger = LogManager.getLogger(getClass());
         bSend = htOptions_.getBoolean("send", false);
         bDebug = !htOptions_.getBoolean("nodebug", false);
         port = htOptions_.getInteger("port");

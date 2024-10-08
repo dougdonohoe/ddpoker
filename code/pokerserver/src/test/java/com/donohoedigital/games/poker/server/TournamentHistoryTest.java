@@ -40,7 +40,7 @@ import com.donohoedigital.games.poker.model.OnlineGame;
 import com.donohoedigital.games.poker.model.OnlineProfile;
 import com.donohoedigital.games.poker.model.TournamentHistory;
 import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class TournamentHistoryTest
 {
-    private final Logger logger = Logger.getLogger(TournamentHistoryTest.class);
+    private final Logger logger = LogManager.getLogger(TournamentHistoryTest.class);
 
     @Autowired
     private TournamentHistoryDao histDao;

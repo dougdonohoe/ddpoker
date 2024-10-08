@@ -71,7 +71,7 @@ public class GameDetail extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = Logger.getLogger(GameDetail.class);
+    //private static Logger logger = LogManager.getLogger(GameDetail.class);
 
     public static final String PARAM_HISTORY_ID = "histId";
     public static final String PARAM_GAME_ID = "gameId";

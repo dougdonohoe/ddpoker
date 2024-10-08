@@ -51,7 +51,7 @@ import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.p2p.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,7 +68,7 @@ import java.util.List;
 public class PokerMain extends GameEngine implements Peer2PeerControllerInterface, LanControllerInterface,
                                                      UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static final Logger logger = Logger.getLogger(GameEngine.class);
+    private static final Logger logger = LogManager.getLogger(GameEngine.class);
 
     private String sFileParam_ = null;
     private final boolean bLoadNames;
@@ -484,7 +484,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
          */
         if (!isDemo() && sFileParam_ != null)
         {
-            Logger log = Logger.getLogger(PokerMain.class);
+            Logger log = LogManager.getLogger(PokerMain.class);
             if (sFileParam_.endsWith(GameListPanel.SAVE_EXT))
             {
                 log.info("Loading saved game: " + sFileParam_);

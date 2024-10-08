@@ -46,7 +46,7 @@ import java.util.*;
 @Table(name = "wan_game")
 public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
 {
-    //private static Logger logger = Logger.getLogger(OnlineGame.class);
+    //private static Logger logger = LogManager.getLogger(OnlineGame.class);
 
     private DMTypedHashMap data_;
 

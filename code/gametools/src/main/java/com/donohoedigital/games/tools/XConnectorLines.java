@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class XConnectorLines extends ImageComponent {
     
-    //static Logger logger = Logger.getLogger(XConnectorLines.class);
+    //static Logger logger = LogManager.getLogger(XConnectorLines.class);
     
     protected Borders myBorders_ = null;
     protected boolean bNoImage_ = false;

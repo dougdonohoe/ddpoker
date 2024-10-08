@@ -40,7 +40,7 @@ package com.donohoedigital.games.tools;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,7 @@ import java.awt.event.*;
 public class GameboardBorderManager extends GameManager
 {
     
-    static Logger logger = Logger.getLogger(GameboardBorderManager.class);
+    static Logger logger = LogManager.getLogger(GameboardBorderManager.class);
     
     // run options
     double dScale_;

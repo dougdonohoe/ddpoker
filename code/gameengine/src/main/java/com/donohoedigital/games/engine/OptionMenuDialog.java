@@ -52,7 +52,7 @@ import java.util.List;
  */
 public abstract class OptionMenuDialog extends DialogPhase implements ChangeListener, GuiUtils.CheckListener
 {
-    //static Logger logger = Logger.getLogger(OptionMenuDialog.class);
+    //static Logger logger = LogManager.getLogger(OptionMenuDialog.class);
 
     private DDHtmlArea text_;
     private DDPanel data_;

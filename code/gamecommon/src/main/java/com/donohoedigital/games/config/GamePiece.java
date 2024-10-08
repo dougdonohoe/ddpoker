@@ -50,7 +50,7 @@ import java.util.*;
  */
 public abstract class GamePiece implements Comparable
 {
-    //static Logger logger = Logger.getLogger(GamePiece.class);
+    //static Logger logger = LogManager.getLogger(GamePiece.class);
     
     protected String sName_ = null;
     protected Integer nType_ = null;

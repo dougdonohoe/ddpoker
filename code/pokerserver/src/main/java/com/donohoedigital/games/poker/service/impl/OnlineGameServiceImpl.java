@@ -39,7 +39,7 @@ import static com.donohoedigital.games.poker.model.OnlineProfile.*;
 import static com.donohoedigital.games.poker.model.TournamentHistory.*;
 import com.donohoedigital.games.poker.model.util.*;
 import com.donohoedigital.games.poker.service.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
@@ -60,7 +60,7 @@ import java.util.*;
 @Service("onlineGameService")
 public class OnlineGameServiceImpl implements OnlineGameService
 {
-    private Logger logger = Logger.getLogger(OnlineGameServiceImpl.class);
+    private Logger logger = LogManager.getLogger(OnlineGameServiceImpl.class);
 
     private OnlineGameDao gameDao;
     private OnlineProfileDao profileDao;

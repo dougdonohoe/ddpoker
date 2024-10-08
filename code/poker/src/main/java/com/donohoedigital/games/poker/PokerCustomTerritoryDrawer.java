@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -55,7 +55,7 @@ import java.util.List;
 public class PokerCustomTerritoryDrawer implements CustomTerritoryDrawer
 {
 
-    static Logger logger = Logger.getLogger(PokerCustomTerritoryDrawer.class);
+    static Logger logger = LogManager.getLogger(PokerCustomTerritoryDrawer.class);
 
     private PokerGame game_;
     private MersenneTwisterFast random_ = new MersenneTwisterFast();

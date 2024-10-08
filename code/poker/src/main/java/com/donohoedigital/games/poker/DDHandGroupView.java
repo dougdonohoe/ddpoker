@@ -37,7 +37,7 @@
  */
 package com.donohoedigital.games.poker;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.gui.*;
 
 import javax.swing.text.*;
@@ -45,7 +45,7 @@ import java.awt.*;
 
 public class DDHandGroupView extends ComponentView
 {
-    static Logger logger = Logger.getLogger(DDHandGroupView.class);
+    static Logger logger = LogManager.getLogger(DDHandGroupView.class);
 
     public static final int DEFAULT_HEIGHT = 200;
     public static final int DEFAULT_WIDTH = 200;

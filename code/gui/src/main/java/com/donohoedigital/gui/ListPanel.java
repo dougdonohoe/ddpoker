@@ -46,7 +46,7 @@ import java.util.List;
 
 public class ListPanel extends DDScrollPane implements ComponentListener
 {
-    //static Logger logger = Logger.getLogger(ListPanel.class);
+    //static Logger logger = LogManager.getLogger(ListPanel.class);
 
     // icons
     private ImageIcon emptyIcon_ = ImageConfig.getImageIcon("blank16");

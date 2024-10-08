@@ -46,7 +46,7 @@ import java.util.*;
  */
 public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTargetUrlCodingStrategy
 {
-    //private static Logger logger = Logger.getLogger(FixedMixedParamUrlCodingStrategy.class);
+    //private static Logger logger = LogManager.getLogger(FixedMixedParamUrlCodingStrategy.class);
 
     private final String[] parameterNames;
 

@@ -39,7 +39,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -51,7 +51,7 @@ import java.util.List;
 
 public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback, ChangeListener
 {
-    static Logger logger = Logger.getLogger(PokerShowdownPanel.class);
+    static Logger logger = LogManager.getLogger(PokerShowdownPanel.class);
 
     private static Dimension resultsSize = new Dimension(90, 50);
 

@@ -52,7 +52,7 @@ import java.awt.image.*;
  */
 public class DDButton extends JButton implements DDHasLabelComponent, DDExtendedComponent, AncestorListener
 {
-    //static Logger logger = Logger.getLogger(DDButton.class);
+    //static Logger logger = LogManager.getLogger(DDButton.class);
 
     public static final int DISABLED_NONE = 0;
     public static final int DISABLED_GRAY = 1;

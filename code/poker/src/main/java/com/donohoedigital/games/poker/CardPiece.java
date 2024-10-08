@@ -44,7 +44,7 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -58,7 +58,7 @@ import java.util.prefs.*;
  */
 public class CardPiece extends PokerGamePiece
 {    
-    static Logger cLogger = Logger.getLogger(CardPiece.class);
+    static Logger cLogger = LogManager.getLogger(CardPiece.class);
     
     // territory point names
     public static final String POINT_HOLE1 = "hole1";

@@ -41,7 +41,7 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 
 import java.util.*;
@@ -58,7 +58,7 @@ import java.awt.geom.*;
  */
 public class DiceBox extends DDPanel implements ActionListener 
 {
-    //static Logger logger = Logger.getLogger(DiceBox.class);
+    //static Logger logger = LogManager.getLogger(DiceBox.class);
     
     int nDieSize_;
     int nSum_ = 0;

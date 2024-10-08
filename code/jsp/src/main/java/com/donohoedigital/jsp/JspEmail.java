@@ -41,7 +41,7 @@ package com.donohoedigital.jsp;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import org.apache.jasper.servlet.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.apache.tomcat.InstanceManager;
 import org.apache.tomcat.SimpleInstanceManager;
 
@@ -54,7 +54,7 @@ import java.io.*;
  */
 public class JspEmail
 {
-    static Logger logger = Logger.getLogger(JspEmail.class);
+    static Logger logger = LogManager.getLogger(JspEmail.class);
 
     static {
         Jsp.init();

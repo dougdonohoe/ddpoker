@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,7 @@ import java.awt.*;
  */
 public class DDImageButton extends DDButton
 {
-    static Logger logger = Logger.getLogger(DDImageButton.class);
+    static Logger logger = LogManager.getLogger(DDImageButton.class);
 
     private boolean bTransparencyIgnored_ = true;
 

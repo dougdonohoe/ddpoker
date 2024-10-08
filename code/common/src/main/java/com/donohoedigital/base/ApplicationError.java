@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.base;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * This class is used to represent an application error condition.  It
@@ -42,12 +42,12 @@ import org.apache.log4j.*;
 
 public class ApplicationError extends RuntimeException
 {
-    private static Logger logger = Logger.getLogger(ApplicationError.class);
+    private static final Logger logger = LogManager.getLogger(ApplicationError.class);
 
     private String sMessage_ = null;
     private String sDetails_ = null;
     private String sSuggestedResolution_ = null;
-    private int nErrorCode_;
+    private final int nErrorCode_;
     boolean bDetailsIsException_ = false;
     private Throwable exception_ = null;
 

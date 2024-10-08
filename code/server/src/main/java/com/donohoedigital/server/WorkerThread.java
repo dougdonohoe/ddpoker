@@ -33,12 +33,12 @@
 
 package com.donohoedigital.server;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 public abstract class WorkerThread extends Thread
 {
-    static Logger logger = Logger.getLogger(WorkerThread.class);
+    static Logger logger = LogManager.getLogger(WorkerThread.class);
     
     // initialization stuff
     protected WorkerPool pool_;

@@ -41,7 +41,7 @@ package com.donohoedigital.games.config;
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class GameState extends MsgState implements SaveFile
 {
-    static Logger logger = Logger.getLogger(GameState.class);
+    static Logger logger = LogManager.getLogger(GameState.class);
        
     public static final String GAME_BEGIN = "save";
     public static final String ONLINE_GAME_BEGIN = "online";

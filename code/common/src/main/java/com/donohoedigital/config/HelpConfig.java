@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import java.net.*;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 public class HelpConfig extends XMLConfigFileLoader
 {
-    private static Logger hLogger = Logger.getLogger(HelpConfig.class);
+    private static Logger hLogger = LogManager.getLogger(HelpConfig.class);
     
     private String HELP_CONFIG = "help.xml";
 

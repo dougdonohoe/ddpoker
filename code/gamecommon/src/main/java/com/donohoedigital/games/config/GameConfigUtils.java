@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class GameConfigUtils
 {
-    //private static Logger logger = Logger.getLogger(GameConfigUtils.class);
+    //private static Logger logger = LogManager.getLogger(GameConfigUtils.class);
 
     public static final String SAVE_DIR = "save";
 

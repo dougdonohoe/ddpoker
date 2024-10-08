@@ -40,7 +40,7 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.server.*;
 import com.donohoedigital.games.comms.*;
@@ -56,7 +56,7 @@ import java.text.SimpleDateFormat;
  */
 public class GameData extends ServerDataFile
 {
-    //static Logger logger = Logger.getLogger(GameData.class);
+    //static Logger logger = LogManager.getLogger(GameData.class);
     
     // constants
     public static final String DATA_EXT = "dat";       // game board file

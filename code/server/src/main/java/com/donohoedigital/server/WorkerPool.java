@@ -33,7 +33,7 @@
 package com.donohoedigital.server;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 
 import java.util.*;
@@ -43,7 +43,7 @@ import java.util.*;
  */
 public class WorkerPool
 {
-    static Logger logger = Logger.getLogger(WorkerPool.class);
+    static Logger logger = LogManager.getLogger(WorkerPool.class);
     
     private List idle_ = new LinkedList();
     private ArrayList workers_ = new ArrayList();

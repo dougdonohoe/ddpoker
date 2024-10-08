@@ -40,7 +40,7 @@ package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 /**
@@ -50,7 +50,7 @@ import org.jdom2.*;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class GamePhase extends TypedHashMap
 {
-    static Logger logger = Logger.getLogger(GamePhase.class);
+    static Logger logger = LogManager.getLogger(GamePhase.class);
    
     private String sClassname_;	
     private Class class_;

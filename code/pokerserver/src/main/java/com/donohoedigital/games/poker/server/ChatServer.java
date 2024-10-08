@@ -42,7 +42,7 @@ import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.games.poker.service.*;
 import com.donohoedigital.games.server.service.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 
 import java.util.*;
@@ -56,7 +56,7 @@ import java.util.*;
  */
 public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static Logger logger = Logger.getLogger(ChatServer.class);
+    private static Logger logger = LogManager.getLogger(ChatServer.class);
 
     private OnlineProfileService onlineProfileService;
     private BannedKeyService bannedKeyService;

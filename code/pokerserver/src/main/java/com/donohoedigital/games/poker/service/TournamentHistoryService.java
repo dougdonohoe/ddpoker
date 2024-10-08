@@ -35,7 +35,7 @@ package com.donohoedigital.games.poker.service;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.model.util.*;
 import org.springframework.transaction.annotation.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 

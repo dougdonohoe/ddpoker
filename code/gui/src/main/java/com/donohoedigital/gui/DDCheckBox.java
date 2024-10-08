@@ -47,7 +47,7 @@ import java.awt.*;
  */
 public class DDCheckBox extends JCheckBox implements DDHasLabelComponent
 {
-    //static Logger logger = Logger.getLogger(DDCheckBox.class);
+    //static Logger logger = LogManager.getLogger(DDCheckBox.class);
 
     private boolean bPaintIconBackground_ = true;
     private Color cCheckColor_ = null;

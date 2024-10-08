@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.imageio.*;
 import java.awt.*;
@@ -57,7 +57,7 @@ import java.io.*;
 public class CardImageCreator extends BaseCommandLineApp
 {
     // logging
-    private static Logger logger = Logger.getLogger(CardImageCreator.class);
+    private static Logger logger = LogManager.getLogger(CardImageCreator.class);
 
     /**
      * Run emailer

@@ -52,7 +52,7 @@ import java.util.List;
  */
 public abstract class OptionMenu extends BasePhase implements ChangeListener, GuiUtils.CheckListener
 {
-    //static Logger logger = Logger.getLogger(OptionMenu.class);
+    //static Logger logger = LogManager.getLogger(OptionMenu.class);
 
     private DDHtmlArea text_;
     protected ButtonBox buttonbox_;

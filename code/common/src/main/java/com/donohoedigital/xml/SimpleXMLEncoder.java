@@ -43,7 +43,7 @@ import java.util.*;
  */
 public class SimpleXMLEncoder
 {
-    //private static Logger logger = Logger.getLogger(SimpleXMLEncoder.class);
+    //private static Logger logger = LogManager.getLogger(SimpleXMLEncoder.class);
 
     SimpleDateFormat format = Utils.getRFC822();
 

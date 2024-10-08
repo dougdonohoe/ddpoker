@@ -40,7 +40,7 @@ package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public abstract class BaseDataFile
 {
-    static Logger logger = Logger.getLogger(BaseDataFile.class);
+    static Logger logger = LogManager.getLogger(BaseDataFile.class);
     
     // constants
     public static final String DELIM = ".";     // delim between components in a file name

@@ -40,7 +40,7 @@ package com.donohoedigital.p2p;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.net.*;
 import java.util.*;
@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class LanManager implements DDMessageListener
 {
-    static Logger logger = Logger.getLogger(LanManager.class);
+    static Logger logger = LogManager.getLogger(LanManager.class);
 
     private static final boolean DEBUG = false;
 

@@ -94,7 +94,7 @@ public class PokerWicketApplication extends BaseWicketApplication
         // from src/main/java to target when they change.  A copy happens on start of
         // PokerJetty, but if it is already running, changes made are not copied, which makes
         // the edit cycle very slow (since you have to restart PokerJetty).  This code
-        // seems to tell Wicket to look i the source location for resources.
+        // seems to tell Wicket to look in the source location for resources.
         // Enable in development mode only.
         if (getConfigurationType().equals(Application.DEVELOPMENT)) {
             getResourceSettings().addResourceFolder("code/pokerwicket/src/main/java");

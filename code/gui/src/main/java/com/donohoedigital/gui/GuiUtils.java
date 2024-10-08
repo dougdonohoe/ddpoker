@@ -34,7 +34,7 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -56,7 +56,7 @@ import java.util.List;
 
 public class GuiUtils
 {
-    static Logger logger = Logger.getLogger(GuiUtils.class);
+    static Logger logger = LogManager.getLogger(GuiUtils.class);
 
     public static final Color COLOR_SCROLL = StylesConfig.getColor("gui.scroll", null);
     public static final Color COLOR_DISABLED_TEXT = StylesConfig.getColor("gui.text.disabled.fg");

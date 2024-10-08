@@ -50,7 +50,7 @@ import java.beans.*;
  */
 public class OptionTextArea extends DDOption implements PropertyChangeListener
 {
-    //static Logger logger = Logger.getLogger(OptionTextArea.class);
+    //static Logger logger = LogManager.getLogger(OptionTextArea.class);
     
     private DDLabel label_;
     private DDTextArea text_;

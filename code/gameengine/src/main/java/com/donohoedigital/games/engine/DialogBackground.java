@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class DialogBackground extends DDPanel 
 {
-    //static Logger logger = Logger.getLogger(DialogBackground.class);
+    //static Logger logger = LogManager.getLogger(DialogBackground.class);
     
     DDPanel dialogbox_;
     ButtonBox buttonbox_;

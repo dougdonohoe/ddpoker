@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 import org.jdom2.input.*;
 import org.xml.sax.*;
@@ -53,7 +53,7 @@ import java.util.*;
 @SuppressWarnings({"unchecked"})
 public class XMLConfigFileLoader implements ErrorHandler
 {
-    static Logger logger = Logger.getLogger(XMLConfigFileLoader.class);
+    static Logger logger = LogManager.getLogger(XMLConfigFileLoader.class);
 
     /**
      * Standard Donohoe Digital name space - http://www.donohoedigital.com

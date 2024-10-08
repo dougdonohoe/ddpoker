@@ -55,7 +55,7 @@ import java.net.*;
  */
 public class Activate extends BasePhase implements PropertyChangeListener
 {
-    //static Logger logger = Logger.getLogger(Activate.class);
+    //static Logger logger = LogManager.getLogger(Activate.class);
 
     private DDTextField reg_;
     private MenuBackground menu_;

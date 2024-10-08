@@ -57,7 +57,7 @@ public class ScrollGameboard extends JViewport implements
                 ComponentListener, FocusListener,
                 AWTEventListener, InternalDialog.ModalBlockerListener
 {
-    //static Logger logger = Logger.getLogger(ScrollGameboard.class);
+    //static Logger logger = LogManager.getLogger(ScrollGameboard.class);
     
     GameEngine engine_;
     Gameboard board_;

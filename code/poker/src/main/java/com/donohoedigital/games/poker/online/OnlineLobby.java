@@ -41,7 +41,7 @@ import com.donohoedigital.games.poker.*;
 import com.donohoedigital.games.poker.network.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -59,7 +59,7 @@ import java.util.List;
  */
 public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.TableMenuItems, ChatManager, Runnable
 {
-    static Logger logger = Logger.getLogger(OnlineLobby.class);
+    static Logger logger = LogManager.getLogger(OnlineLobby.class);
 
     private static OnlineLobby LOBBY = null;
 

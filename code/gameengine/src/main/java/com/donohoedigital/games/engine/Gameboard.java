@@ -43,7 +43,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,7 +60,7 @@ import java.util.prefs.*;
 public class Gameboard extends ImageComponent implements Scrollable, 
                             MouseMotionListener, MouseListener
 {
-    static Logger logger = Logger.getLogger(Gameboard.class);
+    static Logger logger = LogManager.getLogger(Gameboard.class);
     
     protected GameboardConfig gameconfig_;
     protected Territory[] territories_;

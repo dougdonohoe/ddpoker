@@ -58,7 +58,7 @@ import java.util.List;
 public class Help extends BasePhase implements ListSelectionListener,
                                                HyperlinkListener, ActionListener
 {
-    //static Logger logger = Logger.getLogger(Help.class);
+    //static Logger logger = LogManager.getLogger(Help.class);
 
     private DDPanel base_;
     private DDHtmlArea html_;

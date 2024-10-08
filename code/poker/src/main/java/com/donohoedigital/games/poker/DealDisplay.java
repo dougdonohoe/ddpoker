@@ -47,7 +47,7 @@ import com.donohoedigital.games.poker.dashboard.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -56,7 +56,7 @@ import java.util.*;
  */
 public class DealDisplay extends ChainPhase implements Runnable
 {
-    static Logger logger = Logger.getLogger(DealDisplay.class);
+    static Logger logger = LogManager.getLogger(DealDisplay.class);
 
     private static final int DEFAULT_CARD_DELAY = 20;
 

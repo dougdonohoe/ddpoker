@@ -41,7 +41,7 @@ package com.donohoedigital.games.tools;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 
@@ -59,7 +59,7 @@ import javax.swing.event.*;
  */
 public class TerritoryBoard extends Gameboard implements KeyListener, DrawingUtilInterface {
     
-    static Logger logger = Logger.getLogger(TerritoryBoard.class);
+    static Logger logger = LogManager.getLogger(TerritoryBoard.class);
     
     BaseFrame frame_;
     GameboardTerritoryManager manager_;

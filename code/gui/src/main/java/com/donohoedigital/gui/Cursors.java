@@ -50,7 +50,7 @@ import java.awt.*;
  */
 public class Cursors {
     
-    //static Logger logger = Logger.getLogger(Cursors.class);
+    //static Logger logger = LogManager.getLogger(Cursors.class);
     
     public static final Cursor HAND = createCursor("cursor-hand");
     public static final Cursor MOVE = createCursor("cursor-move");

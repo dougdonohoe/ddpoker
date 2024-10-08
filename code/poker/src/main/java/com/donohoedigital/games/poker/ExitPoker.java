@@ -42,14 +42,14 @@ import com.donohoedigital.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.online.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 /**
  * @author Doug Donohoe
  */
 public class ExitPoker extends BasePhase
 {
-    static Logger logger = Logger.getLogger(ExitPoker.class);
+    static Logger logger = LogManager.getLogger(ExitPoker.class);
 
     private PokerGame game_;
     private boolean bCancelFromJoin_ = false;

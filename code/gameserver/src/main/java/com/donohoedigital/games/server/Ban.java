@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.server.model.*;
 import com.donohoedigital.games.server.service.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.*;
 import org.springframework.context.support.*;
@@ -57,7 +57,7 @@ import java.util.*;
 public class Ban
 {
     // logging
-    private static Logger logger = Logger.getLogger(Ban.class);
+    private static Logger logger = LogManager.getLogger(Ban.class);
 
     // option names
     public static final String OPTION_KEY = "key";

@@ -45,7 +45,7 @@ import javax.swing.event.*;
 import java.util.*;
 import java.awt.geom.*;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
 /**

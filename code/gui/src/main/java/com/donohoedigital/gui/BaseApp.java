@@ -34,7 +34,7 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +42,7 @@ import java.util.*;
 
 public abstract class BaseApp
 {
-    private Logger logger = Logger.getLogger(BaseApp.class);
+    private Logger logger = LogManager.getLogger(BaseApp.class);
 
     static Thread mainThread_ = null;
     protected static BaseApp app_ = null;

@@ -34,7 +34,7 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 
@@ -52,7 +52,7 @@ import java.awt.event.*;
  */
 public class EngineDialog extends InternalDialog
 {
-    protected static Logger logger = Logger.getLogger(EngineDialog.class);
+    protected static Logger logger = LogManager.getLogger(EngineDialog.class);
 
     private GameContext context_;
     private DialogBackground base_;

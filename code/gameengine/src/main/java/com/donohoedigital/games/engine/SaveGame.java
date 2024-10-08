@@ -49,7 +49,7 @@ import java.awt.*;
  */
 public class SaveGame extends DialogPhase
 {
-    //static Logger logger = Logger.getLogger(SaveGame.class);
+    //static Logger logger = LogManager.getLogger(SaveGame.class);
     
     GameListPanel panel_;
     

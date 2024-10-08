@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
 
 import java.util.concurrent.*;
@@ -46,7 +46,7 @@ import java.util.concurrent.*;
  */
 public class DispatchQueue extends Thread
 {
-    static Logger logger = Logger.getLogger(DispatchQueue.class);
+    static Logger logger = LogManager.getLogger(DispatchQueue.class);
 
     // members
     private LinkedBlockingQueue queue_ = new LinkedBlockingQueue();

@@ -40,7 +40,7 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.impexp.*;
 import com.donohoedigital.games.poker.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.math.*;
@@ -53,7 +53,7 @@ import java.util.Date;
  */
 public class PokerDatabase
 {
-    static Logger logger = Logger.getLogger(PokerDatabase.class);
+    static Logger logger = LogManager.getLogger(PokerDatabase.class);
 
     public static final int INTENT_LENGTH = 512;
 

@@ -34,7 +34,7 @@ package com.donohoedigital.server;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.util.*;
 
@@ -43,7 +43,7 @@ import java.util.*;
  */
 public class ThreadPool
 {
-    static Logger logger = Logger.getLogger(ThreadPool.class);
+    static Logger logger = LogManager.getLogger(ThreadPool.class);
     
     private GameServer server_;
     private final List<SocketThread> idle_ = new LinkedList<SocketThread>();

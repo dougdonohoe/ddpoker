@@ -39,7 +39,7 @@
 package com.donohoedigital.p2p;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.server.*;
 
 import javax.servlet.*;
@@ -54,7 +54,7 @@ import java.nio.channels.*;
  */
 public class Peer2PeerSocketThread extends SocketThread
 {
-    static Logger logger = Logger.getLogger(Peer2PeerSocketThread.class);
+    static Logger logger = LogManager.getLogger(Peer2PeerSocketThread.class);
     
     private Peer2PeerMessage msg_;
     private boolean bKeepAlive_ = true;

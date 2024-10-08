@@ -49,7 +49,7 @@ import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.event.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.games.poker.network.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.util.*;
@@ -62,7 +62,7 @@ import java.util.*;
 @SuppressWarnings({"PublicField"})
 public class TournamentDirector extends BasePhase implements Runnable, GameManager, ChatManager
 {
-    static Logger logger = Logger.getLogger(TournamentDirector.class);
+    static Logger logger = LogManager.getLogger(TournamentDirector.class);
 
     // debugging stmts
     public static final boolean DEBUG = false; // general debug in this class

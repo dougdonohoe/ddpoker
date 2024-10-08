@@ -54,7 +54,7 @@ import java.util.*;
 @Repository
 public class TournamentHistoryImplJpa extends JpaBaseDao<TournamentHistory, Long> implements TournamentHistoryDao
 {
-    //private Logger logger = Logger.getLogger(TournamentHistoryImplJpa.class);
+    //private Logger logger = LogManager.getLogger(TournamentHistoryImplJpa.class);
 
     public int deleteAllForGame(OnlineGame game)
     {

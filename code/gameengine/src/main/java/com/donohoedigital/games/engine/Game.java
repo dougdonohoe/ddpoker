@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.games.comms.*;
 import com.donohoedigital.games.config.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.event.*;
 import java.beans.*;
@@ -56,7 +56,7 @@ import java.util.prefs.*;
 @SuppressWarnings({"RawUseOfParameterizedType"})
 public class Game extends TypedHashMap implements GameInfo, GamePlayerList, GameObserverList
 {
-    static Logger logger = Logger.getLogger(Game.class);
+    static Logger logger = LogManager.getLogger(Game.class);
 
     // list of players
     protected List<GamePlayer> players_ = new ArrayList<GamePlayer>();

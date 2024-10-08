@@ -53,7 +53,7 @@ import java.awt.*;
  */
 public class MenuBackground extends DDScrollPane
 {
-    //static Logger logger = Logger.getLogger(MenuBackground.class);
+    //static Logger logger = LogManager.getLogger(MenuBackground.class);
 
     public static final String PARAM_MENUBOX_HELP_NAME = "menubox-help-name";
 

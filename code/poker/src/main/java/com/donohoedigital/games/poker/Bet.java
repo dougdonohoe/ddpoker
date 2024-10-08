@@ -46,7 +46,7 @@ import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.games.poker.dashboard.*;
 import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +58,7 @@ import java.awt.event.*;
  */
 public class Bet extends ChainPhase implements PlayerActionListener, CancelablePhase
 {
-    static Logger logger = Logger.getLogger(Bet.class);
+    static Logger logger = LogManager.getLogger(Bet.class);
 
     private PokerPlayer player_;
     private PokerTable table_;

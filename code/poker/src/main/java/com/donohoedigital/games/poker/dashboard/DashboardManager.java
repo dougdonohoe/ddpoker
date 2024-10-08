@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
@@ -50,7 +50,7 @@ import java.util.*;
  */
 public class DashboardManager
 {
-    static Logger logger = Logger.getLogger(DashboardManager.class);
+    static Logger logger = LogManager.getLogger(DashboardManager.class);
 
     private ArrayList items_;
     private DMTypedHashMap prefs_;

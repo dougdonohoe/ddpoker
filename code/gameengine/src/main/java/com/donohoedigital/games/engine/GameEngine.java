@@ -45,7 +45,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.udp.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,7 +60,7 @@ import java.util.prefs.*;
  */
 public abstract class GameEngine extends BaseApp
 {
-    private Logger logger = Logger.getLogger(GameEngine.class);
+    private Logger logger = LogManager.getLogger(GameEngine.class);
 
     // debugging settings
     private static boolean TESTING_SKIP_SPLASH = false;

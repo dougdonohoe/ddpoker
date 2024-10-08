@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import javax.swing.plaf.metal.*;
@@ -48,7 +48,7 @@ import java.awt.geom.*;
  */
 public class DDScrollBarUI extends MetalScrollBarUI
 {
-    static Logger logger = Logger.getLogger(DDScrollBarUI.class);
+    static Logger logger = LogManager.getLogger(DDScrollBarUI.class);
 
     // we override paintThumb() because metal stores its thumb
     // colors statically.

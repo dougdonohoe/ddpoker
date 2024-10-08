@@ -42,7 +42,7 @@ import com.donohoedigital.base.*;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.model.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -52,7 +52,7 @@ import java.util.*;
  */
 public class PlayerProfile extends BaseProfile
 {
-    private static Logger logger = Logger.getLogger(PlayerProfile.class);
+    private static Logger logger = LogManager.getLogger(PlayerProfile.class);
 
     // defines
     public static final String PROFILE_BEGIN = "profile";

@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import java.io.*;
 import java.util.*;
@@ -57,7 +57,7 @@ public class RedirectStream
     {
         stream = new RedirectOutput();
         this.error = error;
-        this.myLogger = Logger.getLogger("com.donohoedigital." + type);
+        this.myLogger = LogManager.getLogger("com.donohoedigital." + type);
     }
 
     /**

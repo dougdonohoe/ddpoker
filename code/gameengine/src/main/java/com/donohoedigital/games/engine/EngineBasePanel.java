@@ -43,7 +43,7 @@ import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +55,7 @@ import java.awt.image.*;
  */
 public class EngineBasePanel extends JPanel
 {
-    static Logger logger = Logger.getLogger(EngineBasePanel.class);
+    static Logger logger = LogManager.getLogger(EngineBasePanel.class);
 
     JComponent bottom_ = null;
     Component center_ = null;

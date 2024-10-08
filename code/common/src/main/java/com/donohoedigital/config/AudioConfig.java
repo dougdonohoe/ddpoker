@@ -39,7 +39,7 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
 import org.jdom2.*;
 
 import javax.sound.midi.*;
@@ -54,7 +54,7 @@ import java.util.*;
  */
 public class AudioConfig extends XMLConfigFileLoader
 {
-    private static Logger aLogger = Logger.getLogger(AudioConfig.class);
+    private static Logger aLogger = LogManager.getLogger(AudioConfig.class);
 
     private static final String AUDIO_CONFIG = "audio.xml";
 

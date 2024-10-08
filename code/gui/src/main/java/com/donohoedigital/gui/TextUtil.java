@@ -40,7 +40,7 @@ import java.util.*;
 
 public class TextUtil 
 {
-    //static Logger logger = Logger.getLogger(TextUtil.class);
+    //static Logger logger = LogManager.getLogger(TextUtil.class);
     
     public double x;
     public double y;
