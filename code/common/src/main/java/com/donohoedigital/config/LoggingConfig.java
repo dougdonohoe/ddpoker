@@ -91,19 +91,19 @@ public class LoggingConfig
         {
             case CLIENT:
             case HEADLESS_CLIENT:
-                configStub = "log4j.client";
+                configStub = "log4j2.client";
                 break;
 
             case WEBAPP:
-                configStub = "log4j.webapp";
+                configStub = "log4j2.webapp";
                 break;
 
             case SERVER:
-                configStub = "log4j.server";
+                configStub = "log4j2.server";
                 break;
 
             case COMMAND_LINE:
-                configStub = "log4j.cmdline";
+                configStub = "log4j2.cmdline";
                 break;
         }
 
@@ -113,7 +113,7 @@ public class LoggingConfig
 
         // look for user override
         if (allowUserOverrides) {
-            sName = ConfigUtils.getUserName() + ".log4j.properties";
+            sName = ConfigUtils.getUserName() + ".log4j2.properties";
             useroverride = new MatchingResources("classpath*:config/override/" + sName).getSingleResourceURL();
 
             sName = ConfigUtils.getUserName() + '.' + configStub + ".properties";

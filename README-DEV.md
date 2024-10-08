@@ -174,7 +174,7 @@ JDK was 1.5.
 
 While some things were upgraded to get the code to work with Java 1.8, our maven dependencies
 still largely date from this time frame too.  We are currently on older/ancient versions of
-Swing, Wicket, log4j, junit, etc. (although we are upgrading some as the mood strikes).
+Swing, Wicket, junit, etc. (although we are upgrading some as the mood strikes).
 
 That said, amazingly, it all still seems to work.  If anybody wants to start upgrading dependencies,
 we are happy to take PRs.
@@ -219,7 +219,7 @@ I apologize for the lack of tests.
 
 Properties files are used for two primary purposes
 
-* `log4j.*.properties` - `LoggingConfig` - configure logging
+* `log4j2.*.properties` - `LoggingConfig` - configure logging
 * `*.properties` - `PropertyConfig` - configure application behavior, various settings, localizable text
 
 One key tenet we adhered to at Donohoe Digital was to avoid making "temporary" changes
@@ -234,17 +234,17 @@ Here's roughly how the two versions work:
 
 Based on "application type", our config looks for:
 
-* Client - `log4j.client.properties`
-* Webapp - `log4j.webapp.properties`
-* Server - `log4j.server.properties`
-* Command Line + Unit Tests - `log4j.cmdline.properties`
+* Client - `log4j2.client.properties`
+* Webapp - `log4j2.webapp.properties`
+* Server - `log4j2.server.properties`
+* Command Line + Unit Tests - `log4j2.cmdline.properties`
 
 It looks for and loads these files on the classpath in this order:
 
-* `config/common/log4j.[apptype].properties` - default settings for `apptype`
-* `config/[appname]/log4j.[apptype].properties` - override default settings for application named `appname`
-* `config/override/[username].log4j.properties` - overrides all types for `username`
-* `config/override/[username].log4j.[apptype].properties` - overrides for just `apptype` for `username`
+* `config/common/log4j2.[apptype].properties` - default settings for `apptype`
+* `config/[appname]/log4j2.[apptype].properties` - override default settings for application named `appname`
+* `config/override/[username].log4j2.properties` - overrides all types for `username`
+* `config/override/[username].log4j2.[apptype].properties` - overrides for just `apptype` for `username`
 
 The latter files override any settings in the earlier files.  In log4j, this is commonly used
 to turn on logging to the console or to change logging level for a particular library.
