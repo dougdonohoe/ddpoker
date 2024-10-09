@@ -303,7 +303,7 @@ is to distribute an all-in-one `.jar` file by doing this:
 ```shell
 mvn-install-notests
 cd code/poker
-mvn package assembly:single -Dmaven.test.skip.exec=true
+mvn package assembly:single -DskipTests=true
 ```
 
 This creates a `poker-3.0-jar-with-dependencies.jar` in the `target` directory.  You can then

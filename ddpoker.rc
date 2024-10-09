@@ -43,10 +43,10 @@ export PATH=${DDHOME}/tools/bin:${PATH}
 export PATH=${DDHOME}/tools/db:${PATH}
 
 # maven shortcuts
-alias mvn-install-notests='(cd $CODE;mvn install -Dmaven.test.skip.exec=true)'
+alias mvn-install-notests='(cd $CODE;mvn install -DskipTests=true)'
 alias mvn-install='(cd $CODE;mvn install)'
 alias mvn-clean='(cd $CODE;mvn clean)'
-alias mvn-package-notests='(cd $CODE;mvn package -Dmaven.test.skip.exec=true)'
+alias mvn-package-notests='(cd $CODE;mvn package -DskipTests=true)'
 alias mvn-package='(cd $CODE;mvn package)'
 alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
 alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t'
