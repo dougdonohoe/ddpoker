@@ -295,4 +295,31 @@ public class GameServletResponse implements HttpServletResponse
     {
         logger.warn("setCharacterEncoding called "+str);
     }
+
+    // Servlet API 3.1 additions
+
+    @Override
+    public int getStatus() {
+        return 0;
+    }
+
+    @Override
+    public String getHeader(String name) {
+        return "";
+    }
+
+    @Override
+    public Collection<String> getHeaders(String name) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Collection<String> getHeaderNames() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void setContentLengthLong(long len) {
+
+    }
 }

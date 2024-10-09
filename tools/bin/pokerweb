@@ -42,12 +42,17 @@ echo
 echo "     **** Running Poker Wicket Webserver ****"
 echo
 
+JETTY_VERSION=9.4.56.v20240826
 # need to specify test classes and jetty/servlet jars (since in test scope)
 export EXTRA_CLASSPATH=code/pokerwicket/target/test-classes:\
-~/.m2/repository/org/mortbay/jetty/jetty-util/6.1.4/jetty-util-6.1.4.jar:\
-~/.m2/repository/org/mortbay/jetty/jetty-management/6.1.4/jetty-management-6.1.4.jar:\
-~/.m2/repository/org/mortbay/jetty/jetty/6.1.4/jetty-6.1.4.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-server/$JETTY_VERSION/jetty-server-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-servlet/$JETTY_VERSION/jetty-servlet-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-xml/$JETTY_VERSION/jetty-xml-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-http/$JETTY_VERSION/jetty-http-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-io/$JETTY_VERSION/jetty-io-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-util/$JETTY_VERSION/jetty-util-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-security/$JETTY_VERSION/jetty-security-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/jetty-webapp/$JETTY_VERSION/jetty-webapp-$JETTY_VERSION.jar:\
 ~/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar
-
 
 exec runjavaexec pokerwicket -server -ms24m -mx96m com.donohoedigital.games.poker.wicket.PokerJetty "$@"

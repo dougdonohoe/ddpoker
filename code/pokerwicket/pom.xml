@@ -70,8 +70,8 @@
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet.api.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -91,31 +91,21 @@
 
     <!--
       We include Jetty mainly so that we can run PokerJetty for dev purposes (don't need a full
-      tomcat install).  PokerJetty is in test code to not conflict with Tomcat
+      tomcat install).  PokerJetty is in test code to not conflict with Tomcat.
     -->
     <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty</artifactId>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
       <version>${jetty.version}</version>
-      <scope>provided</scope>
+      <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty-util</artifactId>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
       <version>${jetty.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty-management</artifactId>
-      <version>${jetty.version}</version>
-      <scope>provided</scope>
+      <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <properties>
-    <jetty.version>6.1.4</jetty.version>
-  </properties>
 
 </project>
 
