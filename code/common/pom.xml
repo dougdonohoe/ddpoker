@@ -91,12 +91,4 @@
     </dependency>
   </dependencies>
 
-  <!-- for xstream -->
-  <repositories>
-    <repository>
-      <id>codehaus.org</id>
-      <url>http://repository.codehaus.org</url>
-    </repository>
-  </repositories>
-
 </project>

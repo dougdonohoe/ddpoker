@@ -37,7 +37,6 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.xml.*;
 import com.donohoedigital.base.*;
-//import com.thoughtworks.xstream.*;
 import junit.framework.*;
 import org.apache.logging.log4j.*;
 
@@ -48,29 +47,11 @@ import java.util.*;
  */
 public class XMLExportTest extends TestCase
 {
-    private static Logger logger = LogManager.getLogger(XMLExportTest.class);
-
-//    public void testXML()
-//    {
-//        XStream xstream = new XStream();
-//        OnlineGame game = PokerTestData.createOnlineGame("Obama", 1, "XYZ-123");
-//        String toXML = xstream.toXML(game);
-//        //logger.debug("GAME: " + toXML + "\n");
-//
-//        TournamentHistory hist = PokerTestData.createTournamentHistory("<test1>\n\"&two??", 1, "xyz");
-//        xstream.useAttributeFor(TournamentHistory.class, "playerName");
-//        xstream.omitField(TournamentHistory.class, "onlineGame");
-//        xstream.omitField(TournamentHistory.class, "profile");
-//        xstream.alias("history", TournamentHistory.class);
-//        toXML = xstream.toXML(hist);
-//        logger.debug("HIST: " + toXML);
-//
-//    }
-
     public void testSimpleXMLEncoder()
     {
         // setup config manager (so we know where profiles live)
         new ConfigManager("poker", ApplicationType.COMMAND_LINE);
+        Logger logger = LogManager.getLogger(XMLExportTest.class);
         Utils.setVersionString("3");
         List<String> testPlayers = Arrays.asList("Doug", "Greg", "<bracket man2>", "\"Quote Man 2\"");
 
@@ -85,7 +66,7 @@ public class XMLExportTest extends TestCase
             x++;
             TournamentProfile tp = (TournamentProfile) p;
 
-            logger.debug("Profile: " + p.getName() + " at " + p.getFile().getAbsolutePath());
+            logger.trace("Profile: {} at {}", p.getName(), p.getFile().getAbsolutePath());
 
             // load rest of data
             tp.load(true);
@@ -99,7 +80,7 @@ public class XMLExportTest extends TestCase
             game.setId(34343L);
 
             // results
-            List<TournamentHistory> hists = new ArrayList<TournamentHistory>();
+            List<TournamentHistory> hists = new ArrayList<>();
             for (int i = 1; i < 5; i++)
             {
                 hists.add(PokerTestData.createTournamentHistory(game, null, "Player " + i, TournamentHistory.PLAYER_TYPE_ONLINE));
@@ -110,7 +91,7 @@ public class XMLExportTest extends TestCase
             game.encodeXML(encoder);
         }
 
-        logger.debug("GAMES: \n" + encoder);
+        logger.trace("GAMES: \n{}", encoder);
 
     }
 }
