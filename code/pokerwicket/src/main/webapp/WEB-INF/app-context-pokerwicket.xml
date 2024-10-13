@@ -47,6 +47,9 @@
   <bean id="appName" class="java.lang.String">
     <constructor-arg value="poker"/>
   </bean>
+  <bean id="appType" class="com.donohoedigital.config.ApplicationType" factory-method="valueOf">
+    <constructor-arg value="WEBAPP"/>
+  </bean>
 
   <bean id="wicketApplication" class="com.donohoedigital.games.poker.wicket.PokerWicketApplication"
         depends-on="configManager"/>

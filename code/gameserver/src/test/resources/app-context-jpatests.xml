@@ -39,6 +39,13 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
           ">
 
+  <bean id="appName" class="java.lang.String">
+    <constructor-arg value="jpa-tests"/>
+  </bean>
+  <bean id="appType" class="com.donohoedigital.config.ApplicationType" factory-method="valueOf">
+    <constructor-arg value="COMMAND_LINE"/>
+  </bean>
+
   <import resource="app-context-gameserver.xml"/>
 
   <!-- testing overrides (db stuff) -->

@@ -30,58 +30,18 @@
  * doug [at] donohoe [dot] info.
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
-package com.donohoedigital.games.poker.wicket;
+package com.donohoedigital.games.poker.server;
 
-import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.LoggingConfig;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * Class for running Poker Wicket website via Jetty (mainly for use locally).
- */
-public class PokerJetty {
-
-    public static void main(String[] args) {
-
-        // initialize logging first
-        LoggingConfig loggingConfig = new LoggingConfig("poker", ApplicationType.WEBAPP);
+public class PokerServerMain {
+    public static void main(String[] argv)
+    {
+        LoggingConfig loggingConfig = new LoggingConfig("poker", ApplicationType.SERVER);
         loggingConfig.init();
-        Logger logger = LogManager.getLogger(PokerJetty.class);
-
-        Server server = getServer();
-
-        try {
-            logger.info(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
-            server.start();
-            while (System.in.available() == 0) {
-                //noinspection BusyWait
-                Thread.sleep(500);
-            }
-            server.stop();
-            server.join();
-        } catch (Exception e) {
-            // need to re-fetch logger since logging is re-initialized
-            logger = LogManager.getLogger(PokerJetty.class);
-            logger.error(Utils.formatExceptionText(e));
-            System.exit(-1);
-        }
-    }
-
-    private static Server getServer() {
-        Server server = new Server(8080);
-
-        // setup context
-        WebAppContext bb = new WebAppContext();
-        bb.setServer(server);
-        bb.setContextPath("/");
-        // path is from root of repo (at least in IntelliJ, where that is default current dir)
-        bb.setWar("code/pokerwicket/src/main/webapp");
-
-        server.setHandler(bb);
-        return server;
+        // create application context (spring creates everything, including the "server" bean, calling init())
+        new ClassPathXmlApplicationContext("app-context-pokerserver.xml");
     }
 }

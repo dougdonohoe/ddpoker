@@ -47,12 +47,13 @@
   <bean id="appName" class="java.lang.String">
     <constructor-arg value="poker"/>
   </bean>
+  <bean id="appType" class="com.donohoedigital.config.ApplicationType" factory-method="valueOf">
+    <constructor-arg value="SERVER"/>
+  </bean>
 
   <bean id="configManager" class="com.donohoedigital.config.ConfigManager">
     <constructor-arg ref="appName"/>
-    <constructor-arg>
-      <value type="com.donohoedigital.config.ApplicationType">SERVER</value>
-    </constructor-arg>
+    <constructor-arg ref="appType"/>
   </bean>
 
   <bean id="servlet" class="com.donohoedigital.games.poker.server.PokerServlet"/>

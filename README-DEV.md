@@ -122,7 +122,7 @@ mvn-test
 ## Poker Server
 
 To run the DD Poker server and chat server, which is what the game talks to,
-you can run `PokerServer` in IntelliJ or use the `pokerserver` script:
+you can run `PokerServerMain` in IntelliJ or use the `pokerserver` script:
 
 ```shell
 pokerserver

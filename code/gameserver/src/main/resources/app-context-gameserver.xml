@@ -36,10 +36,17 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 >
+
+  <!-- logging bean, ideally everything depends on this so it is created first -->
+  <bean id="loggingConfig" class="com.donohoedigital.config.LoggingConfig" init-method="init">
+    <!--suppress SpringXmlModelInspection (appName defined by actual app that imports this file)-->
+    <constructor-arg ref="appName"/>
+    <!--suppress SpringXmlModelInspection (appType defined by actual app that imports this file)-->
+    <constructor-arg ref="appType"/>
+  </bean>
 
   <!-- Turn on processing for @Transactional annotations -->
   <tx:annotation-driven/>
@@ -65,7 +72,8 @@
     1) Change jdbcUrl, password.  Set dialect and auto-gen DDL (below)
   -->
 
-  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+        depends-on="loggingConfig">
     <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
     <property name="jdbcUrl" value="jdbc:mysql://${db.host}/poker?useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false"/>
     <property name="user" value="poker"/>
@@ -83,7 +91,8 @@
     <property name="acquireRetryAttempts" value="0"/>
   </bean>
 
-  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+        depends-on="loggingConfig">
     <property name="dataSource" ref="dataSource"/>
     <property name="persistenceXmlLocation" value="${jpa.persistence.location}"/>
     <property name="persistenceUnitName" value="${jpa.persistence.name}"/>
@@ -105,13 +114,13 @@
     <!--</property>-->
   </bean>
 
-  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" depends-on="loggingConfig">
     <property name="entityManagerFactory" ref="entityManagerFactory"/>
   </bean>
 
   <!-- post-process for @PersistenceContext and exception translation -->
-  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
-  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" depends-on="loggingConfig"/>
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" depends-on="loggingConfig"/>
 
   <!-- common beans -->
   <bean name="regAnalyzer" class="com.donohoedigital.games.server.RegAnalyzer" lazy-init="true"/>

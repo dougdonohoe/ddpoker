@@ -107,7 +107,7 @@ public class Support extends OptionMenu
         data.append("------------------------------------------------------------------------------------\n");
         data.append("Log file:\n\n");
 
-        File logFile = ConfigManager.getConfigManager().getLoggingConfig().getLogFile();
+        File logFile = LoggingConfig.getLoggingConfig().getLogFile();
         if (logFile != null && logFile.exists() && logFile.isFile())
         {
             data.append(ConfigUtils.readFile(logFile));

@@ -44,4 +44,11 @@
 
   <import resource="app-context-gameserver.xml"/>
 
+  <bean id="appName" class="java.lang.String">
+    <constructor-arg value="poker"/>
+  </bean>
+  <bean id="appType" class="com.donohoedigital.config.ApplicationType" factory-method="valueOf">
+    <constructor-arg value="CLIENT"/>
+  </bean>
+
 </beans>

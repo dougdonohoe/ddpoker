@@ -68,8 +68,9 @@ import java.util.List;
 public class PokerMain extends GameEngine implements Peer2PeerControllerInterface, LanControllerInterface,
                                                      UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static final Logger logger = LogManager.getLogger(GameEngine.class);
+    private static final Logger logger;
 
+    private static final String APP_NAME = "poker";
     private String sFileParam_ = null;
     private final boolean bLoadNames;
 
@@ -84,6 +85,11 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         // avoid java.lang.NullPointerException
         //	at javax.swing.plaf.metal.MetalSliderUI.installUI(MetalSliderUI.java:110)
         System.setProperty("swing.defaultlaf", "javax.swing.plaf.metal.MetalLookAndFeel");
+
+        // initialize logging before anything else
+        LoggingConfig loggingConfig = new LoggingConfig(APP_NAME, ApplicationType.CLIENT);
+        loggingConfig.init();
+        logger = LogManager.getLogger(PokerMain.class);
     }
 
     /**
@@ -94,12 +100,12 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     {
         try
         {
-            PokerMain main = new PokerMain("poker", "poker", args);
+            PokerMain main = new PokerMain(APP_NAME, "poker", args);
             main.init();
         }
         catch (ApplicationError ae)
         {
-            System.err.println("Poker ending due to ApplicationError: " + ae.toString());
+            System.err.println("Poker ending due to ApplicationError: " + ae);
             System.exit(1);
         }
         catch (OutOfMemoryError nomem)
@@ -203,14 +209,10 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         public boolean accept(File dir, String name)
         {
             // skip these files
-            if (name.startsWith(".") ||
-                name.equals("db") ||
-                name.equals("advisors") ||
-                name.equals("preflopstrategies"))
-            {
-                return false;
-            }
-            return true;
+            return !name.startsWith(".") &&
+                    !name.equals("db") &&
+                    !name.equals("advisors") &&
+                    !name.equals("preflopstrategies");
         }
     }
 
@@ -355,7 +357,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
     /**
-     * Create a context - here for overridding
+     * Create a context - here for overriding
      */
     @Override
     protected GameContext createInternalGameContext(GameContext context,
@@ -365,88 +367,8 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
     /**
-     * Key validated - cleanup
-     */
-    @Override
-    public void keyValidated(boolean bPatch)
-    {
-        // alpha/beta testing - remove old player profiles, save games
-        // upon activation
-        // turn off clean for B5 TODO: remove altogether for release?
-//        if (!bPatch)
-//        {
-//            clean();
-//            copySaveFiles();
-//        }
-        super.keyValidated(bPatch);
-    }
-
-//    /**
-//     * Clean up various profiles from previous alpha/beta
-//     */
-//    private void clean()
-//    {
-//        if (getVersion().isAlpha() || getVersion().isBeta())
-//        {
-//            File userSave = GameConfigUtils.getSaveDirLocation(true);
-//            cleanDir(userSave);
-//        }
-//    }
-//
-//    /**
-//     * clean logic
-//     */
-//    private void cleanDir(File dir)
-//    {
-//        File files[] = dir.listFiles();
-//        File file;
-//        String sName;
-//        boolean bDelete;
-//        for (int i = 0; files != null && i < files.length; i++)
-//        {
-//            file = files[i];
-//            sName = file.getName().toLowerCase();
-//            if (sName.indexOf("cvs") != -1) continue;
-//
-//            if (file.isDirectory())
-//            {
-//                cleanDir(file);
-//            }
-//
-//            // remove save files (online/save/home), profiles, db
-//            if (sName.startsWith("online.") ||
-//                //sName.startsWith("save.") ||
-//                //sName.startsWith("home.") ||
-//                sName.startsWith("profile.") ||
-//                sName.startsWith("playertype.") ||
-//                sName.startsWith("handgroup.") ||
-//                sName.startsWith("handselection.") ||
-//                sName.startsWith("tourney.") ||
-//                dir.getName().equals("db"))
-//            {
-//                bDelete = false;
-//                logger.debug("Alpha/Beta cleanup.  Removing: " + sName);
-//                try {
-//                    bDelete = file.delete();
-//                }
-//                catch (Throwable t)
-//                {
-//                    bDelete = false;
-//                    logger.warn(Utils.formatExceptionText(t));
-//                }
-//                if (!bDelete)
-//                {
-//                    logger.warn("Unable to delete: " + sName);
-//                }
-//            }
-//        }
-//    }
-
-    /**
      * for case where we just activated, need to start P2P before we
      * do to-do phase
-     *
-     * @param context
      */
     @Override
     protected void processingTODO(GameContext context)
@@ -479,7 +401,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
             initP2P();
         }
 
-        /**
+        /*
          * handle load
          */
         if (!isDemo() && sFileParam_ != null)
@@ -487,7 +409,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
             Logger log = LogManager.getLogger(PokerMain.class);
             if (sFileParam_.endsWith(GameListPanel.SAVE_EXT))
             {
-                log.info("Loading saved game: " + sFileParam_);
+                log.info("Loading saved game: {}", sFileParam_);
                 File file = new File(sFileParam_).getAbsoluteFile();
                 try
                 {
@@ -498,14 +420,14 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 }
                 catch (ApplicationError ae)
                 {
-                    log.error("Unable to load saved game: " + sFileParam_);
+                    log.error("Unable to load saved game: {}", sFileParam_);
                     log.error(ae.toString());
                     // bad save file, so we just do normal initialStart
                 }
             }
             else if (sFileParam_.endsWith(PokerConstants.JOIN_FILE_EXT))
             {
-                log.info("Loading online game join: " + sFileParam_);
+                log.info("Loading online game join: {}", sFileParam_);
                 File file = new File(sFileParam_).getAbsoluteFile();
                 try
                 {
@@ -524,7 +446,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 }
                 catch (ApplicationError ae)
                 {
-                    log.error("Unable to load game join: " + sFileParam_);
+                    log.error("Unable to load game join: {}", sFileParam_);
                     log.error(ae.toString());
                     // bad join file, so we just do normal initialStart
                 }
@@ -587,7 +509,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     //// Player names
     ////
 
-    private List<String> names_ = new ArrayList<String>();
+    private final List<String> names_ = new ArrayList<>();
 
     /**
      * get names array list
@@ -671,7 +593,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
             udp_ = new PokerUDPServer(this);
             udp_.init();
             udp_.manager().addMonitor(this);
-            // nofify OnlineLobby
+            // notify OnlineLobby
             UDPStatus.setUDPServer(udp_);
             if (udp_.isBound()) udp_.start();
         }
@@ -829,7 +751,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         }
         else
         {
-            logger.warn("Connection closing notification received with no OnlineManager from: " + connection);
+            logger.warn("Connection closing notification received with no OnlineManager from {}", connection);
         }
     }
 
@@ -855,19 +777,16 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
 
             OnlineMessage omsg = new OnlineMessage(msg.getMessage());
 
-            switch (omsg.getCategory())
-            {
-                // reply like Online Manager, but with bogus guid
-                // so server test responds with appropriate message
-                case OnlineMessage.CAT_TEST:
-                    return OnlineManager.getTestReply(p2p_, "guid-no-online-game", omsg);
-
-                // respond to any other type of message with same response,
-                // as if some one was trying to join
-                default:
-                    //logger.warn("Message received with no OnlineManager: " + msg);
-                    return OnlineManager.getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nogame"), false);
+            // reply like Online Manager, but with bogus guid
+            // so server test responds with appropriate message
+            if (omsg.getCategory() == OnlineMessage.CAT_TEST) {
+                return OnlineManager.getTestReply(p2p_, "guid-no-online-game", omsg);
             }
+
+            // respond to any other type of message with same response,
+            // as if someone was trying to join
+            //logger.warn("Message received with no OnlineManager: " + msg);
+            return OnlineManager.getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nogame"), false);
         }
         else
         {
@@ -924,14 +843,14 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         {
             case CREATED:
                 if (TESTING(UDPServer.TESTING_UDP))
-                    logger.debug("POKER Created: " + Utils.getAddressPort(link.getRemoteIP()));
+                    logger.debug("POKER Created: {}", Utils.getAddressPort(link.getRemoteIP()));
                 link.addMonitor(this);
                 break;
 
             case DESTROYED:
                 if (TESTING(UDPServer.TESTING_UDP))
-                    logger.debug("POKER Destroyed: " + Utils.getAddressPort(link.getRemoteIP()) +
-                                 " stats: " + link.getStats());
+                    logger.debug("POKER Destroyed: {} stats: {}",Utils.getAddressPort(link.getRemoteIP()),
+                            link.getStats());
                 link.removeMonitor(this);
                 break;
         }
@@ -953,24 +872,24 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         switch (event.getType())
         {
             case ESTABLISHED:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Established: " + link.toStringNameIP());
+                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Established: {}", link.toStringNameIP());
                 break;
 
             case CLOSING:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Closing: " + link.toStringNameIP());
+                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Closing: {}", link.toStringNameIP());
                 if (!link.getRemoteIP().equals(udp_.getChatServer()))
                     connectionClosing(new PokerConnection(link.getID()));
                 break;
 
             case CLOSED:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Closed: " + link.toStringNameIP());
+                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Closed: {}", link.toStringNameIP());
                 if (!link.getRemoteIP().equals(udp_.getChatServer()))
                     connectionClosing(new PokerConnection(link.getID()));
                 break;
 
             case POSSIBLE_TIMEOUT:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Possible timeout on " + link.toStringNameIP() +
-                                                                 " (no message in last " + elapsed + " millis)");
+                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Possible timeout on {} (no message in last {} millis)",
+                        link.toStringNameIP(), elapsed);
                 break;
 
             case TIMEOUT:
@@ -981,7 +900,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 else
                 {
                     // application - nothing to do since link will be closed by udp manager
-                    logger.info("Timeout on " + link.toStringNameIP() + " (no message in last " + elapsed + " millis)");
+                    logger.info("Timeout on {} (no message in last {} millis)", link.toStringNameIP(), elapsed);
                 }
                 break;
 
@@ -993,12 +912,12 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 else
                 {
                     // application - nothing to do since link will be closed by udp manager
-                    logger.info("Resend Failure on " + link.toStringNameIP() + " (unable to send message " + data + ')');
+                    logger.info("Resend Failure on {} (unable to send message {})", link.toStringNameIP(), data);
                 }
                 break;
 
             case SESSION_CHANGED:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER session-changed: " + link.toStringNameIP());
+                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER session-changed: {}", link.toStringNameIP());
 
                 // force new hello since chat server was restarted
                 if (link == udp_.getChatLink())
@@ -1014,11 +933,11 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                     {
                         if (game.getHost().isLocallyControlled())
                         {
-                            logger.info("Session changed (assuming rejoin): " + link.toStringNameIP());
+                            logger.info("Session changed (assuming rejoin): {}", link.toStringNameIP());
                         }
                         else
                         {
-                            logger.warn("Session changed on host (this shouldn't happen), closing link: " + link.toStringNameIP());
+                            logger.warn("Session changed on host (this shouldn't happen), closing link: {}", link.toStringNameIP());
                             link.close();
                         }
                     }
@@ -1036,7 +955,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                     {
                         OnlineMessage om = new OnlineMessage(msg.getMessage());
                         String sMsg = " {" + om.toStringCategory() + '}';
-                        logger.debug("POKER msg from " + link.toStringNameIP() + ": " + data.toStringShort() + sMsg);
+                        logger.debug("POKER msg from {}: {}", link.toStringNameIP(), data.toStringShort() + sMsg);
                     }
 
                     if (data.getUserType() == PokerConstants.USERTYPE_CHAT)
@@ -1060,7 +979,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 else
                 {
                     if (TESTING(EngineConstants.TESTING_UDP_APP))
-                        logger.debug("POKER msg from " + link.toStringNameIP() + ": " + data.toStringShort());
+                        logger.debug("POKER msg ({}) from {}: {}", data.getType(), link.toStringNameIP(), data.toStringShort());
                 }
                 break;
         }
@@ -1158,7 +1077,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         String sKey = msg.getKey();
         if (sKey == null)
         {
-            logger.warn("Message has no key: " + msg);
+            logger.warn("Message has no key: {}", msg);
             return false;
         }
 
@@ -1166,7 +1085,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         Version version = msg.getVersion();
         if (version == null)
         {
-            logger.warn("Message has no version: " + version);
+            logger.warn("Message has no version: {}", msg);
             return false;
         }
 
@@ -1200,13 +1119,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         final String sMsg = PropertyConfig.getMessage("msg.dupip.exit", sName, sHost, sIP);
         // do processing
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        PokerUtils.displayInformationDialog(getDefaultContext(), Utils.fixHtmlTextFor15(sMsg), "msg.title.dupdd", null);
-                        System.exit(1);
-                    }
+                () -> {
+                    PokerUtils.displayInformationDialog(getDefaultContext(), Utils.fixHtmlTextFor15(sMsg), "msg.title.dupdd", null);
+                    System.exit(1);
                 }
         );
     }
@@ -1249,8 +1164,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     {
         if (one == null && two == null) return true;
 
-        if ((one == null && two != null) ||
-            (one != null && two == null)) return false;
+        if (one == null || two == null) return false;
 
         DMTypedHashMap d1 = (DMTypedHashMap) one;
         DMTypedHashMap d2 = (DMTypedHashMap) two;
@@ -1268,9 +1182,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         TournamentProfile p2 = (TournamentProfile) d2.getObject(ONLINE_GAME_PROFILE);
 
         if (p1 == null && p2 == null) return true;
-
-        if ((p1 == null && p2 != null) ||
-            (p1 != null && p2 == null)) return false;
+        if (p1 == null || p2 == null) return false;
 
         return p1.getName().equals(p2.getName()) &&
                p1.getCreateDate() == p2.getCreateDate() &&

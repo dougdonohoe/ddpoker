@@ -51,24 +51,35 @@ import java.util.Properties;
 import static com.donohoedigital.config.ApplicationType.*;
 
 /**
- * Class to initiate logging
+ * Class to initiate logging.  Should be as close to the first thing that happens
+ * in an application since it resets log4j configuration, which can leave any
+ * loggers created prior to this turned off.  The 'debugLoggers' flag is useful
+ * in development to see which loggers are created prior to init().
  */
 public class LoggingConfig
 {
     private static Logger logger = LogManager.getLogger(LoggingConfig.class);
 
-    private static LoggerContext loggerContext;
+    private static LoggingConfig loggingConfig;
 
     private final String appName;
     private final ApplicationType type;
     private final RuntimeDirectory runtimeDirectory;
     private final boolean allowUserOverrides;
 
+    private LoggerContext loggerContext;
     private File logDir = null;
     private File logFile = null;
 
     /**
-     * Construct
+     * Default constructor
+     */
+    public LoggingConfig(String appName, ApplicationType type) {
+        this(appName, type, new DefaultRuntimeDirectory(), true);
+    }
+
+    /**
+     * Full constructor
      */
     public LoggingConfig(String appName, ApplicationType type, RuntimeDirectory runtimeDirectory,
                          boolean allowUserOverrides)
@@ -84,10 +95,16 @@ public class LoggingConfig
      */
     public void init()
     {
-        if (loggerContext != null) {
-            ApplicationError.warnNotNull(loggerContext, "LoggingConfig already initialized");
+        if (loggingConfig != null) {
+            if (!loggingConfig.appName.equals(appName) && !loggingConfig.type.equals(type)) {
+                ApplicationError.warnNotNull(loggingConfig,
+                        "LoggingConfig already initialized with different app/type (" +
+                        loggingConfig.appName + "/" + loggingConfig.type + "), but now attempting to init with " +
+                        appName + "/" + type);
+            }
             return;
         }
+        loggingConfig = this;
 
         boolean useDefault = false;
         String configStub = null;
@@ -313,11 +330,17 @@ public class LoggingConfig
         return logFile;
     }
 
+    public static LoggingConfig getLoggingConfig() {
+        return loggingConfig;
+    }
 
     /**
      * for testing
      */
     static void reset() {
-        loggerContext = null;
+        if (loggingConfig != null) {
+            loggingConfig.shutdown();
+            loggingConfig = null;
+        }
     }
 }

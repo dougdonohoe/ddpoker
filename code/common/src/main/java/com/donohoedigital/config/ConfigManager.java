@@ -46,7 +46,6 @@ public class ConfigManager
     private final String locale;
     private final String extraModule;
     private final String[] modules;
-    private final LoggingConfig logging;
     private final RuntimeDirectory runtimeDir;
 
     /**
@@ -76,14 +75,10 @@ public class ConfigManager
         appName = sAppName;
         locale = sLocale;
         extraModule = sExtraModule;
+        runtimeDir = new DefaultRuntimeDirectory();
 
         // set root prefs node
         Prefs.setRootNodeName(sAppName);
-
-        // init logging
-        runtimeDir = new DefaultRuntimeDirectory();
-        logging = new LoggingConfig(sAppName, type, runtimeDir, true);
-        logging.init();
 
         // modules to load
         modules = sExtraModule == null ? new String[]{"common", sAppName} :
@@ -141,14 +136,6 @@ public class ConfigManager
     public String getExtraModule()
     {
         return extraModule;
-    }
-
-    /**
-     * Return logging config
-     */
-    public LoggingConfig getLoggingConfig()
-    {
-        return logging;
     }
 
     /**

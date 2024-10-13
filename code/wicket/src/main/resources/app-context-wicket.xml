@@ -42,9 +42,8 @@
   <bean id="configManager" class="com.donohoedigital.config.ConfigManager">
     <!--suppress SpringXmlModelInspection (appName defined by actual app that imports this file)-->
     <constructor-arg ref="appName"/>
-    <constructor-arg>
-      <value type="com.donohoedigital.config.ApplicationType">WEBAPP</value>
-    </constructor-arg>
+    <!--suppress SpringXmlModelInspection (appType defined by actual app that imports this file)-->
+    <constructor-arg ref="appType"/>
   </bean>
 
 </beans>

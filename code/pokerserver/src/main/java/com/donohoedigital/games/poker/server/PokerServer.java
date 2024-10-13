@@ -41,7 +41,6 @@ package com.donohoedigital.games.poker.server;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.games.server.EngineServer;
 import com.donohoedigital.udp.*;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;
 
@@ -54,15 +53,6 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
     // udp server for test connections and chat
     private UDPServer udp_;
     private ChatServer chat_;
-
-    /**
-     * Start up
-     */
-	public static void main(String[] argv)
-    {
-        // create application context (spring creates everything, including this "server" bean, calling init())
-        new ClassPathXmlApplicationContext("app-context-pokerserver.xml");
-	}
 
     /**
      * Initialize, start UDP and run
@@ -111,11 +101,13 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
         else switch(event.getType())
         {
             case CREATED:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("PublicTest Created: "+ Utils.getAddressPort(link.getRemoteIP()));
+                if (TESTING(UDPServer.TESTING_UDP))
+                    logger.debug("PublicTest Created: {}", Utils.getAddressPort(link.getRemoteIP()));
                 break;
 
             case DESTROYED:
-                if (TESTING(UDPServer.TESTING_UDP)) logger.debug("PublicTest Destroyed: "+ Utils.getAddressPort(link.getRemoteIP()));
+                if (TESTING(UDPServer.TESTING_UDP))
+                    logger.debug("PublicTest Destroyed: {}", Utils.getAddressPort(link.getRemoteIP()));
                 break;
         }
         //logger.debug("Event: "+ event + " on " + Utils.getAddressPort(event.getLink().getLocalIP()));
