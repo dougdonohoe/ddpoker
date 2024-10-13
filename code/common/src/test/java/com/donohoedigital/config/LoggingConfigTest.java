@@ -54,6 +54,7 @@ public class LoggingConfigTest extends TestCase {
      */
     @Override
     protected void setUp() {
+        LoggingConfig.reset();
         checkDirectoryDoesntExist(runtime.getServerHome());
         checkDirectoryDoesntExist(runtime.getClientHome(null));
     }

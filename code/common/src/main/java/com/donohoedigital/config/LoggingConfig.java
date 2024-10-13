@@ -44,6 +44,7 @@ import org.apache.logging.log4j.core.config.properties.PropertiesConfigurationFa
 import java.io.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Properties;
 
@@ -56,12 +57,13 @@ public class LoggingConfig
 {
     private static Logger logger = LogManager.getLogger(LoggingConfig.class);
 
+    private static LoggerContext loggerContext;
+
     private final String appName;
     private final ApplicationType type;
     private final RuntimeDirectory runtimeDirectory;
     private final boolean allowUserOverrides;
 
-    private LoggerContext loggerContext;
     private File logDir = null;
     private File logFile = null;
 
@@ -82,7 +84,10 @@ public class LoggingConfig
      */
     public void init()
     {
-        ApplicationError.warnNotNull(loggerContext, "LoggingConfig already initialized");
+        if (loggerContext != null) {
+            ApplicationError.warnNotNull(loggerContext, "LoggingConfig already initialized");
+            return;
+        }
 
         boolean useDefault = false;
         String configStub = null;
@@ -233,10 +238,23 @@ public class LoggingConfig
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
+    @SuppressWarnings("FieldCanBeLocal")
+    private final boolean debugLoggers = false;
+
     /**
      * Load all properties files, then configure log4j
      */
     private LoggerContext configure(URL... urls) {
+
+        // helpful to see what loggers exist, that will become disabled when we reload logging
+        if (debugLoggers) {
+            LoggerContext context = (LoggerContext) LogManager.getContext(false);
+            Collection<org.apache.logging.log4j.core.Logger> loggers = context.getLoggers();
+            loggers.forEach(
+                    logger -> System.err.println(logger.getName() + ": " + logger.getLevel())
+            );
+        }
+
         // Need to shut down any log4j config already loaded
         LogManager.shutdown();
 
@@ -250,8 +268,9 @@ public class LoggingConfig
         PropertiesConfiguration config = new PropertiesConfigurationFactory().getConfiguration(null, source);
         LoggerContext ctx = Configurator.initialize(config);
 
-        // we have a new context, recreate our logger
+        // we have a new context, recreate the few loggers that are creating before this is run
         logger = LogManager.getLogger(LoggingConfig.class);
+        ConfigUtils.resetLogger();
 
         return ctx;
     }
@@ -292,5 +311,13 @@ public class LoggingConfig
     public File getLogFile()
     {
         return logFile;
+    }
+
+
+    /**
+     * for testing
+     */
+    static void reset() {
+        loggerContext = null;
     }
 }

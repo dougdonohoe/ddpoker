@@ -44,8 +44,8 @@ import java.io.*;
 public class TestRuntimeDirectory implements RuntimeDirectory
 {
     private static final String TEMPDIR = System.getProperty("java.io.tmpdir");
-    private final File client = new File(TEMPDIR, "/client-test");
-    private final File server = new File(TEMPDIR, "/server-test");
+    private final File client = new File(TEMPDIR, "/" + ConfigUtils.SKIP_LOGGING_PATH + "/client-testing-dir");
+    private final File server = new File(TEMPDIR, "/" + ConfigUtils.SKIP_LOGGING_PATH + "/server-testing-dir");
 
     public File getServerHome()
     {

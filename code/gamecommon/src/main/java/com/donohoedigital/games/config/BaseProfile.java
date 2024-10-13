@@ -51,7 +51,7 @@ import java.util.*;
  */
 public abstract class BaseProfile extends BaseDataFile implements SaveFile, Comparable<BaseProfile>, NamedObject
 {
-    private static Logger logger = LogManager.getLogger(BaseProfile.class);
+    private static final Logger logger = LogManager.getLogger(BaseProfile.class);
 
     // defines
     public static final String PROFILE_EXT = "dat";
@@ -332,17 +332,17 @@ public abstract class BaseProfile extends BaseDataFile implements SaveFile, Comp
     protected static List<BaseProfile> getProfileList(String sDirPath, FilenameFilter filter,
                                                       Class<?> c, boolean bFull)
     {
-        Class<?> signature[] = new Class[]{File.class, Boolean.TYPE};
+        Class<?>[] signature = new Class[]{File.class, Boolean.TYPE};
 
-        File files[] = getProfileDir(sDirPath).listFiles(filter);
+        File[] files = getProfileDir(sDirPath).listFiles(filter);
+
+        List<BaseProfile> profiles = new ArrayList<>();
+        if (files == null) return profiles;
 
         Arrays.sort(files);
-
-        List<BaseProfile> profiles = new ArrayList<BaseProfile>();
-
         BaseProfile profile;
 
-        Object params[] = new Object[2];
+        Object[] params = new Object[2];
 
         params[1] = bFull ? Boolean.TRUE : Boolean.FALSE;
 
@@ -356,8 +356,7 @@ public abstract class BaseProfile extends BaseDataFile implements SaveFile, Comp
             }
             catch (Throwable e)
             {
-                logger.error("Error loading " + file + ": " +
-                             Utils.formatExceptionText(e));
+                logger.error("Error loading {}: {}", file, Utils.formatExceptionText(e));
             }
         }
 

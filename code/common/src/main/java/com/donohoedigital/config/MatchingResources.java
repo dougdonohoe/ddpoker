@@ -51,8 +51,6 @@ import java.util.*;
  */
 public class MatchingResources
 {
-    private static final Logger logger = LogManager.getLogger(MatchingResources.class);
-
     private final Resource[] resources;
     private final String pattern;
 
@@ -70,7 +68,9 @@ public class MatchingResources
         try
         {
             resources = match.getResources(pattern);
-            logger.debug("Found " + resources.length + " resource(s) for: " + pattern);
+            // get on demand since used before LoggingConfig is run
+            Logger logger = LogManager.getLogger(MatchingResources.class);
+            logger.debug("Found {} resource(s) for: {}", resources.length, pattern);
         }
         catch (IOException e)
         {

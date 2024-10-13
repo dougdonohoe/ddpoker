@@ -38,8 +38,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeePrintStream {
     private final PrintStream originalOut;
@@ -59,6 +57,9 @@ public class TeePrintStream {
             capturedOutput = baos.toString(StandardCharsets.UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
+        }
+        if (capturedOutput == null || capturedOutput.isEmpty()) {
+            return new String[0];
         }
         return capturedOutput.split(System.lineSeparator());
     }

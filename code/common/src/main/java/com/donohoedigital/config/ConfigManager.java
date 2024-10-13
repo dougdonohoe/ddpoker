@@ -43,11 +43,11 @@ public class ConfigManager
     private static String appName = null;
 
     // config things we load/store
-    private String locale;
-    private String extraModule;
-    private String[] modules;
-    private LoggingConfig logging;
-    private RuntimeDirectory runtimeDir;
+    private final String locale;
+    private final String extraModule;
+    private final String[] modules;
+    private final LoggingConfig logging;
+    private final RuntimeDirectory runtimeDir;
 
     /**
      * Load config files for given appname of specified type
@@ -144,7 +144,7 @@ public class ConfigManager
     }
 
     /**
-     * reutrn logging dir
+     * Return logging config
      */
     public LoggingConfig getLoggingConfig()
     {

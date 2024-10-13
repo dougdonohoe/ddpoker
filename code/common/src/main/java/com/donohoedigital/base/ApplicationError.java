@@ -42,8 +42,6 @@ import org.apache.logging.log4j.*;
 
 public class ApplicationError extends RuntimeException
 {
-    private static final Logger logger = LogManager.getLogger(ApplicationError.class);
-
     private String sMessage_ = null;
     private String sDetails_ = null;
     private String sSuggestedResolution_ = null;
@@ -266,6 +264,8 @@ public class ApplicationError extends RuntimeException
     {
         if (o != null)
         {
+            // get on-demand since this class is loaded before LoggingConfig
+            Logger logger = LogManager.getLogger(ApplicationError.class);
             logger.warn(sLog);
         }
     }

@@ -52,10 +52,15 @@ import java.util.*;
 /**
  * @author Doug Donohoe
  */
-@SuppressWarnings({"ChannelOpenedButNotSafelyClosed", "RawUseOfParameterizedType"})
+@SuppressWarnings({"ChannelOpenedButNotSafelyClosed", "RawUseOfParameterizedType", "resource"})
 public class ConfigUtils
 {
     static Logger logger = LogManager.getLogger(ConfigUtils.class);
+
+    // allow resetting logger (needed since this is created before LoggingConfig runs)
+    static void resetLogger() {
+        logger = LogManager.getLogger(ConfigUtils.class);
+    }
 
     ///
     /// Convenience functions for loading classes
@@ -96,23 +101,6 @@ public class ConfigUtils
     }
 
     /**
-     * Get a class given a class name and a baseClass it extends from.  Useful to avoid
-     * unchecked casts by caller
-     */
-    @SuppressWarnings({"UnusedDeclaration", "unchecked"})
-    public static <X> Class<X> getClass(Class<X> baseClass, String sClass)
-    {
-        try
-        {
-            return (Class<X>) Class.forName(sClass);
-        }
-        catch (ClassNotFoundException cne)
-        {
-            throw new ApplicationError("Class " + sClass + " was not found", cne);
-        }
-    }
-
-    /**
      * Create new instance of given class using default constructor
      */
     public static <T> T newInstance(Class<T> cClass)
@@ -121,45 +109,29 @@ public class ConfigUtils
         {
             return cClass.newInstance();
         }
-        catch (InstantiationException ie)
+        catch (InstantiationException | IllegalAccessException ie)
         {
             throw new ApplicationError(ie);
-        }
-        catch (IllegalAccessException iae)
-        {
-            throw new ApplicationError(iae);
         }
     }
 
     /**
-     * Create new instance of given class using a particular construtor
+     * Create new instance of given class using a particular constructor
      */
-    public static Object newInstanceGeneric(Class cClass, Class[] signature, Object[] params)
+    public static Object newInstanceGeneric(Class<?> cClass, Class<?>[] signature, Object[] params)
     {
         try
         {
             return cClass.getConstructor(signature).newInstance(params);
         }
-        catch (NoSuchMethodException ie)
+        catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException ie)
         {
             throw new ApplicationError(ie);
-        }
-        catch (InvocationTargetException ie)
-        {
-            throw new ApplicationError(ie);
-        }
-        catch (InstantiationException ie)
-        {
-            throw new ApplicationError(ie);
-        }
-        catch (IllegalAccessException iae)
-        {
-            throw new ApplicationError(iae);
         }
     }
 
     /**
-     * Create new instance of given class using a particular construtor
+     * Create new instance of given class using a particular constructor
      */
     public static <T> T newInstance(Class<T> cClass, Class<T>[] signature, Object[] params)
     {
@@ -167,26 +139,14 @@ public class ConfigUtils
         {
             return cClass.getConstructor(signature).newInstance(params);
         }
-        catch (NoSuchMethodException ie)
+        catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException ie)
         {
             throw new ApplicationError(ie);
-        }
-        catch (InvocationTargetException ie)
-        {
-            throw new ApplicationError(ie);
-        }
-        catch (InstantiationException ie)
-        {
-            throw new ApplicationError(ie);
-        }
-        catch (IllegalAccessException iae)
-        {
-            throw new ApplicationError(iae);
         }
     }
 
     /**
-     * Create new instance of given class using a particular construtor
+     * Create new instance of given class using a particular constructor
      */
     public static <T> T newInstance(Constructor<T> constructor)
     {
@@ -194,7 +154,7 @@ public class ConfigUtils
     }
 
     /**
-     * Create new instance of given class using a particular construtor
+     * Create new instance of given class using a particular constructor
      */
     public static <T> T newInstance(Constructor<T> constructor, Object[] params)
     {
@@ -202,17 +162,9 @@ public class ConfigUtils
         {
             return constructor.newInstance(params);
         }
-        catch (InvocationTargetException ie)
+        catch (InvocationTargetException | IllegalAccessException | InstantiationException ie)
         {
             throw new ApplicationError(ie);
-        }
-        catch (InstantiationException ie)
-        {
-            throw new ApplicationError(ie);
-        }
-        catch (IllegalAccessException iae)
-        {
-            throw new ApplicationError(iae);
         }
     }
 
@@ -223,7 +175,9 @@ public class ConfigUtils
     {
         if (!dir.exists())
         {
-            logger.info("Creating directory: " + dir.getAbsolutePath());
+            if (isNotTestPath(dir.getAbsolutePath())) {
+                logger.info("Creating directory: {}", dir.getAbsolutePath());
+            }
             if (!dir.mkdirs())
             {
                 //logger.error("Unable to create dir " + dir.getAbsolutePath());
@@ -294,11 +248,11 @@ public class ConfigUtils
     }
 
     /**
-     * Get a Writer for the given file, thrwos ApplicationError if problem
+     * Get a Writer for the given file, throws ApplicationError if problem
      */
     public static Writer getWriter(File file)
     {
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try
         {
             fos = new FileOutputStream(file);
@@ -319,15 +273,7 @@ public class ConfigUtils
      */
     public static Reader getReader(File file)
     {
-        FileInputStream fis = null;
-        try
-        {
-            fis = new FileInputStream(file);
-        }
-        catch (FileNotFoundException fnfe)
-        {
-            throw new ApplicationError(fnfe);
-        }
+        FileInputStream fis = getFileInputStream(file);
 
         FileChannel in = fis.getChannel();
         CharsetDecoder decoder = Utils.newDecoder();
@@ -340,7 +286,7 @@ public class ConfigUtils
      */
     public static Reader getReader(URL url)
     {
-        InputStream fis = null;
+        InputStream fis;
         try
         {
             fis = url.openStream();
@@ -354,11 +300,11 @@ public class ConfigUtils
     }
 
     /**
-     * Get an OutputStream for the given file, thrwos ApplicationError if problem
+     * Get an OutputStream for the given file, throws ApplicationError if problem
      */
     public static FileOutputStream getFileOutputStream(File file, boolean bAppend)
     {
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         try
         {
             fos = new FileOutputStream(file, bAppend);
@@ -372,11 +318,11 @@ public class ConfigUtils
     }
 
     /**
-     * Get an InputStream for the given file, thrwos ApplicationError if problem
+     * Get an InputStream for the given file, throws ApplicationError if problem
      */
     public static FileInputStream getFileInputStream(File file)
     {
-        FileInputStream fis = null;
+        FileInputStream fis;
         try
         {
             fis = new FileInputStream(file);
@@ -512,8 +458,7 @@ public class ConfigUtils
         }
         catch (Throwable t)
         {
-            logger.error("Unable to copy " + from.getAbsolutePath() + " to " + to.getAbsolutePath() +
-                         Utils.formatExceptionText(t));
+            logger.error("Unable to copy {} to {}{}", from.getAbsolutePath(), to.getAbsolutePath(), Utils.formatExceptionText(t));
         }
     }
 
@@ -532,7 +477,7 @@ public class ConfigUtils
 
             // use byte buffer and read directly into it
             ByteBuffer buffer = ByteBuffer.allocate(10000);
-            byte bytes[] = buffer.array();
+            byte[] bytes = buffer.array();
             int num;
             while ((num = is.read(bytes)) != -1)
             {
@@ -573,7 +518,7 @@ public class ConfigUtils
         verifyNewDirectory(dTo);
 
         // loop through source
-        File files[] = dFrom.listFiles(filter);
+        File[] files = dFrom.listFiles(filter);
         File src;
         File dest;
         for (int i = 0; files != null && i < files.length; i++)
@@ -589,12 +534,12 @@ public class ConfigUtils
             }
             else if (!dest.exists())
             {
-                logger.info("Copy " + src.getAbsolutePath() + " to " + dest.getAbsolutePath());
+                logger.info("Copy {} to {}", src.getAbsolutePath(), dest.getAbsolutePath());
                 copyFile(src, dest);
             }
             else if (dest.exists() && src.lastModified() > dest.lastModified())
             {
-                logger.info("Update " + src.getAbsolutePath() + " to " + dest.getAbsolutePath());
+                logger.info("Update {} to {}", src.getAbsolutePath(), dest.getAbsolutePath());
                 copyFile(src, dest);
             }
         }
@@ -606,7 +551,7 @@ public class ConfigUtils
      */
     public static void copyURLs(String sResourceBase, String pattern, File dTo)
     {
-        URL matches[] = new MatchingResources("classpath*:" + sResourceBase + '/' + pattern).getAllMatchesURL();
+        URL[] matches = new MatchingResources("classpath*:" + sResourceBase + '/' + pattern).getAllMatchesURL();
         if (matches.length == 0) return;
 
         // validate args
@@ -630,27 +575,19 @@ public class ConfigUtils
             // copy over
             if (!dest.exists())
             {
-                logger.info("Copy " + src + " to " + dest.getAbsolutePath());
+                logger.info("Copy URL {} to {}", src, dest.getAbsolutePath());
                 copyUrlToFile(src, dest);
             }
-
-            // FIX: support updates on url to file copy?
-//            else if (dest.exists() && src.lastModified() > dest.lastModified())
-//            {
-//                logger.info("Update " + src + " to " + dest.getAbsolutePath());
-//                copyUrlToFile(src, dest);
-//            }
         }
     }
-
 
     /**
      * Delete a directory and all of its contents
      */
     public static boolean deleteDir(File dir)
     {
-        File files[] = dir.listFiles();
-        File file = null;
+        File[] files = dir.listFiles();
+        File file;
 
         for (int i = 0; files != null && i < files.length; i++)
         {
@@ -664,7 +601,9 @@ public class ConfigUtils
             else
             {
                 // delete a file
-                logger.info("Delete file " + file.getAbsolutePath());
+                if (isNotTestPath(file.getAbsolutePath())) {
+                    logger.info("Delete file {}", file.getAbsolutePath());
+                }
                 if (!file.delete())
                 {
                     return false;
@@ -673,65 +612,14 @@ public class ConfigUtils
         }
 
         // delete the directory
-        logger.info("Delete directory " + dir.getAbsolutePath());
+        if (isNotTestPath(dir.getAbsolutePath())) {
+            logger.info("Delete directory {}", dir.getAbsolutePath());
+        }
         return dir.delete();
     }
 
     /**
-     * Get the MD5 hash for the given file.
-     */
-    public static String getMD5Hash(File file)
-    {
-        // Calculate the hash.
-        FileInputStream fis = null;
-        byte[] hash = null;
-
-        try
-        {
-            fis = new FileInputStream(file);
-            hash = SecurityUtils.hashRaw(fis, null, "MD5");
-        }
-        catch (IOException e)
-        {
-            throw new ApplicationError(e);
-        }
-        finally
-        {
-            if (fis != null) try
-            {
-                fis.close();
-            }
-            catch (IOException ignored)
-            {
-            }
-        }
-
-        // Encode the hash as hex values.
-        int byteCount = hash.length;
-        int n = 0;
-        String s = null;
-        StringBuilder buffer = new StringBuilder();
-
-        for (int i = 0; i < byteCount; ++i)
-        {
-            n = hash[i] & 0xFF;
-            s = Integer.toHexString(n);
-
-            if (s.length() == 1)
-            {
-                s = '0' + s;
-            }
-
-            buffer.append(s);
-        }
-
-        return buffer.toString();
-    }
-
-    /**
      * Get local host name, return null if unknown
-     *
-     * @param bLogError
      */
     public static String getLocalHost(boolean bLogError)
     {
@@ -754,11 +642,11 @@ public class ConfigUtils
             if (st.hasMoreTokens())
             {
                 sLocalHost = st.nextToken();
-                if (bLogError) logger.warn("Unable to determine local host name, guessing it is: " + sLocalHost);
+                if (bLogError) logger.warn("Unable to determine local host name, guessing it is: {}", sLocalHost);
             }
             else
             {
-                if (bLogError) logger.warn("Unable to determine local host name: " + uhe.getMessage());
+                if (bLogError) logger.warn("Unable to determine local host name: {}", uhe.getMessage());
                 sLocalHost = null;
             }
         }
@@ -772,5 +660,11 @@ public class ConfigUtils
     public static String getUserName()
     {
         return System.getProperties().getProperty("user.name");
+    }
+
+    // hack to skip certain log messages that hamper LoggingConfigTest
+    public static final String SKIP_LOGGING_PATH = "skip-logging";
+    private static boolean isNotTestPath(String path) {
+       return !path.contains(SKIP_LOGGING_PATH);
     }
 }

@@ -33,6 +33,8 @@
 package com.donohoedigital.games.poker.wicket;
 
 import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
@@ -46,6 +48,7 @@ public class PokerJetty {
 
     public static void main(String[] args) {
 
+        new ConfigManager("poker", ApplicationType.WEBAPP, true);
         Server server = getServer();
 
         try {
