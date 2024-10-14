@@ -96,7 +96,7 @@ public class LoggingConfig
     public void init()
     {
         if (loggingConfig != null) {
-            if (!loggingConfig.appName.equals(appName) && !loggingConfig.type.equals(type)) {
+            if (!loggingConfig.appName.equals(appName) || !loggingConfig.type.equals(type)) {
                 ApplicationError.warnNotNull(loggingConfig,
                         "LoggingConfig already initialized with different app/type (" +
                         loggingConfig.appName + "/" + loggingConfig.type + "), but now attempting to init with " +

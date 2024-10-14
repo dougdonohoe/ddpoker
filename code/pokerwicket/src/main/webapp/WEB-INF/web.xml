@@ -48,12 +48,23 @@
         or "deployment". If no configuration is found, "development" is the default.
   -->
 
+  <!-- Logging initialization (happens before anything else) -->
+  <listener>
+    <listener-class>com.donohoedigital.wicket.LoggingContextListener</listener-class>
+  </listener>
+
+  <!-- Logging parameters -->
+  <context-param>
+    <param-name>appName</param-name>
+    <param-value>poker</param-value>
+  </context-param>
+
   <!-- Spring initialization -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
-  <!-- Spring Parameters -->
+  <!-- Spring parameters -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>WEB-INF/app-context-pokerwicket.xml</param-value>
