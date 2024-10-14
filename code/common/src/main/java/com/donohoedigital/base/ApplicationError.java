@@ -182,6 +182,7 @@ public class ApplicationError extends RuntimeException
         return sDetails_;
     }
 
+    @SuppressWarnings("unused")
     public String getSuggestedResolution()
     {
         return sSuggestedResolution_;
@@ -259,6 +260,18 @@ public class ApplicationError extends RuntimeException
         if (!b) throw new ApplicationError(ErrorCodes.ERROR_ASSERTION_FAILED,
                     "ASSERTION FAILURE: Unexpected condition - " + sDetails, oInfo == null ? "" : oInfo.toString(), null);
     }
+
+    public static void fail(String sDetails)
+    {
+        fail(sDetails, null);
+    }
+
+    public static void fail(String sDetails, Object oInfo)
+    {
+        throw new ApplicationError(ErrorCodes.ERROR_ASSERTION_FAILED,
+                "ASSERTION FAILURE: Unexpected condition - " + sDetails, oInfo == null ? "" : oInfo.toString(), null);
+    }
+
 
     public static void warnNotNull(Object o, String sLog)
     {

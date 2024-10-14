@@ -77,7 +77,7 @@ public class HoldemHand implements DataMarshal
     public static final int ROUND_SHOWDOWN = 4;
 
     // TESTING
-    private static String sDealPlayableHands_ = null;
+    private static final String sDealPlayableHands_ = null;
     // private static String sDealPlayableHands_ = "Sklansky";
 
     /**
@@ -112,11 +112,11 @@ public class HoldemHand implements DataMarshal
     private int nSmallBlind_;
     private int nBigBlind_;
 
-    // set to -1 to force lazy load due to player seats not being set prior to demarshall
+    // set to -1 to force lazy load due to player seats not being set prior to demarshal
     private int nSmallBlindSeat_ = -1;
     private int nBigBlindSeat_ = -1;
 
-    private List<PokerPlayer> playerOrder_ = new ArrayList<PokerPlayer>();
+    private final List<PokerPlayer> playerOrder_ = new ArrayList<>();
     private Hand muck_;
     private Hand community_;
     private HandSorted communitySorted_;
@@ -128,8 +128,8 @@ public class HoldemHand implements DataMarshal
     private int potStatus_;
     private long startDate_ = 0;
     private long endDate_ = 0;
-    private List<PokerPlayer> winners_ = new ArrayList<PokerPlayer>(3);
-    private List<PokerPlayer> losers_ = new ArrayList<PokerPlayer>(5);
+    private final List<PokerPlayer> winners_ = new ArrayList<>(3);
+    private final List<PokerPlayer> losers_ = new ArrayList<>(5);
 
     /**
      * Empty for load
@@ -156,7 +156,7 @@ public class HoldemHand implements DataMarshal
         int seed = (int) (mult % Integer.MAX_VALUE);
         if (seed == 0 || seed == lastSEED) seed = lastSEED / SEEDADJ;
         if (seed == 0 || seed == lastSEED) seed = SEEDADJ;
-        if (seed == 0 || seed == lastSEED) seed = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
+        if (seed == lastSEED) seed = (int) (System.currentTimeMillis() % Integer.MAX_VALUE);
         lastSEED = seed;
         return lastSEED;
     }
@@ -176,6 +176,7 @@ public class HoldemHand implements DataMarshal
     /**
      * Creates a new instance of HoldemHand
      */
+    @SuppressWarnings("CommentedOutCode")
     public HoldemHand(PokerTable table)
     {
         table_ = table;
@@ -191,16 +192,16 @@ public class HoldemHand implements DataMarshal
             {
                 PokerPlayer player = game.getHumanPlayer();
                 int nNum = (player.isObserver()) ? table.getHandNum() : player.getHandsPlayed();
-                seed = 9183349 + (nNum * 129);
+                seed = 9183349 + (nNum * 129L);
             }
         }
         deck_ = new Deck(true, seed);
         //deck_ = Deck.getDeckBUG280(); // BUG 280 debugging
         //deck_ = Deck.getDeckBUG284(); // BUG 284 debugging
         //deck_ = Deck.getDeckBUG316(); // BUG 316 debugging
-        pots_ = new DMArrayList<Pot>();
+        pots_ = new DMArrayList<>();
         pots_.add(new Pot(ROUND_PRE_FLOP, 0));
-        history_ = new DMArrayList<HandAction>();
+        history_ = new DMArrayList<>();
         nRound_ = ROUND_PRE_FLOP;
         potStatus_ = PokerConstants.NO_POT_ACTION;
         muck_ = new Hand(3);
@@ -260,14 +261,6 @@ public class HoldemHand implements DataMarshal
     }
 
     /**
-     * Set game type
-     */
-    public void setGameType(int n)
-    {
-        nGameType_ = n;
-    }
-
-    /**
      * Get game type
      */
     public int getGameType()
@@ -319,7 +312,7 @@ public class HoldemHand implements DataMarshal
         // NOTE: moved this to TournamentDirector.doBetting()
         // for display purposes, so the current player isn't
         // displayed until after the deal.  Leaving this here
-        // incase that has un-intended side effects - JDD
+        // in case that has un-intended side effects - JDD
         //initPlayerIndex();
     }
 
@@ -359,7 +352,7 @@ public class HoldemHand implements DataMarshal
         nBigBlindSeat_ = big;
     }
 
-    private static List<PokerPlayer> sORDER = new ArrayList<PokerPlayer>(PokerConstants.SEATS);
+    private static final List<PokerPlayer> sORDER = new ArrayList<>(PokerConstants.SEATS);
 
     /**
      * This method is used to randomly distribute money from between players
@@ -411,9 +404,8 @@ public class HoldemHand implements DataMarshal
         // init bet and ante
         int nNumPlayers = sORDER.size();
         PokerPlayer p;
-        for (int i = 0; i < nNumPlayers; i++)
-        {
-            p = sORDER.get(i);
+        for (PokerPlayer pokerPlayer : sORDER) {
+            p = pokerPlayer;
             p.newSimulatedHand();
             if (nAnte > 0) nTotalPot += p.addSimulatedBet(nAnte);
         }
@@ -488,6 +480,7 @@ public class HoldemHand implements DataMarshal
                 // nothing to call
                 else
                 {
+                    //noinspection StatementWithEmptyBody
                     if (nRandom <= 9500)
                     {
                         //logger.debug(table.getName() + " player " + p.getName() + " random: " + nRandom + " checked");
@@ -528,7 +521,7 @@ public class HoldemHand implements DataMarshal
 
         // randomly order to determine winner(s)
         p = null;
-        while (sORDER.size() > 0)
+        while (!sORDER.isEmpty())
         {
             p = sORDER.remove(DiceRoller.rollDieInt(sORDER.size()) - 1);
             if (p.isFolded()) continue;
@@ -539,7 +532,9 @@ public class HoldemHand implements DataMarshal
         // that went all-in with $1 and won $5000, but this isn't meant to be fair, just a way
         // to gradually reduce the computer players.  if someone is kept alive,
         // well, good for them.
-        p.addChips(nTotalPot);
+        if (p != null) {
+            p.addChips(nTotalPot);
+        }
 
         //logger.debug(table.getName() + " ************************************** player " + p.getName() + " won " + nTotalPot);
     }
@@ -547,6 +542,7 @@ public class HoldemHand implements DataMarshal
     /**
      * Deal cards
      */
+    @SuppressWarnings("SameParameterValue")
     private void dealCards(int nNumCards)
     {
         PokerPlayer player;
@@ -555,6 +551,7 @@ public class HoldemHand implements DataMarshal
         // get num seats at table with players
         int nNum = table_.getNumOccupiedSeats();
 
+        //noinspection ConstantValue
         if (sDealPlayableHands_ != null)
         {
             HandSelectionScheme scheme = HandSelectionScheme.getByName(sDealPlayableHands_);
@@ -614,8 +611,6 @@ public class HoldemHand implements DataMarshal
 
     /**
      * Set player betting order
-     *
-     * @param bCardsRequired
      */
     public void setPlayerOrder(boolean bCardsRequired)
     {
@@ -625,6 +620,7 @@ public class HoldemHand implements DataMarshal
     /**
      * set player order
      */
+    @SuppressWarnings("SameParameterValue")
     private void setPlayerOrder(boolean bCardsRequired, int nRound)
     {
         setPlayerOrder(table_, playerOrder_, nRound, bCardsRequired);
@@ -691,7 +687,7 @@ public class HoldemHand implements DataMarshal
     /**
      * Get player at in active player list.  If NO_CURRENT_PLAYER is
      * passed as the index, null is returned.  Any other non-valid
-     * indexes will be throw an index out of bounds exception.
+     * indexes will throw an index out of bounds exception.
      */
     public PokerPlayer getPlayerAt(int index)
     {
@@ -730,7 +726,7 @@ public class HoldemHand implements DataMarshal
             if (!p.isFolded()) nCnt++;
         }
 
-        ApplicationError.assertTrue(false, "Shouldn't get here for player", player);
+        ApplicationError.fail("Shouldn't get here for player", player);
         return 0;
     }
 
@@ -764,7 +760,7 @@ public class HoldemHand implements DataMarshal
     {
         synchronized (history_)
         {
-            return new ArrayList<HandAction>(history_);
+            return new ArrayList<>(history_);
         }
     }
 
@@ -842,7 +838,7 @@ public class HoldemHand implements DataMarshal
     }
 
     /**
-     * get round that cooresponds with getCommunityForDisplay
+     * get round that corresponds with getCommunityForDisplay
      */
     public int getRoundForDisplay()
     {
@@ -935,19 +931,14 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
-
-
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
                 if (hist.getRound() > nRound) break;
 
                 // TODO: adjust for overbets?
 
-                switch (hist.getAction())
-                {
+                switch (hist.getAction()) {
                     case HandAction.ACTION_ANTE:
                     case HandAction.ACTION_BLIND_SM:
                     case HandAction.ACTION_BLIND_BIG:
@@ -1086,6 +1077,7 @@ public class HoldemHand implements DataMarshal
     /**
      * Advance round - deal community cards
      */
+    @SuppressWarnings("UnusedReturnValue")
     public int advanceRound()
     {
         nRound_++;
@@ -1142,7 +1134,7 @@ public class HoldemHand implements DataMarshal
             // NOTE: moved this to TournamentDirector.doBetting()
             // for display purposes, so the current player isn't
             // displayed until after the cards shown.  Leaving this here
-            // incase that has un-intended side effects - JDD
+            // in case that has un-intended side effects - JDD
             //initPlayerIndex();
 
             // if we are done betting after advancing the
@@ -1254,6 +1246,7 @@ public class HoldemHand implements DataMarshal
     /**
      * return index of current player for use with getPlayerAt()
      */
+    @SuppressWarnings("unused")
     public int getCurrentPlayerIndex()
     {
         return nCurrentPlayerIndex_;
@@ -1273,7 +1266,7 @@ public class HoldemHand implements DataMarshal
      * initializes player order (special case use -
      * if you aren't sure you should be using this,
      * you probably shouldn't).  This method is
-     * sychronized becuase on clients in online games,
+     * synchronized because on clients in online games,
      * could be called from different threads (e.g.,
      * DealDisplay and TournamentDirector.storeHandAction())
      */
@@ -1526,13 +1519,9 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
-                if (hist.getAction() == HandAction.ACTION_FOLD &&
-                    hist.getPlayer() == player)
-                {
+            for (HandAction handAction : history_) {
+                hist = handAction;
+                if (hist.getAction() == HandAction.ACTION_FOLD && hist.getPlayer() == player) {
                     return hist.getRound();
                 }
             }
@@ -1663,7 +1652,7 @@ public class HoldemHand implements DataMarshal
         if (nChips < 0)
         {
             debugPrint();
-            ApplicationError.assertTrue(false, "Adding negative chips " + nChips + " debug: " +
+            ApplicationError.fail("Adding negative chips " + nChips + " debug: " +
                                                sDebug + " action: " + nAction + " pots: " + pots_);
         }
 
@@ -1671,7 +1660,7 @@ public class HoldemHand implements DataMarshal
         if (nChips % nMinChip != 0)
         {
             debugPrint();
-            ApplicationError.assertTrue(false, "Adding uneven chips " + nChips + " debug: " +
+            ApplicationError.fail("Adding uneven chips " + nChips + " debug: " +
                                                sDebug + " action: " + nAction + " pots: " + pots_);
         }
         addHistory(new HandAction(player, nRound_, nAction, nChips, nCall, sDebug));
@@ -1693,7 +1682,7 @@ public class HoldemHand implements DataMarshal
     private void calcPots()
     {
         // create PotInfo for each player
-        List<PotInfo> info = new ArrayList<PotInfo>();
+        List<PotInfo> info = new ArrayList<>();
         PokerPlayer player;
         int nPlayerBet;
         int nNum = getNumPlayers();
@@ -1707,7 +1696,7 @@ public class HoldemHand implements DataMarshal
         // sort it using comparable of PotInfo,
         // placing those short of bet at beginning
         Collections.sort(info);
-        if (TESTING(PokerConstants.TESTING_DEBUG_POT)) logger.debug("PotInfo: " + info);
+        if (TESTING(PokerConstants.TESTING_DEBUG_POT)) logger.debug("PotInfo: {}", info);
 
         // add new pots as needed
         int nLastSideBet = 0;
@@ -1746,8 +1735,7 @@ public class HoldemHand implements DataMarshal
                     }
                     else
                     {
-                        nBet = nSide;
-                        if (nSide > potinfo.nBet) nBet = potinfo.nBet;
+                        nBet = Math.min(nSide, potinfo.nBet);
                         pot2.addChips(potinfo.player, nBet);
                         potinfo.nBet -= nBet;
                     }
@@ -1758,7 +1746,7 @@ public class HoldemHand implements DataMarshal
 
     /**
      * Return the main pot for the current round, eliminating
-     * all side pots and reseting main one.
+     * all side pots and resetting main one.
      */
     private Pot resetMainPotForRound()
     {
@@ -1780,7 +1768,9 @@ public class HoldemHand implements DataMarshal
             }
         }
 
-        last.reset();
+        if (last != null) {
+            last.reset();
+        }
         return last;
     }
 
@@ -1877,21 +1867,18 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
             int nAction;
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 nAction = hist.getAction();
                 if (hist.getRound() == nRound &&
-                    hist.getPlayer() == player &&
-                    (nAction == HandAction.ACTION_BET ||
-                     nAction == HandAction.ACTION_RAISE ||
-                     nAction == HandAction.ACTION_CALL ||
-                     nAction == HandAction.ACTION_BLIND_SM ||
-                     nAction == HandAction.ACTION_BLIND_BIG)
-                        )
-                {
+                        hist.getPlayer() == player &&
+                        (nAction == HandAction.ACTION_BET ||
+                                nAction == HandAction.ACTION_RAISE ||
+                                nAction == HandAction.ACTION_CALL ||
+                                nAction == HandAction.ACTION_BLIND_SM ||
+                                nAction == HandAction.ACTION_BLIND_BIG)
+                ) {
                     nBet += hist.getAmount();
                 }
             }
@@ -1910,13 +1897,10 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getAction() == HandAction.ACTION_BET ||
-                    hist.getAction() == HandAction.ACTION_RAISE)
-                {
+                        hist.getAction() == HandAction.ACTION_RAISE) {
                     if (hist.getAmount() > nBet) nBet = hist.getAdjustedAmount();
                 }
             }
@@ -1935,18 +1919,15 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if ((hist.getAction() == HandAction.ACTION_BET ||
-                     hist.getAction() == HandAction.ACTION_RAISE ||
-                     hist.getAction() == HandAction.ACTION_CALL ||
-                     hist.getAction() == HandAction.ACTION_BLIND_SM ||
-                     hist.getAction() == HandAction.ACTION_BLIND_BIG ||
-                     hist.getAction() == HandAction.ACTION_ANTE) &&
-                    hist.getPlayer() == player)
-                {
+                        hist.getAction() == HandAction.ACTION_RAISE ||
+                        hist.getAction() == HandAction.ACTION_CALL ||
+                        hist.getAction() == HandAction.ACTION_BLIND_SM ||
+                        hist.getAction() == HandAction.ACTION_BLIND_BIG ||
+                        hist.getAction() == HandAction.ACTION_ANTE) &&
+                        hist.getPlayer() == player) {
                     nBet += hist.getAmount();
                 }
             }
@@ -1964,13 +1945,10 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getAction() == HandAction.ACTION_BET &&
-                    hist.getRound() == nRound_)
-                {
+                        hist.getRound() == nRound_) {
                     return hist.getPlayer();
                 }
             }
@@ -1987,12 +1965,9 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
-                if (hist.getAction() == HandAction.ACTION_BLIND_BIG)
-                {
+            for (HandAction handAction : history_) {
+                hist = handAction;
+                if (hist.getAction() == HandAction.ACTION_BLIND_BIG) {
                     return hist.getPlayer();
                 }
             }
@@ -2025,7 +2000,7 @@ public class HoldemHand implements DataMarshal
     }
 
     /**
-     * return player who inititated betting/raising.  This is the
+     * return player who initiated betting/raising.  This is the
      * first player to bet in a round or the last player to raise.
      * If no betting happened in a round, the previous rounds are
      * searched.
@@ -2085,13 +2060,10 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if ((hist.getAction() == HandAction.ACTION_CALL) &&
-                    hist.getRound() == nRound_)
-                {
+                        hist.getRound() == nRound_) {
                     nCalls++;
                 }
             }
@@ -2110,14 +2082,11 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getAction() == HandAction.ACTION_ANTE &&
-                    hist.getPlayer() == player &&
-                    hist.getRound() == nRound_)
-                {
+                        hist.getPlayer() == player &&
+                        hist.getRound() == nRound_) {
                     nBet += hist.getAmount();
                 }
             }
@@ -2136,14 +2105,11 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if ((hist.getAction() == HandAction.ACTION_ANTE ||
-                     hist.getAction() == HandAction.ACTION_BLIND_SM) &&
-                    hist.getPlayer() == player)
-                {
+                        hist.getAction() == HandAction.ACTION_BLIND_SM) &&
+                        hist.getPlayer() == player) {
                     nBet += hist.getAmount();
                 }
             }
@@ -2161,14 +2127,11 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getAction() == HandAction.ACTION_ANTE ||
-                    hist.getAction() == HandAction.ACTION_BLIND_SM ||
-                    hist.getAction() == HandAction.ACTION_BLIND_BIG)
-                {
+                        hist.getAction() == HandAction.ACTION_BLIND_SM ||
+                        hist.getAction() == HandAction.ACTION_BLIND_BIG) {
                     nBet += hist.getAmount();
                 }
             }
@@ -2225,7 +2188,7 @@ public class HoldemHand implements DataMarshal
             nCall = player.getChipCount();
         }
 
-        if (nCall < 0) ApplicationError.assertTrue(nCall >= 0, "Negative call " + nCall, player);
+        if (nCall < 0) ApplicationError.fail("Negative call " + nCall, player);
         return nCall;
     }
 
@@ -2320,7 +2283,7 @@ public class HoldemHand implements DataMarshal
     }
 
     /**
-     * Return minimun raise, which is the big blind, if no raises yet,
+     * Return minimum raise, which is the big blind, if no raises yet,
      * or the largest previous bet/raise.
      */
     public int getMinRaise()
@@ -2329,14 +2292,11 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getRound() == nRound_ &&
-                    (hist.getAction() == HandAction.ACTION_BET ||
-                     hist.getAction() == HandAction.ACTION_RAISE))
-                {
+                        (hist.getAction() == HandAction.ACTION_BET ||
+                                hist.getAction() == HandAction.ACTION_RAISE)) {
                     nMin = Math.max(hist.getAdjustedAmount(), nMin);
                 }
             }
@@ -2396,8 +2356,8 @@ public class HoldemHand implements DataMarshal
                     nAllIn++;
                 }
             }
-            // if not all in, but we have nothing to call and we can't raise,
-            // then mark as as acted
+            // if not all in, but we have nothing to call, and we can't raise,
+            // then mark as acted
             else if (getCall(player) == 0 && getMaxRaise(player) == 0)
             {
                 nPlayersActed++;
@@ -2428,7 +2388,7 @@ public class HoldemHand implements DataMarshal
 
     /**
      * Is pot good?  Meaning have all players
-     * have matched the curent bet on the table
+     * have matched the current bet on the table
      * or gone all-in?
      */
     public boolean isPotGood()
@@ -2498,10 +2458,8 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 nBets += hist.getAmount();
             }
         }
@@ -2523,19 +2481,16 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getPlayer() == player &&
-                    hist.getRound() == nRound_ &&
-                    hist.getAction() != HandAction.ACTION_ANTE &&
-                    hist.getAction() != HandAction.ACTION_BLIND_SM &&
-                    hist.getAction() != HandAction.ACTION_BLIND_BIG &&
-                    hist.getAction() != HandAction.ACTION_WIN &&
-                    hist.getAction() != HandAction.ACTION_OVERBET &&
-                    hist.getAction() != HandAction.ACTION_LOSE)
-                {
+                        hist.getRound() == nRound_ &&
+                        hist.getAction() != HandAction.ACTION_ANTE &&
+                        hist.getAction() != HandAction.ACTION_BLIND_SM &&
+                        hist.getAction() != HandAction.ACTION_BLIND_BIG &&
+                        hist.getAction() != HandAction.ACTION_WIN &&
+                        hist.getAction() != HandAction.ACTION_OVERBET &&
+                        hist.getAction() != HandAction.ACTION_LOSE) {
                     return true;
                 }
             }
@@ -2555,13 +2510,10 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getAction() == HandAction.ACTION_WIN &&
-                    hist.getPlayer() == player)
-                {
+                        hist.getPlayer() == player) {
                     nWin += hist.getAmount();
                 }
             }
@@ -2582,13 +2534,10 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 if (hist.getAction() == HandAction.ACTION_OVERBET &&
-                    hist.getPlayer() == player)
-                {
+                        hist.getPlayer() == player) {
                     nWin += hist.getAmount();
                 }
             }
@@ -2648,7 +2597,7 @@ public class HoldemHand implements DataMarshal
             history_.add(action);
         }
 
-        // if need to calculate the pot, do so (ante, blinds, call, bet, raise)
+        // if we need to calculate the pot, do so (ante, blinds, call, bet, raise)
         switch (nAction)
         {
             case HandAction.ACTION_ANTE:
@@ -2658,7 +2607,7 @@ public class HoldemHand implements DataMarshal
             case HandAction.ACTION_BET:
             case HandAction.ACTION_RAISE:
                 calcPots();
-                if (TESTING(PokerConstants.TESTING_DEBUG_POT)) logger.debug("POTS AT END: " + pots_);
+                if (TESTING(PokerConstants.TESTING_DEBUG_POT)) logger.debug("POTS AT END: {}", pots_);
                 verifyPot();
                 break;
         }
@@ -2690,7 +2639,7 @@ public class HoldemHand implements DataMarshal
                 break;
         }
 
-        // if need to note that a player acted (fold, check, call, bet, raise), do so
+        // if we need to note that a player acted (fold, check, call, bet, raise), do so
         switch (nAction)
         {
             case HandAction.ACTION_FOLD:
@@ -2707,16 +2656,13 @@ public class HoldemHand implements DataMarshal
     /**
      * debug print history
      */
+    @SuppressWarnings("CommentedOutCode")
     private void debugPrint(HandAction action)
     {
         PokerPlayer player = action.getPlayer();
         //int nRank = HoldemExpert.getSklanskyRank(player.getHandSorted());
         //int nGroup = HoldemExpert.getGroupFromRank(nRank);
-        logger.debug((player.isHuman() ? "HU: " : "AI: ") +
-                     action.toString(false) + " " +
-                     ((action.getAction() == HandAction.ACTION_FOLD) ? "" : getCommunity().toString())
-                     //+ " sk: " + nRank + " (group " + nGroup +")"
-        );
+        logger.debug("{}{} {}", player.isHuman() ? "HU: " : "AI: ", action.toString(false), (action.getAction() == HandAction.ACTION_FOLD) ? "" : getCommunity().toString());
     }
 
     /**
@@ -2727,10 +2673,8 @@ public class HoldemHand implements DataMarshal
         HandAction hist;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 debugPrint(hist);
             }
         }
@@ -2749,8 +2693,8 @@ public class HoldemHand implements DataMarshal
         {
             winners_.clear();
             losers_.clear();
-            List<PokerPlayer> localWinners = new ArrayList<PokerPlayer>();
-            List<PokerPlayer> localLosers = new ArrayList<PokerPlayer>();
+            List<PokerPlayer> localWinners = new ArrayList<>();
+            List<PokerPlayer> localLosers = new ArrayList<>();
 
             int nNumPots = getNumPots();
             for (int i = 0; i < nNumPots; i++)
@@ -2842,35 +2786,32 @@ public class HoldemHand implements DataMarshal
     /**
      * record hand information in profile
      */
+    @SuppressWarnings("CommentedOutCode")
     private void recordHandInfo(PokerPlayer player, int nLeft)
     {
         PlayerProfile prof = player.getProfileInitCheck();
-        boolean bRounds[] = new boolean[ROUND_SHOWDOWN + 1];
+        boolean[] bRounds = new boolean[ROUND_SHOWDOWN + 1];
         Arrays.fill(bRounds, false);
         int nRound;
         HandAction hist;
         int nAction;
         synchronized (history_)
         {
-            int nSize = history_.size();
-            for (int i = 0; i < nSize; i++)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
                 nRound = hist.getRound();
                 nAction = hist.getAction();
                 if (hist.getPlayer() != player) continue;
                 if (nRound == ROUND_SHOWDOWN) continue;
 
                 // record fact we reached this round
-                if (!bRounds[nRound])
-                {
+                if (!bRounds[nRound]) {
                     prof.rounds_[nRound]++;
                     bRounds[nRound] = true;
                 }
 
                 // record fold-raise
-                if (nAction <= HandAction.ACTION_RAISE)
-                {
+                if (nAction <= HandAction.ACTION_RAISE) {
                     // record action
                     prof.actions_[nAction]++;
                     prof.nActionCnt_++;
@@ -2909,7 +2850,7 @@ public class HoldemHand implements DataMarshal
         }
 
         // This was a 1.0 thing and is no longer necessary.  We
-        // used to save player stats so the AI could rememeber
+        // used to save player stats so the AI could remember
         // from game to game, but the V1 ai isn't really used
         // anymore, so no longer necessary to save each hand.
         //prof.saveIfPossible();
@@ -2917,7 +2858,7 @@ public class HoldemHand implements DataMarshal
     }
 
     /**
-     * preresolve pot, figuring out winners and losers who don't have to show
+     * pre-resolve pot, figuring out winners and losers who don't have to show
      */
     private void preResolvePot(int nPotNum, List<PokerPlayer> winners, List<PokerPlayer> losers)
     {
@@ -2936,8 +2877,8 @@ public class HoldemHand implements DataMarshal
             if (!pot.isInPot(player)) continue;
             info = player.getHandInfo();
 
-            // if score is greater than or equal to highest score,
-            // this players cards should be exposed
+            // if score is greater than or equal to the highest score,
+            // this player's cards should be exposed
             if (info.getScore() >= nHighScore)
             {
                 if (info.getScore() > nHighScore) winners.clear();
@@ -2961,7 +2902,7 @@ public class HoldemHand implements DataMarshal
         Pot pot = getPot(nPotNum);
         PokerPlayer player;
         HandInfo info;
-        List<PokerPlayer> winners = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> winners = new ArrayList<>();
 
         // get info for each player in pot.
         // This iterates in showdown order.
@@ -2975,8 +2916,8 @@ public class HoldemHand implements DataMarshal
             if (!pot.isInPot(player)) continue;
             info = player.getHandInfo();
 
-            // if score is greater than or equal to highest score,
-            // this players cards should be exposed
+            // if score is greater than or equal to the highest score,
+            // this player's cards should be exposed
             if (info.getScore() >= nHighScore)
             {
                 nHighScore = info.getScore();
@@ -2998,7 +2939,7 @@ public class HoldemHand implements DataMarshal
         // make sure we have a winner
         if (nHighScore == 0)
         {
-            logger.warn("WARNING: no winners for pot: " + pot);
+            logger.warn("WARNING: no winners for pot: {}", pot);
             debugPrint();
             return;
         }
@@ -3007,7 +2948,7 @@ public class HoldemHand implements DataMarshal
         // winner found is closest to button for odd chips;
         // we need to fetch order as of flop since it changes
         // in showdown to order of card display)
-        List<PokerPlayer> order = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> order = new ArrayList<>();
         HoldemHand.setPlayerOrder(table_, order, HoldemHand.ROUND_FLOP, true);
         for (int i = 0; i < nNum; i++)
         {
@@ -3033,7 +2974,7 @@ public class HoldemHand implements DataMarshal
         int nRemainder = nPot - (nShare * nWinners);
         if (nRemainder % nMinChip != 0)
         {
-            logger.warn("Remainder of " + nRemainder + " isn't multiple of chip " + nMinChip + "  pot:" + pot);
+            logger.warn("Remainder of {} isn't multiple of chip {}  pot:{}", nRemainder, nMinChip, pot);
         }
 
         // allocate pot to winners, go through winner array
@@ -3088,7 +3029,7 @@ public class HoldemHand implements DataMarshal
         // verify we allocated the entire pot
         if (nTotalCheck != nPot)
         {
-            logger.warn("Amount awarded (" + nTotalCheck + ") != pot amount (" + nPot + ")");
+            logger.warn("Amount awarded ({}) != pot amount ({})", nTotalCheck, nPot);
         }
     }
 
@@ -3181,22 +3122,17 @@ public class HoldemHand implements DataMarshal
         {
             synchronized (history_)
             {
-                int size = history_.size();
-
                 HandAction hist;
 
-                for (int i = 0; i < size; ++i)
-                {
-                    hist = history_.get(i);
+                for (HandAction handAction : history_) {
+                    hist = handAction;
 
-                    if (hist.getRound() > ROUND_PRE_FLOP)
-                    {
+                    if (hist.getRound() > ROUND_PRE_FLOP) {
                         wasRaisedPreFlop_ = Boolean.FALSE;
                         break;
                     }
 
-                    if (hist.getAction() == HandAction.ACTION_RAISE)
-                    {
+                    if (hist.getAction() == HandAction.ACTION_RAISE) {
                         wasRaisedPreFlop_ = Boolean.TRUE;
                         break;
                     }
@@ -3258,16 +3194,11 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() == ROUND_PRE_FLOP)
-                {
-                    switch (hist.getAction())
-                    {
+                if (hist.getRound() == ROUND_PRE_FLOP) {
+                    switch (hist.getAction()) {
                         case HandAction.ACTION_CALL:
                             ++limpers;
                             break;
@@ -3275,9 +3206,7 @@ public class HoldemHand implements DataMarshal
                             limpers = 0;
                             break;
                     }
-                }
-                else
-                {
+                } else {
                     break;
                 }
             }
@@ -3297,18 +3226,12 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() == round)
-                {
-                    if (hist.getPlayer() == player)
-                    {
-                        switch (hist.getAction())
-                        {
+                if (hist.getRound() == round) {
+                    if (hist.getPlayer() == player) {
+                        switch (hist.getAction()) {
                             case HandAction.ACTION_BLIND_BIG:
                             case HandAction.ACTION_BLIND_SM:
                             case HandAction.ACTION_ANTE:
@@ -3317,9 +3240,7 @@ public class HoldemHand implements DataMarshal
                                 return hist;
                         }
                     }
-                }
-                else if (hist.getRound() > round)
-                {
+                } else if (hist.getRound() > round) {
                     return null;
                 }
             }
@@ -3338,25 +3259,18 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
-
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
                 PokerPlayer player = hist.getPlayer();
 
-                if ((hist.getRound() == round) && (!withChips || player.getChipCount() > 0))
-                {
-                    switch (hist.getAction())
-                    {
+                if ((hist.getRound() == round) && (!withChips || player.getChipCount() > 0)) {
+                    switch (hist.getAction()) {
                         case HandAction.ACTION_BET:
                         case HandAction.ACTION_RAISE:
                             return player;
                     }
-                }
-                else if (hist.getRound() > round)
-                {
+                } else if (hist.getRound() > round) {
                     return null;
                 }
             }
@@ -3441,22 +3355,16 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
-
             boolean canLimp = true;
 
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-                if (hist.getRound() > ROUND_PRE_FLOP)
-                {
+                if (hist.getRound() > ROUND_PRE_FLOP) {
                     return false;
                 }
-                if (hist.getPlayer() == player)
-                {
-                    switch (hist.getAction())
-                    {
+                if (hist.getPlayer() == player) {
+                    switch (hist.getAction()) {
                         case HandAction.ACTION_BLIND_BIG:
                         case HandAction.ACTION_BLIND_SM:
                         case HandAction.ACTION_ANTE:
@@ -3466,11 +3374,8 @@ public class HoldemHand implements DataMarshal
                         default:
                             return canLimp;
                     }
-                }
-                else
-                {
-                    if (hist.getAction() == HandAction.ACTION_RAISE)
-                    {
+                } else {
+                    if (hist.getAction() == HandAction.ACTION_RAISE) {
                         canLimp = false;
                     }
                 }
@@ -3494,11 +3399,8 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
-
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
                 if (hist.getRound() > round) return null;
                 if (hist.getRound() < round) continue;
@@ -3525,12 +3427,8 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
-
-
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
                 if (hist.getRound() > round) return null;
                 if (hist.getRound() < round) continue;
@@ -3554,18 +3452,13 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() > ROUND_PRE_FLOP)
-                {
+                if (hist.getRound() > ROUND_PRE_FLOP) {
                     return false;
                 }
-                if (hist.getAction() == HandAction.ACTION_RAISE)
-                {
+                if (hist.getAction() == HandAction.ACTION_RAISE) {
                     return (hist.getPlayer() == player);
                 }
             }
@@ -3586,19 +3479,13 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() > ROUND_PRE_FLOP)
-                {
+                if (hist.getRound() > ROUND_PRE_FLOP) {
                     break;
                 }
-                if (hist.getAction() == HandAction.ACTION_RAISE)
-                {
+                if (hist.getAction() == HandAction.ACTION_RAISE) {
                     lastRaiser = (hist.getPlayer() == player);
                 }
             }
@@ -3619,25 +3506,16 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() > ROUND_PRE_FLOP)
-                {
+                if (hist.getRound() > ROUND_PRE_FLOP) {
                     break;
                 }
-                if (hist.getAction() == HandAction.ACTION_RAISE)
-                {
-                    if (hist.getPlayer() != player)
-                    {
+                if (hist.getAction() == HandAction.ACTION_RAISE) {
+                    if (hist.getPlayer() != player) {
                         return false;
-                    }
-                    else
-                    {
+                    } else {
                         onlyRaiser = true;
                     }
                 }
@@ -3663,6 +3541,7 @@ public class HoldemHand implements DataMarshal
      * <p/>
      * Note this means false will be returned if a player checked the big blind.
      */
+    @SuppressWarnings("unused")
     public boolean foldedPreFlop(PokerPlayer player)
     {
         if (player == null) return false;
@@ -3671,22 +3550,17 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() > ROUND_PRE_FLOP)
-                {
+                if (hist.getRound() > ROUND_PRE_FLOP) {
                     return false;
                 }
                 if (
                         (hist.getRound() == ROUND_PRE_FLOP) &&
-                        (hist.getPlayer() == player) &&
-                        (hist.getAction() == HandAction.ACTION_FOLD)
-                        )
-                {
+                                (hist.getPlayer() == player) &&
+                                (hist.getAction() == HandAction.ACTION_FOLD)
+                ) {
                     return true;
                 }
             }
@@ -3701,18 +3575,13 @@ public class HoldemHand implements DataMarshal
 
         synchronized (history_)
         {
-            int size = history_.size();
+            for (HandAction handAction : history_) {
+                hist = handAction;
 
-            for (int i = 0; i < size; ++i)
-            {
-                hist = history_.get(i);
-
-                if (hist.getRound() > round)
-                {
+                if (hist.getRound() > round) {
                     break;
                 }
-                if ((hist.getRound() == round) && ((hist.getAction() == HandAction.ACTION_BET) || (hist.getAction() == HandAction.ACTION_RAISE)))
-                {
+                if ((hist.getRound() == round) && ((hist.getAction() == HandAction.ACTION_BET) || (hist.getAction() == HandAction.ACTION_RAISE))) {
                     return true;
                 }
             }

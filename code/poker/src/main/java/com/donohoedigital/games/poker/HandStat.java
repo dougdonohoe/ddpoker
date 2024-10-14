@@ -46,7 +46,7 @@ import com.donohoedigital.games.poker.engine.*;
  *
  * @author  donohoe
  */
-public class HandStat implements Comparable
+public class HandStat implements Comparable<HandStat>
 {
     public int nChip;
     public int nCnt;
@@ -93,9 +93,7 @@ public class HandStat implements Comparable
     /**
      * for sorting
      */
-    public int compareTo(Object o) {
-        HandStat s = (HandStat) o;
-
+    public int compareTo(HandStat s) {
         return (int) (s.getExpectationX() - getExpectationX()); // reverse so sorts descending
     } 
 
@@ -125,8 +123,6 @@ public class HandStat implements Comparable
         nLastChip = nChip;
         nLastCnt = nCnt;
         nLastWon = nWon;
-        //nCnt = 0;
-        //nChip = 0;
     }
 
     /**
@@ -142,8 +138,7 @@ public class HandStat implements Comparable
     public static Format fCnt = new Format("%7d");
     public static Format fExp = new Format("%6.3f");
     public static Format fPerc = new Format("%5.2f");
-    public static Format fAvg = new Format("%5.2f");
-    
+
     /**
      * String rep
      */
