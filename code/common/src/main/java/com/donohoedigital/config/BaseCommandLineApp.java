@@ -48,6 +48,9 @@ public abstract class BaseCommandLineApp
             
     public BaseCommandLineApp(String sAppName, String[] args)
     {
+        LoggingConfig loggingConfig = new LoggingConfig(sAppName, ApplicationType.COMMAND_LINE);
+        loggingConfig.init();
+
         CommandLine.setUsage(getClass().getName() + " [options]");
         setupApplicationCommandLineOptions();
         

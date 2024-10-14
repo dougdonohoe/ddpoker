@@ -39,6 +39,8 @@
 package com.donohoedigital.games.tools;
 
 import com.donohoedigital.base.*;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.LoggingConfig;
 import com.donohoedigital.games.config.*;
 import org.apache.logging.log4j.*;
 
@@ -52,7 +54,6 @@ import java.awt.event.*;
  */
 public class GameboardBorderManager extends GameManager
 {
-    
     static Logger logger = LogManager.getLogger(GameboardBorderManager.class);
     
     // run options
@@ -73,6 +74,9 @@ public class GameboardBorderManager extends GameManager
      */
     public static void main(String[] args) {
         try {
+            LoggingConfig loggingConfig = new LoggingConfig("gametools", ApplicationType.CLIENT);
+            loggingConfig.init();
+
             GameboardBorderManager gamemgr = new GameboardBorderManager("gametools", args);
             gamemgr.init();
             

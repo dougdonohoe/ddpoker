@@ -39,6 +39,8 @@
 package com.donohoedigital.games.tools;
 
 import com.donohoedigital.base.*;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.LoggingConfig;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
@@ -56,7 +58,6 @@ import java.awt.geom.*;
  */
 public class GameboardTerritoryManager extends GameManager implements CustomTerritoryDrawer
 {
-    
     static Logger logger = LogManager.getLogger(GameboardTerritoryManager.class);
     
     // UI Components
@@ -67,6 +68,9 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
      */
     public static void main(String[] args) {
         try {
+            LoggingConfig loggingConfig = new LoggingConfig("gametools", ApplicationType.CLIENT);
+            loggingConfig.init();
+
             GameboardTerritoryManager gamemgr = new GameboardTerritoryManager("gametools", args);
             gamemgr.init();
             
