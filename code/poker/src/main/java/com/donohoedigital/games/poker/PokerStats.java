@@ -320,7 +320,6 @@ public class PokerStats {
             nIter = 50000;
         }
 
-
         // init config
         new ConfigManager("poker", ApplicationType.CLIENT);
 

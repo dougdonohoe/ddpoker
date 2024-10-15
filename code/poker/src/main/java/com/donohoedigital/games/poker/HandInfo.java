@@ -38,18 +38,26 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.LoggingConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.HandSorted;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class to determine what a player has and has a chance of making 
  *
  * @author  donohoe
  */
-public class HandInfo implements Comparable
+@SuppressWarnings({"StringConcatenationInsideStringBufferAppend", "CommentedOutCode", "DuplicatedCode"})
+public class HandInfo implements Comparable<HandInfo>
 {
     //static Logger logger = LogManager.getLogger(HandInfo.class);
 
@@ -66,7 +74,7 @@ public class HandInfo implements Comparable
     public static final int HIGH_CARD = 1;
 
     // descriptions
-    private static String[] desc_ = new String[ROYAL_FLUSH + 1];
+    private static final String[] desc_ = new String[ROYAL_FLUSH + 1];
 
     // scoring
     static final int BASE = 1000000;
@@ -77,7 +85,7 @@ public class HandInfo implements Comparable
     static final int H4 = 65536; // 16 ^ 4  ==  2 ^ 16
 
     // member
-    private PokerPlayer player_;
+    private final PokerPlayer player_;
     private HandSorted hand_;
     private HandSorted comm_;
     private HandSorted all_;
@@ -90,9 +98,9 @@ public class HandInfo implements Comparable
     private int nPairs_;
     private int nTrips_;
     private int nQuads_;
-    private int nNumRank_[];
-    private ArrayList seq_;
-    private ArrayList seqFlush_;
+    private int[] nNumRank_;
+    private ArrayList<Hand> seq_;
+    private ArrayList<Hand> seqFlush_;
     
     // summary
     private int nType_;
@@ -120,8 +128,9 @@ public class HandInfo implements Comparable
     }
     
     /**
-     * Recategorize with new hand and return score
+     * Re-categorize with new hand and return score
      */
+    @SuppressWarnings("unused")
     public int rescoreHand(HandSorted hand)
     {
         hand_ = hand;
@@ -130,8 +139,9 @@ public class HandInfo implements Comparable
     }
     
     /**
-     * Recategorize with new hand and return score
+     * Re-categorize with new hand and return score
      */
+    @SuppressWarnings("unused")
     public int rescoreHand(HandSorted hand, HandSorted community)
     {
         comm_ = community;
@@ -157,10 +167,10 @@ public class HandInfo implements Comparable
         if (nNumRank_ == null) nNumRank_ = new int[Card.ACE+1];
         else Arrays.fill(nNumRank_, 0);
         
-        if (seq_ == null) seq_ = new ArrayList();
+        if (seq_ == null) seq_ = new ArrayList<>();
         else seq_.clear();
         
-        if (seqFlush_ == null) seqFlush_ = new ArrayList();
+        if (seqFlush_ == null) seqFlush_ = new ArrayList<>();
         else seqFlush_.clear();
         
         if (all_ == null) all_ = new HandSorted(hand_);
@@ -177,8 +187,8 @@ public class HandInfo implements Comparable
         // get basic info
         Hand seq = new Hand();
         seq_.add(seq);
-        Hand seqFlush = null;
-        Card last = null;
+        Hand seqFlush;
+        Card last;
         Card c = null;
         for (int i = 0; i < all_.size(); i++)
         {
@@ -190,7 +200,8 @@ public class HandInfo implements Comparable
             {
                 seq.addCard(c);
             }
-            else if (last != null && last.getRank() == c.getRank())
+            else //noinspection StatementWithEmptyBody
+                if (last.getRank() == c.getRank())
             {
                 // do nothing - duplicate rank
             }
@@ -204,7 +215,7 @@ public class HandInfo implements Comparable
             // get straight flush sequences
             last = null;
             seqFlush = getSeqForSuit(c);
-            if (seqFlush != null && seqFlush.size() > 0) last = seqFlush.getCard(seqFlush.size() - 1);
+            if (seqFlush != null && !seqFlush.isEmpty()) last = seqFlush.getCard(seqFlush.size() - 1);
             if (seqFlush != null && (last == null || (last.getRank() + 1) == c.getRank()))
             {
                 seqFlush.addCard(c);
@@ -233,24 +244,20 @@ public class HandInfo implements Comparable
             if (c.getRank() < Card.ACE) break;
             
             // straights
-            for (int j = 0; j < seq_.size(); j++)
-            {
-                seq = (Hand) seq_.get(j);
-                if (seq.size() == 0) continue;
-                if (seq.getCard(0).getRank() == Card.TWO)
-                {
+            for (Hand cards : seq_) {
+                seq = cards;
+                if (seq.isEmpty()) continue;
+                if (seq.getCard(0).getRank() == Card.TWO) {
                     seq.insertCard(c);
                 }
             }
             
             // straight flushes
-            for (int j = 0; j < seqFlush_.size(); j++)
-            {
-                seq = (Hand) seqFlush_.get(j);
-                if (seq.size() == 0) continue;
+            for (Hand cards : seqFlush_) {
+                seq = cards;
+                if (seq.isEmpty()) continue;
                 if (seq.getCard(0).getRank() == Card.TWO &&
-                    seq.getCard(0).isSameSuit(c))
-                {
+                        seq.getCard(0).isSameSuit(c)) {
                     seq.insertCard(c);
                 }
             }
@@ -293,8 +300,8 @@ public class HandInfo implements Comparable
         Hand seq;
         for (int i = (seqFlush_.size() - 1); i >= 0; i--)
         {
-            seq = (Hand) seqFlush_.get(i);
-            if (seq.size() == 0) continue;
+            seq = seqFlush_.get(i);
+            if (seq.isEmpty()) continue;
             if (seq.getCard(0).isSameSuit(c)) return seq;
         }
         return null;
@@ -303,9 +310,10 @@ public class HandInfo implements Comparable
     /**
      * Give this hand a score - used for sorting, etc.
      */
+    @SuppressWarnings("DuplicateBranchesInSwitch")
     private void calcScore()
     {
-        // best_ is ordered where best cards are first in
+        // best_ is ordered where the best cards are first in
         // list (e.g., trips of a full house first)
         nScore_ = BASE * nType_;
         
@@ -494,18 +502,14 @@ public class HandInfo implements Comparable
     private boolean hasRoyalFlush()
     {       
         Hand seqFlush;
-        for (int i = 0; i < seqFlush_.size(); i++)
-        {
-            seqFlush = (Hand) seqFlush_.get(i);
-            if (seqFlush.size() >= 5)
-            {
-                Card last = seqFlush.getCard(seqFlush.size() -1);
-                if (last.getRank() == Card.ACE)
-                {
+        for (Hand cards : seqFlush_) {
+            seqFlush = cards;
+            if (seqFlush.size() >= 5) {
+                Card last = seqFlush.getCard(seqFlush.size() - 1);
+                if (last.getRank() == Card.ACE) {
                     best_.clear();
-                    for (int j = 0; j < 5; j++)
-                    {
-                        best_.addCard(seqFlush.getCard(seqFlush.size() - (j+1)));
+                    for (int j = 0; j < 5; j++) {
+                        best_.addCard(seqFlush.getCard(seqFlush.size() - (j + 1)));
                     }
                     return true;
                 }
@@ -521,19 +525,15 @@ public class HandInfo implements Comparable
     {       
         Hand seqFlush;
         Card best = null;
-        for (int i = 0; i < seqFlush_.size(); i++)
-        {
-            seqFlush = (Hand) seqFlush_.get(i);
-            if (seqFlush.size() >= 5)
-            {
-                Card last = seqFlush.getCard(seqFlush.size() -1);
-                if (best == null || last.getRank() > best.getRank())
-                {
+        for (Hand cards : seqFlush_) {
+            seqFlush = cards;
+            if (seqFlush.size() >= 5) {
+                Card last = seqFlush.getCard(seqFlush.size() - 1);
+                if (best == null || last.getRank() > best.getRank()) {
                     best = last;
                     best_.clear();
-                    for (int j = 0; j < 5; j++)
-                    {
-                        best_.addCard(seqFlush.getCard(seqFlush.size() - (j+1)));
+                    for (int j = 0; j < 5; j++) {
+                        best_.addCard(seqFlush.getCard(seqFlush.size() - (j + 1)));
                     }
                 }
             }
@@ -616,7 +616,7 @@ public class HandInfo implements Comparable
                 }
             }
             
-            // get highest pair
+            // get the highest pair
             for (int i = Card.ACE; i >= Card.TWO; i--)
             {
                 if (topset == i) continue;
@@ -671,8 +671,7 @@ public class HandInfo implements Comparable
     }
     
     /**
-     * Fill best hand with highest cards from
-     * the given suit
+     * Fill best hand with the highest cards from the given suit
      */
     private void fillSuit(CardSuit suit)
     {
@@ -695,19 +694,15 @@ public class HandInfo implements Comparable
     {
         Hand seq;
         Card best = null;
-        for (int i = 0; i < seq_.size(); i++)
-        {
-            seq = (Hand) seq_.get(i);
-            if (seq.size() >= 5) 
-            {
-                Card last = seq.getCard(seq.size() -1);
-                if (best == null || last.getRank() > best.getRank())
-                {
+        for (Hand cards : seq_) {
+            seq = cards;
+            if (seq.size() >= 5) {
+                Card last = seq.getCard(seq.size() - 1);
+                if (best == null || last.getRank() > best.getRank()) {
                     best = last;
                     best_.clear();
-                    for (int j = 0; j < 5; j++)
-                    {
-                        best_.addCard(seq.getCard(seq.size() - (j+1)));
+                    for (int j = 0; j < 5; j++) {
+                        best_.addCard(seq.getCard(seq.size() - (j + 1)));
                     }
                 }
             }
@@ -767,7 +762,7 @@ public class HandInfo implements Comparable
         Hand dup = new Hand(all_);
         int toppair = 0;
 
-        // get highest pair
+        // get the highest pair
         for (int i = Card.ACE; i >= Card.TWO; i--)
         {
             if (nNumRank_[i] == 2) 
@@ -825,7 +820,7 @@ public class HandInfo implements Comparable
         Card card;
         Hand dup = new Hand(all_);
 
-        // get highest pair
+        // get the highest pair
         for (int i = Card.ACE; i >= Card.TWO; i--)
         {
             if (nNumRank_[i] == 2) 
@@ -868,21 +863,21 @@ public class HandInfo implements Comparable
     /**
      * Compare hands
      */
-    public int compareTo(Object o) 
+    public int compareTo(HandInfo i)
     {
-        HandInfo i = (HandInfo) o;
         return nScore_ - i.nScore_;
     }
 
     /**
      * Return true if the given hole cards are part of the "significant" part
      * of the hand type (e.g., one of the cards in a pair, one in trips, etc.).
-     * Strict two pair means both hole cards must be used.  Other wise, only one
+     * Strict two pair means both hole cards must be used.  Otherwise, only one
      * of the two pair must match.
      */
+    @SuppressWarnings("DuplicateBranchesInSwitch")
     public static boolean isOurHandInvolved(Hand hole, int score, int suit, boolean bStrictTwoPair)
     {
-        int cards[] = new int[5];
+        int[] cards = new int[5];
         HandInfoFast.getCards(score, cards);
         int nType = HandInfoFast.getTypeFromScore(score);
         
@@ -941,6 +936,7 @@ public class HandInfo implements Comparable
         int nNeedCard = 10;
         for (int i = Card.ACE; i >= Card.JACK; i--)
         {
+            //noinspection StatementWithEmptyBody
             if (community.isInHand(i, nSuit))
             {
                 // continue to next
@@ -966,15 +962,19 @@ public class HandInfo implements Comparable
     ////
     //// TESTING
     ////
-    
-    public static void main(String args[])
+
+    // TODO: make a unit test
+    public static void main(String[] args)
     {
+        LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
+        loggingConfig.init();
+
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
         testPlayer = new PokerPlayer(0, "Test", true);
         
         test("Royal Flush (clubs)        ", Card.CLUBS_A, Card.CLUBS_J, Card.CLUBS_K, Card.CLUBS_Q, Card.CLUBS_T, Card.SPADES_2, Card.HEARTS_K);
         test("Straight Flush (hearts)    ", Card.HEARTS_9, Card.HEARTS_J, Card.HEARTS_K, Card.HEARTS_Q, Card.CLUBS_Q, Card.HEARTS_T, Card.HEARTS_3);
-        test("A straight, K stflush      ", Card.HEARTS_9, Card.HEARTS_J, Card.HEARTS_K, Card.HEARTS_Q, Card.CLUBS_Q, Card.HEARTS_T, Card.CLUBS_A);
+        test("A straight, K str flush    ", Card.HEARTS_9, Card.HEARTS_J, Card.HEARTS_K, Card.HEARTS_Q, Card.CLUBS_Q, Card.HEARTS_T, Card.CLUBS_A);
         test("Flush (clubs)              ", Card.CLUBS_8, Card.CLUBS_J, Card.CLUBS_K, Card.CLUBS_Q, Card.CLUBS_T, Card.SPADES_2, Card.HEARTS_3);
         test("Full House (two trips)     ", Card.CLUBS_8, Card.HEARTS_8, Card.DIAMONDS_8, Card.CLUBS_Q, Card.SPADES_Q, Card.DIAMONDS_Q, Card.HEARTS_7);
         test("Full House                 ", Card.CLUBS_8, Card.HEARTS_8, Card.DIAMONDS_8, Card.CLUBS_Q, Card.SPADES_Q, Card.DIAMONDS_7, Card.HEARTS_7);
@@ -1003,7 +1003,7 @@ public class HandInfo implements Comparable
         if (c6 != null) hand.addCard(c6);
         if (c7 != null) hand.addCard(c7);
         HandInfo info = new HandInfo(testPlayer, hand, null);
-        System.out.println(sName + " - " + info.toString());
+        System.out.println(sName + " - " + info);
     }
     
     /**

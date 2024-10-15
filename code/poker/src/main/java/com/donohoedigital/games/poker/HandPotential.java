@@ -44,6 +44,7 @@ import org.apache.logging.log4j.*;
 
 import java.util.*;
 
+@SuppressWarnings({"DuplicatedCode", "CommentedOutCode", "StringConcatenationArgumentToLogCall"})
 public class HandPotential
 {
     /**
@@ -103,25 +104,25 @@ public class HandPotential
     public static final int ONE_OVERCARD;
     public static final int HIGH_CARD;
 
-    private static ArrayList aStatKeys_ = new ArrayList();
-    private static ArrayList bStatKeys_ = new ArrayList();
-    private static int nFirstDrawKey_;
+    private static final ArrayList<String> aStatKeys_ = new ArrayList<>();
+    private static final ArrayList<Boolean> bStatKeys_ = new ArrayList<>();
+    private static final int nFirstDrawKey_;
 
-    private static Logger logger = LogManager.getLogger(HandPotential.class);
+    private static Logger logger;
 
-    private Hand pocket_;
-    private Hand community_;
+    private final Hand pocket_;
+    private final Hand community_;
 
-    private int handCounts_[][] = new int[aStatKeys_.size()][2];
-    private int totalHandCount_[] = new int[2];
+    private final int[][] handCounts_ = new int[aStatKeys_.size()][2];
+    private final int[] totalHandCount_ = new int[2];
 
     // debug
-    private static boolean PERF = false;
+    private static final boolean PERF = false;
     
     // indicies into hp[3] array
-    private static int AHEAD = 0;
-    private static int TIED = 1;
-    private static int BEHIND = 2;
+    private static final int AHEAD = 0;
+    private static final int TIED = 1;
+    private static final int BEHIND = 2;
     
     static
     {
@@ -181,8 +182,6 @@ public class HandPotential
      * <br>
      * The messageKey is looked up as <code>msg.handstats.</code><i>messageKey</i><code>
      *
-     * @param messageKey
-     * @param bBold
      * @return newly assigned array index
      */
     private static int addStatKey(String messageKey, boolean bBold)
@@ -195,9 +194,8 @@ public class HandPotential
 
     /**
      * Constructor for pre-flop analysis.
-     *
-     * @param pocket
      */
+    @SuppressWarnings("unused")
     public HandPotential(Hand pocket) {
 
         this(pocket, null);
@@ -205,9 +203,6 @@ public class HandPotential
 
     /**
      * Constructor for post-flop analysis.
-     *
-     * @param pocket
-     * @param community
      */
     public HandPotential(Hand pocket, Hand community)
     {
@@ -603,7 +598,7 @@ public class HandPotential
 
         String message;
 
-        int handCountA = 0;
+        int handCountA;
         int handCountB = 0;
 
         int a;
@@ -611,7 +606,6 @@ public class HandPotential
 
         for (int i = 0; i < aStatKeys_.size(); ++i)
         {
-
             if (twoColumns)
             {
                 a = 0;
@@ -639,7 +633,7 @@ public class HandPotential
                     continue;
                 }
 
-                bold = ((Boolean)bStatKeys_.get(i)).booleanValue();
+                bold = bStatKeys_.get(i);
                 message = PropertyConfig.getMessage("msg.handstats." + aStatKeys_.get(i));
 
                 buf.append("<tr>");
@@ -703,9 +697,10 @@ public class HandPotential
     }
 
     /**
-     * Calculate strenght of hand against N opponents.  Return is float from
+     * Calculate strength of hand against N opponents.  Return is float from
      * 0 to 1 indicating probability of this hand being the best hand
      */
+    @SuppressWarnings("ConstantValue")
     public static float getPotential(Hand hole, Hand community)
     {
         if (PERF) Perf.start();
@@ -832,12 +827,17 @@ public class HandPotential
     /**
      * Testing
      */
-    public static void main(String args[])
+    public static void main(String[] args)
     {
+        LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
+        loggingConfig.init();
+        logger = LogManager.getLogger(HandPotential.class);
+
         Perf.setOn(true);
         new ConfigManager("poker", ApplicationType.CLIENT);
 
-        Hand hand = new Hand(Card.CLUBS_3, Card.CLUBS_5);
+        new Hand(Card.CLUBS_3, Card.CLUBS_5);
+        Hand hand;
         Hand comm = new Hand(Card.CLUBS_4, Card.DIAMONDS_6);
         comm.addCard(Card.CLUBS_K);
         

@@ -47,16 +47,15 @@ import org.apache.logging.log4j.*;
  *
  * @author  donohoe
  */
-public class HandFutures 
+@SuppressWarnings({"CommentedOutCode", "StringConcatenationArgumentToLogCall"})
+public class HandFutures
 {
-    static Logger logger = LogManager.getLogger(HandFutures.class);
+    static Logger logger;
 
     static boolean DEBUG = false;
-    
-    private HandSorted hole_;
-    private HandSorted community_;
-    private int nTotals_[] = new int[HandInfo.ROYAL_FLUSH + 1];
-    private int nTotals2_[] = new int[HandInfo.ROYAL_FLUSH + 1];
+
+    private final int[] nTotals_ = new int[HandInfo.ROYAL_FLUSH + 1];
+    private final int[] nTotals2_ = new int[HandInfo.ROYAL_FLUSH + 1];
     private int nTotal_;
     private int nImprovements_;
     private int nTypeImprovements_;
@@ -66,10 +65,11 @@ public class HandFutures
     /**
      * Create new hand future calc
      */
+    @SuppressWarnings("unused")
     public HandFutures(HandInfoFaster fast, HandInfo info, int nMinHandType)
     {
-        hole_ = info.getHole();
-        community_ = info.getCommunity();
+        HandSorted hole_ = info.getHole();
+        HandSorted community_ = info.getCommunity();
         calcFutures(fast, hole_, community_, nMinHandType);
     }
 
@@ -137,7 +137,7 @@ public class HandFutures
     }
     
     /**
-     * Calculate strenght of hand against N opponents.  Return is float from
+     * Calculate strength of hand against N opponents.  Return is float from
      * 0 to 1 indicating probability of this hand being the best hand
      */
     private void calcFutures(HandInfoFaster FAST, Hand hole, Hand community, int nMinHandType)
@@ -187,7 +187,7 @@ public class HandFutures
                 if (newscore > ourscore) {
                     nImprovements_++;
                     //logger.debug("IMPROVE: " + hole + " " + commcopy + ": " + HandInfo.getHandTypeDesc(nType) + " " + newscore + " - " +
-                        //HandInfo.isOurHandInvolved(hole, newscore, suit,ourtype != HandInfo.HIGH_CARD) + " oursocore: " + ourscore);
+                        //HandInfo.isOurHandInvolved(hole, newscore, suit, ourtype != HandInfo.HIGH_CARD) + " ourscore: " + ourscore);
                 }
                 
                 // count where hand type improves, but only do so
@@ -259,8 +259,12 @@ public class HandFutures
     /**
      * Testing
      */
-    public static void main(String args[])
+    public static void main(String[] args)
     {
+        LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
+        loggingConfig.init();
+        logger = LogManager.getLogger(HandFutures.class);
+
         new ConfigManager("poker", ApplicationType.CLIENT);
         logger.debug("Start");
                 
