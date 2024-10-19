@@ -32,41 +32,42 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
+import com.donohoedigital.games.poker.engine.Hand;
 
 /**
  *
  * @author  donohoe
  */
+@SuppressWarnings("DuplicatedCode")
 public class HandInfoFaster
 {
     // num cards
     private static final int NUM_CARDS = 5;
 
     // pair/trips/quads
-    private byte[] nNumRank_ = new byte[Card.ACE + 1];
-    private byte[] nGroupings_ = new byte[NUM_CARDS+1];
-    private byte[][] nTopGroupings_ = new byte[NUM_CARDS+1][2];
-    private byte TOPGROUPINIT = (byte) 0; // low value is 2 (up to A)
-    
+    private final byte[] nNumRank_ = new byte[Card.ACE + 1];
+    private final byte[] nGroupings_ = new byte[NUM_CARDS+1];
+    private final byte[][] nTopGroupings_ = new byte[NUM_CARDS+1][2];
+
     // straight
     private byte nStraightHigh_ = 0;
-    private byte nStraightSize_;
-    
+
     // flush
-    private byte[] nNumSuit_ = new byte[CardSuit.NUM_SUITS];
+    private final byte[] nNumSuit_ = new byte[CardSuit.NUM_SUITS];
     private byte nBiggestSuit_ = 0;
     
     // straight flush
-    private boolean[] bExist_ = new boolean[Card.ACE + 1];
+    private final boolean[] bExist_ = new boolean[Card.ACE + 1];
         
     // hand
-    private SimpleHand all_ = new SimpleHand();
+    private final SimpleHand all_ = new SimpleHand();
 
     // local class for hand
     private static class SimpleHand
     {
-        SimpleCard cards[] = new SimpleCard[7];
+        SimpleCard[] cards = new SimpleCard[7];
         int size = 0;
 
         public SimpleHand()
@@ -89,23 +90,28 @@ public class HandInfoFaster
     /**
      * Get score
      */
+    @SuppressWarnings("DuplicatedCode")
     public int getScore(Hand h, Hand c)
     {
         all_.size = 0;
         // do here (inlining can be faster)
-        for (int i = h.size()-1; i >= 0; i--)
-        {
-            Card c1 = h.getCard(i);
-            all_.cards[all_.size].suit = c1.getSuit();
-            all_.cards[all_.size].rank = c1.getRank();
-            all_.size++;
+        if (h != null) {
+            for (int i = h.size()-1; i >= 0; i--)
+            {
+                Card c1 = h.getCard(i);
+                all_.cards[all_.size].suit = c1.getSuit();
+                all_.cards[all_.size].rank = c1.getRank();
+                all_.size++;
+            }
         }
-        for (int i1 = c.size()-1; i1 >= 0; i1--)
-        {
-            Card c1 = c.getCard(i1);
-            all_.cards[all_.size].suit = c1.getSuit();
-            all_.cards[all_.size].rank = c1.getRank();
-            all_.size++;
+        if (c != null) {
+            for (int i1 = c.size()-1; i1 >= 0; i1--)
+            {
+                Card c1 = c.getCard(i1);
+                all_.cards[all_.size].suit = c1.getSuit();
+                all_.cards[all_.size].rank = c1.getRank();
+                all_.size++;
+            }
         }
         return getScore(all_);
     }
@@ -130,10 +136,12 @@ public class HandInfoFaster
     /**
      * Get score - not thread safe for perf reasons
      */
-    public int getScore(SimpleHand h)
+    private int getScore(SimpleHand h)
     {
+        @SuppressWarnings("ManualMinMaxCalculation")
         byte nMaxHandSize = (byte)(h.size >= NUM_CARDS ? NUM_CARDS : h.size);
-        
+
+        byte TOPGROUPINIT = (byte) 0;
         boolean bStraight = false;
         boolean bFlush = false;
         int r,c;
@@ -143,13 +151,13 @@ public class HandInfoFaster
         for (r=Card.TWO; r <= Card.ACE; r++) nNumRank_[r] = 0; 
         for (r=0; r <= NUM_CARDS; r++) nGroupings_[r] = 0;
         for (r=0; r < CardSuit.NUM_SUITS; r++) nNumSuit_[r] = 0;
-        for (int i=0; i < (NUM_CARDS+1); i++) {
+        // low value is 2 (up to A)
+        for (int i = 0; i < (NUM_CARDS+1); i++) {
             nTopGroupings_[i][0] = TOPGROUPINIT;
             nTopGroupings_[i][1] = TOPGROUPINIT;
         }
         nStraightHigh_ = 0;
-        nStraightSize_ = 0;
-        
+
         // determine num of each rank, check flush
         for (r=0; r < h.size; r++)
         {
@@ -175,7 +183,7 @@ public class HandInfoFaster
         }
         
         // Ace present for low straight
-        nStraightSize_ = (byte)(nNumRank_[Card.ACE] != 0 ? 1 : 0);
+        byte nStraightSize = (byte) (nNumRank_[Card.ACE] != 0 ? 1 : 0);
 
         // check for straight and pair data
         for (r=Card.TWO; r <= Card.ACE; r++) 
@@ -183,16 +191,16 @@ public class HandInfoFaster
             // check straight
             if (nNumRank_[r] != 0) 
             {
-                if ((++nStraightSize_) >= NUM_CARDS ) 
+                if ((++nStraightSize) >= NUM_CARDS )
                 {
                     bStraight = true;
                     nStraightHigh_ = (byte)r;
                 }
             } else {
-                nStraightSize_ = 0;
+                nStraightSize = 0;
             }
 
-            // get top set of each type (pair,trips,quads,etc)
+            // get top set of each type (pair, trips, quads, etc.)
             c = nNumRank_[r];
             if ( c != 0 ) 
             {
@@ -330,6 +338,7 @@ public class HandInfoFaster
     /**
      * Get suited kickers
      */
+    @SuppressWarnings("SameParameterValue")
     private int getFlushKickers(SimpleHand h, int nNumKickers, byte suit, int H_start)
     {
         int i;
@@ -347,7 +356,7 @@ public class HandInfoFaster
 
         i = Card.ACE;
         while (nNumKickers != 0) {
-            while (bExist_[i] == false) i--;
+            while (!bExist_[i]) i--;
             nNumKickers--;
             value += (i * H_start);
             H_start = (H_start >> 4);

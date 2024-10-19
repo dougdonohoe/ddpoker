@@ -38,15 +38,19 @@
 
 package com.donohoedigital.games.poker;
 
-import org.apache.logging.log4j.*;
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
+import com.donohoedigital.games.poker.engine.Hand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author  donohoe
  */
-public class HandInfoFast 
+@SuppressWarnings({"FieldCanBeLocal", "unused", "StatementWithEmptyBody", "DuplicatedCode"})
+public class HandInfoFast
 {
     static Logger logger = LogManager.getLogger(HandInfoFast.class);
     
@@ -69,10 +73,10 @@ public class HandInfoFast
 
     int nOvercardCount_;
 
-    private byte[] nNumRank_ = new byte[Card.ACE + 1];
-    private byte[] nGroupings_ = new byte[NUM_CARDS+1];
-    private byte[][] nTopGroupings_ = new byte[NUM_CARDS + 1][2];
-    private byte TOPGROUPINIT = (byte) 0; // low value is 2 (up to A)
+    private final byte[] nNumRank_ = new byte[Card.ACE + 1];
+    private final byte[] nGroupings_ = new byte[NUM_CARDS+1];
+    private final byte[][] nTopGroupings_ = new byte[NUM_CARDS + 1][2];
+    private final byte TOPGROUPINIT = (byte) 0; // low value is 2 (up to A)
     
     // straight
     private byte nNutStraightHigh_ = -1;
@@ -81,22 +85,21 @@ public class HandInfoFast
     private int nStraightDrawOuts_;
 
     // flush
-    private byte[] nNumSuit_ = new byte[CardSuit.NUM_SUITS];
-    private long[] nHoleSuitBits_ = new long[CardSuit.NUM_SUITS];
-    private byte[] nHoleSuitHigh_ = new byte[CardSuit.NUM_SUITS];
-    private byte[] nBoardNumSuit_ = new byte[CardSuit.NUM_SUITS];
+    private final byte[] nNumSuit_ = new byte[CardSuit.NUM_SUITS];
+    private final byte[] nHoleSuitHigh_ = new byte[CardSuit.NUM_SUITS];
+    private final byte[] nBoardNumSuit_ = new byte[CardSuit.NUM_SUITS];
     private byte nBiggestSuit_;
     private int nFlushHighRank_;
 
-    private long[] nBoardRankBits_ = new long[CardSuit.NUM_SUITS + 1];
+    private final long[] nBoardRankBits_ = new long[CardSuit.NUM_SUITS + 1];
 
     // straight flush
-    private boolean[] bExist_ = new boolean[Card.ACE + 1];
+    private final boolean[] bExist_ = new boolean[Card.ACE + 1];
 
     // hand
-    private Hand pocket_ = new Hand(2);
-    private Hand community_ = new Hand(5);
-    private Hand all_ = new Hand(7);
+    private final Hand pocket_ = new Hand(2);
+    private final Hand community_ = new Hand(5);
+    private final Hand all_ = new Hand(7);
 
     private int nBetterFlushCards_;
 
@@ -203,7 +206,7 @@ public class HandInfoFast
     public static void debugScore(int nScore)
     {
         int nType = getTypeFromScore(nScore);
-        logger.debug(nScore + " TYPE: " + HandInfo.getHandTypeDesc(nType));
+        logger.debug("{} TYPE: {}", nScore, HandInfo.getHandTypeDesc(nType));
         nScore = nScore % HandInfo.BASE;
         int n;
         for (int i = 16; i >= 0; i -= 4)
@@ -216,7 +219,7 @@ public class HandInfoFast
             }
             else
             {
-                logger.debug("Card: " + Card.getRank(n));
+                logger.debug("Card: {}", Card.getRank(n));
             }
         }
     }
@@ -255,12 +258,12 @@ public class HandInfoFast
             all_.addAll(community);
         }
 
-        byte nMaxHandSize = (byte)(all_.size() >= NUM_CARDS ? NUM_CARDS : all_.size());
+        byte nMaxHandSize = (byte)(Math.min(all_.size(), NUM_CARDS));
 
         boolean bStraight = false;
         boolean bFlush = false;
         int r,c;
-        byte rank,suit;
+        byte rank, suit;
 
         // init
         for (r=Card.TWO; r <= Card.ACE; r++) nNumRank_[r] = 0;
@@ -269,7 +272,6 @@ public class HandInfoFast
         for (suit=0; suit < CardSuit.NUM_SUITS; suit++) {
             nNumSuit_[suit] = 0;
             nBoardRankBits_[suit] = 0;
-            nHoleSuitBits_[suit] = 0;
             nHoleSuitHigh_[suit] = 0;
             nBoardNumSuit_[suit] = 0;
         }
@@ -304,8 +306,6 @@ public class HandInfoFast
                     ++nOvercardCount_;
                 }
 
-                nHoleSuitBits_[suit] |= 1 << rank;
-
                 if (rank > nHoleSuitHigh_[suit]) {
                     nHoleSuitHigh_[suit] = rank;
                 }
@@ -322,8 +322,8 @@ public class HandInfoFast
                     nHighestBoardRank_ = rank;
                 }
 
-                nBoardRankBits_[suit] |= (1 << rank);
-                nBoardRankBits_[CardSuit.NUM_SUITS] |= (1 << rank);
+                nBoardRankBits_[suit] |= (1L << rank);
+                nBoardRankBits_[CardSuit.NUM_SUITS] |= (1L << rank);
                 if (rank == Card.ACE) {
                     // low ace
                     nBoardRankBits_[suit] |= 2;
@@ -363,7 +363,7 @@ public class HandInfoFast
                 int flushcount = 0;
                 for (int flushrank = Card.ACE; flushcount < 5; --flushrank)
                 {
-                    if ((nBoardRankBits_[nBiggestSuit_] & (1 << flushrank)) == 0)
+                    if ((nBoardRankBits_[nBiggestSuit_] & (1L << flushrank)) == 0)
                     {
                         ++nBetterFlushCards_;
                     }
@@ -382,7 +382,7 @@ public class HandInfoFast
             {
                 for (int flushrank = Card.ACE; flushrank > nHoleSuitHigh_[nBiggestSuit_]; --flushrank)
                 {
-                    if ((nBoardRankBits_[nBiggestSuit_] & (1 << flushrank)) == 0)
+                    if ((nBoardRankBits_[nBiggestSuit_] & (1L << flushrank)) == 0)
                     {
                         ++nBetterFlushCards_;
                     }
@@ -581,7 +581,7 @@ public class HandInfoFast
                 nStraightSize_ = 0;
             }
 
-            // get top set of each type (pair,trips,quads,etc)
+            // get top set of each type (pair,trips,quads,etc.)
             c = nNumRank_[r];
             if ( c != 0 )
             {
@@ -749,7 +749,8 @@ public class HandInfoFast
     /**
      * Get suited kickers
      */
-    private int getFlushKickers(Hand h, int nNumKickers, byte suit, int H_start) 
+    @SuppressWarnings("SameParameterValue")
+    private int getFlushKickers(Hand h, int nNumKickers, byte suit, int H_start)
     {
             int i;
             int value=0;
@@ -766,7 +767,7 @@ public class HandInfoFast
 
             i = Card.ACE;
             while (nNumKickers != 0) {
-                    while (bExist_[i] == false) i--;
+                    while (!bExist_[i]) i--;
                     nNumKickers--;
                     value += (i * H_start);
                     H_start = (H_start >> 4);

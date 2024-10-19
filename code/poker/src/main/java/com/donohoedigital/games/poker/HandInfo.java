@@ -149,7 +149,7 @@ public class HandInfo implements Comparable<HandInfo>
         categorize();
         return getScore();
     }
-    
+
     /**
      * Figure out type of hand
      */
@@ -963,7 +963,7 @@ public class HandInfo implements Comparable<HandInfo>
     //// TESTING
     ////
 
-    // TODO: make a unit test
+    // TODO: make a unit test!
     public static void main(String[] args)
     {
         LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
@@ -1006,59 +1006,59 @@ public class HandInfo implements Comparable<HandInfo>
         System.out.println(sName + " - " + info);
     }
     
+
+    public String toString()
+    {
+        return best_ + " " + getHandTypeDesc() + " (score=" + nScore_ + ")";
+    }
+
     /**
      * debug
      */
-    public String toString()
+    public String toStringDebug()
     {
         StringBuilder sb = new StringBuilder();
-        
-        //TESTING
-//        sb.append("\n--- "+player_.getName()+" ---- " + all_ +"\n");
-//        
-//        // suits
-//        sb.append("Spades: " + nSpades_ + "  Hearts: " + nHearts_ + 
-//                  "  Diamonds: " + nDiamonds_ + "  Clubs: " + nClubs_ + "\n");
-//        
-//        // ranks
-//        String sValue = null;
-//        for (int i = 2; i <= Card.ACE; i++)
-//        {
-//            if (i <= 10) sValue = Integer.toString(i);
-//            else if (i == Card.JACK) sValue = "J";
-//            else if (i == Card.QUEEN) sValue = "Q";
-//            else if (i == Card.KING) sValue = "K";
-//            else if (i == Card.ACE) sValue = "A";
-//            sb.append("(" + sValue + "=" + nNumRank_[i] +") ");
-//        }
-//        sb.append("\n");
-//        
-//        // straight seq
-//        Hand seq;
-//        for (int i = 0; i < seq_.size(); i++)
-//        {
-//            seq = (Hand) seq_.get(i);
-//            sb.append("Seq: " + (i+1) +": "+seq+"\n");
-//        }
-//
-//        // straight flush seq
-//        for (int i = 0; i < seqFlush_.size(); i++)
-//        {
-//            seq = (Hand) seqFlush_.get(i);
-//            sb.append("SeqFlush: " + (i+1) +": "+seq+"\n");
-//        }
-//
-//        // pairs, quads, trips
-//        sb.append("Pairs: " + nPairs_ + "  Trips: " + nTrips_ + "  Quads: " + nQuads_ + "\n");
-//        
-//        // TESTING
-        
-        int fast = new HandInfoFast().getScore(hand_, comm_);
-        
-        sb.append(best_ + " " + getHandTypeDesc() + ", score="+nScore_ + " fastscore=" + fast);
-        ApplicationError.assertTrue(fast == nScore_, "Fast doesn't match score");
 
-        
+        sb.append("\n--- "+player_.getName()+" ---- " + all_ +"\n");
+
+        // normal to string
+        sb.append(this);
+        sb.append("\n");
+
+        // suits
+        sb.append("Spades: " + nSpades_ + "  Hearts: " + nHearts_ +
+                "  Diamonds: " + nDiamonds_ + "  Clubs: " + nClubs_ + "\n");
+
+        // ranks
+        String sValue;
+        for (int i = 2; i <= Card.ACE; i++)
+        {
+            if (i <= 10) sValue = Integer.toString(i);
+            else if (i == Card.JACK) sValue = "J";
+            else if (i == Card.QUEEN) sValue = "Q";
+            else if (i == Card.KING) sValue = "K";
+            else /* if (i == Card.ACE) */ sValue = "A";
+            sb.append("(" + sValue + "=" + nNumRank_[i] +") ");
+        }
+        sb.append("\n");
+
+        // straight seq
+        Hand seq;
+        for (int i = 0; i < seq_.size(); i++)
+        {
+            seq = seq_.get(i);
+            sb.append("Seq " + (i+1) +": "+seq+"\n");
+        }
+
+        // straight flush seq
+        for (int i = 0; i < seqFlush_.size(); i++)
+        {
+            seq = seqFlush_.get(i);
+            sb.append("SeqFlush " + (i+1) +": "+seq+"\n");
+        }
+
+        // pairs, quads, trips
+        sb.append("Pairs: " + nPairs_ + "  Trips: " + nTrips_ + "  Quads: " + nQuads_);
         return sb.toString();
     }
 }
