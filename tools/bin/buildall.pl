@@ -368,7 +368,8 @@ sub runIndented
 sub getVersion
 {
     return if ($VERSION);
-	$VERSION=`runjava pokerengine com.donohoedigital.games.poker.engine.PrintVersion`;
+    # Set WORK to location of code so 'runjava' runs that code and not local code
+	$VERSION=`WORK=$DEVPARENT runjava pokerengine com.donohoedigital.games.poker.engine.PrintVersion`;
 	chop $VERSION;
 	$VERSION_FILE = $VERSION =~ s/\./_/gr;
 	print("\nVERSION is '$VERSION', file extension is '$VERSION_FILE'\n");
