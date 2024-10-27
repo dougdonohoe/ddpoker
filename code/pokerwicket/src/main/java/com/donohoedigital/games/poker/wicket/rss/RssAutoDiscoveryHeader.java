@@ -32,8 +32,9 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
-import com.donohoedigital.wicket.*;
-import org.apache.wicket.markup.html.*;
+import com.donohoedigital.wicket.WicketUtils;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
 
 /**
  * @author Doug Donohoe
@@ -42,7 +43,7 @@ public class RssAutoDiscoveryHeader implements IHeaderContributor
 {
     private static final long serialVersionUID = 42L;
 
-    private Class<? extends GamesListRss> clazz;
+    private final Class<? extends GamesListRss> clazz;
 
     public RssAutoDiscoveryHeader(Class <? extends GamesListRss> clazz)
     {
@@ -51,11 +52,10 @@ public class RssAutoDiscoveryHeader implements IHeaderContributor
 
     public void renderHead(IHeaderResponse response)
     {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("<link rel=\"alternate\" ");
-        buffer.append("type=\"").append("application/rss+xml").append("\" ");
-        buffer.append("title=\"").append(FeedTitle.getTitle(clazz)).append("\" ");
-        buffer.append("href=\"").append(WicketUtils.absoluteUrlFor(clazz)).append("\" />");
-        response.renderString(buffer.toString());
+        String buffer = "<link rel=\"alternate\" " +
+                "type=\"" + "application/rss+xml" + "\" " +
+                "title=\"" + FeedTitle.getTitle(clazz) + "\" " +
+                "href=\"" + WicketUtils.absoluteUrlFor(clazz) + "\" />";
+        response.renderString(buffer);
     }
 }

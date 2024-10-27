@@ -32,14 +32,18 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.wicket.pages.online.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import com.donohoedigital.games.poker.model.util.OnlineGameList;
+import com.donohoedigital.games.poker.wicket.pages.online.GameDetail;
 import com.rometools.rome.feed.rss.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Doug Donohoe
@@ -74,7 +78,7 @@ public class GamesListFeed extends Channel
 
         // image
         Image image = new Image();
-        image.setUrl("http://www.ddpoker.com/images/pokericon32.jpg");
+        image.setUrl("https://www.ddpoker.com/images/pokericon32.jpg");
         image.setHeight(32);
         image.setWidth(32);
         image.setLink(url);

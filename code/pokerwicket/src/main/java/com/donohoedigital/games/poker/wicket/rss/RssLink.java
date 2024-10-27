@@ -32,12 +32,15 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
 /**
  * @author Doug Donohoe
  */
-public class RssLink extends BookmarkablePageLink
+public class RssLink extends BookmarkablePageLink<String>
 {
     private static final long serialVersionUID = 42L;
 
@@ -47,6 +50,12 @@ public class RssLink extends BookmarkablePageLink
     public RssLink(String id, Class<? extends GamesListRss> pageClass)
     {
         super(id, pageClass);
-        //TODO(WICKET) add(new HeaderContributor(new RssAutoDiscoveryHeader(pageClass)));
+        Behavior b = new Behavior() {
+            @Override
+            public void renderHead(Component component, IHeaderResponse response) {
+                new RssAutoDiscoveryHeader(pageClass).renderHead(response);
+            }
+        };
+        add(b);
     }
 }

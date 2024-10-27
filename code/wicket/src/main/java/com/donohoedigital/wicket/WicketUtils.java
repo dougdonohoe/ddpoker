@@ -185,7 +185,8 @@ public class WicketUtils
      */
     public static String absoluteUrlFor(Class<? extends Page> page, PageParameters params)
     {
-        return RequestUtils.toAbsolutePath(getRequestCycle().urlFor(page, params).toString(), "");
+        HttpServletRequest req = getHttpServletRequest();
+        return RequestUtils.toAbsolutePath(req.getRequestURL().toString(), getRequestCycle().urlFor(page, params).toString());
     }
 
     /**

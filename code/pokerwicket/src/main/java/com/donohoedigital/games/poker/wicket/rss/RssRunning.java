@@ -55,7 +55,7 @@ public class RssRunning extends GamesListRss
     }
 
     /**
-     * Get URL for assocciated page
+     * Get URL for associated page
      */
     @Override
     protected String getUrl()

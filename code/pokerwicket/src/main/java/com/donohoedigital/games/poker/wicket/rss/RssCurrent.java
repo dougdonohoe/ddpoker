@@ -55,7 +55,7 @@ public class RssCurrent extends GamesListRss
     }
 
     /**
-     * Get URL for assocciated page
+     * Get URL for associated page
      */
     @Override
     protected String getUrl()
