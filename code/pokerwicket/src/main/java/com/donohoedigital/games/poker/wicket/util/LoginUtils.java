@@ -32,32 +32,38 @@
  */
 package com.donohoedigital.games.poker.wicket.util;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import static com.donohoedigital.games.poker.wicket.util.LoginUtils.LoginType.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.wicket.*;
-import com.donohoedigital.wicket.pages.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.server.model.BannedKey;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.pages.BasePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.*;
-import java.text.*;
-import java.util.*;
+import javax.servlet.http.Cookie;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import static com.donohoedigital.games.poker.wicket.util.LoginUtils.LoginType.COOKIE;
+import static com.donohoedigital.games.poker.wicket.util.LoginUtils.LoginType.PAGE;
 
 /**
  * @author Doug Donohoe
  */
 public class LoginUtils
 {
-    private static Logger logger = LogManager.getLogger(LoginUtils.class);
+    private static final Logger logger = LogManager.getLogger(LoginUtils.class);
 
     private static final String LOGIN = "login";
 
-    private BasePage<?> page;
+    private final BasePage<?> page;
 
     enum LoginType
     {
@@ -107,7 +113,7 @@ public class LoginUtils
         OnlineProfile profile = profileService.getOnlineProfileByName(name);
 
         // get IP for logging
-        String ip = WicketUtils.getWebRequest().getHttpServletRequest().getRemoteAddr();
+        String ip = WicketUtils.getHttpServletRequest().getRemoteAddr();
 
         // profile should be there and activated
         if (profile == null || !profile.isActivated() || profile.isRetired())
@@ -116,19 +122,19 @@ public class LoginUtils
             {
                 if (type == PAGE)
                     page.error(PropertyConfig.getMessage("msg.web.poker.invalidprofile")); // FIX: use wicket properties files
-                logger.info(String.valueOf(type) + ": " + ip + ' ' + name + " login failed (no such user).");
+                logger.info("{}: {} {} login failed (no such user).", type, ip, name);
             }
             else if (profile.isRetired())
             {
                 if (type == PAGE)
                     page.error(PropertyConfig.getMessage("msg.web.poker.retired", Utils.encodeHTML(name))); // FIX: use wicket properties files
-                logger.info(String.valueOf(type) + ": " + ip + ' ' + name + " login failed (retired).");
+                logger.info("{}: {} {} login failed (retired).", type, ip, name);
             }
             else // !profile.isActivated()
             {
                 if (type == PAGE)
                     page.error(PropertyConfig.getMessage("msg.web.poker.invalidprofile")); // FIX: use wicket properties files
-                logger.info(String.valueOf(type) + ": " + ip + ' ' + name + " login failed (not activated).");
+                logger.info("{}: {} {} login failed (not activated).", type, ip, name);
             }
 
             return false;
@@ -143,18 +149,18 @@ public class LoginUtils
                 DateFormat sf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
                 page.error(PropertyConfig.getMessage("msg.banned", sf.format(ban.getUntil())));
             }
-            logger.info(String.valueOf(type) + ": " + ip + ' ' + name + " login failed (banned): " + profile + "; ban: " + ban);
+            logger.info("{}: {} {} login failed (banned): {}; ban: {}", type, ip, name, profile, ban);
             return false;
         }
 
-        // verfiy password (if login from page)
+        // verify password (if login from page)
         boolean authenticated = false;
         if (type == PAGE)
         {
             if (!profile.getPassword().equals(password))
             {
                 page.error(PropertyConfig.getMessage("msg.web.poker.invalidprofile")); // FIX: use wicket properties files
-                logger.info(String.valueOf(type) + ": " + ip + ' ' + name + " login failed (password mismatch).");
+                logger.info("{}: {} {} login failed (password mismatch).", type, ip, name);
                 return false;
             }
             else
@@ -167,7 +173,7 @@ public class LoginUtils
         PokerUser user = new PokerUser(profile);
         user.setAuthenticated(authenticated);
         PokerSession.get().setLoggedInUser(user);
-        logger.info(String.valueOf(type) + ": " + ip + ' ' + name + " logged in (authenticated=" + user.isAuthenticated() + ").");
+        logger.info("{}: {} {} logged in (authenticated={}).", type, ip, name, user.isAuthenticated());
 
         // set cookie
         if (remember)
@@ -181,7 +187,6 @@ public class LoginUtils
         {
             // default to page that login form was on
             // need to use "class" so page is re-rendered
-            //noinspection unchecked
             setResponsePage();
         }
 
@@ -217,6 +222,6 @@ public class LoginUtils
     private void setResponsePage()
     {
         //logger.debug("Params: "+ page.getPageParameters());
-        page.setResponsePage(page.getPageClass(), WicketUtils.removeWicketInterface(page.getPageParameters()));
+        page.setResponsePage(page.getPageClass(), page.getPageParameters());
     }
 }

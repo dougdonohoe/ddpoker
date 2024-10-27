@@ -32,9 +32,7 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import org.wicketstuff.annotation.scan.*;
-import org.apache.wicket.request.target.coding.*;
-import org.apache.wicket.*;
+import org.wicketstuff.annotation.scan.AnnotatedMountScanner;
 
 /**
  * Override to return our bookmarkable page (which fixes a bug)
@@ -46,9 +44,9 @@ public class DDMountScanner extends AnnotatedMountScanner
     /**
      * Returns the default coding strategy given a mount path and class.
      */
-    @Override
-    public IRequestTargetUrlCodingStrategy getDefaultStrategy(String mountPath, Class<? extends Page> pageClass)
-    {
-        return new BookmarkablePage(mountPath, pageClass, null);
-    }
+//    @Override
+//    public IRequestTargetUrlCodingStrategy getDefaultStrategy(String mountPath, Class<? extends Page> pageClass)
+//    {
+//        return new BookmarkablePage(mountPath, pageClass, null);
+//    }
 }

@@ -39,7 +39,6 @@
 #
 # options: see below
 #
-# TODO: code signing, get version from code to pass to install4j
 
 $OSTYPE=$^O;
 # mac?

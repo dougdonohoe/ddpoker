@@ -32,30 +32,37 @@
  */
 package com.donohoedigital.games.poker.wicket.admin.pages;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
-import org.apache.wicket.datetime.markup.html.basic.*;
-import org.apache.wicket.extensions.markup.html.form.*;
-import org.apache.wicket.extensions.yui.calendar.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.basic.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.validation.*;
-import org.apache.wicket.validation.validator.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.wicket.panels.FormFeedbackPanel;
+import com.donohoedigital.games.server.model.BannedKey;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.StringModel;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
+import org.apache.wicket.extensions.markup.html.form.DateTextField;
+import org.apache.wicket.extensions.yui.calendar.DatePicker;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.IErrorMessageSource;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidationError;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.validator.DateValidator;
+import org.apache.wicket.validation.validator.StringValidator;
+import org.wicketstuff.annotation.mount.MountPath;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -64,7 +71,7 @@ import java.util.*;
  * Time: 10:39:35 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "admin/ban-list")
+@MountPath("admin/ban-list")
 public class BanList extends AdminPokerPage
 {
     private static final long serialVersionUID = 42L;
@@ -248,7 +255,7 @@ public class BanList extends AdminPokerPage
             BannedKey ban = row.getModelObject();
 
             // CSS class
-            row.add(new AttributeModifier("class", true, new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
+            row.add(new AttributeModifier("class", new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
 
             // data
             row.add(new Label("id"));

@@ -32,8 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.behavior.*;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
 /**
  * @author Doug Donohoe
@@ -48,6 +47,6 @@ public class RssLink extends BookmarkablePageLink
     public RssLink(String id, Class<? extends GamesListRss> pageClass)
     {
         super(id, pageClass);
-        add(new HeaderContributor(new RssAutoDiscoveryHeader(pageClass)));
+        //TODO(WICKET) add(new HeaderContributor(new RssAutoDiscoveryHeader(pageClass)));
     }
 }

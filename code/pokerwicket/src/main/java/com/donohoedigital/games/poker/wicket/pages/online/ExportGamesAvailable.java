@@ -32,14 +32,14 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.wicket.annotations.*;
-import org.apache.wicket.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path = "export/games/available")
+@MountPath("export/games/available")
 @MountFixedMixedParam(parameterNames = {GamesListExport.PARAM_FILE_NAME})
 public class ExportGamesAvailable extends GamesListExport
 {

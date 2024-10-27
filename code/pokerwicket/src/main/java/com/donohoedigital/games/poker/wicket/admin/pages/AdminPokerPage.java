@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.poker.wicket.admin.pages;
 
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.pages.*;
-import com.donohoedigital.games.poker.wicket.admin.panels.*;
-import org.apache.wicket.*;
+import com.donohoedigital.games.poker.wicket.admin.panels.AdminTopNavigation;
+import com.donohoedigital.games.poker.wicket.pages.BasePokerPage;
+import com.donohoedigital.games.poker.wicket.panels.TopNavigation;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Created by IntelliJ IDEA.

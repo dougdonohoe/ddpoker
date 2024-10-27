@@ -48,19 +48,6 @@
   <version>3.0</version>
   <name>wicket</name>
 
-  <repositories>
-    <repository>
-      <id>wicket-snaps</id>
-      <url>http://wicketstuff.org/maven/repository</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
-  </repositories>
-
   <!-- slf4j exclusions done to avoid this error:
             java.lang.IllegalAccessError: tried to access field org.slf4j.impl.StaticLoggerBinder.SINGLETON
             from class org.slf4j.LoggerFactory
@@ -73,8 +60,8 @@
     </dependency>
     <dependency>
       <groupId>org.apache.wicket</groupId>
-      <artifactId>wicket</artifactId>
-      <version>1.4-rc1</version>
+      <artifactId>wicket-core</artifactId>
+      <version>${wicket.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -85,7 +72,7 @@
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-extensions</artifactId>
-      <version>1.4-rc1</version>
+      <version>${wicket.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -96,7 +83,7 @@
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-datetime</artifactId>
-      <version>1.4-rc1</version>
+      <version>${wicket.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -107,7 +94,7 @@
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-spring</artifactId>
-      <version>1.4-rc1</version>
+      <version>${wicket.version}</version>
       <!-- exclude spring framework that wicket pulls in -->
       <exclusions>
         <exclusion>
@@ -122,8 +109,19 @@
     </dependency>
     <dependency>
       <groupId>org.wicketstuff</groupId>
-      <artifactId>annotation</artifactId>
-      <version>1.4.21</version>
+      <artifactId>wicketstuff-annotation</artifactId>
+      <version>${wicketstuff.version}</version>
+    <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.wicketstuff</groupId>
+      <artifactId>wicketstuff-jslibraries</artifactId>
+      <version>${wicketstuff.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -133,19 +131,8 @@
     </dependency>
     <dependency>
       <groupId>org.wicketstuff</groupId>
-      <artifactId>scriptaculous</artifactId>
-      <version>1.4.21</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.wicketstuff</groupId>
-      <artifactId>prototype</artifactId>
-      <version>1.4.21</version>
+      <artifactId>wicketstuff-prototype</artifactId>
+      <version>${wicketstuff.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>

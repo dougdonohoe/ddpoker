@@ -33,13 +33,13 @@
 package com.donohoedigital.games.poker.wicket.pages.online;
 
 import com.donohoedigital.games.poker.wicket.rss.*;
-import org.wicketstuff.annotation.mount.*;
+import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe
  */
 
-@MountPath(path = "online")
+@MountPath("online")
 public class OnlineHome extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;

@@ -32,19 +32,21 @@
  */
 package com.donohoedigital.wicket.common;
 
-import org.apache.wicket.*;
-import org.apache.wicket.request.target.coding.*;
-import org.apache.wicket.util.string.*;
-import org.apache.wicket.util.value.*;
+import org.apache.wicket.Page;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.AppendingStringBuffer;
+import org.apache.wicket.util.value.ValueMap;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
  * Correct version of MixedParamUrlCodingStrategy
  */
-public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTargetUrlCodingStrategy
+public class FixedMixedParamUrlCodingStrategy // TODO(WICKET) extends BookmarkablePageRequestTargetUrlCodingStrategy
 {
     //private static Logger logger = LogManager.getLogger(FixedMixedParamUrlCodingStrategy.class);
 
@@ -61,7 +63,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
     public FixedMixedParamUrlCodingStrategy(String mountPath, Class<? extends Page> bookmarkablePageClass,
                                             String pageMapName, String[] parameterNames)
     {
-        super(mountPath, bookmarkablePageClass, pageMapName);
+        // TODO(WICKET) super(mountPath, bookmarkablePageClass, pageMapName);
         this.parameterNames = parameterNames;
     }
 
@@ -75,7 +77,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
     public FixedMixedParamUrlCodingStrategy(String mountPath, Class<? extends Page> bookmarkablePageClass,
                                             String[] parameterNames)
     {
-        super(mountPath, bookmarkablePageClass, PageMap.DEFAULT_NAME);
+        // TODO(WICKET) super(mountPath, bookmarkablePageClass, PageMap.DEFAULT_NAME);
         this.parameterNames = parameterNames;
     }
 
@@ -83,7 +85,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
      * {@inheritDoc}
      */
     @SuppressWarnings({"unchecked", "RawUseOfParameterizedType"})
-    @Override
+    // TODD @Override
     protected void appendParameters(AppendingStringBuffer url, Map parameters)
     {
         Set<String> parameterNamesToAdd = new HashSet<String>(parameters.keySet());
@@ -118,7 +120,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
                 if (param != null && param.length() > 0)
                 {
                     url.append(first ? '?' : '&');
-                    url.append(urlEncodeQueryComponent(parameterName)).append("=").append(urlEncodeQueryComponent(param));
+                    // TODO(WICKET) url.append(urlEncodeQueryComponent(parameterName)).append("=").append(urlEncodeQueryComponent(param));
                     first = false;
                 }
             }
@@ -160,12 +162,12 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
      * {@inheritDoc}
      */
     @SuppressWarnings({"RawUseOfParameterizedType"})
-    @Override
+    // TODO(WICKET) @Override
     protected ValueMap decodeParameters(String urlFragment, Map urlParameters)
     {
         PageParameters params = new PageParameters();
         // Add all url parameters
-        params.putAll(urlParameters);
+        // TODO(WICKET)        params.put(urlParameters);
         String urlPath = urlFragment;
         if (urlPath.startsWith("/"))
         {
@@ -184,18 +186,20 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
             {
                 // only set parameter if it didn't come down in another form (e.g., query
                 // string or posted form values).
-                if (!params.containsKey(parameterNames[i]))
-                {
-                    params.put(parameterNames[i], urlDecodePathComponent(pathParts[i]));
-                }
+                // TODO(WICKET)
+//                if (!params.containsKey(parameterNames[i]))
+//                {
+//                    params.put(parameterNames[i], urlDecodePathComponent(pathParts[i]));
+//                }
             }
         }
 
-        return params;
+        // TODO(WICKET) return params;
+        return null;
     }
 
     ////
-    //// code below to allow any characer in the path.  We deal with:
+    //// code below to allow any character in the path.  We deal with:
     ////
     //// . and .. which are interpreted by the servlet container
     //// / and \ which are also path components
@@ -217,7 +221,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
     private static final char BACKSLASH_ALIAS = 'b';
 
 
-    @Override
+    // TODO(WICKET) @Override
     protected String urlEncodePathComponent(String value)
     {
         String enc = null;
@@ -241,14 +245,14 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
         else
         {
             value = encodeSpecial(value);
-            enc = super.urlEncodePathComponent(value);
+            //TODO(WICKET) enc = super.urlEncodePathComponent(value);
         }
 
         //logger.debug("Encoded " + value + " to " + enc);
         return enc;
     }
 
-    @Override
+    // TODO(WICKET) @Override
     protected String urlDecodePathComponent(String value)
     {
         if (value == null || value.length() == 0 || value.equals(NULL_CHAR_STRING))
@@ -269,7 +273,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
         }
 
         value = decodeSpecial(value);
-        return super.urlDecodePathComponent(value);
+        return value; // TODO(WICKET) super.urlDecodePathComponent(value);
     }
 
     /**

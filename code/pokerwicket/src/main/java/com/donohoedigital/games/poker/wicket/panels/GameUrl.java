@@ -32,12 +32,13 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.wicket.pages.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import org.apache.wicket.markup.html.link.*;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.wicket.pages.BasePokerPage;
+import com.donohoedigital.games.poker.wicket.util.JoinGameResource;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import org.apache.wicket.markup.html.link.ResourceLink;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,7 +60,7 @@ public class GameUrl extends VoidPanel
         nourl.add(parentPage.getCurrentProfile().getLoginLink("loginLink"));
         add(nourl);
         add(new StringLabel("url", game.getUrl()).setVisible(loggedIn));
-        add(new ResourceLink("joinLink", new JoinGameResource(game, false)));
-        add(new ResourceLink("observeLink", new JoinGameResource(game, true)));
+        add(new ResourceLink("joinLink", JoinGameResource.create(game, false)));
+        add(new ResourceLink("observeLink", JoinGameResource.create(game, true)));
     }
 }

@@ -38,7 +38,7 @@ import org.wicketstuff.annotation.mount.MountPath;
  * @author Doug Donohoe
  */
 
-@MountPath(path = "about/faq")
+@MountPath("about/faq")
 public class AboutFaq extends AboutPokerPage {
     private static final long serialVersionUID = 42L;
 

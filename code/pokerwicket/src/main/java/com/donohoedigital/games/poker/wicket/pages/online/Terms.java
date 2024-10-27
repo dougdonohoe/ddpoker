@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import org.wicketstuff.annotation.mount.*;
+import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,7 +41,7 @@ import org.wicketstuff.annotation.mount.*;
  * Time: 2:48:39 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "terms")
+@MountPath("terms")
 public class Terms extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;

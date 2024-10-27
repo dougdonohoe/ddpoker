@@ -32,26 +32,31 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.model.HostSummary;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.poker.wicket.panels.NameRangeSearchForm;
+import com.donohoedigital.games.poker.wicket.util.DateRange;
+import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
+import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
 import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.models.IntegerModel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BookmarkablePagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.annotation.mount.MountPath;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -60,7 +65,7 @@ import java.util.*;
  * Time: 1:36:58 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "hosts")
+@MountPath("hosts")
 @MountFixedMixedParam(parameterNames = {HostList.PARAM_BEGIN, HostList.PARAM_END, HostList.PARAM_NAME,
         HostList.PARAM_PAGE, HostList.PARAM_SIZE})
 public class HostList extends OnlinePokerPage
@@ -206,7 +211,7 @@ public class HostList extends OnlinePokerPage
             HostList.HostData data = getSearchData();
 
             // CSS class
-            row.add(new AttributeModifier("class", true,
+            row.add(new AttributeModifier("class",
                                           new StringModel(PokerSession.isLoggedInUser(summary.getHostName()) ? "highlight" :
                                                           row.getIndex() % 2 == 0 ? "odd" : "even")));
 

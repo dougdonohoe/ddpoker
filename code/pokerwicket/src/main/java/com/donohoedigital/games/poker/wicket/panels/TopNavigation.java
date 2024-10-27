@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.models.StringModel;
+import org.apache.wicket.AttributeModifier;
 
 /**
  * Created by IntelliJ IDEA.
@@ -54,7 +55,7 @@ public class TopNavigation extends VoidPanel
         super(id);
 
         titlebar = new VoidContainer("titlebar");
-        titlebar.add(new AttributeModifier("class", true, new StringModel("titlebar-" + style)));
+        titlebar.add(new AttributeModifier("class", new StringModel("titlebar-" + style)));
         add(titlebar);
     }
 }

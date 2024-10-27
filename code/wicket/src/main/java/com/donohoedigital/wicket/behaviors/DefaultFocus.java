@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.wicket.behaviors;
 
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.IHeaderResponse;
 
 /**
  * @author Doug Donohoe
@@ -52,16 +52,14 @@ public class DefaultFocus extends AbstractPrototypeBehavior
     }
 
     @Override
-    public void renderHead(IHeaderResponse iHeaderResponse)
+    public void renderHead(Component component, IHeaderResponse iHeaderResponse)
     {
-        super.renderHead(iHeaderResponse);
-        iHeaderResponse.renderOnLoadJavascript(getJavascript().toString());
+        super.renderHead(component, iHeaderResponse);
+        iHeaderResponse.renderOnLoadJavaScript(getJavascript().toString());
     }
 
     /**
      * Get javascript to render
-     *
-     * @return
      */
     @Override
     protected StringBuilder getJavascript()

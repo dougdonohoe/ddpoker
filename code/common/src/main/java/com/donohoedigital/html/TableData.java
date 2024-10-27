@@ -41,9 +41,8 @@ package com.donohoedigital.html;
  */
 public class TableData
 {
-    private String sData_;
-    private String bgColor_;
-    // TODO private int colSpan_;
+    private final String sData_;
+    private final String bgColor_;
 
     public TableData(String sData, String bgColor)
     {

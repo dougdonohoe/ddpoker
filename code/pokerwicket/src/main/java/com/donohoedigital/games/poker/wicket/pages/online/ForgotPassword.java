@@ -32,16 +32,17 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.mail.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.wicket.panels.FormFeedbackPanel;
+import com.donohoedigital.mail.DDPostalService;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,7 +51,7 @@ import org.wicketstuff.annotation.mount.*;
  * Time: 12:19:02 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "forgot")
+@MountPath("forgot")
 public class ForgotPassword extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
@@ -71,7 +72,7 @@ public class ForgotPassword extends OnlinePokerPage
         super(null);
 
         // form data
-        CompoundPropertyModel<ForgotPassword> formData = new CompoundPropertyModel<ForgotPassword>(this);
+        CompoundPropertyModel<ForgotPassword> formData = new CompoundPropertyModel<>(this);
 
         // change password form
         Form<ForgotPassword> pwform = new Form<ForgotPassword>("form", formData)
@@ -107,7 +108,7 @@ public class ForgotPassword extends OnlinePokerPage
         };
         add(pwform);
 
-        TextField<String> nameText = new TextField<String>("name");
+        TextField<String> nameText = new TextField<>("name");
         pwform.add(nameText.setRequired(true));
 
         // error / feedback

@@ -32,13 +32,13 @@
  */
 package com.donohoedigital.games.poker.wicket.pages;
 
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.pages.*;
-import org.apache.wicket.*;
-import org.apache.wicket.protocol.http.request.*;
+import com.donohoedigital.games.poker.wicket.panels.CopyrightFooter;
+import com.donohoedigital.games.poker.wicket.panels.CurrentProfile;
+import com.donohoedigital.games.poker.wicket.panels.TopNavigation;
+import com.donohoedigital.games.poker.wicket.util.LoginUtils;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.pages.BasePage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Created by IntelliJ IDEA.
@@ -64,13 +64,6 @@ public abstract class BasePokerPage extends BasePage<Void>
         add(new CurrentProfile(PROFILE_NAME, isLoginPanelVisible()).setVisible(isCurrentProfileDisplayed()));
         add(new VoidContainer("no-profile").setVisible(!isCurrentProfileDisplayed()));
         add(new CopyrightFooter("footer"));
-
-        // ie 5 center bug
-        WebClientInfo w = (WebClientInfo) getWebRequestCycle().getClientInfo();
-        String userAgent = w.getUserAgent();
-        boolean ie5bug = userAgent != null && userAgent.contains("MSIE 5");
-        add(new StringLabel("ie5-bug-center-start", "<center>").setEscapeModelStrings(false).setRenderBodyOnly(true).setVisible(ie5bug));
-        add(new StringLabel("ie5-bug-center-end", "</center>").setEscapeModelStrings(false).setRenderBodyOnly(true).setVisible(ie5bug));
     }
 
     /**

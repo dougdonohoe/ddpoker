@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import org.apache.wicket.request.target.coding.*;
+//import org.apache.wicket.request.target.coding.*;
 
 /**
  * Override to deal with pre-fetch browser/toolbar (?) bug that tries to get resources
@@ -41,26 +41,26 @@ import org.apache.wicket.request.target.coding.*;
  *
  * @author Doug Donohoe
  */
-public class BookmarkablePage extends BookmarkablePageRequestTargetUrlCodingStrategy
+public class BookmarkablePage //extends BookmarkablePageRequestTargetUrlCodingStrategy
 {
-    /**
-     * Construct.
-     */
-    public <C extends org.apache.wicket.Page> BookmarkablePage(String mountPath, Class<C> bookmarkablePageClass, String pageMapName)
-    {
-        super(mountPath, bookmarkablePageClass, pageMapName);
-    }
-
-    /**
-     * @see org.apache.wicket.request.target.coding.IRequestTargetUrlCodingStrategy#matches(org.apache.wicket.IRequestTarget)
-     */
-    @Override
-    public boolean matches(String path)
-    {
-        // mount path should not contain /resources/ (ends up returning a 404).
-
-        if (path.contains("/resources/")) return false;
-
-        return super.matches(path);
-    }
+//    /**
+//     * Construct.
+//     */
+//    public <C extends org.apache.wicket.Page> BookmarkablePage(String mountPath, Class<C> bookmarkablePageClass, String pageMapName)
+//    {
+//        super(mountPath, bookmarkablePageClass, pageMapName);
+//    }
+//
+//    /**
+//     * @see org.apache.wicket.request.target.coding.IRequestTargetUrlCodingStrategy#matches(org.apache.wicket.IRequestTarget)
+//     */
+//    @Override
+//    public boolean matches(String path)
+//    {
+//        // mount path should not contain /resources/ (ends up returning a 404).
+//
+//        if (path.contains("/resources/")) return false;
+//
+//        return super.matches(path);
+//    }
 }

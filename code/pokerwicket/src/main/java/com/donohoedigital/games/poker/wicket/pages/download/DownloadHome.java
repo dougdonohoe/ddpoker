@@ -40,7 +40,7 @@ import org.wicketstuff.annotation.mount.MountPath;
  * @author Doug Donohoe
  */
 
-@MountPath(path = "download")
+@MountPath("download")
 public class DownloadHome extends DownloadPokerPage {
     private static final long serialVersionUID = 42L;
 

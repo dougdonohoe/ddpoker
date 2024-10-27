@@ -32,27 +32,35 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.poker.wicket.panels.HighightedAliases;
+import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.labels.BasicPluralLabelProvider;
+import com.donohoedigital.wicket.labels.HighlightLabel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BookmarkablePagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.annotation.mount.MountPath;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -61,7 +69,7 @@ import java.util.*;
  * Time: 1:36:58 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "search")
+@MountPath("search")
 @MountFixedMixedParam(parameterNames = {Search.PARAM_SEARCH, Search.PARAM_PAGE, Search.PARAM_SIZE})
 public class Search extends OnlinePokerPage
 {
@@ -92,8 +100,8 @@ public class Search extends OnlinePokerPage
 
     private void init(PageParameters params)
     {
-        String text = params.getString(PARAM_SEARCH);
-        if (text != null && text.length() == 0) text = null;
+        String text = params.get(PARAM_SEARCH).toString();
+        if (text != null && text.isEmpty()) text = null;
         final TextField<String> name = new TextField<String>("name", new StringModel(text));
         name.add(new DefaultFocus());
 
@@ -106,7 +114,7 @@ public class Search extends OnlinePokerPage
             protected void onSubmit()
             {
                 PageParameters p = new PageParameters();
-                p.put(PARAM_SEARCH, name.getModelObject());
+                p.set(PARAM_SEARCH, name.getModelObject());
                 setResponsePage(Search.class, p);
 
                 // testing of error page
@@ -192,7 +200,7 @@ public class Search extends OnlinePokerPage
             String search = getSearchData().getSearch();
 
             // CSS class
-            row.add(new AttributeModifier("class", true,
+            row.add(new AttributeModifier("class",
                                           new StringModel(PokerSession.isLoggedInUser(profile.getName()) ? "highlight" :
                                                           row.getIndex() % 2 == 0 ? "odd" : "even")));
 

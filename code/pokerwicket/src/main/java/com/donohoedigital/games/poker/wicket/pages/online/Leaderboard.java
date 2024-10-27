@@ -32,29 +32,43 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import static com.donohoedigital.games.poker.service.TournamentHistoryService.LeaderboardType.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.model.LeaderboardSummary;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.service.TournamentHistoryService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.poker.wicket.panels.LeaderboardForm;
+import com.donohoedigital.games.poker.wicket.util.DateRange;
+import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
+import com.donohoedigital.games.poker.wicket.util.PokerCurrencyLabel;
+import com.donohoedigital.games.poker.wicket.util.PokerPercentLabel;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.common.AliasedPageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.basic.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.models.AliasedCompoundPropertyModel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BookmarkablePagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.annotation.mount.MountPath;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+
+import static com.donohoedigital.games.poker.service.TournamentHistoryService.LeaderboardType.ddr1;
+import static com.donohoedigital.games.poker.service.TournamentHistoryService.LeaderboardType.roi;
 
 /**
  * Created by IntelliJ IDEA.
@@ -63,7 +77,7 @@ import java.util.*;
  * Time: 2:48:39 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "leaderboard")
+@MountPath("leaderboard")
 @MountFixedMixedParam(parameterNames = {Leaderboard.PARAM_TYPE, Leaderboard.PARAM_GAMES,
         Leaderboard.PARAM_BEGIN, Leaderboard.PARAM_END,
         Leaderboard.PARAM_NAME, Leaderboard.PARAM_PAGE,
@@ -74,7 +88,7 @@ public class Leaderboard extends OnlinePokerPage
 
     //private static Logger logger = LogManager.getLogger(Leaderboard.class);
 
-    private static boolean DEBUG_ZERO_RESULTS = false;
+    private static final boolean DEBUG_ZERO_RESULTS = false;
 
     public static final String PARAM_TYPE = "type";
     public static final String PARAM_GAMES = "games";
@@ -86,7 +100,7 @@ public class Leaderboard extends OnlinePokerPage
 
     private boolean showFootnote = false;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
+    @SuppressWarnings("unused")
     @SpringBean
     private TournamentHistoryService histService;
 
@@ -103,7 +117,7 @@ public class Leaderboard extends OnlinePokerPage
 
     private void init(PageParameters params)
     {
-        final TournamentHistoryService.LeaderboardType type = params.getAsEnum(PARAM_TYPE, TournamentHistoryService.LeaderboardType.class, ddr1);
+        final TournamentHistoryService.LeaderboardType type = WicketUtils.getAsEnum(params, PARAM_TYPE, TournamentHistoryService.LeaderboardType.class, ddr1);
 
         // title
         add(new VoidContainer("ddr1Title").setVisible(type == ddr1));
@@ -166,7 +180,7 @@ public class Leaderboard extends OnlinePokerPage
     }
 
     /**
-     * leader data, fetched from TouranmentHistoryService
+     * leader data, fetched from TournamentHistoryService
      */
     @SuppressWarnings({"PublicInnerClass"})
     public class LeaderData extends AliasedPageableServiceProvider<LeaderboardSummary> implements NameRangeSearch
@@ -177,10 +191,10 @@ public class Leaderboard extends OnlinePokerPage
         private String name;
         private Date begin = null;
         private Date end = null;
-        private Date beginDefault = Utils.getDateDays(-89);
-        private Date endDefault = Utils.getDateEndOfDay(new Date());
+        private final Date beginDefault = Utils.getDateDays(-89);
+        private final Date endDefault = Utils.getDateEndOfDay(new Date());
 
-        private TournamentHistoryService.LeaderboardType type;
+        private final TournamentHistoryService.LeaderboardType type;
 
         private LeaderData(TournamentHistoryService.LeaderboardType type)
         {
@@ -190,7 +204,7 @@ public class Leaderboard extends OnlinePokerPage
         @Override
         public Iterator<LeaderboardSummary> iterator(int first, int pagesize)
         {
-            if (DEBUG_ZERO_RESULTS) return new ArrayList<LeaderboardSummary>(0).iterator();
+            if (DEBUG_ZERO_RESULTS) return Collections.emptyIterator();
             DateRange dr = new DateRange(this, false);
             return histService.getLeaderboard(size(), first, pagesize, type, games, name, dr.getBegin(), dr.getEnd()).iterator();
         }
@@ -283,7 +297,7 @@ public class Leaderboard extends OnlinePokerPage
             LeaderData data = getLeaderData();
 
             // CSS class
-            row.add(new AttributeModifier("class", true,
+            row.add(new AttributeModifier("class",
                                           new StringModel(PokerSession.isLoggedInUser(history.getPlayerName()) ? "highlight" :
                                                           row.getIndex() % 2 == 0 ? "odd" : "even")));
 
@@ -319,7 +333,7 @@ public class Leaderboard extends OnlinePokerPage
             Label nameLabel = new HighlightLabel("playerName", data.getName(), PokerWicketApplication.SEARCH_HIGHLIGHT, true);
             if (bAI)
             {
-                AttributeModifier clazz = new AttributeModifier("class", true, new StringModel("ai"));
+                AttributeModifier clazz = new AttributeModifier("class", new StringModel("ai"));
                 nameLabel.add(clazz);
                 link.add(clazz);
             }
@@ -328,7 +342,7 @@ public class Leaderboard extends OnlinePokerPage
 
                 if (PokerSession.isLoggedInUser(history.getPlayerName()))
                 {
-                    AttributeModifier clazz = new AttributeModifier("class", true, new StringModel("current"));
+                    AttributeModifier clazz = new AttributeModifier("class", new StringModel("current"));
                     nameLabel.add(clazz);
                     link.add(clazz);
                 }
@@ -383,15 +397,15 @@ public class Leaderboard extends OnlinePokerPage
 
     public static BookmarkablePageLink<Leaderboard> getDDR1Link(String id, PageParameters params)
     {
-        BookmarkablePageLink<Leaderboard> link = new BookmarkablePageLink<Leaderboard>(id, Leaderboard.class, params);
-        link.setParameter(PARAM_TYPE, ddr1.toString());
+        BookmarkablePageLink<Leaderboard> link = new BookmarkablePageLink<>(id, Leaderboard.class, params);
+        link.getPageParameters().set(PARAM_TYPE, ddr1.toString());
         return link;
     }
 
     public static BookmarkablePageLink<Leaderboard> getRoiLink(String id, PageParameters params)
     {
-        BookmarkablePageLink<Leaderboard> link = new BookmarkablePageLink<Leaderboard>(id, Leaderboard.class, params);
-        link.setParameter(PARAM_TYPE, roi.toString());
+        BookmarkablePageLink<Leaderboard> link = new BookmarkablePageLink<>(id, Leaderboard.class, params);
+        link.getPageParameters().set(PARAM_TYPE, roi.toString());
         return link;
     }
 }

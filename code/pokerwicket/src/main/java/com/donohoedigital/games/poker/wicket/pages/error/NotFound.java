@@ -32,8 +32,9 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.error;
 
-import com.donohoedigital.wicket.labels.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.labels.StringLabel;
+import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,7 +43,7 @@ import org.wicketstuff.annotation.mount.*;
  * Time: 9:49:42 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "notfound")
+@MountPath("notfound")
 public class NotFound extends ErrorPokerPage
 {
     //private static final Logger logger = LogManager.getLogger(NotFound.class);
@@ -50,7 +51,7 @@ public class NotFound extends ErrorPokerPage
     public NotFound()
     {
         super(null);
-        String missing = (String) getWebRequestCycle().getWebRequest().getHttpServletRequest().getAttribute("javax.servlet.error.request_uri");
+        String missing = (String) WicketUtils.getHttpServletRequest().getAttribute("javax.servlet.error.request_uri");
         add(new StringLabel("url", missing));
     }
 }

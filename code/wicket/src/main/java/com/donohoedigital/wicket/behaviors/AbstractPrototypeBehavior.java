@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.wicket.behaviors;
 
-import org.apache.wicket.*;
-import org.apache.wicket.behavior.*;
-import org.apache.wicket.markup.html.*;
-import org.wicketstuff.prototype.*;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.html.IHeaderContributor;
+import org.apache.wicket.markup.html.IHeaderResponse;
+import org.wicketstuff.jslibraries.JSLib;
+import org.wicketstuff.jslibraries.Library;
+import org.wicketstuff.jslibraries.VersionDescriptor;
 
 /**
  * @author Doug Donohoe
  */
-public abstract class AbstractPrototypeBehavior extends AbstractBehavior
+public abstract class AbstractPrototypeBehavior extends Behavior
 {
     private static final long serialVersionUID = 42L;
 
@@ -48,14 +51,14 @@ public abstract class AbstractPrototypeBehavior extends AbstractBehavior
      * Add prototype to header
      */
     @Override
-    public void renderHead(IHeaderResponse response)
+    public void renderHead(Component component, IHeaderResponse response)
     {
-        response.renderJavascriptReference(PrototypeResourceReference.INSTANCE);
+        IHeaderContributor header = JSLib.getHeaderContribution(VersionDescriptor.alwaysLatest(Library.PROTOTYPE));
+        header.renderHead(response);
     }
 
     /**
      * Get javascript to render
-     * @return
      */
     protected abstract StringBuilder getJavascript();
 

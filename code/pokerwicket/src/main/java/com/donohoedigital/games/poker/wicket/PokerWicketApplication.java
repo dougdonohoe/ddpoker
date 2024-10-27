@@ -32,20 +32,27 @@
  */
 package com.donohoedigital.games.poker.wicket;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.admin.*;
-import com.donohoedigital.games.poker.wicket.pages.error.*;
-import com.donohoedigital.games.poker.wicket.pages.home.*;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.mail.*;
-import com.donohoedigital.wicket.*;
-import com.donohoedigital.wicket.annotations.*;
-import org.apache.wicket.*;
-import org.apache.wicket.protocol.http.*;
-import org.springframework.beans.factory.annotation.*;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.wicket.admin.AdminAuthorizationStrategy;
+import com.donohoedigital.games.poker.wicket.pages.error.ErrorPage;
+import com.donohoedigital.games.poker.wicket.pages.error.ExpiredPage;
+import com.donohoedigital.games.poker.wicket.pages.home.HomeHome;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import com.donohoedigital.mail.DDPostalService;
+import com.donohoedigital.wicket.BaseWicketApplication;
+import com.donohoedigital.wicket.annotations.DDMountScanner;
+import org.apache.wicket.Page;
+import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.Session;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,7 +64,7 @@ import java.util.*;
 public class PokerWicketApplication extends BaseWicketApplication
 {
     public static final String SEARCH_HIGHLIGHT = "search-highlight";
-    public static final Date START_OF_TIME = new GregorianCalendar(2005, 7, 1).getTime(); // august 1st 2005 (1st month of DD Poker online)
+    public static final Date START_OF_TIME = new GregorianCalendar(2005, Calendar.AUGUST, 1).getTime(); // August 1st 2005 (1st month of DD Poker online)
 
     private static final String hostName = ConfigUtils.getLocalHost(false);
 
@@ -96,7 +103,7 @@ public class PokerWicketApplication extends BaseWicketApplication
         // the edit cycle very slow (since you have to restart PokerJetty).  This code
         // seems to tell Wicket to look in the source location for resources.
         // Enable in development mode only.
-        if (getConfigurationType().equals(Application.DEVELOPMENT)) {
+        if (getConfigurationType().equals(RuntimeConfigurationType.DEVELOPMENT)) {
             getResourceSettings().addResourceFolder("code/pokerwicket/src/main/java");
         }
     }
@@ -115,7 +122,7 @@ public class PokerWicketApplication extends BaseWicketApplication
     }
 
     @Override
-    protected Page getExceptionPage(RuntimeException e)
+    protected Page getExceptionPage(Exception e)
     {
         return new ErrorPage(e);
     }
@@ -126,10 +133,10 @@ public class PokerWicketApplication extends BaseWicketApplication
      * FIX: do this smarter (when we fix the JDBC url too!)
      */
     @Override
-    public String getConfigurationType()
+    public RuntimeConfigurationType getConfigurationType()
     {
         if (hostName != null && (hostName.contains("donohoedigital.com") || hostName.contains("ddpoker.com")))
-            return Application.DEPLOYMENT;
+            return RuntimeConfigurationType.DEPLOYMENT;
 
         return super.getConfigurationType();
     }

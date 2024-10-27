@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.wicket.converters;
 
-import org.apache.wicket.util.convert.*;
-import org.apache.wicket.util.convert.converters.*;
+import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.convert.converter.AbstractDecimalConverter;
 
-import java.util.*;
-import java.text.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.

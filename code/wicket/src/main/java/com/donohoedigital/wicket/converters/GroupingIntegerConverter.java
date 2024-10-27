@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.wicket.converters;
 
-import org.apache.wicket.util.convert.converters.*;
+import org.apache.wicket.util.convert.converter.AbstractIntegerConverter;
 
-import java.text.*;
-import java.util.*;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.

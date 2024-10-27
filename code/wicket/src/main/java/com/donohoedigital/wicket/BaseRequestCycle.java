@@ -34,31 +34,23 @@ package com.donohoedigital.wicket;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.wicket.*;
-import org.apache.wicket.protocol.http.*;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.cycle.RequestCycleContext;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Our own request cycle - keeping in case we need to override something in the future
  *
  * @author Doug Donohoe
  */
-public class BaseRequestCycle extends WebRequestCycle
+public class BaseRequestCycle extends RequestCycle
 {
-    private Logger logger = LogManager.getLogger(BaseRequestCycle.class);
+    private final Logger logger = LogManager.getLogger(BaseRequestCycle.class);
         
-    /**
-     * Constructor which simply passes arguments to superclass for storage there. This instance will
-     * be set as the current one for this thread.
-     *
-     * @param application The application
-     * @param request     The request
-     * @param response    The response
-     */
-    public BaseRequestCycle(BaseWicketApplication application, WebRequest request, Response response)
+    public BaseRequestCycle(RequestCycleContext requestCycleContext)
     {
-        super(application, request, response);
+        super(requestCycleContext);
     }
 
     /**
@@ -67,10 +59,9 @@ public class BaseRequestCycle extends WebRequestCycle
     @Override
     protected void onBeginRequest()
     {
-        HttpServletRequest http = getWebRequest().getHttpServletRequest();
-        logger.debug("Request: " + http.getRemoteAddr() +
-                     ' ' + http.getMethod() +
-                     ' ' + getWebRequest().getURL());
+        HttpServletRequest http = (HttpServletRequest) getRequest().getContainerRequest();
+        logger.debug("Request: {} {} {}", http.getRemoteAddr(),
+                http.getMethod(), http.getRequestURI());
     }
 
     /**
@@ -80,22 +71,5 @@ public class BaseRequestCycle extends WebRequestCycle
     @Override
     protected void onEndRequest()
     {
-    }
-
-    /**
-     * Template method that is called when a runtime exception is thrown, just before the actual
-     * handling of the runtime exception. This is called by
-     * {@link org.apache.wicket.request.AbstractRequestCycleProcessor#respond(RuntimeException, org.apache.wicket.RequestCycle)}.
-     *
-     * @param page Any page context where the exception was thrown
-     * @param e    The exception
-     * @return Any error page to redirect to
-     */
-    @Override
-    public Page onRuntimeException(Page page, RuntimeException e)
-    {
-        if (e instanceof PageExpiredException) return null;
-        
-        return ((BaseWicketApplication) application).getExceptionPage(e);
     }
 }

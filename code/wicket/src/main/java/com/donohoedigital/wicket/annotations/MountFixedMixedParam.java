@@ -32,8 +32,7 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import com.donohoedigital.wicket.common.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.common.FixedMixedParamUrlCodingStrategy;
 
 import java.lang.annotation.*;
 
@@ -43,12 +42,12 @@ import java.lang.annotation.*;
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@MountDefinition(strategyClass = FixedMixedParamUrlCodingStrategy.class, argOrder = {"pageMapName", "parameterNames"})
+// TODO(WICKET) @MountDefinition(strategyClass = FixedMixedParamUrlCodingStrategy.class, argOrder = {"pageMapName", "parameterNames"})
 @Inherited
 @Documented
 public @interface MountFixedMixedParam
 {    
-    String pageMapName() default MountDefinition.NULL;
+    String pageMapName() default "[null]";
 
     String[] parameterNames();
 }

@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.wicket.behaviors;
 
-import org.apache.wicket.*;
-import org.apache.wicket.markup.*;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.ComponentTag;
 
 /**
  * @author Doug Donohoe
