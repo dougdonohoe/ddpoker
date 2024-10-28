@@ -40,7 +40,7 @@ import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
 import com.donohoedigital.games.poker.wicket.panels.NameRangeSearchForm;
 import com.donohoedigital.games.poker.wicket.util.DateRange;
 import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
@@ -66,7 +66,7 @@ import java.util.Iterator;
  * To change this template use File | Settings | File Templates.
  */
 @MountPath("hosts")
-@MountFixedMixedParam(parameterNames = {HostList.PARAM_BEGIN, HostList.PARAM_END, HostList.PARAM_NAME,
+@MountMixedParam(parameterNames = {HostList.PARAM_BEGIN, HostList.PARAM_END, HostList.PARAM_NAME,
         HostList.PARAM_PAGE, HostList.PARAM_SIZE})
 public class HostList extends OnlinePokerPage
 {

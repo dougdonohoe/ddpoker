@@ -36,7 +36,7 @@ import com.donohoedigital.base.Utils;
 import com.donohoedigital.games.poker.model.util.OnlineGameList;
 import com.donohoedigital.games.poker.service.OnlineGameService;
 import com.donohoedigital.wicket.WicketUtils;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.converters.ParamDateConverter;
 import com.donohoedigital.xml.SimpleXMLEncoder;
 import org.apache.wicket.markup.html.WebPage;
@@ -51,7 +51,7 @@ import java.util.Date;
 /**
  * @author Doug Donohoe
  */
-@MountFixedMixedParam(parameterNames = {GamesListExport.PARAM_DAYS_AGO, GamesListExport.PARAM_DATE,
+@MountMixedParam(parameterNames = {GamesListExport.PARAM_DAYS_AGO, GamesListExport.PARAM_DATE,
         GamesListExport.PARAM_FILE_NAME})
 public abstract class GamesListExport extends WebPage
 {

@@ -47,7 +47,7 @@ import com.donohoedigital.games.poker.wicket.panels.NameRangeSearchForm;
 import com.donohoedigital.games.poker.wicket.util.DateRange;
 import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
 import com.donohoedigital.games.poker.wicket.util.PokerCurrencyLabel;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
@@ -78,7 +78,7 @@ import java.util.Iterator;
  */
 @SuppressWarnings("unused")
 @MountPath("history")
-@MountFixedMixedParam(parameterNames = {History.PARAM_NAME, History.PARAM_BEGIN, History.PARAM_END,
+@MountMixedParam(parameterNames = {History.PARAM_NAME, History.PARAM_BEGIN, History.PARAM_END,
         History.PARAM_GAME_NAME, History.PARAM_PAGE, History.PARAM_SIZE})
 public class History extends OnlinePokerPage
 {

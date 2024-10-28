@@ -45,7 +45,7 @@ import com.donohoedigital.games.poker.wicket.pages.error.ErrorPage;
 import com.donohoedigital.games.poker.wicket.panels.GameUrl;
 import com.donohoedigital.games.poker.wicket.util.PokerCurrencyLabel;
 import com.donohoedigital.wicket.WicketUtils;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
@@ -77,7 +77,7 @@ import java.util.Iterator;
  */
 @SuppressWarnings("unused")
 @MountPath("game")
-@MountFixedMixedParam(parameterNames = {GameDetail.PARAM_GAME_ID, GameDetail.PARAM_HISTORY_ID})
+@MountMixedParam(parameterNames = {GameDetail.PARAM_GAME_ID, GameDetail.PARAM_HISTORY_ID})
 public class GameDetail extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
@@ -350,6 +350,7 @@ public class GameDetail extends OnlinePokerPage
         PageParameters params = new PageParameters();
         params.set(PARAM_GAME_ID, gameId);
         return WicketUtils.absoluteUrlFor(GameDetail.class, params);
+        // TODO(WICKET): not using our encoder here (getting query params)
     }
 
 }

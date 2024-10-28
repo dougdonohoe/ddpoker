@@ -44,7 +44,7 @@ import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
 import com.donohoedigital.games.poker.wicket.util.PokerCurrencyLabel;
 import com.donohoedigital.games.poker.wicket.util.PokerPercentLabel;
 import com.donohoedigital.wicket.WicketUtils;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.common.AliasedPageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
@@ -78,7 +78,7 @@ import static com.donohoedigital.games.poker.service.TournamentHistoryService.Le
  * To change this template use File | Settings | File Templates.
  */
 @MountPath("leaderboard")
-@MountFixedMixedParam(parameterNames = {Leaderboard.PARAM_TYPE, Leaderboard.PARAM_GAMES,
+@MountMixedParam(parameterNames = {Leaderboard.PARAM_TYPE, Leaderboard.PARAM_GAMES,
         Leaderboard.PARAM_BEGIN, Leaderboard.PARAM_END,
         Leaderboard.PARAM_NAME, Leaderboard.PARAM_PAGE,
         Leaderboard.PARAM_SIZE})

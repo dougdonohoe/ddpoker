@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.annotations.MountPath;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
@@ -40,7 +40,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * @author Doug Donohoe
  */
 @MountPath("export/games/current")
-@MountFixedMixedParam(parameterNames = {GamesListExport.PARAM_FILE_NAME})
+@MountMixedParam(parameterNames = {GamesListExport.PARAM_FILE_NAME})
 public class ExportGamesCurrent extends GamesListExport
 {
     private static final long serialVersionUID = 42L;

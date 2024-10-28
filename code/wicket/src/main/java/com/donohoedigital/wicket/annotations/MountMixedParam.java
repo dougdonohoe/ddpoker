@@ -32,22 +32,17 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import com.donohoedigital.wicket.common.FixedMixedParamUrlCodingStrategy;
-
 import java.lang.annotation.*;
 
 /**
- * Mount annotation for {@link FixedMixedParamUrlCodingStrategy}.
+ * Mount annotation for {@link MixedParamEncoder}.
  * @author Doug Donohoe
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-// TODO(WICKET) @MountDefinition(strategyClass = FixedMixedParamUrlCodingStrategy.class, argOrder = {"pageMapName", "parameterNames"})
 @Inherited
 @Documented
-public @interface MountFixedMixedParam
-{    
-    String pageMapName() default "[null]";
-
+public @interface MountMixedParam
+{
     String[] parameterNames();
 }

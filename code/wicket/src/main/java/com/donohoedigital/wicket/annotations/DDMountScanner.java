@@ -118,18 +118,22 @@ public class DDMountScanner {
         if (mountPath == null)
             return;
 
+        // primary path, default if no explicit path is provided
         String path = mountPath.value();
-
-        // default if no explicit path is provided
-        if ("".equals(path)) {
+        if (path == null || path.isEmpty()) {
             path = getDefaultMountPath(pageClass);
         }
 
-        list.add(getRequestMapper(path, pageClass));
+        // See if we have mixed param info
+        MountMixedParam mountMixedParam = pageClass.getAnnotation(MountMixedParam.class);
+        String[] params = mountMixedParam == null ? null : mountMixedParam.parameterNames();
+
+        // primary
+        list.add(getRequestMapper(path, pageClass, params));
 
         // alternates
         for (String alt : mountPath.alt()) {
-            list.add(getRequestMapper(alt, pageClass));
+            list.add(getRequestMapper(alt, pageClass, params));
         }
     }
 
@@ -137,8 +141,14 @@ public class DDMountScanner {
      * Returns the default mapper given a mount path and class.
      */
     public IRequestMapper getRequestMapper(String mountPath,
-                                           Class<? extends IRequestablePage> pageClass) {
-        return new MountedMapper(mountPath, pageClass);
+                                           Class<? extends IRequestablePage> pageClass,
+                                           String[] parameterNames) {
+        if (parameterNames == null || parameterNames.length == 0) {
+            return new MountedMapper(mountPath, pageClass);
+        } else {
+            return new MountedMapper(mountPath, pageClass,
+                    new MixedParamEncoder(parameterNames));
+        }
     }
 
     /**

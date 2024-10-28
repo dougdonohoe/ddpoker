@@ -39,7 +39,7 @@ import com.donohoedigital.games.poker.wicket.PokerSession;
 import com.donohoedigital.games.poker.wicket.PokerUser;
 import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
 import com.donohoedigital.games.poker.wicket.panels.HighightedAliases;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.behaviors.DefaultFocus;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
@@ -70,7 +70,7 @@ import java.util.Iterator;
  * To change this template use File | Settings | File Templates.
  */
 @MountPath("search")
-@MountFixedMixedParam(parameterNames = {Search.PARAM_SEARCH, Search.PARAM_PAGE, Search.PARAM_SIZE})
+@MountMixedParam(parameterNames = {Search.PARAM_SEARCH, Search.PARAM_PAGE, Search.PARAM_SIZE})
 public class Search extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;

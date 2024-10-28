@@ -46,7 +46,7 @@ import com.donohoedigital.games.poker.wicket.rss.GamesListRss;
 import com.donohoedigital.games.poker.wicket.rss.RssLink;
 import com.donohoedigital.games.poker.wicket.util.DateRange;
 import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
-import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
 import com.donohoedigital.wicket.components.VoidContainer;
@@ -80,8 +80,8 @@ import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Categ
  * Time: 1:36:58 PM
  * To change this template use File | Settings | File Templates.
  */
-@SuppressWarnings({"PublicStaticArrayField"})
-@MountFixedMixedParam(parameterNames = {GamesList.PARAM_BEGIN, GamesList.PARAM_END, GamesList.PARAM_NAME,
+@SuppressWarnings({"PublicStaticArrayField", "unused", "rawtypes", "unchecked"})
+@MountMixedParam(parameterNames = {GamesList.PARAM_BEGIN, GamesList.PARAM_END, GamesList.PARAM_NAME,
         GamesList.PARAM_PAGE, GamesList.PARAM_SIZE})
 public abstract class GamesList extends OnlinePokerPage
 {
@@ -109,7 +109,6 @@ public abstract class GamesList extends OnlinePokerPage
         available, running, recent, current
     }
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private OnlineGameService gameService;
 
@@ -267,12 +266,12 @@ public abstract class GamesList extends OnlinePokerPage
     {
         private static final long serialVersionUID = 42L;
 
-        private Category category;
+        private final Category category;
         private String name;
         private Date begin;
         private Date end;
-        private Date beginDefault = PokerWicketApplication.START_OF_TIME;
-        private Date endDefault = Utils.getDateEndOfDay(new Date());
+        private final Date beginDefault = PokerWicketApplication.START_OF_TIME;
+        private final Date endDefault = Utils.getDateEndOfDay(new Date());
 
         private GameData(Category category)
         {
@@ -370,7 +369,7 @@ public abstract class GamesList extends OnlinePokerPage
             Link<?> link = GameDetail.getGameIdLink("detailsLink", game.getId());
             row.add(link);
 
-            // tourament name (in link)
+            // tournament name (in link)
             link.add(new StringLabel("tournament.name"));
 
             // invite only
@@ -393,7 +392,7 @@ public abstract class GamesList extends OnlinePokerPage
             {
                 players = game.getTournament().getPlayers();
             }
-            if (players == null) players = new ArrayList<String>();
+            if (players == null) players = new ArrayList<>();
             row.add(new PlayerList("playerList", players).setVisible(category != recent));
 
             // url link
