@@ -35,7 +35,7 @@ package com.donohoedigital.games.poker.wicket.rss;
 import com.donohoedigital.games.poker.wicket.pages.online.GamesList;
 import com.donohoedigital.games.poker.wicket.pages.online.RecentGames;
 import com.donohoedigital.wicket.WicketUtils;
-import org.wicketstuff.annotation.mount.MountPath;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * @author Doug Donohoe

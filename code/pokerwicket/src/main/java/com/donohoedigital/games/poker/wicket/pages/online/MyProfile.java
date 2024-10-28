@@ -40,6 +40,7 @@ import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.wicket.PokerSession;
 import com.donohoedigital.games.poker.wicket.PokerUser;
 import com.donohoedigital.games.poker.wicket.panels.FormFeedbackPanel;
+import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.behaviors.DefaultFocus;
 import com.donohoedigital.wicket.common.InfoOnlyFilter;
 import com.donohoedigital.wicket.labels.GroupingIntegerLabel;
@@ -62,7 +63,6 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.annotation.mount.MountPath;
 
 import java.io.Serializable;
 import java.util.ArrayList;

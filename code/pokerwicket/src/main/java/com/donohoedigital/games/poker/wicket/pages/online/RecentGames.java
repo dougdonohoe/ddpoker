@@ -35,10 +35,10 @@ package com.donohoedigital.games.poker.wicket.pages.online;
 import com.donohoedigital.db.DBUtils;
 import com.donohoedigital.games.poker.wicket.rss.GamesListRss;
 import com.donohoedigital.games.poker.wicket.rss.RssRecent;
+import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.converters.ParamDateConverter;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.annotation.mount.MountPath;
 
 import java.util.Date;
 

@@ -33,9 +33,9 @@
 package com.donohoedigital.games.poker.wicket.pages.error;
 
 import com.donohoedigital.base.Utils;
+import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.labels.HiddenComponent;
 import com.donohoedigital.wicket.labels.StringLabel;
-import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * Created by IntelliJ IDEA.

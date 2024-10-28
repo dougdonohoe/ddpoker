@@ -34,8 +34,8 @@ package com.donohoedigital.games.poker.wicket.pages.online;
 
 import com.donohoedigital.games.poker.wicket.rss.GamesListRss;
 import com.donohoedigital.games.poker.wicket.rss.RssCurrent;
+import com.donohoedigital.wicket.annotations.MountPath;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.annotation.mount.MountPath;
 
 import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Category.current;
 

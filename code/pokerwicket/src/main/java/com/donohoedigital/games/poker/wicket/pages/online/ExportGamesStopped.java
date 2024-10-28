@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
+import com.donohoedigital.wicket.annotations.MountPath;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe

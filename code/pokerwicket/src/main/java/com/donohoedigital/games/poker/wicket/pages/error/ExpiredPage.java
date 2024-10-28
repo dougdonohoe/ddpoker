@@ -34,9 +34,9 @@ package com.donohoedigital.games.poker.wicket.pages.error;
 
 import com.donohoedigital.games.poker.wicket.util.LoginUtils;
 import com.donohoedigital.wicket.ExpirationUtils;
+import com.donohoedigital.wicket.annotations.MountPath;
 import org.apache.wicket.request.http.handler.RedirectRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe

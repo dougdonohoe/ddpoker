@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.store;
 
-import org.wicketstuff.annotation.mount.MountPath;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * Created by IntelliJ IDEA.

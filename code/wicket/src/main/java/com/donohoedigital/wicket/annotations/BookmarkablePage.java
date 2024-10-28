@@ -34,6 +34,7 @@ package com.donohoedigital.wicket.annotations;
 
 //import org.apache.wicket.request.target.coding.*;
 
+// TODO(WICKET): delete
 /**
  * Override to deal with pre-fetch browser/toolbar (?) bug that tries to get resources
  * incorrectly (e.g., /home/resource/foo instead of /resources/foo).  This fixes these errors:

@@ -40,6 +40,7 @@ import com.donohoedigital.games.poker.wicket.PokerUser;
 import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
 import com.donohoedigital.games.poker.wicket.panels.HighightedAliases;
 import com.donohoedigital.wicket.annotations.MountFixedMixedParam;
+import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.behaviors.DefaultFocus;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
@@ -57,7 +58,6 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.annotation.mount.MountPath;
 
 import java.util.ArrayList;
 import java.util.Iterator;

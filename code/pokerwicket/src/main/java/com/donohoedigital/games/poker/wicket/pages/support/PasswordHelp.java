@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.support;
 
-import org.wicketstuff.annotation.mount.MountPath;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * @author Doug Donohoe

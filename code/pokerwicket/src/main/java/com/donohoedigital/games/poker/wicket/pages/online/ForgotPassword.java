@@ -38,11 +38,11 @@ import com.donohoedigital.games.poker.model.OnlineProfile;
 import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.wicket.panels.FormFeedbackPanel;
 import com.donohoedigital.mail.DDPostalService;
+import com.donohoedigital.wicket.annotations.MountPath;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * Created by IntelliJ IDEA.

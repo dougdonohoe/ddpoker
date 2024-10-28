@@ -109,17 +109,6 @@
     </dependency>
     <dependency>
       <groupId>org.wicketstuff</groupId>
-      <artifactId>wicketstuff-annotation</artifactId>
-      <version>${wicketstuff.version}</version>
-    <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.wicketstuff</groupId>
       <artifactId>wicketstuff-jslibraries</artifactId>
       <version>${wicketstuff.version}</version>
       <exclusions>
