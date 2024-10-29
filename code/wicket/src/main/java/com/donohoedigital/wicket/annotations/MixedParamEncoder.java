@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.wicket.annotations;
 
+import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
@@ -118,8 +119,13 @@ public class MixedParamEncoder implements IPageParametersEncoder {
     @Override
     public PageParameters decodePageParameters(Request request) {
         PageParameters params = new PageParameters();
-        // Add all url parameters
-        // TODO(WICKET)        params.put(urlParameters);
+
+        // add all url query parameters
+        IRequestParameters queryParameters = request.getQueryParameters();
+        queryParameters.getParameterNames().forEach(name ->
+                params.set(name, queryParameters.getParameterValue(name)));
+
+        // add path components
         String urlPath = request.getUrl().getPath();
         if (urlPath.startsWith("/"))
         {

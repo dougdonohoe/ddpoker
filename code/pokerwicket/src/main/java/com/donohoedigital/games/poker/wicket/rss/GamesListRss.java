@@ -54,7 +54,7 @@ public abstract class GamesListRss extends WebPage
 {
     private static final long serialVersionUID = 42L;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass", "unused"})
+    @SuppressWarnings({"unused"})
     @SpringBean
     protected OnlineGameService gameService;
 
