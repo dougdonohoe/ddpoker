@@ -172,6 +172,18 @@ public class WicketUtils
         return path;
     }
 
+    public static String getBaseUrl(HttpServletRequest request) {
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String baseUrl = scheme + "://" + serverName;
+
+        if (serverPort != 80 && serverPort != 443) {
+            baseUrl += ":" + serverPort;
+        }
+
+        return baseUrl + "/";
+    }
     /**
      * URL for page/params
      */
@@ -186,7 +198,7 @@ public class WicketUtils
     public static String absoluteUrlFor(Class<? extends Page> page, PageParameters params)
     {
         HttpServletRequest req = getHttpServletRequest();
-        return RequestUtils.toAbsolutePath(req.getRequestURL().toString(), getRequestCycle().mapUrlFor(page, params).toString());
+        return RequestUtils.toAbsolutePath(getBaseUrl(req), getRequestCycle().mapUrlFor(page, params).toString());
     }
 
     /**

@@ -59,6 +59,6 @@ public abstract class CountDataView<T> extends DataView<T> implements CountPagea
 
     public int getPageSize()
     {
-        return internalGetItemCount();
+        return getItemsPerPage();
     }
 }

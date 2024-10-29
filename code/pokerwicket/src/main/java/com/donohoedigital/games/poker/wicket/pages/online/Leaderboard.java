@@ -397,15 +397,15 @@ public class Leaderboard extends OnlinePokerPage
 
     public static BookmarkablePageLink<Leaderboard> getDDR1Link(String id, PageParameters params)
     {
-        BookmarkablePageLink<Leaderboard> link = new BookmarkablePageLink<>(id, Leaderboard.class, params);
-        link.getPageParameters().set(PARAM_TYPE, ddr1.toString());
-        return link;
+        PageParameters copy = new PageParameters(params);
+        copy.set(PARAM_TYPE, ddr1.toString());
+        return new BookmarkablePageLink<>(id, Leaderboard.class, copy);
     }
 
     public static BookmarkablePageLink<Leaderboard> getRoiLink(String id, PageParameters params)
     {
-        BookmarkablePageLink<Leaderboard> link = new BookmarkablePageLink<>(id, Leaderboard.class, params);
-        link.getPageParameters().set(PARAM_TYPE, roi.toString());
-        return link;
+        PageParameters copy = new PageParameters(params);
+        copy.set(PARAM_TYPE, roi.toString());
+        return new BookmarkablePageLink<>(id, Leaderboard.class, copy);
     }
 }

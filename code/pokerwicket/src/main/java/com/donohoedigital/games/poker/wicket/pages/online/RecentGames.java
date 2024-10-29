@@ -51,6 +51,7 @@ import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Categ
  * Time: 2:26:32 PM
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("unused")
 @MountPath("completed")
 public class RecentGames extends GamesList
 {
@@ -86,13 +87,13 @@ public class RecentGames extends GamesList
         return RssRecent.class;
     }
 
-    public static BookmarkablePageLink getHostLink(String id, String host, Date begin, Date end)
+    public static BookmarkablePageLink<RecentGames> getHostLink(String id, String host, Date begin, Date end)
     {
         ParamDateConverter CONVERTER = new ParamDateConverter();
         PageParameters params = new PageParameters();
         params.set(PARAM_NAME, DBUtils.sqlExactMatch(host));
         params.set(PARAM_BEGIN, CONVERTER.convertToString(begin));
         params.set(PARAM_END, CONVERTER.convertToString(end));
-        return new BookmarkablePageLink(id, RecentGames.class, params);
+        return new BookmarkablePageLink<>(id, RecentGames.class, params);
     }
 }

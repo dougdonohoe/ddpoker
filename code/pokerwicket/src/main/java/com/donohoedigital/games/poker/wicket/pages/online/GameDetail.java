@@ -350,7 +350,5 @@ public class GameDetail extends OnlinePokerPage
         PageParameters params = new PageParameters();
         params.set(PARAM_GAME_ID, gameId);
         return WicketUtils.absoluteUrlFor(GameDetail.class, params);
-        // TODO(WICKET): not using our encoder here (getting query params)
     }
-
 }

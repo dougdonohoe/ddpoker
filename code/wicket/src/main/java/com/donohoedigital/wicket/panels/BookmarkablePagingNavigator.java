@@ -88,7 +88,7 @@ public class BookmarkablePagingNavigator extends BoxPagingNavigator
     {
         PageParameters linkParams = new PageParameters(linkToParams);
         linkParams.set(pageParamName, pageNum);
-        BookmarkablePageLink link = new BookmarkablePageLink(id, linkTo, linkParams);
+        BookmarkablePageLink<?> link = new BookmarkablePageLink<Page>(id, linkTo, linkParams);
         link.setEnabled(pageNum != getCurrentPage());
         return link;
     }

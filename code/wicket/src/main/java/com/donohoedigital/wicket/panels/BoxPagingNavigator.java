@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.wicket.panels;
 
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.markup.repeater.*;
+import com.donohoedigital.wicket.common.CountPageable;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.labels.GroupingIntegerLabel;
+import com.donohoedigital.wicket.labels.PluralLabel;
+import com.donohoedigital.wicket.labels.PluralLabelProvider;
+import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.repeater.RepeatingView;
 
 /**
  * @author Doug Donohoe
@@ -73,7 +77,7 @@ public class BoxPagingNavigator extends VoidPanel
         // remove all children
         removeAll();
 
-        // set pageable to page that should be displayed (as retreived from params)
+        // set pageable to page that should be displayed (as retrieved from params)
         int current = getCurrentPage();
 
         // get counts
@@ -190,11 +194,9 @@ public class BoxPagingNavigator extends VoidPanel
     /**
      * validate page and set it
      */
-    protected int setCurrentPageValidated(int pg)
+    protected void setCurrentPageValidated(int pg)
     {
-        pg = validatePageNumber(pg);
-        setCurrentPage(pg);
-        return pg;
+        setCurrentPage(validatePageNumber(pg));
     }
 
     /**
@@ -235,7 +237,7 @@ public class BoxPagingNavigator extends VoidPanel
      */
     protected Link<?> getLink(String id, final int pageNum)
     {
-        Link<?> link = new Link(id)
+        Link<?> link = new Link<Page>(id)
         {
             private static final long serialVersionUID = 42L;
 

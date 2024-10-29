@@ -104,6 +104,7 @@ public class PokerWicketApplication extends BaseWicketApplication
         // seems to tell Wicket to look in the source location for resources.
         // Enable in development mode only.
         if (getConfigurationType().equals(RuntimeConfigurationType.DEVELOPMENT)) {
+            getResourceSettings().addResourceFolder("code/wicket/src/main/java");
             getResourceSettings().addResourceFolder("code/pokerwicket/src/main/java");
         }
     }
