@@ -32,31 +32,42 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.pages.error.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.converters.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.service.TournamentHistoryService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.poker.wicket.pages.error.ErrorPage;
+import com.donohoedigital.games.poker.wicket.panels.Aliases;
+import com.donohoedigital.games.poker.wicket.panels.NameRangeSearchForm;
+import com.donohoedigital.games.poker.wicket.util.DateRange;
+import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
+import com.donohoedigital.games.poker.wicket.util.PokerCurrencyLabel;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.converters.ParamDateConverter;
 import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.datetime.markup.html.basic.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BookmarkablePagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -65,8 +76,9 @@ import java.util.*;
  * Time: 12:19:02 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "history")
-@MountFixedMixedParam(parameterNames = {History.PARAM_NAME, History.PARAM_BEGIN, History.PARAM_END,
+@SuppressWarnings("unused")
+@MountPath("history")
+@MountMixedParam(parameterNames = {History.PARAM_NAME, History.PARAM_BEGIN, History.PARAM_END,
         History.PARAM_GAME_NAME, History.PARAM_PAGE, History.PARAM_SIZE})
 public class History extends OnlinePokerPage
 {
@@ -81,11 +93,9 @@ public class History extends OnlinePokerPage
     public static final String PARAM_PAGE = "page";
     public static final String PARAM_SIZE = "s";
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private OnlineProfileService profileService;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private TournamentHistoryService histService;
 
@@ -101,7 +111,7 @@ public class History extends OnlinePokerPage
 
     /**
      * Create page using user from id or name params (in that order).
-     * Defaults to logged in user if neither of those is valid.
+     * Defaults to logged-in user if neither of those is valid.
      */
     public History(PageParameters params)
     {
@@ -129,7 +139,7 @@ public class History extends OnlinePokerPage
             final HistoryData data = new HistoryData(user);
 
             // search form (create now so data search terms are set)
-            NameRangeSearchForm searchForm = new NameRangeSearchForm("form", params, getClass(), data,
+            NameRangeSearchForm searchForm = new NameRangeSearchForm("form", params, this.getClass(), data,
                                                                      PARAM_GAME_NAME, PARAM_BEGIN, PARAM_END,
                                                                      "Tournament")
             {
@@ -138,7 +148,7 @@ public class History extends OnlinePokerPage
                 @Override
                 protected void addCustomPageParameters(PageParameters p)
                 {
-                    p.add(PARAM_NAME, data.getUser().getName());
+                    p.set(PARAM_NAME, data.getUser().getName());
                 }
             };
 
@@ -173,7 +183,7 @@ public class History extends OnlinePokerPage
     private PokerUser getUser(PageParameters params)
     {
         PokerUser user = null;
-        String name = params.getString(PARAM_NAME, null);
+        String name = params.get(PARAM_NAME).toString();
 
         if (name != null)
         {
@@ -240,12 +250,12 @@ public class History extends OnlinePokerPage
     {
         private static final long serialVersionUID = 42L;
 
-        private PokerUser user;
+        private final PokerUser user;
         private String name;
         private Date begin;
         private Date end;
-        private Date beginDefault = PokerWicketApplication.START_OF_TIME;
-        private Date endDefault = Utils.getDateEndOfDay(new Date());
+        private final Date beginDefault = PokerWicketApplication.START_OF_TIME;
+        private final Date endDefault = Utils.getDateEndOfDay(new Date());
 
         private HistoryData(PokerUser user)
         {
@@ -328,13 +338,13 @@ public class History extends OnlinePokerPage
             TournamentHistory history = row.getModelObject();
 
             // CSS class
-            row.add(new AttributeModifier("class", true, new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
+            row.add(new AttributeModifier("class", new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
 
             // link to tournament details
             Link<?> link = GameDetail.getHistoryIdLink("detailsLink", history.getId());
             row.add(link);
 
-            // tourament name (in link)
+            // tournament name (in link)
             link.add(new StringLabel("tournamentName"));
 
             // last hand label if game not ended
@@ -434,18 +444,18 @@ public class History extends OnlinePokerPage
 
     public static BookmarkablePageLink<History> getHistoryLink(String id, String userName)
     {
-        BookmarkablePageLink<History> link = new BookmarkablePageLink<History>(id, History.class);
-        link.setParameter(PARAM_NAME, userName);
+        BookmarkablePageLink<History> link = new BookmarkablePageLink<>(id, History.class);
+        link.getPageParameters().set(PARAM_NAME, userName);
         return link;
     }
 
     public static BookmarkablePageLink<History> getHistoryLink(String id, String userName, Date begin, Date end)
     {
-        BookmarkablePageLink<History> link = new BookmarkablePageLink<History>(id, History.class);
+        BookmarkablePageLink<History> link = new BookmarkablePageLink<>(id, History.class);
         ParamDateConverter conv = new ParamDateConverter();
-        link.setParameter(PARAM_NAME, userName);
-        link.setParameter(PARAM_BEGIN, conv.convertToString(begin));
-        link.setParameter(PARAM_END, conv.convertToString(end));
+        link.getPageParameters().set(PARAM_NAME, userName);
+        link.getPageParameters().set(PARAM_BEGIN, conv.convertToString(begin));
+        link.getPageParameters().set(PARAM_END, conv.convertToString(end));
         return link;
     }
 }

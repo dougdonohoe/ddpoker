@@ -32,13 +32,13 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import org.apache.wicket.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.annotations.MountPath;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path = "export/games/stopped")
+@MountPath("export/games/stopped")
 public class ExportGamesStopped extends GamesListExport
 {
     private static final long serialVersionUID = 42L;

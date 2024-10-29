@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Category.*;
-import com.donohoedigital.games.poker.wicket.rss.*;
-import org.apache.wicket.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.games.poker.wicket.rss.GamesListRss;
+import com.donohoedigital.games.poker.wicket.rss.RssCurrent;
+import com.donohoedigital.wicket.annotations.MountPath;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+
+import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Category.current;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +46,7 @@ import org.wicketstuff.annotation.mount.*;
  * Time: 2:38:30 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "current")
+@MountPath("current")
 public class CurrentGames extends GamesList
 {
     private static final long serialVersionUID = 42L;

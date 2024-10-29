@@ -32,31 +32,35 @@
  */
 package com.donohoedigital.games.poker.wicket.admin.pages;
 
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.db.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.util.string.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.service.RegistrationService;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.labels.BasicPluralLabelProvider;
+import com.donohoedigital.wicket.labels.HighlightLabel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BoxPagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path="admin/reg-search")
+@SuppressWarnings("unused")
+@MountPath("admin/reg-search")
 public class RegistrationSearch extends AdminPokerPage
 {
     private static final long serialVersionUID = 42L;
@@ -65,7 +69,6 @@ public class RegistrationSearch extends AdminPokerPage
 
     public static final int ITEMS_PER_PAGE = 10;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private RegistrationService regService;
 
@@ -91,7 +94,7 @@ public class RegistrationSearch extends AdminPokerPage
         add(new BoxPagingNavigator("navigator", dataView, new BasicPluralLabelProvider("registration", "registrations")));
 
         // form data
-        CompoundPropertyModel<SearchData> formData = new CompoundPropertyModel<SearchData>(data);
+        CompoundPropertyModel<SearchData> formData = new CompoundPropertyModel<>(data);
 
         // form
         Form<SearchData> form = new Form<SearchData>("form", formData)
@@ -107,7 +110,7 @@ public class RegistrationSearch extends AdminPokerPage
         };
         add(form);
         
-        TextField<String> nameText = new TextField<String>("name");
+        TextField<String> nameText = new TextField<>("name");
         nameText.add(new DefaultFocus());
 
         form.add(nameText);
@@ -228,7 +231,7 @@ public class RegistrationSearch extends AdminPokerPage
         {
 
             // CSS class
-            row.add(new AttributeModifier("class", true, new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
+            row.add(new AttributeModifier("class", new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
 
             // name
             row.add(new HighlightLabel("name", getSearchData().getName(), PokerWicketApplication.SEARCH_HIGHLIGHT, true));

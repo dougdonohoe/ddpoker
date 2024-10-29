@@ -32,23 +32,22 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.error;
 
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.*;
-import org.apache.wicket.*;
-import org.apache.wicket.request.target.basic.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.games.poker.wicket.util.LoginUtils;
+import com.donohoedigital.wicket.ExpirationUtils;
+import com.donohoedigital.wicket.annotations.MountPath;
+import org.apache.wicket.request.http.handler.RedirectRequestHandler;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path = "expired")
+@MountPath("expired")
 public class ExpiredPage extends ErrorPokerPage
 {
-    //private static Logger logger = LogManager.getLogger(ExpiredPage.class);
+    //private static final Logger logger = LogManager.getLogger(ExpiredPage.class);
 
     private static final long serialVersionUID = 42L;
 
-    @SuppressWarnings({"ThisEscapedInObjectConstruction"})
     public ExpiredPage(PageParameters parameters)
     {
         super(parameters);
@@ -57,13 +56,13 @@ public class ExpiredPage extends ErrorPokerPage
         new LoginUtils(this).deleteLoginCookie();
 
         // redirect if we had a cookie
-        ExpirationUtils exp = new ExpirationUtils();
-        if (exp.getLastPath() != null)
+        String lastPath = ExpirationUtils.getLastPath();
+        if (lastPath != null)
         {
-            //logger.debug("Expired page redirecting to: " + exp.getLastPath());
+            //logger.debug("Expired page redirecting to: {}", lastPath);
 
             // redirect
-            getRequestCycle().setRequestTarget(new RedirectRequestTarget(exp.getLastPath()));
+            getRequestCycle().scheduleRequestHandlerAfterCurrent(new RedirectRequestHandler(lastPath));
         }
     }
 }

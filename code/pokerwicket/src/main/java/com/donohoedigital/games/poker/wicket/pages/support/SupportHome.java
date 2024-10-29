@@ -32,13 +32,13 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.support;
 
-import org.wicketstuff.annotation.mount.MountPath;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * @author Doug Donohoe
  */
 
-@MountPath(path = "support")
+@MountPath("support")
 public class SupportHome extends SupportPokerPage {
     private static final long serialVersionUID = 42L;
 

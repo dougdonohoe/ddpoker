@@ -32,8 +32,9 @@
  */
 package com.donohoedigital.games.poker.wicket;
 
-import org.apache.wicket.*;
-import org.apache.wicket.protocol.http.*;
+import org.apache.wicket.Session;
+import org.apache.wicket.protocol.http.WebSession;
+import org.apache.wicket.request.Request;
 
 /**
  * Created by IntelliJ IDEA.

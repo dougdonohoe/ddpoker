@@ -32,12 +32,14 @@
  */
 package com.donohoedigital.wicket.common;
 
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.repeater.data.*;
-import org.apache.wicket.model.*;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.models.EntityModel;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -109,11 +111,11 @@ public abstract class PageableServiceProvider<T> implements IDataProvider<T>
      */
     public void processSizeFromParams(PageParameters params, String name)
     {
-        Integer n = params.getAsInteger(name);
-        if (n == null)
+        int n = WicketUtils.getAsInt(params, name, -1);
+        if (n == -1)
         {
             n = size();
-            params.put(name, n);
+            params.set(name, n);
         }
         else
         {
@@ -133,9 +135,10 @@ public abstract class PageableServiceProvider<T> implements IDataProvider<T>
      * Returns object (something fetched from the iterator()) in a EntityModel wrapped
      * by a CompoundPropertyModel
      */
+    @SuppressWarnings("unchecked")
     public IModel<T> model(T object)
     {
-        return new CompoundPropertyModel<T>(new EntityModel<T>(object));
+        return new CompoundPropertyModel<T>((IModel<T>) new EntityModel<T>(object));
     }
 
     /**

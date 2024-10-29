@@ -33,11 +33,10 @@
 package com.donohoedigital.games.poker.wicket.util;
 
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.protocol.http.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import org.apache.wicket.request.resource.ByteArrayResource;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,64 +45,15 @@ import org.apache.wicket.protocol.http.*;
  * Time: 3:01:53 PM
  * To change this template use File | Settings | File Templates.
  */
-public class JoinGameResource extends DynamicWebResource
+public class JoinGameResource
 {
-    private static final long serialVersionUID = 42L;
-
-    private String name;
-    private String url;
-
-    public JoinGameResource(OnlineGame game, boolean observe)
-	{
-        // file name
-        name = new StringBuilder().append("game")
-                                  .append(game.getId())
-                                  .append(observe ? "obs" : "")
-                                  .append('.')
-                                  .append(PokerConstants.JOIN_FILE_EXT).toString();
-
-        // url
-        StringBuilder sb = new StringBuilder(game.getUrl());
-        if (observe) sb.append(PokerConstants.JOIN_OBSERVER_QUERY);
-        sb.append('\n');
-        url = sb.toString();
-    }
-
-	@Override
-    protected void setHeaders(WebResponse response)
-	{
-		super.setHeaders(response);
-        response.setAttachmentHeader(name);
-	}
-
-	private class PokerUrlResourceState extends ResourceState
-	{
-		private byte[] stream;
-
-		private PokerUrlResourceState(byte[] data)
-		{
-			stream = data;
-		}
-		@Override
-        public byte[] getData()
-		{
-			return stream;
-		}
-		@Override
-        public int getLength()
-		{
-			return stream.length;
-		}
-		@Override
-        public String getContentType()
-		{
-			return PokerConstants.CONTENT_TYPE_JOIN;
-		}
-	}
-
-	@Override
-    protected ResourceState getResourceState()
-	{
-        return new PokerUrlResourceState(Utils.encodeBasic(url));
+	public static ByteArrayResource create(OnlineGame game, boolean observe) {
+		String name = "game" + game.getId() + (observe ? "obs" : "") + '.' +
+                PokerConstants.JOIN_FILE_EXT;
+		StringBuilder sb = new StringBuilder(game.getUrl());
+		if (observe) sb.append(PokerConstants.JOIN_OBSERVER_QUERY);
+		sb.append('\n');
+		byte[] url = Utils.encodeBasic(sb.toString());
+		return new ByteArrayResource(PokerConstants.CONTENT_TYPE_JOIN, url, name);
 	}
 }

@@ -40,8 +40,8 @@ import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.wicket.pages.online.Search;
 import com.donohoedigital.games.server.service.BannedKeyService;
 import junit.framework.TestCase;
-import org.apache.logging.log4j.*;
-import org.apache.wicket.spring.injection.annot.test.AnnotApplicationContextMock;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
 
@@ -55,15 +55,17 @@ import static org.easymock.EasyMock.*;
  * User: donohoe
  * Date: May 12, 2008
  * Time: 10:47:51 AM
- * To change this template use File | Settings | File Templates.
+ * Rudimentary test which uses mocking and WicketTester
  */
 public class ApplicationTest extends TestCase
 {
     Logger logger = LogManager.getLogger(ApplicationTest.class);
 
     private WicketTester tester;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final boolean verbose = false;
 
-    private String searchString = "+";
+    private final String searchString = "+";
 
     @Override
     public void setUp()
@@ -78,8 +80,8 @@ public class ApplicationTest extends TestCase
         profile.setActivated(false);
         profile.setPassword("password");
 
-        List<OnlineProfile> array = new ArrayList<OnlineProfile>(1);
-        List<OnlineProfile> aliases = new ArrayList<OnlineProfile>(0);
+        List<OnlineProfile> array = new ArrayList<>(1);
+        List<OnlineProfile> aliases = new ArrayList<>(0);
         array.add(profile);
 
         // services
@@ -99,7 +101,7 @@ public class ApplicationTest extends TestCase
         replay(onlineProfileService);
 
         // mock spring
-        ApplicationContextMock appctx = new AnnotApplicationContextMock();
+        ApplicationContextMock appctx = new ApplicationContextMock();
         appctx.putBean("onlineProfileService", onlineProfileService);
         appctx.putBean("bannedKeyService", bannedKeyService);
         appctx.putBean("onlineGameService", onlineGameService);
@@ -117,24 +119,23 @@ public class ApplicationTest extends TestCase
         //start and render the test page
         tester.startPage(Search.class);
 
-        logger.debug("Request URL: " + tester.getServletRequest().getRequestURL());
+        logger.debug("Request URL: {}", tester.getRequest().getRequestURL());
 
         // set search criteria
-        tester.setParameterForNextRequest("form:name", "doug");
+        tester.getLastRenderedPage().getPageParameters().set("form:name", "doug");
         tester.submitForm("form");
 
         // to get actual HTML
-        tester.dumpPage();
+        if (verbose) tester.dumpPage();
 
         logger.debug("XXXXXXXXXXXXXXXXXXX ===== form submit ===== XXXXXXXXXXXXXXXXXXX");
 
         // set search criteria
-        tester.setParameterForNextRequest("form:name", searchString);
+        tester.getLastRenderedPage().getPageParameters().set("form:name", searchString);
         tester.submitForm("form");
 
-        //
-        logger.debug("Request URL: " + tester.getServletRequest().getRequestURL());
-        tester.dumpPage();
-
+        // Dump page again
+        logger.debug("Request URL: {}", tester.getRequest().getRequestURL());
+        if (verbose) tester.dumpPage();
     }
 }

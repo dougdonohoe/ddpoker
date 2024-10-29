@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.poker.wicket.admin;
 
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.admin.pages.*;
-import org.apache.wicket.*;
-import org.apache.wicket.authorization.strategies.page.*;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.admin.pages.AdminLogin;
+import com.donohoedigital.games.poker.wicket.admin.pages.AdminPokerPage;
+import org.apache.wicket.Page;
+import org.apache.wicket.authorization.strategies.page.SimplePageAuthorizationStrategy;
 
 /**
  * @author Doug Donohoe

@@ -32,16 +32,20 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import com.rometools.rome.io.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.request.target.resource.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.util.resource.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.model.util.OnlineGameList;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.wicket.WicketUtils;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.WireFeedOutput;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.resource.IResourceStream;
+import org.apache.wicket.util.resource.StringResourceStream;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author Doug Donohoe
@@ -50,7 +54,7 @@ public abstract class GamesListRss extends WebPage
 {
     private static final long serialVersionUID = 42L;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass", "unused"})
+    @SuppressWarnings({"unused"})
     @SpringBean
     protected OnlineGameService gameService;
 
@@ -76,11 +80,11 @@ public abstract class GamesListRss extends WebPage
         }
 
         // create target
-        ResourceStreamRequestTarget target = new ResourceStreamRequestTarget(
-                new StringResourceStream(xml, "text/xml"));
+        IResourceStream resourceStream = new StringResourceStream(xml, "text/xml");
+        ResourceStreamRequestHandler target = new ResourceStreamRequestHandler(resourceStream);
 
-        // respond with target
-        getRequestCycle().setRequestTarget(target);
+        // Set the response to use the new handler
+        WicketUtils.getRequestCycle().scheduleRequestHandlerAfterCurrent(target);
     }
 
     /**

@@ -32,31 +32,41 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.pages.error.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
-import org.apache.wicket.datetime.markup.html.basic.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.engine.TournamentProfileHtml;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.games.poker.service.TournamentHistoryService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.pages.error.ErrorPage;
+import com.donohoedigital.games.poker.wicket.panels.GameUrl;
+import com.donohoedigital.games.poker.wicket.util.PokerCurrencyLabel;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.labels.GroupingIntegerLabel;
+import com.donohoedigital.wicket.labels.HiddenComponent;
+import com.donohoedigital.wicket.labels.PlaceLabel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.StringModel;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -65,8 +75,9 @@ import java.util.*;
  * Time: 12:19:02 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "game")
-@MountFixedMixedParam(parameterNames = {GameDetail.PARAM_GAME_ID, GameDetail.PARAM_HISTORY_ID})
+@SuppressWarnings("unused")
+@MountPath("game")
+@MountMixedParam(parameterNames = {GameDetail.PARAM_GAME_ID, GameDetail.PARAM_HISTORY_ID})
 public class GameDetail extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
@@ -76,18 +87,15 @@ public class GameDetail extends OnlinePokerPage
     public static final String PARAM_HISTORY_ID = "histId";
     public static final String PARAM_GAME_ID = "gameId";
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private OnlineGameService gameService;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private TournamentHistoryService histService;
 
     /**
      * Create page
      */
-    @SuppressWarnings({"ThisEscapedInObjectConstruction"})
     public GameDetail(PageParameters params)
     {
         super(params);
@@ -105,7 +113,7 @@ public class GameDetail extends OnlinePokerPage
         link.add(new StringLabel("hostName", game.getHostPlayer()));
         add(link);
         add(new StringLabel("status", getMessage(mode)));
-        add(DateLabel.forDatePattern("date", new Model<Date>(getDate(game)), PropertyConfig.getMessage("msg.format.datetime")));
+        add(DateLabel.forDatePattern("date", new Model<>(getDate(game)), PropertyConfig.getMessage("msg.format.datetime")));
 
         // game url if reg/play mode
         add(new GameUrl("gameUrl", game, PokerSession.get().isLoggedIn(), this).setVisible(mode == OnlineGame.MODE_REG || mode == OnlineGame.MODE_PLAY));
@@ -144,7 +152,7 @@ public class GameDetail extends OnlinePokerPage
     {
         private static final long serialVersionUID = 42L;
 
-        private Long id;
+        private final Long id;
         private transient TournamentHistoryList histories = null;
 
         private FinishData(Long id)
@@ -195,7 +203,7 @@ public class GameDetail extends OnlinePokerPage
             TournamentHistory history = row.getModelObject();
 
             // CSS class
-            row.add(new AttributeModifier("class", true,
+            row.add(new AttributeModifier("class",
                                           new StringModel(PokerSession.isLoggedInUser(history.getPlayerName()) ? "highlight" :
                                                           row.getIndex() % 2 == 0 ? "odd" : "even")));
             // place
@@ -287,10 +295,10 @@ public class GameDetail extends OnlinePokerPage
     {
         OnlineGame game = null;
 
-        // look for history id first (if there, PARAM_GAME_ID might be be set to a '-'
+        // look for history id first (if there, PARAM_GAME_ID might be set to a '-'
         // depending on the url coding strategy)
-        Long historyId = params.getAsLong(PARAM_HISTORY_ID);
-        if (historyId != null)
+        long historyId = WicketUtils.getAsLong(params, PARAM_HISTORY_ID, -1L);
+        if (historyId != -1L)
         {
             game = gameService.getOnlineGameByTournamentHistoryId(historyId);
             if (game == null)
@@ -301,8 +309,8 @@ public class GameDetail extends OnlinePokerPage
         }
 
         // then look for game id
-        Long gameId = params.getAsLong(PARAM_GAME_ID);
-        if (gameId != null)
+        long gameId = WicketUtils.getAsLong(params, PARAM_GAME_ID, -1L);
+        if (gameId != -1L)
         {
             game = gameService.getOnlineGameById(gameId);
             if (game == null)
@@ -325,23 +333,22 @@ public class GameDetail extends OnlinePokerPage
 
     public static BookmarkablePageLink<GameDetail> getGameIdLink(String id, long gameId)
     {
-        BookmarkablePageLink<GameDetail> link = new BookmarkablePageLink<GameDetail>(id, GameDetail.class);
-        link.setParameter(PARAM_GAME_ID, gameId);
+        BookmarkablePageLink<GameDetail> link = new BookmarkablePageLink<>(id, GameDetail.class);
+        link.getPageParameters().set(PARAM_GAME_ID, gameId);
         return link;
     }
 
     public static BookmarkablePageLink<GameDetail> getHistoryIdLink(String id, long histId)
     {
-        BookmarkablePageLink<GameDetail> link = new BookmarkablePageLink<GameDetail>(id, GameDetail.class);
-        link.setParameter(PARAM_HISTORY_ID, histId);
+        BookmarkablePageLink<GameDetail> link = new BookmarkablePageLink<>(id, GameDetail.class);
+        link.getPageParameters().set(PARAM_HISTORY_ID, histId);
         return link;
     }
 
     public static String absoluteUrlFor(long gameId)
     {
         PageParameters params = new PageParameters();
-        params.put(PARAM_GAME_ID, gameId);
+        params.set(PARAM_GAME_ID, gameId);
         return WicketUtils.absoluteUrlFor(GameDetail.class, params);
     }
-
 }

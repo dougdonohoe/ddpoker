@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.store;
 
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,7 +41,7 @@ import org.wicketstuff.annotation.mount.*;
  * Time: 1:33:45 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "donate")
+@MountPath("donate")
 public class Donate extends StorePokerPage
 {
     private static final long serialVersionUID = 42L;

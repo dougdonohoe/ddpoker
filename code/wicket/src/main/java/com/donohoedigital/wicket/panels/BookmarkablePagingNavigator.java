@@ -32,17 +32,19 @@
  */
 package com.donohoedigital.wicket.panels;
 
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.labels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.link.*;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.common.CountPageable;
+import com.donohoedigital.wicket.labels.PluralLabelProvider;
+import org.apache.wicket.Page;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Created by IntelliJ IDEA.
  * User: donohoe
  * Date: Apr 24, 2008
  * Time: 9:04:07 AM
- *
  * Bookmarkable paging navigator.  Numbers pages starting at 1 so that
  * bookmarked links 'page=x' matches the display values to the user.
  */
@@ -75,7 +77,7 @@ public class BookmarkablePagingNavigator extends BoxPagingNavigator
         this.pageParamName = pageParamName;
         this.linkTo = linkTo;
         this.linkToParams = linkToParams;
-        setCurrentPageValidated(linkToParams.getAsInteger(pageParamName, 1));
+        setCurrentPageValidated(WicketUtils.getAsInt(linkToParams, pageParamName, 1));
     }
 
     /**
@@ -85,8 +87,8 @@ public class BookmarkablePagingNavigator extends BoxPagingNavigator
     protected Link<?> getLink(String id, int pageNum)
     {
         PageParameters linkParams = new PageParameters(linkToParams);
-        linkParams.put(pageParamName, pageNum);
-        BookmarkablePageLink link = new BookmarkablePageLink(id, linkTo, linkParams);
+        linkParams.set(pageParamName, pageNum);
+        BookmarkablePageLink<?> link = new BookmarkablePageLink<Page>(id, linkTo, linkParams);
         link.setEnabled(pageNum != getCurrentPage());
         return link;
     }

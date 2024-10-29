@@ -32,37 +32,36 @@
  */
 package com.donohoedigital.wicket;
 
-import org.apache.wicket.protocol.http.*;
-import org.apache.wicket.request.target.component.*;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.handler.RenderPageRequestHandler;
 
-import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
 
 /**
  * @author Doug Donohoe
  */
 public class ExpirationUtils
 {
-    //private static Logger logger = LogManager.getLogger(ExpirationUtils.class);
+    //private static final Logger logger = LogManager.getLogger(ExpirationUtils.class);
 
     private static final String LAST_PATH = "last-path";
 
     /**
      * Store last bookmarkable request path in a cookie
      */
-    public void rememberPath()
+    public static void rememberPath()
     {
-        WebRequestCycle requestCycle = WicketUtils.getWebRequestCycle();
-
+        RequestCycle requestCycle = WicketUtils.getRequestCycle();
         // if a bookmarkable page, remember URL
-        if (requestCycle.getRequestTarget() instanceof BookmarkablePageRequestTarget)
+        if (requestCycle.getActiveRequestHandler() instanceof RenderPageRequestHandler)
         {
-            Cookie c = WicketUtils.createCookie(LAST_PATH, requestCycle.getWebRequest().getServletPath());
+            Cookie c = WicketUtils.createCookie(LAST_PATH, WicketUtils.getHttpServletRequest().getServletPath());
             WicketUtils.addCookie(c);
-            //logger.debug("Remembering URL: " + c.getValue() + " on " + c.getPath());
+            //logger.debug("Remembering URL: {} on {}", c.getValue(), c.getPath());
         }
     }
 
-    public String getLastPath()
+    public static String getLastPath()
     {
         return WicketUtils.getCookieValue(LAST_PATH);
     }

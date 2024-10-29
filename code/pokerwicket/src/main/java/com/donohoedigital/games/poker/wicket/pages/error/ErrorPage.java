@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.error;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.wicket.labels.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.labels.HiddenComponent;
+import com.donohoedigital.wicket.labels.StringLabel;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,11 +44,12 @@ import org.wicketstuff.annotation.mount.*;
  * Time: 2:48:39 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "error")
+@MountPath("error")
 public class ErrorPage extends ErrorPokerPage
 {
     private static final long serialVersionUID = 42L;
 
+    @SuppressWarnings("unused")
     public ErrorPage()
     {
         this("Nice try, pal", "");

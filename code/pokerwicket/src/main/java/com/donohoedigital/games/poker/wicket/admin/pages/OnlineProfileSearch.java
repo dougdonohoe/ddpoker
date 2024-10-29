@@ -32,34 +32,38 @@
  */
 package com.donohoedigital.games.poker.wicket.admin.pages;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.pages.online.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.util.string.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.poker.wicket.pages.online.History;
+import com.donohoedigital.games.poker.wicket.panels.Aliases;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.labels.BasicPluralLabelProvider;
+import com.donohoedigital.wicket.labels.HighlightLabel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BoxPagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path = "admin/online-profile-search")
+@MountPath("admin/online-profile-search")
 public class OnlineProfileSearch extends AdminPokerPage
 {
     //private static Logger logger = LogManager.getLogger(Search.class);
@@ -214,7 +218,7 @@ public class OnlineProfileSearch extends AdminPokerPage
             final String key = profile.getLicenseKey();
 
             // CSS class
-            row.add(new AttributeModifier("class", true, new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
+            row.add(new AttributeModifier("class", new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
 
             // link to player details
             Link<?> link = History.getHistoryLink("playerLink", profile.getName());

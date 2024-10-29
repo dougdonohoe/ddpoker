@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.wicket.behaviors;
 
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
+import com.donohoedigital.wicket.common.JavascriptHideable;
+import com.donohoedigital.wicket.models.StringModel;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 
 /**
  * @author Doug Donohoe
@@ -54,12 +55,11 @@ public class HideShow extends AbstractOnClickBehavior
         this.visibleAtStart = visibleAtStart;
 
         hideShow.setOutputMarkupId(true);
-        hideShow.add(new AttributeModifier("style", true, new HideShowModel()));
+        hideShow.add(new AttributeModifier("style", new HideShowModel()));
     }
 
     /**
      * Get javascript to render
-     * @return
      */
     @Override
     protected StringBuilder getJavascript()

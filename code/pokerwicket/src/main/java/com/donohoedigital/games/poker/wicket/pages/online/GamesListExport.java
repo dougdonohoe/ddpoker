@@ -32,25 +32,26 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.wicket.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.converters.*;
-import com.donohoedigital.xml.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.request.target.resource.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.util.resource.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.model.util.OnlineGameList;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
+import com.donohoedigital.wicket.converters.ParamDateConverter;
+import com.donohoedigital.xml.SimpleXMLEncoder;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.resource.IResourceStream;
+import org.apache.wicket.util.resource.StringResourceStream;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author Doug Donohoe
  */
-@MountFixedMixedParam(parameterNames = {GamesListExport.PARAM_DAYS_AGO, GamesListExport.PARAM_DATE,
+@MountMixedParam(parameterNames = {GamesListExport.PARAM_DAYS_AGO, GamesListExport.PARAM_DATE,
         GamesListExport.PARAM_FILE_NAME})
 public abstract class GamesListExport extends WebPage
 {
@@ -60,24 +61,23 @@ public abstract class GamesListExport extends WebPage
     public static final String PARAM_DAYS_AGO = "days";
     public static final String PARAM_FILE_NAME = "file";
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
+    @SuppressWarnings("unused")
     @SpringBean
     private OnlineGameService gameService;
 
-    @SuppressWarnings({"AbstractMethodCallInConstructor"})
     public GamesListExport(PageParameters params)
     {
         ParamDateConverter CONVERTER = new ParamDateConverter();
         Date day;
-        Integer daysago;
+        int daysago;
         String file;
 
         if (params == null) params = new PageParameters();
 
         // get params
-        daysago = params.getAsInteger(PARAM_DAYS_AGO);
-        file = params.getString(PARAM_FILE_NAME);
-        if (daysago != null)
+        daysago = WicketUtils.getAsInt(params, PARAM_DAYS_AGO, -1);
+        file = params.get(PARAM_FILE_NAME).toString();
+        if (daysago != -1)
         {
             day = Utils.getDateDays(-daysago);
         }
@@ -109,20 +109,19 @@ public abstract class GamesListExport extends WebPage
 
         // encode it
         SimpleXMLEncoder encoder = new SimpleXMLEncoder();
-        StringBuilder comment = new StringBuilder();
 
-        comment.append("Copyright (c) 2004-").append(Utils.getDateYear()).append(". Donohoe Digital LLC\n");
-        comment.append("DD Poker ").append(getGameTypeForComment())
-                .append(" games export from ").append(begin).append(" to ").append(end);
+        String comment = "Copyright (c) 2004-" + Utils.getDateYear() + ". Donohoe Digital LLC\n" +
+                "DD Poker " + getGameTypeForComment() +
+                " games export from " + begin + " to " + end;
 
-        encoder.addComment(comment.toString(), true);
+        encoder.addComment(comment, true);
         encoder.setCurrentObject("ddpoker");
         encoder.add(games);
         encoder.finishCurrentObject();
 
         // create target
-        ResourceStreamRequestTarget target = new ResourceStreamRequestTarget(
-                new StringResourceStream(encoder.toString(), "text/xml"));
+        IResourceStream resourceStream = new StringResourceStream(encoder.toString(), "text/xml");
+        ResourceStreamRequestHandler target = new ResourceStreamRequestHandler(resourceStream);
 
         // set file name if provided
         if (file != null)
@@ -130,13 +129,13 @@ public abstract class GamesListExport extends WebPage
             target.setFileName(file);
         }
 
-        // respond with target
-        getRequestCycle().setRequestTarget(target);
+        // Set the response to use the new handler
+        WicketUtils.getRequestCycle().scheduleRequestHandlerAfterCurrent(target);
     }
 
     /**
      * Subclass to return true if only should use current day only (from midnight to midnight).  Alternative is
-     * to use 24 hour period preceding date.  Default is false.
+     * to use 24-hour period preceding date.  Default is false.
      */
     protected boolean getUseCalendarDayOnly()
     {

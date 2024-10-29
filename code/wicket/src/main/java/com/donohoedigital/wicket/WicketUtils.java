@@ -32,15 +32,21 @@
  */
 package com.donohoedigital.wicket;
 
-import com.donohoedigital.base.*;
-import org.apache.wicket.*;
-import org.apache.wicket.protocol.http.*;
-import org.apache.wicket.protocol.http.request.*;
-import org.apache.wicket.util.convert.*;
-import org.apache.wicket.util.convert.converters.*;
+import com.donohoedigital.base.Utils;
+import org.apache.wicket.Page;
+import org.apache.wicket.protocol.http.RequestUtils;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.http.WebRequest;
+import org.apache.wicket.request.http.WebResponse;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.convert.converter.DateConverter;
 
-import javax.servlet.http.*;
-import java.util.*;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -51,26 +57,12 @@ import java.util.*;
  */
 public class WicketUtils
 {
-    //private static Logger logger = LogManager.getLogger(WicketUtils.class);
-
-    /**
-     * remove wicket:interface parameter from params
-     */
-    public static PageParameters removeWicketInterface(PageParameters params)
-    {
-        if (params != null)
-        {
-            params.remove(WebRequestCodingStrategy.INTERFACE_PARAMETER_NAME);
-        }
-        return params;
-    }
-
     /**
      * Get a date from page parameters using given converter
      */
     public static Date getAsDate(PageParameters params, String name, Date def, DateConverter converter)
     {
-        String sDate = params.getString(name, null);
+        String sDate = params.get(name).toString();
         if (sDate == null) return def;
 
         try {
@@ -82,12 +74,69 @@ public class WicketUtils
         }
     }
 
+    public static int getAsInt(PageParameters params, String name, Integer def) {
+        String value = params.get(name).toString();
+        if (value == null || value.isEmpty()) return def;
+        return Integer.parseInt(value);
+    }
+
+    public static long getAsLong(PageParameters params, String name, Long def) {
+        String value = params.get(name).toString();
+        if (value == null || value.isEmpty()) return def;
+        return Long.parseLong(value);
+    }
+
+    public static <T extends Enum<T>> T getAsEnum(PageParameters params, String key, Class<T> eClass, T defaultValue)
+    {
+        return getEnumImpl(params, key, eClass, defaultValue);
+    }
+
+    /**
+     * get enum implementation
+     */
+    @SuppressWarnings( { "unchecked" })
+    private static <T extends Enum<T>> T getEnumImpl(PageParameters params, String key, Class<?> eClass, T defaultValue)
+    {
+        if (eClass == null) throw new IllegalArgumentException("eClass value cannot be null");
+
+        String value = params.get(key).toString();
+        if (value == null) return defaultValue;
+
+        Method valueOf;
+        try
+        {
+            valueOf = eClass.getMethod("valueOf", String.class);
+        }
+        catch (NoSuchMethodException e)
+        {
+            throw new RuntimeException("Could not find method valueOf(String s) for " + eClass.getName(), e);
+        }
+
+        try
+        {
+            return (T)valueOf.invoke(eClass, value);
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new RuntimeException("Could not invoke method valueOf(String s) on " + eClass.getName(), e);
+        }
+        catch (InvocationTargetException e)
+        {
+            // IllegalArgumentException thrown if enum isn't defined - just return default
+            if (e.getCause() instanceof IllegalArgumentException)
+            {
+                return defaultValue;
+            }
+            throw new RuntimeException(e); // shouldn't happen
+        }
+    }
+
     /**
      * Get WebRequestCycle
      */
-    public static WebRequestCycle getWebRequestCycle()
+    public static RequestCycle getRequestCycle()
     {
-        return (WebRequestCycle) RequestCycle.get();
+        return RequestCycle.get();
     }
 
     /**
@@ -95,7 +144,7 @@ public class WicketUtils
      */
     public static WebRequest getWebRequest()
     {
-        return getWebRequestCycle().getWebRequest();
+        return (WebRequest) getRequestCycle().getRequest();
     }
 
     /**
@@ -103,7 +152,14 @@ public class WicketUtils
      */
     public static WebResponse getWebResponse()
     {
-        return getWebRequestCycle().getWebResponse();    
+        return (WebResponse) getRequestCycle().getResponse();
+    }
+
+    /**
+     * Get HttpServletResponse
+     */
+    public static HttpServletRequest getHttpServletRequest() {
+        return (HttpServletRequest) getWebRequest().getContainerRequest();
     }
 
     /**
@@ -111,26 +167,23 @@ public class WicketUtils
      */
     public static String getContextPath()
     {
-        String path = getWebRequest().getHttpServletRequest().getContextPath();
+        String path = getHttpServletRequest().getContextPath();
         if (Utils.isEmpty(path)) return "/";
         return path;
     }
 
-    /**
-     * Get protocol/machine/port/context path
-     */
-    public static String getBaseUrl()
-    {
-        StringBuilder sb = new StringBuilder();
-        HttpServletRequest req = getWebRequest().getHttpServletRequest();
-        sb.append(req.getScheme());
-        sb.append("://");
-        sb.append(req.getServerName());
-        if (req.getServerPort() != 80 || req.getServerPort() != 443) sb.append(':').append(req.getServerPort());
-        sb.append(getContextPath());
-        return sb.toString();
-    }
+    public static String getBaseUrl(HttpServletRequest request) {
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String baseUrl = scheme + "://" + serverName;
 
+        if (serverPort != 80 && serverPort != 443) {
+            baseUrl += ":" + serverPort;
+        }
+
+        return baseUrl + "/";
+    }
     /**
      * URL for page/params
      */
@@ -144,7 +197,8 @@ public class WicketUtils
      */
     public static String absoluteUrlFor(Class<? extends Page> page, PageParameters params)
     {
-        return RequestUtils.toAbsolutePath(getWebRequestCycle().urlFor(page, params).toString());
+        HttpServletRequest req = getHttpServletRequest();
+        return RequestUtils.toAbsolutePath(getBaseUrl(req), getRequestCycle().mapUrlFor(page, params).toString());
     }
 
     /**

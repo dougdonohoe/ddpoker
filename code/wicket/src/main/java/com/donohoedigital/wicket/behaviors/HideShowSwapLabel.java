@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.behaviors;
 
-import org.apache.wicket.*;
+import org.apache.wicket.Component;
 
 /**
  * @author Doug Donohoe
@@ -41,9 +41,9 @@ public class HideShowSwapLabel extends HideShow
 {
     private static final long serialVersionUID = 42L;
 
-    private Component label;
-    private String labelWhenVisible;
-    private String labelWhenHidden;
+    private final Component label;
+    private final String labelWhenVisible;
+    private final String labelWhenHidden;
 
     public HideShowSwapLabel(Component hideShow, boolean visibleAtStart, Component label, String labelWhenVisible, String labelWhenHidden)
     {
@@ -58,8 +58,6 @@ public class HideShowSwapLabel extends HideShow
 
     /**
      * Get javascript to render
-     *
-     * @return
      */
     @Override
     protected StringBuilder getJavascript()

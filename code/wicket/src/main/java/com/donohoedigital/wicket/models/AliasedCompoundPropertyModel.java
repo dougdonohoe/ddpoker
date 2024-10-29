@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.wicket.models;
 
-import org.apache.wicket.model.*;
-import org.apache.wicket.*;
+import org.apache.wicket.Component;
+import org.apache.wicket.IClusterable;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -90,15 +92,11 @@ public class AliasedCompoundPropertyModel<T> extends CompoundPropertyModel<T>
 	@SuppressWarnings({"CollectionDeclaredAsConcreteClass"})
     private final ArrayList<Alias> aliases = new ArrayList<Alias>(1);
 
-	/**
-	 * Constructor
-	 *
-	 * @param model
-	 *            The model object, which may or may not implement IModel
-	 */
+
+	@SuppressWarnings("unchecked")
 	public AliasedCompoundPropertyModel(final Object model)
 	{
-		super(model);
+		super((IModel<T>) model);
 	}
 
 	/**

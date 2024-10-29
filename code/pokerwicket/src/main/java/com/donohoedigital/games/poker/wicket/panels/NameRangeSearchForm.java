@@ -32,20 +32,22 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.games.poker.wicket.pages.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.converters.*;
-import com.donohoedigital.wicket.labels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.extensions.markup.html.form.*;
-import org.apache.wicket.extensions.yui.calendar.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.model.*;
+import com.donohoedigital.games.poker.wicket.pages.BasePokerPage;
+import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.converters.ParamDateConverter;
+import com.donohoedigital.wicket.labels.StringLabel;
+import org.apache.wicket.extensions.markup.html.form.DateTextField;
+import org.apache.wicket.extensions.yui.calendar.DatePicker;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author Doug Donohoe
@@ -68,7 +70,7 @@ public class NameRangeSearchForm extends VoidPanel
     {
         super(id);
 
-        String name = params.getString(paramName);
+        String name = params.get(paramName).toString();
         Date begin = WicketUtils.getAsDate(params, paramBegin, null, CONVERTER);
         Date end = WicketUtils.getAsDate(params, paramEnd, null, CONVERTER);
 
@@ -77,7 +79,7 @@ public class NameRangeSearchForm extends VoidPanel
         data.setName(name);
 
         // form
-        form = new StatelessForm<NameRangeSearch>("form", new CompoundPropertyModel<NameRangeSearch>(data))
+        form = new StatelessForm<NameRangeSearch>("form", new CompoundPropertyModel<>(data))
         {
             private static final long serialVersionUID = 42L;
 
@@ -86,9 +88,9 @@ public class NameRangeSearchForm extends VoidPanel
             {
                 PageParameters p = new PageParameters();
                 addCustomPageParameters(p);
-                p.put(paramName, getModelObject().getName());
-                p.put(paramBegin, toStringDate(getModelObject().getBegin()));
-                p.put(paramEnd, toStringDate(getModelObject().getEnd()));
+                p.set(paramName, getModelObject().getName());
+                p.set(paramBegin, toStringDate(getModelObject().getBegin()));
+                p.set(paramEnd, toStringDate(getModelObject().getEnd()));
                 setResponsePage(clazz, p);
             }
         };
@@ -97,7 +99,7 @@ public class NameRangeSearchForm extends VoidPanel
         // entry fields
         beginT = new DateTextField("begin");
         endT = new DateTextField("end");
-        TextField<String> nameText = new TextField<String>("name");
+        TextField<String> nameText = new TextField<>("name");
         nameText.add(new DefaultFocus());
 
         form.add(beginT.add(new DatePicker()));

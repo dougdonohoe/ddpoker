@@ -32,15 +32,17 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.db.*;
-import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Category.*;
-import com.donohoedigital.games.poker.wicket.rss.*;
-import com.donohoedigital.wicket.converters.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.link.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.games.poker.wicket.rss.GamesListRss;
+import com.donohoedigital.games.poker.wicket.rss.RssRecent;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.converters.ParamDateConverter;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import java.util.*;
+import java.util.Date;
+
+import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Category.recent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,7 +51,8 @@ import java.util.*;
  * Time: 2:26:32 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "completed")
+@SuppressWarnings("unused")
+@MountPath("completed")
 public class RecentGames extends GamesList
 {
     private static final long serialVersionUID = 42L;
@@ -84,13 +87,13 @@ public class RecentGames extends GamesList
         return RssRecent.class;
     }
 
-    public static BookmarkablePageLink getHostLink(String id, String host, Date begin, Date end)
+    public static BookmarkablePageLink<RecentGames> getHostLink(String id, String host, Date begin, Date end)
     {
         ParamDateConverter CONVERTER = new ParamDateConverter();
         PageParameters params = new PageParameters();
-        params.put(PARAM_NAME, DBUtils.sqlExactMatch(host));
-        params.put(PARAM_BEGIN, CONVERTER.convertToString(begin));
-        params.put(PARAM_END, CONVERTER.convertToString(end));
-        return new BookmarkablePageLink(id, RecentGames.class, params);
+        params.set(PARAM_NAME, DBUtils.sqlExactMatch(host));
+        params.set(PARAM_BEGIN, CONVERTER.convertToString(begin));
+        params.set(PARAM_END, CONVERTER.convertToString(end));
+        return new BookmarkablePageLink<>(id, RecentGames.class, params);
     }
 }

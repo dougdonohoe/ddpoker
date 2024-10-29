@@ -32,23 +32,131 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import org.wicketstuff.annotation.scan.*;
-import org.apache.wicket.request.target.coding.*;
-import org.apache.wicket.*;
+import com.donohoedigital.config.MatchingResources;
+import org.apache.wicket.Page;
+import org.apache.wicket.request.IRequestMapper;
+import org.apache.wicket.request.component.IRequestablePage;
+import org.apache.wicket.request.mapper.MountedMapper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
- * Override to return our bookmarkable page (which fixes a bug)
+ * This code was originally contributed to wicketstuff as the 'annotation'
+ * library.  When 1.5 was released, its functionality was significantly
+ * reduced, removing strategies that DD Poker relied on.  When I upgraded
+ * to 1.5, I had to pull this in so we could restore the mount strategies
+ * we previously used.  Wicket has moved on and there isn't much incentive
+ * to re-introduce this functionality as a library, so keeping it internal.
  *
  * @author Doug Donohoe
  */
-public class DDMountScanner extends AnnotatedMountScanner
-{
+public class DDMountScanner {
+
     /**
-     * Returns the default coding strategy given a mount path and class.
+     * Get the Spring search pattern given a package name or part of a package name.
      */
-    @Override
-    public IRequestTargetUrlCodingStrategy getDefaultStrategy(String mountPath, Class<? extends Page> pageClass)
-    {
-        return new BookmarkablePage(mountPath, pageClass, null);
+    public String getPatternForPackage(String packageName) {
+        if (packageName == null) packageName = "";
+        packageName = packageName.replace('.', '/');
+        if (!packageName.endsWith("/")) {
+            packageName += '/';
+        }
+
+        return "classpath*:" + packageName + "**/*.class";
+    }
+
+    /**
+     * Scan given a package name or part of a package name and return list of classes with MountPath
+     * annotation.
+     */
+    public List<Class<?>> getPackageMatches(String pattern) {
+        return getPatternMatches(getPatternForPackage(pattern));
+    }
+
+    /**
+     * Scan given a Spring search pattern and return list of classes with MountPath annotation.
+     */
+    public List<Class<?>> getPatternMatches(String pattern) {
+        MatchingResources resources = new MatchingResources(pattern);
+        Set<Class<?>> mounts = resources.getAnnotatedMatches(MountPath.class);
+        for (Class<?> mount : mounts) {
+            if (!(Page.class.isAssignableFrom(mount))) {
+                throw new RuntimeException("@MountPath annotated class should subclass Page: " +
+                        mount);
+            }
+        }
+        return new ArrayList<>(mounts);
+    }
+
+    /**
+     * Scan given package name or part of a package name.
+     */
+    public AnnotatedMountList scanPackage(String packageName) {
+        return scanList(getPackageMatches(packageName));
+    }
+
+    /**
+     * Scan a list of classes which are annotated with MountPath.
+     */
+    @SuppressWarnings({"unchecked"})
+    protected AnnotatedMountList scanList(List<Class<?>> mounts) {
+        AnnotatedMountList list = new AnnotatedMountList();
+        for (Class<?> mount : mounts) {
+            Class<? extends Page> page = (Class<? extends Page>) mount;
+            scanClass(page, list);
+        }
+        return list;
+    }
+
+    /**
+     * Magic of all this is done here.
+     */
+    private void scanClass(Class<? extends Page> pageClass, AnnotatedMountList list) {
+        MountPath mountPath = pageClass.getAnnotation(MountPath.class);
+        if (mountPath == null)
+            return;
+
+        // primary path, default if no explicit path is provided
+        String path = mountPath.value();
+        if (path == null || path.isEmpty()) {
+            path = getDefaultMountPath(pageClass);
+        }
+
+        // See if we have mixed param info
+        MountMixedParam mountMixedParam = pageClass.getAnnotation(MountMixedParam.class);
+        String[] params = mountMixedParam == null ? null : mountMixedParam.parameterNames();
+
+        // primary
+        list.add(getRequestMapper(path, pageClass, params));
+
+        // alternates
+        for (String alt : mountPath.alt()) {
+            list.add(getRequestMapper(alt, pageClass, params));
+        }
+    }
+
+    /**
+     * Returns the default mapper given a mount path and class.
+     */
+    public IRequestMapper getRequestMapper(String mountPath,
+                                           Class<? extends IRequestablePage> pageClass,
+                                           String[] parameterNames) {
+        if (parameterNames == null || parameterNames.length == 0) {
+            return new MountedMapper(mountPath, pageClass);
+        } else {
+            return new MountedMapper(mountPath, pageClass,
+                    new MixedParamEncoder(parameterNames));
+        }
+    }
+
+    /**
+     * Returns the default mount path for a given class (used if the path has not been specified in
+     * the <code>@MountPath</code> annotation). By default, this method returns the
+     * pageClass.getSimpleName().
+     */
+    public String getDefaultMountPath(Class<? extends IRequestablePage> pageClass) {
+        return pageClass.getSimpleName();
     }
 }

@@ -32,14 +32,15 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
-import com.donohoedigital.games.poker.wicket.pages.online.*;
-import com.donohoedigital.wicket.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.games.poker.wicket.pages.online.GamesList;
+import com.donohoedigital.games.poker.wicket.pages.online.RecentGames;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path = "rss/games/completed")
+@MountPath("rss/games/completed")
 public class RssRecent extends GamesListRss
 {
     private static final long serialVersionUID = 42L;
@@ -54,7 +55,7 @@ public class RssRecent extends GamesListRss
     }
 
     /**
-     * Get URL for assocciated page
+     * Get URL for associated page
      */
     @Override
     protected String getUrl()

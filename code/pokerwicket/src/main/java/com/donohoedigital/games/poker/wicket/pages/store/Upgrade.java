@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.store;
 
-import com.donohoedigital.games.poker.wicket.pages.download.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.games.poker.wicket.pages.download.DownloadHome;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,7 +43,7 @@ import org.wicketstuff.annotation.mount.*;
  * <p/>
  * DD Poker 3 - no upgrade, just go to download
  */
-@MountPath(path = "upgrade")
+@MountPath("upgrade")
 public class Upgrade extends DownloadHome
 {
     private static final long serialVersionUID = 42L;

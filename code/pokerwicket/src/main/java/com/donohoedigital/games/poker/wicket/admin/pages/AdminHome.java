@@ -32,12 +32,12 @@
  */
 package com.donohoedigital.games.poker.wicket.admin.pages;
 
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * @author Doug Donohoe
  */
-@MountPath(path="admin")
+@MountPath("admin")
 public class AdminHome extends AdminPokerPage
 {
     private static final long serialVersionUID = 42L;

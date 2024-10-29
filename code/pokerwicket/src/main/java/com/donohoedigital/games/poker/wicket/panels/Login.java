@@ -32,13 +32,13 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.pages.*;
+import com.donohoedigital.games.poker.wicket.util.LoginUtils;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.common.JavascriptHideable;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.pages.BasePage;
 import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.model.*;
+import org.apache.wicket.model.CompoundPropertyModel;
 
 /**
  * Created by IntelliJ IDEA.
@@ -62,7 +62,7 @@ public class Login extends VoidPanel implements JavascriptHideable
 
         this.visibleToUser = visibleToUser;
 
-        Form<Login> form = new StatelessForm<Login>("login", new CompoundPropertyModel<Login>(this))
+        Form<Login> form = new StatelessForm<Login>("login", new CompoundPropertyModel<>(this))
         {
             private static final long serialVersionUID = 42L;
 
@@ -74,7 +74,7 @@ public class Login extends VoidPanel implements JavascriptHideable
         };
         add(form);
 
-        TextField<?> nameText = new TextField("name");
+        TextField<String> nameText = new TextField<>("name");
         nameText.setRequired(true);
         if (visibleToUser) nameText.add(new DefaultFocus());
 

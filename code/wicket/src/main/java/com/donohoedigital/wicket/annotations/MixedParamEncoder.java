@@ -2,91 +2,58 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  * DD Poker - Source Code
  * Copyright (c) 2003-2024 Doug Donohoe
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * For the full License text, please see the LICENSE.txt file
  * in the root directory of this project.
- * 
- * The "DD Poker" and "Donohoe Digital" names and logos, as well as any images, 
+ *
+ * The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
  * graphics, text, and documentation found in this repository (including but not
- * limited to written documentation, website content, and marketing materials) 
- * are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 
- * 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets 
+ * limited to written documentation, website content, and marketing materials)
+ * are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+ * 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
  * without explicit written permission for any uses not covered by this License.
  * For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
  * in the root directory of this project.
- * 
- * For inquiries regarding commercial licensing of this source code or 
- * the use of names, logos, images, text, or other assets, please contact 
+ *
+ * For inquiries regarding commercial licensing of this source code or
+ * the use of names, logos, images, text, or other assets, please contact
  * doug [at] donohoe [dot] info.
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
-package com.donohoedigital.wicket.common;
+package com.donohoedigital.wicket.annotations;
 
-import org.apache.wicket.*;
-import org.apache.wicket.request.target.coding.*;
-import org.apache.wicket.util.string.*;
-import org.apache.wicket.util.value.*;
+import org.apache.wicket.request.IRequestParameters;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.Set;
 
-
-/**
- * Correct version of MixedParamUrlCodingStrategy
- */
-public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTargetUrlCodingStrategy
-{
-    //private static Logger logger = LogManager.getLogger(FixedMixedParamUrlCodingStrategy.class);
+public class MixedParamEncoder implements IPageParametersEncoder {
 
     private final String[] parameterNames;
 
-    /**
-     * Construct.
-     *
-     * @param mountPath             mount path
-     * @param bookmarkablePageClass class of mounted page
-     * @param pageMapName           name of pagemap
-     * @param parameterNames        the parameter names (not null)
-     */
-    public FixedMixedParamUrlCodingStrategy(String mountPath, Class<? extends Page> bookmarkablePageClass,
-                                            String pageMapName, String[] parameterNames)
-    {
-        super(mountPath, bookmarkablePageClass, pageMapName);
+    public MixedParamEncoder(String[] parameterNames) {
         this.parameterNames = parameterNames;
     }
 
-    /**
-     * Construct.
-     *
-     * @param mountPath             mount path (not empty)
-     * @param bookmarkablePageClass class of mounted page (not null)
-     * @param parameterNames        the parameter names (not null)
-     */
-    public FixedMixedParamUrlCodingStrategy(String mountPath, Class<? extends Page> bookmarkablePageClass,
-                                            String[] parameterNames)
-    {
-        super(mountPath, bookmarkablePageClass, PageMap.DEFAULT_NAME);
-        this.parameterNames = parameterNames;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings({"unchecked", "RawUseOfParameterizedType"})
     @Override
-    protected void appendParameters(AppendingStringBuffer url, Map parameters)
-    {
-        Set<String> parameterNamesToAdd = new HashSet<String>(parameters.keySet());
+    public Url encodePageParameters(PageParameters parameters) {
+        Url url = new Url();
+        Set<String> parameterNamesToAdd = new HashSet<>(parameters.getNamedKeys());
 
         // Find index of last specified parameter
         boolean foundParameter = false;
@@ -94,7 +61,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
         while (lastSpecifiedParameter != 0 && !foundParameter)
         {
             String param = getString(parameters, parameterNames[--lastSpecifiedParameter]);
-            foundParameter = param != null && param.length() > 0;
+            foundParameter = param != null && !param.isEmpty();
         }
 
         // append parameters we found
@@ -102,8 +69,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
         {
             for (int i = 0; i <= lastSpecifiedParameter; i++)
             {
-                url.append("/");
-                url.append(urlEncodePathComponent(getString(parameters, parameterNames[i])));
+                url.getSegments().add(urlEncodePathComponent(getString(parameters, parameterNames[i])));
                 parameterNamesToAdd.remove(parameterNames[i]);
             }
         }
@@ -111,27 +77,21 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
         // add remaining as query string
         if (!parameterNamesToAdd.isEmpty())
         {
-            boolean first = true;
             for (String parameterName : parameterNamesToAdd)
             {
                 String param = getString(parameters, parameterName);
-                if (param != null && param.length() > 0)
+                if (param != null && !param.isEmpty())
                 {
-                    url.append(first ? '?' : '&');
-                    url.append(urlEncodeQueryComponent(parameterName)).append("=").append(urlEncodeQueryComponent(param));
-                    first = false;
+                    url.getQueryParameters().add(new Url.QueryParameter(parameterName, param));
                 }
             }
         }
+        return url;
     }
 
-    /**
-     * Similar to ValueMap logic
-     */
-    @SuppressWarnings({"RawUseOfParameterizedType"})
-    protected final String getString(final Map map, final String key)
+    private String getString(final PageParameters parameters, final String key)
     {
-        final Object o = map.get(key);
+        final Object o = parameters.get(key);
         if (o == null)
         {
             return null;
@@ -156,25 +116,26 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings({"RawUseOfParameterizedType"})
     @Override
-    protected ValueMap decodeParameters(String urlFragment, Map urlParameters)
-    {
+    public PageParameters decodePageParameters(Request request) {
         PageParameters params = new PageParameters();
-        // Add all url parameters
-        params.putAll(urlParameters);
-        String urlPath = urlFragment;
+
+        // add all url query parameters
+        IRequestParameters queryParameters = request.getQueryParameters();
+        queryParameters.getParameterNames().forEach(name ->
+                params.set(name, queryParameters.getParameterValue(name)));
+
+        // add path components
+        String urlPath = request.getUrl().getPath();
         if (urlPath.startsWith("/"))
         {
             urlPath = urlPath.substring(1);
         }
 
-        if (urlPath.length() > 0)
+        if (!urlPath.isEmpty())
         {
             String[] pathParts = urlPath.split("/");
+            //noinspection StatementWithEmptyBody
             if (pathParts.length > parameterNames.length)
             {
                 //logger.warn("Too many path parts: " + WicketUtils.getWebRequest().getURL());
@@ -184,9 +145,9 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
             {
                 // only set parameter if it didn't come down in another form (e.g., query
                 // string or posted form values).
-                if (!params.containsKey(parameterNames[i]))
+                if (params.get(parameterNames[i]) != null)
                 {
-                    params.put(parameterNames[i], urlDecodePathComponent(pathParts[i]));
+                    params.set(parameterNames[i], urlDecodePathComponent(pathParts[i]));
                 }
             }
         }
@@ -195,7 +156,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
     }
 
     ////
-    //// code below to allow any characer in the path.  We deal with:
+    //// code below to allow any character in the path.  We deal with:
     ////
     //// . and .. which are interpreted by the servlet container
     //// / and \ which are also path components
@@ -216,12 +177,10 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
     private static final char SLASH_ALIAS = 's';
     private static final char BACKSLASH_ALIAS = 'b';
 
-
-    @Override
     protected String urlEncodePathComponent(String value)
     {
-        String enc = null;
-        if (value == null || value.length() == 0)
+        String enc;
+        if (value == null || value.isEmpty())
         {
             enc = NULL_CHAR_STRING;
         }
@@ -240,18 +199,16 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
 
         else
         {
-            value = encodeSpecial(value);
-            enc = super.urlEncodePathComponent(value);
+            enc = encodeSpecial(value);
         }
 
         //logger.debug("Encoded " + value + " to " + enc);
         return enc;
     }
 
-    @Override
-    protected String urlDecodePathComponent(String value)
+    private String urlDecodePathComponent(String value)
     {
-        if (value == null || value.length() == 0 || value.equals(NULL_CHAR_STRING))
+        if (value == null || value.isEmpty() || value.equals(NULL_CHAR_STRING))
         {
             return null;
         }
@@ -268,8 +225,7 @@ public class FixedMixedParamUrlCodingStrategy extends BookmarkablePageRequestTar
             return "..";
         }
 
-        value = decodeSpecial(value);
-        return super.urlDecodePathComponent(value);
+        return decodeSpecial(value);
     }
 
     /**

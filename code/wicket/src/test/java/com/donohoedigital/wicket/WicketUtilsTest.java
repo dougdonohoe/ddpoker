@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.wicket;
 
-import com.donohoedigital.wicket.converters.*;
-import junit.framework.*;
-import org.apache.wicket.*;
+import com.donohoedigital.wicket.converters.ParamDateConverter;
+import junit.framework.TestCase;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,7 +47,7 @@ import java.util.*;
  * Time: 10:30:48 AM
  * To change this template use File | Settings | File Templates.
  */
-public class WicketUilsTest extends TestCase
+public class WicketUtilsTest extends TestCase
 {
 	public void testDate()
 	{
@@ -59,8 +61,8 @@ public class WicketUilsTest extends TestCase
         String bad = "adsfkjadfs";
 
         PageParameters params = new PageParameters();
-        params.put(GOOD, good);
-        params.put(BAD, bad);
+        params.set(GOOD, good);
+        params.set(BAD, bad);
 
 
         Date d = WicketUtils.getAsDate(params, GOOD, null, conv);

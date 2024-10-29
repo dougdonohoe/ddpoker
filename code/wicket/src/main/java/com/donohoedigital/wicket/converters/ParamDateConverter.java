@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.wicket.converters;
 
-import org.apache.wicket.util.convert.converters.*;
+import org.apache.wicket.util.convert.converter.DateConverter;
 
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Doug Donohoe

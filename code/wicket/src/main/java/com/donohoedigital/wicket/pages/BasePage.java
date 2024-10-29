@@ -32,10 +32,9 @@
  */
 package com.donohoedigital.wicket.pages;
 
-import com.donohoedigital.wicket.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.model.*;
+import com.donohoedigital.wicket.ExpirationUtils;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Doug Donohoe
@@ -45,31 +44,6 @@ public class BasePage<T> extends WebPage
     //private static Logger logger = LogManager.getLogger(BasePage.class);
 
     private static final long serialVersionUID = 42L;
-
-    protected BasePage()
-    {
-        super();
-    }
-
-    protected BasePage(IModel<T> tiModel)
-    {
-        super(tiModel);
-    }
-
-    protected BasePage(IPageMap pageMap)
-    {
-        super(pageMap);
-    }
-
-    protected BasePage(IPageMap pageMap, IModel<T> tiModel)
-    {
-        super(pageMap, tiModel);
-    }
-
-    protected BasePage(IPageMap pageMap, PageParameters parameters)
-    {
-        super(pageMap, parameters);
-    }
 
     protected BasePage(PageParameters parameters)
     {
@@ -83,7 +57,6 @@ public class BasePage<T> extends WebPage
     protected void onAfterRender()
     {
         super.onAfterRender();
-
-        new ExpirationUtils().rememberPath();
+        ExpirationUtils.rememberPath();
     }
 }

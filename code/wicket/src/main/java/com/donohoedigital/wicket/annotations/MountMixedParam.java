@@ -32,35 +32,17 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import org.apache.wicket.request.target.coding.*;
+import java.lang.annotation.*;
 
 /**
- * Override to deal with pre-fetch browser/toolbar (?) bug that tries to get resources
- * incorrectly (e.g., /home/resource/foo instead of /resources/foo).  This fixes these errors:
- * ERROR URL fragment has unmatched key/value pair: resources/org.wicketstuff.prototype.PrototypeResourceReference/prototype.js
- *
+ * Mount annotation for {@link MixedParamEncoder}.
  * @author Doug Donohoe
  */
-public class BookmarkablePage extends BookmarkablePageRequestTargetUrlCodingStrategy
+@Target({ ElementType.TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+public @interface MountMixedParam
 {
-    /**
-     * Construct.
-     */
-    public <C extends org.apache.wicket.Page> BookmarkablePage(String mountPath, Class<C> bookmarkablePageClass, String pageMapName)
-    {
-        super(mountPath, bookmarkablePageClass, pageMapName);
-    }
-
-    /**
-     * @see org.apache.wicket.request.target.coding.IRequestTargetUrlCodingStrategy#matches(org.apache.wicket.IRequestTarget)
-     */
-    @Override
-    public boolean matches(String path)
-    {
-        // mount path should not contain /resources/ (ends up returning a 404).
-
-        if (path.contains("/resources/")) return false;
-
-        return super.matches(path);
-    }
+    String[] parameterNames();
 }

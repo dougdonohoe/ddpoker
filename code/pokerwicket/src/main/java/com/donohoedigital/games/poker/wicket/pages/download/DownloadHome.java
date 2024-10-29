@@ -33,14 +33,14 @@
 package com.donohoedigital.games.poker.wicket.pages.download;
 
 import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.labels.StringLabel;
-import org.wicketstuff.annotation.mount.MountPath;
 
 /**
  * @author Doug Donohoe
  */
 
-@MountPath(path = "download")
+@MountPath("download")
 public class DownloadHome extends DownloadPokerPage {
     private static final long serialVersionUID = 42L;
 

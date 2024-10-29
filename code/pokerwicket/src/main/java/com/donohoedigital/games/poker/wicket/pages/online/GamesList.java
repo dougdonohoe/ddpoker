@@ -32,32 +32,45 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.games.poker.wicket.rss.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.annotations.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.panels.*;
-import org.apache.wicket.*;
-import org.apache.wicket.datetime.markup.html.basic.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.markup.repeater.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.apache.wicket.util.string.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerWicketApplication;
+import com.donohoedigital.games.poker.wicket.panels.GameUrl;
+import com.donohoedigital.games.poker.wicket.panels.NameRangeSearchForm;
+import com.donohoedigital.games.poker.wicket.panels.PlayerList;
+import com.donohoedigital.games.poker.wicket.rss.GamesListRss;
+import com.donohoedigital.games.poker.wicket.rss.RssLink;
+import com.donohoedigital.games.poker.wicket.util.DateRange;
+import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
+import com.donohoedigital.wicket.annotations.MountMixedParam;
+import com.donohoedigital.wicket.common.PageableServiceProvider;
+import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.labels.BasicPluralLabelProvider;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.DateModel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.panels.BookmarkablePagingNavigator;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.*;
+import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.date;
 import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Category.*;
 
 /**
@@ -67,8 +80,8 @@ import static com.donohoedigital.games.poker.wicket.pages.online.GamesList.Categ
  * Time: 1:36:58 PM
  * To change this template use File | Settings | File Templates.
  */
-@SuppressWarnings({"PublicStaticArrayField"})
-@MountFixedMixedParam(parameterNames = {GamesList.PARAM_BEGIN, GamesList.PARAM_END, GamesList.PARAM_NAME,
+@SuppressWarnings({"PublicStaticArrayField", "unused", "rawtypes", "unchecked"})
+@MountMixedParam(parameterNames = {GamesList.PARAM_BEGIN, GamesList.PARAM_END, GamesList.PARAM_NAME,
         GamesList.PARAM_PAGE, GamesList.PARAM_SIZE})
 public abstract class GamesList extends OnlinePokerPage
 {
@@ -96,7 +109,6 @@ public abstract class GamesList extends OnlinePokerPage
         available, running, recent, current
     }
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private OnlineGameService gameService;
 
@@ -254,12 +266,12 @@ public abstract class GamesList extends OnlinePokerPage
     {
         private static final long serialVersionUID = 42L;
 
-        private Category category;
+        private final Category category;
         private String name;
         private Date begin;
         private Date end;
-        private Date beginDefault = PokerWicketApplication.START_OF_TIME;
-        private Date endDefault = Utils.getDateEndOfDay(new Date());
+        private final Date beginDefault = PokerWicketApplication.START_OF_TIME;
+        private final Date endDefault = Utils.getDateEndOfDay(new Date());
 
         private GameData(Category category)
         {
@@ -349,7 +361,7 @@ public abstract class GamesList extends OnlinePokerPage
             Category category = data.getCategory();
 
             // CSS class
-            row.add(new AttributeModifier("class", true,
+            row.add(new AttributeModifier("class",
                                           new StringModel(PokerSession.isLoggedInUser(game.getHostPlayer()) ? "highlight" :
                                                           row.getIndex() % 2 == 0 ? "odd" : "even")));
 
@@ -357,7 +369,7 @@ public abstract class GamesList extends OnlinePokerPage
             Link<?> link = GameDetail.getGameIdLink("detailsLink", game.getId());
             row.add(link);
 
-            // tourament name (in link)
+            // tournament name (in link)
             link.add(new StringLabel("tournament.name"));
 
             // invite only
@@ -380,7 +392,7 @@ public abstract class GamesList extends OnlinePokerPage
             {
                 players = game.getTournament().getPlayers();
             }
-            if (players == null) players = new ArrayList<String>();
+            if (players == null) players = new ArrayList<>();
             row.add(new PlayerList("playerList", players).setVisible(category != recent));
 
             // url link

@@ -32,8 +32,9 @@
  */
 package com.donohoedigital.wicket.components;
 
-import org.apache.wicket.markup.repeater.data.*;
-import com.donohoedigital.wicket.common.*;
+import com.donohoedigital.wicket.common.CountPageable;
+import org.apache.wicket.markup.repeater.data.DataView;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
 
 /**
  * Created by IntelliJ IDEA.
@@ -58,6 +59,6 @@ public abstract class CountDataView<T> extends DataView<T> implements CountPagea
 
     public int getPageSize()
     {
-        return internalGetRowsPerPage();
+        return getItemsPerPage();
     }
 }

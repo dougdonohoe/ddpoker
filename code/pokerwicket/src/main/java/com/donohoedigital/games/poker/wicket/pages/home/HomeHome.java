@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.home;
 
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.wicket.annotations.MountPath;
 
 /**
  * @author Doug Donohoe
@@ -40,7 +40,7 @@ import org.wicketstuff.annotation.mount.*;
 
 // mount needed since login/logout on home page doesn't work with ie ... it requests "/./" which it doesn't seem
 // to understand should be reduced to just "/".  FIX: this may be a wicket bug I can fix
-@MountPath(path = "home")
+@MountPath("home")
 public class HomeHome extends HomePokerPage
 {
     private static final long serialVersionUID = 42L;

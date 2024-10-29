@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.wicket.labels;
 
-import com.donohoedigital.base.*;
-import org.apache.wicket.markup.*;
-import org.apache.wicket.markup.html.basic.*;
+import com.donohoedigital.base.Utils;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.html.basic.Label;
 
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  * class to replace text that matches highlight with &lt;span class=cssClass>highlight&lt;/span>
@@ -116,7 +117,7 @@ public class HighlightLabel extends Label
 	 * Do our magic
 	 */
 	@Override
-	protected void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
+	public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag)
 	{
 		replaceComponentTagBody(markupStream, openTag, getHighlightedText());
 	}

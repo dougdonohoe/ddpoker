@@ -32,30 +32,41 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.panels.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
-import org.apache.wicket.behavior.*;
-import org.apache.wicket.feedback.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.form.validation.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.list.*;
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.spring.injection.annot.*;
-import org.wicketstuff.annotation.mount.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.OnlineProfileSummary;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.panels.FormFeedbackPanel;
+import com.donohoedigital.wicket.annotations.MountPath;
+import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.common.InfoOnlyFilter;
+import com.donohoedigital.wicket.labels.GroupingIntegerLabel;
+import com.donohoedigital.wicket.labels.HiddenComponent;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.IntegerModel;
+import com.donohoedigital.wicket.models.StringModel;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.SimpleAttributeModifier;
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -64,7 +75,7 @@ import java.util.*;
  * Time: 12:19:02 PM
  * To change this template use File | Settings | File Templates.
  */
-@MountPath(path = "myprofile")
+@MountPath("myprofile")
 public class MyProfile extends OnlinePokerPage
 {
     private static final long serialVersionUID = 42L;
@@ -206,7 +217,7 @@ public class MyProfile extends OnlinePokerPage
                     OnlineProfileSummary p = row.getModelObject();
 
                     // CSS class
-                    row.add(new AttributeModifier("class", true, new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
+                    row.add(new AttributeModifier("class", new StringModel(row.getIndex() % 2 == 0 ? "odd" : "even")));
 
                     // display name with &nbsp; spaces so they don't wrap
                     Link<?> link = History.getHistoryLink("playerLink", p.getName());

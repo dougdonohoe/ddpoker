@@ -32,16 +32,21 @@
  */
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
-import junit.framework.*;
-import org.apache.logging.log4j.*;
-import org.apache.wicket.util.convert.converters.*;
-import org.springframework.core.io.*;
-import org.springframework.core.io.support.*;
+import com.donohoedigital.base.Utils;
+import junit.framework.TestCase;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.wicket.util.convert.converter.DateConverter;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.

@@ -32,13 +32,16 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.games.poker.wicket.pages.*;
-import com.donohoedigital.games.poker.wicket.pages.online.*;
-import com.donohoedigital.wicket.common.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.*;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.model.*;
+import com.donohoedigital.games.poker.wicket.pages.BasePokerPage;
+import com.donohoedigital.games.poker.wicket.pages.online.Leaderboard;
+import com.donohoedigital.wicket.WicketUtils;
+import com.donohoedigital.wicket.common.IntegerSelectChoice;
+import com.donohoedigital.wicket.common.SelectChoiceList;
+import com.donohoedigital.wicket.models.StringModel;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.HiddenField;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author Doug Donohoe
@@ -60,7 +63,7 @@ public class LeaderboardForm extends NameRangeSearchForm
         super(id, params, clazz, data, paramName, paramBegin, paramEnd, "Player");
 
         // get # of games
-        int games = params.getAsInteger(Leaderboard.PARAM_GAMES, 5);
+        int games = WicketUtils.getAsInt(params, Leaderboard.PARAM_GAMES, 5);
         data.setGames(games);
 
         // games list of choices
@@ -88,7 +91,7 @@ public class LeaderboardForm extends NameRangeSearchForm
     @Override
     protected void addCustomPageParameters(PageParameters p)
     {
-        p.put(Leaderboard.PARAM_GAMES, gamesC.getDefaultModelObjectAsString());
-        p.put(Leaderboard.PARAM_TYPE, type.getObject());
+        p.set(Leaderboard.PARAM_GAMES, gamesC.getDefaultModelObjectAsString());
+        p.set(Leaderboard.PARAM_TYPE, type.getObject());
     }
 }
