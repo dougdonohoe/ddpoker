@@ -50,7 +50,6 @@ import com.donohoedigital.wicket.models.IntegerModel;
 import com.donohoedigital.wicket.models.StringModel;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -241,7 +240,7 @@ public class MyProfile extends OnlinePokerPage
                         }
                     };
                     Button button = new Button("button");
-                    button.add(new SimpleAttributeModifier("onclick",
+                    button.add(new AttributeModifier("onclick",
                                                            "return confirm('Are you sure you want to retire " +
                                                            Utils.encodeJavascript(p.getName()) + "?');"));
                     form.add(button);

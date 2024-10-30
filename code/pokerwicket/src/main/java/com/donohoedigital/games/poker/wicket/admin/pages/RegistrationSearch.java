@@ -147,9 +147,9 @@ public class RegistrationSearch extends AdminPokerPage
         private String address;
 
         @Override
-        public Iterator<Registration> iterator(int first, int pagesize)
+        public Iterator<Registration> iterator(long first, long pagesize)
         {
-            return regService.getMatchingRegistrations(size(), first, pagesize, name, email, key, address).iterator();
+            return regService.getMatchingRegistrations((int) size(), (int) first, (int) pagesize, name, email, key, address).iterator();
         }
 
         @Override

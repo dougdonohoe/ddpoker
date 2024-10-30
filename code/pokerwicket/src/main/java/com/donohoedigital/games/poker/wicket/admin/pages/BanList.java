@@ -53,7 +53,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.IErrorMessageSource;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidationError;
 import org.apache.wicket.validation.IValidator;
@@ -71,12 +70,11 @@ import java.util.List;
  * Time: 10:39:35 PM
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("unused")
 @MountPath("admin/ban-list")
 public class BanList extends AdminPokerPage
 {
     private static final long serialVersionUID = 42L;
-
-    public static final int ITEMS_PER_PAGE = 10;
 
     @SpringBean
     private BannedKeyService banService;
@@ -95,7 +93,7 @@ public class BanList extends AdminPokerPage
         add(new WebMarkupContainer("none").setVisible(data.isEmpty()));
 
         // form data
-        CompoundPropertyModel<BanData> formData = new CompoundPropertyModel<BanData>(data);
+        CompoundPropertyModel<BanData> formData = new CompoundPropertyModel<>(data);
 
         // form
         Form<BanData> form = new Form<BanData>("form", formData)
@@ -120,22 +118,21 @@ public class BanList extends AdminPokerPage
         add(form);
 
         // name
-        TextField<String> ban = new TextField<String>("ban");
+        TextField<String> ban = new TextField<>("ban");
         ban.add(new DefaultFocus());
         ban.setRequired(true);
-        ban.add(new StringValidator.MaximumLengthValidator(255));
+        ban.add(StringValidator.maximumLength(255));
         ban.add(new CheckDup());
         form.add(ban);
 
         // until
         DateTextField until = new DateTextField("until");
         form.add(until.add(new DatePicker()));
-        //noinspection unchecked
         until.add(DateValidator.minimum(new Date()));
 
         // comment
-        TextField<String> comment = new TextField<String>("comment");
-        comment.add(new StringValidator.MaximumLengthValidator(128));
+        TextField<String> comment = new TextField<>("comment");
+        comment.add(StringValidator.maximumLength(128));
         form.add(comment);
 
         // error / feedback
@@ -154,14 +151,8 @@ public class BanList extends AdminPokerPage
             if (bannedKey != null)
             {
                 // TODO: use wicket resources for this
-                iValidatable.error(new IValidationError()
-                {
-
-                    public String getErrorMessage(IErrorMessageSource messageSource)
-                    {
-                        return "'" + ban + "' is already banned";
-                    }
-                });
+                iValidatable.error((IValidationError) messageSource ->
+                        "'" + ban + "' is already banned");
             }
         }
     }
@@ -180,7 +171,7 @@ public class BanList extends AdminPokerPage
         private String comment;
 
         @Override
-        public Iterator<BannedKey> iterator(int first, int pagesize)
+        public Iterator<BannedKey> iterator(long first, long pagesize)
         {
             return getList().iterator();
         }
@@ -246,7 +237,7 @@ public class BanList extends AdminPokerPage
 
         private BanListTableView(String id, BanData data)
         {
-            super(id, data, data.size() + 1); // add one in case 0
+            super(id, data, (int) data.size() + 1); // add one in case 0
         }
 
         @Override

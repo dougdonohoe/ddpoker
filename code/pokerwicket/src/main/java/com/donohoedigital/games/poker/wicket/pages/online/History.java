@@ -263,10 +263,10 @@ public class History extends OnlinePokerPage
         }
 
         @Override
-        public Iterator<TournamentHistory> iterator(int first, int pagesize)
+        public Iterator<TournamentHistory> iterator(long first, long pagesize)
         {
             DateRange dr = new DateRange(this);
-            return histService.getAllTournamentHistoriesForProfile(size(), first, pagesize, user.getId(), name, dr.getBegin(), dr.getEnd()).iterator();
+            return histService.getAllTournamentHistoriesForProfile((int) size(), (int) first, (int) pagesize, user.getId(), name, dr.getBegin(), dr.getEnd()).iterator();
         }
 
         @Override

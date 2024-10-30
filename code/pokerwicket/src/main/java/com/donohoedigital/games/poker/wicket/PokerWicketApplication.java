@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket;
 
+import com.donohoedigital.base.RepoUtils;
 import com.donohoedigital.config.ConfigUtils;
 import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.wicket.admin.AdminAuthorizationStrategy;
@@ -48,8 +49,10 @@ import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.util.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -104,8 +107,11 @@ public class PokerWicketApplication extends BaseWicketApplication
         // seems to tell Wicket to look in the source location for resources.
         // Enable in development mode only.
         if (getConfigurationType().equals(RuntimeConfigurationType.DEVELOPMENT)) {
-            getResourceSettings().addResourceFolder("code/wicket/src/main/java");
-            getResourceSettings().addResourceFolder("code/pokerwicket/src/main/java");
+            File repoRoot = RepoUtils.getRepoRoot();
+            getResourceSettings().getResourceFinders().add(0, new Path(
+                    new File(repoRoot, "code/wicket/src/main/java").getAbsolutePath()));
+            getResourceSettings().getResourceFinders().add(0, new Path(
+                    new File(repoRoot, "code/pokerwicket/src/main/java").getAbsolutePath()));
         }
     }
 

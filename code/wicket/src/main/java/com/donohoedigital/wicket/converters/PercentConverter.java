@@ -47,11 +47,11 @@ import java.util.Locale;
  * Time: 2:58:51 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PercentConverter extends AbstractDecimalConverter
+public class PercentConverter extends AbstractDecimalConverter<Double>
 {
 	private static final long serialVersionUID = 42L;
 
-    private int fractionDigits;
+    private final int fractionDigits;
 
     public PercentConverter(int fractionDigits)
     {

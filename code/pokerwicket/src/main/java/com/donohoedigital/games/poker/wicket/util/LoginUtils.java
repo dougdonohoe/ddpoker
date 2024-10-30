@@ -183,7 +183,10 @@ public class LoginUtils
         }
 
         // continue on
-        if (type == PAGE && !page.continueToOriginalDestination())
+        page.continueToOriginalDestination();
+
+        // if didn't continue on...
+        if (type == PAGE)
         {
             // default to page that login form was on
             // need to use "class" so page is re-rendered

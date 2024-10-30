@@ -38,7 +38,10 @@ import com.donohoedigital.games.poker.wicket.panels.TopNavigation;
 import com.donohoedigital.games.poker.wicket.util.LoginUtils;
 import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.pages.BasePage;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.resource.JQueryResourceReference;
 
 /**
  * Created by IntelliJ IDEA.
@@ -64,6 +67,13 @@ public abstract class BasePokerPage extends BasePage<Void>
         add(new CurrentProfile(PROFILE_NAME, isLoginPanelVisible()).setVisible(isCurrentProfileDisplayed()));
         add(new VoidContainer("no-profile").setVisible(!isCurrentProfileDisplayed()));
         add(new CopyrightFooter("footer"));
+    }
+
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        // Ensure jQuery is always included in the head
+        response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.get()));
     }
 
     /**

@@ -34,16 +34,16 @@ package com.donohoedigital.wicket.annotations;
 
 import com.donohoedigital.config.MatchingResources;
 import org.apache.wicket.Page;
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.component.IRequestablePage;
-import org.apache.wicket.request.mapper.MountedMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 /**
- * This code was originally contributed to wicketstuff as the 'annotation'
+ * This code was originally contributed (by me) to wicketstuff as the 'annotation'
  * library.  When 1.5 was released, its functionality was significantly
  * reduced, removing strategies that DD Poker relied on.  When I upgraded
  * to 1.5, I had to pull this in so we could restore the mount strategies

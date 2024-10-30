@@ -38,13 +38,19 @@
 
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.udp.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -53,7 +59,7 @@ import java.util.*;
 public class DealTester extends BaseCommandLineApp
 {
     // logging
-    private Logger logger;
+    private final Logger logger;
 
     /**
      * Run emailer
@@ -66,7 +72,7 @@ public class DealTester extends BaseCommandLineApp
 
         catch (ApplicationError ae)
         {
-            System.err.println("DealTester ending due to ApplicationError: " + ae.toString());
+            System.err.println("DealTester ending due to ApplicationError: " + ae);
             System.exit(1);
         }  
         catch (java.lang.OutOfMemoryError nomem)
@@ -81,16 +87,6 @@ public class DealTester extends BaseCommandLineApp
             System.exit(1);
         }
     }
-    
-    /**
-     * Can be overridden for application specific options
-     */
-    protected void setupApplicationCommandLineOptions()
-    {
-
-    }
-
-    UDPServer udp_;
 
     /**
      * Create War from config file
@@ -114,7 +110,7 @@ public class DealTester extends BaseCommandLineApp
     {
         int[][] hand = new int[52][52];
 
-        boolean ADJUST = true;
+        //boolean ADJUST = true;
         int RUN = 10000000;
 
         Deck d;
@@ -156,7 +152,7 @@ public class DealTester extends BaseCommandLineApp
             }
         }
 
-        ArrayList<DealInfo> sort = new ArrayList<DealInfo>(0);
+        ArrayList<DealInfo> sort = new ArrayList<>(0);
         int min = Integer.MAX_VALUE;
         int max = 0;
         int sum = 0;
@@ -197,7 +193,7 @@ public class DealTester extends BaseCommandLineApp
 
     }
 
-    private class DealInfo implements Comparable
+    private static class DealInfo implements Comparable<DealInfo>
     {
         String sHand;
         int cnt;
@@ -208,9 +204,8 @@ public class DealTester extends BaseCommandLineApp
             cnt = c;
         }
 
-        public int compareTo(Object o)
+        public int compareTo(DealInfo d)
         {
-            DealInfo d = (DealInfo) o;
             return cnt - d.cnt;
         }
     }

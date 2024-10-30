@@ -141,9 +141,9 @@ public class OnlineProfileSearch extends AdminPokerPage
         private String key;
 
         @Override
-        public Iterator<OnlineProfile> iterator(int first, int pagesize)
+        public Iterator<OnlineProfile> iterator(long first, long pagesize)
         {
-            return profileService.getMatchingOnlineProfiles(size(), first, pagesize, name, email, key, true).iterator();
+            return profileService.getMatchingOnlineProfiles((int) size(), (int) first, (int) pagesize, name, email, key, true).iterator();
         }
 
         @Override

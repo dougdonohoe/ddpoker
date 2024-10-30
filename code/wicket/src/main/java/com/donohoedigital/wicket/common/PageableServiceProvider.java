@@ -59,7 +59,7 @@ public abstract class PageableServiceProvider<T> implements IDataProvider<T>
     /**
      * Fetch 'pagesize' rows starting at index 'first' and return as an Iterator
      */
-    public abstract Iterator<T> iterator(int first, int pagesize);
+    public abstract Iterator<T> iterator(long first, long pagesize);
 
     /**
      * Implementers should implement logic to fetch the total count of all
@@ -74,7 +74,7 @@ public abstract class PageableServiceProvider<T> implements IDataProvider<T>
      *
      * @return total count of all items represented by this provider
      */
-    public int size()
+    public long size()
     {
         if (size == null)
         {
@@ -114,7 +114,7 @@ public abstract class PageableServiceProvider<T> implements IDataProvider<T>
         int n = WicketUtils.getAsInt(params, name, -1);
         if (n == -1)
         {
-            n = size();
+            n = (int) size();
             params.set(name, n);
         }
         else
@@ -138,7 +138,7 @@ public abstract class PageableServiceProvider<T> implements IDataProvider<T>
     @SuppressWarnings("unchecked")
     public IModel<T> model(T object)
     {
-        return new CompoundPropertyModel<T>((IModel<T>) new EntityModel<T>(object));
+        return new CompoundPropertyModel<>((IModel<T>) new EntityModel<>(object));
     }
 
     /**

@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.wicket.converters;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
-import java.util.*;
+import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.
@@ -54,7 +54,7 @@ public class PlaceConverter extends GroupingIntegerConverter
     public static final PlaceConverter INSTANCE = new PlaceConverter();
 
     @Override
-    public String convertToString(Object value, Locale locale)
+    public String convertToString(Integer value, Locale locale)
     {
         return PropertyConfig.getPlace((Integer)value, super.convertToString(value, locale));
     }
