@@ -64,8 +64,8 @@ public class HideShowSwapLabel extends HideShow
     {
         StringBuilder sb = super.getJavascript();
 
-        sb.append(proto(label)).append(".update(");
-        sb.append(proto(hideShow)).append(".visible() ? ");
+        sb.append(proto(label)).append(".text(");
+        sb.append(proto(hideShow)).append(".is(':visible') ? ");
         sb.append(quote(labelWhenVisible));
         sb.append(" : ");
         sb.append(quote(labelWhenHidden));

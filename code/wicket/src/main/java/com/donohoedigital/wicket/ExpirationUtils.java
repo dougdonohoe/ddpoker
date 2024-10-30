@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.wicket;
 
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.handler.RenderPageRequestHandler;
 
 import javax.servlet.http.Cookie;
 

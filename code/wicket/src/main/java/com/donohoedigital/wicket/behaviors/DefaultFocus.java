@@ -33,12 +33,13 @@
 package com.donohoedigital.wicket.behaviors;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.OnLoadHeaderItem;
 
 /**
  * @author Doug Donohoe
  */
-public class DefaultFocus extends AbstractPrototypeBehavior
+public class DefaultFocus extends AbstractJQueryBehavior
 {
     private static final long serialVersionUID = 42L;
 
@@ -55,7 +56,7 @@ public class DefaultFocus extends AbstractPrototypeBehavior
     public void renderHead(Component component, IHeaderResponse iHeaderResponse)
     {
         super.renderHead(component, iHeaderResponse);
-        iHeaderResponse.renderOnLoadJavaScript(getJavascript().toString());
+        iHeaderResponse.render(OnLoadHeaderItem.forScript(getJavascript()));
     }
 
     /**

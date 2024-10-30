@@ -32,14 +32,13 @@
  */
 package com.donohoedigital.wicket.annotations;
 
-import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import java.lang.reflect.Array;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MixedParamEncoder implements IPageParametersEncoder {
@@ -117,16 +116,16 @@ public class MixedParamEncoder implements IPageParametersEncoder {
     }
 
     @Override
-    public PageParameters decodePageParameters(Request request) {
+    public PageParameters decodePageParameters(Url url) {
         PageParameters params = new PageParameters();
 
         // add all url query parameters
-        IRequestParameters queryParameters = request.getQueryParameters();
-        queryParameters.getParameterNames().forEach(name ->
-                params.set(name, queryParameters.getParameterValue(name)));
+        List<Url.QueryParameter> queryParameters = url.getQueryParameters();
+        queryParameters.forEach(qp ->
+                params.set(qp.getName(), qp.getValue()));
 
         // add path components
-        String urlPath = request.getUrl().getPath();
+        String urlPath = url.getPath();
         if (urlPath.startsWith("/"))
         {
             urlPath = urlPath.substring(1);

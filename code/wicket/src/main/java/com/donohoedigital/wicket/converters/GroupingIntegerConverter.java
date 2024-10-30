@@ -44,7 +44,7 @@ import java.util.Locale;
  * Time: 2:58:51 PM
  * To change this template use File | Settings | File Templates.
  */
-public class GroupingIntegerConverter extends AbstractIntegerConverter
+public class GroupingIntegerConverter extends AbstractIntegerConverter<Integer>
 {
     private static final long serialVersionUID = 42L;
 

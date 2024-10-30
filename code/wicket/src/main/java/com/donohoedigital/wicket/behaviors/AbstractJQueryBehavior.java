@@ -34,28 +34,13 @@ package com.donohoedigital.wicket.behaviors;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
-import org.wicketstuff.jslibraries.JSLib;
-import org.wicketstuff.jslibraries.Library;
-import org.wicketstuff.jslibraries.VersionDescriptor;
 
 /**
  * @author Doug Donohoe
  */
-public abstract class AbstractPrototypeBehavior extends Behavior
+public abstract class AbstractJQueryBehavior extends Behavior
 {
     private static final long serialVersionUID = 42L;
-
-    /**
-     * Add prototype to header
-     */
-    @Override
-    public void renderHead(Component component, IHeaderResponse response)
-    {
-        IHeaderContributor header = JSLib.getHeaderContribution(VersionDescriptor.alwaysLatest(Library.PROTOTYPE));
-        header.renderHead(response);
-    }
 
     /**
      * Get javascript to render
@@ -67,7 +52,7 @@ public abstract class AbstractPrototypeBehavior extends Behavior
      */
     protected String proto(Component component)
     {
-        return "$('"+component.getMarkupId()+"')";
+        return "$('#" + component.getMarkupId() + "')";
     }
 
     /**

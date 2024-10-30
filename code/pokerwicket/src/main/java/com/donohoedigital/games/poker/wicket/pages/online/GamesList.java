@@ -279,10 +279,10 @@ public abstract class GamesList extends OnlinePokerPage
         }
 
         @Override
-        public Iterator<OnlineGame> iterator(int first, int pagesize)
+        public Iterator<OnlineGame> iterator(long first, long pagesize)
         {
             DateRange dr = new DateRange(this);
-            return gameService.getOnlineGames(size(), first, pagesize, getModes(category),
+            return gameService.getOnlineGames((int) size(), (int) first, (int) pagesize, getModes(category),
                                               name, dr.getBegin(), dr.getEnd(), date).iterator();
         }
 

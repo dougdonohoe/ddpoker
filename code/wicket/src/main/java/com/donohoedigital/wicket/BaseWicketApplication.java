@@ -61,11 +61,6 @@ public abstract class BaseWicketApplication extends WebApplication implements Ap
         setRequestCycleProvider(new BaseRequestCycleProvider());
         getRequestCycleListeners().add(new BaseRequestCycleListener(this));
 
-        // TODO(WICKET): trying to turn off ?id on each page, but this isn't working yet
-        //               probably due to login form on each page.  Something for another day.
-        // turn off page versioning (a page can override isVersioned)
-        // getPageSettings().setVersionPagesByDefault(false);
-
         // initialize Spring
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext));
 

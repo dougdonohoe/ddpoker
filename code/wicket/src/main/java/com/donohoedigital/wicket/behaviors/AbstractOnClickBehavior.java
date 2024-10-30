@@ -38,11 +38,11 @@ import org.apache.wicket.markup.ComponentTag;
 /**
  * @author Doug Donohoe
  */
-public abstract class AbstractOnClickBehavior extends AbstractPrototypeBehavior
+public abstract class AbstractOnClickBehavior extends AbstractJQueryBehavior
 {
     private static final long serialVersionUID = 42L;
 
-    private boolean noop;
+    private final boolean noop;
 
     /**
      * Construct.

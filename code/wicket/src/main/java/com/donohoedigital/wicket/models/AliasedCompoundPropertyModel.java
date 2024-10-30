@@ -33,9 +33,9 @@
 package com.donohoedigital.wicket.models;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.io.IClusterable;
 
 import java.util.ArrayList;
 

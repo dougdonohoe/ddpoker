@@ -81,7 +81,7 @@ public class BoxPagingNavigator extends VoidPanel
         int current = getCurrentPage();
 
         // get counts
-        int pageCount = pageable.getPageCount();
+        int pageCount = (int) pageable.getPageCount();
         int totalItemCount = pageable.getTotalItemCount();
         int rowsPerPage = pageable.getPageSize();
 
@@ -125,7 +125,7 @@ public class BoxPagingNavigator extends VoidPanel
         if (showAnchors) visible += 4; // 2 for anchors, 2 for '...'
 
         int current = getCurrentPage();
-        int end = pageable.getPageCount();
+        int end = (int) pageable.getPageCount();
         int begin = 1;
 
         int first = validatePageNumber(current - padding);
@@ -212,7 +212,7 @@ public class BoxPagingNavigator extends VoidPanel
      */
     protected int getCurrentPage()
     {
-        return pageable.getCurrentPage() + 1;
+        return (int) pageable.getCurrentPage() + 1;
     }
 
     /**
@@ -220,7 +220,7 @@ public class BoxPagingNavigator extends VoidPanel
      */
     private int validatePageNumber(int pg)
     {
-        int count = pageable.getPageCount();
+        int count = (int) pageable.getPageCount();
         if (pg < 1 || count <= 1)
         {
             pg = 1;

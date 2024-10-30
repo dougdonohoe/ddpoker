@@ -134,14 +134,14 @@ public class HostList extends OnlinePokerPage
         private String name;
         private Date begin;
         private Date end;
-        private Date beginDefault = PokerWicketApplication.START_OF_TIME;
-        private Date endDefault = Utils.getDateEndOfDay(new Date());
+        private final Date beginDefault = PokerWicketApplication.START_OF_TIME;
+        private final Date endDefault = Utils.getDateEndOfDay(new Date());
 
         @Override
-        public Iterator<HostSummary> iterator(int first, int pagesize)
+        public Iterator<HostSummary> iterator(long first, long pagesize)
         {
             DateRange dr = new DateRange(this);
-            return gameService.getHostSummary(size(), first, pagesize, name, dr.getBegin(), dr.getEnd()).iterator();
+            return gameService.getHostSummary((int) size(), (int) first, (int) pagesize, name, dr.getBegin(), dr.getEnd()).iterator();
         }
 
         @Override
@@ -216,7 +216,7 @@ public class HostList extends OnlinePokerPage
                                                           row.getIndex() % 2 == 0 ? "odd" : "even")));
 
             // num
-            row.add(new PlaceLabel("num", new IntegerModel(getCurrentPage() * getPageSize() + row.getIndex() + 1)));
+            row.add(new PlaceLabel("num", new IntegerModel(((int) getCurrentPage()) * getPageSize() + row.getIndex() + 1)));
             // link to player details
             Link<?> link = RecentGames.getHostLink("hostLink", summary.getHostName(), data.getBegin(), data.getEnd());
             row.add(link);

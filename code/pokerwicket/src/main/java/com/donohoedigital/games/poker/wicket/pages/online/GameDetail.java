@@ -161,7 +161,7 @@ public class GameDetail extends OnlinePokerPage
         }
 
         @Override
-        public Iterator<TournamentHistory> iterator(int first, int pagesize)
+        public Iterator<TournamentHistory> iterator(long first, long pagesize)
         {
             return getList().iterator();
         }
@@ -194,7 +194,7 @@ public class GameDetail extends OnlinePokerPage
 
         private FinishTableView(String id, FinishData data)
         {
-            super(id, data, data.size() + 1); // add one in case size is 0
+            super(id, data, (int) data.size() + 1); // add one in case size is 0
         }
 
         @Override

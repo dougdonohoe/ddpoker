@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.poker.wicket.util;
 
-import com.donohoedigital.wicket.converters.*;
+import com.donohoedigital.wicket.converters.GroupingIntegerConverter;
 
-import java.text.*;
-import java.util.*;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class PokerCurrencyConverter extends GroupingIntegerConverter
 {
@@ -51,11 +51,10 @@ public class PokerCurrencyConverter extends GroupingIntegerConverter
     }
 
     @Override
-    public String convertToString(Object value, Locale locale)
+    public String convertToString(Integer value, Locale locale)
     {
-        int num = (Integer) value;
-        String style = num < 0 ? "poker-number-negative" : "poker-number-positive";
-        String pad = num < 0 ? "" : "&nbsp;";
+        String style = value < 0 ? "poker-number-negative" : "poker-number-positive";
+        String pad = value < 0 ? "" : "&nbsp;";
         return "<span class=\"" + style + "\">" + super.convertToString(value, locale) + pad + "</span>";
     }
 }

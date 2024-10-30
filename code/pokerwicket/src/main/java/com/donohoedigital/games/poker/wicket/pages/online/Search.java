@@ -59,7 +59,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -69,6 +69,7 @@ import java.util.Iterator;
  * Time: 1:36:58 PM
  * To change this template use File | Settings | File Templates.
  */
+@SuppressWarnings("unused")
 @MountPath("search")
 @MountMixedParam(parameterNames = {Search.PARAM_SEARCH, Search.PARAM_PAGE, Search.PARAM_SIZE})
 public class Search extends OnlinePokerPage
@@ -83,7 +84,6 @@ public class Search extends OnlinePokerPage
 
     public static final int ITEMS_PER_PAGE = 10;
 
-    @SuppressWarnings({"NonSerializableFieldInSerializableClass"})
     @SpringBean
     private OnlineProfileService profileService;
 
@@ -102,7 +102,7 @@ public class Search extends OnlinePokerPage
     {
         String text = params.get(PARAM_SEARCH).toString();
         if (text != null && text.isEmpty()) text = null;
-        final TextField<String> name = new TextField<String>("name", new StringModel(text));
+        final TextField<String> name = new TextField<>("name", new StringModel(text));
         name.add(new DefaultFocus());
 
         // form
@@ -157,16 +157,16 @@ public class Search extends OnlinePokerPage
         }
 
         @Override
-        public Iterator<OnlineProfile> iterator(int first, int pagesize)
+        public Iterator<OnlineProfile> iterator(long first, long pagesize)
         {
-            if (search == null || search.length() == 0) return new ArrayList<OnlineProfile>(0).iterator();
-            return profileService.getMatchingOnlineProfiles(size(), first, pagesize, search, null, null, true).iterator();
+            if (search == null || search.isEmpty()) return Collections.emptyIterator();
+            return profileService.getMatchingOnlineProfiles((int) size(), (int) first, (int) pagesize, search, null, null, true).iterator();
         }
 
         @Override
         public int calculateSize()
         {
-            if (search == null || search.length() == 0) return 0;
+            if (search == null || search.isEmpty()) return 0;
             return profileService.getMatchingOnlineProfilesCount(search, null, null, true);
         }
 
@@ -175,6 +175,7 @@ public class Search extends OnlinePokerPage
             return search;
         }
 
+        @SuppressWarnings("unused")
         public void setSearch(String s)
         {
             search = s;

@@ -202,11 +202,11 @@ public class Leaderboard extends OnlinePokerPage
         }
 
         @Override
-        public Iterator<LeaderboardSummary> iterator(int first, int pagesize)
+        public Iterator<LeaderboardSummary> iterator(long first, long pagesize)
         {
             if (DEBUG_ZERO_RESULTS) return Collections.emptyIterator();
             DateRange dr = new DateRange(this, false);
-            return histService.getLeaderboard(size(), first, pagesize, type, games, name, dr.getBegin(), dr.getEnd()).iterator();
+            return histService.getLeaderboard((int) size(), (int) first, (int) pagesize, type, games, name, dr.getBegin(), dr.getEnd()).iterator();
         }
 
         @Override

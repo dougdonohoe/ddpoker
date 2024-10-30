@@ -33,8 +33,9 @@
 package com.donohoedigital.games.poker.wicket.rss;
 
 import com.donohoedigital.wicket.WicketUtils;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.MetaDataHeaderItem;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 
 /**
  * @author Doug Donohoe
@@ -52,10 +53,9 @@ public class RssAutoDiscoveryHeader implements IHeaderContributor
 
     public void renderHead(IHeaderResponse response)
     {
-        String buffer = "<link rel=\"alternate\" " +
-                "type=\"" + "application/rss+xml" + "\" " +
-                "title=\"" + FeedTitle.getTitle(clazz) + "\" " +
-                "href=\"" + WicketUtils.absoluteUrlFor(clazz) + "\" />";
-        response.renderString(buffer);
+        MetaDataHeaderItem item = MetaDataHeaderItem.forLinkTag("alternate", WicketUtils.absoluteUrlFor(clazz));
+        item.addTagAttribute("type", "application/rss+xml");
+        item.addTagAttribute("title", FeedTitle.getTitle(clazz));
+        response.render(item);
     }
 }
