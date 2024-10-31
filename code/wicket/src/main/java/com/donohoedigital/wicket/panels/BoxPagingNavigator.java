@@ -72,6 +72,14 @@ public class BoxPagingNavigator extends VoidPanel
     }
 
     @Override
+    protected void onInitialize() {
+        super.onInitialize();
+
+        // Wicket 7: need to add components onInitialize too
+        onBeforeRender();
+    }
+
+    @Override
     protected void onBeforeRender()
     {
         // remove all children
@@ -88,7 +96,6 @@ public class BoxPagingNavigator extends VoidPanel
         int start = ((current - 1) * rowsPerPage) + 1;
         int end = start + rowsPerPage - 1;
         if (end > totalItemCount) end = totalItemCount;
-
 
         // if more than one page, display links
         if (pageCount > 1)
