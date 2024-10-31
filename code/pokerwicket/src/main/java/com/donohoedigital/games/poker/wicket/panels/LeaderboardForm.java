@@ -50,8 +50,8 @@ public class LeaderboardForm extends NameRangeSearchForm
 {
     private static final long serialVersionUID = 42L;
 
-    private StringModel type = new StringModel();
-    private DropDownChoice<IntegerSelectChoice> gamesC;
+    private final StringModel type = new StringModel();
+    private final DropDownChoice<IntegerSelectChoice> gamesC;
 
     /**
      * @see org.apache.wicket.Component#Component(String)
@@ -67,7 +67,7 @@ public class LeaderboardForm extends NameRangeSearchForm
         data.setGames(games);
 
         // games list of choices
-        SelectChoiceList<IntegerSelectChoice> gamesValues = new SelectChoiceList<IntegerSelectChoice>();
+        SelectChoiceList<IntegerSelectChoice> gamesValues = new SelectChoiceList<>();
         for (int g : new int[]{1, 5, 10, 15, 20, 25, 30, 40, 50, 100, 150, 200, 250, 300, 500, 1000})
         {
             gamesValues.add(new IntegerSelectChoice(g));
@@ -75,13 +75,13 @@ public class LeaderboardForm extends NameRangeSearchForm
         IntegerSelectChoice gameChoice = gamesValues.addSorted(new IntegerSelectChoice(games));
 
         // model and drop down choice
-        Model<IntegerSelectChoice> gameModel = new Model<IntegerSelectChoice>(gameChoice);
-        gamesC = new DropDownChoice<IntegerSelectChoice>("games", gameModel, gamesValues, gamesValues);
+        Model<IntegerSelectChoice> gameModel = new Model<>(gameChoice);
+        gamesC = new DropDownChoice<>("games", gameModel, gamesValues, gamesValues);
         form.add(gamesC);
 
         // hidden field for ROI
         type.setObject(data.getType().name());
-        HiddenField<String> typeH = new HiddenField<String>("type", type);
+        HiddenField<String> typeH = new HiddenField<>("type", type);
         form.add(typeH);
     }
 

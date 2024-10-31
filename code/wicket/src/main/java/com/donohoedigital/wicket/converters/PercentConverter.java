@@ -36,6 +36,7 @@ import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
 import org.apache.wicket.util.convert.converter.AbstractDecimalConverter;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -72,9 +73,8 @@ public class PercentConverter extends AbstractDecimalConverter<Double>
 	 */
 	public Double convertToObject(final String value, Locale locale)
 	{
-		final Number number = parse(value, -Double.MAX_VALUE, Double.MAX_VALUE, locale);
-		// Double.MIN is the smallest nonzero positive number, not the largest
-		// negative number
+		final Number number = parse(value, BigDecimal.valueOf(Long.MIN_VALUE),
+				BigDecimal.valueOf(Long.MAX_VALUE), locale);
 
 		if (number == null)
 		{

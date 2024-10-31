@@ -38,14 +38,25 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
-import org.jdom2.input.*;
-import org.xml.sax.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaders;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
-import java.net.*;
-import java.util.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author donohoe
@@ -172,7 +183,7 @@ public class XMLConfigFileLoader implements ErrorHandler
      */
     private SAXBuilder createParser(String sNameSpace, String sValidationSchema, String sAppName, String sModule)
     {
-        SAXBuilder parser = new SAXBuilder(true);
+        SAXBuilder parser = new SAXBuilder(XMLReaders.DTDVALIDATING);
         parser.setErrorHandler(this);
         parser.setEntityResolver(CachedEntityResolver.instance());
 

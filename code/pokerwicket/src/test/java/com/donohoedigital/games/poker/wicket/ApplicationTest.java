@@ -116,7 +116,7 @@ public class ApplicationTest extends TestCase
 
     public void testSearch()
     {
-        //start and render the test page
+        // start and render the test page
         tester.startPage(Search.class);
 
         logger.debug("Request URL: {}", tester.getRequest().getRequestURL());
