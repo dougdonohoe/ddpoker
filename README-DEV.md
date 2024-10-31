@@ -146,13 +146,14 @@ The second option is to run using Tomcat via Docker, similar to
 what a production setup might look like.
 
 ```shell
+mvn-package-no-tests
 docker build -f Dockerfile.pokerweb.docker -t pokerweb .
 docker run -it -p 8080:8080 pokerweb
 
 # get container id for following commands
 CONTAINER=$(docker ps | grep pokerweb | cut -f 1 -d " ")
 
-# To see logs, find container name using 
+# To see logs
 docker exec -it $CONTAINER tail -200f /home/ddpoker3/work/ddpoker/runtime/log/poker-web.log
 
 # To login to running server

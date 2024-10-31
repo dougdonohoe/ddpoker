@@ -34,6 +34,7 @@ package com.donohoedigital.wicket.converters;
 
 import org.apache.wicket.util.convert.converter.AbstractIntegerConverter;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -61,7 +62,8 @@ public class GroupingIntegerConverter extends AbstractIntegerConverter<Integer>
 
     public Integer convertToObject(String value, Locale locale)
     {
-        final Number number = parse(value, Integer.MIN_VALUE, Integer.MAX_VALUE, locale);
+        final Number number = parse(value, BigDecimal.valueOf(Integer.MIN_VALUE),
+                BigDecimal.valueOf(Integer.MIN_VALUE), locale);
 
         if (number == null)
         {

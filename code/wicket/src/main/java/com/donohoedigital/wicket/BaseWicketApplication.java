@@ -64,10 +64,6 @@ public abstract class BaseWicketApplication extends WebApplication implements Ap
         // initialize Spring
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext));
 
-        // remove default of <em> ... </em>
-        getMarkupSettings().setDefaultBeforeDisabledLink(null);
-        getMarkupSettings().setDefaultAfterDisabledLink(null);
-
         // remove wicket tags in development
         getMarkupSettings().setStripWicketTags(true);
     }

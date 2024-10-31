@@ -60,8 +60,9 @@ public class BaseRequestCycle extends RequestCycle
     protected void onBeginRequest()
     {
         HttpServletRequest http = (HttpServletRequest) getRequest().getContainerRequest();
-        logger.debug("Request: {} {} {}", http.getRemoteAddr(),
-                http.getMethod(), http.getRequestURI());
+        String queryString = http.getQueryString();
+        logger.debug("Request: {} {} {}{}", http.getRemoteAddr(),
+                http.getMethod(), http.getRequestURI(), queryString == null ? "" : "?" + queryString);
     }
 
     /**

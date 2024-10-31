@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.wicket.common;
 
-import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.model.IModel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * List of SelectChoice&lt;?&gt; items.
@@ -50,9 +53,25 @@ public class SelectChoiceList<T extends SelectChoice<?>> extends ArrayList<T> im
      *
      * @param items initial items
      */
+    @SafeVarargs
     public SelectChoiceList(T... items)
     {
         Collections.addAll(this, items);
+    }
+
+    @Override
+    public T getObject(String id, IModel<? extends List<? extends T>> choices) {
+        List<? extends T> _choices = choices.getObject();
+        for (int index = 0; index < _choices.size(); index++)
+        {
+            // Get next choice
+            final T choice = _choices.get(index);
+            if (getIdValue(choice, index).equals(id))
+            {
+                return choice;
+            }
+        }
+        return null;
     }
 
     /**
