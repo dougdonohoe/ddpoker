@@ -39,6 +39,7 @@ import com.donohoedigital.wicket.labels.GroupingIntegerLabel;
 import com.donohoedigital.wicket.labels.PluralLabel;
 import com.donohoedigital.wicket.labels.PluralLabelProvider;
 import org.apache.wicket.Page;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -105,8 +106,8 @@ public class BoxPagingNavigator extends VoidPanel
             add(pages);
 
             // always show prev/next
-            pages.add(getLink("prev", validatePageNumber(current - 1)));
-            pages.add(getLink("next", validatePageNumber(current + 1)));
+            pages.add(getLink("prev", validatePageNumber(current - 1), true));
+            pages.add(getLink("next", validatePageNumber(current + 1), true));
 
             // hard work
             addPageLinks(pages);
@@ -165,7 +166,7 @@ public class BoxPagingNavigator extends VoidPanel
         }
 
         // first page anchor
-        Link<?> firstLink = getLink("first", begin);
+        Link<?> firstLink = getLink("first", begin, false);
         firstLink.setVisible(showAnchors);
         pages.add(firstLink);
 
@@ -180,7 +181,7 @@ public class BoxPagingNavigator extends VoidPanel
 
         for (int i = first; i <= last; i++)
         {
-            Link<?> link = getLink(String.valueOf(i), i);
+            Link<?> link = getLink(String.valueOf(i), i, false);
             link.add(new GroupingIntegerLabel("pageLabel", i));
             rv.add(link);
         }
@@ -191,7 +192,7 @@ public class BoxPagingNavigator extends VoidPanel
         pages.add(rightDots);
 
         // last page anchor
-        Link<?> lastLink = getLink("last", end);
+        Link<?> lastLink = getLink("last", end, false);
         lastLink.add(new GroupingIntegerLabel("lastLabel", end));
         lastLink.setVisible(showAnchors && last != end);
         pages.add(lastLink);
@@ -242,19 +243,24 @@ public class BoxPagingNavigator extends VoidPanel
     /**
      * bookmarkable link to given page
      */
-    protected Link<?> getLink(String id, final int pageNum)
+    protected Link<?> getLink(String id, final int pageNum, boolean anchor)
     {
-        Link<?> link = new Link<Page>(id)
-        {
-            private static final long serialVersionUID = 42L;
+        Link<?> link = createLink(id, pageNum);
+        link.setEnabled(pageNum != getCurrentPage());
+        if (pageNum == getCurrentPage()) {
+            link.add(new AttributeAppender("class", anchor ? "anchor-disabled-page-link" : "current-page-link", " "));
+        } else {
+            link.add(new AttributeAppender("class", "active-page-link", " "));
+        }
+        return link;
+    }
 
+    protected Link<?> createLink(String id, final int pageNum) {
+        return new Link<Page>(id) {
             @Override
-            public void onClick()
-            {
+            public void onClick() {
                 setCurrentPage(pageNum);
             }
         };
-        link.setEnabled(pageNum != getCurrentPage());
-        return link;
     }
 }

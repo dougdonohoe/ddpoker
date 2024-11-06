@@ -52,13 +52,9 @@ public class BookmarkablePagingNavigator extends BoxPagingNavigator
 {
     private static final long serialVersionUID = 42L;
 
-    //private static Logger logger = LogManager.getLogger(BookmarkablePagingNavigator.class);
-
     protected String pageParamName;
     protected PageParameters linkToParams;
     protected Class<? extends Page> linkTo;
-
-
 
     public BookmarkablePagingNavigator(String id, CountPageable pageable, PluralLabelProvider itemName,
                                        Class<? extends Page> linkTo,
@@ -84,13 +80,11 @@ public class BookmarkablePagingNavigator extends BoxPagingNavigator
      * bookmarkable link to given page
      */
     @Override
-    protected Link<?> getLink(String id, int pageNum)
+    protected Link<?> createLink(String id, int pageNum)
     {
         PageParameters linkParams = new PageParameters(linkToParams);
         linkParams.set(pageParamName, pageNum);
-        BookmarkablePageLink<?> link = new BookmarkablePageLink<Page>(id, linkTo, linkParams);
-        link.setEnabled(pageNum != getCurrentPage());
-        return link;
+        return new BookmarkablePageLink<Page>(id, linkTo, linkParams);
     }
 
 }

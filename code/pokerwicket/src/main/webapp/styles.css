@@ -725,8 +725,8 @@ table.tournament-info span.addpadding {
     vertical-align: middle;
 }
 
-/* defaults - disabled links */
-.pages a.link, .pages a.pagelink, .pages span.link, .pages span.pagelink {
+/* defaults for all links (disabled) */
+.pages a.link, .pages span.link, .current-page-link, .active-page-link, .anchor-disabled-page-link {
     background: #EEEEEE;
     color: #888888;
     border: 1px solid #AAAAAA;
@@ -741,7 +741,7 @@ table.tournament-info span.addpadding {
 }
 
 /* current page */
-.pages span.pagelink {
+.current-page-link {
     background: #2E6AB1;
     border: 1px solid #2E6AB1;
     color: #FFFFFF;
@@ -749,16 +749,21 @@ table.tournament-info span.addpadding {
 }
 
 /* active link to another page */
-.pages a.link, .pages a.pagelink {
-    border: 1px solid #9AAFE5;
-    background: #FFFFFF;
-    color: #000000;
-    font-weight: bold;
+.active-page-link {
+    border: 1px solid #9AAFE5 !important;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-weight: bold !important;
 }
 
-.pages a:hover {
+.active-page-link:hover {
+    color: #000000;
     border-color: #2E6AB1;
     background: #FFFFD0;
+}
+
+.active-page-link:link, .active-page-link:visited {
+    color: #000000;
 }
 
 .pages span.dots {
