@@ -30,16 +30,19 @@
  * doug [at] donohoe [dot] info.
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
-package com.donohoedigital.wicket;
+package com.donohoedigital.wicket.components;
 
-import org.apache.wicket.IRequestCycleProvider;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.cycle.RequestCycleContext;
+import com.googlecode.wicket.jquery.core.Options;
+import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
+import org.apache.wicket.extensions.markup.html.form.DateTextField;
 
-public class BaseRequestCycleProvider implements IRequestCycleProvider {
+public class DatePickerUtil {
 
-    @Override
-    public RequestCycle apply(RequestCycleContext requestCycleContext) {
-        return new BaseRequestCycle(requestCycleContext);
+    public static DateTextField create(String id) {
+        return new DatePicker(id,
+                "MM/dd/yyyy", // Java
+                new Options("dateFormat",
+                        Options.asString("mm/dd/yy") // JavaScript
+                ));
     }
 }

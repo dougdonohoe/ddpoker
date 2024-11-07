@@ -30,16 +30,44 @@
  * doug [at] donohoe [dot] info.
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
-package com.donohoedigital.wicket;
+package com.donohoedigital.wicket.annotations;
 
-import org.apache.wicket.IRequestCycleProvider;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.cycle.RequestCycleContext;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.junit.Test;
 
-public class BaseRequestCycleProvider implements IRequestCycleProvider {
+import static org.junit.Assert.assertEquals;
 
-    @Override
-    public RequestCycle apply(RequestCycleContext requestCycleContext) {
-        return new BaseRequestCycle(requestCycleContext);
+public class MixedParamEncoderTest {
+
+    @Test
+    public void testEncodeDecode() {
+        MixedParamEncoder encoder = new MixedParamEncoder(new String[] {"x", "y", "a", "b", "c", "d", "e"});
+        PageParameters params = new PageParameters();
+        params.add("y", "-");
+        params.add("a", ".");
+        params.add("b", "..");
+        params.add("c", "space between");
+        params.add("d", "slash/and\\backslash");
+        params.add("e", "a:colon");
+        Url encoded = encoder.encodePageParameters(params);
+        assertEquals("-/:-/:d/:d:d/space%20between/slash:sand:bbackslash/a::colon", encoded.toString());
+        PageParameters decoded = encoder.decodePageParameters(encoded);
+        assertEquals(params, decoded);
+
+        params = new PageParameters();
+        params.add("x", "shorter");
+        params.add("y", "path");
+        encoded = encoder.encodePageParameters(params);
+        assertEquals("shorter/path", encoded.toString());
+        decoded = encoder.decodePageParameters(encoded);
+        assertEquals(params, decoded);
+
+        params.add("e", "gaps");
+        encoded = encoder.encodePageParameters(params);
+        assertEquals("shorter/path/-/-/-/-/gaps", encoded.toString());
+        decoded = encoder.decodePageParameters(encoded);
+        assertEquals(params, decoded);
     }
+
 }

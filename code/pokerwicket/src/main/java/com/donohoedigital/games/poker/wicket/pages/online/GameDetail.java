@@ -50,13 +50,9 @@ import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
 import com.donohoedigital.wicket.components.VoidContainer;
-import com.donohoedigital.wicket.labels.GroupingIntegerLabel;
-import com.donohoedigital.wicket.labels.HiddenComponent;
-import com.donohoedigital.wicket.labels.PlaceLabel;
-import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.labels.*;
 import com.donohoedigital.wicket.models.StringModel;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Fragment;
@@ -113,7 +109,7 @@ public class GameDetail extends OnlinePokerPage
         link.add(new StringLabel("hostName", game.getHostPlayer()));
         add(link);
         add(new StringLabel("status", getMessage(mode)));
-        add(DateLabel.forDatePattern("date", new Model<>(getDate(game)), PropertyConfig.getMessage("msg.format.datetime")));
+        add(DateLabel.forDatePattern("date", new Model<>(getDate(game)), PropertyConfig.getMessage("msg.format.datetime ")));
 
         // game url if reg/play mode
         add(new GameUrl("gameUrl", game, PokerSession.get().isLoggedIn(), this).setVisible(mode == OnlineGame.MODE_REG || mode == OnlineGame.MODE_PLAY));

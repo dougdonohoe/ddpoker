@@ -36,11 +36,11 @@ import com.donohoedigital.games.poker.wicket.pages.BasePokerPage;
 import com.donohoedigital.games.poker.wicket.util.NameRangeSearch;
 import com.donohoedigital.wicket.WicketUtils;
 import com.donohoedigital.wicket.behaviors.DefaultFocus;
+import com.donohoedigital.wicket.components.DatePickerUtil;
 import com.donohoedigital.wicket.components.VoidPanel;
 import com.donohoedigital.wicket.converters.ParamDateConverter;
 import com.donohoedigital.wicket.labels.StringLabel;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
@@ -56,9 +56,9 @@ public class NameRangeSearchForm extends VoidPanel
 {
     private static final long serialVersionUID = 42L;
 
-    private ParamDateConverter CONVERTER = new ParamDateConverter();
-    private DateTextField beginT;
-    private DateTextField endT;
+    private final ParamDateConverter CONVERTER = new ParamDateConverter();
+    private final DateTextField beginT;
+    private final DateTextField endT;
 
     protected Form<NameRangeSearch> form;
 
@@ -97,13 +97,13 @@ public class NameRangeSearchForm extends VoidPanel
         add(form);
 
         // entry fields
-        beginT = new DateTextField("begin");
-        endT = new DateTextField("end");
+        beginT = DatePickerUtil.create("begin");
+        endT = DatePickerUtil.create("end");
         TextField<String> nameText = new TextField<>("name");
         nameText.add(new DefaultFocus());
 
-        form.add(beginT.add(new DatePicker()));
-        form.add(endT.add(new DatePicker()));
+        form.add(beginT);
+        form.add(endT);
         form.add(new StringLabel("nameLabel", nameLabel));
         form.add(nameText);
         form.add(new FormFeedbackPanel("form-style2"));
@@ -126,8 +126,6 @@ public class NameRangeSearchForm extends VoidPanel
 
     /**
      * subclass can override to add custom page parameters
-     *
-     * @param p
      */
     protected void addCustomPageParameters(PageParameters p)
     {

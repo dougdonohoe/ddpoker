@@ -210,7 +210,7 @@ public class LoginUtils
     public void logout()
     {
         // clear session
-        PokerSession.get().invalidate();
+        PokerSession.get().invalidateNow();
 
         // clear cookie
         deleteLoginCookie();

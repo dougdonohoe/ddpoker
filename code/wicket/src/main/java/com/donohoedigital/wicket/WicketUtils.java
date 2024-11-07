@@ -41,11 +41,14 @@ import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.converter.DateConverter;
+import org.apache.wicket.util.encoding.UrlDecoder;
+import org.apache.wicket.util.encoding.UrlEncoder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -206,7 +209,7 @@ public class WicketUtils
      */
     public static Cookie createCookie(String name, String value)
     {
-        Cookie c = new Cookie(name, WicketURLEncoder.PATH_INSTANCE.encode(value));
+        Cookie c = new Cookie(name, UrlEncoder.PATH_INSTANCE.encode(value, StandardCharsets.UTF_8));
         c.setPath(getContextPath());
         c.setMaxAge(60 * 60 * 24 * 365); // one year
         return c;
@@ -240,7 +243,7 @@ public class WicketUtils
         String value = c.getValue();
         if (value == null) return null;
 
-        return WicketURLDecoder.PATH_INSTANCE.decode(value);
+        return UrlDecoder.PATH_INSTANCE.decode(value, StandardCharsets.UTF_8);
     }
 
     /**
