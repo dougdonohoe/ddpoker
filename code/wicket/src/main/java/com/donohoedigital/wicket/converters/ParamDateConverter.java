@@ -46,14 +46,20 @@ public class ParamDateConverter extends DateConverter
 {
     private static final long serialVersionUID = 42L;
 
-    /**
-     * @param locale
-     * @return Returns the date format.
-     */
+    String pattern;
+
+    public ParamDateConverter() {
+        this("yyyy-MM-dd");
+    }
+
+    public ParamDateConverter(String pattern) {
+        this.pattern = pattern;
+    }
+
     @Override
     public DateFormat getDateFormat(Locale locale)
     {
-		return new SimpleDateFormat("yyyy-MM-dd");
+		return new SimpleDateFormat(pattern);
     }
 
     /**
@@ -63,14 +69,5 @@ public class ParamDateConverter extends DateConverter
     {
         if (value == null) return null;
         return super.convertToString(value, null);
-    }
-
-    /**
-     * @see org.apache.wicket.util.convert.IConverter#convertToObject(String, java.util.Locale)
-     */
-    public Date convertToObject(String value)
-    {
-        if (value == null) return null;
-        return super.convertToObject(value, null);
     }
 }

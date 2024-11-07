@@ -32,15 +32,17 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.games.poker.wicket.*;
-import com.donohoedigital.games.poker.wicket.util.*;
-import com.donohoedigital.wicket.behaviors.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import com.donohoedigital.wicket.pages.*;
-import org.apache.wicket.markup.html.*;
-import org.apache.wicket.markup.html.link.*;
+import com.donohoedigital.games.poker.wicket.PokerSession;
+import com.donohoedigital.games.poker.wicket.PokerUser;
+import com.donohoedigital.games.poker.wicket.util.LoginUtils;
+import com.donohoedigital.wicket.behaviors.HideShowSwapLabel;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.wicket.models.StringModel;
+import com.donohoedigital.wicket.pages.BasePage;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.Link;
 
 /**
  * Created by IntelliJ IDEA.
@@ -55,9 +57,9 @@ public class CurrentProfile extends VoidPanel
 
     private static final long serialVersionUID = 42L;
 
-    private Login loginPanel;
-    private StringLabel loginLabel;
-    private boolean loginVisibleAtStart;
+    private final Login loginPanel;
+    private final StringLabel loginLabel;
+    private final boolean loginVisibleAtStart;
 
     public CurrentProfile(String id, boolean loginVisibleAtStart)
     {
@@ -83,7 +85,7 @@ public class CurrentProfile extends VoidPanel
         link.add(loginLabel);
 
         // logout link
-        add(new Link("logoutLink")
+        add(new Link<Void>("logoutLink")
         {
             private static final long serialVersionUID = 42L;
 

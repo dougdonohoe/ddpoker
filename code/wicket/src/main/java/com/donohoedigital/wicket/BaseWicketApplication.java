@@ -34,6 +34,7 @@ package com.donohoedigital.wicket;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.resource.JQueryResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -60,6 +61,9 @@ public abstract class BaseWicketApplication extends WebApplication implements Ap
         // set cycle provider and listener
         setRequestCycleProvider(new BaseRequestCycleProvider());
         getRequestCycleListeners().add(new BaseRequestCycleListener(this));
+
+        // JQuery - ensure same version used everywhere
+        getJavaScriptLibrarySettings().setJQueryReference(JQueryResourceReference.getV1());
 
         // initialize Spring
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext));

@@ -35,8 +35,10 @@ package com.donohoedigital.wicket.annotations;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.encoding.UrlDecoder;
 
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,6 +70,7 @@ public class MixedParamEncoder implements IPageParametersEncoder {
         {
             for (int i = 0; i <= lastSpecifiedParameter; i++)
             {
+                // NOTE: adding to url segments will UrlEncode the value (which we need to reverse below)
                 url.getSegments().add(urlEncodePathComponent(getString(parameters, parameterNames[i])));
                 parameterNamesToAdd.remove(parameterNames[i]);
             }
@@ -176,7 +179,7 @@ public class MixedParamEncoder implements IPageParametersEncoder {
     private static final char SLASH_ALIAS = 's';
     private static final char BACKSLASH_ALIAS = 'b';
 
-    protected String urlEncodePathComponent(String value)
+    private String urlEncodePathComponent(String value)
     {
         String enc;
         if (value == null || value.isEmpty())
@@ -195,13 +198,10 @@ public class MixedParamEncoder implements IPageParametersEncoder {
         {
             enc = DOTDOT_ALIAS;
         }
-
         else
         {
             enc = encodeSpecial(value);
         }
-
-        //logger.debug("Encoded " + value + " to " + enc);
         return enc;
     }
 
@@ -224,11 +224,12 @@ public class MixedParamEncoder implements IPageParametersEncoder {
             return "..";
         }
 
-        return decodeSpecial(value);
+        // Undo UrlEncode done above
+        return UrlDecoder.PATH_INSTANCE.decode(decodeSpecial(value), StandardCharsets.UTF_8);
     }
 
     /**
-     * Encode string to handle . / \ and null
+     * Encode string to handle . / \
      */
     private String encodeSpecial(String value)
     {

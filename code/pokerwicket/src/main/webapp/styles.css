@@ -124,6 +124,11 @@ strong {
     font-weight: bold;
 }
 
+input[type="submit" i] {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
 /**
  * Wicket feedback panel
  */

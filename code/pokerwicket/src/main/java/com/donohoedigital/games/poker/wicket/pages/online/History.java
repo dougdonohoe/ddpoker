@@ -57,7 +57,6 @@ import com.donohoedigital.wicket.labels.*;
 import com.donohoedigital.wicket.models.StringModel;
 import com.donohoedigital.wicket.panels.BookmarkablePagingNavigator;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;

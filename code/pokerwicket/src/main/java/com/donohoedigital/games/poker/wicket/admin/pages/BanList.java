@@ -40,12 +40,12 @@ import com.donohoedigital.wicket.annotations.MountPath;
 import com.donohoedigital.wicket.behaviors.DefaultFocus;
 import com.donohoedigital.wicket.common.PageableServiceProvider;
 import com.donohoedigital.wicket.components.CountDataView;
+import com.donohoedigital.wicket.components.DatePickerUtil;
+import com.donohoedigital.wicket.labels.DateLabel;
 import com.donohoedigital.wicket.labels.StringLabel;
 import com.donohoedigital.wicket.models.StringModel;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -126,8 +126,8 @@ public class BanList extends AdminPokerPage
         form.add(ban);
 
         // until
-        DateTextField until = new DateTextField("until");
-        form.add(until.add(new DatePicker()));
+        DateTextField until = DatePickerUtil.create("until");
+        form.add(until);
         until.add(DateValidator.minimum(new Date()));
 
         // comment
