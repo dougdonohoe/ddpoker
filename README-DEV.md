@@ -29,7 +29,7 @@ Feel free to submit a PR with any changes to these docs that would help Linux or
 
 Required software:
 
-* Java 8 - [See AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot)
+* Java 11 - [See AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot)
 * Maven 3 - [See Apache Maven](https://maven.apache.org/install.html)
 * Docker (optional, but useful to run some things) - [See Docker](https://docs.docker.com/engine/install/)
 
@@ -52,10 +52,10 @@ source ddpoker.rc
 
 ```shell
 # Java - Intel
-brew install openjdk@8 
+brew install openjdk@8  # TODO(JAVA11): fixme
 
 # Java - Apple Silicon (M1,M2,M3,...)
-brew install temurin@8
+brew install temurin@8 # TODO(JAVA11): fixme
 
 # Maven
 brew install maven
@@ -97,9 +97,9 @@ the `code/pom.xml` file and prompt you to load it:
 
 <img src="images/intellij-maven.png" alt="IntelliJ Maven" width="400px">
 
-**NOTE**:  You will probably need to edit the Project Structure to tell IntelliJ to use Java 1.8.
+**NOTE**:  You will probably need to edit the Project Structure to tell IntelliJ to use Java 11.
 Go to _File -> Project Structure... -> Project Settings -> Project -> SDK_ and
-set to Java 1.8 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
+set to Java 11 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
 
 ## Server Dependencies
 
@@ -174,7 +174,7 @@ of DD Poker was written from 2004-2007, with sporadic updates after that.  The o
 JDK was 1.5.
 
 Most of our dependencies (Swing, Hibernate, Wicket, log4j, etc.) have been updated to the latest versions
-that work with Java 8.
+that work with Java 8 (and soon, Java 11).
 
 That said, amazingly, it all still seems to work.  If anybody wants to start upgrading dependencies,
 we are happy to take PRs.

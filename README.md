@@ -32,7 +32,7 @@ reading all the [developer documentation](README-DEV.md) or worrying
 about servers and databases, follow these steps:
 
 1. Clone this repo
-2. Install [Java 1.8](https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=hotspot)
+2. Install [Java 11](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot)
    and [Maven 3](https://maven.apache.org/install.html)
 3. Run these commands in the `ddpoker` directory:
 
