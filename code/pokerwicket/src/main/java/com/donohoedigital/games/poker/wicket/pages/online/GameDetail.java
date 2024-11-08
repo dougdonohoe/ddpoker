@@ -109,7 +109,7 @@ public class GameDetail extends OnlinePokerPage
         link.add(new StringLabel("hostName", game.getHostPlayer()));
         add(link);
         add(new StringLabel("status", getMessage(mode)));
-        add(DateLabel.forDatePattern("date", new Model<>(getDate(game)), PropertyConfig.getMessage("msg.format.datetime ")));
+        add(DateLabel.forDatePattern("date", new Model<>(getDate(game)), PropertyConfig.getMessage("msg.format.datetime")));
 
         // game url if reg/play mode
         add(new GameUrl("gameUrl", game, PokerSession.get().isLoggedIn(), this).setVisible(mode == OnlineGame.MODE_REG || mode == OnlineGame.MODE_PLAY));
