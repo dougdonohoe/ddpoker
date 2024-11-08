@@ -51,10 +51,12 @@ alias mvn-package='(cd $CODE;mvn package)'
 alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
 alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t'
 
-# attempt to auto-set JAVA_HOME to 1.8 if on mac
+# attempt to auto-set JAVA_HOME to 11 if on mac
 if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
   # look in apple silicon/intel brew locations
-  for home in /Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home /usr/local/opt/openjdk@8; do
+  #for home in /Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home /usr/local/opt/openjdk@8; do
+  # TODO(JAVA11): openjdk@11 right?
+  for home in /usr/local/Cellar/openjdk@11/11.0.25/libexec/openjdk.jdk/Contents/Home /usr/local/opt/openjdk@11; do
     if [[ -d "${home}" && "${home}" != "${JAVA_HOME}" ]]; then
       export JAVA_HOME="${home}"
       export PATH="${home}/bin:${PATH}"
@@ -63,27 +65,26 @@ if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
   done
 fi
 
-# See if java 1.8 is installed
+# See if java 11 is installed
 if ! test -x "$(command -v java)"; then
   if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
     arch=$(uname -m)
     if [[ "${arch}" == "arm64" ]]; then
-      brew=temurin@8
+      brew=temurin@11 # TODO(JAVA11): right?
     else
-      brew=openjdk@8
+      brew=openjdk@11
     fi
-    echo "WARNING: Java 1.8 is not installed. Have your run 'brew install $brew'"
+    echo "WARNING: Java 11 is not installed. Have your run 'brew install $brew'?"
   else
-    echo "WARNING: Java 1.8 is not installed."
+    echo "WARNING: Java 11 is not installed."
   fi
 else
-  # Java is installed, check version is 1.8
-  if ! java -version 2>&1 | head -1 | grep -q "1.8."; then
-    echo "WARNING: Java version is not 1.8 (which DD Poker requires).  Version is:"
+  # Java is installed, check version is 11
+  if ! java -version 2>&1 | head -1 | grep -q "\"11\."; then
+    echo "WARNING: Java version is not 11 (which DD Poker requires).  Version is:"
     java -version
   fi
 fi
-
 
 # See if maven is installed
 if ! test -x "$(command -v mvn)"; then

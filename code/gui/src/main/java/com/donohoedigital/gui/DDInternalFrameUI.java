@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.*;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  * Our implementation of JInternalFrame.
@@ -51,7 +51,6 @@ public class DDInternalFrameUI extends BasicInternalFrameUI {
     }
 
     protected JComponent createNorthPane(JInternalFrame w) {
-        DDInternalFrameTitlePane myTitlePane = new DDInternalFrameTitlePane((InternalDialog) w);
-        return myTitlePane;
+        return new DDInternalFrameTitlePane((InternalDialog) w);
     }
 }

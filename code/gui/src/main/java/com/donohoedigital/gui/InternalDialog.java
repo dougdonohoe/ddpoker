@@ -38,38 +38,36 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.config.Perf;
 
 import javax.swing.*;
-import javax.swing.text.*;
-import javax.swing.event.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelListener;
+import java.beans.PropertyVetoException;
+import java.util.Stack;
     
 /**
  *
  * @author  Doug Donohoe
  */
-@SuppressWarnings({"PublicInnerClass"})
+@SuppressWarnings({"PublicInnerClass", "CommentedOutCode"})
 public class InternalDialog extends JInternalFrame implements DDWindow
 {
-    static Logger logger = LogManager.getLogger(InternalDialog.class);
-    
     protected BaseFrame frame_;
-    private boolean bModal_ = false;
+    private final boolean bModal_;
     private Component previousFocusOwner_;
-    private boolean PERF = false;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final boolean PERF = false;
 
-    protected void finalize() throws Throwable {
-        super.finalize();
-        if (PERF) Perf.finalize(this, getName());
-    }
-    
     /**
      * Creates a new InternalDialog - set BaseFrame later
      */
@@ -97,11 +95,11 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         setDesktopIcon(new InternalIcon(this));
         
         // BUG 133 - turn off requesting of focus to
-        // avoid apparent memory lead in KeyboardFocusManager.newFocusOwner
-        if (Perf.isOn())
-        {
+        // avoid apparent memory leak in KeyboardFocusManager.newFocusOwner
+        //if (Perf.isOn())
+        //{
             //TODO needed with JProfile? setRequestFocusEnabled(false);
-        }
+        //}
 
         addInternalFrameListener(new InternalFrameAdapter() {
             public void internalFrameIconified(InternalFrameEvent e)
@@ -136,19 +134,18 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         focus_ = null;
         closed_ = null;
         previousFocusOwner_ = null;
-        // empty panel allows previous phase to get cleanedup sooner
+        // empty panel allows previous phase to get cleaned up sooner
         setContentPane(new JPanel());
-        setDesktopIcon(null);
     }
     
     /**
      * Icon
      */
-    private class InternalIcon extends JInternalFrame.JDesktopIcon
+    private static class InternalIcon extends JInternalFrame.JDesktopIcon
     {
-        boolean bFirstIconification = true;
-        Point pLocation;
-        
+//        boolean bFirstIconification = true;
+//        Point pLocation;
+
         public InternalIcon(JInternalFrame f)
         {
             super(f);
@@ -184,15 +181,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
 //            pLocation = p;
 //        }
     }
-    
-    /**
-     * Get BaseFrame used with this window
-     */
-    public BaseFrame getBaseFrame()
-    {
-        return frame_;
-    }
-    
+
     /**
      * Set base frame to be used with this window
      */
@@ -211,7 +200,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         if (frame_ != null)
         {
             // when displaying this, remember previous focus owner
-            // so long as it it isn't a dialog or iconified dialog
+            // so long as it isn't a dialog or iconified dialog
             Component owner = frame_.getFocusOwner();
             if (owner != null && GuiUtils.getInternalDialog(owner) == null &&
                 !(owner.getParent() instanceof InternalIcon))
@@ -232,10 +221,10 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     public static final int POSITION_CENTER_TOP = 2;
     
     /**
-     * Used in showDialog - position dialog so as not to obscur location
-     * specified in last call to setNotObscurredLocation()
+     * Used in showDialog - position dialog so as not to obscure location
+     * specified in last call to setNotObscuredLocation()
      */
-    public static final int POSITION_NOT_OBSCURRED = 3;
+    public static final int POSITION_NOT_OBSCURED = 3;
     
     /**
      * USed in showDialog - position dialog centered, but adjust by x,y
@@ -249,7 +238,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     public static final int POSITION_NONE = 5; 
     
     /**
-     * Overriden to reset focus on setVisible(false)
+     * Overridden to reset focus on setVisible(false)
      */
     public void setVisible(boolean b)
     {
@@ -266,7 +255,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     }
 
     /**
-     * Overriden to catch PropertyVetoException and
+     * Overridden to catch PropertyVetoException and
      * to reset focus on iconification
      */
     public void setIcon(boolean b)
@@ -293,15 +282,15 @@ public class InternalDialog extends JInternalFrame implements DDWindow
        if (frame_ == null) return; // ignore first call from JInternalFrame constructor (before frame_ set)
        SwingUtilities.invokeLater(
             new Runnable() {
-                BaseFrame frame = frame_;
-                Component restoreTo = previousFocusOwner_;
+                final BaseFrame frame = frame_;
+                final Component restoreTo = previousFocusOwner_;
                 public void run() {
                     frame.restoreFocus(restoreTo);
                 }
        });
     }
     
-    // component that should get focus in this internaldialog
+    // component that should get focus in this InternalDialog
     private Component focus_;
     
     /**
@@ -310,13 +299,12 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     private void setFocus()
     {
         SwingUtilities.invokeLater(
-            new Runnable() {
-                public void run() {
+                () -> {
                     // BUG 133 - this can happen in certain cases where a dialog
                     // is quickly dismissed
                     if (focus_ == null) return;
 
-                    //logger.debug("Seting focus to: " +focus_);
+                    //logger.debug("Setting focus to: " +focus_);
                     // BUG 133 - turn off requesting of focus to
                     // avoid apparent memory leak in KeyboardFocusManager.newFocusOwner
                     if (!Perf.isOn())
@@ -324,7 +312,6 @@ public class InternalDialog extends JInternalFrame implements DDWindow
                         focus_.requestFocus();
                     }
                 }
-            }
         );
     }
     
@@ -366,16 +353,15 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     // Listeners for modal mouse blocker layer
     private static final MouseAdapter MY_MOUSE = new MouseAdapter() {};
     private static final MouseMotionAdapter MY_MOUSE_MOTION = new MouseMotionAdapter() {};
-    private static final MouseWheelListener MY_MOUSE_WHEEL = new MouseWheelListener() 
-                            {  public void mouseWheelMoved(MouseWheelEvent e) {}};
+    private static final MouseWheelListener MY_MOUSE_WHEEL = e -> {};
     
     // list of all modal info
-    private static Stack<ModalInfo> modal_ = new Stack<ModalInfo>();
+    private static final Stack<ModalInfo> modal_ = new Stack<>();
     
     /**
      * Track modal info to handle multiple modal dialogs
      */
-    private class ModalInfo
+    private static class ModalInfo
     {
         Integer nLayer;
         Integer nMouseBlockerLayer;
@@ -388,7 +374,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     }
 
     /**
-     * Shows the dialog, using the given lcose listener
+     * Shows the dialog, using the given close listener
      */
     private void _showDialog(InternalFrameListener close, int nPOS, Component cFocus, boolean visible)
     {
@@ -415,7 +401,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
 
 
                 ModalInfo modal = null;
-                if (modal_.size() > 0)
+                if (!modal_.isEmpty())
                 {
                     modal = modal_.peek();
                 }
@@ -453,10 +439,10 @@ public class InternalDialog extends JInternalFrame implements DDWindow
                     centerTop();
                     break;
 
-                case POSITION_NOT_OBSCURRED:
+                case POSITION_NOT_OBSCURED:
                     validate();
                     pack();
-                    setNotObscurred(x_, y_, buffer_);
+                    setNotObscured(x_, y_, buffer_);
                     break;
 
                 case POSITION_CENTER_ADJUST:
@@ -493,7 +479,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     }
 
     /**
-     * Removes this from the BaseFrame's layeredpane and calls dispose()
+     * Removes this from the BaseFrame's layered pane and calls dispose()
      */
     public void removeDialog()
     {
@@ -571,7 +557,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     @SuppressWarnings({"PublicInnerClass"})
     public interface DialogOpened
     {
-        public void dialogAdded(InternalDialog dialog);
+        void dialogAdded(InternalDialog dialog);
     }
 
     /**
@@ -580,7 +566,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     @SuppressWarnings({"PublicInnerClass"})
     public interface DialogClosed
     {
-        public void dialogRemoved(InternalDialog dialog);
+        void dialogRemoved(InternalDialog dialog);
     }
 
     /**
@@ -606,7 +592,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     {
         /* Since all input will be blocked until this dialog is dismissed,
          * make sure its parent containers are visible first (this component
-         * is tested below).  This is necessary for JApplets, because
+         * is tested below).  This is necessary for JApplets,
          * because an applet normally isn't made visible until after its
          * start() method returns -- if this method is called from start(),
          * the applet will appear to hang while an invisible modal frame
@@ -702,9 +688,9 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     
     /**
      * Set location to be used if calling show with
-     * POSITION_NOT_OBSCURRED as positioning hint
+     * POSITION_NOT_OBSCURED as positioning hint
      */
-    public void setNotObscurredLocation(int x, int y, int buffer)
+    public void setNotObscuredLocation(int x, int y, int buffer)
     {
         x_ = x;
         y_ = y;
@@ -712,9 +698,9 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     }
     
     /**
-     * Position so dialog doesn't obscur x,y
+     * Position so dialog doesn't obscure x,y
      */
-    public void setNotObscurred(int x, int y, int buffer)
+    public void setNotObscured(int x, int y, int buffer)
     {
         if (frame_ == null) return;
         int bw = getWidth();
@@ -752,7 +738,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
                 int nVertical = Math.min(nTopDiff,nBottomDiff);
                 int nHoriz = Math.min(nLeftDiff, nRightDiff);
                 
-                // if least space off screen on horizontal
+                // if least space off-screen on horizontal
                 if (nHoriz < nVertical)
                 {
                     y = (fh-bh)/2; // center on y axis
@@ -766,7 +752,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
                         x += buffer + Math.max(0, ((fw-x)-bw)/2);
                     }
                 }
-                else // more space on vert (y axis)
+                else // more space on vert (y-axis)
                 {
                     x = (fw - bw)/2;
                     
@@ -817,10 +803,10 @@ public class InternalDialog extends JInternalFrame implements DDWindow
      * Interface for handling mouse blockers
      */
     @SuppressWarnings({"PublicInnerClass"})
-    public static interface ModalBlockerListener
+    public interface ModalBlockerListener
     {
-        public void blockerCreated(JPanel panel);
-        public void blockerFinished(JPanel panel);
+        void blockerCreated(JPanel panel);
+        void blockerFinished(JPanel panel);
     }
     
     private static ModalBlockerListener blockerListener_ = null;
@@ -864,7 +850,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
      */
     public void setHelpMessage(String sMessage)
     {
-        if (tHelp_ != null && sMessage != null && sMessage.length() > 0)
+        if (tHelp_ != null && sMessage != null && !sMessage.isEmpty())
         {
             tHelp_.setText(sMessage);
             tHelp_.repaint();
@@ -895,6 +881,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     /**
      * Show help for this component
      */
+    @SuppressWarnings("DuplicatedCode")
     public void showHelp(DDComponent source)
     {
         // if skipping next, do so

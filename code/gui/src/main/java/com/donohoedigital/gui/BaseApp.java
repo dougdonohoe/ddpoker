@@ -32,17 +32,21 @@
  */
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.Locale;
 
+@SuppressWarnings("CommentedOutCode")
 public abstract class BaseApp
 {
-    private Logger logger = LogManager.getLogger(BaseApp.class);
+    private final Logger logger = LogManager.getLogger(BaseApp.class);
 
     static Thread mainThread_ = null;
     protected static BaseApp app_ = null;
@@ -55,7 +59,7 @@ public abstract class BaseApp
 
     private boolean bReady_ = false;
     private String sVersionString;
-    private String[] args;
+    private final String[] args;
 
     public BaseApp(String sAppName, String sVersionString, String[] args)
     {
@@ -73,10 +77,9 @@ public abstract class BaseApp
         // If mac, we need to instantiate by name the mac application class
         // we do this so we can compile this on all platforms
         //
-        if (Utils.ISMAC && !bHeadless) // start MacApplication
+        if (Utils.ISMAC && !bHeadless)
         {
-            Class<?> cMac = ConfigUtils.getClass("com.donohoedigital.gui.mac.MacApplication", true);
-            ConfigUtils.newInstance(cMac);
+            setupMac();
             Utils.sleepMillis(500); // BUG 266 - allow for this to register so we can get app events
         }
 
@@ -85,6 +88,37 @@ public abstract class BaseApp
         this.args = args;
     }
 
+    private void setupMac() {
+        // Set handlers for macOS-specific actions
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+
+            desktop.setAboutHandler(e -> {
+                if (!app_.isReady()) return;
+                app_.showAbout();
+            });
+
+            desktop.setOpenFileHandler(e -> {
+                if (!e.getFiles().isEmpty()) {
+                    CommandLine.setMacFileArg(e.getFiles().get(0).getAbsolutePath());
+                }
+            });
+
+            desktop.setPreferencesHandler(e -> {
+                if (!app_.isReady()) return;
+                app_.showPrefs();
+            });
+
+            desktop.setQuitHandler((e, response) -> {
+                if (app_.isReady()) {
+                    app_.quit();
+                    response.cancelQuit();  // Indicates that app handles quit
+                } else {
+                    response.performQuit(); // Forces quit if app isn't ready
+                }
+            });
+        }
+    }
     /**
      * Can be overridden for application specific options
      */
@@ -179,13 +213,9 @@ public abstract class BaseApp
 
         // invoke later to set ready flag (used for Mac integration)
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        bReady_ = true;
-                        //logger.debug("INITIAL frame size: " + initSize_);
-                    }
+                () -> {
+                    bReady_ = true;
+                    //logger.debug("INITIAL frame size: " + initSize_);
                 }
         );
     }
@@ -237,7 +267,7 @@ public abstract class BaseApp
     }
 
     /**
-     * quit app - calls okayToClose, which if returns true, then we exit
+     * quit app - if okayToClose
      */
     public void quit()
     {
@@ -261,7 +291,7 @@ public abstract class BaseApp
             }
             catch (Throwable t)
             {
-                logger.debug("Error trying to cleanup: " + Utils.formatExceptionText(t));
+                logger.debug("Error trying to cleanup: {}", Utils.formatExceptionText(t));
             }
 
             exitAfterWindowClosed(nCode);
@@ -286,13 +316,7 @@ public abstract class BaseApp
     private void exitAfterWindowClosed(final int nCode)
     {
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        _exit(nCode);
-                    }
-                }
+                () -> _exit(nCode)
         );
     }
 
