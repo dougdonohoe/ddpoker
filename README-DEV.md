@@ -578,3 +578,25 @@ source ddpoker.rc
 mvn-package-notests
 poker
 ```
+
+## Appendix E: Running GitHub Actions Locally
+
+You can run GitHub actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
+
+To install `act`:
+
+```shell
+brew install act
+```
+
+The `act-ddpoker` alias uses a custom Docker image you need to build once:
+
+```shell
+docker build -t ddpoker-act-runner -f Dockerfile.act .
+```
+
+To run the GitHub testing action locally, just use the alias:
+
+```shell
+act-ddpoker
+```

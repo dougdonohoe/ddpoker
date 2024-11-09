@@ -38,16 +38,25 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.lang.reflect.*;
-import java.net.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.nio.charset.*;
-import java.util.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.InetAddress;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
+import java.util.StringTokenizer;
 
 /**
  * @author Doug Donohoe
@@ -107,9 +116,10 @@ public class ConfigUtils
     {
         try
         {
-            return cClass.newInstance();
+            return cClass.getDeclaredConstructor().newInstance();
         }
-        catch (InstantiationException | IllegalAccessException ie)
+        catch (InstantiationException | IllegalAccessException | NoSuchMethodException
+                | InvocationTargetException ie)
         {
             throw new ApplicationError(ie);
         }
