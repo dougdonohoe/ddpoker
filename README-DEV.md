@@ -29,7 +29,7 @@ Feel free to submit a PR with any changes to these docs that would help Linux or
 
 Required software:
 
-* Java 11 - [See AdoptOpenJDK](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot)
+* Java 11 - [See Adoptium](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=11)
 * Maven 3 - [See Apache Maven](https://maven.apache.org/install.html)
 * Docker (optional, but useful to run some things) - [See Docker](https://docs.docker.com/engine/install/)
 
@@ -51,14 +51,7 @@ source ddpoker.rc
 [Brew](https://brew.sh/) is useful to install Java and Maven:
 
 ```shell
-# Java - Intel
-brew install openjdk@11
-
-# Java - Apple Silicon (M1,M2,M3,...)
-brew install temurin@11
-
-# Maven
-brew install maven
+brew install temurin@11 maven
 ```
 
 ## Compile Code
