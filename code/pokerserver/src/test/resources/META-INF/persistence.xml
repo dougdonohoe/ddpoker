@@ -65,7 +65,7 @@
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.use_sql_comments" value="true"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1/pokertest?useSSL=false"/>
+      <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1/pokertest?allowPublicKeyRetrieval=true&amp;useSSL=false"/>
       <property name="hibernate.connection.username" value="pokertest"/>
       <property name="hibernate.connection.password" value="p0k3rdb!"/>
       <property name="hibernate.c3p0.min_size" value="1"/>

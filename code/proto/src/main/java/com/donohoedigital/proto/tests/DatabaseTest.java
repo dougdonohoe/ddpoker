@@ -49,7 +49,7 @@ public class DatabaseTest {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try {
                 Connection conn = DriverManager.getConnection(
-                        "jdbc:mysql://127.0.0.1/pokertest?useSSL=false", "pokertest", "p0k3rdb!");
+                        "jdbc:mysql://127.0.0.1/pokertest?allowPublicKeyRetrieval=true&useSSL=false", "pokertest", "p0k3rdb!");
                 Statement stmt= conn.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT * from wan_profile");
 

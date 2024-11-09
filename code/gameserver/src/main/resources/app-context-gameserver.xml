@@ -60,7 +60,7 @@
   <!-- single connection data source -->
   <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
   <!--<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>-->
-  <!--<property name="url" value="jdbc:mysql://localhost/poker?useSSL=false"/>-->
+  <!--<property name="url" value="jdbc:mysql://localhost/poker?allowPublicKeyRetrieval=true&amp;useSSL=false"/>-->
   <!--<property name="username" value="poker"/>-->
   <!--<property name="password" value="p0k3rdb!"/>-->
   <!--</bean>-->
@@ -75,7 +75,7 @@
   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
         depends-on="loggingConfig">
     <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
-    <property name="jdbcUrl" value="jdbc:mysql://${db.host}/poker?useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false"/>
+    <property name="jdbcUrl" value="jdbc:mysql://${db.host}/poker?useUnicode=true&amp;characterEncoding=UTF8&amp;allowPublicKeyRetrieval=true&amp;useSSL=false"/>
     <property name="user" value="poker"/>
     <property name="password" value="p0k3rdb!"/>
     <!--<property name="driverClass" value="org.hsqldb.jdbcDriver"/>-->
