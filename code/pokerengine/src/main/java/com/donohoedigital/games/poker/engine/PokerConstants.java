@@ -63,7 +63,8 @@ public class PokerConstants
     //public static final Version VERSION = new Version(3, 0, 6, true); // release 3.0, Patch 6
     //public static final Version VERSION = new Version(3, 1, 0, true); // release 3.1 (open sourced!)
     //public static final Version VERSION = new Version(3, 1, 1, true); // release 3.1.1 (add Windows installer)
-    public static final Version VERSION = new Version(3, 1, 2, true); // release 3.1.2 (dependency updates)
+    //public static final Version VERSION = new Version(3, 1, 2, true); // release 3.1.2 (dependency updates)
+    public static final Version VERSION = new Version(3, 1, 3, true); // release 3.1.3 (Java 11, dependency updates)
 
     // OS versions (can be different if specific patches released)
     public static final Version LATEST_MAC = VERSION;
@@ -81,14 +82,12 @@ public class PokerConstants
     public static final Version VERSION_LAST_COMPAT = new Version(3, 0, 4, true);
 
     // get start of license keys
-
     public static int getKeyStart()
     {
         return getKeyStart(VERSION);
     }
 
     // get start
-
     public static int getKeyStart(Version version)
     {
         if (version.isBeta() || version.isAlpha())

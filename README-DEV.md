@@ -52,10 +52,10 @@ source ddpoker.rc
 
 ```shell
 # Java - Intel
-brew install openjdk@8  # TODO(JAVA11): fixme
+brew install openjdk@11
 
 # Java - Apple Silicon (M1,M2,M3,...)
-brew install temurin@8 # TODO(JAVA11): fixme
+brew install temurin@11
 
 # Maven
 brew install maven
