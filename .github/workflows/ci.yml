@@ -44,10 +44,6 @@ jobs:
         image: mysql:9.0
         env:
           MYSQL_ROOT_PASSWORD: d@t@b@s3
-          MYSQL_DATABASE: pokertest
-          MYSQL_USER: poker
-          MYSQL_PASSWORD: p0k3rdb!
-          MYSQL_OPT_SSL_ENFORCE: 0
         ports:
           - 3306:3306
         options: >-
@@ -60,7 +56,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'

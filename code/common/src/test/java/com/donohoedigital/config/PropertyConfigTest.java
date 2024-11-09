@@ -45,20 +45,21 @@ public class PropertyConfigTest extends TestCase
 {
     public void testLoadClient()
     {
+        System.getProperties().setProperty("user.name", "unit-tester");
         String[] modules = {"common", "testapp"};
         new PropertyConfig("testapp", modules, ApplicationType.CLIENT, null, true);
 
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.common"), true);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.common.override"), true);
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("test.common"));
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("test.common.override"));
 
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.true"), true);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.false"), false);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.yes"), true);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.no"), false);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.+"), true);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.-"), false);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.1"), true);
-        assertEquals(PropertyConfig.getRequiredBooleanProperty("test.boolean.0"), false);
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("test.boolean.true"));
+        assertFalse(PropertyConfig.getRequiredBooleanProperty("test.boolean.false"));
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("test.boolean.yes"));
+        assertFalse(PropertyConfig.getRequiredBooleanProperty("test.boolean.no"));
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("test.boolean.+"));
+        assertFalse(PropertyConfig.getRequiredBooleanProperty("test.boolean.-"));
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("test.boolean.1"));
+        assertFalse(PropertyConfig.getRequiredBooleanProperty("test.boolean.0"));
 
         assertEquals(PropertyConfig.getRequiredStringProperty("test.string"), "This is a string");
         assertEquals(PropertyConfig.getRequiredIntegerProperty("test.integer"), 42);
@@ -68,8 +69,7 @@ public class PropertyConfigTest extends TestCase
         assertEquals(PropertyConfig.getMessage("test.message.one", "just"), "Replace just one.");
         assertEquals(PropertyConfig.getMessage("test.message.two", "this", "that"), "Replace this and that.");
 
-        // TODO(CI): depends on src/test/resources/config/testapp/override/donohoe.properties
-        // FIX: set username instead
-        // assertEquals(PropertyConfig.getRequiredBooleanProperty("override.set"), true);
+        // override in unit-tester.properties
+        assertTrue(PropertyConfig.getRequiredBooleanProperty("override.set"));
     }
 }
