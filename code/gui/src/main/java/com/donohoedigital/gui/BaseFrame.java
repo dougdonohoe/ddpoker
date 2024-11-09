@@ -32,16 +32,18 @@
  */
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ImageConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BaseFrame extends JFrame implements DDWindow
@@ -54,7 +56,7 @@ public class BaseFrame extends JFrame implements DDWindow
     boolean bIgnoreNextDeactive_ = false;
     boolean bActive_ = false;
     DisplayMode dmLastSet_ = null;
-    private List<InternalDialog> allDialogs_ = new ArrayList<InternalDialog>();
+    private final List<InternalDialog> allDialogs_ = new ArrayList<>();
 
     public BaseFrame()
     {
@@ -109,16 +111,9 @@ public class BaseFrame extends JFrame implements DDWindow
         // need to run later so that window is drawn first/initialized
         if (bFull)
         {
+            //frame_.setDisplayMode(800, 600, 32, 75); // TODO: configure, get depth/refresh from current
             SwingUtilities.invokeLater(
-                    new Runnable()
-                    {
-                        public void run()
-                        {
-                            setFullScreenOn();
-                            //frame_.setDisplayMode(800, 600, 32, 75); // TODO: configure, get depth/refresh from current
-
-                        }
-                    }
+                    this::setFullScreenOn
             );
         }
     }
@@ -164,13 +159,9 @@ public class BaseFrame extends JFrame implements DDWindow
 
         // need to repaint content pane after set display mode
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        getContentPane().validate();
-                        getContentPane().repaint();
-                    }
+                () -> {
+                    getContentPane().validate();
+                    getContentPane().repaint();
                 }
         );
     }
@@ -179,6 +170,7 @@ public class BaseFrame extends JFrame implements DDWindow
      * Turn full screen mode on.  Returns true if succeeded.
      * False if failed (i.e., already in full screen mode).
      */
+    @SuppressWarnings("UnusedReturnValue")
     public boolean setFullScreenOn()
     {
         if (!isFullScreenSupported()) return false;
@@ -323,7 +315,7 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     public void removeAllDialogs()
     {
-        List<InternalDialog> all = new ArrayList<InternalDialog>(allDialogs_);
+        List<InternalDialog> all = new ArrayList<>(allDialogs_);
         for (InternalDialog dialog : all)
         {
             dialog.removeDialog();
@@ -335,7 +327,7 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     public void unselectAllDialogs()
     {
-        if (allDialogs_.size() == 0) return;
+        if (allDialogs_.isEmpty()) return;
         InternalDialog dialog;
 
         for (int i = allDialogs_.size() - 1; i >= 0; i--)
@@ -359,7 +351,7 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     private boolean restoreFocusLastDialog()
     {
-        if (allDialogs_.size() == 0) return false;
+        if (allDialogs_.isEmpty()) return false;
         InternalDialog dialog;
         InternalDialog backup = null;
 
@@ -410,10 +402,10 @@ public class BaseFrame extends JFrame implements DDWindow
             //logger.debug("XX BASE window activated focus to " + getContentPane());
             restoreTo = getContentPane();
         }
-        else
-        {
-            //logger.debug("YY BASE window activated focus to " + restoreTo);
-        }
+//        else
+//        {
+//            //logger.debug("YY BASE window activated focus to " + restoreTo);
+//        }
 
         restoreTo.requestFocus();
     }
@@ -570,7 +562,7 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     public void setHelpMessage(String sMessage)
     {
-        if (tHelp_ != null && sMessage != null && sMessage.length() > 0)
+        if (tHelp_ != null && sMessage != null && !sMessage.isEmpty())
         {
             tHelp_.setText(sMessage);
             tHelp_.repaint();
@@ -644,7 +636,7 @@ public class BaseFrame extends JFrame implements DDWindow
     private static int SEQ = 0;
 
     // list of all logged modals
-    private List<Modal> logged_ = new ArrayList<Modal>();
+    private final List<Modal> logged_ = new ArrayList<>();
 
     /**
      * get new Modal handler
@@ -659,8 +651,8 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     public void endModalLogged()
     {
-        if (logged_.size() == 0) return;
-        List<Modal> clone = new ArrayList<Modal>(logged_);
+        if (logged_.isEmpty()) return;
+        List<Modal> clone = new ArrayList<>(logged_);
         for (Modal modal : clone)
         {
             modal.endModal();

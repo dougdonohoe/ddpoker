@@ -60,7 +60,7 @@ hdiutil convert "$SRC" -format UDRW -o "$DST_RW"
 # Add 20000 to the size
 input=$(hdiutil resize "$DST_RW" | tail -1)
 size=$(echo "$input" | awk '{print $2}')
-newsize=$((size + 20000))
+newsize=$((size + 50000))
 echo "Increasing size from $size to $newsize..."
 hdiutil resize -sectors $newsize "$DST_RW"
 

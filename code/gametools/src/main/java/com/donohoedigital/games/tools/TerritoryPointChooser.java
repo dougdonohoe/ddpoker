@@ -38,12 +38,16 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.config.TerritoryPoints;
+import com.donohoedigital.gui.BaseFrame;
+import com.donohoedigital.gui.DDComboBox;
+import com.donohoedigital.gui.InternalDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
     
 /**
  *
@@ -74,6 +78,7 @@ public class TerritoryPointChooser extends InternalDialog implements ActionListe
     /**
      * Create components of this chooser
      */
+    @SuppressWarnings("DuplicatedCode")
     private JComponent createUI()
     {
         // combobox
@@ -145,14 +150,14 @@ public class TerritoryPointChooser extends InternalDialog implements ActionListe
     public static String getTerritoryPointType(TerritoryPointChooser chooser, 
                                         Territory t, int x, int y)
     {
-        // figure out best location so not to cover x,y point with buffer of 10 pixels
-        chooser.setNotObscurredLocation(x,y,10);
+        // figure out the best location so not to cover x,y point with buffer of 10 pixels
+        chooser.setNotObscuredLocation(x,y,10);
         
         // update territory chooser is using
         chooser.setTerritory(t);
         
         // set visible / modal
-        chooser.showDialog(null, InternalDialog.POSITION_CENTER);//TODO - fix InternalDialog.POSITION_NOT_OBSCURRED);
+        chooser.showDialog(null, InternalDialog.POSITION_CENTER);//TODO - fix InternalDialog.POSITION_NOT_OBSCURED);
         return chooser.sChoice_;
     }
 }

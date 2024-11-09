@@ -62,29 +62,4 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>mac</id>
-      <activation>
-        <os>
-          <family>!mac</family>
-        </os>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <excludes>
-                <!-- only compile on Mac (loaded by name in BaseApp.java) -->
-                <exclude>**/com/donohoedigital/gui/mac/MacApplication.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
 </project>

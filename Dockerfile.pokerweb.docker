@@ -29,17 +29,17 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# Use the CentOS 6 base image
-FROM centos:6
+# Use the CentOS 7 base image
+FROM centos:7
 
 # Update mirror list
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
 RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
-# Install necessary dependencies including Java 8
+# Install necessary dependencies including Java 11
 RUN yum -y update && yum -y remove java && yum install -y \
-       java-1.8.0-openjdk \
-       java-1.8.0-openjdk-devel \
+       java-11-openjdk \
+       java-11-openjdk-devel \
        wget
 
 # Download and install Tomcat 8.5.100
