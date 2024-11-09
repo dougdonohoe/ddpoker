@@ -69,6 +69,7 @@ public class PropertyConfigTest extends TestCase
         assertEquals(PropertyConfig.getMessage("test.message.two", "this", "that"), "Replace this and that.");
 
         // TODO(CI): depends on src/test/resources/config/testapp/override/donohoe.properties
+        // FIX: set username instead
         // assertEquals(PropertyConfig.getRequiredBooleanProperty("override.set"), true);
     }
 }
