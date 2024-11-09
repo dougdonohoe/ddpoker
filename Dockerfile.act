@@ -29,7 +29,7 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# Dockerfile to create image for use with act
+# Dockerfile to create image for use with 'act' tool (testing GitHub actions)
 FROM catthehacker/ubuntu:runner-latest
 
 # Install required tools

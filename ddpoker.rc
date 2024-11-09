@@ -53,8 +53,8 @@ alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.ou
 
 # act shortcut
 alias act-ddpoker='act --platform ubuntu-latest=ddpoker-act-runner --pull=false \
- --container-options "-v $HOME/.m2:/home/runner/.m2" \
- --job test pull_request'
+  --container-options "-v $HOME/.m2:/home/runner/.m2" \
+  --job test pull_request'
 
 # attempt to auto-set JAVA_HOME to 11 if on mac
 if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
