@@ -33,7 +33,8 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
 public class StatResult
 {
@@ -156,8 +157,7 @@ public class StatResult
                        PokerConstants.formatPercent(winPercent_),
                        PokerConstants.formatPercent(tiePercent_),
                        PokerConstants.formatPercent(losePercent_),
-                       new Integer(handCount_)
-                        );
+                       handCount_);
     }
 
     public String toString() {

@@ -38,13 +38,15 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -161,7 +163,7 @@ public class OptionRadio extends DDOption implements ActionListener, ChangeListe
     {
         if (radio_.isSelected())
         {
-            map_.setInteger(sOptionName_, new Integer(nValue_));
+            map_.setInteger(sOptionName_, nValue_);
         }
     }
     

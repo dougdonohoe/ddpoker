@@ -38,7 +38,8 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.MersenneTwisterFast;
+import com.donohoedigital.base.Utils;
 
 /**
  *
@@ -80,8 +81,7 @@ public class DiceRoller {
      */
     public static Integer rollDie(int nSides)
     {
-        int nNum = rollDieInt(nSides);
-        return new Integer(nNum);
+        return rollDieInt(nSides);
     }
     
     /**

@@ -32,17 +32,22 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.ai.PokerAI;
 import com.donohoedigital.games.poker.dashboard.*;
 import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.event.PokerTableListener;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
 import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.gui.*;
 
@@ -50,9 +55,13 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Collections;
 import java.util.List;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.TOGGLE;
 
 public class ShowTournamentTable extends ShowPokerTable implements
                                                         PokerTableInput,
@@ -1554,7 +1563,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
         int key = event.getKeyCode();
 
-        if (event.getModifiers() == 0 || event.isShiftDown())
+        if (event.getModifiersEx() == 0 || event.isShiftDown())
         {
             switch (key)
             {
@@ -2811,7 +2820,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         public void mousePressed(MouseEvent e)
         {
             Point p = SwingUtilities.convertPoint((Component) e.getSource(), e.getX(), e.getY(), board_);
-            board_.mousePressed(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiers(),
+            board_.mousePressed(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiersEx(),
                                                p.x, p.y, e.getClickCount(), e.isPopupTrigger()));
         }
 
@@ -2822,7 +2831,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         public void mouseReleased(MouseEvent e)
         {
             Point p = SwingUtilities.convertPoint((Component) e.getSource(), e.getX(), e.getY(), board_);
-            board_.mouseReleased(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiers(),
+            board_.mouseReleased(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiersEx(),
                                                 p.x, p.y, e.getClickCount(), e.isPopupTrigger()));
         }
 
@@ -2837,7 +2846,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         public void mouseDragged(MouseEvent e)
         {
             Point p = SwingUtilities.convertPoint((Component) e.getSource(), e.getX(), e.getY(), board_);
-            board_.mouseDragged(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiers(),
+            board_.mouseDragged(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiersEx(),
                                                p.x, p.y, e.getClickCount(), e.isPopupTrigger()));
         }
 
@@ -2848,7 +2857,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         public void mouseMoved(MouseEvent e)
         {
             Point p = SwingUtilities.convertPoint((Component) e.getSource(), e.getX(), e.getY(), board_);
-            board_.mouseMoved(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiers(),
+            board_.mouseMoved(new MouseEvent(board_, e.getID(), e.getWhen(), e.getModifiersEx(),
                                              p.x, p.y, e.getClickCount(), e.isPopupTrigger()));
         }
     }

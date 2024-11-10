@@ -38,7 +38,9 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
 
 /**
  *
@@ -55,7 +57,7 @@ public class DieRoll6x2 implements DataMarshal
     {
         this.nFirst=DiceRoller.rollDie6();
         this.nSecond=DiceRoller.rollDie6();
-        nSum = nFirst.intValue() + nSecond.intValue();
+        nSum = nFirst + nSecond;
     }
 
     public String toString()
@@ -70,19 +72,19 @@ public class DieRoll6x2 implements DataMarshal
     
     public int getFirst()
     {
-        return nFirst.intValue();
+        return nFirst;
     }
     
     public int getSecond()
     {
-        return nSecond.intValue();
+        return nSecond;
     }
     
     public void demarshal(MsgState state, String sData)
     {
-        nFirst = new Integer(Integer.parseInt(sData.substring(0,1)));
-        nSecond = new Integer(Integer.parseInt(sData.substring(1)));
-        nSum = nFirst.intValue() + nSecond.intValue();
+        nFirst = Integer.parseInt(sData.substring(0,1));
+        nSecond = Integer.parseInt(sData.substring(1));
+        nSum = nFirst + nSecond;
     }
     
     public String marshal(MsgState state)

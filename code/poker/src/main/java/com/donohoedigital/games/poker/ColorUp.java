@@ -38,13 +38,16 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  *
@@ -81,7 +84,7 @@ public class ColorUp extends ChainPhase
             if (!TESTING(PokerConstants.TESTING_AUTOPILOT) && !game_.isOnlineGame())
             {
                 EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.colorup",
-                            new Integer(table_.getMinChip()), new Integer(table_.getNextMinChip())),
+                            table_.getMinChip(), table_.getNextMinChip()),
                             "msg.windowtitle.colorup", "colorup", "colorup");
             }
 

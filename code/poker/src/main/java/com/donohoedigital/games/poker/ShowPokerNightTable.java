@@ -32,17 +32,24 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.Phase;
+import com.donohoedigital.games.engine.ProfileList;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class ShowPokerNightTable extends ShowPokerTable implements PropertyChangeListener, GameClockListener, SwingConstants
 {
@@ -426,7 +433,7 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
     {
         int key = event.getKeyCode();
 
-        if (event.getModifiers() == 0 || event.isShiftDown())
+        if (event.getModifiersEx() == 0 || event.isShiftDown())
         {
             switch (key)
             {

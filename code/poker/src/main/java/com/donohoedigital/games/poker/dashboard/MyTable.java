@@ -32,15 +32,17 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.
@@ -90,7 +92,7 @@ public class MyTable extends DashboardItem implements ActionListener
     protected Object getDynamicTitleParam()
     {
         PokerTable table = game_.getCurrentTable();
-        return new Integer(table.getNumber());
+        return table.getNumber();
     }
 
     ///
@@ -119,8 +121,8 @@ public class MyTable extends DashboardItem implements ActionListener
         }
 
         labelInfo_.setText(PropertyConfig.getMessage(sMsgKey,
-                                new Integer(human.getTable().getNumber()),
-                                bObs ? null : new Integer(human.getSeat() + 1),
+                                human.getTable().getNumber(),
+                                bObs ? null : human.getSeat() + 1,
                                 ""+nHandNum) // use "" + to not get commas
                                 );
 

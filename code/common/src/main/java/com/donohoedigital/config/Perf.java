@@ -40,7 +40,9 @@ package com.donohoedigital.config;
 
 //import com.jprofiler.agent.*;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -148,27 +150,6 @@ public class Perf
             }
             count.num++;
             System.out.println("MEMORY: construct " + sName + " count now " + count.num);
-        }
-    }
-
-    /**
-     * Note finalization of object
-     */
-    public static void finalize(Object o, String sDesc)
-    {
-        if (!MEM || !ON) return;
-        synchronized(count_)
-        {
-            String sName = o.getClass().getName();
-            if (sDesc != null) sName += "-"+sDesc;
-            Counter count = (Counter) count_.get(sName);
-            if (count == null) {
-                System.out.println("MEMORY: WARNING ####### - finalize without construct: " + sName);
-                return;
-            }
-            count.num--;
-            if (count.num == 0) count_.remove(sName);
-            System.out.println("MEMORY: finalize " + sName + " count now " + count.num);
         }
     }
 

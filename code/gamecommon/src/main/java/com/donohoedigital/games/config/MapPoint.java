@@ -38,11 +38,11 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
-
-import org.jdom2.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.XMLConfigFileLoader;
+import com.donohoedigital.config.XMLWriter;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  *
@@ -54,7 +54,7 @@ public class MapPoint
     
     public int x_ = 0;
     public int y_ = 0;
-    protected Integer NO_ANGLE = new Integer(0);
+    protected Integer NO_ANGLE = 0;
     protected Integer angle_ = NO_ANGLE; 
     
     
@@ -84,7 +84,7 @@ public class MapPoint
     public MapPoint(int x, int y, int angle, String sType) {
         x_ = x;
         y_ = y;
-        angle_ = new Integer(angle);
+        angle_ = angle;
         sType_ = sType;
     }
     
@@ -94,8 +94,8 @@ public class MapPoint
     public MapPoint(Element point, Namespace ns, String sAttrErrorDesc)
                 throws ApplicationError
     {
-        x_ = XMLConfigFileLoader.getIntegerAttributeValue(point, "x", true, sAttrErrorDesc).intValue();
-        y_ = XMLConfigFileLoader.getIntegerAttributeValue(point, "y", true, sAttrErrorDesc).intValue();
+        x_ = XMLConfigFileLoader.getIntegerAttributeValue(point, "x", true, sAttrErrorDesc);
+        y_ = XMLConfigFileLoader.getIntegerAttributeValue(point, "y", true, sAttrErrorDesc);
         angle_ = XMLConfigFileLoader.getIntegerAttributeValue(point, "angle", false, sAttrErrorDesc, NO_ANGLE);
         sType_ = XMLConfigFileLoader.getStringAttributeValue(point, "type", false, sAttrErrorDesc, NO_TYPE);
     }
@@ -161,7 +161,7 @@ public class MapPoint
      */
     public void setAngle(int nAngle)
     {
-        angle_ = new Integer(nAngle);
+        angle_ = nAngle;
     }
     
     /**
@@ -188,8 +188,8 @@ public class MapPoint
     {
         writer.printIndent(nIndent);
         writer.printElementStartOpen("point");
-        writer.printAttribute("x", new Integer(x_));
-        writer.printAttribute("y", new Integer(y_));
+        writer.printAttribute("x", x_);
+        writer.printAttribute("y", y_);
         if (angle_ != null && !angle_.equals(NO_ANGLE)) writer.printAttribute("angle", angle_);
         if (sType_ != null && !sType_.equals(NO_TYPE)) writer.printAttribute("type", sType_);
         writer.printElementEndLine();

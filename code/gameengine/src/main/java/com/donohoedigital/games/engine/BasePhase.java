@@ -38,11 +38,13 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.NameValueToken;
+import com.donohoedigital.config.Perf;
 import com.donohoedigital.games.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -64,12 +66,7 @@ public abstract class BasePhase implements Phase
     public BasePhase() {
         if (false) Perf.construct(this, null);
     }
-    
-    @Override
-    protected void finalize() {
-        if (false) Perf.finalize(this, null);
-    }
-    
+
     /**
      * Init phase, storing engine and gamephase
      */

@@ -38,8 +38,9 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DataMarshal;
 
 /**
  * Wrapper of DDMessage for lan client messages
@@ -170,7 +171,7 @@ public class LanClientInfo
     
     public void setAliveMillis(long s)
     {
-        data_.setLong(LAN_ALIVE_MILLIS, new Long(s));
+        data_.setLong(LAN_ALIVE_MILLIS, s);
     }
     
     public DataMarshal getGameData()

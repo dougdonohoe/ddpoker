@@ -32,15 +32,21 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.ddpoker.holdem.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.ddpoker.holdem.PlayerAction;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 public class RuleEngine implements AIConstants
 {
@@ -3155,17 +3161,17 @@ public class RuleEngine implements AIConstants
 
             for (index = 0; index < outcomes.size(); ++index)
             {
-                if (score_[((Integer)outcomes.get(index)).intValue()] < score_[i]) break;
+                if (score_[(Integer) outcomes.get(index)] < score_[i]) break;
             }
 
-            outcomes.add(index, new Integer(i));
+            outcomes.add(index, i);
         }
 
         StringBuilder buf = new StringBuilder();
 
         for (int i = 0; i < outcomes.size(); ++i)
         {
-            buf.append(getReasoningHTML(((Integer)outcomes.get(i)).intValue()));
+            buf.append(getReasoningHTML((Integer) outcomes.get(i)));
             buf.append("<br><br>");
         }
 
@@ -3216,17 +3222,17 @@ public class RuleEngine implements AIConstants
 
             for (index = 0; index < adjustments.size(); index+=2)
             {
-                if (((Float)adjustments.get(index+1)).floatValue() < total)
+                if ((Float) adjustments.get(index + 1) < total)
                 {
                     break;
                 }
             }
 
-            adjustments.add(index, new Float(total));
-            adjustments.add(index, new Integer(i));
+            adjustments.add(index, total);
+            adjustments.add(index, i);
         }
 
-        if (adjustments.size() > 0)
+        if (!adjustments.isEmpty())
         {
             buf.append(PropertyConfig.getMessage("msg.aireason.heading", getOutcomeLabel(outcome),
                     getStrengthColor(score_[outcome] - 0.5f)));
@@ -3234,8 +3240,8 @@ public class RuleEngine implements AIConstants
 
         for (int i = 0; i < adjustments.size(); i +=2)
         {
-            int factor = ((Integer)(adjustments.get(i))).intValue();
-            float value = ((Float)(adjustments.get(i+1))).floatValue();
+            int factor = (Integer) (adjustments.get(i));
+            float value = (Float) (adjustments.get(i + 1));
 
             String display = PropertyConfig.getMessage
                         ("msg.aireason." + factorNames_.get(factor));

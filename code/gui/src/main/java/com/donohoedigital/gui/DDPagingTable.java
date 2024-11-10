@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DDPagingTable extends DDPanel implements ActionListener
 {
@@ -163,9 +164,9 @@ public class DDPagingTable extends DDPanel implements ActionListener
             }
 
             Object[] params = new Object[3];
-            params[0] = new Integer(offset_ + 1);
-            params[1] = new Integer(offset_ + model.getRowCount());
-            params[2] = new Integer(totalCount);
+            params[0] = offset_ + 1;
+            params[1] = offset_ + model.getRowCount();
+            params[2] = totalCount;
             String text = PropertyConfig.getMessage(("msg." + pagingMsg_ + ".paging"), params);
             label_.setText(text);
 

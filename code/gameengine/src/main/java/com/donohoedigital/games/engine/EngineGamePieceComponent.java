@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.ImageComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,7 +90,7 @@ public class EngineGamePieceComponent extends JComponent
     
     public void setQuantityToDisplay(int n)
     {
-        nQuantityToDisplay_ = new Integer(n);
+        nQuantityToDisplay_ = n;
     }
     
     public void setEngineGamePiece(EngineGamePiece piece)

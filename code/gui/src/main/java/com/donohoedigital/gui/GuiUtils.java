@@ -32,27 +32,40 @@
  */
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.StylesConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.plaf.*;
-import javax.swing.plaf.metal.*;
-import javax.swing.text.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.plaf.UIResource;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.datatransfer.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
-import java.awt.geom.*;
-import java.awt.image.*;
-import java.beans.*;
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class GuiUtils
 {
@@ -64,13 +77,13 @@ public class GuiUtils
     public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
     static final JTextComponent.KeyBinding[] MAC_CUT_COPY_PASTE = {
             new JTextComponent.KeyBinding(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_MASK),
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK),
                     DefaultEditorKit.copyAction),
             new JTextComponent.KeyBinding(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_MASK),
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK),
                     DefaultEditorKit.pasteAction),
             new JTextComponent.KeyBinding(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_MASK),
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_DOWN_MASK),
                     DefaultEditorKit.cutAction),
     };
 

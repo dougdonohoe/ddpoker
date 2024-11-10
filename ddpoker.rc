@@ -56,27 +56,27 @@ alias act-ddpoker='act --platform ubuntu-latest=ddpoker-act-runner --pull=false 
   --container-options "-v $HOME/.m2:/home/runner/.m2" \
   --job test pull_request'
 
-# attempt to auto-set JAVA_HOME to 11 if on mac
+# attempt to auto-set JAVA_HOME to 17 if on mac
 if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
-  JAVA11_HOME=$(/usr/libexec/java_home -F -v 11 2>/dev/null || echo "/java11/not/found")
-  if [[ -d "${JAVA11_HOME}" && "${JAVA11_HOME}" != "${JAVA_HOME}" ]]; then
-    export JAVA_HOME="${JAVA11_HOME}"
-    export PATH="${JAVA11_HOME}/bin:${PATH}"
+  JAVA17_HOME=$(/usr/libexec/java_home -F -v 17 2>/dev/null || echo "/java17/not/found")
+  if [[ -d "${JAVA17_HOME}" && "${JAVA17_HOME}" != "${JAVA_HOME}" ]]; then
+    export JAVA_HOME="${JAVA17_HOME}"
+    export PATH="${JAVA17_HOME}/bin:${PATH}"
     echo "JAVA_HOME changed, version now '$(java -version 2>&1 | head -1)'"
   fi
 fi
 
-# See if java 11 is installed
+# See if java 17 is installed
 if ! test -x "$(command -v java)"; then
   if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
-    echo "WARNING: Java 11 is not installed. Have your run 'brew install temurin@11'?"
+    echo "WARNING: Java 17 is not installed. Have your run 'brew install temurin@17'?"
   else
-    echo "WARNING: Java 11 is not installed."
+    echo "WARNING: Java 17 is not installed."
   fi
 else
-  # Java is installed, check version is 11
-  if ! java -version 2>&1 | head -1 | grep -q "\"11\."; then
-    echo "WARNING: Java version is not 11 (which DD Poker requires).  Version is:"
+  # Java is installed, check version is 17
+  if ! java -version 2>&1 | head -1 | grep -q "\"17\."; then
+    echo "WARNING: Java version is not 17 (which DD Poker requires).  Version is:"
     java -version
   fi
 fi

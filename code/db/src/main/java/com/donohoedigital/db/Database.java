@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
-import java.sql.*;
-import java.text.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.text.MessageFormat;
 
 /**
  * Represents a logical database.
@@ -224,7 +226,7 @@ public class Database
         // Force the driver to load.
         try
         {
-            Class.forName(getDriverClassName()).newInstance();
+            Class.forName(getDriverClassName()).getDeclaredConstructor().newInstance();
         }
         catch (Exception e)
         {

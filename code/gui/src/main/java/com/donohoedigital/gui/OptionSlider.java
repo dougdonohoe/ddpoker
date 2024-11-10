@@ -38,11 +38,12 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.event.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 /**
@@ -71,7 +72,7 @@ public class OptionSlider extends DDOption implements ChangeListener
         }
         else
         {
-            nDefault_ = new Integer(PropertyConfig.getRequiredIntegerProperty(getDefaultKey()));
+            nDefault_ = PropertyConfig.getRequiredIntegerProperty(getDefaultKey());
         }
         
         int nStep = PropertyConfig.getIntegerProperty("option." + sName_ + ".step", 10);
@@ -161,7 +162,7 @@ public class OptionSlider extends DDOption implements ChangeListener
      */
     public void saveToMap()
     {
-        map_.setInteger(sName_, new Integer(slider_.getValue()));
+        map_.setInteger(sName_, slider_.getValue());
     }
     
     /** reset to default value

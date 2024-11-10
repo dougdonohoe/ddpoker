@@ -38,24 +38,36 @@
 
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.DialogPhase;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.*;
+import com.donohoedigital.games.poker.ai.AIOutcome;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.ai.RuleEngine;
+import com.donohoedigital.games.poker.ai.V2Player;
 import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.event.*;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Collections;
+import java.util.Comparator;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 public class AdvisorInfoDialog extends DialogPhase
 {
@@ -81,7 +93,7 @@ public class AdvisorInfoDialog extends DialogPhase
         if (!game_.isClockMode()) profile_.setPrizePool(game_.getPrizePool(), true); // update to current
         ic_.setScaleToFit(false);
         ic_.setIconWidth(GamePrefsPanel.ICWIDTH);
-        ic_.setIconHeight(new Integer(GamePrefsPanel.ICHEIGHT.intValue())); // need to be slightly higher for focus
+        ic_.setIconHeight(GamePrefsPanel.ICHEIGHT); // need to be slightly higher for focus
         super.init(engine, context, gamephase);
     }
 

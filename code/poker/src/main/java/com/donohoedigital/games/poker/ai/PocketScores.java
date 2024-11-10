@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.HandInfoFaster;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Reusable computation of hand scores with a given board.
@@ -86,7 +87,7 @@ public class PocketScores
             fpFlop_ = fpFlop;
         }
 
-        Object key = new Long(community.fingerprint());
+        Object key = community.fingerprint();
 
         PocketScores scores = (PocketScores)cache_.get(key);
 

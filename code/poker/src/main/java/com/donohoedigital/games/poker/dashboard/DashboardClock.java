@@ -32,12 +32,12 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
 import com.zookitec.layout.*;
 
 import javax.swing.*;
@@ -171,7 +171,7 @@ public class DashboardClock extends DashboardItem implements GameClockListener
         PokerTable table = game_.getCurrentTable();
         if (table != null) nLevel = table.getLevel();
 
-        String sLevel = PropertyConfig.getMessage("msg.dash.level", new Integer(nLevel));
+        String sLevel = PropertyConfig.getMessage("msg.dash.level", nLevel);
         labelLevel_.setText(sLevel);
         TournamentProfile profile = game_.getProfile();
 
@@ -179,22 +179,22 @@ public class DashboardClock extends DashboardItem implements GameClockListener
         if (profile.isBreak(nLevel))
         {
             labelBlinds_.setText(PropertyConfig.getMessage("msg.dash.break",
-                                                           new Integer(profile.getMinutes(nLevel))));
+                                                           profile.getMinutes(nLevel)));
         }
         // ante and blinds
         else
         {
             // show gametype if different from default
             String sGameType = profile.getGameTypeDisplay(nLevel);
-            if (sGameType.length() > 0) sGameType = PropertyConfig.getMessage("msg.dash.gametype", sGameType);
+            if (!sGameType.isEmpty()) sGameType = PropertyConfig.getMessage("msg.dash.gametype", sGameType);
             
             int nAnte = profile.getAnte(nLevel);
             int nBig = profile.getBigBlind(nLevel);
             int nSmall = profile.getSmallBlind(nLevel);
             labelBlinds_.setText(PropertyConfig.getMessage(nAnte == 0 ? "msg.dash.blinds" : "msg.dash.blinds.a",
-                                                       new Integer(nSmall),
-                                                       new Integer(nBig),
-                                                       nAnte == 0 ? null : new Integer(nAnte),
+                                                       nSmall,
+                                                       nBig,
+                                                       nAnte == 0 ? null : nAnte,
                                                        sGameType));
         }
 

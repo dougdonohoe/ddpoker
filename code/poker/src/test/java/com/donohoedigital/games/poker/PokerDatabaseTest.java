@@ -32,11 +32,9 @@
  */
 package com.donohoedigital.games.poker;
 
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
-import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.db.BindArray;
-import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.poker.model.TournamentProfile;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +43,8 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /*
  * The purpose of this test is to provide a rudimentary way to very our hsqldb
@@ -71,6 +70,7 @@ public class PokerDatabaseTest {
      */
     @Test
     public void testBasics() throws IOException {
+        Utils.setVersionString("-db-test");
         // init properties like poker client, but headless for test
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
 

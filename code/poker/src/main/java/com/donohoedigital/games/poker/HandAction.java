@@ -38,10 +38,14 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -405,8 +409,8 @@ public class HandAction implements DataMarshal
         if (isAllIn()) nAmount += nCall;
 
         Object[] params = new Object[4 + (extraParams != null ? extraParams.length : 0)];
-        params[0] = new Integer(nAmount);
-        params[1] = new Integer(nCall);
+        params[0] = nAmount;
+        params[1] = nCall;
         params[2] = sIcon;
         params[3] = Utils.encodeHTML(getPlayer().getName());
         if (extraParams != null && extraParams.length > 0)

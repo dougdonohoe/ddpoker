@@ -32,18 +32,28 @@
  */
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.gui.DDWindow;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Stack;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 
 /**
@@ -964,7 +974,7 @@ public class GameContext
                                                "Make sure class exists");
                 }
 
-                phase = cClass.newInstance();
+                phase = cClass.getDeclaredConstructor().newInstance();
 
                 // otherwise init
                 phase.init(engine_, this, gamephase);

@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Reusable computation of odds of winning (Effective Hand Strength) with a given pocket hand, board, and cards to come.
@@ -102,7 +103,7 @@ public class PocketOdds
             fpBoard_ = fpBoard;
         }
 
-        Object key = new Long(pocket.fingerprint());
+        Object key = pocket.fingerprint();
 
         PocketOdds odds = (PocketOdds)cache_.get(key);
 

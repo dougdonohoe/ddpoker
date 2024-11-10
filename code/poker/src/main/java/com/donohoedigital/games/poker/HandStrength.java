@@ -38,12 +38,16 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  *
@@ -162,7 +166,7 @@ public class HandStrength
         for (int i = 1; i <= nOpponents; i++)
         {
             oppStrength = getStrength(dStrength, i) * 100;
-            sb.append(PropertyConfig.getMessage("msg.strength.row", new Integer(i),
+            sb.append(PropertyConfig.getMessage("msg.strength.row", i,
                                                 HandStat.fPerc.form(oppStrength)));
         }
 

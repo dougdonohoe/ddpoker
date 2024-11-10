@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class AIStrategyNode
 {
@@ -175,7 +176,7 @@ public class AIStrategyNode
 
         if (value < 0)
         {
-            profile.getMap().setInteger("strat." + name_, new Integer(defval));
+            profile.getMap().setInteger("strat." + name_, defval);
             value = defval;
         }
 

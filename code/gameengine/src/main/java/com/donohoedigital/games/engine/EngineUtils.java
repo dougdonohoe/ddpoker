@@ -38,15 +38,22 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.AudioPlayer;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.DDButton;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.GuiUtils;
 
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -292,7 +299,7 @@ public class EngineUtils
         }
         if (nTimeoutSeconds > 0)
         {
-            params.setInteger(DisplayTimedMessage.PARAM_SECONDS, new Integer(nTimeoutSeconds));
+            params.setInteger(DisplayTimedMessage.PARAM_SECONDS, nTimeoutSeconds);
         }
         Phase confirm = context.processPhaseNow(sPhase, params);
 

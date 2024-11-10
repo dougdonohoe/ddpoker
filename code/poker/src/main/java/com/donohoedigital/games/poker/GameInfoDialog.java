@@ -38,19 +38,24 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.db.BindArray;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.DialogPhase;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.OptionMenu;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.online.Lobby;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
+import java.sql.Types;
 
 /**
  *
@@ -78,7 +83,7 @@ public class GameInfoDialog extends DialogPhase
         if (!game_.isClockMode() && !bLobbyMode_) profile_.setPrizePool(game_.getPrizePool(), true); // update to current
         ic_.setScaleToFit(false);
         ic_.setIconWidth(GamePrefsPanel.ICWIDTH);
-        ic_.setIconHeight(new Integer(GamePrefsPanel.ICHEIGHT.intValue() + 6)); // need to be slightly higher for focus
+        ic_.setIconHeight(GamePrefsPanel.ICHEIGHT + 6); // need to be slightly higher for focus
         super.init(engine, context, gamephase);
     }
     
@@ -212,7 +217,7 @@ public class GameInfoDialog extends DialogPhase
             setPreferredSize(new Dimension(650, 363));
 
             BindArray bindArray = new BindArray();
-            bindArray.addValue(Types.INTEGER, new Integer(PokerDatabase.storeTournament(game_)));
+            bindArray.addValue(Types.INTEGER, PokerDatabase.storeTournament(game_));
 
             HoldemHand hhand = game_.getCurrentTable().getHoldemHand();
 

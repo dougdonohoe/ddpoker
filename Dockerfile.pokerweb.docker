@@ -30,16 +30,16 @@
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # Use the CentOS 7 base image
-FROM centos:7
+FROM centos:8
 
 # Update mirror list
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
 RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
-# Install necessary dependencies including Java 11
-RUN yum -y update && yum -y remove java && yum install -y \
-       java-11-openjdk \
-       java-11-openjdk-devel \
+# Install necessary dependencies including Java 17
+RUN yum -y update && yum -y remove java && yum install -y --setopt=skip_missing_names_on_install=False \
+       java-17-openjdk \
+       java-17-openjdk-devel \
        wget
 
 # Download and install Tomcat 8.5.100
