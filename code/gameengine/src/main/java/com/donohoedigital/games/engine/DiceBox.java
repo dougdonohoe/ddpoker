@@ -38,19 +38,16 @@
 
 package com.donohoedigital.games.engine;
 
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GamePlayer;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
 
-import java.util.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
-import java.awt.geom.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -155,7 +152,7 @@ public class DiceBox extends DDPanel implements ActionListener
      */
     public int getMod()
     {
-        return nMod_.intValue();
+        return nMod_;
     }
     
     /**
@@ -195,31 +192,31 @@ public class DiceBox extends DDPanel implements ActionListener
         die1_ = (die1 != null) ? die1 : DiceRoller.rollDie(6);
         die2_ = (die2 != null) ? die2 : DiceRoller.rollDie(6);
         
-        nSum_ = die1_.intValue() + die2_.intValue();
+        nSum_ = die1_ + die2_;
         int nTotal = nSum_;
         
         if (nMod_ != null)
         {
-            nTotal = nSum_ + nMod_.intValue();
+            nTotal = nSum_ + nMod_;
             result_.setText(PropertyConfig.getMessage("msg.dicebox.result.mod",
-                                                new Integer(nSum_),
+                                                nSum_,
                                                 nMod_,
-                                                new Integer(nTotal)));
+                                                nTotal));
         }
         else
         {
             result_.setText(PropertyConfig.getMessage("msg.dicebox.result",
-                                                new Integer(nSum_)));
+                                                nSum_));
         }
         
-        DieImage img1 = new DieImage(die1_.intValue(), nDieSize_, nDieSize_);
-        DieImage img2 = new DieImage(die2_.intValue(), nDieSize_, nDieSize_);
+        DieImage img1 = new DieImage(die1_, nDieSize_, nDieSize_);
+        DieImage img2 = new DieImage(die2_, nDieSize_, nDieSize_);
         
         int INDENT = 10;
         
         int yRange = (box_.getHeight() - img1.getHeight()) - (2*INDENT);
-        int y1 = DiceRoller.rollDie(yRange).intValue() + INDENT - 1;
-        int y2 = DiceRoller.rollDie(yRange).intValue() + INDENT - 1;
+        int y1 = DiceRoller.rollDie(yRange) + INDENT - 1;
+        int y2 = DiceRoller.rollDie(yRange) + INDENT - 1;
         
         int xRange = (box_.getWidth() - img2.getWidth()) - (2 * INDENT);
         
@@ -228,8 +225,8 @@ public class DiceBox extends DDPanel implements ActionListener
         int x2 = 0;
         while (!bOkay)
         {
-            x1 = DiceRoller.rollDie(xRange).intValue() + INDENT - 1;
-            x2 = DiceRoller.rollDie(xRange).intValue() + INDENT - 1;
+            x1 = DiceRoller.rollDie(xRange) + INDENT - 1;
+            x2 = DiceRoller.rollDie(xRange) + INDENT - 1;
             
             // if x's are more than a width apart, its okay
             if (Math.abs(x1 - x2) > (img1.getWidth()+1))

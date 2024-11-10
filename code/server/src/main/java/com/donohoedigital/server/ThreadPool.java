@@ -32,11 +32,15 @@
  */
 package com.donohoedigital.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ConfigUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Doug Donohoe
@@ -91,7 +95,7 @@ public class ThreadPool
         {
             // create new thread
             try {
-                thread = (SocketThread) socketClass_.newInstance();
+                thread = (SocketThread) socketClass_.getDeclaredConstructor().newInstance();
             }
             catch (Exception e) {
                 throw new ApplicationError(e);

@@ -32,12 +32,16 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.MessageErrorDialog;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.InternalDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +100,7 @@ public class PokerErrorDialog extends MessageErrorDialog
     public void messageReceived(DDMessage message)
     {
         int n = gamephase_.getInteger(PARAM_ATTEMPT, 1);
-        attempts_.setText(PropertyConfig.getMessage("msg.reconnect.attempts", new Integer(n)));
+        attempts_.setText(PropertyConfig.getMessage("msg.reconnect.attempts", n));
         super.messageReceived(message);
     }
 

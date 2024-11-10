@@ -38,10 +38,11 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.poker.online.TournamentDirector;
 
 /**
  *
@@ -69,7 +70,7 @@ public class PreShowdown extends ChainPhase
             // the local player, then that player is a winner
             DMArrayList winners = (DMArrayList) gamephase_.getObject(PARAM_WINNERS);
             boolean bWinner = false;
-            if (winners != null && winners.contains(new Integer(player.getID())))
+            if (winners != null && winners.contains(player.getID()))
             {
                 bWinner = true;
             }

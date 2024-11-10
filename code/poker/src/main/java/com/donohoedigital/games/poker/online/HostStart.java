@@ -38,14 +38,17 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerMain;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -120,7 +123,7 @@ public class HostStart extends ChainPhase implements ActionListener
         {
             mgr_.sendDirectorChat(PropertyConfig.getMessage(
                     (nNumAI > 1 ? "msg.chat.ai.added.plural" : "msg.chat.ai.added.singular"),
-                    new Integer(nNumAI)), null);
+                    nNumAI), null);
         }
         
         // set current table for host
@@ -137,7 +140,7 @@ public class HostStart extends ChainPhase implements ActionListener
         // do countdown
         mgr_.sendDirectorChat(PropertyConfig.getMessage(
                     (DELAY > 1 ? "msg.chat.starts.plural" : "msg.chat.starts.singular"),
-                    new Integer(DELAY)), null);
+                    DELAY), null);
         
         timer_ = new javax.swing.Timer(ONE_SEC,  this);
         timer_.start();
@@ -163,7 +166,7 @@ public class HostStart extends ChainPhase implements ActionListener
             {
                 mgr_.sendDirectorChat(PropertyConfig.getMessage(
                     (left > 1 ? "msg.chat.starts.plural" : "msg.chat.starts.singular"),
-                    new Integer(left)), null);
+                    left), null);
             }
         }
     }

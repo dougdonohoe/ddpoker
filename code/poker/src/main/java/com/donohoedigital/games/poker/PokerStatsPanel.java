@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -154,7 +156,7 @@ public class PokerStatsPanel extends DDTabPanel
         header_.setText(PropertyConfig.getMessage("msg.sim.header.generic",
                                                      pocket.toHTML(),
                                                      "&nbsp;&nbsp;" + community.toHTML(),
-                                                     new Integer((2+nNumComm) * 23 + 5),
+                                                     (2+nNumComm) * 23 + 5,
                                                      sMsg));
     }
 

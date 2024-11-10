@@ -32,13 +32,15 @@
  */
 package com.donohoedigital.games.poker;
 
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PokerSimulatorPanel extends DDTabPanel implements DDProgressFeedback
 {
@@ -148,7 +150,7 @@ public class PokerSimulatorPanel extends DDTabPanel implements DDProgressFeedbac
         nNumComm = community.size();
         header_.setText(PropertyConfig.getMessage(sKey, pocket.toHTML(),
                                                   community.toHTML(),
-                                                  new Integer((2+nNumComm) * 23 + 5)));
+                                                  (2+nNumComm) * 23 + 5));
     }
 
     /**

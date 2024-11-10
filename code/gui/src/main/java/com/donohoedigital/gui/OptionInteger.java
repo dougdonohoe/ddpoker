@@ -38,11 +38,12 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.event.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 /**
@@ -89,7 +90,7 @@ public class OptionInteger extends DDOption implements ChangeListener
         }
         else
         {
-            nDefault_ = new Integer(PropertyConfig.getRequiredIntegerProperty(getDefaultKey()));
+            nDefault_ = PropertyConfig.getRequiredIntegerProperty(getDefaultKey());
         }
         
         int nStep = PropertyConfig.getIntegerProperty("option." + sName_ + ".step", 1);
@@ -102,8 +103,8 @@ public class OptionInteger extends DDOption implements ChangeListener
         spinner_ = new DDNumberSpinner(nMin, nMax, nStep, GuiManager.DEFAULT, STYLE);
         Dimension pref = spinner_.getPreferredSize(); // tweak size
         if (nWidth > 0) spinner_.setPreferredSize(new Dimension(nWidth,pref.height-4));
-        spinner_.setValue(nDefaultOverride != null ? nDefaultOverride.intValue() :
-                                prefs_.getInt(sName_, nDefault_.intValue()));
+        spinner_.setValue(nDefaultOverride != null ? nDefaultOverride :
+                                prefs_.getInt(sName_, nDefault_));
         spinner_.setBigStep(nBigStep);
         spinner_.addChangeListener(this);
         spinner_.addMouseListener(this);
@@ -231,7 +232,7 @@ public class OptionInteger extends DDOption implements ChangeListener
      */
     public void saveToMap()
     {
-        map_.setInteger(sName_, new Integer(spinner_.getValue()));
+        map_.setInteger(sName_, spinner_.getValue());
     }
     
     /** reset to default value (triggers stateChanged())
@@ -239,12 +240,12 @@ public class OptionInteger extends DDOption implements ChangeListener
      */
     public void resetToDefault()
     {
-        spinner_.setValue(nDefault_.intValue());
+        spinner_.setValue(nDefault_);
     }
 
     public void resetToPrefs()
     {
-        spinner_.setValue(prefs_.getInt(sName_, nDefault_.intValue()));
+        spinner_.setValue(prefs_.getInt(sName_, nDefault_));
     }
 
     /**
@@ -252,7 +253,7 @@ public class OptionInteger extends DDOption implements ChangeListener
      */
     public void resetToMap()
     {
-        spinner_.setValue(map_.getInteger(sName_, nDefault_.intValue()));
+        spinner_.setValue(map_.getInteger(sName_, nDefault_));
     }
     
 }

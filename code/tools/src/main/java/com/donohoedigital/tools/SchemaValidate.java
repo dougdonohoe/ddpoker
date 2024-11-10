@@ -32,11 +32,15 @@
  */
 package com.donohoedigital.tools;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
+
+import javax.xml.parsers.SAXParserFactory;
 
 public class SchemaValidate extends DefaultHandler {
-    StringBuilder result = new StringBuilder("");
+    StringBuilder result = new StringBuilder();
 
     /** Warning. */
     public void warning(SAXParseException ex) {
@@ -86,7 +90,7 @@ public class SchemaValidate extends DefaultHandler {
     public static String process(String xmlFileURL) {
         try {
             SchemaValidate validate = new SchemaValidate();
-            XMLReader parser = XMLReaderFactory.createXMLReader();
+            XMLReader parser = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
             parser.setContentHandler(validate);
             parser.setErrorHandler(validate);
             parser.setFeature("http://xml.org/sax/features/validation", true);

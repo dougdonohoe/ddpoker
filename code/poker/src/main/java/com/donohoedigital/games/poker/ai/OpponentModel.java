@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.games.poker.HandAction;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.engine.Hand;
 
 public class OpponentModel
 {
@@ -426,7 +428,7 @@ public class OpponentModel
 
     public void saveToMap(DMTypedHashMap map, String sPrefix)
     {
-        map.setInteger(sPrefix + "handsPlayed", new Integer(handsPlayed));
+        map.setInteger(sPrefix + "handsPlayed", handsPlayed);
         map.setObject(sPrefix + "handsPaid", handsPaid.encode());
         map.setObject(sPrefix + "handsLimped", handsLimped.encode());
         map.setObject(sPrefix + "handsFoldedUnraised", handsFoldedUnraised.encode());
@@ -451,7 +453,7 @@ public class OpponentModel
             map.setObject(sPrefix + "aggression" + i, aggression[i].encode());
         }
 
-        map.setBoolean("overbetPotPostFlop", new Boolean(overbetPotPostFlop));
+        map.setBoolean("overbetPotPostFlop", overbetPotPostFlop);
     }
 
     public void loadFromMap(DMTypedHashMap map, String sPrefix)

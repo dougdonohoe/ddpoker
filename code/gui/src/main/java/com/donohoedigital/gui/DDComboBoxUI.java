@@ -39,11 +39,14 @@
 package com.donohoedigital.gui;
 
 import javax.swing.*;
-import javax.swing.plaf.*;
-import javax.swing.plaf.basic.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.ComboPopup;
+import javax.swing.plaf.metal.MetalComboBoxEditor;
 import java.awt.*;
-import java.beans.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * Copied MetalComboBoxUI and made tweaks - for
@@ -113,15 +116,6 @@ public class DDComboBoxUI extends BasicComboBoxUI
         }
     }
 
-    /**
-     * As of Java 2 platform v1.4 this method is no longer used. Do not call or
-     * override. All the functionality of this method is in the
-     * MetalPropertyChangeListener.
-     *
-     * @deprecated As of Java 2 platform v1.4.
-     */
-    protected void editablePropertyChanged( PropertyChangeEvent e ) { }
-
     protected LayoutManager createLayoutManager() {
         return new MetalComboBoxLayoutManager();
     }
@@ -159,24 +153,12 @@ public class DDComboBoxUI extends BasicComboBoxUI
         }
     }
 
-    /**
-     * As of Java 2 platform v1.4 this method is no
-     * longer used.
-     *
-     * @deprecated As of Java 2 platform v1.4.
-     */
-    protected void removeListeners() {
-        if ( propertyChangeListener != null ) {
-            comboBox.removePropertyChangeListener( propertyChangeListener );
-        }
-    }
-
     public Dimension getMinimumSize( JComponent c ) {
         if ( !isMinimumSizeDirty ) {
             return new Dimension( cachedMinimumSize );
         }
 
-        Dimension size = null;
+        Dimension size;
 
         if ( !comboBox.isEditable() &&
              arrowButton != null &&

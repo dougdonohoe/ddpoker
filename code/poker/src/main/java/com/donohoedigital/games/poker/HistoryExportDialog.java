@@ -38,19 +38,26 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.impexp.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.db.BindArray;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.FileChooserDialog;
+import com.donohoedigital.games.poker.impexp.ImpExp;
+import com.donohoedigital.games.poker.impexp.ImpExpHand;
+import com.donohoedigital.games.poker.impexp.ImpExpParadise;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.config.*;
 
 import javax.swing.*;
-import java.io.*;
-import java.util.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
 
 public class HistoryExportDialog extends FileChooserDialog
 {
@@ -181,14 +188,14 @@ public class HistoryExportDialog extends FileChooserDialog
 
                 cbxHands_.setText(PropertyConfig.getMessage(
                                     "msg.handtranscriptcount" + (exp_.handIDs.size() != 1 ? ".plural" : ".singular"),
-                                    new Integer(exp_.handIDs.size())));
+                                    exp_.handIDs.size()));
                 cbxHands_.setSelected(true);
 
                 cbxHands_.addActionListener(actionListener);
 
                 cbxTournaments_.setText(PropertyConfig.getMessage(
                                     "msg.tourneysummarycount" + (exp_.tournamentCount != 1 ? ".plural" : ".singular"),
-                                    new Integer(exp_.tournamentCount)));
+                                    exp_.tournamentCount));
 
                 cbxTournaments_.addActionListener(actionListener);
 
@@ -268,15 +275,15 @@ public class HistoryExportDialog extends FileChooserDialog
 
                         for (int i = 0; i < exp_.handIDs.size() && !cancel_; ++i)
                         {
-                            ieHand = PokerDatabase.getHandForExport(((Integer)exp_.handIDs.get(i)).intValue());
+                            ieHand = PokerDatabase.getHandForExport((Integer) exp_.handIDs.get(i));
 
                             if (cbxTournaments_.isSelected() &&
                                 (summariesExported.size() < exp_.tournamentCount) &&
-                                !summariesExported.contains(new Integer(ieHand.tournamentID)))
+                                !summariesExported.contains(ieHand.tournamentID))
                             {
                                 w.write(ie.exportTournament(ieHand));
                                 w.write("\r\n\r\n");
-                                summariesExported.add(new Integer(ieHand.tournamentID));
+                                summariesExported.add(ieHand.tournamentID);
                             }
 
                             if (cbxHands_.isSelected())

@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -141,7 +143,7 @@ public class DisplayTimedMessage extends DisplayMessage implements CancelablePha
         GuiUtils.invoke(new Runnable() {
             public void run() {
                 String sSeconds = PropertyConfig.getMessage(nSecondsLeft_ == 1 ? "msg.seconds.singular" : "msg.seconds.plural",
-                                                            new Integer(nSecondsLeft_));
+                                                            nSecondsLeft_);
 
                 timer_.setText(PropertyConfig.getMessage("msg.dialog.timer", sSeconds));
             }

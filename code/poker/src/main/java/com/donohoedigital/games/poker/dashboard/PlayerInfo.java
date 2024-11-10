@@ -32,17 +32,22 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.Gameboard;
+import com.donohoedigital.games.engine.TerritorySelectionListener;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.GuiManager;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -115,7 +120,7 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
                     }
                     else if (nLeft > 0)
                     {                        
-                        what = new Integer(nLeft);
+                        what = nLeft;
                     }
                 }
 
@@ -132,11 +137,11 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             if (numLeft == 0) numLeft = game_.getNumPlayers();
             labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo",
                                       Utils.encodeHTML(last_.getName()),
-                                      new Integer(last_.getHandsPlayedDisconnected()),
-                                      new Integer(last_.getHandsPlayedSitout()),
+                                      last_.getHandsPlayedDisconnected(),
+                                      last_.getHandsPlayedSitout(),
                                       sRebuy,
                                       PropertyConfig.getPlace(game_.getRank(last_)),
-                                      new Integer(numLeft)
+                                      numLeft
             ));
         }
         else

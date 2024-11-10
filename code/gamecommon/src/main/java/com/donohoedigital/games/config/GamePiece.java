@@ -39,10 +39,10 @@
 package com.donohoedigital.games.config;
 
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.PropertyConfig;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -68,7 +68,7 @@ public abstract class GamePiece implements Comparable
      */
     public GamePiece(int nType, GamePlayer player, String sName)
     {
-        nType_ = new Integer(nType);
+        nType_ = nType;
         player_ = player;
         sName_ = sName;
         addToken(createToken(false));

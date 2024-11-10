@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Reusable computation of relative ranking of hands (Raw Hand Strength) with a given board.
@@ -82,7 +83,7 @@ public class PocketRanks
             fpFlop_ = fpFlop;
         }
 
-        Object key = new Long(community.fingerprint());
+        Object key = community.fingerprint();
 
         PocketRanks ranks = (PocketRanks)cache_.get(key);
 

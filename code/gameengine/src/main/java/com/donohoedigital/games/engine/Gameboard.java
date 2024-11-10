@@ -38,20 +38,25 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.Perf;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.ImageComponent;
+import com.donohoedigital.gui.TextUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.prefs.*;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  *
@@ -85,13 +90,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     
     protected boolean bUseImage_ = true;
     protected GameEngine engine_;
-    
-    @SuppressWarnings({"FinalizeDoesntCallSuperFinalize"})
-    @Override
-    protected void finalize() {
-        Perf.finalize(this, null);
-    }
-    
+
     public void cleanup()
     {
         tlisteners_.clear();

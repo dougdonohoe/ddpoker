@@ -38,8 +38,11 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateEntry;
 
 /**
  *
@@ -241,7 +244,7 @@ public class GamePlayerLoopPhase extends BasePhase
     public GameStateEntry addGameStateEntry(GameState state)
     {
         GameStateEntry entry = super._addGameStateEntry(state);
-        entry.addNameValueToken(PARAM_STARTING_INDEX, new Integer(nPlayerIndex_));
+        entry.addNameValueToken(PARAM_STARTING_INDEX, nPlayerIndex_);
         entry.addNameValueToken(PARAM_SAVE_LOOP_PHASE, context_.getCurrentPhase().getGamePhase().getName());
         return entry;
     }

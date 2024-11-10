@@ -38,7 +38,7 @@ public class BooleanTracker
     private int next_;
     private boolean full_;
     private int countTrue_;
-    private boolean entries_[];
+    private boolean[] entries_;
 
     public BooleanTracker(int length, int min)
     {
@@ -218,11 +218,11 @@ public class BooleanTracker
 
         String s = (String)o;
 
-        String a[] = s.split(",");
+        String[] a = s.split(",");
 
         min_ = Integer.parseInt(a[0]);
         next_ = Integer.parseInt(a[1]);
-        full_ = new Boolean(a[2]).booleanValue();
+        full_ = Boolean.parseBoolean(a[2]);
         countTrue_ = Integer.parseInt(a[3]);
         entries_ = new boolean[Integer.parseInt(a[4])];
 

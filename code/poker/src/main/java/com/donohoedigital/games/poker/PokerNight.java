@@ -38,12 +38,15 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.BasePhase;
+import com.donohoedigital.games.engine.DisplayMessage;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 
@@ -167,8 +170,8 @@ public class PokerNight extends BasePhase implements GameClockListener
                     game_.getMinChip() > nMinBefore)
                 {
                     sChipRace = PropertyConfig.getMessage("msg.finish.color",
-                            new Integer(game_.getLastMinChip()),
-                            new Integer(game_.getMinChip()));
+                            game_.getLastMinChip(),
+                            game_.getMinChip());
                     if (bRebuy || bAddon) sChipRace = "<BR><BR>" + sChipRace;
                 }
 
@@ -185,19 +188,19 @@ public class PokerNight extends BasePhase implements GameClockListener
                     }
                     else if (bRebuy && bAddon)
                     {
-                        sMsg = PropertyConfig.getMessage("msg.finish.both", new Integer(nLevel), sChipRace);
+                        sMsg = PropertyConfig.getMessage("msg.finish.both", nLevel, sChipRace);
                     }
                     else if (bRebuy)
                     {
-                        sMsg = PropertyConfig.getMessage("msg.finish.rebuy", new Integer(nLevel), sChipRace);
+                        sMsg = PropertyConfig.getMessage("msg.finish.rebuy", nLevel, sChipRace);
                     }
                     else if (bAddon)
                     {
-                        sMsg = PropertyConfig.getMessage("msg.finish.addon", new Integer(nLevel), sChipRace);
+                        sMsg = PropertyConfig.getMessage("msg.finish.addon", nLevel, sChipRace);
                     }
                     else
                     {
-                        sMsg = PropertyConfig.getMessage("msg.finish.colorup", new Integer(nLevel), sChipRace);
+                        sMsg = PropertyConfig.getMessage("msg.finish.colorup", nLevel, sChipRace);
                     }
 
                     // show message

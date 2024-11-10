@@ -38,15 +38,23 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.ImageDef;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.util.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageProducer;
+import java.awt.image.RGBImageFilter;
+import java.util.HashMap;
 
 /**
  * @author Doug Donohoe
@@ -482,7 +490,7 @@ public class ImageComponent extends JComponent implements Icon
                             long free = Runtime.getRuntime().freeMemory();
                             if (free < estimate)
                             {
-                                logger.warn(PropertyConfig.getMessage("msg.needmem.debug", new Integer(estimate), new Long(free)));
+                                logger.warn(PropertyConfig.getMessage("msg.needmem.debug", estimate, free));
                             }
                             buffer_ = ImageDef.createBufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
                             //LoggingConfig.debugPrintMemory("After new buffer");

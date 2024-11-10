@@ -38,17 +38,11 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.server.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.games.comms.EngineMessage;
 
 import java.io.*;
-import java.util.*;
-import java.text.SimpleDateFormat;
 
 /**
  *
@@ -105,8 +99,8 @@ public class PlayerQueue extends ServerDataFile
         
         dir_ = dir;
         sFileNum_ = sFileNum;
-        nPlayerID_ = new Integer(nPlayerID);
-        file_ = getPlayerQueueFile(dir_, sFileNum_, nPlayerID_.intValue(), false);
+        nPlayerID_ = nPlayerID;
+        file_ = getPlayerQueueFile(dir_, sFileNum_, nPlayerID_, false);
         
         if (bNew)
         {
@@ -126,7 +120,7 @@ public class PlayerQueue extends ServerDataFile
      */
     public int getPlayerID()
     {
-        return nPlayerID_.intValue();
+        return nPlayerID_;
     }
     
     /**

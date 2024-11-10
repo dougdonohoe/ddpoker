@@ -32,21 +32,31 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.Perf;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.FileChooserDialog;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.Phase;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.text.*;
+import javax.swing.border.Border;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * subclass to handle selection and copy
@@ -298,16 +308,16 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
                 {
                     if (bounds.contains(botright))
                     {
-                        html.select(html.viewToModel(adjtopleft), html.viewToModel(adjbotright));
+                        html.select(html.viewToModel2D(adjtopleft), html.viewToModel2D(adjbotright));
                     }
                     else
                     {
-                        html.select(html.viewToModel(adjtopleft), Integer.MAX_VALUE);
+                        html.select(html.viewToModel2D(adjtopleft), Integer.MAX_VALUE);
                     }
                 }
                 else if (bounds.contains(botright))
                 {
-                    html.select(0, html.viewToModel(adjbotright));
+                    html.select(0, html.viewToModel2D(adjbotright));
                 }
                 else
                 {
@@ -341,7 +351,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
             adjstart = SwingUtilities.convertPoint(getListParent(), start_, html);
             if (bounds.contains(start_))
             {
-                int pos = html.viewToModel(adjstart);
+                int pos = html.viewToModel2D(adjstart);
                 int length = html.getDocument().getLength();
                 int start = pos - 1;
                 int end = pos + 1;
@@ -588,12 +598,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
             setEnabled(false);
             setUseEmptyBorder(true);
         }
-
-        public void finalize()
-        {
-            if (false) Perf.finalize(this, "Chat");
-        }
-
+        
         public void update()
         {
             ChatPanel.ChatMessage msg = getMessage();

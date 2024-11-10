@@ -32,18 +32,28 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.ddpoker.holdem.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
+import com.ddpoker.holdem.PlayerAction;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.Perf;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.engine.EngineGameAI;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.event.PokerTableListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.beans.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 // TODO: provide APIs for logging that don't require DDLogger
 // TODO: provide generic idiot-proof marshal/demarshal interface
@@ -82,14 +92,6 @@ public class PokerAI extends EngineGameAI implements PokerTableListener, Propert
     {
         super(false);
         if (false) Perf.construct(this, null);
-    }
-
-    /**
-     * finalize
-     */
-    protected void finalize()
-    {
-        if (false) Perf.finalize(this, null);
     }
 
     public void propertyChange(PropertyChangeEvent evt)

@@ -32,18 +32,21 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.DiceRoller;
+import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.base.*;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 /**
@@ -296,7 +299,7 @@ public class AdvanceAction extends DashboardItem implements ActionListener
             {
                 nCallAmount_ = nToCall;
                 call_.setSelected(false);
-                call_.setText(PropertyConfig.getMessage("checkbox.call$.label", new Integer(nCallAmount_)));
+                call_.setText(PropertyConfig.getMessage("checkbox.call$.label", nCallAmount_));
             }
             call_.setEnabled(true);
         }

@@ -32,16 +32,24 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.PlayerProfile;
+import com.donohoedigital.games.poker.PlayerProfileOptions;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PlayerType extends BaseProfile
 {
@@ -635,7 +643,7 @@ public class PlayerType extends BaseProfile
 
     public void setStratValue(String name, int value)
     {
-        getMap().setInteger("strat." + name, new Integer(value));
+        getMap().setInteger("strat." + name, value);
     }
 
     public ArrayList getSummaryNodes(boolean bIncludeDisabled)

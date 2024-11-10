@@ -38,7 +38,7 @@ public class FloatTracker
     private int next_;
     private boolean full_;
     private float weightedAverage_;
-    private float entries_[];
+    private float[] entries_;
 
     public FloatTracker(int length, int min)
     {
@@ -64,7 +64,7 @@ public class FloatTracker
     {
         if (f == null) return;
 
-        float fv = f.floatValue();
+        float fv = f;
 
         entries_[next_] = fv;
 
@@ -202,14 +202,14 @@ public class FloatTracker
 
         String s = (String)o;
 
-        String a[] = s.split(",");
+        String[] a = s.split(",");
 
         min_ = Integer.parseInt(a[0]);
         next_ = Integer.parseInt(a[1]);
-        full_ = new Boolean(a[2]).booleanValue();
+        full_ = Boolean.parseBoolean(a[2]);
         entries_ = new float[Integer.parseInt(a[4])];
 
-        String v[] = a[5].split(":");
+        String[] v = a[5].split(":");
 
         for (int i = 0; i < entries_.length && i < v.length; ++i)
         {
