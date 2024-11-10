@@ -38,29 +38,43 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameConfigUtils;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateFactory;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.PokerConnection;
+import com.donohoedigital.games.poker.network.PokerConnectionServer;
+import com.donohoedigital.games.poker.network.PokerUDPTransporter;
+import com.donohoedigital.games.poker.online.ChatHandler;
+import com.donohoedigital.games.poker.online.ListGames;
+import com.donohoedigital.games.poker.online.OnlineManager;
+import com.donohoedigital.gui.DDHtmlEditorKit;
 import com.donohoedigital.p2p.*;
 import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.net.*;
-import java.nio.channels.*;
-import java.sql.*;
-import java.util.*;
+import java.net.URL;
+import java.nio.channels.SocketChannel;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * @author Doug Donohoe
@@ -86,7 +100,8 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         //	at javax.swing.plaf.metal.MetalSliderUI.installUI(MetalSliderUI.java:110)
         System.setProperty("swing.defaultlaf", "javax.swing.plaf.metal.MetalLookAndFeel");
 
-        // initialize logging before anything else
+        // initialize logging before anything else (need version string for log file directory)
+        Utils.setVersionString(PokerConstants.VERSION.getMajorAsString());
         LoggingConfig loggingConfig = new LoggingConfig(APP_NAME, ApplicationType.CLIENT);
         loggingConfig.init();
         logger = LogManager.getLogger(PokerMain.class);
@@ -147,7 +162,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     public PokerMain(String sConfigName, String sMainModule, String[] args, boolean bHeadless, boolean bLoadNames)
             throws ApplicationError
     {
-        super(sConfigName, sMainModule, "" + PokerConstants.VERSION.getMajor(), args, bHeadless);
+        super(sConfigName, sMainModule, PokerConstants.VERSION.getMajorAsString(), args, bHeadless);
         this.bLoadNames = bLoadNames;
     }
 

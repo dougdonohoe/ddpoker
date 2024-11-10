@@ -8,6 +8,7 @@ public class VersionTest extends TestCase {
         // major/minor
         Version v = new Version("3.1");
         assertEquals(3, v.getMajor());
+        assertEquals("3", v.getMajorAsString());
         assertEquals(1, v.getMinor());
 
         // old style patch parsing

@@ -38,7 +38,8 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
 
 /**
  * @author donohoe
@@ -157,6 +158,11 @@ public class Version implements DataMarshal
     public int getMajor()
     {
         return nMajor_;
+    }
+
+    public String getMajorAsString()
+    {
+        return String.valueOf(nMajor_);
     }
 
     public int getMinor()
