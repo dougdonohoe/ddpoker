@@ -70,6 +70,9 @@ public abstract class BaseWicketApplication extends WebApplication implements Ap
 
         // remove wicket tags in development
         getMarkupSettings().setStripWicketTags(true);
+
+        // Wicket 9: disable CSP
+        getCspSettings().blocking().disabled();
     }
 
     /**

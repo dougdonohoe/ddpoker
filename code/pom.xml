@@ -76,8 +76,8 @@
     <hibernate.version>5.6.15.Final</hibernate.version>
     <jetty.version>9.4.56.v20240826</jetty.version>
     <junit.version>4.13.2</junit.version>
-    <wicket.version>8.16.0</wicket.version>
-    <wicket.jquery.ui.version>8.14.0</wicket.jquery.ui.version>
+    <wicket.version>9.18.0</wicket.version>
+    <wicket.jquery.ui.version>9.18.0</wicket.jquery.ui.version>
     <dependency.classpath.outputFile>target/classpath.txt</dependency.classpath.outputFile>
   </properties>
 
