@@ -182,7 +182,7 @@ means the later modules are dependent on one or more of the earlier modules.
 * `gui` - GUI infrastructure extending Java Swing
 * `installer` - custom installer logic (e.g., cleanup)
 * `db` - database infrastructure extending Hibernate
-* `wicket` - web infrastructure extending Java Swing
+* `wicket` - web infrastructure extending Java Swing (currently on [Wicket 9](https://nightlies.apache.org/wicket/guide/9.x/single.html))
 * `jsp` - tools using `.jsp` pages to generate emails and files
 * `server` - core server functionality
 * `udp` - core UDP networking functionality
