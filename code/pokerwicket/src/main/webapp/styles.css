@@ -1108,57 +1108,6 @@ div.download {
     width: 675px;
 }
 
-div.download td {
-    width: 225px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 1px solid green;
-    border-collapse: collapse;
-}
-
-.download-os {
-    font-size: 1.2em;
-    font-weight: bold;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    text-align: center;
-
-    background: #333333;
-    color: white;
-}
-
-.download-file {
-    font-size: 1.2em;
-    padding-top: 10px;
-    text-align: center;
-}
-
-.download-alt {
-    font-size: .8em;
-    padding-top: 15px;
-    text-align: center;
-}
-
-.download-reqs-title {
-    border-top: 1px solid green;
-    margin-top: 14px;
-    padding-top: 2px;
-    font-size: 1em;
-    font-weight: bold;
-}
-
-.download-reqs {
-    padding-top: 5px;
-    padding-left: 15px;
-    font-size: .8em;
-}
-
-.download-reqs li {
-    list-style-position: inside;
-}
-
 /**
  * about/details pages
  */
