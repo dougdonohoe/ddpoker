@@ -33,13 +33,16 @@
 package com.donohoedigital.games.poker.server;
 
 import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.db.PagedList;
 import com.donohoedigital.games.poker.dao.OnlineGameDao;
 import com.donohoedigital.games.poker.dao.OnlineProfileDao;
 import com.donohoedigital.games.poker.model.HostSummary;
 import com.donohoedigital.games.poker.model.OnlineGame;
 import com.donohoedigital.games.poker.model.util.OnlineGameList;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +133,7 @@ public class OnlineGameTest
     @Rollback
     public void testPaging()
     {
+        new ConfigManager("poker", ApplicationType.COMMAND_LINE);
         final int gameCount = 12;
         assertEquals(gameCount % 4, 0); // must be divisible by 4
         long now = System.currentTimeMillis();
@@ -147,7 +151,7 @@ public class OnlineGameTest
             og.setStartDate(new Date(now + ((i % 4 + 1) * day)));
             og.setEndDate(new Date(now + (reverse * day * 3)));
 
-            Utils.sleepMillis(1000); // ensure different dates
+            Utils.sleepMillis(1000); // ensure different dates but TODO(HIBERNATE): makes this slow
             dao.save(og);
         }
 

@@ -34,22 +34,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
           ">
 
   <!-- poker server specific properties (need to set before import) -->
-  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="location" value="classpath:pokerserver.properties"/>
+  <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:pokerserver.properties</value>
+        <value>classpath:pokerwicket.properties</value>
+      </list>
+    </property>
   </bean>
+<!--  TODO: use other way above (context:property-placeholder) -->
 
   <import resource="classpath:/app-context-wicket.xml"/>
-
-  <bean id="appName" class="java.lang.String">
-    <constructor-arg value="poker"/>
-  </bean>
-  <bean id="appType" class="com.donohoedigital.config.ApplicationType" factory-method="valueOf">
-    <constructor-arg value="WEBAPP"/>
-  </bean>
 
   <bean id="wicketApplication" class="com.donohoedigital.games.poker.wicket.PokerWicketApplication"
         depends-on="configManager"/>

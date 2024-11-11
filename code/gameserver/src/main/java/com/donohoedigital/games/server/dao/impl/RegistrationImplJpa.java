@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.games.server.dao.impl;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.db.dao.impl.*;
-import com.donohoedigital.games.server.*;
-import com.donohoedigital.games.server.dao.*;
-import com.donohoedigital.games.server.model.*;
-import org.springframework.stereotype.*;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.db.dao.impl.JpaBaseDao;
+import com.donohoedigital.games.server.RegDayOfYearCount;
+import com.donohoedigital.games.server.RegHourCount;
+import com.donohoedigital.games.server.dao.RegistrationDao;
+import com.donohoedigital.games.server.model.Registration;
+import jakarta.persistence.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

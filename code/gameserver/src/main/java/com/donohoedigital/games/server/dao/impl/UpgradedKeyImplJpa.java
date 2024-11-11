@@ -32,13 +32,13 @@
  */
 package com.donohoedigital.games.server.dao.impl;
 
-import com.donohoedigital.db.dao.impl.*;
-import com.donohoedigital.games.server.dao.*;
-import com.donohoedigital.games.server.model.*;
-import org.springframework.stereotype.*;
+import com.donohoedigital.db.dao.impl.JpaBaseDao;
+import com.donohoedigital.games.server.dao.UpgradedKeyDao;
+import com.donohoedigital.games.server.model.UpgradedKey;
+import jakarta.persistence.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

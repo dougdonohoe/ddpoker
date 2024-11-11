@@ -32,15 +32,20 @@
  */
 package com.donohoedigital.games.poker.dao.impl;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.db.dao.impl.*;
-import com.donohoedigital.games.poker.dao.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import org.springframework.stereotype.*;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.db.dao.impl.JpaBaseDao;
+import com.donohoedigital.games.poker.dao.OnlineProfileDao;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.OnlineProfilePurgeSummary;
+import com.donohoedigital.games.poker.model.OnlineProfileSummary;
+import jakarta.persistence.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
