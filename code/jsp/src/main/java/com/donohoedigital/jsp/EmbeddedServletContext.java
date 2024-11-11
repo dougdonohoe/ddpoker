@@ -38,13 +38,17 @@
 
 package com.donohoedigital.jsp;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import jakarta.servlet.*;
+import jakarta.servlet.descriptor.JspConfigDescriptor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import javax.servlet.descriptor.JspConfigDescriptor;
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -88,7 +92,7 @@ public class EmbeddedServletContext implements ServletContext
         return null;
     }
 
-    public javax.servlet.ServletContext getContext(String str)
+    public jakarta.servlet.ServletContext getContext(String str)
     {
         logger.warn("getContext called: " + str);
         return null;
@@ -128,7 +132,7 @@ public class EmbeddedServletContext implements ServletContext
         return 0;
     }
 
-    public javax.servlet.RequestDispatcher getNamedDispatcher(String str)
+    public jakarta.servlet.RequestDispatcher getNamedDispatcher(String str)
     {
         logger.warn("getNamedDispatcher called: " + str);
         return null;
@@ -184,7 +188,7 @@ public class EmbeddedServletContext implements ServletContext
         return "Donohoe Digital Game Server";
     }
 
-    public javax.servlet.Servlet getServlet(String str) throws javax.servlet.ServletException
+    public jakarta.servlet.Servlet getServlet(String str) throws jakarta.servlet.ServletException
     {
         logger.warn("getServlet called: " + str);
         return null;
@@ -374,5 +378,50 @@ public class EmbeddedServletContext implements ServletContext
     @Override
     public String getVirtualServerName() {
         return "";
+    }
+
+    @Override
+    public ServletRegistration.Dynamic addJspFile(String servletName, String jspFile) {
+        return null;
+    }
+
+    @Override
+    public int getSessionTimeout() {
+        return 0;
+    }
+
+    @Override
+    public void setSessionTimeout(int sessionTimeout) {
+
+    }
+
+    @Override
+    public String getRequestCharacterEncoding() {
+        return "";
+    }
+
+    @Override
+    public void setRequestCharacterEncoding(String encoding) {
+
+    }
+
+    @Override
+    public String getResponseCharacterEncoding() {
+        return "";
+    }
+
+    @Override
+    public void setResponseCharacterEncoding(String encoding) {
+
+    }
+
+    @Override
+    public void setRequestCharacterEncoding(Charset encoding) {
+        ServletContext.super.setRequestCharacterEncoding(encoding);
+    }
+
+    @Override
+    public void setResponseCharacterEncoding(Charset encoding) {
+        ServletContext.super.setResponseCharacterEncoding(encoding);
     }
 }

@@ -39,12 +39,14 @@
 package com.donohoedigital.p2p;
 
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.server.BaseServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.*;
-import java.io.*;
+import java.io.IOException;
 
 /**
  *

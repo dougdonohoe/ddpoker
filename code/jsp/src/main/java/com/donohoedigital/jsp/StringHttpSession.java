@@ -38,8 +38,10 @@
 
 package com.donohoedigital.jsp;
 
-import javax.servlet.http.*;
-import java.util.*;
+import jakarta.servlet.http.HttpSession;
+
+import java.util.Enumeration;
+import java.util.HashMap;
 
 /**
  *
@@ -57,7 +59,7 @@ public class StringHttpSession extends HashMap<String, Object> implements HttpSe
         return get(str);
     }
     
-    public Enumeration getAttributeNames()
+    public Enumeration<String> getAttributeNames()
     {
         return null;
     }
@@ -82,22 +84,7 @@ public class StringHttpSession extends HashMap<String, Object> implements HttpSe
         return 1000;
     }
     
-    public javax.servlet.ServletContext getServletContext()
-    {
-        return null;
-    }
-    
-    public HttpSessionContext getSessionContext()
-    {
-        return null;
-    }
-    
-    public Object getValue(String str)
-    {
-        return get(str);
-    }
-    
-    public String[] getValueNames()
+    public jakarta.servlet.ServletContext getServletContext()
     {
         return null;
     }
@@ -110,22 +97,12 @@ public class StringHttpSession extends HashMap<String, Object> implements HttpSe
     {
         return false;
     }
-    
-    public void putValue(String str, Object obj)
-    {
-        put(str,obj);
-    }
-    
+
     public void removeAttribute(String str)
     {
         remove(str);
     }
-    
-    public void removeValue(String str)
-    {
-        remove(str);
-    }
-    
+
     public void setAttribute(String str, Object obj)
     {
         put(str, obj);

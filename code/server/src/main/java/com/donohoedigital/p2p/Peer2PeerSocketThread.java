@@ -38,13 +38,19 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.server.BaseServlet;
+import com.donohoedigital.server.SocketThread;
+import com.donohoedigital.server.ThreadPool;
+import jakarta.servlet.ServletException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import java.io.*;
-import java.nio.channels.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.nio.channels.SocketChannel;
 
 /**
  * Class for handling incoming p2p connections.

@@ -32,15 +32,17 @@
  */
 package com.donohoedigital.db.dao.impl;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.db.dao.*;
-import com.donohoedigital.db.model.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.db.dao.BaseDao;
+import com.donohoedigital.db.model.BaseModel;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 
-import javax.persistence.*;
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

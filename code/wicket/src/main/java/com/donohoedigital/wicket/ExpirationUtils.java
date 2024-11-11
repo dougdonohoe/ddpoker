@@ -32,10 +32,9 @@
  */
 package com.donohoedigital.wicket;
 
+import jakarta.servlet.http.Cookie;
 import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.request.cycle.RequestCycle;
-
-import javax.servlet.http.Cookie;
 
 /**
  * @author Doug Donohoe

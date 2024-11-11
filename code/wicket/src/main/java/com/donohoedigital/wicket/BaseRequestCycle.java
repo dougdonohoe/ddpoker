@@ -32,12 +32,11 @@
  */
 package com.donohoedigital.wicket;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.cycle.RequestCycleContext;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Our own request cycle - keeping in case we need to override something in the future

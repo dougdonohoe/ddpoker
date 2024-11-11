@@ -40,26 +40,41 @@ package com.donohoedigital.games.server;
 
 
 import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.server.model.*;
+import com.donohoedigital.db.DatabaseManager;
+import com.donohoedigital.games.comms.ActionItem;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.comms.RegistrationMessage;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameConfigUtils;
+import com.donohoedigital.games.server.model.BannedKey;
 import com.donohoedigital.games.server.model.Registration;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.jsp.*;
-import com.donohoedigital.mail.*;
-import com.donohoedigital.server.*;
-import org.apache.commons.lang.builder.*;
-import org.springframework.beans.factory.annotation.*;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import com.donohoedigital.games.server.service.RegistrationService;
+import com.donohoedigital.jsp.JspEmail;
+import com.donohoedigital.mail.DDPostalService;
+import com.donohoedigital.server.BaseServlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-import java.text.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * @author donohoe

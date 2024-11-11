@@ -49,7 +49,7 @@
   <!--</persistence-unit>-->
 
   <persistence-unit name="poker">
-    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <!-- note: auto-detection works only if you specify the directory to look into -->
     <!--      which is a pain in the ass in development/test -->
     <!--<jar-file>file:/Users/donohoe/work/ddpoker/code/poker/target/classes</jar-file>-->
@@ -73,7 +73,6 @@
       <property name="hibernate.c3p0.timeout" value="300"/>
       <property name="hibernate.c3p0.max_statements" value="50"/>
       <property name="hibernate.c3p0.idle_test_period" value="3000"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
       <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
     </properties>
   </persistence-unit>

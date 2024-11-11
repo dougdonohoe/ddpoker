@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.server.model;
 
-import com.donohoedigital.db.model.*;
+import com.donohoedigital.db.model.BaseModel;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.

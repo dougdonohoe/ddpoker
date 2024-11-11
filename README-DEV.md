@@ -166,8 +166,8 @@ This code base was originally written over 20 years ago, beginning in 2002.  The
 of DD Poker was written from 2004-2007, with sporadic updates after that.  The original
 JDK was 1.5.
 
-Most of our dependencies (Swing, Hibernate, Wicket, log4j, etc.) have been updated to the latest versions
-that work with Java 8 (and soon, Java 17).
+Most of our dependencies (Swing, Hibernate, Wicket, Jetty, Tomcat, log4j, etc.) have been updated to the latest versions
+that work with Java 17.
 
 That said, amazingly, it all still seems to work.  If anybody wants to start upgrading dependencies,
 we are happy to take PRs.
@@ -470,13 +470,13 @@ To enable the `postfix` SMTP mail server on a Mac:
 ```shell
 # turn on
 sudo postfix start
- 
+
 # turn off
 sudo postfix stop
- 
+
 # status
 sudo postfix status
- 
+
 # test (may go to spam), will generate a response report
 echo "Test email body" | sendmail -v your_email@your_domain.com
  

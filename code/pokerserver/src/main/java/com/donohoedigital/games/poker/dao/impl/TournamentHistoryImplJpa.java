@@ -32,17 +32,20 @@
  */
 package com.donohoedigital.games.poker.dao.impl;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.db.dao.impl.*;
-import com.donohoedigital.games.poker.dao.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.model.util.*;
-import org.springframework.stereotype.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.db.DBUtils;
+import com.donohoedigital.db.dao.impl.JpaBaseDao;
+import com.donohoedigital.games.poker.dao.TournamentHistoryDao;
+import com.donohoedigital.games.poker.model.LeaderboardSummary;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import com.donohoedigital.games.poker.model.util.LeaderboardSummaryList;
+import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
+import jakarta.persistence.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
-import java.math.*;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -202,7 +205,7 @@ public class TournamentHistoryImplJpa extends JpaBaseDao<TournamentHistory, Long
         countQuery.setParameter("end", end);
         countQuery.setParameter("game_limit", (long) games_limit);
         if (!empty) countQuery.setParameter("name", DBUtils.sqlWildcard(nameSearch));
-        BigInteger countResult = (BigInteger) countQuery.getSingleResult();
+        Long countResult = (Long) countQuery.getSingleResult();
 
         return countResult.intValue();
     }

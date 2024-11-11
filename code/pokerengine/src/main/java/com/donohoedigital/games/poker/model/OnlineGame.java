@@ -32,12 +32,15 @@
  */
 package com.donohoedigital.games.poker.model;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.db.model.*;
-import com.donohoedigital.xml.*;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataMarshaller;
+import com.donohoedigital.db.model.BaseModel;
+import com.donohoedigital.xml.SimpleXMLEncodable;
+import com.donohoedigital.xml.SimpleXMLEncoder;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Wrapper for WAN games

@@ -32,11 +32,14 @@
  */
 package com.donohoedigital.games.server.model;
 
-import com.donohoedigital.db.model.*;
-import org.apache.commons.lang.builder.*;
+import com.donohoedigital.db.model.BaseModel;
+import jakarta.persistence.*;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by IntelliJ IDEA.

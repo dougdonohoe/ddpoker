@@ -38,12 +38,12 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.games.comms.*;
+import com.donohoedigital.games.comms.EngineMessage;
 import com.donohoedigital.jsp.StringHttpServletRequest;
-import com.donohoedigital.mail.*;
+import com.donohoedigital.mail.DDMailErrorHandler;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.IOException;
 
 /**
  *

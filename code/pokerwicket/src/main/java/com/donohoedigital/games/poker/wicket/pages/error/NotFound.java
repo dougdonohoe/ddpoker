@@ -51,7 +51,7 @@ public class NotFound extends ErrorPokerPage
     public NotFound()
     {
         super(null);
-        String missing = (String) WicketUtils.getHttpServletRequest().getAttribute("javax.servlet.error.request_uri");
+        String missing = (String) WicketUtils.getHttpServletRequest().getAttribute("jakarta.servlet.error.request_uri");
         add(new StringLabel("url", missing));
     }
 }

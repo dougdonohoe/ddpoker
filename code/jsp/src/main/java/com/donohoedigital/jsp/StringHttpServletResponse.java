@@ -38,12 +38,19 @@
 
 package com.donohoedigital.jsp;
 
-import org.apache.logging.log4j.*;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  *
@@ -148,7 +155,7 @@ public class StringHttpServletResponse implements HttpServletResponse
         logger.warn("setLocale called");
     }
     
-    public void addCookie(javax.servlet.http.Cookie cookie)
+    public void addCookie(jakarta.servlet.http.Cookie cookie)
     {
         logger.warn("addCookie called");
     }
@@ -273,5 +280,30 @@ public class StringHttpServletResponse implements HttpServletResponse
 
     @Override
     public void setContentLengthLong(long l) {
+    }
+
+    @Override
+    public void sendRedirect(String location, int sc, boolean clearBuffer) throws IOException {
+
+    }
+
+    @Override
+    public void sendRedirect(String location, boolean clearBuffer) throws IOException {
+        HttpServletResponse.super.sendRedirect(location, clearBuffer);
+    }
+
+    @Override
+    public void sendRedirect(String location, int sc) throws IOException {
+        HttpServletResponse.super.sendRedirect(location, sc);
+    }
+
+    @Override
+    public void setTrailerFields(Supplier<Map<String, String>> supplier) {
+        HttpServletResponse.super.setTrailerFields(supplier);
+    }
+
+    @Override
+    public Supplier<Map<String, String>> getTrailerFields() {
+        return HttpServletResponse.super.getTrailerFields();
     }
 }

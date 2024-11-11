@@ -32,14 +32,15 @@
  */
 package com.donohoedigital.games.server.model;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DataMarshaller;
 import com.donohoedigital.comms.Version;
-import com.donohoedigital.db.model.*;
-import org.apache.commons.lang.builder.*;
+import com.donohoedigital.db.model.BaseModel;
+import jakarta.persistence.*;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.

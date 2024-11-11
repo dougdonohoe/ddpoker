@@ -35,17 +35,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
   <!-- logging bean, ideally everything depends on this so it is created first -->
   <bean id="loggingConfig" class="com.donohoedigital.config.LoggingConfig" init-method="init">
-    <!--suppress SpringXmlModelInspection (appName defined by actual app that imports this file)-->
-    <constructor-arg ref="appName"/>
-    <!--suppress SpringXmlModelInspection (appType defined by actual app that imports this file)-->
-    <constructor-arg ref="appType"/>
+    <constructor-arg value="${app.name}"/>
+    <constructor-arg value="${app.type}"/>
   </bean>
 
   <!-- Turn on processing for @Transactional annotations -->
@@ -101,9 +99,6 @@
         <!-- controlled via log4j -->
         <property name="showSql" value="false"/>
         <property name="generateDdl" value="false"/>
-        <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
-        <!--<property name="generateDdl" value="true"/>-->
-        <!--<property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/>-->
       </bean>
     </property>
     <!-- how to specify hibernate specific settings -->

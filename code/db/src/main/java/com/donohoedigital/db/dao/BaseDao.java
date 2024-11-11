@@ -32,11 +32,11 @@
  */
 package com.donohoedigital.db.dao;
 
-import com.donohoedigital.db.model.*;
+import com.donohoedigital.db.model.BaseModel;
+import jakarta.persistence.Query;
 
-import javax.persistence.*;
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

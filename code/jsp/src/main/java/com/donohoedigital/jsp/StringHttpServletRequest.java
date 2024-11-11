@@ -38,11 +38,14 @@
 
 package com.donohoedigital.jsp;
 
-import org.apache.logging.log4j.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -66,7 +69,7 @@ public class StringHttpServletRequest implements HttpServletRequest
     public Object getAttribute(String str)
     {
         if (str.equals("org.apache.catalina.jsp_file")) return null; // okay - we know about this
-        if (str.equals("javax.servlet.include.servlet_path")) return null; // Jasper hook
+        if (str.equals("jakarta.servlet.include.servlet_path")) return null; // Jasper hook
         logger.warn("getAttribute called " + str);
 		return null;
     }
@@ -107,7 +110,7 @@ public class StringHttpServletRequest implements HttpServletRequest
 		return null;
     }
     
-    public javax.servlet.http.Cookie[] getCookies()
+    public jakarta.servlet.http.Cookie[] getCookies()
     {
         logger.warn("getCookies called");
 		return null;
@@ -244,7 +247,7 @@ public class StringHttpServletRequest implements HttpServletRequest
 		return null;
     }
     
-    public javax.servlet.RequestDispatcher getRequestDispatcher(String str)
+    public jakarta.servlet.RequestDispatcher getRequestDispatcher(String str)
     {
         logger.warn("getRequestDispatcher called " + str);
 		return null;
@@ -461,5 +464,25 @@ public class StringHttpServletRequest implements HttpServletRequest
     @Override
     public DispatcherType getDispatcherType() {
         return null;
+    }
+
+    @Override
+    public String getRequestId() {
+        return "";
+    }
+
+    @Override
+    public String getProtocolRequestId() {
+        return "";
+    }
+
+    @Override
+    public ServletConnection getServletConnection() {
+        return null;
+    }
+
+    @Override
+    public void setCharacterEncoding(Charset encoding) {
+        HttpServletRequest.super.setCharacterEncoding(encoding);
     }
 }

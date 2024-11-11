@@ -38,14 +38,18 @@
 
 package com.donohoedigital.tools;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.server.SocketThread;
+import jakarta.servlet.ServletException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * This class is for testing registrations through a proxy.  We configure

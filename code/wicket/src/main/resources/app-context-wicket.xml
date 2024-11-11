@@ -34,16 +34,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
           ">
 
   <import resource="classpath:/app-context-gameserver.xml"/>
 
   <bean id="configManager" class="com.donohoedigital.config.ConfigManager">
-    <!--suppress SpringXmlModelInspection (appName defined by actual app that imports this file)-->
-    <constructor-arg ref="appName"/>
-    <!--suppress SpringXmlModelInspection (appType defined by actual app that imports this file)-->
-    <constructor-arg ref="appType"/>
+    <constructor-arg value="${app.name}"/>
+    <constructor-arg value="${app.type}"/>
   </bean>
 
 </beans>

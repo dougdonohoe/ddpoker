@@ -38,12 +38,16 @@
 
 package com.donohoedigital.games.poker.model;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.db.model.*;
-import com.donohoedigital.xml.*;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.db.model.BaseModel;
+import com.donohoedigital.xml.SimpleXMLEncodable;
+import com.donohoedigital.xml.SimpleXMLEncoder;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author donohoe
