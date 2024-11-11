@@ -34,9 +34,8 @@ package com.donohoedigital.wicket;
 
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.LoggingConfig;
-
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 /**
  * Custom context listener to initialize our logging before anything else

@@ -63,7 +63,7 @@ public abstract class BaseWicketApplication extends WebApplication implements Ap
         getRequestCycleListeners().add(new BaseRequestCycleListener(this));
 
         // JQuery - ensure same version used everywhere
-        getJavaScriptLibrarySettings().setJQueryReference(JQueryResourceReference.getV1());
+        getJavaScriptLibrarySettings().setJQueryReference(JQueryResourceReference.getV3());
 
         // initialize Spring
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, applicationContext));

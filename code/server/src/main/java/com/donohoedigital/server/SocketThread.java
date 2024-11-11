@@ -33,17 +33,23 @@
 
 package com.donohoedigital.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessenger;
 import com.donohoedigital.comms.Servlet;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import jakarta.servlet.ServletException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
+import java.util.StringTokenizer;
 
 public class SocketThread extends Thread
 {

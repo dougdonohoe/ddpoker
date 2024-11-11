@@ -55,7 +55,7 @@ public class DBUtils
         {
             char c = original.charAt(i);
 
-            if (c == '%' || c == '_' || c == '\\')
+            if (c == '%' || c == '_')
             {
                 sb.append('\\');
             }
@@ -66,7 +66,7 @@ public class DBUtils
     }
 
     /**
-     * Return given term as a wildcarded for SQL (append % to front and end)
+     * Return given term as a wildcard for SQL (append % to front and end)
      */
     public static String sqlWildcard(String term)
     {
@@ -74,7 +74,7 @@ public class DBUtils
         {
             return term.substring(SQL_EXACT_MATCH.length());
         }
-        return term == null || term.length() == 0 ? "%" : '%' + sqlEscapeWildcards(term) + '%';
+        return term == null || term.isEmpty() ? "%" : '%' + sqlEscapeWildcards(term) + '%';
     }
 
     /**

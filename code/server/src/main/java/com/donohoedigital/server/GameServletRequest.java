@@ -38,11 +38,16 @@
 
 package com.donohoedigital.server;
 
-import org.apache.logging.log4j.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpUpgradeHandler;
+import jakarta.servlet.http.Part;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -137,7 +142,7 @@ public class GameServletRequest implements HttpServletRequest
 		return null;
     }
     
-    public javax.servlet.http.Cookie[] getCookies()
+    public jakarta.servlet.http.Cookie[] getCookies()
     {
         logger.warn("getCookies called");
 		return null;
@@ -176,7 +181,7 @@ public class GameServletRequest implements HttpServletRequest
 		return null;
     }
     
-    public javax.servlet.ServletInputStream getInputStream() throws java.io.IOException
+    public jakarta.servlet.ServletInputStream getInputStream() throws java.io.IOException
     {
 		throw new IOException("unsupported");
     }
@@ -300,7 +305,7 @@ public class GameServletRequest implements HttpServletRequest
 		return null;
     }
     
-    public javax.servlet.RequestDispatcher getRequestDispatcher(String str)
+    public jakarta.servlet.RequestDispatcher getRequestDispatcher(String str)
     {
         logger.warn("getRequestDispatcher called " + str);
 		return null;
@@ -346,13 +351,13 @@ public class GameServletRequest implements HttpServletRequest
 		return null;
     }
     
-    public javax.servlet.http.HttpSession getSession()
+    public jakarta.servlet.http.HttpSession getSession()
     {
         logger.warn("getSession called");
 		return null;
     }
     
-    public javax.servlet.http.HttpSession getSession(boolean param)
+    public jakarta.servlet.http.HttpSession getSession(boolean param)
     {
         logger.warn("getSession called " + param);
 		return null;
@@ -516,6 +521,21 @@ public class GameServletRequest implements HttpServletRequest
         return null;
     }
 
+    @Override
+    public String getRequestId() {
+        return "";
+    }
+
+    @Override
+    public String getProtocolRequestId() {
+        return "";
+    }
+
+    @Override
+    public ServletConnection getServletConnection() {
+        return null;
+    }
+
     /**
      * class for case-insensitive hash
      */
@@ -526,4 +546,5 @@ public class GameServletRequest implements HttpServletRequest
             return s1.toUpperCase().compareTo(s2.toUpperCase());
         }
     }
+
 }

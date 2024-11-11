@@ -46,7 +46,7 @@
       </list>
     </property>
   </bean>
-<!--  TODO: use other way above (context:property-placeholder) -->
+<!-- TODO: use other way above (context:property-placeholder) -->
 
   <import resource="classpath:/app-context-wicket.xml"/>
 

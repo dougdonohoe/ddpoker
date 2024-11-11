@@ -38,10 +38,15 @@
 
 package com.donohoedigital.jsp;
 
-import org.apache.logging.log4j.*;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.servlet.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * @author donohoe
@@ -75,13 +80,13 @@ public class EmbeddedServletConfig implements ServletConfig
     }
 
     @SuppressWarnings({"RawUseOfParameterizedType"})
-    public Enumeration getInitParameterNames()
+    public Enumeration<String> getInitParameterNames()
     {
         List<String> params = new ArrayList<String>();
         return Collections.enumeration(params);
     }
 
-    public javax.servlet.ServletContext getServletContext()
+    public jakarta.servlet.ServletContext getServletContext()
     {
         return context_;
     }

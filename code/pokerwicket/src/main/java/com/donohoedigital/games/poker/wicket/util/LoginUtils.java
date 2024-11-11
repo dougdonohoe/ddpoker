@@ -43,10 +43,10 @@ import com.donohoedigital.games.server.model.BannedKey;
 import com.donohoedigital.games.server.service.BannedKeyService;
 import com.donohoedigital.wicket.WicketUtils;
 import com.donohoedigital.wicket.pages.BasePage;
+import jakarta.servlet.http.Cookie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.Cookie;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;

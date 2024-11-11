@@ -73,7 +73,7 @@ public abstract class BasePokerPage extends BasePage<Void>
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
         // Ensure jQuery is always included in the head
-        response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.getV1()));
+        response.render(JavaScriptHeaderItem.forReference(JQueryResourceReference.getV3()));
     }
 
     /**

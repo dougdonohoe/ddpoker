@@ -32,9 +32,8 @@
  */
 package com.donohoedigital.jsp;
 
+import jakarta.servlet.jsp.JspFactory;
 import org.apache.jasper.runtime.JspFactoryImpl;
-
-import javax.servlet.jsp.JspFactory;
 
 public class Jsp {
 

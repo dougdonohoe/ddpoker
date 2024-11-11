@@ -213,9 +213,8 @@ public class OnlineProfileTest
         list = dao.getMatching(null, 0, max, "_", null, null, false);
         assertEquals(total, list.size());
 
-        // TODO(HIBERNATE)
-//        list = dao.getMatching(null, 0, max, "\\", null, null, false);
-//        assertEquals(total, list.size());
+        list = dao.getMatching(null, 0, max, "\\", null, null, false);
+        assertEquals(total, list.size());
 
         list = dao.getMatching(null, 0, max, null, null, key1, false);
         assertEquals(total / 2, list.size());
