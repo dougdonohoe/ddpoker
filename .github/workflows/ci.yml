@@ -77,4 +77,4 @@ jobs:
           source ddpoker.rc
           reset_dbs.sh pokertest
           cd code
-          mvn test -Dskip.unit.tests=false
+          mvn package -Dskip.unit.tests=false
