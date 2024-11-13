@@ -164,13 +164,12 @@ bits of knowledge and advice.
 
 This code base was originally written over 20 years ago, beginning in 2002.  The majority
 of DD Poker was written from 2004-2007, with sporadic updates after that.  The original
-JDK was 1.5.
+JDK was 1.5 (aka Java 5).
 
-Most of our dependencies (Swing, Hibernate, Wicket, Jetty, Tomcat, log4j, etc.) have been updated to the latest versions
-that work with Java 17.
-
-That said, amazingly, it all still seems to work.  If anybody wants to start upgrading dependencies,
-we are happy to take PRs.
+Amazingly, nearly all of our dependencies (Swing, Hibernate, Wicket, Jetty, Tomcat, log4j, etc.) have been updated 
+to the latest versions that work with Java 17.  The only exception is `HSQLDB`, which we currently
+have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
+we don't want to deal with at this time.
 
 ### Modules
 
