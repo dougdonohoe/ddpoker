@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.server;
 
-import org.apache.commons.lang.builder.*;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Created by IntelliJ IDEA.

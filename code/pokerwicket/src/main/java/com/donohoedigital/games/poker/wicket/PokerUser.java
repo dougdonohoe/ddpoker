@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.poker.wicket;
 
-import com.donohoedigital.games.poker.model.*;
-import org.apache.commons.lang.builder.*;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
