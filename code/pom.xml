@@ -72,7 +72,7 @@
     <slf4j.version>2.0.16</slf4j.version>
     <servlet.api.version>6.1.0</servlet.api.version>
     <tomcat.version>11.0.6</tomcat.version>
-    <spring.version>6.2.5</spring.version>
+    <spring.version>6.2.6</spring.version>
     <hibernate.version>6.6.13.Final</hibernate.version>
     <jetty.version>12.0.19</jetty.version>
     <junit.version>4.13.2</junit.version>
