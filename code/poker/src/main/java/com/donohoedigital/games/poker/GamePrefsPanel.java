@@ -38,26 +38,35 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.DDMessageListener;
 import com.donohoedigital.comms.DMTypedHashMap;
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.comms.EngineMessage;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.gui.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.ai.gui.HandSelectionManager;
+import com.donohoedigital.games.poker.ai.gui.PlayerTypeManager;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.online.GetPublicIP;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  * @author Doug Donohoe
@@ -599,7 +608,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
             chatServer_ = new OptionText(NODE, PokerConstants.OPTION_ONLINE_CHAT, OSTYLE, map_,
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
-            int maxLabelWidth = 2 + Math.max(onlineServer_.getLabelComponent().getPreferredSize().width,
+            int maxLabelWidth = 5 + Math.max(onlineServer_.getLabelComponent().getPreferredSize().width,
                     chatServer_.getLabelComponent().getPreferredSize().width);
 
             // adjust labels so same size (doing this since not using a GridBag layout)
