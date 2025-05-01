@@ -586,37 +586,33 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             //
 
             DDLabelBorder serverBorder = new DDLabelBorder("onlineserver", OSTYLE);
-            serverBorder.setLayout(new BorderLayout());
+            serverBorder.setLayout(new BorderLayout(10, 0));
             base.add(serverBorder, BorderLayout.SOUTH);
 
             // online enabled checkbox
             onlineEnabled_ = new OptionBoolean(NODE, EngineConstants.OPTION_ONLINE_ENABLED, OSTYLE, map_, true);
             serverBorder.add(GuiUtils.NORTH(onlineEnabled_), BorderLayout.WEST);
-            onlineEnabled_.addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    doOnlineEnabled();
-                }
-            });
+            onlineEnabled_.addChangeListener(e -> doOnlineEnabled());
 
             // servers list (online, chat)
             DDPanel serversTable = new DDPanel();
-            serversTable.setLayout(new VerticalFlowLayout(VerticalFlowLayout.LEFT, 10, 2));
+            serversTable.setLayout(new GridBagLayout());
 
             onlineServer_ = new OptionText(NODE, EngineConstants.OPTION_ONLINE_SERVER, OSTYLE, map_,
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
             chatServer_ = new OptionText(NODE, PokerConstants.OPTION_ONLINE_CHAT, OSTYLE, map_,
                     ONLINE_SERVER_LIMIT, ONLINE_SERVER_REGEXP, 400, true);
-            int maxLabelWidth = 5 + Math.max(onlineServer_.getLabelComponent().getPreferredSize().width,
-                    chatServer_.getLabelComponent().getPreferredSize().width);
 
-            // adjust labels so same size (doing this since not using a GridBag layout)
-            GuiUtils.setPreferredWidth(onlineServer_.getLabelComponent(), maxLabelWidth);
-            GuiUtils.setPreferredWidth(chatServer_.getLabelComponent(), maxLabelWidth);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weightx = 1.0;
+            gbc.insets = new Insets(2, 0, 2, 10);
 
-            serversTable.add(onlineServer_);
-            serversTable.add(chatServer_);
+            serversTable.add(onlineServer_, gbc);
+            gbc.gridy = 1;
+            serversTable.add(chatServer_, gbc);
             serverBorder.add(serversTable, BorderLayout.CENTER);
 
             // test button
@@ -740,7 +736,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
     }
 
     /**
-     * Resetdialog button
+     * Reset dialog button
      */
     public void actionPerformed(ActionEvent e)
     {
