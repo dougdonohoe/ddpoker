@@ -65,7 +65,8 @@ public class PokerConstants
     //public static final Version VERSION = new Version(3, 1, 1, true); // release 3.1.1 (add Windows installer)
     //public static final Version VERSION = new Version(3, 1, 2, true); // release 3.1.2 (dependency updates)
     //public static final Version VERSION = new Version(3, 1, 3, true); // release 3.1.3 (Java 11, dependency updates)
-    public static final Version VERSION = new Version(3, 1, 4, true); // release 3.1.4 (Java 17, dependency updates)
+    //public static final Version VERSION = new Version(3, 1, 4, true); // release 3.1.4 (Java 17, dependency updates)
+    public static final Version VERSION = new Version(3, 1, 5, true); // release 3.1.5 (Java 21, dependency updates)
 
     // OS versions (can be different if specific patches released)
     public static final Version LATEST_MAC = VERSION;
