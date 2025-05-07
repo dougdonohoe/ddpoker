@@ -38,7 +38,7 @@ RUN apt-get update && apt-get install -y \
     x11-apps \
     iputils-ping nmap telnet \
     git vim tree \
-    openjdk-17-jdk maven
+    openjdk-21-jdk maven
 
 # Start bash
 CMD ["/bin/bash"]
