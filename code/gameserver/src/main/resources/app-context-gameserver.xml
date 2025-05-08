@@ -73,7 +73,7 @@
   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
         depends-on="loggingConfig">
     <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
-    <property name="jdbcUrl" value="jdbc:mysql://${db.host}/poker?useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false"/>
+    <property name="jdbcUrl" value="jdbc:mysql://${db.host}:${db.port}/poker?useUnicode=true&amp;characterEncoding=UTF8&amp;useSSL=false"/>
     <property name="user" value="poker"/>
     <property name="password" value="p0k3rdb!"/>
     <!--<property name="driverClass" value="org.hsqldb.jdbcDriver"/>-->

@@ -29,16 +29,21 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# Ubuntu base image useful for testing builds and running Poker.  See Appendix B
+# Ubuntu/java base image useful for testing builds and running Poker.  See Appendix B
 # of README-DEV.md for details on how to use this Dockerfile.
-FROM ubuntu
+FROM openjdk:21-slim
 
 # Install helpful tools, java, maven
 RUN apt-get update && apt-get install -y \
+    libx11-6 \
+    libxext6 \
+    libxrender1 \
+    libxtst6 \
+    libxi6 \
     x11-apps \
     iputils-ping nmap telnet \
     git vim tree \
-    openjdk-21-jdk maven
+    maven
 
 # Start bash
 CMD ["/bin/bash"]
