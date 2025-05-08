@@ -32,10 +32,6 @@
 # Use the Rocky Linux 9 base image
 FROM rockylinux:9
 
-# Update mirror list
-#TODO RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
-#TODO RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
-
 # Install necessary dependencies including Java 21
 RUN yum -y update && yum -y remove java && yum install -y --setopt=skip_missing_names_on_install=False \
        java-21-openjdk \
