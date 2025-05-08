@@ -45,7 +45,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: d@t@b@s3
         ports:
-          - 3306:3306
+          # Use 3307 so running locally with 'act' doesn't conflict with existing mysql
+          - 3307:3306
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -74,6 +75,7 @@ jobs:
         shell: bash
         run: |
           set -o errexit
+          export MYSQL_TCP_PORT=3307
           source ddpoker.rc
           reset_dbs.sh pokertest
           cd code

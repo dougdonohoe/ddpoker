@@ -141,7 +141,7 @@ what a production setup might look like.
 ```shell
 mvn-package-no-tests
 docker build -f Dockerfile.pokerweb.docker -t pokerweb .
-docker run -it -p 8080:8080 pokerweb
+docker run -it --rm -p 8080:8080 pokerweb
 
 # get container id for following commands
 CONTAINER=$(docker ps | grep pokerweb | cut -f 1 -d " ")
@@ -444,7 +444,12 @@ mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!
 mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!
 ```
 
-**NOTE**: Yes, it is bad practice to store database passwords in `git`, but keep the database
+**NOTE 1**: I've seen an issue where the DD Poker tests or servers cannot connect to MySQL
+until at least one command line connection has been made first.  I haven't spent time trying
+to figure out why this is (could be a weird Docker issue).  After restarting MySQL, run the
+two commands above to verify things are working properly.
+
+**NOTE 2**: Yes, it is bad practice to store database passwords in `git`, but keep the database
 and servers all used to run on the same machine and in production, the MySQL installation only
 allowed access from localhost, so it wasn't a huge risk.  For development purposes, this
 is also fine.
@@ -562,7 +567,7 @@ xhost + localhost
 docker build -f Dockerfile.ubuntu.docker -t pokerubuntu .
 
 # Run it, mapping ddpoker dir and maven .m2 dir to the image
-docker run -it -v $(pwd):$(pwd) -v $HOME/.m2:/root/.m2 \
+docker run -it --rm -v $(pwd):$(pwd) -v $HOME/.m2:/root/.m2 \
   -w $(pwd) -e DISPLAY=host.docker.internal:0 pokerubuntu
 ```
 
@@ -600,5 +605,21 @@ To run the GitHub testing action locally, just use the alias:
 act-ddpoker
 ```
 
-**NOTE**: You cannot already have `mysql` running in docker (from above), as this
-conflicts with the `mysql` act tries to start.
+## Appendix F: Testing Notes
+
+When testing major changes, here's a checklist of things to manually
+verify:
+
+* Start MySQL (either in Docker or locally), then connect via `mysql`
+  * `mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!`
+  * `mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!`
+* `mvn-package`
+* Start server via `PokerServerMain` and `pokerserver`
+* Start website via `PokerJetty` and `pokerweb`
+* Build website Docker image and run via Docker
+* Start game via `PokerMain` and `poker`
+* With the server running
+  * verify game can start an online game (adjust online settings using server's IP)
+  * verify global *Online Lobby*
+* Start game from Ubuntu Docker
+* Build `act` docker image and running `act-ddpoker` (remember to stop MySQL)

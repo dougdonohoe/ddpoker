@@ -75,7 +75,7 @@ if ! test -x "$(command -v java)"; then
   fi
 else
   # Java is installed, check version is 21
-  if ! java -version 2>&1 | head -1 | grep -q "\"21\."; then
+  if ! java -version 2>&1 | head -1 | grep -q "\"21"; then
     echo "WARNING: Java version is not 21 (which DD Poker requires).  Version is:"
     java -version
   fi
