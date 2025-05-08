@@ -605,6 +605,16 @@ To run the GitHub testing action locally, just use the alias:
 act-ddpoker
 ```
 
+**NOTE**: This will fail if MySQL is already running, since it will prevent `act` from starting MySQL.  You'll
+see an error like this:
+
+```
+[DD Poker CI/test] failed to start container: Error response from daemon: 
+failed to set up container networking: driver failed programming 
+external connectivity on endpoint act-DD-Poker-CI-test
+Bind for 0.0.0.0:3306 failed: port is already allocated
+```
+
 ## Appendix F: Testing Notes
 
 When testing major changes, here's a checklist of things to manually
