@@ -31,15 +31,14 @@
 
 # Ubuntu base image useful for testing builds and running Poker.  See Appendix D
 # of README-DEV.md for details on how to use this Dockerfile.
-FROM ubuntu:22.04
+FROM ubuntu
 
 # Install helpful tools, java, maven
 RUN apt-get update && apt-get install -y \
-    iputils-ping nmap telnet \
     x11-apps \
+    iputils-ping nmap telnet \
     git vim tree \
-    openjdk-21-jdk \
-    maven
+    openjdk-21-jdk maven
 
 # Set JAVA_HOME to avoid warnings (Unable to autodetect 'javac' path)
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
