@@ -1,7 +1,7 @@
 /*
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  * DD Poker - Source Code
- * Copyright (c) 2003-2024 Doug Donohoe
+ * Copyright (c) 2003-2025 Doug Donohoe
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ public class RssTest extends TestCase
         channel.setLink("http://www.ddpoker.com/");
         channel.setLastBuildDate(new Date());
         channel.setLanguage("en");
-        channel.setCopyright("Copyright (c) 2004-2008.  Donohoe Digital LLC.");
+        channel.setCopyright("Copyright (c) 1215-2531.  Donohoe Digital LLC.");
 
         Category cat = new Category();
         cat.setValue("Available Games");

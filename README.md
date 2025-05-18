@@ -107,7 +107,7 @@ somebody, somewhere.
 ## Copyright and Licenses
 
 Unless otherwise noted, the contents of this repository are
-Copyright (c) 2003-2024 Doug Donohoe.  All rights reserved.
+Copyright (c) 2003-2025 Doug Donohoe.  All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
