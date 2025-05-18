@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="10.0.8" transformSequenceNumber="10">
+<install4j version="11.0.3" transformSequenceNumber="11">
   <directoryPresets config="./custom" />
   <application name="DD Poker 3" applicationId="5571-3951-3041-7888" mediaDir="../builds" mediaFilePattern="ddpoker${compiler:sys.version}" shortName="ddpoker3" publisher="DD Poker" publisherWeb="http://www.ddpoker.com/" version="3.0" allPathsRelative="true" macVolumeId="d24c5a0cf4cff0ab" javaMinVersion="21" javaMaxVersion="21">
     <languages>
@@ -1005,7 +1005,7 @@ return true;
       </topLevelFiles>
     </macosArchive>
   </mediaSets>
-  <buildIds buildAll="false">
+  <buildIds>
     <mediaSet refId="4" />
     <mediaSet refId="15" />
     <mediaSet refId="201" />
