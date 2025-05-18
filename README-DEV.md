@@ -6,21 +6,21 @@ Welcome to the DD Poker source code. This page tells you (hopefully)
 everything you need to know to run the three main programs that
 make up DD Poker:
 
-* **DD Poker Game** - the poker game itself, a Java Swing desktop application
-* **Poker Server** - the backend API server that the game talks to for online games
-* **Poker Web** - the old Apache Wicket-based DD Poker website, including the "Online Game Portal", which
+* **DD Poker Game** — the poker game itself, a Java Swing desktop application
+* **Poker Server** — the backend API server that the game talks to for online games
+* **Poker Web** — the old Apache Wicket-based DD Poker website, including the "Online Game Portal", which
   shows various information about online games like current games, history, games by player, etc.
 
-## Mac vs Linux vs Windows (a note from Doug)
+## Mac vs. Linux vs. Windows (a note from Doug)
 
-These instructions are admittedly Mac centric, largely because that is what I have used
+These instructions are admittedly Mac-centric, largely because that is what I have used
 for the last 15 years.  I've done cursory testing on Linux (see Appendix D for testing tips
 on Ubuntu from Docker/Mac).
 
 Even though DD Poker was originally developed
 mainly on Windows (with Cygwin), I haven't used Windows for development in a
 very long time, so apologies to Windows developers for the lack of instructions.
-Cygwin worked back in the day and I imagine that the Windows Subsystem for Linux (WSL)
+Cygwin worked back in the day, and I imagine that the Windows Subsystem for Linux (WSL)
 should be helpful here, too.
 
 Feel free to submit a PR with any changes to these docs that would help Linux or Windows users.
@@ -29,7 +29,7 @@ Feel free to submit a PR with any changes to these docs that would help Linux or
 
 Required software:
 
-* Java 17 - [See Adoptium](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=17)
+* Java 21 - [See Adoptium](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=21)
 * Maven 3 - [See Apache Maven](https://maven.apache.org/install.html)
 * Docker (optional, but useful to run some things) - [See Docker](https://docs.docker.com/engine/install/)
 
@@ -51,7 +51,7 @@ source ddpoker.rc
 [Brew](https://brew.sh/) is useful to install Java and Maven:
 
 ```shell
-brew install temurin@17 maven
+brew install temurin@21 maven
 ```
 
 ## Compile Code
@@ -75,12 +75,12 @@ poker
 ```
 
 If you want to run the game using your personal servers, you'll need to set go
-to _Options -> Online -> Public Online Servers_ and check the **Enabled** checkbox and
+to _Options → Online → Public Online Servers_ and check the **Enabled** checkbox and
 enter the server information in the two fields.  See below for details on running the
 servers.
 
 If you start `poker` with `enabled=true`, but your servers are not running, you may see a
-several second delay on startup as a connection attempt is made and freezes the UI until it times out.
+several-second delay on startup as a connection attempt is made and freezes the UI until it times out.
 
 ## Development
 
@@ -90,9 +90,9 @@ the `code/pom.xml` file and prompt you to load it:
 
 <img src="images/intellij-maven.png" alt="IntelliJ Maven" width="400px">
 
-**NOTE**:  You will probably need to edit the Project Structure to tell IntelliJ to use Java 17.
-Go to _File -> Project Structure... -> Project Settings -> Project -> SDK_ and
-set to Java 17 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
+**NOTE**: You will probably need to edit the Project Structure to tell IntelliJ to use Java 21.
+Go to _File → Project Structure... → Project Settings → Project → SDK_ and
+set to Java 21 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
 
 ## Server Dependencies
 
@@ -105,7 +105,7 @@ appendices below for more details:
 
 ## Run Tests
 
-To build code and run units tests, use `mvn-test`.  Some
+To build code and run unit tests, use `mvn-test`.  Some
 tests assume the `pokertest` database exists.
 
 ```shell
@@ -141,7 +141,7 @@ what a production setup might look like.
 ```shell
 mvn-package-no-tests
 docker build -f Dockerfile.pokerweb.docker -t pokerweb .
-docker run -it -p 8080:8080 pokerweb
+docker run -it --rm -p 8080:8080 pokerweb
 
 # get container id for following commands
 CONTAINER=$(docker ps | grep pokerweb | cut -f 1 -d " ")
@@ -160,14 +160,14 @@ Once started, you can visit [http://localhost:8080/online](http://localhost:8080
 This section is meant to help developers understand the code base, and it contains random
 bits of knowledge and advice.
 
-### Warning - This Code is Old!
+### Warning — This Code is Old!
 
 This code base was originally written over 20 years ago, beginning in 2002.  The majority
-of DD Poker was written from 2004-2007, with sporadic updates after that.  The original
+of DD Poker was written from 2004 to 2007, with sporadic updates after that.  The original
 JDK was 1.5 (aka Java 5).
 
 Amazingly, nearly all of our dependencies (Swing, Hibernate, Wicket, Jetty, Tomcat, log4j, etc.) have been updated 
-to the latest versions that work with Java 17.  The only exception is `HSQLDB`, which we currently
+to the latest versions that work with Java 21.  The only exception is `HSQLDB`, which we currently
 have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
 we don't want to deal with at this time.
 
@@ -239,7 +239,7 @@ It looks for and loads these files on the classpath in this order:
 * `config/override/[username].log4j2.[apptype].properties` - overrides for just `apptype` for `username`
 
 The latter files override any settings in the earlier files.  In log4j, this is commonly used
-to turn on logging to the console or to change logging level for a particular library.
+to turn on logging to the console or to change the logging level for a particular library.
 
 #### PropertyConfig
 
@@ -403,7 +403,7 @@ mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t 
 mvn-tree
 ```
 
-## Appendix A - Database via Docker
+## Appendix A — Database via Docker
 
 DD Poker's server uses MySQL.  You can easily run an instance locally using Docker.
 
@@ -444,7 +444,12 @@ mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!
 mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!
 ```
 
-**NOTE**:  Yes, it is bad practice to store database passwords in `git`, but keep the database
+**NOTE 1**: I've seen an issue where the DD Poker tests or servers cannot connect to MySQL
+until at least one command line connection has been made first.  I haven't spent time trying
+to figure out why this is (could be a weird Docker issue).  After restarting MySQL, run the
+two commands above to verify things are working properly.
+
+**NOTE 2**: Yes, it is bad practice to store database passwords in `git`, but keep the database
 and servers all used to run on the same machine and in production, the MySQL installation only
 allowed access from localhost, so it wasn't a huge risk.  For development purposes, this
 is also fine.
@@ -530,7 +535,7 @@ Follow the instructions above to create the database tables (via `reset_db.sh`).
 
 ## Appendix D: Testing on Ubuntu via Docker
 
-It is possible to run DD Poker in Ubuntu in Docker and display on your Mac, but
+It is possible to run DD Poker in Ubuntu in Docker and display it on your Mac, but
 it can be a little finicky.  Here's what I got to work with help from
 [this helpful gist](https://gist.github.com/cschiewek/246a244ba23da8b9f0e7b11a68bf3285).
 
@@ -541,7 +546,7 @@ from the command line:
 open -a XQuartz
 ```
 
-Next, got to _XQuartz -> Settings -> Security_ and ensure **Allow connections
+Next, got to _XQuartz → Settings → Security_ and ensure **Allow connections
 from network clients** is checked.
 
 <img src="images/quartz-settings.png" alt="Quartz Settings" width="400px">
@@ -562,7 +567,7 @@ xhost + localhost
 docker build -f Dockerfile.ubuntu.docker -t pokerubuntu .
 
 # Run it, mapping ddpoker dir and maven .m2 dir to the image
-docker run -it -v $(pwd):$(pwd) -v $HOME/.m2:/root/.m2 \
+docker run -it --rm -v $(pwd):$(pwd) -v $HOME/.m2:/root/.m2 \
   -w $(pwd) -e DISPLAY=host.docker.internal:0 pokerubuntu
 ```
 
@@ -599,3 +604,32 @@ To run the GitHub testing action locally, just use the alias:
 ```shell
 act-ddpoker
 ```
+
+**NOTE**: This will fail if MySQL is already running, since it will prevent `act` from starting MySQL.  You'll
+see an error like this:
+
+```
+[DD Poker CI/test] failed to start container: Error response from daemon: 
+failed to set up container networking: driver failed programming 
+external connectivity on endpoint act-DD-Poker-CI-test
+Bind for 0.0.0.0:3306 failed: port is already allocated
+```
+
+## Appendix F: Testing Notes
+
+When testing major changes, here's a checklist of things to manually
+verify:
+
+* Start MySQL (either in Docker or locally), then connect via `mysql`
+  * `mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!`
+  * `mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!`
+* `mvn-package`
+* Start server via `PokerServerMain` and `pokerserver`
+* Start website via `PokerJetty` and `pokerweb`
+* Build website Docker image and run via Docker
+* Start game via `PokerMain` and `poker`
+* With the server running
+  * verify game can start an online game (adjust online settings using server's IP)
+  * verify global *Online Lobby*
+* Start game from Ubuntu Docker
+* Build `act` docker image and running `act-ddpoker` (remember to stop MySQL)

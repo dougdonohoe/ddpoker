@@ -29,7 +29,7 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# Ubuntu base image useful for testing builds and running Poker.  See Appendix B
+# Ubuntu base image useful for testing builds and running Poker.  See Appendix D
 # of README-DEV.md for details on how to use this Dockerfile.
 FROM ubuntu
 
@@ -38,7 +38,10 @@ RUN apt-get update && apt-get install -y \
     x11-apps \
     iputils-ping nmap telnet \
     git vim tree \
-    openjdk-17-jdk maven
+    openjdk-21-jdk maven
+
+# Set JAVA_HOME to avoid warnings (Unable to autodetect 'javac' path)
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 
 # Start bash
 CMD ["/bin/bash"]
