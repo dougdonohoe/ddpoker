@@ -29,21 +29,20 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# Ubuntu/java base image useful for testing builds and running Poker.  See Appendix B
+# Ubuntu base image useful for testing builds and running Poker.  See Appendix D
 # of README-DEV.md for details on how to use this Dockerfile.
-FROM openjdk:21-slim
+FROM ubuntu:22.04
 
 # Install helpful tools, java, maven
 RUN apt-get update && apt-get install -y \
-    libx11-6 \
-    libxext6 \
-    libxrender1 \
-    libxtst6 \
-    libxi6 \
-    x11-apps \
     iputils-ping nmap telnet \
+    x11-apps \
     git vim tree \
+    openjdk-21-jdk \
     maven
+
+# Set JAVA_HOME to avoid warnings (Unable to autodetect 'javac' path)
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 
 # Start bash
 CMD ["/bin/bash"]
