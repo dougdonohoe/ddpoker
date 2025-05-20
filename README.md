@@ -141,7 +141,7 @@ or via maven dependencies as seen in the `pom.xml` files.  These are explained i
 [code/poker/src/main/resources/config/poker/help/credits.html](https://static.ddpoker.com/gamehelp/help/credits.html) and the licenses 
 mentioned therein can be found in the `docs/license` directory.
 
-Third party source code directly copied into this repository include the following:
+Third party source code directly copied into this repository includes the following:
 
 * Zookitec Explicit Layout in `code/poker/src/main/java/com/zookitec/layout/*.java`
 * `MersenneTwisterFast` random number generator in `code/common/src/main/java/com/donohoedigital/base/MersenneTwisterFast.java`
