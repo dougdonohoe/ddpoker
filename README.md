@@ -59,7 +59,7 @@ and, while at a poker tournament, the proverbial lightbulb went
 off that there were no good poker software simulators out there,
 especially for tournaments.  Leveraging the game 
 engine he built for War!, Doug immediately started building
-a poker game.  Less that a year later, DD Poker was ready for 
+a poker game.  Less than a year later, DD Poker was ready for 
 release.
 
 DD Poker 1.0 was originally released (and sold in boxes!) in 
@@ -89,11 +89,11 @@ for a detailed release history starting with version 2.0.
 
 ## Why Open Source?
 
-Even though DD Poker and the backend servers was shutdown
+Even though DD Poker and the backend servers were shutdown
 in July 2017, folks continue to play it by manually
 sharing game URLs.  There was a minor revival during the 
-2020 pandemic and sporadic inquiries have come in over the
-years.
+2020 pandemic and sporadic inquiries regarding the source
+code have come in over the years.
 
 While Donohoe Digital LLC can no longer
 run the old DD Poker servers, there might be folks out there that
@@ -107,7 +107,7 @@ somebody, somewhere.
 ## Copyright and Licenses
 
 Unless otherwise noted, the contents of this repository are
-Copyright (c) 2003-2024 Doug Donohoe.  All rights reserved.
+Copyright (c) 2003-2025 Doug Donohoe.  All rights reserved.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -141,7 +141,7 @@ or via maven dependencies as seen in the `pom.xml` files.  These are explained i
 [code/poker/src/main/resources/config/poker/help/credits.html](https://static.ddpoker.com/gamehelp/help/credits.html) and the licenses 
 mentioned therein can be found in the `docs/license` directory.
 
-Third party source code directly copied into this repository include the following:
+Third party source code directly copied into this repository includes the following:
 
 * Zookitec Explicit Layout in `code/poker/src/main/java/com/zookitec/layout/*.java`
 * `MersenneTwisterFast` random number generator in `code/common/src/main/java/com/donohoedigital/base/MersenneTwisterFast.java`
