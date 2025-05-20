@@ -59,7 +59,7 @@ and, while at a poker tournament, the proverbial lightbulb went
 off that there were no good poker software simulators out there,
 especially for tournaments.  Leveraging the game 
 engine he built for War!, Doug immediately started building
-a poker game.  Less that a year later, DD Poker was ready for 
+a poker game.  Less than a year later, DD Poker was ready for 
 release.
 
 DD Poker 1.0 was originally released (and sold in boxes!) in 
@@ -89,11 +89,11 @@ for a detailed release history starting with version 2.0.
 
 ## Why Open Source?
 
-Even though DD Poker and the backend servers was shutdown
+Even though DD Poker and the backend servers were shutdown
 in July 2017, folks continue to play it by manually
 sharing game URLs.  There was a minor revival during the 
-2020 pandemic and sporadic inquiries have come in over the
-years.
+2020 pandemic and sporadic inquiries regarding the source
+code have come in over the years.
 
 While Donohoe Digital LLC can no longer
 run the old DD Poker servers, there might be folks out there that
