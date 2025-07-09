@@ -134,6 +134,15 @@ For inquiries regarding commercial licensing of this source code or
 the use of names, logos, images, text, or other assets, please contact
 doug [at] donohoe [dot] info.
 
+## Trademarks
+
+Donohoe Digital owns the following registered trademarks:
+
+ * `DD Poker` (registration #7856123) — The mark consists of standard characters without claim to
+   any particular font style, size or color.
+ * The `DD` spade logo (registration #7856124) — The mark consists of the letters "DD", colored red with a black 
+   border superimposed over a black playing card spade symbol.
+
 ## Third Party Licenses and Other Open Source Code
 
 DD Poker incorporates various other open source code, either directly as source files
