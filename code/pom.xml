@@ -74,7 +74,7 @@
     <tomcat.version>11.0.13</tomcat.version>
     <spring.version>6.2.12</spring.version>
     <hibernate.version>6.6.33.Final</hibernate.version>
-    <jetty.version>12.1.2</jetty.version>
+    <jetty.version>12.1.3</jetty.version>
     <junit.version>4.13.2</junit.version>
     <wicket.version>10.7.0</wicket.version>
     <wicket.jquery.ui.version>10.0.0-M1</wicket.jquery.ui.version>
