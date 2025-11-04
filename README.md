@@ -1,6 +1,6 @@
 # DD Poker
 
-## About
+## About This Repo
 
 ![dd-poker-3.jpg](images/dd-poker-3.jpg)
 
@@ -12,7 +12,19 @@ on Mac, Linux and Windows.  The backend-server is essentially
 a Java Spring application that talks to MySQL.  The website 
 (aka "Online Portal") is built on the Apache Wicket framework.
 
-## Screenshots
+## About The Game
+
+The DD Poker game is a full-featured no-limit Texas Hold'em simulator, allowing
+you to play against AI and human opponents.  It also has a poker clock for
+running your own home tournaments and a sophisticated calculator tool for 
+exploring the strength of various hands and the odds of winning.
+
+These screenshots show (from left to right):
+
+* Main menu
+* A sample hand showing the primary hand UI, including the "DD Dashboard" tools, chat window, and other controls 
+* Poker clock
+* Calculator tool
 
 ![screenshots.png](images/screenshots.png)
 
