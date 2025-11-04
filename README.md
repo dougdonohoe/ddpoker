@@ -12,6 +12,10 @@ on Mac, Linux and Windows.  The backend-server is essentially
 a Java Spring application that talks to MySQL.  The website 
 (aka "Online Portal") is built on the Apache Wicket framework.
 
+## Screenshots
+
+![screenshots.png](images/screenshots.png)
+
 ## Installers
 
 See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for the latest Mac, Linux and Windows installers.
