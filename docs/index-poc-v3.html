@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DD Poker - Modern Navigation</title>
+<!--    <link rel="stylesheet" href="styles.css">-->
+<!--    <script src="nav.js"></script>-->
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <a href="/" class="logo">
+                <span class="logo-icon">DD</span>
+                <span>DD Poker</span>
+            </a>
+
+            <nav>
+                <ul class="main-nav" id="mainNav">
+                    <li class="main-nav-item">
+                        <a href="/home" class="main-nav-link" data-page="home">Home</a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/download" class="main-nav-link" data-page="download">Download</a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/about" class="main-nav-link active nav-item-with-submenu" data-page="about">About</a>
+                        <div class="mobile-submenu" id="submenu-about">
+                            <a href="/about">Overview</a>
+                            <a href="/about/practice">Practice</a>
+                            <a href="/about/online">Online</a>
+                            <a href="/about/analysis">Analysis</a>
+                            <a href="/about/pokerclock">Poker Clock</a>
+                            <a href="/about/competition">Competition</a>
+                            <a href="/about/screenshots">Screenshots</a>
+                            <a href="/about/faq">FAQs</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/store" class="main-nav-link nav-item-with-submenu" data-page="store">Store</a>
+                        <div class="mobile-submenu" id="submenu-store">
+                            <a href="/store">Products</a>
+                            <a href="/store/pricing">Pricing</a>
+                            <a href="/store/license">License</a>
+                            <a href="/store/upgrades">Upgrades</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/forums" class="main-nav-link nav-item-with-submenu" data-page="forums">Forums</a>
+                        <div class="mobile-submenu" id="submenu-forums">
+                            <a href="/forums">General</a>
+                            <a href="/forums/strategy">Strategy</a>
+                            <a href="/forums/technical">Technical Support</a>
+                            <a href="/forums/bugs">Bug Reports</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/support" class="main-nav-link nav-item-with-submenu" data-page="support">Support</a>
+                        <div class="mobile-submenu" id="submenu-support">
+                            <a href="/support">Getting Started</a>
+                            <a href="/support/documentation">Documentation</a>
+                            <a href="/support/troubleshooting">Troubleshooting</a>
+                            <a href="/support/contact">Contact</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/online" class="main-nav-link nav-item-with-submenu" data-page="online">Online</a>
+                        <div class="mobile-submenu" id="submenu-online">
+                            <a href="/online">Game Portal</a>
+                            <a href="/online/leaderboards">Leaderboards</a>
+                            <a href="/online/tournaments">Tournaments</a>
+                            <a href="/online/stats">Player Stats</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+        </div>
+
+        <nav class="secondary-nav" id="secondaryNav">
+            <ul class="secondary-nav-list">
+                <li><a href="/about" class="secondary-nav-link active">Overview</a></li>
+                <li><a href="/about/practice" class="secondary-nav-link">Practice</a></li>
+                <li><a href="/about/online" class="secondary-nav-link">Online</a></li>
+                <li><a href="/about/analysis" class="secondary-nav-link">Analysis</a></li>
+                <li><a href="/about/pokerclock" class="secondary-nav-link">Poker Clock</a></li>
+                <li><a href="/about/competition" class="secondary-nav-link">Competition</a></li>
+                <li><a href="/about/screenshots" class="secondary-nav-link">Screenshots</a></li>
+                <li><a href="/about/faq" class="secondary-nav-link">FAQs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h1 class="page-title">About DD Poker</h1>
+        <p class="page-description">
+            Learn about DD Poker's features, the team behind it, and how it became one of the premier 
+            poker practice and tournament management applications.
+        </p>
+
+        <div class="demo-content">
+            <h2 style="margin-bottom: 1rem; color: #1a472a;">Interactive Demo</h2>
+            <p style="line-height: 1.6; color: #666; margin-bottom: 1rem;">
+                The navigation now uses real links that would work in production:
+            </p>
+            <ul style="line-height: 2; color: #666; margin-left: 1.5rem;">
+                <li>Main sections use paths like <code>/about</code>, <code>/store</code></li>
+                <li>Sub-sections use nested paths like <code>/about/practice</code></li>
+                <li>Active states based on current URL path</li>
+                <li>JavaScript loads in <code>&lt;head&gt;</code> using <code>DOMContentLoaded</code></li>
+                <li>Mobile menu properly right-aligned</li>
+            </ul>
+            
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #1a472a;">Navigation Data Structure</h3>
+            <pre style="background: #f5f5f5; padding: 1rem; border-radius: 8px; overflow-x: auto;"><code>const navData = {
+  about: {
+    title: 'About',
+    link: '/about',
+    subPages: [
+      { title: 'Overview', link: '/about' },
+      { title: 'Practice', link: '/about/practice' },
+      ...
+    ]
+  },
+  store: { ... },
+  ...
+}</code></pre>
+        </div>
+    </main>
+
+    <div class="demo-badge">Interactive Prototype</div>
+
+    <!-- Inline styles for demo (in production, this would be in styles.css) -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        code {
+            background: #e5e7eb;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #1a472a;
+            font-size: 1.3rem;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .main-nav-item {
+            position: relative;
+        }
+
+        .main-nav-link {
+            display: block;
+            padding: 1.25rem 1.25rem;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .main-nav-link:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .main-nav-link.active {
+            color: white;
+            border-bottom-color: #4ade80;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            margin-left: auto;
+        }
+
+        /* Mobile submenu */
+        .mobile-submenu {
+            display: none;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .mobile-submenu.open {
+            display: block;
+        }
+
+        .mobile-submenu a {
+            display: block;
+            padding: 0.875rem 1.25rem 0.875rem 3rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
+        }
+
+        .mobile-submenu a:hover,
+        .mobile-submenu a.active {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-item-with-submenu {
+            position: relative;
+        }
+
+        .nav-item-with-submenu::after {
+            content: '›';
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%) rotate(0deg);
+            transition: transform 0.2s;
+            font-size: 1.5rem;
+        }
+
+        .nav-item-with-submenu.open::after {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        /* Secondary Navigation */
+        .secondary-nav {
+            background: rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .secondary-nav-list {
+            display: flex;
+            list-style: none;
+            padding: 0 2rem;
+            min-height: 48px;
+        }
+
+        .secondary-nav-link {
+            display: block;
+            padding: 0.875rem 1.25rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .secondary-nav-link:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .secondary-nav-link.active {
+            color: white;
+            border-bottom-color: #4ade80;
+            font-weight: 500;
+        }
+
+        /* Content Area */
+        .content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #1a472a;
+            margin-bottom: 1rem;
+        }
+
+        .page-description {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .demo-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Demo indicator */
+        .demo-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4ade80;
+            color: #1a472a;
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(74,222,128,0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #1a472a;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
+            }
+
+            .main-nav.open {
+                display: flex;
+            }
+
+            .main-nav-link {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                border-left: 3px solid transparent;
+            }
+
+            .main-nav-link.active {
+                border-bottom-color: rgba(255,255,255,0.1);
+                border-left-color: #4ade80;
+            }
+
+            .secondary-nav {
+                display: none !important;
+            }
+
+            .content {
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .demo-content {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-submenu {
+                display: none !important;
+            }
+            
+            .nav-item-with-submenu::after {
+                display: none;
+            }
+        }
+    </style>
+    
+    <!-- Inline JavaScript for demo (in production, this would be in nav.js) -->
+    <script>
+        // Navigation data structure with proper links
+        const navData = {
+            home: {
+                title: 'Home',
+                link: '/home',
+                subPages: null
+            },
+            download: {
+                title: 'Download',
+                link: '/download',
+                subPages: null
+            },
+            about: {
+                title: 'About',
+                link: '/about',
+                subPages: [
+                    { title: 'Overview', link: '/about' },
+                    { title: 'Practice', link: '/about/practice' },
+                    { title: 'Online', link: '/about/online' },
+                    { title: 'Analysis', link: '/about/analysis' },
+                    { title: 'Poker Clock', link: '/about/pokerclock' },
+                    { title: 'Competition', link: '/about/competition' },
+                    { title: 'Screenshots', link: '/about/screenshots' },
+                    { title: 'FAQs', link: '/about/faq' }
+                ]
+            },
+            store: {
+                title: 'Store',
+                link: '/store',
+                subPages: [
+                    { title: 'Products', link: '/store' },
+                    { title: 'Pricing', link: '/store/pricing' },
+                    { title: 'License', link: '/store/license' },
+                    { title: 'Upgrades', link: '/store/upgrades' }
+                ]
+            },
+            forums: {
+                title: 'Forums',
+                link: '/forums',
+                subPages: [
+                    { title: 'General', link: '/forums' },
+                    { title: 'Strategy', link: '/forums/strategy' },
+                    { title: 'Technical Support', link: '/forums/technical' },
+                    { title: 'Bug Reports', link: '/forums/bugs' }
+                ]
+            },
+            support: {
+                title: 'Support',
+                link: '/support',
+                subPages: [
+                    { title: 'Getting Started', link: '/support' },
+                    { title: 'Documentation', link: '/support/documentation' },
+                    { title: 'Troubleshooting', link: '/support/troubleshooting' },
+                    { title: 'Contact', link: '/support/contact' }
+                ]
+            },
+            online: {
+                title: 'Online',
+                link: '/online',
+                subPages: [
+                    { title: 'Game Portal', link: '/online' },
+                    { title: 'Leaderboards', link: '/online/leaderboards' },
+                    { title: 'Tournaments', link: '/online/tournaments' },
+                    { title: 'Player Stats', link: '/online/stats' }
+                ]
+            }
+        };
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mainNav = document.getElementById('mainNav');
+            const secondaryNav = document.getElementById('secondaryNav');
+
+            // Mobile menu toggle
+            mobileMenuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('open');
+            });
+
+            // Main navigation click handling (for demo - prevent navigation)
+            document.querySelectorAll('.main-nav-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // For demo only - remove in production
+                    
+                    const isMobile = document.documentElement.clientWidth <= 768;
+                    const page = link.dataset.page;
+                    const hasSubmenu = link.classList.contains('nav-item-with-submenu');
+                    
+                    if (isMobile && hasSubmenu) {
+                        // Toggle submenu on mobile
+                        const submenu = link.parentElement.querySelector('.mobile-submenu');
+                        const isCurrentlyOpen = submenu.classList.contains('open');
+                        
+                        // Close all other submenus
+                        document.querySelectorAll('.mobile-submenu').forEach(function(s) {
+                            s.classList.remove('open');
+                        });
+                        document.querySelectorAll('.nav-item-with-submenu').forEach(function(l) {
+                            l.classList.remove('open');
+                        });
+                        
+                        // Toggle current submenu
+                        if (!isCurrentlyOpen) {
+                            submenu.classList.add('open');
+                            link.classList.add('open');
+                        }
+                    } else {
+                        // Desktop behavior or mobile without submenu
+                        document.querySelectorAll('.main-nav-link').forEach(function(l) {
+                            l.classList.remove('active');
+                        });
+                        link.classList.add('active');
+                        
+                        // Close mobile menu if no submenu
+                        if (!hasSubmenu) {
+                            mainNav.classList.remove('open');
+                        }
+                        
+                        // Update secondary nav (desktop only)
+                        if (!isMobile) {
+                            updateSecondaryNav(page);
+                        }
+                    }
+                });
+            });
+
+            // Mobile submenu link clicks (for demo - prevent navigation)
+            document.querySelectorAll('.mobile-submenu a').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // For demo only - remove in production
+                    
+                    // Update active state within submenu
+                    link.closest('.mobile-submenu').querySelectorAll('a').forEach(function(l) {
+                        l.classList.remove('active');
+                    });
+                    link.classList.add('active');
+                    
+                    // Set parent as active
+                    document.querySelectorAll('.main-nav-link').forEach(function(l) {
+                        l.classList.remove('active');
+                    });
+                    link.closest('.main-nav-item').querySelector('.main-nav-link').classList.add('active');
+                    
+                    // Close mobile menu
+                    mainNav.classList.remove('open');
+                });
+            });
+
+            // Secondary navigation click handling (for demo - prevent navigation)
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('secondary-nav-link')) {
+                    e.preventDefault(); // For demo only - remove in production
+                    document.querySelectorAll('.secondary-nav-link').forEach(function(l) {
+                        l.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                }
+            });
+
+            function updateSecondaryNav(page) {
+                const pageData = navData[page];
+                
+                if (pageData && pageData.subPages) {
+                    const html = pageData.subPages.map(function(item, i) {
+                        return '<li><a href="' + item.link + '" class="secondary-nav-link' + (i === 0 ? ' active' : '') + '">' + item.title + '</a></li>';
+                    }).join('');
+                    
+                    secondaryNav.querySelector('.secondary-nav-list').innerHTML = html;
+                    secondaryNav.style.display = 'block';
+                } else {
+                    secondaryNav.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

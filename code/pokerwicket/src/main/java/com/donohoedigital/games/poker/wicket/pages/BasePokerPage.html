@@ -35,13 +35,16 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href="styles.css" rel="stylesheet" type="text/css">
+    <link href="nav.css" rel="stylesheet" type="text/css">
+    <script src="nav.js"></script>
 </head>
 
 <body>
 
-<div wicket:id="nav">TopNavigation</div>
+<wicket:container wicket:id="nav"/>
 <div id="content">
     <div wicket:id="profile">CurrentProfile</div>
     <div class="current-profile" wicket:id="no-profile">&nbsp;</div>

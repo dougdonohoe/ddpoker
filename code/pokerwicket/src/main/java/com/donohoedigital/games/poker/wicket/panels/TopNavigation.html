@@ -35,6 +35,91 @@
 
 <wicket:panel>
 
+    <header class="header">
+        <div class="header-top">
+            <a href="/" class="logo">
+                <span class="logo-icon">DD</span>
+                <span>DD Poker</span>
+            </a>
+
+            <nav>
+                <!-- JDD: can generate this list from navData; sub-menus too -->
+                <ul class="main-nav" id="mainNav">
+                    <li class="main-nav-item">
+                        <a href="/home" class="main-nav-link" data-page="home">Home</a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/download" class="main-nav-link" data-page="download">Download</a>
+                    </li>
+                    <li class="main-nav-item">
+                        <!-- JDD: 'active' hard-coded (fix) -->
+                        <a href="/about" class="main-nav-link active nav-item-with-submenu" data-page="about">About</a>
+                        <div class="mobile-submenu" id="submenu-about">
+                            <a href="/about">Overview</a>
+                            <a href="/about/practice">Practice</a>
+                            <a href="/about/online">Online</a>
+                            <a href="/about/analysis">Analysis</a>
+                            <a href="/about/pokerclock">Poker Clock</a>
+                            <a href="/about/competition">Competition</a>
+                            <a href="/about/screenshots">Screenshots</a>
+                            <a href="/about/faq">FAQs</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/store" class="main-nav-link nav-item-with-submenu" data-page="store">Store</a>
+                        <div class="mobile-submenu" id="submenu-store">
+                            <a href="/store">Store</a>
+                            <a href="/donate">Donate</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/forums" class="main-nav-link" data-page="forums">Forums</a>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/support" class="main-nav-link nav-item-with-submenu" data-page="support">Support</a>
+                        <div class="mobile-submenu" id="submenu-support">
+                            <a href="/support">Overview</a>
+                            <a href="/support/selfhelp">Self Help</a>
+                            <a href="/support/passwords">Passwords</a>
+                            <a href="/support/onlinesupplement">Online Supplement</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/online" class="main-nav-link nav-item-with-submenu" data-page="online">Online</a>
+                        <div class="mobile-submenu" id="submenu-online">
+                            <a href="/online">Portal</a>
+                            <a href="/leaderboard">Leaderboard</a>
+                            <a href="/current">Current</a>
+                            <a href="/completed">Completed</a>
+                            <a href="/history">History</a>
+                            <a href="/search">Search</a>
+                            <a href="/myprofile">My Profile</a>
+                        </div>
+                    </li>
+                    <li class="main-nav-item">
+                        <a href="/admin" class="main-nav-link nav-item-with-submenu" data-page="admin">Admin</a>
+                        <div class="mobile-submenu" id="submenu-admin">
+                            <a href="/admin">Admin</a>
+                            <a href="/admin/online-profile-search">Profile Search</a>
+                            <a href="/admin/reg-search">Reg Search</a>
+                            <a href="/admin/ban-list">Ban List</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                ☰
+            </button>
+        </div>
+
+        <!-- Secondary nav updated by JS (JDD: remove <li>???) -->
+        <nav class="secondary-nav" id="secondaryNav">
+            <ul class="secondary-nav-list">
+            </ul>
+        </nav>
+    </header>
+
     <table id="titlebar" wicket:id="titlebar">
         <tr>
             <wicket:link>
