@@ -57,10 +57,4 @@ public abstract class SupportPokerPage extends BasePokerPage
     {
         return new SupportTopNavigation(id);
     }
-
-    @Override
-    protected boolean isCurrentProfileDisplayed()
-    {
-        return true;
-    }
 }

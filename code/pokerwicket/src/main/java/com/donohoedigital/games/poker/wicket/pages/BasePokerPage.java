@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.pages;
 
+import com.donohoedigital.games.poker.wicket.PokerWicketConstants;
 import com.donohoedigital.games.poker.wicket.panels.CopyrightFooter;
 import com.donohoedigital.games.poker.wicket.panels.CurrentProfile;
 import com.donohoedigital.games.poker.wicket.panels.TopNavigation;
@@ -42,6 +43,8 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.resource.JQueryResourceReference;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * Created by IntelliJ IDEA.
@@ -84,7 +87,9 @@ public abstract class BasePokerPage extends BasePage<Void>
     /**
      * subclass needs to implement - return if current profile panel is displayed
      */
-    protected abstract boolean isCurrentProfileDisplayed();
+    protected boolean isCurrentProfileDisplayed() {
+        return !TESTING(PokerWicketConstants.DEBUG_DOC_MODE);
+    }
 
     /**
      * Is login panel visible (in current profile panel - result passed to CurrentProfile constructor).  Default is false.

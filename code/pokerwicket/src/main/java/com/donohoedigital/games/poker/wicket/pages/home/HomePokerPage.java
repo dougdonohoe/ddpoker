@@ -57,10 +57,4 @@ public abstract class HomePokerPage extends BasePokerPage
     {
         return new HomeTopNavigation(id);
     }
-
-    @Override
-    protected boolean isCurrentProfileDisplayed()
-    {
-        return true;
-    }
 }

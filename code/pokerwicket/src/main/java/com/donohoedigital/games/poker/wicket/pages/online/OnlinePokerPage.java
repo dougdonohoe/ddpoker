@@ -57,10 +57,4 @@ public abstract class OnlinePokerPage extends BasePokerPage
     {
         return new OnlineTopNavigation(id);
     }
-
-    @Override
-    protected boolean isCurrentProfileDisplayed()
-    {
-        return true;
-    }
 }
