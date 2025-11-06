@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DD Poker - Modern Navigation</title>
+    <link rel="stylesheet" href="nav-v2.css">
+    <script src="nav-v2.js"></script>
+</head>
+<body>
+<header class="header">
+    <div class="header-top">
+        <a href="/" class="logo">
+            <span class="logo-icon">DD</span>
+            <span>DD Poker</span>
+        </a>
+
+        <nav>
+            <!-- JDD: can generate this list from navData -->
+            <ul class="main-nav" id="mainNav">
+                <li class="main-nav-item">
+                    <a href="/home" class="main-nav-link" data-page="home">Home</a>
+                </li>
+                <li class="main-nav-item">
+                    <a href="/download" class="main-nav-link" data-page="download">Download</a>
+                </li>
+                <li class="main-nav-item">
+                    <!-- JDD: 'active' hard-coded (fix) -->
+                    <a href="/about" class="main-nav-link active nav-item-with-submenu" data-page="about">About</a>
+                </li>
+                <li class="main-nav-item">
+                    <a href="/store" class="main-nav-link nav-item-with-submenu" data-page="store">Store</a>
+                </li>
+                <li class="main-nav-item">
+                    <a href="/forums" class="main-nav-link nav-item-with-submenu" data-page="forums">Forums</a>
+                </li>
+                <li class="main-nav-item">
+                    <a href="/support" class="main-nav-link nav-item-with-submenu" data-page="support">Support</a>
+                </li>
+                <li class="main-nav-item">
+                    <a href="/online" class="main-nav-link nav-item-with-submenu" data-page="online">Online</a>
+                </li>
+                <li class="main-nav-item">
+                    <a href="/admin" class="main-nav-link nav-item-with-submenu" data-page="admin">Admin</a>
+                </li>
+            </ul>
+        </nav>
+
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            ☰
+        </button>
+    </div>
+
+    <!-- Secondary nav updated by JS -->
+    <nav class="secondary-nav" id="secondaryNav">
+        <ul class="secondary-nav-list"></ul>
+    </nav>
+</header>
+
+<main class="content">
+    <h1 class="page-title">About DD Poker</h1>
+    <p class="page-description">
+        Learn about DD Poker's features, the team behind it, and how it became one of the premier
+        poker practice and tournament management applications.
+    </p>
+
+    <div class="demo-content">
+        <h2 style="margin-bottom: 1rem; color: #1a472a;">Interactive Demo</h2>
+        <p style="line-height: 1.6; color: #666; margin-bottom: 1rem;">
+            The navigation now uses real links that would work in production:
+        </p>
+        <ul style="line-height: 2; color: #666; margin-left: 1.5rem;">
+            <li>Main sections use paths like <code>/about</code>, <code>/store</code></li>
+            <li>Sub-sections use nested paths like <code>/about/practice</code></li>
+            <li>Active states based on current URL path</li>
+            <li>JavaScript loads in <code>&lt;head&gt;</code> using <code>DOMContentLoaded</code></li>
+            <li>Mobile menu properly right-aligned</li>
+        </ul>
+
+        <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #1a472a;">Navigation Data Structure</h3>
+        <pre style="background: #f5f5f5; padding: 1rem; border-radius: 8px; overflow-x: auto;"><code>const navData = {
+  about: {
+    title: 'About',
+    link: '/about',
+    subPages: [
+      { title: 'Overview', link: '/about' },
+      { title: 'Practice', link: '/about/practice' },
+      ...
+    ]
+  },
+  store: { ... },
+  ...
+}</code></pre>
+    </div>
+</main>
+
+<div class="demo-badge">Interactive Prototype</div>
+
+</body>
+</html>
