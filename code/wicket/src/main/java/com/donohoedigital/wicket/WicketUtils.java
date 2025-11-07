@@ -37,6 +37,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.RequestUtils;
+import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
@@ -202,6 +203,14 @@ public class WicketUtils
     {
         HttpServletRequest req = getHttpServletRequest();
         return RequestUtils.toAbsolutePath(getBaseUrl(req), getRequestCycle().mapUrlFor(page, params).toString());
+    }
+
+    /**
+     * Relative URL for page/params
+     */
+    public static String currentMountPath() {
+        Url u = RequestCycle.get().getRequest().getUrl();
+        return String.join("/", u.getSegments());
     }
 
     /**

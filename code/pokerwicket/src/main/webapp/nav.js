@@ -64,7 +64,7 @@ const navData = {
         title: 'Admin',
         link: '/admin',
         subPages: [
-            {title: 'Admin', link: '/Admin'},
+            {title: 'Admin', link: '/admin'},
             {title: 'Profile Search', link: '/admin/online-profile-search'},
             {title: 'Reg Search', link: '/admin/reg-search'},
             {title: 'Ban List', link: '/admin/ban-list'},
@@ -74,6 +74,8 @@ const navData = {
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function () {
+    // Set by TopNavigation
+    const mountPath = document.getElementById('header').dataset.mount;
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mainNav = document.getElementById('mainNav');
     const secondaryNav = document.getElementById('secondaryNav');
@@ -225,8 +227,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // JDD: consolidate these two calls (causes flashing), also doesn't work on all mountPaths
     // set secondary nav on load
-    updateSecondaryNav("about") // JDD: need to determine active page
+    updateSecondaryNav(mountPath)
 
     // Call it on page load
     setActiveNavigation();

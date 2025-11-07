@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
+import com.donohoedigital.wicket.WicketUtils;
 import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.components.VoidPanel;
 import com.donohoedigital.wicket.models.StringModel;
@@ -49,10 +50,16 @@ public class TopNavigation extends VoidPanel
     private static final long serialVersionUID = 42L;
 
     protected VoidContainer titlebar;
+    protected VoidContainer header;
 
     public TopNavigation(String id, String style)
     {
         super(id);
+
+        // make mount path accessible in JS via document.getElementById('header').dataset.mount;
+        header = new VoidContainer("header");
+        header.add(new AttributeModifier("data-mount", WicketUtils.currentMountPath()));
+        add(header);
 
         titlebar = new VoidContainer("titlebar");
         titlebar.add(new AttributeModifier("class", new StringModel("titlebar-" + style)));
