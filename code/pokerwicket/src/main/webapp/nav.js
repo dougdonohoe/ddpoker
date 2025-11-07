@@ -57,6 +57,7 @@ const navData = {
             {title: 'Completed', link: '/completed'},
             {title: 'History', link: '/history'},
             {title: 'Search', link: '/search'},
+            {title: 'Hosts', link: '/hosts'},
             {title: 'My Profile', link: '/myprofile'},
         ]
     },
@@ -76,6 +77,7 @@ const navData = {
 document.addEventListener('DOMContentLoaded', function () {
     // Set by TopNavigation
     const mountPath = document.getElementById('header').dataset.mount;
+    const rootPage = document.getElementById('header').dataset.root;
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mainNav = document.getElementById('mainNav');
     const secondaryNav = document.getElementById('secondaryNav');
@@ -85,11 +87,11 @@ document.addEventListener('DOMContentLoaded', function () {
         mainNav.classList.toggle('open');
     });
 
-    // Main navigation click handling (for demo - prevent navigation)
+    // Main navigation click handling
     document.querySelectorAll('.main-nav-link').forEach(function (link) {
         link.addEventListener('click', function (e) {
             const isMobile = document.documentElement.clientWidth <= 768;
-            const page = link.dataset.page;
+            const newRoot = link.dataset.root;
             const hasSubmenu = link.classList.contains('nav-item-with-submenu');
 
             if (isMobile && hasSubmenu) {
@@ -127,13 +129,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Update secondary nav (desktop only)
                 if (!isMobile) {
-                    updateSecondaryNav(page);
+                    updateSecondaryNav(newRoot);
                 }
             }
         });
     });
 
-    // Mobile submenu link clicks (for demo - prevent navigation)
+    // Mobile submenu link clicks
     document.querySelectorAll('.mobile-submenu a').forEach(function (link) {
         link.addEventListener('click', function (e) {
 
@@ -154,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Secondary navigation click handling (for demo - prevent navigation)
+    // Secondary navigation click handling
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('secondary-nav-link')) {
 
@@ -165,12 +167,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    function updateSecondaryNav(page) {
-        const pageData = navData[page];
+    function updateSecondaryNav(root) {
+        const pageData = navData[root];
 
         if (pageData && pageData.subPages) {
             const html = pageData.subPages.map(function (item, i) {
-                return '<li><a href="' + item.link + '" class="secondary-nav-link' + (i === 0 ? ' active' : '') + '">' + item.title + '</a></li>';
+                // JDD: issue: matches multiple points (/about, /about/analysis)
+                const active = ('/' + mountPath).startsWith(item.link)
+                return '<li><a href="' + item.link + '" class="secondary-nav-link' + (active ? ' active' : '') + '">' + item.title + '</a></li>';
             }).join('');
 
             secondaryNav.querySelector('.secondary-nav-list').innerHTML = html;
@@ -180,60 +184,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Set active states based on current URL path
-    function setActiveNavigation() {
-        const currentPath = window.location.pathname;
-
+    // Set root nav item active
+    function updatePrimaryNav(root) {
         // Find and activate the main nav link
         document.querySelectorAll('.main-nav-link').forEach(function (link) {
-            const linkPath = link.getAttribute('href');
-            const page = link.dataset.page;
-
             // Check if current path matches or starts with this section
-            if (currentPath === linkPath || currentPath.startsWith(linkPath + '/')) {
+            if (root === link.dataset.root) {
                 link.classList.add('active');
-
-                // If on desktop and this section has subpages, update secondary nav
-                if (document.documentElement.clientWidth > 768 && navData[page] && navData[page].subPages) {
-                    updateSecondaryNav(page);
-                }
             } else {
                 link.classList.remove('active');
             }
         });
-
-        // Find and activate the secondary nav link (if visible)
-        if (document.documentElement.clientWidth > 768) {
-            document.querySelectorAll('.secondary-nav-link').forEach(function (link) {
-                const linkPath = link.getAttribute('href');
-                if (currentPath === linkPath) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-
-        // Find and activate mobile submenu link (if in mobile view)
-        if (document.documentElement.clientWidth <= 768) {
-            document.querySelectorAll('.mobile-submenu a').forEach(function (link) {
-                const linkPath = link.getAttribute('href');
-                if (currentPath === linkPath) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
     }
 
-    // JDD: consolidate these two calls (causes flashing), also doesn't work on all mountPaths
-    // set secondary nav on load
-    updateSecondaryNav(mountPath)
+    // Update active links in root list and sub-pages
+    updatePrimaryNav(rootPage);
+    updateSecondaryNav(rootPage)
 
-    // Call it on page load
-    setActiveNavigation();
-
-    // Optional: Also call on window resize in case user switches between mobile/desktop
-    //window.addEventListener('resize', setActiveNavigation);
+    // JDD: Needed? Optional: Also call on window resize in case user switches between mobile/desktop
+    //window.addEventListener('resize', updatePrimaryNav);
 });

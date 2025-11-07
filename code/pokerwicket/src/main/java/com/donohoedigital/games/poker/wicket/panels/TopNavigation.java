@@ -56,9 +56,10 @@ public class TopNavigation extends VoidPanel
     {
         super(id);
 
-        // make mount path accessible in JS via document.getElementById('header').dataset.mount;
+        // make root page and mount path accessible in JS via document.getElementById('header').dataset.mount|root;
         header = new VoidContainer("header");
         header.add(new AttributeModifier("data-mount", WicketUtils.currentMountPath()));
+        header.add(new AttributeModifier("data-root", style));
         add(header);
 
         titlebar = new VoidContainer("titlebar");
