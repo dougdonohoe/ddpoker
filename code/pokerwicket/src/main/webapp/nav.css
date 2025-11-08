@@ -49,16 +49,9 @@ code {
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
-    background: white;
-    border-radius: 8px;
+    width: 60px;
+    height: 60px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    color: #1a472a;
-    font-size: 1.3rem;
 }
 
 /* Main Navigation */
