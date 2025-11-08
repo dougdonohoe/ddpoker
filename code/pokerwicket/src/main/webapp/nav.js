@@ -73,6 +73,10 @@ const navData = {
     }
 };
 
+function isMobile() {
+    return document.documentElement.clientWidth <= 768;
+}
+
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function () {
     // Set by TopNavigation
@@ -90,11 +94,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Main navigation click handling
     document.querySelectorAll('.main-nav-link').forEach(function (link) {
         link.addEventListener('click', function (e) {
-            const isMobile = document.documentElement.clientWidth <= 768;
             const newRoot = link.dataset.root;
             const hasSubmenu = link.classList.contains('nav-item-with-submenu');
 
-            if (isMobile && hasSubmenu) {
+            if (isMobile() && hasSubmenu) {
                 // don't follow link
                 e.preventDefault();
 
@@ -128,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 // Update secondary nav (desktop only)
-                if (!isMobile) {
+                if (!isMobile()) {
                     updateSecondaryNav(newRoot);
                 }
             }
@@ -184,22 +187,43 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             secondaryNav.style.display = 'none';
         }
+
+        // Find and activate mobile submenu link (if in mobile view)
+        if (isMobile()) {
+            document.querySelectorAll('.mobile-submenu a').forEach(function (link) {
+                const linkPath = link.getAttribute('href');
+                // JDD: this misses longer URLs with query params like /completed/-/-/...  (can't use i === 0 trick as above)
+                const fullMountPath = '/' + mountPath
+                if (fullMountPath === linkPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
     }
 
-    // Set root nav item active
+    // Set root nav item active (called on page load)
     function updatePrimaryNav(root) {
         // Find and activate the main nav link
         document.querySelectorAll('.main-nav-link').forEach(function (link) {
-            // Check if current path matches or starts with this section
+            const submenu = link.parentElement.querySelector('.mobile-submenu');
+            const hasSubmenu = link.classList.contains('nav-item-with-submenu');
+
+            // If matching link, make active and open (mobile)
             if (root === link.dataset.root) {
                 link.classList.add('active');
-            } else {
-                link.classList.remove('active');
+
+                // for mobile
+                if (hasSubmenu && isMobile()) {
+                    link.classList.add('open');
+                    submenu.classList.add('open');
+                }
             }
         });
     }
 
-    // Update active links in root list and sub-pages
+    // Set active links in root list and sub-pages
     updatePrimaryNav(rootPage);
     updateSecondaryNav(rootPage)
 
