@@ -172,8 +172,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (pageData && pageData.subPages) {
             const html = pageData.subPages.map(function (item, i) {
-                // JDD: issue: matches multiple points (/about, /about/analysis)
-                const active = ('/' + mountPath).startsWith(item.link)
+                // First item in list must match exactly, otherwise look at starts with
+                // this prevents paths like 'about/online' from matching root 'about'
+                const fullMountPath = '/' + mountPath
+                const active = i === 0 ? fullMountPath === item.link : fullMountPath.startsWith(item.link)
                 return '<li><a href="' + item.link + '" class="secondary-nav-link' + (active ? ' active' : '') + '">' + item.title + '</a></li>';
             }).join('');
 
