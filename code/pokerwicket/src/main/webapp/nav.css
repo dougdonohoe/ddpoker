@@ -1,10 +1,23 @@
+/* Fonts */
+.delius-regular {
+    font-family: "Delius", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
 /* Header */
 .header {
-    background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+    /*background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);*/
+    background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
+    background-repeat: repeat;                 /* default, but explicit is nice */
+    background-size: auto;                     /* or set a size if you want scaling */
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     position: sticky;
     top: 0;
     z-index: 1000;
+    font-family: "Delius", cursive;
+    font-variant: small-caps;
+    font-size: 1.3rem;
 }
 
 .header-top {
@@ -98,7 +111,7 @@
     padding: 0.875rem 1.25rem 0.875rem 3rem;
     color: rgba(255,255,255,0.7);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     transition: all 0.2s;
 }
@@ -147,7 +160,7 @@
     padding: 0.875rem 1.25rem;
     color: rgba(255,255,255,0.8);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     white-space: nowrap;
     transition: all 0.2s;
     border-bottom: 2px solid transparent;
@@ -197,20 +210,6 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-/* Demo indicator */
-.demo-badge {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #4ade80;
-    color: #1a472a;
-    padding: 0.75rem 1.25rem;
-    border-radius: 50px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(74,222,128,0.4);
-    font-size: 0.9rem;
 }
 
 /* Mobile Styles */
