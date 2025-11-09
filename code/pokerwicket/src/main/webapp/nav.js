@@ -195,27 +195,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Mobile submenu link clicks
-    document.querySelectorAll('.mobile-submenu a').forEach(function (link) {
-        link.addEventListener('click', function (e) {
-
-            // Update active state within submenu
-            link.closest('.mobile-submenu').querySelectorAll('a').forEach(function (l) {
-                l.classList.remove('active');
-            });
-            link.classList.add('active');
-
-            // Set parent as active
-            document.querySelectorAll('.main-nav-link').forEach(function (l) {
-                l.classList.remove('active');
-            });
-            link.closest('.main-nav-item').querySelector('.main-nav-link').classList.add('active');
-
-            // Close mobile menu
-            mainNav.classList.remove('open');
-        });
-    });
-
     // Secondary navigation click handling
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('secondary-nav-link')) {
