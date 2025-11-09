@@ -77,19 +77,76 @@ function isMobile() {
     return document.documentElement.clientWidth <= 768;
 }
 
+function generateNavigation(rootPage) {
+    const mainNav = document.getElementById('mainNav');
+    let html = '';
+
+    // Loop through each page in navData
+    for (const [slug, pageData] of Object.entries(navData)) {
+        const hasSubmenu = pageData.subPages && pageData.subPages.length > 0;
+        const submenuClass = hasSubmenu ? ' nav-item-with-submenu' : '';
+
+        const active = rootPage === slug;
+        const open = isMobile() && active
+
+        let clazz = active ? ' active' : ''; // JDD: combine with submenuClass
+        if (open) {
+            clazz += ' open';
+        }
+        html += '<li class="main-nav-item">';
+        html += `<a href="${pageData.link}" class="main-nav-link${submenuClass}${clazz}" data-page="${slug}">${pageData.title}</a>`;
+
+        // Add mobile submenu if subpages exist
+        if (hasSubmenu) {
+            html += `<div class="mobile-submenu ${open ? ' open' : ''}" id="submenu-${slug}">`;
+            pageData.subPages.forEach(function(subPage, i) {
+                const fullMountPath = '/' + mountPath
+                const active = i === 0 ? fullMountPath === subPage.link : fullMountPath.startsWith(subPage.link)
+                const activeClass = active ? ' active' : '';
+                html += `<a href="${subPage.link}" class="${activeClass}">${subPage.title}</a>`;
+            });
+            html += '</div>';
+        }
+        html += '</li>';
+    }
+
+    mainNav.innerHTML = html;
+}
+
+// JDD: duplicative of above - consolidate (one is full page secondary nav;other is mobile)
+function generateSecondaryNavigation(root) {
+    const secondaryNav = document.getElementById('secondaryNav');
+
+    const pageData = navData[root];
+
+    if (pageData && pageData.subPages) {
+        const html = pageData.subPages.map(function (item, i) {
+            // First item in list must match exactly, otherwise look at starts with
+            // this prevents paths like 'about/online' from matching root 'about'
+            const fullMountPath = '/' + mountPath
+            const active = i === 0 ? fullMountPath === item.link : fullMountPath.startsWith(item.link)
+            return '<li><a href="' + item.link + '" class="secondary-nav-link' + (active ? ' active' : '') + '">' + item.title + '</a></li>';
+        }).join('');
+
+        secondaryNav.querySelector('.secondary-nav-list').innerHTML = html;
+        secondaryNav.style.display = 'block';
+    } else {
+        secondaryNav.style.display = 'none';
+    }
+}
+
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function () {
     // Set by TopNavigation
-    const mountPath = document.getElementById('header').dataset.mount;
-    const rootPage = document.getElementById('header').dataset.root;
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mainNav = document.getElementById('mainNav');
-    const secondaryNav = document.getElementById('secondaryNav');
 
     // Mobile menu toggle
     mobileMenuToggle.addEventListener('click', function () {
         mainNav.classList.toggle('open');
     });
+
+    // JDD: some click handling may be overkill since page is reloaded
 
     // Main navigation click handling
     document.querySelectorAll('.main-nav-link').forEach(function (link) {
@@ -132,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Update secondary nav (desktop only)
                 if (!isMobile()) {
-                    updateSecondaryNav(newRoot);
+                    generateSecondaryNavigation(newRoot);
                 }
             }
         });
@@ -169,64 +226,16 @@ document.addEventListener('DOMContentLoaded', function () {
             e.target.classList.add('active');
         }
     });
-
-    function updateSecondaryNav(root) {
-        const pageData = navData[root];
-
-        if (pageData && pageData.subPages) {
-            const html = pageData.subPages.map(function (item, i) {
-                // First item in list must match exactly, otherwise look at starts with
-                // this prevents paths like 'about/online' from matching root 'about'
-                const fullMountPath = '/' + mountPath
-                const active = i === 0 ? fullMountPath === item.link : fullMountPath.startsWith(item.link)
-                return '<li><a href="' + item.link + '" class="secondary-nav-link' + (active ? ' active' : '') + '">' + item.title + '</a></li>';
-            }).join('');
-
-            secondaryNav.querySelector('.secondary-nav-list').innerHTML = html;
-            secondaryNav.style.display = 'block';
-        } else {
-            secondaryNav.style.display = 'none';
-        }
-
-        // Find and activate mobile submenu link (if in mobile view)
-        if (isMobile()) {
-            document.querySelectorAll('.mobile-submenu a').forEach(function (link) {
-                const linkPath = link.getAttribute('href');
-                // JDD: this misses longer URLs with query params like /completed/-/-/...  (can't use i === 0 trick as above)
-                const fullMountPath = '/' + mountPath
-                if (fullMountPath === linkPath) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-        }
-    }
-
-    // Set root nav item active (called on page load)
-    function updatePrimaryNav(root) {
-        // Find and activate the main nav link
-        document.querySelectorAll('.main-nav-link').forEach(function (link) {
-            const submenu = link.parentElement.querySelector('.mobile-submenu');
-            const hasSubmenu = link.classList.contains('nav-item-with-submenu');
-
-            // If matching link, make active and open (mobile)
-            if (root === link.dataset.root) {
-                link.classList.add('active');
-
-                // for mobile
-                if (hasSubmenu && isMobile()) {
-                    link.classList.add('open');
-                    submenu.classList.add('open');
-                }
-            }
-        });
-    }
-
-    // Set active links in root list and sub-pages
-    updatePrimaryNav(rootPage);
-    updateSecondaryNav(rootPage)
-
-    // JDD: Needed? Optional: Also call on window resize in case user switches between mobile/desktop
-    //window.addEventListener('resize', updatePrimaryNav);
 });
+
+///
+/// main script
+///
+
+// get wicket info
+const mountPath = document.getElementById('header').dataset.mount;
+const rootPage = document.getElementById('header').dataset.root;
+
+// generate nav
+generateNavigation(rootPage);
+generateSecondaryNavigation(rootPage)
