@@ -8,9 +8,9 @@
 /* Header */
 .header {
     background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-    background-repeat: repeat;                 /* default, but explicit is nice */
-    background-size: auto;                     /* or set a size if you want scaling */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    background-repeat: repeat; /* default, but explicit is nice */
+    background-size: auto; /* or set a size if you want scaling */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -22,8 +22,12 @@
 .header-top {
     display: flex;
     align-items: center;
-    padding: 0 2rem;
+    padding: 0 .25rem;
     height: 70px;
+}
+
+.header-wrapper {
+    width: 100%; /* Make nav full width */
 }
 
 .logo {
@@ -44,6 +48,7 @@
     width: 60px;
     height: 60px;
     display: flex;
+    padding-right: .3rem;
 }
 
 /* Main Navigation */
@@ -59,8 +64,8 @@
 
 .main-nav-link {
     display: block;
-    padding: 1.0rem 1.0rem;
-    color: rgba(255,255,255,0.9);
+    padding: 0.0rem 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s;
@@ -73,12 +78,12 @@
 
 .main-nav-link:hover {
     color: white;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .main-nav-link.active {
     color: yellow;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 /* Mobile Menu Toggle */
@@ -89,15 +94,15 @@
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 1.5rem;
     margin-left: auto;
 }
 
 /* Mobile submenu */
 .mobile-submenu {
     display: none;
-    background: rgba(0,0,0,0.2);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .mobile-submenu.open {
@@ -107,18 +112,22 @@
 .mobile-submenu a {
     display: block;
     padding: 0.875rem 1.25rem 0.875rem 3rem;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 1.2rem;
     font-variant: normal;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.2s;
+    background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
+    background-repeat: repeat; /* default, but explicit is nice */
+    background-size: auto; /* or set a size if you want scaling */
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .mobile-submenu a:hover,
 .mobile-submenu a.active {
     color: yellow;
-    background: rgba(255,255,255,0.4);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .nav-item-with-submenu {
@@ -141,8 +150,8 @@
 
 /* Secondary Navigation */
 .secondary-nav {
-    background: rgba(0,0,0,0.5);
-    border-top: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -150,14 +159,13 @@
 .secondary-nav-list {
     display: flex;
     list-style: none;
-    padding: 0 2rem;
-    min-height: 48px;
+    padding: 0.2rem .66rem;
 }
 
-.secondary-nav-link {
+.secondary-nav-link, .secondary-from-child {
     display: block;
-    padding: 0.875rem 1.25rem;
-    color: rgba(255,255,255,0.8);
+    padding: 0 .66rem;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-size: 1.0rem;
     font-variant: normal;
@@ -165,6 +173,12 @@
     transition: all 0.2s;
     border-bottom: 2px solid transparent;
 }
+
+.secondary-from-child {
+    padding: 0.2rem .66rem;
+    color: yellow;
+}
+
 
 .secondary-nav-link:link {
     color: white;
@@ -176,7 +190,7 @@
 
 .secondary-nav-link:hover {
     color: white;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .secondary-nav-link.active {
@@ -205,17 +219,14 @@
     margin-bottom: 2rem;
 }
 
-.demo-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
 /* Mobile Styles */
 @media (max-width: 768px) {
     .mobile-menu-toggle {
         display: block;
+    }
+
+    .header-top {
+        justify-content: space-between;
     }
 
     .main-nav {
@@ -225,26 +236,40 @@
         left: 0;
         right: 0;
         background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-        background-repeat: repeat;                 /* default, but explicit is nice */
-        background-size: auto;                     /* or set a size if you want scaling */
+        background-repeat: repeat; /* default, but explicit is nice */
+        background-size: auto; /* or set a size if you want scaling */
         flex-direction: column;
         gap: 0;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         max-height: calc(100vh - 70px);
         overflow-y: auto;
     }
 
     .main-nav.open {
         display: flex;
+        border-top: 1px solid rgba(255, 255, 255, 0.6);
     }
 
     .main-nav-link {
-        border-bottom: 1px solid rgba(255,255,255,0.6);
+        padding: 1.0rem 1.0rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         border-left: 3px solid transparent;
+        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
+        background-repeat: repeat; /* default, but explicit is nice */
+        background-size: auto; /* or set a size if you want scaling */
     }
 
     .main-nav-link.active {
-        border-bottom-color: rgba(255,255,255,0.6);
+        border-bottom-color: rgba(255, 255, 255, 0.6);
+        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
+        background-repeat: repeat; /* default, but explicit is nice */
+        background-size: auto; /* or set a size if you want scaling */
+    }
+
+    .main-nav-link.hover {
+        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
+        background-repeat: repeat; /* default, but explicit is nice */
+        background-size: auto; /* or set a size if you want scaling */
     }
 
     .secondary-nav {

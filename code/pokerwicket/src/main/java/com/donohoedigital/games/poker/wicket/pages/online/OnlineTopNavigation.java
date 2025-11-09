@@ -52,6 +52,6 @@ public class OnlineTopNavigation extends TopNavigation
     {
         super(id, "online");
 
-        titlebar.add(new BookmarkablePageLink<AdminHome>("adminLink", AdminHome.class).setVisible(PokerSession.isLoggedInUserAdmin()));
+        header.add(new BookmarkablePageLink<AdminHome>("adminLink", AdminHome.class).setVisible(PokerSession.isLoggedInUserAdmin()));
     }
 }

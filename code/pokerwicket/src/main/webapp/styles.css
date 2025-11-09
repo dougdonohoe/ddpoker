@@ -268,94 +268,6 @@ a.name:active {
 }
 
 /**
-* Title bar settings
-*/
-#titlebar {
-    width: 775px;
-    height: 75px;
-
-    margin: 0;
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-
-    border: 0;
-    border-collapse: collapse;
-
-    padding: 0;
-}
-
-.titlebar-home {
-    background: url( images/titlebar3-home.jpg ) no-repeat;
-}
-
-.titlebar-online {
-    background: url( images/titlebar3-online.jpg ) no-repeat;
-}
-
-.titlebar-store {
-    background: url( images/titlebar3-store.jpg ) no-repeat;
-}
-
-.titlebar-admin {
-    background: url( images/titlebar3-none.jpg ) no-repeat;
-}
-
-.titlebar-error {
-    background: url( images/titlebar3-none.jpg ) no-repeat;
-}
-
-.titlebar-about {
-    background: url( images/titlebar3-about.jpg ) no-repeat;
-}
-
-.titlebar-download {
-    background: url( images/titlebar3-download.jpg ) no-repeat;
-}
-
-.titlebar-forums {
-    background: url( images/titlebar3-forums.jpg ) no-repeat;
-}
-
-.titlebar-support {
-    background: url( images/titlebar3-support.jpg ) no-repeat;
-}
-
-.titlebar-home {
-    display: block;
-    width: 70px;
-    height: 75px;
-}
-
-.titlebar-tab {
-    display: block;
-    width: 100px;
-    height: 42px;
-}
-
-td.titlebar-subtabs {
-    height: 28px;
-    padding-left: 18px;
-    vertical-align: middle;
-    color: yellow;
-}
-
-td.titlebar-subtabs .nav {
-    display: block;
-    padding-right: 24px;
-    float: left;
-    position: relative;
-}
-
-td.titlebar-spacer-end {
-    width: 5px;
-}
-
-td.titlebar-spacer-bottom {
-    height: 5px;
-}
-
-/**
 * current-profile
 */
 div.current-profile {
@@ -380,12 +292,9 @@ div.current-profile em {
  * content box
  */
 #content {
-    width: 773px; /* 775 less 2px for border on left/right */
-
     margin-left: auto;
     margin-right: auto;
 
-    border: 1px solid black;
     border-top-width: 0;
     border-collapse: collapse;
 
@@ -1033,8 +942,6 @@ div.host-search span.gap {
 
 #homepage {
     background: url( images/websitemenu3.jpg ) no-repeat;
-
-    width: 773px; /* two less to not override border */
 
     margin: 0;
     margin-top: 0;

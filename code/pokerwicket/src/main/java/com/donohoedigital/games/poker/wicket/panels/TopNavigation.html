@@ -38,53 +38,30 @@
     <header class="header" id="header" wicket:id="header">
         <div class="header-top">
             <a href="/" class="logo">
-                <img class="logo-icon" src="./images/pokericon128.png" alt="DD Poker" />
+                <img class="logo-icon" src="./images/pokericon128.png" alt="DD Poker"/>
             </a>
+            <div class="header-wrapper">
+                <nav>
+                    <ul class="main-nav" id="mainNav"></ul>
+                </nav>
 
-            <nav>
-                <ul class="main-nav" id="mainNav"></ul>
-            </nav>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    ☰
+                </button>
 
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-                ☰
-            </button>
+                <nav class="secondary-nav" id="secondaryNav">
+                    <ul class="secondary-nav-list"></ul>
+                    <p class="secondary-from-child"><wicket:child/></p>
+                </nav>
+
+            </div>
+
         </div>
 
-        <nav class="secondary-nav" id="secondaryNav">
-            <ul class="secondary-nav-list"></ul>
-        </nav>
     </header>
 
     <!-- Load JS after elements above so we can generate menu -->
     <script src="nav.js"></script>
-
-
-    <table id="titlebar" wicket:id="titlebar">
-        <tr>
-            <wicket:link>
-                <td rowspan="3"><a class="titlebar-home" href="/home"/></td>
-                <td><a class="titlebar-tab" href="/home"/></td>
-                <td><a class="titlebar-tab" href="/download"/></td>
-                <td><a class="titlebar-tab" href="/about"/></td>
-                <td><a class="titlebar-tab" href="/store"/></td>
-                <td><a class="titlebar-tab" href="/forums"/></td>
-                <td><a class="titlebar-tab" href="/support"/></td>
-                <td><a class="titlebar-tab" href="/online"/></td>
-            </wicket:link>
-            <td class="titlebar-spacer-end"/>
-        </tr>
-        <tr>
-            <td class="titlebar-subtabs" colspan="7">
-
-                <wicket:child/>
-
-            </td>
-            <td class="titlebar-spacer-end"/>
-        </tr>
-        <tr>
-            <td class="titlebar-spacer-bottom" colspan="8"/>
-        </tr>
-    </table>
 
 </wicket:panel>
 

@@ -124,16 +124,19 @@ function generateSecondaryNavigation(root) {
     const secondaryNav = document.getElementById('secondaryNav');
     const pageData = navData[root];
 
+    let secondaryList = secondaryNav.querySelector('.secondary-nav-list');
+    let secondaryFromChild = secondaryNav.querySelector('.secondary-from-child');
+
     if (pageData && pageData.subPages) {
         const html = pageData.subPages.map(function (subPage, i) {
             const activeClass = getActiveClass(i, subPage);
             return `<li><a href="${subPage.link}" class="secondary-nav-link${activeClass}">${subPage.title}</a></li>`;
         }).join('');
 
-        secondaryNav.querySelector('.secondary-nav-list').innerHTML = html;
-        secondaryNav.style.display = 'block';
+        secondaryList.innerHTML = html;
+        secondaryFromChild.style.display = 'none';
     } else {
-        secondaryNav.style.display = 'none';
+        secondaryList.style.display = 'none';
     }
 }
 

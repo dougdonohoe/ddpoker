@@ -49,7 +49,6 @@ public class TopNavigation extends VoidPanel
 {
     private static final long serialVersionUID = 42L;
 
-    protected VoidContainer titlebar;
     protected VoidContainer header;
 
     public TopNavigation(String id, String style)
@@ -61,9 +60,5 @@ public class TopNavigation extends VoidPanel
         header.add(new AttributeModifier("data-mount", WicketUtils.currentMountPath()));
         header.add(new AttributeModifier("data-root", style));
         add(header);
-
-        titlebar = new VoidContainer("titlebar");
-        titlebar.add(new AttributeModifier("class", new StringModel("titlebar-" + style)));
-        add(titlebar);
     }
 }
