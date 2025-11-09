@@ -135,9 +135,8 @@ function generateSecondaryNavigation(root) {
     }
 }
 
-// Wait for DOM to be ready
-document.addEventListener('DOMContentLoaded', function () {
-    // Set by TopNavigation
+// Menu event handlers
+function addMenuEventHandlers() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mainNav = document.getElementById('mainNav');
 
@@ -146,12 +145,9 @@ document.addEventListener('DOMContentLoaded', function () {
         mainNav.classList.toggle('open');
     });
 
-    // JDD: some click handling may be overkill since page is reloaded
-
-    // Main navigation click handling
+    // Mobile menu open/close handling
     document.querySelectorAll('.main-nav-link').forEach(function (link) {
         link.addEventListener('click', function (e) {
-            const newRoot = link.dataset.root;
             const hasSubmenu = link.classList.contains('nav-item-with-submenu');
 
             if (isMobile() && hasSubmenu) {
@@ -175,37 +171,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     submenu.classList.add('open');
                     link.classList.add('open');
                 }
-            } else {
-                // Desktop behavior or mobile without submenu
-                document.querySelectorAll('.main-nav-link').forEach(function (l) {
-                    l.classList.remove('active');
-                });
-                link.classList.add('active');
-
-                // Close mobile menu if no submenu
-                if (!hasSubmenu) {
-                    mainNav.classList.remove('open');
-                }
-
-                // Update secondary nav (desktop only)
-                if (!isMobile()) {
-                    generateSecondaryNavigation(newRoot);
-                }
             }
         });
     });
-
-    // Secondary navigation click handling
-    document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('secondary-nav-link')) {
-
-            document.querySelectorAll('.secondary-nav-link').forEach(function (l) {
-                l.classList.remove('active');
-            });
-            e.target.classList.add('active');
-        }
-    });
-});
+}
 
 ///
 /// main script
@@ -217,4 +186,5 @@ const rootPage = document.getElementById('header').dataset.root;
 
 // generate nav
 generateNavigation(rootPage);
-generateSecondaryNavigation(rootPage)
+generateSecondaryNavigation(rootPage);
+addMenuEventHandlers();
