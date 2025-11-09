@@ -32,11 +32,14 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
+import com.donohoedigital.games.poker.wicket.PokerWicketConstants;
 import com.donohoedigital.wicket.WicketUtils;
 import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.components.VoidPanel;
 import com.donohoedigital.wicket.models.StringModel;
 import org.apache.wicket.AttributeModifier;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,6 +62,7 @@ public class TopNavigation extends VoidPanel
         header = new VoidContainer("header");
         header.add(new AttributeModifier("data-mount", WicketUtils.currentMountPath()));
         header.add(new AttributeModifier("data-root", style));
+        header.add(new AttributeModifier("data-docmode", TESTING(PokerWicketConstants.DEBUG_DOC_MODE)));
         add(header);
     }
 }

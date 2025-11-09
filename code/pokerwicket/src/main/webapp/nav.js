@@ -19,35 +19,34 @@ const navData = {
             {title: 'Online', link: '/about/online'},
             {title: 'Analysis', link: '/about/analysis'},
             {title: 'Poker Clock', link: '/about/pokerclock'},
-            {title: 'Competition', link: '/about/competition'},
+            {title: 'Competition', link: '/about/competition', skipInDocMode: true},
             {title: 'Screenshots', link: '/about/screenshots'},
             {title: 'FAQs', link: '/about/faq'}
         ]
     },
     store: {
-        title: 'Store',
-        link: '/store',
-        subPages: [
-            {title: 'Store', link: '/store'},
-            {title: 'Donate', link: '/donate'},
-        ]
+        title: 'Donate',
+        link: '/donate',
     },
     forums: {
+        skipInDocMode: true,
         title: 'Forums',
         link: '/forums',
-        subPages: null
+        subPages: null,
     },
     support: {
+        skipInDocMode: true,
         title: 'Support',
         link: '/support',
         subPages: [
             {title: 'Overview', link: '/support'},
             {title: 'Self Help', link: '/support/selfhelp'},
-            {title: 'Password Help', link: '/support/passwords'},
+            {title: 'Password Help', link: '/support/passwords', skipInDocMode: true},
             {title: 'Online Supplement', link: '/support/onlinesupplement'},
         ]
     },
     online: {
+        skipInDocMode: true,
         title: 'Online',
         link: '/online',
         subPages: [
@@ -62,6 +61,7 @@ const navData = {
         ]
     },
     admin: {
+        skipInDocMode: true,
         title: 'Admin',
         link: '/admin',
         subPages: [
@@ -86,12 +86,20 @@ function getActiveClass(i, subPage) {
     return activeClass;
 }
 
+function getActiveSubpages(pageData) {
+    return pageData.subPages.filter(subPage => !docMode || !subPage.skipInDocMode);
+}
+
 function generateNavigation(rootPage) {
     const mainNav = document.getElementById('mainNav');
     let html = '';
 
     // Loop through each page in navData
     for (const [slug, pageData] of Object.entries(navData)) {
+        if (docMode && pageData.skipInDocMode) {
+            continue;
+        }
+
         const hasSubmenu = pageData.subPages && pageData.subPages.length > 0;
         const submenuClass = hasSubmenu ? ' nav-item-with-submenu' : '';
 
@@ -108,7 +116,8 @@ function generateNavigation(rootPage) {
         // Add mobile submenu if subpages exist
         if (hasSubmenu) {
             html += `<div class="mobile-submenu ${open ? ' open' : ''}" id="submenu-${slug}">`;
-            pageData.subPages.forEach(function(subPage, i) {
+
+            getActiveSubpages(pageData).forEach(function(subPage, i) {
                 const activeClass = getActiveClass(i, subPage);
                 html += `<a href="${subPage.link}" class="${activeClass}">${subPage.title}</a>`;
             });
@@ -128,7 +137,7 @@ function generateSecondaryNavigation(root) {
     let secondaryFromChild = secondaryNav.querySelector('.secondary-from-child');
 
     if (pageData && pageData.subPages) {
-        const html = pageData.subPages.map(function (subPage, i) {
+        const html = getActiveSubpages(pageData).map(function (subPage, i) {
             const activeClass = getActiveClass(i, subPage);
             return `<li><a href="${subPage.link}" class="secondary-nav-link${activeClass}">${subPage.title}</a></li>`;
         }).join('');
@@ -188,6 +197,7 @@ function addMenuEventHandlers() {
 // get wicket info
 const mountPath = document.getElementById('header').dataset.mount;
 const rootPage = document.getElementById('header').dataset.root;
+const docMode = document.getElementById('header').dataset.docmode;
 
 // generate nav
 generateNavigation(rootPage);
