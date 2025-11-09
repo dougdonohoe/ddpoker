@@ -77,6 +77,15 @@ function isMobile() {
     return document.documentElement.clientWidth <= 768;
 }
 
+function getActiveClass(i, subPage) {
+    // First item in list must match exactly, otherwise look at starts with
+    // this prevents paths like 'about/online' from matching root 'about'
+    const fullMountPath = '/' + mountPath
+    const active = i === 0 ? fullMountPath === subPage.link : fullMountPath.startsWith(subPage.link)
+    const activeClass = active ? ' active' : '';
+    return activeClass;
+}
+
 function generateNavigation(rootPage) {
     const mainNav = document.getElementById('mainNav');
     let html = '';
@@ -100,9 +109,7 @@ function generateNavigation(rootPage) {
         if (hasSubmenu) {
             html += `<div class="mobile-submenu ${open ? ' open' : ''}" id="submenu-${slug}">`;
             pageData.subPages.forEach(function(subPage, i) {
-                const fullMountPath = '/' + mountPath
-                const active = i === 0 ? fullMountPath === subPage.link : fullMountPath.startsWith(subPage.link)
-                const activeClass = active ? ' active' : '';
+                const activeClass = getActiveClass(i, subPage);
                 html += `<a href="${subPage.link}" class="${activeClass}">${subPage.title}</a>`;
             });
             html += '</div>';
@@ -113,19 +120,14 @@ function generateNavigation(rootPage) {
     mainNav.innerHTML = html;
 }
 
-// JDD: duplicative of above - consolidate (one is full page secondary nav;other is mobile)
 function generateSecondaryNavigation(root) {
     const secondaryNav = document.getElementById('secondaryNav');
-
     const pageData = navData[root];
 
     if (pageData && pageData.subPages) {
-        const html = pageData.subPages.map(function (item, i) {
-            // First item in list must match exactly, otherwise look at starts with
-            // this prevents paths like 'about/online' from matching root 'about'
-            const fullMountPath = '/' + mountPath
-            const active = i === 0 ? fullMountPath === item.link : fullMountPath.startsWith(item.link)
-            return '<li><a href="' + item.link + '" class="secondary-nav-link' + (active ? ' active' : '') + '">' + item.title + '</a></li>';
+        const html = pageData.subPages.map(function (subPage, i) {
+            const activeClass = getActiveClass(i, subPage);
+            return `<li><a href="${subPage.link}" class="secondary-nav-link${activeClass}">${subPage.title}</a></li>`;
         }).join('');
 
         secondaryNav.querySelector('.secondary-nav-list').innerHTML = html;
