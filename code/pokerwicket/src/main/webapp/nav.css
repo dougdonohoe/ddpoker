@@ -7,7 +7,6 @@
 
 /* Header */
 .header {
-    /*background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);*/
     background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
     background-repeat: repeat;                 /* default, but explicit is nice */
     background-size: auto;                     /* or set a size if you want scaling */
@@ -60,7 +59,7 @@
 
 .main-nav-link {
     display: block;
-    padding: 1.25rem 1.25rem;
+    padding: 1.0rem 1.0rem;
     color: rgba(255,255,255,0.9);
     text-decoration: none;
     font-weight: 500;
@@ -78,9 +77,8 @@
 }
 
 .main-nav-link.active {
-    color: white;
-    border-bottom-color: #4ade80;
-    background: rgba(255,255,255,0.05);
+    color: yellow;
+    background: rgba(255,255,255,0.1);
 }
 
 /* Mobile Menu Toggle */
@@ -112,14 +110,15 @@
     color: rgba(255,255,255,0.7);
     text-decoration: none;
     font-size: 1.2rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-variant: normal;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
     transition: all 0.2s;
 }
 
 .mobile-submenu a:hover,
 .mobile-submenu a.active {
-    color: white;
-    background: rgba(255,255,255,0.05);
+    color: yellow;
+    background: rgba(255,255,255,0.4);
 }
 
 .nav-item-with-submenu {
@@ -142,7 +141,7 @@
 
 /* Secondary Navigation */
 .secondary-nav {
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.5);
     border-top: 1px solid rgba(255,255,255,0.1);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -160,7 +159,8 @@
     padding: 0.875rem 1.25rem;
     color: rgba(255,255,255,0.8);
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
+    font-variant: normal;
     white-space: nowrap;
     transition: all 0.2s;
     border-bottom: 2px solid transparent;
@@ -180,9 +180,9 @@
 }
 
 .secondary-nav-link.active {
-    color: white;
-    border-bottom-color: #4ade80;
+    color: yellow;
     font-weight: 500;
+    font-variant: normal;
 }
 
 /* Content Area */
@@ -224,7 +224,9 @@
         top: 70px;
         left: 0;
         right: 0;
-        background: #1a472a;
+        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
+        background-repeat: repeat;                 /* default, but explicit is nice */
+        background-size: auto;                     /* or set a size if you want scaling */
         flex-direction: column;
         gap: 0;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -237,13 +239,12 @@
     }
 
     .main-nav-link {
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
         border-left: 3px solid transparent;
     }
 
     .main-nav-link.active {
-        border-bottom-color: rgba(255,255,255,0.1);
-        border-left-color: #4ade80;
+        border-bottom-color: rgba(255,255,255,0.6);
     }
 
     .secondary-nav {
