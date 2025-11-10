@@ -58,17 +58,18 @@ function generateNavigation(rootPage) {
         }
 
         const hasSubmenu = pageData.subPages && pageData.subPages.length > 0;
-        const submenuClass = hasSubmenu ? ' nav-item-with-submenu' : '';
-
         const active = rootPage === slug;
         const open = isMobile() && active
 
-        let clazz = active ? ' active' : ''; // JDD: combine with submenuClass
+        let submenuClass = hasSubmenu ? ' nav-item-with-submenu' : '';
+        if (active) {
+            submenuClass += ' active';
+        }
         if (open) {
-            clazz += ' open';
+            submenuClass += ' open';
         }
         html += '<li class="main-nav-item">';
-        html += `<a href="${pageData.link}" class="main-nav-link${submenuClass}${clazz}" data-page="${slug}">${pageData.title}</a>`;
+        html += `<a href="${pageData.link}" class="main-nav-link${submenuClass}" data-page="${slug}">${pageData.title}</a>`;
 
         // Add mobile submenu if subpages exist
         if (hasSubmenu) {
