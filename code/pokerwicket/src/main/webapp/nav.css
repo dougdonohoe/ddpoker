@@ -1,15 +1,41 @@
-/* Fonts */
-.delius-regular {
-    font-family: "Delius", cursive;
-    font-weight: 400;
-    font-style: normal;
-}
+/*
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * DD Poker - Source Code
+ * Copyright (c) 2003-2025 Doug Donohoe
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * For the full License text, please see the LICENSE.txt file
+ * in the root directory of this project.
+ *
+ * The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
+ * graphics, text, and documentation found in this repository (including but not
+ * limited to written documentation, website content, and marketing materials)
+ * are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+ * 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
+ * without explicit written permission for any uses not covered by this License.
+ * For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+ * in the root directory of this project.
+ *
+ * For inquiries regarding commercial licensing of this source code or
+ * the use of names, logos, images, text, or other assets, please contact
+ * doug [at] donohoe [dot] info.
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ */
 
 /* Header */
 .header {
-    background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-    background-repeat: repeat; /* default, but explicit is nice */
-    background-size: auto; /* or set a size if you want scaling */
+    background-image: url('/images/titlebar-background-pattern.png');
+    background-repeat: repeat;
+    background-size: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
@@ -72,7 +98,7 @@
     border-bottom: 3px solid transparent;
 }
 
-.main-nav-link:visited {
+.main-nav-link:visited, .main-nav-link:link {
     color: white;
 }
 
@@ -118,9 +144,9 @@
     font-variant: normal;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.2s;
-    background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-    background-repeat: repeat; /* default, but explicit is nice */
-    background-size: auto; /* or set a size if you want scaling */
+    background-image: url('/images/titlebar-background-pattern.png');
+    background-repeat: repeat;
+    background-size: auto;
     background: rgba(0, 0, 0, 0.3);
 }
 
@@ -235,9 +261,9 @@
         top: 70px;
         left: 0;
         right: 0;
-        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-        background-repeat: repeat; /* default, but explicit is nice */
-        background-size: auto; /* or set a size if you want scaling */
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
         flex-direction: column;
         gap: 0;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -254,22 +280,22 @@
         padding: 1.0rem 1.0rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.6);
         border-left: 3px solid transparent;
-        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-        background-repeat: repeat; /* default, but explicit is nice */
-        background-size: auto; /* or set a size if you want scaling */
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
     }
 
     .main-nav-link.active {
         border-bottom-color: rgba(255, 255, 255, 0.6);
-        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-        background-repeat: repeat; /* default, but explicit is nice */
-        background-size: auto; /* or set a size if you want scaling */
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
     }
 
     .main-nav-link.hover {
-        background-image: url('/images/titlebar-background-pattern.png'); /* or .jpg */
-        background-repeat: repeat; /* default, but explicit is nice */
-        background-size: auto; /* or set a size if you want scaling */
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
     }
 
     .secondary-nav {
