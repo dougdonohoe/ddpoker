@@ -152,16 +152,32 @@ li.feedbackPanelERROR {
 .float-right {
     float: right;
     margin: 0 0 1rem 1rem; /* top right bottom left */
-    max-width: 240px;      /* optional sizing */
+    max-width: 500px;
     height: auto;
+}
+
+/* responsive: drop the float on narrow screens */
+@media (max-width: 600px) {
+    .float-right {
+        float: none;
+        display: block;            /* make it a block */
+        margin: 0 auto 0;       /* centers horizontally */
+        max-width: 300px;
+    }
 }
 
 /* float the image to the left, add space on its left/bottom */
 .float-left {
     float: left;
     margin: 0 1rem 0 1rem; /* top right bottom left */
-    max-width: 240px;      /* optional sizing */
+    max-width: 300px;
     height: auto;
+}
+
+@media (max-width: 600px) {
+    .float-left {
+        max-width: 300px;
+    }
 }
 
 /* optional spacing for the next block */
@@ -219,18 +235,6 @@ li.feedbackPanelERROR {
     /* vertical-align: -0.125em;  // nudge up*/
     /* vertical-align: 0.125em;   // nudge down */
 }
-
-/* responsive: drop the float on narrow screens */
-@media (max-width: 600px) {
-    .float-right {
-        float: none;
-        display: block;            /* make it a block */
-        margin: 0 auto 0rem;       /* centers horizontally */
-        max-width: 400px;            /* optional: fit small screens */
-        height: auto;
-    }
-}
-
 
 /**
  * common
@@ -419,7 +423,6 @@ div.current-profile em {
 .description li {
     margin-left: 2em;
     padding-bottom: .5em;
-    list-style-type: disc;
 }
 
 .description p {
@@ -438,6 +441,11 @@ div.current-profile em {
     }
 }
 
+.description-column-wrap p {
+    padding-bottom: 1em;
+}
+
+
 .title {
     text-align: center;
     padding-bottom: 10px;
@@ -454,7 +462,8 @@ div.current-profile em {
 
 .title-smaller {
     text-align: center;
-    padding-bottom: 15px;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
 
     color: black;
     font-weight: bold;
@@ -1064,12 +1073,16 @@ div.host-search span.gap {
     padding-left: 2rem;
 }
 
-#homepage li {
+li {
     background-image: url( images/spade.jpg );
     background-repeat: no-repeat;
     background-position: 0 0;
     padding-bottom: 3px;
     padding-left: 25px;
+}
+
+li ul li {
+    background-image: none;
 }
 
 .donate-form {
@@ -1132,30 +1145,20 @@ p.titlelink {
  */
 
 div.legacy-details {
-    width: 730px;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-div.legacy-details td {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 25px;
+    padding-top: 1rem;
 }
 
 div.legacy-details ol li {
     list-style: decimal;
     list-style-position: outside;
     padding-bottom: .25em;
-    margin-left: 2em;
+    margin-left: 0;
 }
 
 div.legacy-details li {
-    list-style: disc;
     list-style-position: outside;
     padding-bottom: .25em;
-    margin-left: 2em;
+    margin-left: 0;
 }
 
 div.legacy-details li ul {
@@ -1163,9 +1166,10 @@ div.legacy-details li ul {
 }
 
 div.legacy-details li ul li {
-    list-style: circle;
-    margin-left: 2em;
     list-style-position: outside;
+    list-style: circle;
+    margin-left: 2rem;
+    padding-left: .5rem;
 }
 
 div.legacy-details li strong {
@@ -1179,10 +1183,6 @@ div.legacy-details p strong {
 }
 
 div.legacy-details p {
-    padding-bottom: .5em;
-}
-
-div.legacy-details ul {
     padding-bottom: .5em;
 }
 

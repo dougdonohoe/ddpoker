@@ -97,7 +97,7 @@ function generateSecondaryNavigation(root) {
     if (pageData && pageData.subPages) {
         const html = getActiveSubpages(pageData).map(function (subPage, i) {
             const activeClass = getActiveClass(i, subPage);
-            return `<li><a href="${subPage.link}" class="secondary-nav-link${activeClass}">${subPage.title}</a></li>`;
+            return `<li class="secondary-nav-li"><a href="${subPage.link}" class="secondary-nav-link${activeClass}">${subPage.title}</a></li>`;
         }).join('');
 
         secondaryList.innerHTML = html;
