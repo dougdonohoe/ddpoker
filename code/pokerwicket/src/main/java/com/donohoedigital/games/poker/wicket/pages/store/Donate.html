@@ -55,16 +55,14 @@
         still incur expenses for:
         <br><br>
         <ul>
-            <li>Hosting our servers (website and the online games portal)</li>
-            <li>Bandwidth (downloads and the online games portal)</li>
+            <li>Development software (e.g., IntelliJ, Photoshop, etc.)</li>
             <li>Development hardware</li>
-            <li>Development software (e.g., IntelliJ, Install4j, JProfiler, Photoshop, etc.)</li>
+            <li>Cloud hosting (this website)</li>
             <li>Our time</li>
         </ul>
         <br>
         If you enjoy DD Poker and wish to keep its community thriving, please consider donating to offset
-        these expenses. If you purchased DD Poker 2 recently, please think of it as a donation.
-
+        these expenses.
 
         <div class="donate-form">
 
@@ -84,43 +82,30 @@
 
                 <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">
 
-                <table>
-                    <tr>
-                        <td>
-                            <span class="mild" style="font-size: 110%">Amount</span>
-                        </td>
-                        <td>
-                            <input style="text-align: right;"
-                                   class="text" size="5" maxlength="10" name="amount" type="text" value="">
+                <span class="mild donate-element" style="font-size: 110%">Amount</span>
+                <input style="text-align: right;"
+                       class="input-text donate-element" size="5" maxlength="10" name="amount" type="text" value="">
+                <span class="donate-element">
+                    <select style="display: inline;" name="currency_code">
+                        <option selected="selected" value="USD">$ (USD)</option>
+                        <option value="EUR">&#8364; (EUR)</option>
+                        <option value="GBP">&pound; (GBP)</option>
+                        <option value="CAD">$ (CAD)</option>
+                        <option value="AUD">$ (AUD)</option>
+                        <option value="JPY">&yen; (JPY)</option>
+                        <option value="CHF">SFr (CHF)</option>
+                    </select>
+                </span>
 
-                        </td>
-                        <td>
-                            <select style="display: inline;" name="currency_code">
-                                <option selected="selected" value="USD">$ (USD)</option>
-                                <option value="EUR">&#8364; (EUR)</option>
-                                <option value="GBP">&pound; (GBP)</option>
-                                <option value="CAD">$ (CAD)</option>
-                                <option value="AUD">$ (AUD)</option>
-                                <option value="JPY">&yen; (JPY)</option>
-                                <option value="CHF">SFr (CHF)</option>
-                            </select>
-
-                        </td>
-                        <td rowspan="1">
-                            <input type="image" src="images/btn_donateCC_LG.gif" width="122" height="47"
-                                   name="submit" alt="Donate">
-                            <!--<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
-
-                        </td>
-                    </tr>
-                </table>
-
+                <input type="image" src="images/btn_donateCC_LG.gif" width="122" height="47"
+                       name="submit" alt="Donate">
             </form>
 
         </div>
 
-        We use <span class="mild">PayPal</span> to securely process your donations. Enter the amount you wish to donate,
-        choose your currency and click on the <span class="mild">Donate</span> button
+        We use <span class="mild">PayPal</span> to securely process your donations.
+        Enter the amount you wish to donate,
+        choose your currency, and click on the <span class="mild">Donate</span> button
         (<span class="small">you do not need a PayPal account to donate</span>).
         <br>
         <br>

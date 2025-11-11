@@ -180,6 +180,16 @@ li.feedbackPanelERROR {
     }
 }
 
+.center-image {
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+    .center-image {
+        max-width: 300px;
+    }
+}
+
 /* optional spacing for the next block */
 .next {
     margin-top: 1rem;
@@ -263,7 +273,7 @@ div.footnote {
     padding-top: 10px;
 }
 
-input.text {
+.input-text {
     border: 1px solid #336600;
     color: blue;
     font-size: 115%;
@@ -1095,21 +1105,26 @@ li ul li {
 .donate-form {
     padding-top: 20px;
     padding-bottom: 20px;
-}
-
-.donate-form table {
     margin-left: auto;
     margin-right: auto;
-    background-color: #DDDDDD;
-    border: 2px solid black;
+    text-align: center;
 }
 
-.donate-form td {
-    vertical-align: middle;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
+.donate-element {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.donate-form input[type=image] {
+    padding-left: 0;
+    display: inline-block;      /* ensure it's inline-level */
+    vertical-align: middle;     /* center against text line */
+}
+
+@media (max-width: 600px) {
+    .donate-form input[type=image] {
+        padding-top: 1rem;
+    }
 }
 
 .donate-note {

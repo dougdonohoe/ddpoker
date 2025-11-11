@@ -42,6 +42,9 @@ const { navData } = require('./navData.js');
 function extractLinks() {
     const links = new Set();
 
+    // special case - donate page thank you
+    links.add("/thankyou")
+
     for (const pageData of Object.values(navData)) {
         if (pageData.skipInDocMode) {
             continue;
