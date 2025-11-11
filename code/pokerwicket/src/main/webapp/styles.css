@@ -1183,12 +1183,12 @@ div.legacy-details p strong {
 }
 
 div.legacy-details p {
-    padding-bottom: .5em;
+    padding-bottom: 1rem;
 }
 
 div.legacy-details tt {
     color: green;
-    font-size: 1.1em;
+    font-size: 1.1rem;
 }
 
 /**
