@@ -156,6 +156,14 @@ li.feedbackPanelERROR {
     height: auto;
 }
 
+/* float the image to the left, add space on its left/bottom */
+.float-left {
+    float: left;
+    margin: 0 1rem 0 1rem; /* top right bottom left */
+    max-width: 240px;      /* optional sizing */
+    height: auto;
+}
+
 /* optional spacing for the next block */
 .next {
     margin-top: 1rem;
@@ -187,6 +195,10 @@ li.feedbackPanelERROR {
     .extra-top-padding {
         padding-top: 0;
     }
+}
+
+.extra-top-padding-desc {
+    padding-top: 2.5rem;
 }
 
 .text {
@@ -397,8 +409,6 @@ div.current-profile em {
 }
 
 .description {
-    padding-left: 40px;
-    padding-right: 40px;
     padding-bottom: 10px;
 }
 
@@ -414,6 +424,18 @@ div.current-profile em {
 
 .description p {
     padding-bottom: 1em;
+}
+
+.description-column p {
+    padding-bottom: 1em;
+    overflow: hidden;      /* in desktop, don't wrap around images */
+}
+
+@media (max-width: 600px) {
+    .description-column p {
+        padding-bottom: .75em;
+        overflow: initial;
+    }
 }
 
 .title {
@@ -1092,40 +1114,17 @@ div.download {
 
 .float-right-doug-greg {
     float: right;
-    margin-top: 50px;
+    margin-top: 1rem;
     margin-bottom: 25px;
     margin-right: 20px;
     margin-left: 20px;
     text-align: center;
 }
 
-div.abouttable {
-    margin-left: auto;
-    margin-right: auto;
-    width: 650px;
-    padding-top: 20px;
-}
-
-div.abouttable td {
-    vertical-align: top;
-    text-align: left;
-}
-
-div.abouttable td.imagecol {
-    width: 150px;
-    text-align: center;
-    padding-right: 20px;
-    padding-bottom: 20px;
-}
-
-div.abouttable p.titlelink {
+p.titlelink {
     padding-bottom: 10px;
     font-size: 1.2em;
     text-align: center;
-}
-
-div.abouttable p {
-    padding-bottom: 10px;
 }
 
 /**

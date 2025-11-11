@@ -43,7 +43,7 @@ See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for the latest M
 Installers are built by [Donohoe Digital LLC](https://www.donohoedigital.com/) 
 courtesy of a license to ej-technologies' 
 [excellent multi-platform installer builder, install4j](https://www.ej-technologies.com/install4j).
-We are grateful that they provided us an open-source license.
+We are grateful that they provided us an open source license.
 
 There is also an option to distribute a jar file, which the _Installers_ section of
 the [Developer Notes](README-DEV.md) explains.

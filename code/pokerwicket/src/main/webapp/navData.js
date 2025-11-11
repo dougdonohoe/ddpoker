@@ -54,7 +54,7 @@ const navData = {
             {title: 'Poker Clock', link: '/about/pokerclock'},
             {title: 'Competition', link: '/about/competition', skipInDocMode: true},
             {title: 'Screenshots', link: '/about/screenshots'},
-            {title: 'FAQs', link: '/about/faq'}
+            {title: 'FAQ', link: '/about/faq'}
         ]
     },
     store: {
