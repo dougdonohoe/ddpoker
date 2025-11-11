@@ -149,7 +149,7 @@ li.feedbackPanelERROR {
 }
 
 /* float the image to the right, add space on its left/bottom */
-.float-right {
+.float-right, .float-right img {
     float: right;
     margin: 0 0 1rem 1rem; /* top right bottom left */
     max-width: 500px;
@@ -158,7 +158,7 @@ li.feedbackPanelERROR {
 
 /* responsive: drop the float on narrow screens */
 @media (max-width: 600px) {
-    .float-right {
+    .float-right, .float-right img {
         float: none;
         display: block;            /* make it a block */
         margin: 0 auto 0;       /* centers horizontally */
@@ -167,7 +167,7 @@ li.feedbackPanelERROR {
 }
 
 /* float the image to the left, add space on its left/bottom */
-.float-left {
+.float-left, .float-left img {
     float: left;
     margin: 0 1rem 0 1rem; /* top right bottom left */
     max-width: 300px;
@@ -175,7 +175,7 @@ li.feedbackPanelERROR {
 }
 
 @media (max-width: 600px) {
-    .float-left {
+    .float-left, .float-left img {
         max-width: 300px;
     }
 }
@@ -429,12 +429,19 @@ div.current-profile em {
     padding-bottom: 1em;
 }
 
+.description-column {
+}
+
 .description-column p {
     padding-bottom: 1em;
     overflow: hidden;      /* in desktop, don't wrap around images */
 }
 
 @media (max-width: 600px) {
+    .description-column p {
+        padding-top: 1rem;
+    }
+
     .description-column p {
         padding-bottom: .75em;
         overflow: initial;
