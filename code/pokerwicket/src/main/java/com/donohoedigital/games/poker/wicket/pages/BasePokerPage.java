@@ -68,7 +68,6 @@ public abstract class BasePokerPage extends BasePage<Void>
 
         add(getTopNavigation("nav"));
         add(new CurrentProfile(PROFILE_NAME, isLoginPanelVisible()).setVisible(isCurrentProfileDisplayed()));
-        add(new VoidContainer("no-profile").setVisible(!isCurrentProfileDisplayed()));
         add(new CopyrightFooter("footer"));
     }
 

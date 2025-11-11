@@ -34,7 +34,7 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 
 <wicket:head>
-    <title>Official Site - DD Poker Software - No Limit Texas Hold'em - by Donohoe Digital</title>
+    <title>DD Poker - Texas Hold'em - Official Site</title>
 </wicket:head>
 
 <body>
@@ -42,45 +42,81 @@
 <wicket:extend>
     <div id="homepage">
 
-        <table id="homedetails">
-            <tr>
-                <td class="imagerow">
-                    <a href="../download"><img src="images/download-button.jpg" alt="Want DD Poker 3? Download"></a>
-                </td>
-                <td class="imagerow">
-                    <a href="donate"><img src="images/donate.jpg" alt="Like DD Poker 3? Donate"></a>
-                </td>
-                <td class="imagerow-last">&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="3" class="detailsrow">
+        <div class="media">
+            <img class="float-right" src="images/websitemenu-mirror.png" alt="DD Poker Screenshot">
+
+            <div class="extra-top-padding">
+                <div class="text">
+                    DD Poker is a full-featured
+                    <a href="https://github.com/dougdonohoe/ddpoker">open-source</a>
+                    Texas Hold'em (no-limit, pot-limit, limit) simulator, allowing
+                    you to play against AI and human opponents.
+                </div>
+                <div class="text">
                     <ul>
                         <li><span class="mild">Free</span> and <span class="mild">fully functional</span> poker
                             entertainment software.
                         </li>
-                        <li>Play online with your friends in public or private games.</li>
-                        <li>Meet new poker buddies in the friendliest poker community on the internet.</li>
+                        <li>Play online with your friends in private games.</li>
                         <li>Practice your no-limit, pot-limit and limit skills against advanced
                             computer opponents.
                         </li>
-                        <li>Design your own tournaments.</li>
+                        <li>Design and run your own tournaments.</li>
                         <li>
                             <wicket:link><a href="../about/AboutHome.html">Full details...</a></wicket:link>
                         </li>
                     </ul>
+                </div>
 
-                </td>
-            </tr>
-        </table>
+                <div class="text">
+                    It also has a poker clock for running your own
+                    home tournaments and a sophisticated calculator tool for
+                    exploring the strength of various hands
+                    and the odds of winning.
+                </div>
+
+                <div class="text">
+                    You can play against other human opponents by setting up an online game and sharing
+                    the game URL (unless everyone is running on the LAN,
+                    this requires opening a port to allow inbound connections to your computer).
+                </div>
+                <div class="text">
+                    There used to be an <span class="mild">Online Portal</span> that facilitated
+                    finding games posted by
+                    other users, tracked player profiles, and maintained tournament histories.  We
+                    no longer run this server, but you can run your own using the
+                    <a href="https://github.com/dougdonohoe/ddpoker">DD Poker source code</a>.
+                </div>
+
+                <div class="text">
+                    <a href="https://www.ej-technologies.com/install4j"><img class="ej-icon" alt="install4j"
+                                                                             src="images/install4j_small.png"
+                                                                             height="18px">
+                    </a>
+                    <a href="../download ">Installers</a>
+                    are built courtesy of <span class="ej">ej-technologies'</span>
+                    <a href="https://www.ej-technologies.com/install4j">multi-platform
+                        installer builder, Install4j</a>.
+                </div>
+
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="../download"><img class="action-button" src="images/download-button.jpg"
+                                       alt="Want DD Poker 3? Download"></a>
+            <a href="donate"><img class="action-button" src="images/donate.jpg" alt="Like DD Poker 3? Donate"></a>
+        </div>
 
         <div class="donate-note">
             Although DD Poker is free software, we still
-            incur real expenses for on-going
-            development, bandwidth usage and operating our servers. If you
+            incur real expenses for ongoing
+            development. If you
             enjoy DD Poker, please consider
             <wicket:link><a href="../store/Donate.html">donating</a></wicket:link>
             to help defray these costs.
         </div>
+
     </div>
 </wicket:extend>
 

@@ -140,6 +140,87 @@ li.feedbackPanelERROR {
 }
 
 /**
+ * Grid
+ */
+
+/* contain the float so following content doesn't slide up */
+.media {
+    display: flow-root;
+}
+
+/* float the image to the right, add space on its left/bottom */
+.float-right {
+    float: right;
+    margin: 0 0 1rem 1rem; /* top right bottom left */
+    max-width: 240px;      /* optional sizing */
+    height: auto;
+}
+
+/* optional spacing for the next block */
+.next {
+    margin-top: 1rem;
+}
+
+.action-buttons {
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+.action-button {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (max-width: 600px) {
+    .action-button {
+        padding-left: .5rem;
+        padding-right: .5rem;
+        max-height: 55px;
+    }
+}
+
+.extra-top-padding {
+    padding-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .extra-top-padding {
+        padding-top: 0;
+    }
+}
+
+.text {
+    padding-bottom: 2rem;
+}
+
+.ej {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.ej-icon {
+    display: inline-block;      /* ensure it's inline-level */
+    vertical-align: middle;     /* center against text line */
+    height: 1em;                /* size to text height (optional) */
+    padding-right: 4px;
+    /* tweak if it still looks a hair low/high: */
+    /* vertical-align: -0.125em;  // nudge up*/
+    /* vertical-align: 0.125em;   // nudge down */
+}
+
+/* responsive: drop the float on narrow screens */
+@media (max-width: 600px) {
+    .float-right {
+        float: none;
+        display: block;            /* make it a block */
+        margin: 0 auto 0rem;       /* centers horizontally */
+        max-width: 400px;            /* optional: fit small screens */
+        height: auto;
+    }
+}
+
+
+/**
  * common
  */
 
@@ -298,8 +379,17 @@ div.current-profile em {
     border-top-width: 0;
     border-collapse: collapse;
 
-    padding-top: 2px;
-    padding-bottom: 10px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+@media (max-width: 550px) {
+    #content  {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 .centered {
@@ -424,6 +514,13 @@ p.copyright {
     font-size: 65%;
     vertical-align: middle;
     text-align: center;
+}
+
+@media (max-width: 600px) {
+    p.copyright {
+        font-size: 50%
+    }
+
 }
 
 /**
@@ -940,41 +1037,15 @@ div.host-search span.gap {
  * Home page
  */
 
-#homepage {
-    background: url( images/websitemenu3.jpg ) no-repeat;
-    /*background-size: contain;*/
 
-    margin: 0;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-
-    border: 0;
-    padding: 0;
-    padding-top: 120px;
-}
-
-#homedetails td.imagerow {
-    width: 265px;
-    padding-top: 12px;
-    vertical-align: top;
-    text-align: center;
-}
-
-#homedetails td.imagerow-last {
-    width: 243px;
-}
-
-#homedetails td.detailsrow {
-    padding-left: 60px;
-    padding-top: 15px;
-    font-size: 1.2em;
+#homepage ul {
+    padding-left: 2rem;
 }
 
 #homepage li {
     background-image: url( images/spade.jpg );
     background-repeat: no-repeat;
-    background-position: 0 -.2em;
+    background-position: 0 0;
     padding-bottom: 3px;
     padding-left: 25px;
 }
@@ -1013,7 +1084,6 @@ div.download {
     padding-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    width: 675px;
 }
 
 /**
