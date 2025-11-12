@@ -117,13 +117,10 @@
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
     display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 1.5rem;
-    margin-left: auto;
+}
+
+.mobile-menu-title {
+    display: none;
 }
 
 /* Mobile submenu */
@@ -253,8 +250,26 @@
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+    .mobile-menu-title {
+        display: flex;
+        color: yellow;
+    }
+
+    .mobile-menu-title div {
+        padding-top: 23px;
+        padding-left: 1.0rem;
+        font-size: 120%;
+    }
+
     .mobile-menu-toggle {
-        display: block;
+        display: flex;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 1.5rem;
+        margin-left: auto;
     }
 
     .header-top {

@@ -34,12 +34,16 @@ function isMobile() {
     return document.documentElement.clientWidth <= 768;
 }
 
-function getActiveClass(i, subPage) {
+function isActiveSubPage(i, subPage) {
     // First item in list must match exactly, otherwise look at starts with
     // this prevents paths like 'about/online' from matching root 'about'
     const fullMountPath = '/' + mountPath
     const active = i === 0 ? fullMountPath === subPage.link : fullMountPath.startsWith(subPage.link)
-    const activeClass = active ? ' active' : '';
+    return active
+}
+
+function getActiveClass(i, subPage) {
+    const activeClass = isActiveSubPage(i, subPage) ? ' active' : '';
     return activeClass;
 }
 
@@ -49,6 +53,7 @@ function getActiveSubpages(pageData) {
 
 function generateNavigation(rootPage) {
     const mainNav = document.getElementById('mainNav');
+    const mobileTitle = document.getElementById('mobileTitle');
     let html = '';
 
     // Loop through each page in navData
@@ -60,6 +65,7 @@ function generateNavigation(rootPage) {
         const hasSubmenu = pageData.subPages && pageData.subPages.length > 0;
         const active = rootPage === slug;
         const open = isMobile() && active
+        let subTitle = undefined;
 
         let submenuClass = hasSubmenu ? ' nav-item-with-submenu' : '';
         if (active) {
@@ -78,10 +84,23 @@ function generateNavigation(rootPage) {
             getActiveSubpages(pageData).forEach(function(subPage, i) {
                 const activeClass = getActiveClass(i, subPage);
                 html += `<a href="${subPage.link}" class="${activeClass}">${subPage.title}</a>`;
+
+                if (isActiveSubPage(i, subPage)) {
+                    subTitle = subPage.title;
+                }
             });
             html += '</div>';
         }
         html += '</li>';
+
+        // Set mobile title if active, appending subTitle if defined
+        if (active) {
+            let title = pageData.title;
+            if (subTitle && subTitle !== title) {
+                title += ' - ' + subTitle;
+            }
+            mobileTitle.innerHTML = title;
+        }
     }
 
     mainNav.innerHTML = html;
