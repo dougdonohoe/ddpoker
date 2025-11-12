@@ -174,7 +174,7 @@ function addMenuEventHandlers() {
 // get wicket info
 const mountPath = document.getElementById('header').dataset.mount;
 const rootPage = document.getElementById('header').dataset.root;
-const docMode = document.getElementById('header').dataset.docmode;
+const docMode = document.getElementById('header').dataset.docmode === 'true';
 
 // generate nav
 generateNavigation(rootPage);

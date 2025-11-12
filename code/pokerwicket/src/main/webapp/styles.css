@@ -197,6 +197,7 @@ li.feedbackPanelERROR {
 
 .action-buttons {
     text-align: center;
+    padding-top: 1em;
     padding-bottom: 1em;
 }
 
@@ -225,10 +226,6 @@ li.feedbackPanelERROR {
 
 .extra-top-padding-desc {
     padding-top: 2.5rem;
-}
-
-.text {
-    padding-bottom: 2rem;
 }
 
 .ej {
@@ -273,10 +270,11 @@ div.footnote {
     padding-top: 10px;
 }
 
-.input-text {
+input[type=text]{
     border: 1px solid #336600;
     color: blue;
     font-size: 115%;
+    padding-left: 5px;
 }
 
 select {
@@ -379,9 +377,9 @@ a.name:active {
 */
 div.current-profile {
 
-    padding-right: 4px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-right: 6px;
+    padding-top: 6px;
+    padding-bottom: 0;
 
     text-align: right;
     font-size: 80%;
@@ -508,7 +506,6 @@ div.current-profile em {
 }
 
 p.callout {
-    width: 600px;
     padding: 10px;
     border: 1px solid black;
     margin-bottom: 1em;
@@ -522,8 +519,6 @@ p.callout {
  * site map table
  */
 #site-map {
-    width: 660px;
-
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
@@ -582,7 +577,7 @@ div.form-panel {
 
 div.form {
     border: 2px solid black;
-    width: 220px;
+    width: 330px;
     margin-left: auto;
     margin-right: auto;
     background-color: #999999;
@@ -853,8 +848,6 @@ div.url a.join {
 */
 
 div.games-list {
-    width: 740px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -878,8 +871,6 @@ div.games-list table.tournament-info td {
  */
 
 div.leaderboard {
-    width: 700px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -903,8 +894,6 @@ div.leaderboard .current {
  */
 
 div.tournament-history {
-    width: 750px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -967,7 +956,6 @@ div.tournament-details table.tournament-info table.sub-table {
 /* override tournament-info defaults */
 
 div.tournament-details table.tournament-info {
-    width: 700px;
 }
 
 div.tournament-details table.tournament-info td {
@@ -985,8 +973,6 @@ div.tournament-details table.tournament-info th {
  */
 
 div.search-player {
-    width: 700px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -996,7 +982,6 @@ div.search-form {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 15px;
-    width: 500px;
 
     text-align: center;
 }
@@ -1066,8 +1051,6 @@ span.password {
  */
 
 div.host-list {
-    width: 500px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -1218,7 +1201,6 @@ div.legacy-details tt {
  */
 
 table.issue-list {
-    width: 650px;
     border: 1px solid green;
     padding: 5px;
     border-collapse: collapse;
@@ -1238,13 +1220,11 @@ tr.issue-header {
 }
 
 .help-menu {
-    width: 650px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .help-menu table {
-    width: 650px;
     margin-bottom: 20px;
 }
 
