@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# DD Poker - Source Code
+# Copyright (c) 2003-2025 Doug Donohoe
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For the full License text, please see the LICENSE.txt file
+# in the root directory of this project.
+#
+# The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
+# graphics, text, and documentation found in this repository (including but not
+# limited to written documentation, website content, and marketing materials)
+# are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+# 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
+# without explicit written permission for any uses not covered by this License.
+# For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+# in the root directory of this project.
+#
+# For inquiries regarding commercial licensing of this source code or
+# the use of names, logos, images, text, or other assets, please contact
+# doug [at] donohoe [dot] info.
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Script to generate static ddpoker.com website from Wicket site running with
+# settings.debug.docmode=true.
+#
+set -euo pipefail
+
+# Load node
+source "$HOME/.nvm/nvm.sh"
+
+# Script dir
+SDIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+ROOT=$(dirname "$(dirname "$SDIR")")
+
+# Vars
+EXTRACT_JS="${ROOT}/code/pokerwicket/src/main/webapp/extract-links.js"
+BASE_URL="http://localhost:8080"
+
+# Get paths
+PATHS=$(node "$EXTRACT_JS")
+echo "Paths from navData:"
+echo "${PATHS[@]}"
+
+# Build absolute URLs for wget
+URLS=()
+for p in ${PATHS}; do
+  URLS+=("${BASE_URL}${p}/")
+done
+
+# Cleanup wget
+rm -f ./.wget-hsts || true
+
+# Fetch pages
+wget \
+  --no-verbose \
+  --page-requisites \
+  --adjust-extension \
+  --no-host-directories \
+  --restrict-file-names=unix \
+  --execute robots=off \
+  "${URLS[@]}"
+
+# --- Root redirect to home/ ---
+cat > index.html <<'EOF'
+<!doctype html>
+<meta charset="utf-8">
+<title>Redirecting…</title>
+<meta http-equiv="refresh" content="0; url=home/">
+<link rel="canonical" href="home/">
+<script>location.replace("home/");</script>
+<p>If you are not redirected, <a href="home/">click here</a>.</p>
+EOF
+
+echo
+echo "==> Done. Serve locally with:"
+echo "==>  python3 -m http.server 8000"
+echo

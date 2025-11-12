@@ -633,3 +633,24 @@ verify:
   * verify global *Online Lobby*
 * Start game from Ubuntu Docker
 * Build `act` docker image and running `act-ddpoker` (remember to stop MySQL)
+
+## Appendix G: DD Poker Website
+
+Back in the day, the Wicket-based webapp (aka the Online Portal) was also the 
+source of `ddpoker.com`.  This site was replaced with a simple static memorial page in
+July 2017. In November 2025, we modernized the website, made it responsive (aka mobile-friendly),
+and republished as a means to document DD Poker features and functionality.
+
+The `generate-website` script is used to extract this static version
+of the website without interactive features like the Online Portal and Admin.
+This is now used as the source of [ddpoker.com](https://www.ddpoker.com/).
+
+The debug setting `settings.debug.docmode=true` must be on before starting `PokerJetty`
+or running `pokerweb`.  The `generate-website` script assumes `node` is installed and 
+available on the `PATH`.  The script saves all Javascript, CSS, HTML and images to the
+current working directory.  To preview the site run:
+
+```bash
+python3 -m http.server 8000
+```
+

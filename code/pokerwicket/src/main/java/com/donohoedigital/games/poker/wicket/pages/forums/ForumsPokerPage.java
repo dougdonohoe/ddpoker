@@ -57,10 +57,4 @@ public abstract class ForumsPokerPage extends BasePokerPage
     {
         return new ForumsTopNavigation(id);
     }
-
-    @Override
-    protected boolean isCurrentProfileDisplayed()
-    {
-        return true;
-    }
 }

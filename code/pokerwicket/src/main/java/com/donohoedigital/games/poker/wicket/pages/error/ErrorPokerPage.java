@@ -57,10 +57,4 @@ public abstract class ErrorPokerPage extends BasePokerPage
     {
         return new ErrorTopNavigation(id);
     }
-
-    @Override
-    protected boolean isCurrentProfileDisplayed()
-    {
-        return true;
-    }
 }

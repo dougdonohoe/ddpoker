@@ -57,10 +57,4 @@ public abstract class DownloadPokerPage extends BasePokerPage
     {
         return new DownloadTopNavigation(id);
     }
-
-    @Override
-    protected boolean isCurrentProfileDisplayed()
-    {
-        return true;
-    }
 }

@@ -4,7 +4,7 @@
 
 ![dd-poker-3.jpg](images/dd-poker-3.jpg)
 
-This repository contains all the source code for the DD Poker
+This repository contains all the source code for the [DD Poker](https://www.ddpoker.com/home/)
 computer game, the underlying game engine, the supporting 
 backend server, and the companion website. The game itself is 
 a Java Swing-based desktop application that is capable of running 
@@ -14,12 +14,14 @@ a Java Spring application that talks to MySQL.  The website
 
 ## About The Game
 
+For a full description of the game, visit [ddpoker.com](https://www.ddpoker.com/about/).
+
 The DD Poker game is a full-featured Texas Hold'em (no-limit, pot-limit, limit) simulator, allowing
 you to play against AI and human opponents.  It also has a poker clock for running your own 
 home tournaments and a sophisticated calculator tool for exploring the strength of various hands 
 and the odds of winning.
 
-These screenshots show (from left to right):
+The following screenshots show (from left to right):
 
 * Main menu
 * A sample hand showing the primary hand UI, including the "DD Dashboard" tools, chat window, and other controls 
@@ -27,6 +29,8 @@ These screenshots show (from left to right):
 * Calculator tool
 
 ![screenshots.png](images/screenshots.png)
+
+_See [ddpoker.com](https://www.ddpoker.com/about/screenshots/) for more screenshots._
 
 You can play against other human opponents by setting up an online game and sharing
 the game URL (unless everyone is running on the LAN,
@@ -43,7 +47,7 @@ See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for the latest M
 Installers are built by [Donohoe Digital LLC](https://www.donohoedigital.com/) 
 courtesy of a license to ej-technologies' 
 [excellent multi-platform installer builder, install4j](https://www.ej-technologies.com/install4j).
-We are grateful that they provided us an open-source license.
+We are grateful that they provided us an open source license.
 
 There is also an option to distribute a jar file, which the _Installers_ section of
 the [Developer Notes](README-DEV.md) explains.

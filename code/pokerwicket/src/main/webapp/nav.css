@@ -1,0 +1,348 @@
+/*
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * DD Poker - Source Code
+ * Copyright (c) 2003-2025 Doug Donohoe
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * For the full License text, please see the LICENSE.txt file
+ * in the root directory of this project.
+ *
+ * The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
+ * graphics, text, and documentation found in this repository (including but not
+ * limited to written documentation, website content, and marketing materials)
+ * are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+ * 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
+ * without explicit written permission for any uses not covered by this License.
+ * For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+ * in the root directory of this project.
+ *
+ * For inquiries regarding commercial licensing of this source code or
+ * the use of names, logos, images, text, or other assets, please contact
+ * doug [at] donohoe [dot] info.
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ */
+
+/* Header */
+.header {
+    background-image: url('/images/titlebar-background-pattern.png');
+    background-repeat: repeat;
+    background-size: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: "Delius", cursive;
+    font-variant: small-caps;
+    font-size: 1.3rem;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    padding: 0 .25rem;
+    height: 70px;
+}
+
+.header-wrapper {
+    width: 100%; /* Make nav full width */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.logo:link {
+    color: white;
+}
+
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    padding-right: .3rem;
+}
+
+/* Main Navigation */
+.main-nav {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.main-nav-item {
+    position: relative;
+    background-image: none;
+    padding: 0;
+}
+
+.main-nav-link {
+    display: block;
+    padding: 0.0rem 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav-link:visited, .main-nav-link:link {
+    color: white;
+}
+
+.main-nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.main-nav-link.active {
+    color: yellow;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+}
+
+.mobile-menu-title {
+    display: none;
+}
+
+/* Mobile submenu */
+.mobile-submenu {
+    display: none;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-submenu.open {
+    display: block;
+}
+
+.mobile-submenu a {
+    display: block;
+    padding: 0.875rem 1.25rem 0.875rem 3rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-variant: normal;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s;
+    background-image: url('/images/titlebar-background-pattern.png');
+    background-repeat: repeat;
+    background-size: auto;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.mobile-submenu a:hover,
+.mobile-submenu a.active {
+    color: yellow;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.nav-item-with-submenu {
+    position: relative;
+}
+
+.nav-item-with-submenu::after {
+    content: '›';
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.2s;
+    font-size: 1.5rem;
+}
+
+.nav-item-with-submenu.open::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+/* Secondary Navigation */
+.secondary-nav {
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.secondary-nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0.2rem .66rem;
+}
+.secondary-nav-li {
+    background-image: none;
+    padding: 0;
+}
+
+.secondary-nav-link, .secondary-from-child {
+    display: block;
+    padding: 0 .66rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 1.0rem;
+    font-variant: normal;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+.secondary-from-child {
+    padding: 0.2rem .66rem;
+    color: yellow;
+}
+
+
+.secondary-nav-link:link {
+    color: white;
+}
+
+.secondary-nav-link:visited {
+    color: white;
+}
+
+.secondary-nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.secondary-nav-link.active {
+    color: yellow;
+    font-weight: 500;
+    font-variant: normal;
+}
+
+/* Content Area */
+.content {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    color: #1a472a;
+    margin-bottom: 1rem;
+}
+
+.page-description {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .mobile-menu-title {
+        display: flex;
+        color: yellow;
+    }
+
+    .mobile-menu-title div {
+        padding-top: 23px;
+        padding-left: 1.0rem;
+        font-size: 120%;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 1.5rem;
+        margin-left: auto;
+    }
+
+    .header-top {
+        justify-content: space-between;
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
+        flex-direction: column;
+        gap: 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+
+    .main-nav.open {
+        display: flex;
+        border-top: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .main-nav-link {
+        padding: 1.0rem 1.0rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        border-left: 3px solid transparent;
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
+    }
+
+    .main-nav-link.active {
+        border-bottom-color: rgba(255, 255, 255, 0.6);
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
+    }
+
+    .main-nav-link.hover {
+        background-image: url('/images/titlebar-background-pattern.png');
+        background-repeat: repeat;
+        background-size: auto;
+    }
+
+    .secondary-nav {
+        display: none !important;
+    }
+
+    .content {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .demo-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-submenu {
+        display: none !important;
+    }
+
+    .nav-item-with-submenu::after {
+        display: none;
+    }
+}

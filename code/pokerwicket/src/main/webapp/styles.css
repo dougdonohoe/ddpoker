@@ -86,7 +86,7 @@ a {
 */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 1.2rem;
     background: white;
     color: black;
 }
@@ -140,6 +140,110 @@ li.feedbackPanelERROR {
 }
 
 /**
+ * Grid
+ */
+
+/* contain the float so following content doesn't slide up */
+.media {
+    display: flow-root;
+}
+
+/* float the image to the right, add space on its left/bottom */
+.float-right, .float-right img {
+    float: right;
+    margin: 0 0 1rem 1rem; /* top right bottom left */
+    max-width: 500px;
+    height: auto;
+}
+
+/* responsive: drop the float on narrow screens */
+@media (max-width: 600px) {
+    .float-right, .float-right img {
+        float: none;
+        display: block;            /* make it a block */
+        margin: 0 auto 0;       /* centers horizontally */
+        max-width: 300px;
+    }
+}
+
+/* float the image to the left, add space on its left/bottom */
+.float-left, .float-left img {
+    float: left;
+    margin: 0 1rem 0 1rem; /* top right bottom left */
+    max-width: 300px;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .float-left, .float-left img {
+        max-width: 300px;
+    }
+}
+
+.center-image {
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+    .center-image {
+        max-width: 300px;
+    }
+}
+
+/* optional spacing for the next block */
+.next {
+    margin-top: 1rem;
+}
+
+.action-buttons {
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.action-button {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (max-width: 600px) {
+    .action-button {
+        padding-left: .5rem;
+        padding-right: .5rem;
+        max-height: 55px;
+    }
+}
+
+.extra-top-padding {
+    padding-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .extra-top-padding {
+        padding-top: 0;
+    }
+}
+
+.extra-top-padding-desc {
+    padding-top: 2.5rem;
+}
+
+.ej {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.ej-icon {
+    display: inline-block;      /* ensure it's inline-level */
+    vertical-align: middle;     /* center against text line */
+    height: 1em;                /* size to text height (optional) */
+    padding-right: 4px;
+    /* tweak if it still looks a hair low/high: */
+    /* vertical-align: -0.125em;  // nudge up*/
+    /* vertical-align: 0.125em;   // nudge down */
+}
+
+/**
  * common
  */
 
@@ -166,10 +270,11 @@ div.footnote {
     padding-top: 10px;
 }
 
-input.text {
+input[type=text]{
     border: 1px solid #336600;
     color: blue;
     font-size: 115%;
+    padding-left: 5px;
 }
 
 select {
@@ -268,101 +373,13 @@ a.name:active {
 }
 
 /**
-* Title bar settings
-*/
-#titlebar {
-    width: 775px;
-    height: 75px;
-
-    margin: 0;
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-
-    border: 0;
-    border-collapse: collapse;
-
-    padding: 0;
-}
-
-.titlebar-home {
-    background: url( images/titlebar3-home.jpg ) no-repeat;
-}
-
-.titlebar-online {
-    background: url( images/titlebar3-online.jpg ) no-repeat;
-}
-
-.titlebar-store {
-    background: url( images/titlebar3-store.jpg ) no-repeat;
-}
-
-.titlebar-admin {
-    background: url( images/titlebar3-none.jpg ) no-repeat;
-}
-
-.titlebar-error {
-    background: url( images/titlebar3-none.jpg ) no-repeat;
-}
-
-.titlebar-about {
-    background: url( images/titlebar3-about.jpg ) no-repeat;
-}
-
-.titlebar-download {
-    background: url( images/titlebar3-download.jpg ) no-repeat;
-}
-
-.titlebar-forums {
-    background: url( images/titlebar3-forums.jpg ) no-repeat;
-}
-
-.titlebar-support {
-    background: url( images/titlebar3-support.jpg ) no-repeat;
-}
-
-.titlebar-home {
-    display: block;
-    width: 70px;
-    height: 75px;
-}
-
-.titlebar-tab {
-    display: block;
-    width: 100px;
-    height: 42px;
-}
-
-td.titlebar-subtabs {
-    height: 28px;
-    padding-left: 18px;
-    vertical-align: middle;
-    color: yellow;
-}
-
-td.titlebar-subtabs .nav {
-    display: block;
-    padding-right: 24px;
-    float: left;
-    position: relative;
-}
-
-td.titlebar-spacer-end {
-    width: 5px;
-}
-
-td.titlebar-spacer-bottom {
-    height: 5px;
-}
-
-/**
 * current-profile
 */
 div.current-profile {
 
-    padding-right: 4px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-right: 6px;
+    padding-top: 6px;
+    padding-bottom: 0;
 
     text-align: right;
     font-size: 80%;
@@ -380,17 +397,23 @@ div.current-profile em {
  * content box
  */
 #content {
-    width: 773px; /* 775 less 2px for border on left/right */
-
     margin-left: auto;
     margin-right: auto;
 
-    border: 1px solid black;
     border-top-width: 0;
     border-collapse: collapse;
 
-    padding-top: 2px;
-    padding-bottom: 10px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+@media (max-width: 550px) {
+    #content  {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 .centered {
@@ -398,8 +421,6 @@ div.current-profile em {
 }
 
 .description {
-    padding-left: 40px;
-    padding-right: 40px;
     padding-bottom: 10px;
 }
 
@@ -410,12 +431,35 @@ div.current-profile em {
 .description li {
     margin-left: 2em;
     padding-bottom: .5em;
-    list-style-type: disc;
 }
 
 .description p {
     padding-bottom: 1em;
 }
+
+.description-column {
+}
+
+.description-column p {
+    padding-bottom: 1em;
+    overflow: hidden;      /* in desktop, don't wrap around images */
+}
+
+@media (max-width: 600px) {
+    .description-column p {
+        padding-top: 1rem;
+    }
+
+    .description-column p {
+        padding-bottom: .75em;
+        overflow: initial;
+    }
+}
+
+.description-column-wrap p {
+    padding-bottom: 1em;
+}
+
 
 .title {
     text-align: center;
@@ -433,7 +477,8 @@ div.current-profile em {
 
 .title-smaller {
     text-align: center;
-    padding-bottom: 15px;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
 
     color: black;
     font-weight: bold;
@@ -461,7 +506,6 @@ div.current-profile em {
 }
 
 p.callout {
-    width: 600px;
     padding: 10px;
     border: 1px solid black;
     margin-bottom: 1em;
@@ -475,8 +519,6 @@ p.callout {
  * site map table
  */
 #site-map {
-    width: 660px;
-
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
@@ -517,6 +559,13 @@ p.copyright {
     text-align: center;
 }
 
+@media (max-width: 600px) {
+    p.copyright {
+        font-size: 50%
+    }
+
+}
+
 /**
  * form settings
  */
@@ -528,7 +577,7 @@ div.form-panel {
 
 div.form {
     border: 2px solid black;
-    width: 220px;
+    width: 330px;
     margin-left: auto;
     margin-right: auto;
     background-color: #999999;
@@ -799,8 +848,6 @@ div.url a.join {
 */
 
 div.games-list {
-    width: 740px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -824,8 +871,6 @@ div.games-list table.tournament-info td {
  */
 
 div.leaderboard {
-    width: 700px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -849,8 +894,6 @@ div.leaderboard .current {
  */
 
 div.tournament-history {
-    width: 750px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -913,7 +956,6 @@ div.tournament-details table.tournament-info table.sub-table {
 /* override tournament-info defaults */
 
 div.tournament-details table.tournament-info {
-    width: 700px;
 }
 
 div.tournament-details table.tournament-info td {
@@ -931,8 +973,6 @@ div.tournament-details table.tournament-info th {
  */
 
 div.search-player {
-    width: 700px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -942,7 +982,6 @@ div.search-form {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 15px;
-    width: 500px;
 
     text-align: center;
 }
@@ -1012,8 +1051,6 @@ span.password {
  */
 
 div.host-list {
-    width: 500px;
-
     margin-left: auto;
     margin-right: auto;
 }
@@ -1031,64 +1068,46 @@ div.host-search span.gap {
  * Home page
  */
 
-#homepage {
-    background: url( images/websitemenu3.jpg ) no-repeat;
 
-    width: 773px; /* two less to not override border */
-
-    margin: 0;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-
-    border: 0;
-    padding: 0;
-    padding-top: 120px;
+#homepage ul {
+    padding-left: 2rem;
 }
 
-#homedetails td.imagerow {
-    width: 265px;
-    padding-top: 12px;
-    vertical-align: top;
-    text-align: center;
-}
-
-#homedetails td.imagerow-last {
-    width: 243px;
-}
-
-#homedetails td.detailsrow {
-    padding-left: 60px;
-    padding-top: 15px;
-    font-size: 1.2em;
-}
-
-#homepage li {
+li {
     background-image: url( images/spade.jpg );
     background-repeat: no-repeat;
-    background-position: 0 -.2em;
+    background-position: 0 0;
     padding-bottom: 3px;
     padding-left: 25px;
+}
+
+li ul li {
+    background-image: none;
 }
 
 .donate-form {
     padding-top: 20px;
     padding-bottom: 20px;
-}
-
-.donate-form table {
     margin-left: auto;
     margin-right: auto;
-    background-color: #DDDDDD;
-    border: 2px solid black;
+    text-align: center;
 }
 
-.donate-form td {
-    vertical-align: middle;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
+.donate-element {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.donate-form input[type=image] {
+    padding-left: 0;
+    display: inline-block;      /* ensure it's inline-level */
+    vertical-align: middle;     /* center against text line */
+}
+
+@media (max-width: 600px) {
+    .donate-form input[type=image] {
+        padding-top: 1rem;
+    }
 }
 
 .donate-note {
@@ -1105,7 +1124,6 @@ div.download {
     padding-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    width: 675px;
 }
 
 /**
@@ -1114,40 +1132,17 @@ div.download {
 
 .float-right-doug-greg {
     float: right;
-    margin-top: 50px;
+    margin-top: 1rem;
     margin-bottom: 25px;
     margin-right: 20px;
     margin-left: 20px;
     text-align: center;
 }
 
-div.abouttable {
-    margin-left: auto;
-    margin-right: auto;
-    width: 650px;
-    padding-top: 20px;
-}
-
-div.abouttable td {
-    vertical-align: top;
-    text-align: left;
-}
-
-div.abouttable td.imagecol {
-    width: 150px;
-    text-align: center;
-    padding-right: 20px;
-    padding-bottom: 20px;
-}
-
-div.abouttable p.titlelink {
+p.titlelink {
     padding-bottom: 10px;
     font-size: 1.2em;
     text-align: center;
-}
-
-div.abouttable p {
-    padding-bottom: 10px;
 }
 
 /**
@@ -1155,30 +1150,20 @@ div.abouttable p {
  */
 
 div.legacy-details {
-    width: 730px;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-div.legacy-details td {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 25px;
+    padding-top: 1rem;
 }
 
 div.legacy-details ol li {
     list-style: decimal;
     list-style-position: outside;
     padding-bottom: .25em;
-    margin-left: 2em;
+    margin-left: 0;
 }
 
 div.legacy-details li {
-    list-style: disc;
     list-style-position: outside;
     padding-bottom: .25em;
-    margin-left: 2em;
+    margin-left: 0;
 }
 
 div.legacy-details li ul {
@@ -1186,9 +1171,10 @@ div.legacy-details li ul {
 }
 
 div.legacy-details li ul li {
-    list-style: circle;
-    margin-left: 2em;
     list-style-position: outside;
+    list-style: circle;
+    margin-left: 2rem;
+    padding-left: .5rem;
 }
 
 div.legacy-details li strong {
@@ -1202,16 +1188,12 @@ div.legacy-details p strong {
 }
 
 div.legacy-details p {
-    padding-bottom: .5em;
-}
-
-div.legacy-details ul {
-    padding-bottom: .5em;
+    padding-bottom: 1rem;
 }
 
 div.legacy-details tt {
     color: green;
-    font-size: 1.1em;
+    font-size: 1.1rem;
 }
 
 /**
@@ -1219,7 +1201,6 @@ div.legacy-details tt {
  */
 
 table.issue-list {
-    width: 650px;
     border: 1px solid green;
     padding: 5px;
     border-collapse: collapse;
@@ -1239,13 +1220,11 @@ tr.issue-header {
 }
 
 .help-menu {
-    width: 650px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .help-menu table {
-    width: 650px;
     margin-bottom: 20px;
 }
 
