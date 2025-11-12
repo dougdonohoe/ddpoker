@@ -31,18 +31,20 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-// Script to export paths of all pages for use in DD Poker documentation site.
+// Script to export paths of all pages for use in DD Poker website.
 // Requires 'node' is installed and available.
 //
 // nvm_init # for me, ensures 'node' is defined
 // node code/pokerwicket/src/main/webapp/extract-links.js
 //
+// In normal use, this is called from generate-website.
+
 const { navData } = require('./navData.js');
 
 function extractLinks() {
     const links = new Set();
 
-    // special case - donate page thank you
+    // special case not in navData - donate page thank you
     links.add("/thankyou")
 
     for (const pageData of Object.values(navData)) {

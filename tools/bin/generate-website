@@ -30,7 +30,7 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #
-# Script to generate static ddpoker.com website from Wicket site running in with
+# Script to generate static ddpoker.com website from Wicket site running with
 # settings.debug.docmode=true.
 #
 set -euo pipefail
@@ -59,12 +59,6 @@ done
 
 # Cleanup wget
 rm -f ./.wget-hsts || true
-
-# Cleanup existing
-if [[ -f nav.css && -d images && -f nav.css ]]; then
-  echo "Deleting exiting files..."
-  rm -rvf ./* ./.*
-fi
 
 # Fetch pages
 wget \
