@@ -14,12 +14,14 @@ a Java Spring application that talks to MySQL.  The website
 
 ## About The Game
 
+For a full description of the game, visit [ddpoker.com](https://www.ddpoker.com/about/).
+
 The DD Poker game is a full-featured Texas Hold'em (no-limit, pot-limit, limit) simulator, allowing
 you to play against AI and human opponents.  It also has a poker clock for running your own 
 home tournaments and a sophisticated calculator tool for exploring the strength of various hands 
 and the odds of winning.
 
-These screenshots show (from left to right):
+The following screenshots show (from left to right):
 
 * Main menu
 * A sample hand showing the primary hand UI, including the "DD Dashboard" tools, chat window, and other controls 
@@ -27,6 +29,8 @@ These screenshots show (from left to right):
 * Calculator tool
 
 ![screenshots.png](images/screenshots.png)
+
+_See [ddpoker.com](https://www.ddpoker.com/about/screenshots/) for more screenshots._
 
 You can play against other human opponents by setting up an online game and sharing
 the game URL (unless everyone is running on the LAN,
