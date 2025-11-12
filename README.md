@@ -4,7 +4,7 @@
 
 ![dd-poker-3.jpg](images/dd-poker-3.jpg)
 
-This repository contains all the source code for the DD Poker
+This repository contains all the source code for the [DD Poker](https://www.ddpoker.com/home/)
 computer game, the underlying game engine, the supporting 
 backend server, and the companion website. The game itself is 
 a Java Swing-based desktop application that is capable of running 
