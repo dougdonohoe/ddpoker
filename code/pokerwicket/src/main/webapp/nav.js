@@ -37,7 +37,9 @@ function isMobile() {
 function isActiveSubPage(i, subPage) {
     // First item in list must match exactly, otherwise look at starts with
     // this prevents paths like 'about/online' from matching root 'about'
-    const fullMountPath = '/' + mountPath
+    // Also remove trailing / if it exists.
+    const fullMountPath = '/' + mountPath.replace(/\/$/, "");
+
     const active = i === 0 ? fullMountPath === subPage.link : fullMountPath.startsWith(subPage.link)
     return active
 }
