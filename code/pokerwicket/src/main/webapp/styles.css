@@ -425,11 +425,12 @@ div.current-profile em {
 }
 
 .description ul {
+    padding-top: 1em;
     padding-bottom: .5em;
 }
 
 .description li {
-    margin-left: 2em;
+    margin-left: 0;
     padding-bottom: .5em;
 }
 
