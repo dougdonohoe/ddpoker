@@ -157,7 +157,7 @@ li.feedbackPanelERROR {
 }
 
 /* responsive: drop the float on narrow screens */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .float-right, .float-right img {
         float: none;
         display: block;            /* make it a block */
@@ -174,7 +174,7 @@ li.feedbackPanelERROR {
     height: auto;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .float-left, .float-left img {
         max-width: 300px;
     }
@@ -184,7 +184,7 @@ li.feedbackPanelERROR {
     padding-bottom: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .center-image {
         max-width: 300px;
     }
@@ -206,7 +206,7 @@ li.feedbackPanelERROR {
     padding-right: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .action-button {
         padding-left: .5rem;
         padding-right: .5rem;
@@ -218,7 +218,7 @@ li.feedbackPanelERROR {
     padding-top: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .extra-top-padding {
         padding-top: 0;
     }
@@ -409,7 +409,7 @@ div.current-profile em {
     padding-right: 3rem;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 768px) {
     #content  {
         padding-left: 1rem;
         padding-right: 1rem;
@@ -446,7 +446,7 @@ div.current-profile em {
     overflow: hidden;      /* in desktop, don't wrap around images */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .description-column p {
         padding-top: 1rem;
     }
@@ -560,7 +560,7 @@ p.copyright {
     text-align: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     p.copyright {
         font-size: 50%
     }
@@ -1105,7 +1105,7 @@ li ul li {
     vertical-align: middle;     /* center against text line */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .donate-form input[type=image] {
         padding-top: 1rem;
     }
