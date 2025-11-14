@@ -38,11 +38,6 @@ const navData = {
         link: '/home',
         subPages: null
     },
-    download: {
-        title: 'Download',
-        link: '/download',
-        subPages: null
-    },
     about: {
         title: 'About',
         link: '/about',
@@ -56,6 +51,11 @@ const navData = {
             {title: 'Screenshots', link: '/about/screenshots'},
             {title: 'FAQ', link: '/about/faq'}
         ]
+    },
+    download: {
+        title: 'Download',
+        link: '/download',
+        subPages: null
     },
     store: {
         title: 'Donate',
