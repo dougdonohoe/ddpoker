@@ -69,6 +69,7 @@ public class PokerSession extends WebSession
     public void setLoggedInUser(PokerUser loggedInUser)
     {
         this.loggedInUser = loggedInUser;
+        this.bind();
     }
 
     public boolean isLoggedIn()
