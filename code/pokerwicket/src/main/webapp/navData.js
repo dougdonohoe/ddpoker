@@ -95,6 +95,7 @@ const navData = {
     },
     admin: {
         skipInDocMode: true,
+        admin: true,
         title: 'Admin',
         link: '/admin',
         subPages: [

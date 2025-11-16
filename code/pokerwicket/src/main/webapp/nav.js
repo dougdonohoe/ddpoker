@@ -63,6 +63,9 @@ function generateNavigation(rootPage) {
         if (docMode && pageData.skipInDocMode) {
             continue;
         }
+        if (!adminOn && pageData.admin) {
+            continue;
+        }
 
         const hasSubmenu = pageData.subPages && pageData.subPages.length > 0;
         const active = rootPage === slug;
@@ -176,6 +179,7 @@ function addMenuEventHandlers() {
 // get wicket info
 const mountPath = document.getElementById('header').dataset.mount;
 const rootPage = document.getElementById('header').dataset.root;
+const adminOn = document.getElementById('header').dataset.admin === 'true';
 const docMode = document.getElementById('header').dataset.docmode === 'true';
 
 // generate nav

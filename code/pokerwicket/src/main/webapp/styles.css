@@ -270,7 +270,7 @@ div.footnote {
     padding-top: 10px;
 }
 
-input[type=text]{
+input[type=text], input[type=password] {
     border: 1px solid #336600;
     color: blue;
     font-size: 115%;
@@ -599,6 +599,7 @@ div.form td {
 div.form td.label {
     color: yellow;
     text-align: right;
+    vertical-align: top;
 }
 
 div.form td.sample {
