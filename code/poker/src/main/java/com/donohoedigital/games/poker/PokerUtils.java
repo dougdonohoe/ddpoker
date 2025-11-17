@@ -734,18 +734,18 @@ public class PokerUtils extends EngineUtils
     }
 
     /**
-     * Is option on, specify default
+     * Is option on, default in client.properties
      */
-    public static boolean isOptionOn(String sName, boolean bDefault)
+    public static boolean isOptionOn(String sName)
     {
         GameEngine engine = GameEngine.getGameEngine();
-        return engine.getPrefsNode().getBoolean(sName, bDefault);
+        return engine.getPrefsNode().getBooleanOption(sName);
     }
 
     /**
-     * Get int option, specify default
+     * Get int preference, specify default
      */
-    public static int getIntOption(String sName, int nDefault)
+    public static int getIntPref(String sName, int nDefault)
     {
         GameEngine engine = GameEngine.getGameEngine();
         return engine.getPrefsNode().getInt(sName, nDefault);

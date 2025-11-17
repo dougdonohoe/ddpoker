@@ -243,7 +243,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
             if (bHostTableDealForButton)
             {
-                boolean bPauseAtStart = PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_PAUSE, false);
+                boolean bPauseAtStart = PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_PAUSE);
 
                 if (bPauseAtStart)
                 {

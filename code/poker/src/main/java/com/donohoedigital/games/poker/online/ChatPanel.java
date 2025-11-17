@@ -373,7 +373,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
      */
     private void createDisplay(boolean bRepaint)
     {
-        int nOpt = PokerUtils.getIntOption(PokerConstants.OPTION_CHAT_DISPLAY, PokerConstants.DISPLAY_SPLIT);
+        int nOpt = PokerUtils.getIntPref(PokerConstants.OPTION_CHAT_DISPLAY, PokerConstants.DISPLAY_SPLIT);
         if (nDisplayOpt_ == nOpt || (!bOnlineInGame_ && center_ != null))
         {
             return;
@@ -604,7 +604,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             bgColor = cDealerBG_;
             sKey = "msg.chat.dealer";
             boolean bSkip = false;
-            int nOpt = PokerUtils.getIntOption(PokerConstants.OPTION_CHAT_DEALER, PokerConstants.DEALER_ALL);
+            int nOpt = PokerUtils.getIntPref(PokerConstants.OPTION_CHAT_DEALER, PokerConstants.DEALER_ALL);
             switch (nType)
             {
                 case PokerConstants.CHAT_ALWAYS:
@@ -626,7 +626,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                     break;
 
                 case PokerConstants.CHAT_TIMEOUT:
-                    if (!PokerUtils.isOptionOn(PokerConstants.OPTION_CHAT_TIMEOUT, true))
+                    if (!PokerUtils.isOptionOn(PokerConstants.OPTION_CHAT_TIMEOUT))
                     {
                         bSkip = true;
                     }
@@ -650,10 +650,10 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 // observers muted?
                 if (player.isObserver())
                 {
-                    if (!PokerUtils.isOptionOn(PokerConstants.OPTION_CHAT_OBSERVERS, true)) return;
+                    if (!PokerUtils.isOptionOn(PokerConstants.OPTION_CHAT_OBSERVERS)) return;
                 }
                 // players muted?
-                else if (!PokerUtils.isOptionOn(PokerConstants.OPTION_CHAT_PLAYERS, true)) return;
+                else if (!PokerUtils.isOptionOn(PokerConstants.OPTION_CHAT_PLAYERS)) return;
 
                 // muted specifically?
                 if (muted_.containsPlayer(player.getName(), player.getKey())) return;

@@ -1575,7 +1575,7 @@ public class OnlineManager implements ChatManager
      */
     void checkAllConnected()
     {
-        boolean bPauseAllDisconnected = PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_PAUSE_ALL_DISCONNECTED, true);
+        boolean bPauseAllDisconnected = PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_PAUSE_ALL_DISCONNECTED);
         int nClients = 0;
         int nDisconnected = 0;
 

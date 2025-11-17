@@ -252,7 +252,7 @@ public class TournamentOptions extends BasePhase implements ChangeListener, Ance
                 game.setTempOnlineGameID();
                 GameState state = game.newGameState("temp", GameListPanel.SAVE_EXT);
                 // TODO: UDP only if testing is enabled
-                String prefix = (DebugConfig.isTestingOn() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_UDP, false)) ?
+                String prefix = (DebugConfig.isTestingOn() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_UDP)) ?
                                 PokerConstants.ONLINE_GAME_PREFIX_UDP : PokerConstants.ONLINE_GAME_PREFIX_TCP;
                 String id = prefix + state.getFileNumber();
                 String sName = PropertyConfig.getMessage("msg.onlineGameName.host", id);

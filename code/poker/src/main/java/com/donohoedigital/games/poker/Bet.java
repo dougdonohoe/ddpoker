@@ -158,13 +158,13 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             }
 
             // online games - play sound if option is on
-            if (game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO, true))
+            if (game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO))
             {
                 AudioConfig.playFX("onlineact");
             }
 
             // online games - move window to front if option is on
-            if (Utils.ISWINDOWS && game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_FRONT, true))
+            if (Utils.ISWINDOWS && game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_FRONT))
             {
                 BaseFrame frame = context_.getFrame();
                 if (!frame.isFullScreen())

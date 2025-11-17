@@ -108,7 +108,7 @@ public class DealDisplay extends ChainPhase implements Runnable
             PokerPlayer player = game_.getLocalPlayer();
             if (!player.isHost() && !player.isObserver() && player.isSittingOut())
             {
-                if (game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO, true))
+                if (game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO))
                 {
                     AudioConfig.playFX("onlineact");
                 }
