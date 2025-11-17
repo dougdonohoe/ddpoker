@@ -329,8 +329,7 @@ public class DealDisplay extends ChainPhase implements Runnable
         int nSeat = player.getSeat();
         Hand hand = player.getHand();
         boolean bUp = hand.getType() != Hand.TYPE_NORMAL;
-        GameEngine engine = GameEngine.getGameEngine();
-        boolean bDealDown = engine.getPrefsNode().getBooleanOption(PokerConstants.OPTION_HOLE_CARDS_DOWN);
+        boolean bDealDown = PokerUtils.isOptionOn(PokerConstants.OPTION_HOLE_CARDS_DOWN);
         boolean bAIFaceUp = PokerUtils.isCheatOn(context, PokerConstants.OPTION_CHEAT_AIFACEUP);
 
         // get card and create a piece around it

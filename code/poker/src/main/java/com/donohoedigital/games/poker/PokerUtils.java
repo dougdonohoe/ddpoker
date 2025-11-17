@@ -316,7 +316,7 @@ public class PokerUtils extends EngineUtils
 
         GameEngine engine = GameEngine.getGameEngine();
         boolean bFoldCheck = context.getGame() != null && !context.getGame().isOnlineGame() &&
-                             engine.getPrefsNode().getBooleanOption(PokerConstants.OPTION_CHECKFOLD);
+                             isOptionOn(PokerConstants.OPTION_CHECKFOLD);
         if (bFoldCheck)
         {
             bFold_ = true;

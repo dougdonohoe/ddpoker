@@ -85,7 +85,7 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
         // pause game if not autopilot, not online game and if pref is set
         bPause_ = !TESTING(PokerConstants.TESTING_AUTOPILOT) &&
                   !game_.isOnlineGame() &&
-                    engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_PAUSE_COLOR);
+                    PokerUtils.isOptionOn(PokerConstants.OPTION_PAUSE_COLOR);
                   
         
         // this is here so that a save by a user at this

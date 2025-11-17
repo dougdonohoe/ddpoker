@@ -312,7 +312,7 @@ public class CardPiece extends PokerGamePiece
      */
     protected boolean isLargePref()
     {
-        return GameEngine.getGameEngine().getPrefsNode().getBooleanOption(PokerConstants.OPTION_LARGE_CARDS);
+        return PokerUtils.isOptionOn(PokerConstants.OPTION_LARGE_CARDS);
     }
 
     // image back
@@ -837,7 +837,7 @@ public class CardPiece extends PokerGamePiece
      */
     protected boolean is4ColorPref()
     {
-        return GameEngine.getGameEngine().getPrefsNode().getBooleanOption(PokerConstants.OPTION_FOUR_COLOR_DECK);
+        return PokerUtils.isOptionOn(PokerConstants.OPTION_FOUR_COLOR_DECK);
     }
 
     /** 
@@ -931,9 +931,8 @@ public class CardPiece extends PokerGamePiece
     {
         if (card.isFaceCard())
         {
-            EnginePrefs prefsNode = GameEngine.getGameEngine().getPrefsNode();
-            boolean fourColorDeck = prefsNode.getBooleanOption(PokerConstants.OPTION_FOUR_COLOR_DECK);
-            boolean stylized = prefsNode.getBooleanOption(PokerConstants.OPTION_STYLIZED_FACE_CARDS);
+            boolean fourColorDeck = PokerUtils.isOptionOn(PokerConstants.OPTION_FOUR_COLOR_DECK);
+            boolean stylized = PokerUtils.isOptionOn(PokerConstants.OPTION_STYLIZED_FACE_CARDS);
 
             if (card.getCardSuit() == CardSuit.SPADES)
             {

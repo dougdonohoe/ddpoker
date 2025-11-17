@@ -215,7 +215,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             // if the fold key was pressed, zip along
             if (PokerUtils.isFoldKey() && !table_.isZipMode())
             {
-                boolean bZip = engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_ZIP_MODE);
+                boolean bZip = PokerUtils.isOptionOn(PokerConstants.OPTION_ZIP_MODE);
                 if (bZip && !TESTING(PokerConstants.TESTING_DOUG_CONTROLS_AI) && !game_.isOnlineGame())
                 {
                     bSetZipModeAtEnd_ = true;
@@ -437,7 +437,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
      */
     private void foldHumanCheck()
     {
-        boolean bZip = engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_ZIP_MODE);
+        boolean bZip = PokerUtils.isOptionOn(PokerConstants.OPTION_ZIP_MODE);
         if (player_.isHuman() && bZip && !TESTING(PokerConstants.TESTING_DOUG_CONTROLS_AI) && !game_.isOnlineGame())
         {
             bSetZipModeAtEnd_ = true;

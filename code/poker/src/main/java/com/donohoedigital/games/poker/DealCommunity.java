@@ -94,7 +94,7 @@ public class DealCommunity extends ChainPhase implements PlayerActionListener
         // we are in an all-in showdown.  Show cards.
         if (hhand_.isAllInShowdown() && !table_.isZipMode())
         {
-            boolean bPause = (engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_PAUSE_ALLIN) ||
+            boolean bPause = (PokerUtils.isOptionOn(PokerConstants.OPTION_PAUSE_ALLIN) ||
                               PokerUtils.isCheatOn(context_, PokerConstants.OPTION_CHEAT_PAUSECARDS)) &&
                              !TESTING(PokerConstants.TESTING_AUTOPILOT) && !game_.isOnlineGame();
 

@@ -2496,7 +2496,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
      */
     private boolean isAutoDeal(PokerTable table)
     {
-        return (!bOnline_ && engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_AUTODEAL)) ||
+        return (!bOnline_ && PokerUtils.isOptionOn(PokerConstants.OPTION_AUTODEAL)) ||
                TESTING(PokerConstants.TESTING_AUTOPILOT) ||
                (bOnline_ && !(TESTING(PokerConstants.TESTING_ONLINE_AUTO_DEAL_OFF) && table.isCurrent())) ||
 

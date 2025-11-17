@@ -181,7 +181,7 @@ public class PokerUDPServer extends UDPServer implements PokerConnectionServer, 
             ChatHandler handler = main_.getChatLobbyHandler();
 
             // if not enabled, just show same message we show in the SendMessageDialog
-            if (!GameEngine.getGameEngine().getPrefsNode().getBooleanOption(EngineConstants.OPTION_ONLINE_ENABLED)) {
+            if (!PokerUtils.isOptionOn(EngineConstants.OPTION_ONLINE_ENABLED)) {
                 // msg.msgerror.7
                 if (handler != null)
                 {

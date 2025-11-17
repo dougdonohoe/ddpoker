@@ -276,10 +276,10 @@ public class PokerStartMenu extends StartMenu
         }
 
         // Only do server code if enabled
-        boolean enabled = engine_.getPrefsNode().getBooleanOption(EngineConstants.OPTION_ONLINE_ENABLED);
+        boolean enabled = PokerUtils.isOptionOn(EngineConstants.OPTION_ONLINE_ENABLED);
 
         // Preform message check the first time the start menu is displayed.
-        if (enabled && messageCheck && profile_ != null && engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_AUTO_CHECK_UPDATE))
+        if (enabled && messageCheck && profile_ != null && PokerUtils.isOptionOn(PokerConstants.OPTION_AUTO_CHECK_UPDATE))
         {
             String LASTMSG_KEY = "lastmsg";
 
