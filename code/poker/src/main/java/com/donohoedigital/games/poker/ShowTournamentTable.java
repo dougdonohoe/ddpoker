@@ -1077,7 +1077,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         if (table_.isZipMode()) return;
 
         // get fold check pref
-        boolean bFoldCheck = GameEngine.getGameEngine().getPrefsNode().getBoolean(PokerConstants.OPTION_CHECKFOLD, false);
+        boolean bFoldCheck = GameEngine.getGameEngine().getPrefsNode().getBooleanOption(PokerConstants.OPTION_CHECKFOLD);
 
         boolean bAllowContinueLower = false;
         boolean bAllowContinue = false;
@@ -1559,7 +1559,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     protected boolean handleKeyPressed(KeyEvent event)
     {
         // get disable shortcuts pref
-        boolean bDisableShortcuts = GameEngine.getGameEngine().getPrefsNode().getBoolean(PokerConstants.OPTION_DISABLE_SHORTCUTS, false);
+        boolean bDisableShortcuts = GameEngine.getGameEngine().getPrefsNode().getBooleanOption(PokerConstants.OPTION_DISABLE_SHORTCUTS);
 
         int key = event.getKeyCode();
 
@@ -1854,7 +1854,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
                 GameEngine engine = GameEngine.getGameEngine();
                 boolean bAIPeek = PokerUtils.isCheatOn(context_, PokerConstants.OPTION_CHEAT_MOUSEOVER);
-                boolean bHoleFaceDown = engine.getPrefsNode().getBoolean(PokerConstants.OPTION_HOLE_CARDS_DOWN, false);
+                boolean bHoleFaceDown = engine.getPrefsNode().getBooleanOption(PokerConstants.OPTION_HOLE_CARDS_DOWN);
 
                 PokerPlayer player = card.getPokerPlayer();
                 if (!card.isUp() && (bAIPeek || (player.isHuman() && bHoleFaceDown && player.isLocallyControlled())))
@@ -1898,7 +1898,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     public boolean allowTerritorySelection(Territory t, MouseEvent e)
     {
         return GuiUtils.isPopupTrigger(e,
-                                       !engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_RIGHT_CLICK_ONLY, false));
+                                       !engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_RIGHT_CLICK_ONLY));
     }
 
     // menu

@@ -215,7 +215,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             // if the fold key was pressed, zip along
             if (PokerUtils.isFoldKey() && !table_.isZipMode())
             {
-                boolean bZip = engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_ZIP_MODE, false);
+                boolean bZip = engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_ZIP_MODE);
                 if (bZip && !TESTING(PokerConstants.TESTING_DOUG_CONTROLS_AI) && !game_.isOnlineGame())
                 {
                     bSetZipModeAtEnd_ = true;
@@ -227,7 +227,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             {
                 int nWaitTenths = game_.isOnlineGame() ?
                                   (TESTING(PokerConstants.TESTING_ONLINE_AI_NO_WAIT) ? 0 : TournamentDirector.AI_PAUSE_TENTHS) :
-                                  engine_.getPrefsNode().getInt(PokerConstants.OPTION_DELAY, 8);
+                                  engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_DELAY);
 
                 // encore idea - have ai pause to increase drama after human has bet - to
                 // make it appear like ai is "thinking" ... even if no delay is set
@@ -437,7 +437,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
      */
     private void foldHumanCheck()
     {
-        boolean bZip = engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_ZIP_MODE, false);
+        boolean bZip = engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_ZIP_MODE);
         if (player_.isHuman() && bZip && !TESTING(PokerConstants.TESTING_DOUG_CONTROLS_AI) && !game_.isOnlineGame())
         {
             bSetZipModeAtEnd_ = true;

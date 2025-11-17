@@ -2496,7 +2496,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
      */
     private boolean isAutoDeal(PokerTable table)
     {
-        return (!bOnline_ && engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_AUTODEAL, false)) ||
+        return (!bOnline_ && engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_AUTODEAL)) ||
                TESTING(PokerConstants.TESTING_AUTOPILOT) ||
                (bOnline_ && !(TESTING(PokerConstants.TESTING_ONLINE_AUTO_DEAL_OFF) && table.isCurrent())) ||
 
@@ -2526,7 +2526,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         }
         else if (bOnline_)
         {
-            nDelay = engine_.getPrefsNode().getInt(PokerConstants.OPTION_AUTODEALONLINE, 40) * 100;
+            nDelay = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_AUTODEALONLINE) * 100;
         }
         else
         {
@@ -2540,11 +2540,11 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
             if (!bHumanFolded)
             {
-                nDelay = engine_.getPrefsNode().getInt(PokerConstants.OPTION_AUTODEALHAND, 30) * 100;
+                nDelay = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_AUTODEALHAND) * 100;
             }
             else
             {
-                nDelay = engine_.getPrefsNode().getInt(PokerConstants.OPTION_AUTODEALFOLD, 10) * 100;
+                nDelay = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_AUTODEALFOLD) * 100;
             }
         }
 

@@ -166,7 +166,7 @@ public class PokerNight extends BasePhase implements GameClockListener
 
                 boolean bDemoOver = engine_.isDemo() && game_.getLevel() >= DEMO_MAX;
 
-                if (engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_CLOCK_COLOUP, true) &&
+                if (engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_CLOCK_COLOUP) &&
                     game_.getMinChip() > nMinBefore)
                 {
                     sChipRace = PropertyConfig.getMessage("msg.finish.color",
@@ -218,7 +218,7 @@ public class PokerNight extends BasePhase implements GameClockListener
                 }
                 else
                 {
-                    if (engine_.getPrefsNode().getBoolean(PokerConstants.OPTION_CLOCK_PAUSE, false))
+                    if (engine_.getPrefsNode().getBooleanOption(PokerConstants.OPTION_CLOCK_PAUSE))
                     {
                         stopClock();
                     }

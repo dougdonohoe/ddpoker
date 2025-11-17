@@ -92,7 +92,7 @@ public class HostStart extends ChainPhase implements ActionListener
         ((PokerMain)engine_).getLanManager().wakeAliveThread();
         
         // delay
-        DELAY = engine_.getPrefsNode().getInt(PokerConstants.OPTION_ONLINESTART, 10);
+        DELAY = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_ONLINESTART);
         DELAY_SECS = ONE_SEC * DELAY;
 
         // determine number of ai players needed

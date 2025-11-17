@@ -316,7 +316,7 @@ public class PokerUtils extends EngineUtils
 
         GameEngine engine = GameEngine.getGameEngine();
         boolean bFoldCheck = context.getGame() != null && !context.getGame().isOnlineGame() &&
-                             engine.getPrefsNode().getBoolean(PokerConstants.OPTION_CHECKFOLD, false);
+                             engine.getPrefsNode().getBooleanOption(PokerConstants.OPTION_CHECKFOLD);
         if (bFoldCheck)
         {
             bFold_ = true;
@@ -834,8 +834,8 @@ public class PokerUtils extends EngineUtils
 
         // get scale to max from prefs
         GameEngine engine = context.getGameEngine();
-        int maxWidth = engine.getPrefsNode().getInt(PokerConstants.OPTION_SCREENSHOT_MAX_WIDTH, 1024);
-        int maxHeight = engine.getPrefsNode().getInt(PokerConstants.OPTION_SCREENSHOT_MAX_HEIGHT, 768);
+        int maxWidth = engine.getPrefsNode().getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_WIDTH);
+        int maxHeight = engine.getPrefsNode().getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_HEIGHT);
         BufferedImage image = GuiUtils.printToImage(context.getRootComponent(), maxWidth, maxHeight);
         AudioConfig.playFX("camera");
 
