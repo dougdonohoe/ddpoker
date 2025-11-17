@@ -45,6 +45,7 @@ ROOT=$(dirname "$(dirname "$SDIR")")
 # Vars
 EXTRACT_JS="${ROOT}/code/pokerwicket/src/main/webapp/extract-links.js"
 BASE_URL="http://localhost:8080"
+DOMAIN="https://www.ddpoker.com"
 
 # Get paths
 PATHS=$(node "$EXTRACT_JS")
@@ -79,6 +80,29 @@ cat > index.html <<'EOF'
 <link rel="canonical" href="home/">
 <script>location.replace("home/");</script>
 <p>If you are not redirected, <a href="home/">click here</a>.</p>
+EOF
+
+# Generate sitemap.xml (needed since webcrawlers might not run JS code)
+cat > sitemap.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+EOF
+
+for url in $PATHS; do
+    if [[ "$url" =~ "thankyou" ]]; then
+      continue
+    fi
+    echo "  <url><loc>${DOMAIN}${url}</loc></url>" >> sitemap.xml
+done
+
+cat >> sitemap.xml << 'EOF'
+</urlset>
+EOF
+
+# Generate robots.txt
+cat > robots.txt << EOF
+User-agent: *
+Sitemap: ${DOMAIN}/sitemap.xml
 EOF
 
 echo
