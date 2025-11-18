@@ -710,18 +710,11 @@ public class PokerUtils extends EngineUtils
      * Is cheat option on?  If there is an online game
      * going on, always return false;
      */
-    public static boolean isCheatOn(GameContext context, String sName)
-    {
-        return isCheatOn(context, sName, false);
-    }
-
     /**
      * Is cheat option on, specify default
      */
-    public static boolean isCheatOn(GameContext context, String sName, boolean bDefault)
+    public static boolean isCheatOn(GameContext context, String sName)
     {
-        GameEngine engine = GameEngine.getGameEngine();
-
         // check if online game, if so no cheat options
         if (context != null)
         {
@@ -730,7 +723,7 @@ public class PokerUtils extends EngineUtils
                 return false;
         }
 
-        return engine.getPrefsNode().getBoolean(sName, bDefault);
+        return isOptionOn(sName);
     }
 
     /**

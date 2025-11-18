@@ -1913,7 +1913,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     {
         DDPopupMenu menu = null;
 
-        boolean bShowCheatItems = PokerUtils.isCheatOn(context_, PokerConstants.OPTION_CHEAT_POPUP, true) &&
+        boolean bShowCheatItems = PokerUtils.isCheatOn(context_, PokerConstants.OPTION_CHEAT_POPUP) &&
                                   (!game_.isOnlineGame() || TESTING(PokerConstants.TESTING_ALLOW_CHEAT_ONLINE));
 
         GamePiece gamePiece = PokerUtils.getPokerGameboard().getGamePieceUnderMouse();
