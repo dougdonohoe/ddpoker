@@ -50,7 +50,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.prefs.*;
 
 /**
  *
@@ -373,7 +372,7 @@ public class CardPiece extends PokerGamePiece
     protected String getDeckPref()
     {
         EnginePrefs prefs = GameEngine.getGameEngine().getPrefsNode();
-        String sName = prefs.get(sPrefName_, null);
+        String sName = prefs.getString(sPrefName_, null);
         if (sName == null)
         {
             sName = PropertyConfig.getStringProperty("msg.back.default", "card-Water.jpg");

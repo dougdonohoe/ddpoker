@@ -447,7 +447,7 @@ public class PlayerType extends BaseProfile
 
     public static String getAdvisorKey()
     {
-        return GameEngine.getGameEngine().getPrefsNode().get
+        return GameEngine.getGameEngine().getPrefsNode().getString
                 (PokerConstants.OPTION_DEFAULT_ADVISOR, null);
     }
 

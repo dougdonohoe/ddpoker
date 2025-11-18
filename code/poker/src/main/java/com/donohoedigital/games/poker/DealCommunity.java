@@ -125,7 +125,7 @@ public class DealCommunity extends ChainPhase implements PlayerActionListener
             }
             else
             {
-                int nWaitTenths = game_.isOnlineGame() ? 10 : engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_DELAY);
+                int nWaitTenths = game_.isOnlineGame() ? 10 : PokerUtils.getIntOption(PokerConstants.OPTION_DELAY);
                 nWaitTenths = Math.max(nWaitTenths, 7);
                 process(nWaitTenths); // TODO: configure all-in-showdown pause online/practice?
             }
@@ -166,7 +166,7 @@ public class DealCommunity extends ChainPhase implements PlayerActionListener
         if (bDrawn_ && !table_.isZipMode() && nNumWithCards_ > 1)
         {
             // wait after showing cards
-            if (nWaitTenths == 0) nWaitTenths = game_.isOnlineGame() ? 0 : engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_DELAY);
+            if (nWaitTenths == 0) nWaitTenths = game_.isOnlineGame() ? 0 : PokerUtils.getIntOption(PokerConstants.OPTION_DELAY);
             if (nWaitTenths > 0)
             {
                 Thread t = new Thread(new DealWait(nWaitTenths), "DealWait");

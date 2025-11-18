@@ -51,7 +51,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import java.util.prefs.*;
 
 /**
  *
@@ -115,7 +114,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
     public static String getStoredProfile(String sMsgName)
     {
         EnginePrefs prefs = GameEngine.getGameEngine().getPrefsNode();
-        return prefs.get(getPrefsName(sMsgName), null);        
+        return prefs.getString(getPrefsName(sMsgName), null);
     }
     
     /**
@@ -219,7 +218,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         top_.add(scroll_, BorderLayout.CENTER);
 
         // get previous selected
-        String sSelected = prefs_.get(sPrefName_, null);
+        String sSelected = prefs_.getString(sPrefName_, null);
 
         ProfilePanel pp;
         for (BaseProfile aProfiles_ : profiles_)

@@ -734,12 +734,30 @@ public class PokerUtils extends EngineUtils
     }
 
     /**
-     * Is option on, default in client.properties
+     * Is option on?, default in client.properties
      */
     public static boolean isOptionOn(String sName)
     {
         GameEngine engine = GameEngine.getGameEngine();
         return engine.getPrefsNode().getBooleanOption(sName);
+    }
+
+    /**
+     * Get string option, default in client.properties
+     */
+    public static String getStringOption(String sName)
+    {
+        GameEngine engine = GameEngine.getGameEngine();
+        return engine.getPrefsNode().getStringOption(sName);
+    }
+
+    /**
+     * Get int option, default in client.properties
+     */
+    public static int getIntOption(String sName)
+    {
+        GameEngine engine = GameEngine.getGameEngine();
+        return engine.getPrefsNode().getIntOption(sName);
     }
 
     /**
@@ -833,9 +851,8 @@ public class PokerUtils extends EngineUtils
         }
 
         // get scale to max from prefs
-        GameEngine engine = context.getGameEngine();
-        int maxWidth = engine.getPrefsNode().getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_WIDTH);
-        int maxHeight = engine.getPrefsNode().getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_HEIGHT);
+        int maxWidth = PokerUtils.getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_WIDTH);
+        int maxHeight = PokerUtils.getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_HEIGHT);
         BufferedImage image = GuiUtils.printToImage(context.getRootComponent(), maxWidth, maxHeight);
         AudioConfig.playFX("camera");
 

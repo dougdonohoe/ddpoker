@@ -2526,7 +2526,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         }
         else if (bOnline_)
         {
-            nDelay = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_AUTODEALONLINE) * 100;
+            nDelay = PokerUtils.getIntOption(PokerConstants.OPTION_AUTODEALONLINE) * 100;
         }
         else
         {
@@ -2540,11 +2540,11 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
             if (!bHumanFolded)
             {
-                nDelay = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_AUTODEALHAND) * 100;
+                nDelay = PokerUtils.getIntOption(PokerConstants.OPTION_AUTODEALHAND) * 100;
             }
             else
             {
-                nDelay = engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_AUTODEALFOLD) * 100;
+                nDelay = PokerUtils.getIntOption(PokerConstants.OPTION_AUTODEALFOLD) * 100;
             }
         }
 

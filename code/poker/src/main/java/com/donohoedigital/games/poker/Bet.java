@@ -227,7 +227,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             {
                 int nWaitTenths = game_.isOnlineGame() ?
                                   (TESTING(PokerConstants.TESTING_ONLINE_AI_NO_WAIT) ? 0 : TournamentDirector.AI_PAUSE_TENTHS) :
-                                  engine_.getPrefsNode().getIntOption(PokerConstants.OPTION_DELAY);
+                                  PokerUtils.getIntOption(PokerConstants.OPTION_DELAY);
 
                 // encore idea - have ai pause to increase drama after human has bet - to
                 // make it appear like ai is "thinking" ... even if no delay is set

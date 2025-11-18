@@ -90,7 +90,7 @@ public class EnginePrefs {
                 PropertyConfig.getRequiredIntegerProperty(DDOption.GetDefaultKey(prefName)));
     }
 
-    public String get(String key, String def) {
+    public String getString(String key, String def) {
         return prefs_.get(key, def);
     }
 
@@ -98,7 +98,9 @@ public class EnginePrefs {
         return prefs_.getInt(key, def);
     }
 
-    public boolean getBoolean(String key, boolean def) { return prefs_.getBoolean(key, def); }
+    public boolean getBoolean(String key, boolean def) {
+        return prefs_.getBoolean(key, def);
+    }
 
     public void put(String key, String value) {
         prefs_.put(key, value);

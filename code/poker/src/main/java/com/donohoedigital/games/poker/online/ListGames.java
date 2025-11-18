@@ -336,7 +336,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
 
         if (bUseLastButton)
         {
-            final String sLast = engine_.getPrefsNode().get(PokerConstants.PREF_LAST_JOIN, null);
+            final String sLast = engine_.getPrefsNode().getString(PokerConstants.PREF_LAST_JOIN, null);
             DDButton uselast = new GlassButton("uselast", "Glass");
             buttons.add(uselast, BorderLayout.EAST);
             if (sLast != null && sLast.length() > 0)
