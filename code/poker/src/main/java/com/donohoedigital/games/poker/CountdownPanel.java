@@ -112,7 +112,7 @@ public class CountdownPanel extends DDPanel implements ActionListener
      */
     public void countdown(boolean b)
     {
-        if (!PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_COUNTDOWN, true) || !bSupported_) b = false;
+        if (!PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_COUNTDOWN) || !bSupported_) b = false;
 
         if (b)
         {

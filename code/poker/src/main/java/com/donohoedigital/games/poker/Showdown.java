@@ -109,7 +109,7 @@ public class Showdown extends ChainPhase
         boolean bShowRiver = PokerUtils.isCheatOn(context, PokerConstants.OPTION_CHEAT_RABBITHUNT);
         boolean bShowWin = PokerUtils.isCheatOn(context, PokerConstants.OPTION_CHEAT_SHOWWINNINGHAND);
         boolean bShowMuck = PokerUtils.isCheatOn(context, PokerConstants.OPTION_CHEAT_SHOW_MUCKED);
-        boolean bHumanUp = !engine.getPrefsNode().getBoolean(PokerConstants.OPTION_HOLE_CARDS_DOWN, false);
+        boolean bHumanUp = !PokerUtils.isOptionOn(PokerConstants.OPTION_HOLE_CARDS_DOWN);
         boolean bAIFaceUp = PokerUtils.isCheatOn(context, PokerConstants.OPTION_CHEAT_AIFACEUP);
         boolean bSeenRiver = hhand.isActionInRound(HoldemHand.ROUND_RIVER);
         boolean bShowCards;

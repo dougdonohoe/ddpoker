@@ -922,8 +922,7 @@ public class PokerGame extends Game implements PlayerActionListener
      */
     private int getSecondsPerHandAction()
     {
-        GameEngine engine = GameEngine.getGameEngine();
-        int nHandsPerHour = engine.getPrefsNode().getInt(PokerConstants.OPTION_HANDS_PER_HOUR, 30);
+        int nHandsPerHour = PokerUtils.getIntOption(PokerConstants.OPTION_HANDS_PER_HOUR);
         int nSecondsPerHand = 3600 / nHandsPerHour;
         return nSecondsPerHand / 5;
     }

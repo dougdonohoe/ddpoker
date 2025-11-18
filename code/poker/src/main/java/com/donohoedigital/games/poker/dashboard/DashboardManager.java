@@ -186,7 +186,7 @@ public class DashboardManager
      */
     private void loadPrefs()
     {
-        String sPrefs = GameEngine.getGameEngine().getPrefsNode().get(sPrefName_, null);
+        String sPrefs = GameEngine.getGameEngine().getPrefsNode().getString(sPrefName_, null);
         prefs_ = new DMTypedHashMap();
         if (sPrefs != null)
         {

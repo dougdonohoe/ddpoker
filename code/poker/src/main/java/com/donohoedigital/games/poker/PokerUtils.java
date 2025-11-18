@@ -316,7 +316,7 @@ public class PokerUtils extends EngineUtils
 
         GameEngine engine = GameEngine.getGameEngine();
         boolean bFoldCheck = context.getGame() != null && !context.getGame().isOnlineGame() &&
-                             engine.getPrefsNode().getBoolean(PokerConstants.OPTION_CHECKFOLD, false);
+                             isOptionOn(PokerConstants.OPTION_CHECKFOLD);
         if (bFoldCheck)
         {
             bFold_ = true;
@@ -710,18 +710,11 @@ public class PokerUtils extends EngineUtils
      * Is cheat option on?  If there is an online game
      * going on, always return false;
      */
-    public static boolean isCheatOn(GameContext context, String sName)
-    {
-        return isCheatOn(context, sName, false);
-    }
-
     /**
      * Is cheat option on, specify default
      */
-    public static boolean isCheatOn(GameContext context, String sName, boolean bDefault)
+    public static boolean isCheatOn(GameContext context, String sName)
     {
-        GameEngine engine = GameEngine.getGameEngine();
-
         // check if online game, if so no cheat options
         if (context != null)
         {
@@ -730,22 +723,40 @@ public class PokerUtils extends EngineUtils
                 return false;
         }
 
-        return engine.getPrefsNode().getBoolean(sName, bDefault);
+        return isOptionOn(sName);
     }
 
     /**
-     * Is option on, specify default
+     * Is option on?, default in client.properties
      */
-    public static boolean isOptionOn(String sName, boolean bDefault)
+    public static boolean isOptionOn(String sName)
     {
         GameEngine engine = GameEngine.getGameEngine();
-        return engine.getPrefsNode().getBoolean(sName, bDefault);
+        return engine.getPrefsNode().getBooleanOption(sName);
     }
 
     /**
-     * Get int option, specify default
+     * Get string option, default in client.properties
      */
-    public static int getIntOption(String sName, int nDefault)
+    public static String getStringOption(String sName)
+    {
+        GameEngine engine = GameEngine.getGameEngine();
+        return engine.getPrefsNode().getStringOption(sName);
+    }
+
+    /**
+     * Get int option, default in client.properties
+     */
+    public static int getIntOption(String sName)
+    {
+        GameEngine engine = GameEngine.getGameEngine();
+        return engine.getPrefsNode().getIntOption(sName);
+    }
+
+    /**
+     * Get int preference, specify default
+     */
+    public static int getIntPref(String sName, int nDefault)
     {
         GameEngine engine = GameEngine.getGameEngine();
         return engine.getPrefsNode().getInt(sName, nDefault);
@@ -833,9 +844,8 @@ public class PokerUtils extends EngineUtils
         }
 
         // get scale to max from prefs
-        GameEngine engine = context.getGameEngine();
-        int maxWidth = engine.getPrefsNode().getInt(PokerConstants.OPTION_SCREENSHOT_MAX_WIDTH, 1024);
-        int maxHeight = engine.getPrefsNode().getInt(PokerConstants.OPTION_SCREENSHOT_MAX_HEIGHT, 768);
+        int maxWidth = PokerUtils.getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_WIDTH);
+        int maxHeight = PokerUtils.getIntOption(PokerConstants.OPTION_SCREENSHOT_MAX_HEIGHT);
         BufferedImage image = GuiUtils.printToImage(context.getRootComponent(), maxWidth, maxHeight);
         AudioConfig.playFX("camera");
 

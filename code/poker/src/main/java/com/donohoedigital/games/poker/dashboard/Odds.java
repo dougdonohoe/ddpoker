@@ -150,7 +150,7 @@ public abstract class Odds extends DashboardItem
     {
         // no hand
         if (hhand == null
-            //    || (!bMouseOver && asViewedBy.isHuman() && engine.getPrefsNode().getBoolean(PokerConstants.OPTION_HOLE_CARDS_DOWN, false))
+            //    || (!bMouseOver && asViewedBy.isHuman() && engine.getPrefsNode().getBooleanOption(PokerConstants.OPTION_HOLE_CARDS_DOWN))
                 )
         {
             return "";

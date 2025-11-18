@@ -42,6 +42,7 @@ import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.engine.ChainPhase;
 import com.donohoedigital.games.poker.PokerGame;
 import com.donohoedigital.games.poker.PokerMain;
+import com.donohoedigital.games.poker.PokerUtils;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.model.TournamentProfile;
 import org.apache.logging.log4j.LogManager;
@@ -92,7 +93,7 @@ public class HostStart extends ChainPhase implements ActionListener
         ((PokerMain)engine_).getLanManager().wakeAliveThread();
         
         // delay
-        DELAY = engine_.getPrefsNode().getInt(PokerConstants.OPTION_ONLINESTART, 10);
+        DELAY = PokerUtils.getIntOption(PokerConstants.OPTION_ONLINESTART);
         DELAY_SECS = ONE_SEC * DELAY;
 
         // determine number of ai players needed

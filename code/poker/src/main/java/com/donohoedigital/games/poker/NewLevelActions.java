@@ -193,7 +193,7 @@ public class NewLevelActions extends ChainPhase implements CancelablePhase
                                                 prof.getLastRebuyLevel(),
                         sPending);
 
-        if (game.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO, true))
+        if (game.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO))
         {
             AudioConfig.playFX("onlineact");
         }
@@ -224,7 +224,7 @@ public class NewLevelActions extends ChainPhase implements CancelablePhase
                                                 nCost, nChips,
                                                 prof.getAddonLevel());
 
-        if (game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO, true))
+        if (game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_AUDIO))
         {
             AudioConfig.playFX("onlineact");
         }

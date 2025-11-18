@@ -50,7 +50,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.prefs.*;
 
 /**
  *
@@ -312,7 +311,7 @@ public class CardPiece extends PokerGamePiece
      */
     protected boolean isLargePref()
     {
-        return GameEngine.getGameEngine().getPrefsNode().getBoolean(PokerConstants.OPTION_LARGE_CARDS, true);
+        return PokerUtils.isOptionOn(PokerConstants.OPTION_LARGE_CARDS);
     }
 
     // image back
@@ -373,7 +372,7 @@ public class CardPiece extends PokerGamePiece
     protected String getDeckPref()
     {
         EnginePrefs prefs = GameEngine.getGameEngine().getPrefsNode();
-        String sName = prefs.get(sPrefName_, null);
+        String sName = prefs.getString(sPrefName_, null);
         if (sName == null)
         {
             sName = PropertyConfig.getStringProperty("msg.back.default", "card-Water.jpg");
@@ -837,7 +836,7 @@ public class CardPiece extends PokerGamePiece
      */
     protected boolean is4ColorPref()
     {
-        return GameEngine.getGameEngine().getPrefsNode().getBoolean(PokerConstants.OPTION_FOUR_COLOR_DECK, false);
+        return PokerUtils.isOptionOn(PokerConstants.OPTION_FOUR_COLOR_DECK);
     }
 
     /** 
@@ -931,9 +930,8 @@ public class CardPiece extends PokerGamePiece
     {
         if (card.isFaceCard())
         {
-            EnginePrefs prefsNode = GameEngine.getGameEngine().getPrefsNode();
-            boolean fourColorDeck = prefsNode.getBoolean(PokerConstants.OPTION_FOUR_COLOR_DECK, false);
-            boolean stylized = prefsNode.getBoolean(PokerConstants.OPTION_STYLIZED_FACE_CARDS, true);
+            boolean fourColorDeck = PokerUtils.isOptionOn(PokerConstants.OPTION_FOUR_COLOR_DECK);
+            boolean stylized = PokerUtils.isOptionOn(PokerConstants.OPTION_STYLIZED_FACE_CARDS);
 
             if (card.getCardSuit() == CardSuit.SPADES)
             {
