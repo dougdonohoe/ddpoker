@@ -74,6 +74,8 @@ poker
 For details on how to build and run DD Poker and
 the backend server and website, please see [README-DEV.md](README-DEV.md).
 
+See also the comprehensive AI-Generated documentation for DD Poker at [DeepWiki](https://deepwiki.com/dougdonohoe/ddpoker).
+
 ## History
 
 DD Poker was developed by Donohoe Digital LLC, a small computer
