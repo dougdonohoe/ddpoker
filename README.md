@@ -74,7 +74,7 @@ poker
 For details on how to build and run DD Poker and
 the backend server and website, please see [README-DEV.md](README-DEV.md).
 
-See also the comprehensive AI-Generated documentation for DD Poker at
+Also see the comprehensive AI-Generated documentation for DD Poker at
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/dougdonohoe/ddpoker).
 
 ## History
