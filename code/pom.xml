@@ -73,7 +73,7 @@
     <servlet.api.version>6.1.0</servlet.api.version>
     <tomcat.version>11.0.15</tomcat.version>
     <spring.version>6.2.14</spring.version>
-    <hibernate.version>6.6.38.Final</hibernate.version>
+    <hibernate.version>6.6.39.Final</hibernate.version>
     <jetty.version>12.1.5</jetty.version>
     <junit.version>4.13.2</junit.version>
     <wicket.version>10.7.0</wicket.version>
