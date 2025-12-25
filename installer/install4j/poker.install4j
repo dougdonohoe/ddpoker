@@ -8,7 +8,7 @@
     <codeSigning macEnabled="true" macPkcs12File="../../target/developerID_application.p12" windowsEnabled="true" windowsKeySource="pkcs11" windowsPkcs11Library="/usr/local/lib/libeTPkcs11.dylib">
       <windowsPkcs11Identifier issuer="Sectigo Public Code Signing CA R36" serial="b188553e484920219014bcbae1b277c5" subject="Donohoe Digital LLC" />
     </codeSigning>
-    <jreBundles jdkProviderId="Corretto" release="25/25.0.0.0.1" />
+    <jreBundles jdkProviderId="Corretto" release="25/25.0.1.9.1" />
   </application>
   <files>
     <mountPoints>
