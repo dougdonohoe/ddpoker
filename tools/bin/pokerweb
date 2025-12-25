@@ -42,7 +42,12 @@ echo
 echo "     **** Running Poker Wicket Webserver ****"
 echo
 
-JETTY_VERSION=12.1.5
+# Extract Jetty version from pom.xml to avoid hardcoding
+JETTY_VERSION=$(grep '<jetty.version>' "$DDHOME/code/pom.xml" | sed 's/.*<jetty.version>\([^<]*\)<\/jetty.version>.*/\1/')
+if [ -z "$JETTY_VERSION" ]; then
+    echo "ERROR: Could not extract jetty.version from $DDHOME/code/pom.xml"
+    exit 1
+fi
 # need to specify test classes and jetty/servlet jars (since in test scope)
 export EXTRA_CLASSPATH=code/pokerwicket/target/test-classes:\
 ~/.m2/repository/org/eclipse/jetty/ee10/jetty-ee10-servlet/$JETTY_VERSION/jetty-ee10-servlet-$JETTY_VERSION.jar:\
