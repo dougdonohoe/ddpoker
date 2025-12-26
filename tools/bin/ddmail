@@ -35,5 +35,5 @@
 echo
 echo "     **** Running DDMailer ****"
 echo
-runjava tools -server -Dverbose:gc -ms24m -mx96m com.donohoedigital.tools.DDMailer $*
+runjava tools -server -Dverbose:gc -Xms24m -Xmx96m com.donohoedigital.tools.DDMailer $*
 echo
