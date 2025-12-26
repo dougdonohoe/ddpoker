@@ -35,5 +35,5 @@
 echo
 echo "     **** Running Gameboard Territory Manager ****"
 echo
-runjava gametools -ms65m -mx128m com.donohoedigital.games.tools.GameboardTerritoryManager $*
+runjava gametools -Xms65m -Xmx128m com.donohoedigital.games.tools.GameboardTerritoryManager $*
 echo

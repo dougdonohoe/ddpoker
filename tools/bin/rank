@@ -32,4 +32,4 @@
 #
 # Script to run log rank updater
 
-runjava gametools -server -Dverbose:gc -ms64m -mx640m com.donohoedigital.games.tools.PokerRankUpdater $*
+runjava gametools -server -Dverbose:gc -Xms64m -Xmx640m com.donohoedigital.games.tools.PokerRankUpdater $*

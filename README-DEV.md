@@ -29,7 +29,7 @@ Feel free to submit a PR with any changes to these docs that would help Linux or
 
 Required software:
 
-* Java 21 - [See Adoptium](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=21)
+* Java 25 - [See Adoptium](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=25)
 * Maven 3 - [See Apache Maven](https://maven.apache.org/install.html)
 * Docker (optional, but useful to run some things) - [See Docker](https://docs.docker.com/engine/install/)
 
@@ -51,7 +51,7 @@ source ddpoker.rc
 [Brew](https://brew.sh/) is useful to install Java and Maven:
 
 ```shell
-brew install temurin@21 maven
+brew install temurin@25 maven
 ```
 
 ## Compile Code
@@ -90,9 +90,9 @@ the `code/pom.xml` file and prompt you to load it:
 
 <img src="images/intellij-maven.png" alt="IntelliJ Maven" width="400px">
 
-**NOTE**: You will probably need to edit the Project Structure to tell IntelliJ to use Java 21.
+**NOTE**: You will probably need to edit the Project Structure to tell IntelliJ to use Java 25.
 Go to _File → Project Structure... → Project Settings → Project → SDK_ and
-set to Java 21 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
+set to Java 25 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
 
 ## Server Dependencies
 
@@ -167,7 +167,7 @@ of DD Poker was written from 2004 to 2007, with sporadic updates after that.  Th
 JDK was 1.5 (aka Java 5).
 
 Amazingly, nearly all of our dependencies (Swing, Hibernate, Wicket, Jetty, Tomcat, log4j, etc.) have been updated 
-to the latest versions that work with Java 21.  The only exception is `HSQLDB`, which we currently
+to the latest versions that work with Java 25.  The only exception is `HSQLDB`, which we currently
 have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
 we don't want to deal with at this time.
 

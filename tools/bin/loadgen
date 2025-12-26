@@ -32,4 +32,4 @@
 #
 # Script to run LoadGen java class
 
-runjava tools -Dverbosegc -ms65m -mx256m com.donohoedigital.tools.LoadGen $*
+runjava tools -Dverbosegc -Xms65m -Xmx256m com.donohoedigital.tools.LoadGen $*

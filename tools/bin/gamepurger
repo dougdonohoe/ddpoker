@@ -32,4 +32,4 @@
 #
 # Script to run online game purger
 
-runjava pokerserver -server -Dverbose:gc -ms16m -mx64m com.donohoedigital.games.poker.server.OnlineGamePurger $*
+runjava pokerserver -server -Dverbose:gc -Xms16m -Xmx64m com.donohoedigital.games.poker.server.OnlineGamePurger $*

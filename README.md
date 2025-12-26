@@ -59,7 +59,7 @@ reading all the [developer documentation](README-DEV.md) or worrying
 about servers and databases, follow these steps:
 
 1. Clone this repo
-2. Install [Java 21](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=21)
+2. Install [Java 25](https://adoptium.net/temurin/releases/?os=any&package=jdk&version=25)
    and [Maven 3](https://maven.apache.org/install.html)
 3. Run these commands in the `ddpoker` directory:
 

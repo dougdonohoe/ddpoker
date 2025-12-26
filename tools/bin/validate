@@ -35,5 +35,5 @@
 echo
 echo "     **** Running SchemaValidate ****"
 echo
-runjava tools -ms65m -mx128m com.donohoedigital.tools.SchemaValidate $*
+runjava tools -Xms65m -Xmx128m com.donohoedigital.tools.SchemaValidate $*
 echo

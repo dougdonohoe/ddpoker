@@ -32,10 +32,10 @@
 # Use the Rocky Linux 9 base image
 FROM rockylinux:9
 
-# Install necessary dependencies including Java 21
+# Install necessary dependencies including Java 25
 RUN yum -y update && yum -y remove java && yum install -y --setopt=skip_missing_names_on_install=False \
-       java-21-openjdk \
-       java-21-openjdk-devel \
+       java-25-openjdk \
+       java-25-openjdk-devel \
        wget
 
 # Download and install Tomcat 11.0.1

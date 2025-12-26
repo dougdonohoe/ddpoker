@@ -35,5 +35,5 @@
 echo
 echo "     **** Running Gameboard Border Manager ****"
 echo
-runjava gametools -ms65m -mx128m com.donohoedigital.games.tools.GameboardBorderManager $*
+runjava gametools -Xms65m -Xmx128m com.donohoedigital.games.tools.GameboardBorderManager $*
 echo

@@ -35,4 +35,4 @@
 echo
 echo "     **** Running Poker Server ****"
 echo
-exec runjavaexec pokerserver -server -ms24m -mx96m com.donohoedigital.games.poker.server.PokerServerMain "$@"
+exec runjavaexec pokerserver -server -Xms24m -Xmx96m com.donohoedigital.games.poker.server.PokerServerMain "$@"

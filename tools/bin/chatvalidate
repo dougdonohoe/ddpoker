@@ -32,4 +32,4 @@
 #
 # Script to run chat validation
 
-runjava gametools -ms65m -mx256m com.donohoedigital.games.tools.ChatValidate $*
+runjava gametools -Xms65m -Xmx256m com.donohoedigital.games.tools.ChatValidate $*
