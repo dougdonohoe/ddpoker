@@ -32,4 +32,4 @@
 #
 # Script to run log analyzer
 
-runjava gameserver -server -Dverbose:gc -ms64m -mx640m com.donohoedigital.games.server.RegAnalyzer $*
+runjava gameserver -server -Dverbose:gc -Xms64m -Xmx640m com.donohoedigital.games.server.RegAnalyzer $*

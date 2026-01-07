@@ -35,5 +35,5 @@
 echo
 echo "     **** Running Proxy Server ****"
 echo
-runjava tools -server -ms24m -mx48m com.donohoedigital.tools.ProxyServer $*
+runjava tools -server -Xms24m -Xmx48m com.donohoedigital.tools.ProxyServer $*
 echo

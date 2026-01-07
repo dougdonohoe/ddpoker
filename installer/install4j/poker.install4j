@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="11.0.3" transformSequenceNumber="11">
+<install4j version="11.0.5" transformSequenceNumber="11">
   <directoryPresets config="./custom" />
-  <application name="DD Poker 3" applicationId="5571-3951-3041-7888" mediaDir="../builds" mediaFilePattern="ddpoker${compiler:sys.version}" shortName="ddpoker3" publisher="DD Poker" publisherWeb="http://www.ddpoker.com/" version="3.0" allPathsRelative="true" macVolumeId="d24c5a0cf4cff0ab" javaMinVersion="21" javaMaxVersion="21">
+  <application name="DD Poker 3" applicationId="5571-3951-3041-7888" mediaDir="../builds" mediaFilePattern="ddpoker${compiler:sys.version}" shortName="ddpoker3" publisher="DD Poker" publisherWeb="http://www.ddpoker.com/" version="3.0" allPathsRelative="true" macVolumeId="d24c5a0cf4cff0ab" javaMinVersion="25" javaMaxVersion="25">
     <languages>
       <principalLanguage id="en" customLocalizationFile="./custom/override.messages.utf8" />
     </languages>
     <codeSigning macEnabled="true" macPkcs12File="../../target/developerID_application.p12" windowsEnabled="true" windowsKeySource="pkcs11" windowsPkcs11Library="/usr/local/lib/libeTPkcs11.dylib">
       <windowsPkcs11Identifier issuer="Sectigo Public Code Signing CA R36" serial="b188553e484920219014bcbae1b277c5" subject="Donohoe Digital LLC" />
     </codeSigning>
-    <jreBundles jdkProviderId="Corretto" release="21/21.0.7.6.1" />
+    <jreBundles jdkProviderId="Corretto" release="25/25.0.1.8.1" />
   </application>
   <files>
     <mountPoints>

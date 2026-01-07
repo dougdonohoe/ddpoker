@@ -38,10 +38,10 @@ RUN apt-get update && apt-get install -y \
     x11-apps \
     iputils-ping nmap telnet \
     git vim tree \
-    openjdk-21-jdk maven
+    openjdk-25-jdk maven
 
 # Set JAVA_HOME to avoid warnings (Unable to autodetect 'javac' path)
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64
 
 # Start bash
 CMD ["/bin/bash"]

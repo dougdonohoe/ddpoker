@@ -56,27 +56,27 @@ alias act-ddpoker='act --platform ubuntu-latest=ddpoker-act-runner --pull=false 
   --container-options "-v $HOME/.m2:/home/runner/.m2" \
   --job test pull_request'
 
-# attempt to auto-set JAVA_HOME to 21 if on mac
+# attempt to auto-set JAVA_HOME to 25 if on mac
 if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
-  JAVA21_HOME=$(/usr/libexec/java_home -F -v 21 2>/dev/null || echo "/java21/not/found")
-  if [[ -d "${JAVA21_HOME}" && "${JAVA21_HOME}" != "${JAVA_HOME}" ]]; then
-    export JAVA_HOME="${JAVA21_HOME}"
-    export PATH="${JAVA21_HOME}/bin:${PATH}"
+  JAVA25_HOME=$(/usr/libexec/java_home -F -v 25 2>/dev/null || echo "/java25/not/found")
+  if [[ -d "${JAVA25_HOME}" && "${JAVA25_HOME}" != "${JAVA_HOME}" ]]; then
+    export JAVA_HOME="${JAVA25_HOME}"
+    export PATH="${JAVA25_HOME}/bin:${PATH}"
     echo "JAVA_HOME changed, version now '$(java -version 2>&1 | head -1)'"
   fi
 fi
 
-# See if java 21 is installed
+# See if java 25 is installed
 if ! test -x "$(command -v java)"; then
   if [[ "${OSTYPE:0:6}" == "darwin" ]]; then
-    echo "WARNING: Java 21 is not installed. Have your run 'brew install temurin@21'?"
+    echo "WARNING: Java 25 is not installed. Have your run 'brew install temurin@25'?"
   else
-    echo "WARNING: Java 21 is not installed."
+    echo "WARNING: Java 25 is not installed."
   fi
 else
-  # Java is installed, check version is 21
-  if ! java -version 2>&1 | head -1 | grep -q "\"21"; then
-    echo "WARNING: Java version is not 21 (which DD Poker requires).  Version is:"
+  # Java is installed, check version is 25
+  if ! java -version 2>&1 | head -1 | grep -q "\"25"; then
+    echo "WARNING: Java version is not 25 (which DD Poker requires).  Version is:"
     java -version
   fi
 fi
