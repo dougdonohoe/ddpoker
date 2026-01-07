@@ -1,6 +1,6 @@
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # DD Poker - Source Code
-# Copyright (c) 2003-2025 Doug Donohoe
+# Copyright (c) 2003-2026 Doug Donohoe
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
