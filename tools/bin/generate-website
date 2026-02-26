@@ -78,6 +78,9 @@ wget \
   --execute robots=off \
   "${URLS[@]}"
 
+# Fetch og:image assets (absolute URLs in meta tags, not auto-discovered by wget)
+wget --no-verbose -O images/cover.png "${BASE_URL}/images/cover.png"
+
 # Generate sitemap.xml (needed since webcrawlers might not run JS code)
 cat > sitemap.xml << 'EOF'
 <?xml version="1.0" encoding="UTF-8"?>
