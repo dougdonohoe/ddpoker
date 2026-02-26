@@ -38,9 +38,11 @@ import com.donohoedigital.wicket.annotations.MountPath;
  * @author Doug Donohoe
  */
 
-// mount needed since login/logout on home page doesn't work with ie ... it requests "/./" which it doesn't seem
-// to understand should be reduced to just "/".  FIX: this may be a wicket bug I can fix
-@MountPath("home")
+// NOTE: previously, this mount needed since login/logout on home page didn't work
+// with ie ... it requests "/./" which it doesn't seem to understand should be reduced to just "/".
+// FIX: this may be a wicket bug I can fix
+// @MountPath("home")
+// For static site generation, we want the home page at / ... and IE is dead
 public class HomeHome extends HomePokerPage
 {
     private static final long serialVersionUID = 42L;

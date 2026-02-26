@@ -35,7 +35,7 @@
 const navData = {
     home: {
         title: 'Home',
-        link: '/home',
+        link: '/',
         subPages: null
     },
     about: {

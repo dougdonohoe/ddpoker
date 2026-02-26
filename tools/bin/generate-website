@@ -55,8 +55,15 @@ echo "${PATHS[@]}"
 # Build absolute URLs for wget
 URLS=()
 for p in ${PATHS}; do
-  URLS+=("${BASE_URL}${p}/")
+  if [[ "${p}" == "/" ]]; then
+    URLS+=("${BASE_URL}${p}")
+  else # trailing slash needed so foo/index.html is created for sub-folder
+    URLS+=("${BASE_URL}${p}/")
+  fi
 done
+
+echo "URLs:"
+echo "${URLS[@]}"
 
 # Cleanup wget
 rm -f ./.wget-hsts || true
@@ -70,17 +77,6 @@ wget \
   --restrict-file-names=unix \
   --execute robots=off \
   "${URLS[@]}"
-
-# --- Root redirect to home/ ---
-cat > index.html <<'EOF'
-<!doctype html>
-<meta charset="utf-8">
-<title>Redirecting…</title>
-<meta http-equiv="refresh" content="0; url=home/">
-<link rel="canonical" href="home/">
-<script>location.replace("home/");</script>
-<p>If you are not redirected, <a href="home/">click here</a>.</p>
-EOF
 
 # Generate sitemap.xml (needed since webcrawlers might not run JS code)
 cat > sitemap.xml << 'EOF'
