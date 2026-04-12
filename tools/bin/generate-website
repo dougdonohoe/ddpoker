@@ -31,7 +31,7 @@
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #
 # Script to generate static ddpoker.com website from Wicket site running with
-# settings.debug.docmode=true.
+# settings.debug.docmode=true.  Outputs into current directory.
 #
 set -euo pipefail
 
@@ -88,7 +88,7 @@ cat > sitemap.xml << 'EOF'
 EOF
 
 for url in $PATHS; do
-    if [[ "$url" =~ "thankyou" ]]; then
+    if [[ "$url" =~ "thankyou" || "$url" =~ "notfound" ]]; then
       continue
     fi
     echo "  <url><loc>${DOMAIN}${url}</loc></url>" >> sitemap.xml
@@ -103,6 +103,10 @@ cat > robots.txt << EOF
 User-agent: *
 Sitemap: ${DOMAIN}/sitemap.xml
 EOF
+
+# Move notfound to 404.html
+mv -f notfound/index.html 404.html
+rmdir notfound
 
 echo
 echo "==> Done. Serve locally with:"

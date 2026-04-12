@@ -34,7 +34,7 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 
 <wicket:head>
-    <title>DD Poker - Error</title>
+    <title>DD Poker - Page Not Found</title>
 </wicket:head>
 
 <body>
@@ -43,11 +43,14 @@
     <div class="title">Page Not Found</div>
 
     <div class="description">
-        The page you were looking for ( <span class="spicy" wicket:id="url">missing</span> )
+        The page you were looking for ( <span id="missing-path" class="spicy" wicket:id="url">missing</span> )
         was not found.  We are sorry for the trouble.   You can likely find what you are
         looking for by choosing one of the tabs above.
     </div>
 
+    <script type="text/javascript">
+        document.getElementById('missing-path').textContent = window.location.pathname;
+    </script>
 </wicket:extend>
 
 </body>

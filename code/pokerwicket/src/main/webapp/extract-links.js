@@ -46,6 +46,7 @@ function extractLinks() {
 
     // special case not in navData - donate page thank you
     links.add("/thankyou")
+    links.add("/notfound") // will become 404.html
 
     for (const pageData of Object.values(navData)) {
         if (pageData.skipInDocMode) {
