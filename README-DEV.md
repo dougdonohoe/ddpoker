@@ -647,7 +647,7 @@ This is now used as the source of [ddpoker.com](https://www.ddpoker.com/).
 
 The debug setting `settings.debug.docmode=true` must be on before starting `PokerJetty`
 or running `pokerweb`.  The `generate-website` script assumes `node` is installed and 
-available on the `PATH`.  The script saves all Javascript, CSS, HTML and images to the
+available on the `PATH`.  The script saves all JavaScript, CSS, HTML and images to the
 current working directory.  To preview the site run:
 
 ```bash
