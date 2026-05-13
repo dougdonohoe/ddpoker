@@ -94,12 +94,14 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
             DDPanel format = new DDPanel();
             format.add(displayBorder_);
             format.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        
+
+            UIManager.put("FileChooser.readOnly", Boolean.TRUE); // disable new folder, renaming
             choose_ = new DDFileChooser("deckimage", STYLE, engine_.getPrefsNode().getPrefs());
             choose_.addChoosableFileFilter(new DeckProfile.DeckFilter());
             choose_.setAccessory(format);
             choose_.addPropertyChangeListener(this);
             base.add(choose_, BorderLayout.CENTER);
+            UIManager.put("FileChooser.readOnly", Boolean.FALSE); // restore
         
             checkButtons();
         }
