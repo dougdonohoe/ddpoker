@@ -104,9 +104,9 @@ User-agent: *
 Sitemap: ${DOMAIN}/sitemap.xml
 EOF
 
-# Move notfound to 404.html
-mv -f notfound/index.html 404.html
-rmdir notfound
+# Create 404.html from notfound/index.html, rewriting relative paths to absolute
+sed -e 's|\.\./\./|/|g' -e 's|\.\./|/|g' notfound/index.html > 404.html
+rm -rf notfound
 
 echo
 echo "==> Done. Serve locally with:"

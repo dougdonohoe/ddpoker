@@ -53,7 +53,7 @@ public class Order extends BasePhase
     
     public void start()
     {
-        String sURL = gamephase_.getString("url", "http://www.donohoedigital.com/");
+        String sURL = gamephase_.getString("url", "https://www.donohoedigital.com/");
         String sDisplay = sURL;
         int nQuery = sDisplay.indexOf('?');
         if (nQuery != -1) sDisplay = sDisplay.substring(0,nQuery);
