@@ -52,8 +52,8 @@ alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
 alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t'
 
 # act shortcut
-alias act-ddpoker='act --platform ubuntu-latest=ddpoker-act-runner --pull=false \
-  --container-options "-v $HOME/.m2:/home/runner/.m2" \
+alias act-ddpoker='mkdir -p $HOME/.m2-act && act --platform ubuntu-latest=ddpoker-act-runner --pull=false \
+  --container-options "-v $HOME/.m2-act:/home/runner/.m2" \
   --job test pull_request'
 
 # attempt to auto-set JAVA_HOME to 25 if on mac
