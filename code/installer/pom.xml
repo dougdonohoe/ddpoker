@@ -57,7 +57,7 @@
     <dependency>
       <groupId>com.install4j</groupId>
       <artifactId>install4j-runtime</artifactId>
-      <version>12.0.4</version>
+      <version>13.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
