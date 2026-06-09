@@ -115,7 +115,7 @@ elsif ($full)
 }
 
 # done
-if (!$builtsomething && !$scp)
+if (!$builtsomething)
 {
 	print ("\noptions:\n"); 
 	print ("   -full            build full installer in ~/$BASEDIR\n");
@@ -126,7 +126,7 @@ if (!$builtsomething && !$scp)
 	print ("   -nounpack        skip unpack jars step\n");
 	print ("   -nobuildrelease  skip buildrelease step\n");
 	print ("   -noinstaller     skip install4j build step\n");
-	print ("   -scp             scp all installers to remote machine\n");
+	print ("   -nonotarize      skip notarize step\n");
 	print ("   -github          create a release at github with all installers\n");
 	print ("   -exitearly       just print env vars\n");
 	print ("\n");
@@ -134,18 +134,6 @@ if (!$builtsomething && !$scp)
 }
 else
 {
-	# scp to remote machine
-	if ($scp)
-	{
-	    # create script to be executed by 'buildall'
-	    getVersion();
-		open(SCP, ">/tmp/buildall.scp") || die "Couldn't open /tmp/buildall.scp";
-		print (SCP "cd $INSTALLERDIR\n");
-		print (SCP "echo Copying: ddpoker$VERSION_FILE.* in $INSTALLERDIR...\n");
-		print (SCP "scp ddpoker$VERSION_FILE.dmg ddpoker$VERSION_FILE.exe ddpoker$VERSION_FILE.sh $ENV{AWS_APACHE}:/home/donohoe/staging\n");
-		close(SCP);
-	}
-
 	exit(0);
 }
 
@@ -317,21 +305,28 @@ sub build
 		$install4j = $PRODUCT . ".install4j";
 
 		# copy cert
-        runIndented("~/work/donohoe/ddpoker/cp-certs.sh '$DEVDIR/target'");
+        runIndented("~/work/donohoe/installer/cp-certs.sh '$DEVDIR/target'");
 
         # get passwords
-        $mac_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
+        $mac_pw = `~/work/donohoe/installer/get-password.sh "ddpoker-dev-app-p12" "Apple P12 cert"`;
         chop $mac_pw;
-        $win_pw = `~/work/donohoe/ddpoker/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
+        $win_pw = `~/work/donohoe/installer/get-password.sh "ddpoker-sectigo-token-password" "Windows Sectigo cert"`;
         chop $win_pw;
+
+        # clean old builds
+        runIndented("rm -vf $INSTALLERDIR/${PRODUCT}${VERSION_FILE}.*");
 
 		# run install4j
         $cmd = "/Applications/install4j.app/Contents/Resources/app/bin/install4jc --release=$VERSION " .
-                "--mac-keystore-password='$mac_pw' --win-keystore-password='$win_pw' --build-selected $install4j\n";
+                "--mac-keystore-password='$mac_pw' --win-keystore-password='$win_pw' --build-selected $install4j";
         runIndented($cmd);
 
         # Set icons in Mac installer and notarize
-        runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
+        if (!$nonotarize) {
+            runIndented("${DEVDIR}/tools/bin/mac-set-icons-notarize.sh $VERSION_FILE");
+        } else {
+            print($indent . "Notarization skipped.\n");
+        }
 
         # Create md5sums.txt
         cd($INSTALLERDIR);
@@ -360,7 +355,12 @@ sub runIndented
 		next if ($filter && $_ =~ /$filter/);
 		print($indent . "  " . $_);
 	}
-	close OUTPUT || die "\n*** Error code ($?) running '$command' $!\n\n";
+	close OUTPUT;
+    my $exit_code = $? >> 8;
+    if ($exit_code != 0) {
+        print("\n*** Error (exit code $exit_code) running '$command'\n\n");
+        exit($exit_code);
+    }
 }
 
 # set VERSION and VERSION_FILE (assumes mvn has been run)
