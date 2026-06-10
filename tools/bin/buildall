@@ -30,26 +30,12 @@
 # doug [at] donohoe [dot] info.
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #
-# Script to run buildall.pl command, then scp at end if directed to do so
+# Script to run buildall.pl command
 #
 # Current way we typically run this: buildall -dev (in current tree)
 #
 buildall.pl "$@"
 RESULT=$?
-
-# if -scp was passed, the perl script will create this temp file
-# for us to execute.  We do this so the scp progress meter is 
-# displayed
-#
-if [ -f /tmp/buildall.scp ]
-then
-	echo
-	echo "------------------------------------------------------------------------------------------------"
-	echo "COPY: scp to ${AWS_APACHE} ..."
-	echo
-	source /tmp/buildall.scp
-	rm /tmp/buildall.scp
-fi
 
 if [ "$RESULT" = "0" ]; then
 	echo 

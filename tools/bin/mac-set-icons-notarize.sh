@@ -53,6 +53,11 @@ DST_RW="$DDHOME/installer/builds/ddpoker${VERSION}_rw.dmg"
 DST_ALT="$DDHOME/installer/builds/ddpoker${VERSION}_alt.dmg"
 DST_MNT="/Volumes/dd_poker_dst"
 
+if [[ ! -f "$SRC" ]]; then
+  echo "$SRC not found."
+  exit 1
+fi
+
 # make read/write copy of installer
 rm -f "$DST_RW"
 hdiutil convert "$SRC" -format UDRW -o "$DST_RW"
@@ -104,4 +109,4 @@ mv -v "$SRC" "$BAK"
 mv -v "$DST_ALT" "$SRC"
 
 # Sign and notarize new one
-~/work/donohoe/ddpoker/mac-sign-notarize.sh "$SRC"
+~/work/donohoe/installer/mac-sign-notarize.sh "$SRC"
