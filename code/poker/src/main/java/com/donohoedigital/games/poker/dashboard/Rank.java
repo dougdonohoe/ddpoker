@@ -42,6 +42,7 @@ import com.donohoedigital.games.poker.online.*;
 import com.donohoedigital.gui.*;
 
 import javax.swing.*;
+import java.awt.event.*;
 import java.beans.*;
 
 /**
@@ -53,7 +54,11 @@ import java.beans.*;
  */
 public class Rank extends DashboardItem
 {
+    /** how often to recheck our position while a hand is in progress */
+    private static final int REFRESH_MILLIS = 2000;
+
     DDLabel labelInfo_;
+    private javax.swing.Timer refresh_;
 
     public Rank(GameContext context)
     {
@@ -74,6 +79,33 @@ public class Rank extends DashboardItem
         game_.addPropertyChangeListener(PokerGame.PROP_GAME_LOADED, this);
         game_.addPropertyChangeListener(PokerGame.PROP_GAME_OVER, this);
         game_.addPropertyChangeListener(PokerGame.PROP_PLAYER_FINISHED, this);
+
+        // The rest of the tournament moves while a hand is in progress - the
+        // all-computer tables play their hands when ours bets (see
+        // TournamentDirector.doBettingAllComputer) - but nothing tells this
+        // panel, because dashboard items listen to the current table only and
+        // no event is raised for activity elsewhere.  Without a periodic
+        // refresh the rank shown stays frozen for the whole hand and can be
+        // thousands of places out of date.
+        refresh_ = new javax.swing.Timer(REFRESH_MILLIS, new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                if (isDisplayed()) updateAll();
+            }
+        });
+        refresh_.setRepeats(true);
+        refresh_.start();
+    }
+
+    /**
+     * stop the refresh timer
+     */
+    @Override
+    public void finish()
+    {
+        if (refresh_ != null) refresh_.stop();
+        super.finish();
     }
 
     @Override
@@ -204,6 +236,17 @@ public class Rank extends DashboardItem
                                                    PropertyConfig.getMessage("msg.tables", nNumTables),
                                                    nWon > 0 ? nWon : null
         );
+
+        // The refresh timer fires regularly whether or not anything has moved,
+        // so skip the repaint when the display would be identical.  The open
+        // state matters as well as the text: getTitle() only includes the rank
+        // while collapsed, so collapsing has to force the title to be redrawn
+        // even though the body text is unchanged.
+        boolean bOpen = isOpen();
+        if (sTextToUpdate_ != null && sTextToUpdate_.equals(sLastText_) && bOpen == bLastOpen_) return;
+        sLastText_ = sTextToUpdate_;
+        bLastOpen_ = bOpen;
+
         GuiUtils.invoke(setLabelRunner_);
     }
 
@@ -218,6 +261,8 @@ public class Rank extends DashboardItem
 
     // text to set label
     private String sTextToUpdate_ = null;
+    private String sLastText_ = null;
+    private boolean bLastOpen_ = true;
     private String sRank_;
 
     // runnable for setting label text in swing thread
