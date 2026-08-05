@@ -14,6 +14,8 @@ a Java Spring application that talks to MySQL.  The website
 
 ## DD Family
 
+![logo_192x192.png](images/logo_192x192.png)
+
 The Java/Swing game engine built for DD Poker was modernized into a more general app engine and used to create the
 [DD Photos Desktop App](https://github.com/dougdonohoe/ddphotos-app/#dd-photos-desktop-app),
 a way to quickly and easily publish your own beautiful photo albums.  As seen in this
