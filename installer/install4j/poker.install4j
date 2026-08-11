@@ -24,7 +24,7 @@
       <executable name="ddpoker" iconSet="true" iconFile="./custom/pokericon16to64.ico" executableDir="." redirectStderr="false" stderrFile="log/err.txt" stdoutFile="log/out.txt" failOnStderrOutput="false" executableMode="gui">
         <versionInfo include="true" fileVersion="3.0.0.0" fileDescription="http://www.ddpoker.com/" legalCopyright="Copyright © 2004-2026. Donohoe Digital LLC." internalName="DD Poker" />
       </executable>
-      <java mainClass="com.donohoedigital.games.poker.PokerMain" vmParameters="&quot;-Dcom.donohoedigital.classpath=${launcher:sys.launcherDirectory}&quot; -Dsun.java2d.noddraw=true  -Xms32m -Xmx68m" preferredVM="client">
+      <java mainClass="com.donohoedigital.games.poker.PokerMain" vmParameters="&quot;-Dcom.donohoedigital.classpath=${launcher:sys.launcherDirectory}&quot; -Dsun.java2d.noddraw=true  -Xms32m -Xmx512m" preferredVM="client">
         <classPath>
           <directory location="." failOnError="false" />
           <scanDirectory location="." failOnError="false" />

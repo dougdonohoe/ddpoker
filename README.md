@@ -12,6 +12,16 @@ on Mac, Linux and Windows.  The backend-server is essentially
 a Java Spring application that talks to MySQL.  The website 
 (aka "Online Portal") is built on the Apache Wicket framework.
 
+## DD Family
+
+![logo_192x192.png](images/logo_192x192.png)
+
+The Java/Swing game engine built for DD Poker was modernized into a more general app engine and used to create the
+[DD Photos Desktop App](https://github.com/dougdonohoe/ddphotos-app/#dd-photos-desktop-app),
+a way to quickly and easily publish your own beautiful photo albums.  As seen in this
+[sample site↗](https://ddphotos.donohoe.info), a DD Photos site is wicked-fast, mobile friendly, 
+and distraction free.
+
 ## About The Game
 
 For a full description of the game, visit [ddpoker.com](https://www.ddpoker.com/about/).
