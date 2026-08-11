@@ -135,20 +135,33 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             int numLeft = game_.getNumPlayers() - game_.getNumPlayersOut();
             // if end of tournament, list number of players in tournament
             if (numLeft == 0) numLeft = game_.getNumPlayers();
+
+            // Disconnects and sit-outs can only happen in an online game - nothing in
+            // a practice game sets either flag, so both counters would read zero for
+            // the whole tournament.  Leave the rows out rather than show dead text.
+            String sOnline = !game_.isOnlineGame() ? "" :
+                             PropertyConfig.getMessage("msg.dash.playerinfo.online",
+                                      last_.getHandsPlayedDisconnected(),
+                                      last_.getHandsPlayedSitout());
+
             labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo",
                                       Utils.encodeHTML(last_.getName()),
-                                      last_.getHandsPlayedDisconnected(),
-                                      last_.getHandsPlayedSitout(),
-                                      sRebuy,
                                       PropertyConfig.getPlace(game_.getRank(last_)),
-                                      numLeft
+                                      numLeft,
+                                      sOnline,
+                                      sRebuy
             ));
         }
         else
         {
+            // keep the same height as when filled in, so the panel does not jump
+            // about as the mouse moves on and off the players
+            String sOnlineSpace = !game_.isOnlineGame() ? "" :
+                                  PropertyConfig.getMessage("msg.dash.playerinfo.online.space");
             String sRebuySpace = "";
             if (game_.getProfile().isRebuys()) sRebuySpace = PropertyConfig.getMessage("msg.dash.rebuy.space");
-            labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.none", sRebuySpace));
+            labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.none",
+                                      sOnlineSpace, sRebuySpace));
         }
 
     }
