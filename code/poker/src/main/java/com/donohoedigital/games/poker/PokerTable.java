@@ -1539,7 +1539,10 @@ public class PokerTable implements ObjectID
      * Is a hand in progress at this table - that is, are there chips committed to
      * a pot which have not yet been awarded?  When this is true, the chip counts of
      * players at this table are mid-hand and must not be compared against players at
-     * other tables; use PokerPlayer.getChipCountAtStart() instead.  See BUG 420.
+     * other tables; use PokerGame.getSettledChipCount() instead.  Note that is
+     * deliberately not PokerPlayer.getChipCountAtStart() - that snapshot is not taken
+     * until the deal, which is too late for anything reacting to TYPE_NEW_HAND.
+     * See BUG 420 for the original use of this test, in isRebuyAllowed() below.
      *
      * Not synchronized on purpose - this is read from the swing thread while the
      * tournament director holds this table's monitor.
