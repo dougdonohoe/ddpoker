@@ -68,7 +68,22 @@ public class ChipLeaderPanel extends DDTabPanel
     public void createUI()
     {
         PokerPlayer p;
-        List<PokerPlayer> leaders = game_.getPlayersByRank();
+
+        // Capture each player's settled chip count once, then sort that snapshot.
+        // Settled counts are what make this panel agree with the Rank dashboard item -
+        // this dialog is opened mid-hand, when live counts have the current table's
+        // bets already pushed into the pot.  See PokerGame.getSettledChipCount().
+        // Sorting the snapshot also keeps Collections.sort() off of live mutable state,
+        // which can otherwise throw "Comparison method violates its general contract!"
+        // if the tournament director moves chips while the sort is running.
+        List<PokerPlayer> all = game_.getPokerPlayersCopy();
+        List<RankInfo> leaders = new ArrayList<RankInfo>(all.size());
+        for (PokerPlayer each : all)
+        {
+            leaders.add(new RankInfo(each, 0, game_.getSettledChipCount(each)));
+        }
+        Collections.sort(leaders, SORT_SETTLED);
+
         List<RankInfo> finished = new ArrayList<RankInfo>();
         List<RankInfo> current = new ArrayList<RankInfo>();
         int nNum = leaders.size();
@@ -76,6 +91,7 @@ public class ChipLeaderPanel extends DDTabPanel
         int min = Integer.MAX_VALUE;
         int max = 0;
         int nChips;
+        RankInfo info;
         PokerPlayer human = game_.getHumanPlayer();
         int nHumanRank = 0;
         int nRank = 0;
@@ -84,15 +100,17 @@ public class ChipLeaderPanel extends DDTabPanel
         // current players
         for (int i = 0; !bDone && i < nNum; i++)
         {
-            p = leaders.get(i);
-            nChips = p.getChipCount();
+            info = leaders.get(i);
+            p = info.player;
+            nChips = info.nChips;
             if (nChips == 0 && p.getPlace() != 0) continue;
             if (nChips != nLastChips)
             {
                 nRank = (i+1);
             }
             nLastChips = nChips;
-            current.add(new RankInfo(p, nRank));
+            info.nRank = nRank;
+            current.add(info);
             if (nChips < min) min = nChips;
             if (nChips > max) max = nChips;
             if (p == human)
@@ -104,9 +122,11 @@ public class ChipLeaderPanel extends DDTabPanel
         // finished players
         for (int i = 0; i < nNum; i++)
         {
-            p = leaders.get(i);
-            if ((p.getChipCount() != 0 && !bDone) || p.getPlace() == 0) continue;
-            finished.add(new RankInfo(p, i+1));
+            info = leaders.get(i);
+            p = info.player;
+            if ((info.nChips != 0 && !bDone) || p.getPlace() == 0) continue;
+            info.nRank = i+1;
+            finished.add(info);
             if (p == human)
             {
                 nHumanRank = i+1;
@@ -164,7 +184,7 @@ public class ChipLeaderPanel extends DDTabPanel
 
             if (human.getPlace() == 0 && !human.isObserver())
             {
-                int chip = human.getChipCount();
+                int chip = game_.getSettledChipCount(human);
                 int big = game_.getProfile().getLastBigBlind(human.getTable().getLevel());
                 double perc = ((double) chip / (double) total) * 100.0d;
                 double multavg = (double) chip / (double) avg;
@@ -226,13 +246,53 @@ public class ChipLeaderPanel extends DDTabPanel
     {
         PokerPlayer player;
         int nRank;
+        int nChips; // NO_CHIPS means none captured - display the live count instead
 
         RankInfo(PokerPlayer player, int nRank)
         {
+            this(player, nRank, NO_CHIPS);
+        }
+
+        RankInfo(PokerPlayer player, int nRank, int nChips)
+        {
             this.player = player;
             this.nRank = nRank;
+            this.nChips = nChips;
         }
     }
+
+    /**
+     * Marks a RankInfo which carries no captured chip count.  TableListPanel builds
+     * RankInfo directly to show a live view of one table, and must keep showing live
+     * chips so it agrees with the felt.
+     */
+    static final int NO_CHIPS = -1;
+
+    /**
+     * Orders players by captured chip count.  Mirrors PokerGame.SortChips, but reads
+     * the captured count rather than the live one so the ordering cannot change
+     * underneath the sort.
+     */
+    private static final Comparator<RankInfo> SORT_SETTLED = new Comparator<RankInfo>()
+    {
+        public int compare(RankInfo r1, RankInfo r2)
+        {
+            // reverse comparison so highest chips at top
+            int diff = r2.nChips - r1.nChips;
+            if (diff != 0) return diff;
+
+            // if no diff, and chip count is zero, sort by place
+            // normal comparison so best finish at top
+            if (r1.nChips == 0)
+            {
+                diff = r1.player.getPlace() - r2.player.getPlace();
+                if (diff != 0) return diff;
+            }
+
+            // if still no diff, rank by id, which puts human towards the top
+            return r1.player.getID() - r2.player.getID();
+        }
+    };
 
     public static final String COL_SEAT = "seat";
     public static final String COL_RANK = "rank";
@@ -300,6 +360,10 @@ public class ChipLeaderPanel extends DDTabPanel
             return players.get(r).nRank;
         }
 
+        public int getChips(int r) {
+            return players.get(r).nChips;
+        }
+
         public String getColumnName(int c) {
             return names[c];
         }
@@ -362,7 +426,10 @@ public class ChipLeaderPanel extends DDTabPanel
             else if (names[colIndex].equals(COL_CHIPS))
             {
                 if (p == null || getRank(rowIndex) < 0) return "";
-                sValue = getNumber(p.getChipCount());
+                // fall back to the live count for callers which build RankInfo
+                // directly (TableListPanel) - see NO_CHIPS
+                int nChips = getChips(rowIndex);
+                sValue = getNumber(nChips == NO_CHIPS ? p.getChipCount() : nChips);
             }
             else if (names[colIndex].equals(COL_BUYIN))
             {

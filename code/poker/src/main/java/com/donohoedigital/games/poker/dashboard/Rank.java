@@ -60,15 +60,33 @@ public class Rank extends DashboardItem
         super(context, "rank");
         setDynamicTitle(true);
         //setTableEventsImmediate(); // we need them immediately so rank is correct
+
+        // TYPE_END_HAND is what keeps the rank current.  It is fired at the end of
+        // HoldemHand.resolve(), once the pot has been awarded, so every chip count in
+        // the tournament is settled at that moment: the all-computer tables played
+        // their whole hand back at our first betting round (see
+        // TournamentDirector.doBettingAllComputer).  Without it the rank does not move
+        // until the *next* hand is dealt - with auto deal off, that means it sits stale
+        // for as long as the player looks at the pot they just won.
+        //
+        // TYPE_NEW_HAND is still needed: busted players are not removed and tables are
+        // not consolidated until the next hand's clean-up, so it is what corrects the
+        // "out of N players at M tables" part of the message.
+        //
+        // TYPE_PLAYER_CHIPS_CHANGED looks dead but is not - it is fired only by the
+        // cheat menu's change-chip-count option (ShowTournamentTable), which is the
+        // one way chips move outside of a hand.
         if (game_.isOnlineGame())
         {
             trackTableEvents(PokerTableEvent.TYPE_NEW_HAND |
+                             PokerTableEvent.TYPE_END_HAND |
                              PokerTableEvent.TYPE_PLAYER_CHIPS_CHANGED |
                              PokerTableEvent.TYPE_STATE_CHANGED);
         }
         else
         {
             trackTableEvents(PokerTableEvent.TYPE_NEW_HAND |
+                             PokerTableEvent.TYPE_END_HAND |
                              PokerTableEvent.TYPE_PLAYER_CHIPS_CHANGED);
         }
         game_.addPropertyChangeListener(PokerGame.PROP_GAME_LOADED, this);
@@ -91,7 +109,7 @@ public class Rank extends DashboardItem
     }
 
     /**
-     * update rank on new level change and new hand
+     * update rank on end of hand, new hand and new level change
      */
     @Override
     public void tableEventOccurred(PokerTableEvent event)
