@@ -595,6 +595,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         }
         manager.addItem(new MyTable(context_), false);
         manager.addItem(new Rank(context_), false);
+        manager.addItem(new PlayerInfo(context_), false);
         if (!game_.isOnlineGame() || bDashAdvisor)
         {
             manager.addItem(new DashboardAdvisor(context_), false);
@@ -605,7 +606,6 @@ public class ShowTournamentTable extends ShowPokerTable implements
         if (game_.isOnlineGame())
         {
             manager.addItem(new ObserversDash(context_), false);
-            manager.addItem(new PlayerInfo(context_), false);
         }
 
         manager.addItem(new DebugDash(context_), false);
