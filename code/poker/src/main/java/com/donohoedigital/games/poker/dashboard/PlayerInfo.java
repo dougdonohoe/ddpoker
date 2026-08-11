@@ -44,9 +44,11 @@ import com.donohoedigital.games.poker.PokerUtils;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.GuiManager;
 
 import javax.swing.*;
+import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 
 /**
@@ -60,18 +62,51 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
 {
     DDLabel labelInfo_;
     PokerPlayer last_;
+    private DDLabel labelName_;
+    private RankBandsPanel bands_;
 
     public PlayerInfo(GameContext context)
     {
         super(context, "playerinfo");
-        trackTableEvents(PokerTableEvent.TYPE_PLAYER_REBUY);
+
+        // TYPE_PLAYER_REBUY keeps the rebuy count honest.  The two hand events keep
+        // the ranks honest: the hovered player's position moves as the rest of the
+        // tournament plays, and the mouse can sit still across many hands, so
+        // without them the figures freeze at whatever they were when hovered.
+        // TYPE_END_HAND is the settled moment - see the note in Rank.
+        trackTableEvents(PokerTableEvent.TYPE_PLAYER_REBUY |
+                         PokerTableEvent.TYPE_END_HAND |
+                         PokerTableEvent.TYPE_NEW_HAND);
         PokerUtils.getGameboard().addTerritorySelectionListener(this);
     }
 
     protected JComponent createBody()
     {
+        DDPanel base = new DDPanel();
+        ((BorderLayout) base.getLayout()).setVgap(0);
+
+        // the player's name spans the full width, above everything else
+        labelName_ = new DDLabel(GuiManager.DEFAULT, STYLE);
+        base.add(labelName_, BorderLayout.NORTH);
+
+        // The graphic sits beside the rank rows rather than beside the panel as a
+        // whole, and is pinned to the top of them, so it stays level with the
+        // Tournament row however many rows are added underneath - rebuys, and the
+        // online-only rows, both come and go.
+        DDPanel rows = new DDPanel(GuiManager.DEFAULT, STYLE);
+        ((BorderLayout) rows.getLayout()).setHgap(4);
+
+        bands_ = new RankBandsPanel();
+        DDPanel bandsTop = new DDPanel();
+        ((BorderLayout) bandsTop.getLayout()).setVgap(0);
+        bandsTop.add(bands_, BorderLayout.NORTH);
+
         labelInfo_ = new DDLabel(GuiManager.DEFAULT, STYLE);
-        return labelInfo_;
+        rows.add(bandsTop, BorderLayout.WEST);
+        rows.add(labelInfo_, BorderLayout.CENTER);
+        base.add(rows, BorderLayout.CENTER);
+
+        return base;
     }
 
     /**
@@ -86,6 +121,10 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         if (t == null) p = null;
         else p = PokerUtils.getPokerPlayer(context_, t);
 
+        // fall back to ourselves, as the Player Style panel does, so the panel
+        // says something useful before the mouse has been anywhere
+        if (p == null) p = game_.getHumanPlayer();
+
         if (p != last_)
         {
             last_ = p;
@@ -98,6 +137,8 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
      */
     protected void updateInfo()
     {
+        if (!isOpen() || !isDisplayed()) return;
+
         if (last_ != null && !last_.isObserver())
         {
             String sRebuy = "";
@@ -119,7 +160,7 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
                         what = PropertyConfig.getMessage("msg.dash.rebuy.unlimited");
                     }
                     else if (nLeft > 0)
-                    {                        
+                    {
                         what = nLeft;
                     }
                 }
@@ -135,6 +176,20 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             int numLeft = game_.getNumPlayers() - game_.getNumPlayersOut();
             // if end of tournament, list number of players in tournament
             if (numLeft == 0) numLeft = game_.getNumPlayers();
+            int nTourneyRank = game_.getRank(last_);
+
+            // position at the hovered player's own table.  Rank of 0 means they are
+            // not seated - an observer, or a player already out - and at a single
+            // table the two scales would say the same thing, so the row is dropped.
+            PokerTable table = last_.getTable();
+            int nTableRank = table == null ? 0 : table.getRank(last_);
+            int nTableCount = table == null ? 0 : table.getNumOccupiedSeats();
+            boolean bSingleBar = game_.getNumTables() == 1 || nTableRank == 0 || nTableCount == 0;
+
+            String sTable = bSingleBar ? "" :
+                            PropertyConfig.getMessage("msg.dash.playerinfo.table",
+                                      PropertyConfig.getPlace(nTableRank),
+                                      nTableCount);
 
             // Disconnects and sit-outs can only happen in an online game - nothing in
             // a practice game sets either flag, so both counters would read zero for
@@ -144,24 +199,34 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
                                       last_.getHandsPlayedDisconnected(),
                                       last_.getHandsPlayedSitout());
 
+            labelName_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.name",
+                                      Utils.encodeHTML(last_.getName())));
+
+            // the table row follows the tournament row directly, so the two positions
+            // always read together and stay beside the graphic
             labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo",
-                                      Utils.encodeHTML(last_.getName()),
-                                      PropertyConfig.getPlace(game_.getRank(last_)),
+                                      PropertyConfig.getPlace(nTourneyRank),
                                       numLeft,
+                                      sTable,
                                       sOnline,
                                       sRebuy
             ));
+            bands_.setValues(nTourneyRank, numLeft, nTableRank, nTableCount, bSingleBar);
         }
         else
         {
             // keep the same height as when filled in, so the panel does not jump
             // about as the mouse moves on and off the players
+            String sTableSpace = game_.getNumTables() == 1 ? "" :
+                                 PropertyConfig.getMessage("msg.dash.playerinfo.table.space");
             String sOnlineSpace = !game_.isOnlineGame() ? "" :
                                   PropertyConfig.getMessage("msg.dash.playerinfo.online.space");
             String sRebuySpace = "";
             if (game_.getProfile().isRebuys()) sRebuySpace = PropertyConfig.getMessage("msg.dash.rebuy.space");
+            labelName_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.name.none"));
             labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.none",
-                                      sOnlineSpace, sRebuySpace));
+                                      sTableSpace, sOnlineSpace, sRebuySpace));
+            bands_.setValues(0, 0, 0, 0, true);
         }
 
     }
