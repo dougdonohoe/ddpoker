@@ -34,6 +34,7 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,6 +58,14 @@ public class PokerGameSettledChipsTest
     {
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
         game_ = new PokerGame(null);
+        game_.setProfile(new TournamentProfile("test")); // dealing a hand reads it
+    }
+
+    private PokerTable table(int nNum)
+    {
+        PokerTable t = new PokerTable(game_, nNum);
+        t.setMinChip(1); // HoldemHand.addToPot() divides by this
+        return t;
     }
 
     /**
@@ -68,38 +77,74 @@ public class PokerGameSettledChipsTest
         PokerPlayer p = new PokerPlayer(nId, sName, true);
         p.setChipCount(nChips);
         p.newSimulatedHand(); // snapshots nChipsAtStart_
-        p.setTable(table, nSeat);
+        table.setPlayer(p, nSeat); // seats at the table AND sets the player's table/seat
         game_.addPlayer(p);
         return p;
     }
 
     /**
-     * Commit chips to the pot the way a bet does - straight off the live stack,
-     * leaving the start-of-hand snapshot alone.
+     * Put a hand in progress at the table, far enough along that chips can be committed.
+     * setPlayerOrder() is the first thing HoldemHand.deal() does, and the pot bookkeeping
+     * needs it before any bet is recorded.
      */
-    private void commitToPot(PokerPlayer p, int nAmount)
+    private HoldemHand startHand(PokerTable table)
     {
-        p.setChipCount(p.getChipCount() - nAmount);
+        table.setButton(1); // seat 0 posts the big blind, so it commits a useful amount
+        HoldemHand hhand = new HoldemHand(table);
+        table.setHoldemHand(hhand);
+        hhand.deal();
+        return hhand;
     }
 
     @Test
     public void reportsStartOfHandChipsWhileHandInProgress()
     {
-        PokerTable table = new PokerTable(game_, 1);
+        PokerTable table = table(1);
         PokerPlayer doug = seat(table, 0, 1, "Doug", 1000);
-        table.setHoldemHand(new HoldemHand());
+        seat(table, 1, 99, "Opponent", 1000); // a hand needs two players
+        HoldemHand hhand = startHand(table);
         assertTrue("expected a hand in progress", table.isHandInProgress());
 
-        commitToPot(doug, 100);
+        // dealing posts the blinds, which is chips out of the stack and into the pot
+        int nCommitted = hhand.getTotalBet(doug);
+        assertTrue("expected the deal to commit chips", nCommitted > 0);
 
-        assertEquals("live count reflects the bet", 900, doug.getChipCount());
-        assertEquals("settled count ignores the bet", 1000, game_.getSettledChipCount(doug));
+        assertEquals("live count is down by what is in the pot",
+                     1000 - nCommitted, doug.getChipCount());
+        assertEquals("settled count is the stack before it went in",
+                     1000, game_.getSettledChipCount(doug));
+    }
+
+    /**
+     * PokerTable.startNewHand() fires TYPE_NEW_HAND from setHoldemHand() and only then
+     * calls deal(), which is what snapshots PokerPlayer.getChipCountAtStart().  Anything
+     * recomputing on that event sees a hand in progress with nothing committed yet, and
+     * must report the live count - the start-of-hand snapshot is still the *previous*
+     * hand's at that instant.
+     */
+    @Test
+    public void reportsLiveChipsAfterNewHandFiresButBeforeTheDeal()
+    {
+        PokerTable table = table(1);
+        PokerPlayer doug = seat(table, 0, 1, "Doug", 1000);
+
+        // won the last hand - live count is now settled at 1400, but the snapshot still
+        // holds 1000 until the next deal calls PokerPlayer.newHand()
+        doug.setChipCount(1400);
+        assertEquals("snapshot is deliberately stale here", 1000, doug.getChipCountAtStart());
+
+        // new hand created and TYPE_NEW_HAND fired; deal() has not run
+        table.setHoldemHand(new HoldemHand(table));
+        assertTrue(table.isHandInProgress());
+
+        assertEquals("must not report the previous hand's snapshot",
+                     1400, game_.getSettledChipCount(doug));
     }
 
     @Test
     public void reportsLiveChipsBetweenHands()
     {
-        PokerTable table = new PokerTable(game_, 1);
+        PokerTable table = table(1);
         PokerPlayer doug = seat(table, 0, 1, "Doug", 1000);
         assertFalse("expected no hand in progress", table.isHandInProgress());
 
@@ -127,15 +172,20 @@ public class PokerGameSettledChipsTest
     @Test
     public void midHandPlayerIsNotSunkBelowSettledRivals()
     {
-        PokerTable mine = new PokerTable(game_, 1);
-        PokerTable theirs = new PokerTable(game_, 2);
+        PokerTable mine = table(1);
+        PokerTable theirs = table(2);
 
         PokerPlayer doug = seat(mine, 0, 1, "Doug", 1000);
-        PokerPlayer rival = seat(theirs, 0, 2, "Rival", 950);
+        seat(mine, 1, 99, "Opponent", 1000); // a hand needs two players
+        PokerPlayer rival = seat(theirs, 0, 2, "Rival", 0);
 
-        // my table is mid-hand, theirs has finished
-        mine.setHoldemHand(new HoldemHand());
-        commitToPot(doug, 100);
+        // my table is mid-hand, theirs is between hands
+        HoldemHand hhand = startHand(mine);
+        int nCommitted = hhand.getTotalBet(doug);
+        assertTrue("expected the deal to commit chips", nCommitted > 1);
+
+        // park the rival between my live count and my settled one
+        rival.setChipCount(1000 - nCommitted + 1);
 
         // live counts have me behind, which is the bug
         assertTrue("live comparison sinks the mid-hand player",

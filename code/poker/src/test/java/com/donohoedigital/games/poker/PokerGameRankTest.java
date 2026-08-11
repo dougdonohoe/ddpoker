@@ -35,6 +35,7 @@ package com.donohoedigital.games.poker;
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -58,12 +60,47 @@ public class PokerGameRankTest
     {
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
         game_ = new PokerGame(null);
+        game_.setProfile(new TournamentProfile("test")); // dealing a hand reads it
     }
 
     private PokerPlayer add(int nId, int nChips)
     {
         PokerPlayer p = new PokerPlayer(nId, "P" + nId, true);
         p.setChipCount(nChips);
+        game_.addPlayer(p);
+        return p;
+    }
+
+    private PokerTable table(int nNum)
+    {
+        PokerTable t = new PokerTable(game_, nNum);
+        t.setMinChip(1); // HoldemHand.addToPot() divides by this
+        return t;
+    }
+
+    /**
+     * Put a hand in progress at the table, far enough along that chips can be committed.
+     * setPlayerOrder() is the first thing HoldemHand.deal() does, and the pot bookkeeping
+     * needs it before any bet is recorded.
+     */
+    private HoldemHand startHand(PokerTable table)
+    {
+        table.setButton(1); // seat 0 posts the big blind, so it commits a useful amount
+        HoldemHand hhand = new HoldemHand(table);
+        table.setHoldemHand(hhand);
+        hhand.deal();
+        return hhand;
+    }
+
+    /**
+     * Seat a player, snapshotting their chips as the count at the start of the hand.
+     */
+    private PokerPlayer seat(PokerTable table, int nSeat, int nId, int nChips)
+    {
+        PokerPlayer p = new PokerPlayer(nId, "P" + nId, true);
+        p.setChipCount(nChips);
+        p.newSimulatedHand();
+        table.setPlayer(p, nSeat); // seats at the table AND sets the player's table/seat
         game_.addPlayer(p);
         return p;
     }
@@ -173,18 +210,18 @@ public class PokerGameRankTest
     @Test
     public void allInPlayerDoesNotDisplaceFinishersInRankOrder()
     {
-        PokerTable table = new PokerTable(game_, 1);
+        PokerTable table = table(1);
 
         PokerPlayer leader = new PokerPlayer(1, "Leader", true);
         leader.setChipCount(1000);
         leader.newSimulatedHand();
-        leader.setTable(table, 0);
+        table.setPlayer(leader, 0);
         game_.addPlayer(leader);
 
         PokerPlayer allin = new PokerPlayer(2, "AllIn", true);
         allin.setChipCount(500);
         allin.newSimulatedHand();
-        allin.setTable(table, 1);
+        table.setPlayer(allin, 1);
         game_.addPlayer(allin);
 
         PokerPlayer third = add(3, 0);
@@ -192,8 +229,8 @@ public class PokerGameRankTest
         PokerPlayer fourth = add(4, 0);
         fourth.setPlace(4);
 
-        // hand in progress, AllIn shoves their whole stack into the pot
-        table.setHoldemHand(new HoldemHand());
+        // hand in progress and AllIn has no chips left in front of them
+        startHand(table);
         allin.setChipCount(0);
 
         List<PokerPlayer> rank = game_.getPlayersByRank();
@@ -201,6 +238,58 @@ public class PokerGameRankTest
         assertEquals("an all-in player is still a live player", allin, rank.get(1));
         assertEquals("paid finishers keep their index", third, rank.get(2));
         assertEquals("paid finishers keep their index", fourth, rank.get(3));
+    }
+
+    /**
+     * Tables are not in step with each other - online they are independent state
+     * machines - so a rank computed while one table is mid-hand must not sink the
+     * players sitting at it.  This is the shape of the online bug: the Rank dashboard
+     * item recomputes when another table finishes a hand, which lands in the middle of
+     * ours, and PlayerInfo recomputes on every mouse-over.
+     */
+    @Test
+    public void comparesSettledChipsAcrossTablesMidHand()
+    {
+        PokerTable mine = table(1);
+        PokerTable theirs = table(2);
+
+        PokerPlayer doug = seat(mine, 0, 1, 1000);
+        seat(mine, 1, 98, 1); // a hand needs two players
+        PokerPlayer rival = seat(theirs, 0, 2, 0);
+
+        // my table is mid-hand - dealing put my blind in the pot - and theirs is between
+        // hands.  Park the rival between my live count and my settled one.
+        HoldemHand hhand = startHand(mine);
+        int nCommitted = hhand.getTotalBet(doug);
+        assertTrue("expected the deal to commit chips", nCommitted > 1);
+        rival.setChipCount(1000 - nCommitted + 1);
+
+        assertTrue("live counts would invert these two",
+                   doug.getChipCount() < rival.getChipCount());
+
+        assertEquals("chips in the pot must not cost me a place", 1, game_.getRank(doug));
+        assertEquals(2, game_.getRank(rival));
+    }
+
+    /**
+     * The mid-hand player must not gain a place either - only the chips actually
+     * committed are restored, not the pot they might win.
+     */
+    @Test
+    public void settledChipsDoNotOverstateTheMidHandPlayer()
+    {
+        PokerTable mine = table(1);
+        PokerTable theirs = table(2);
+
+        PokerPlayer doug = seat(mine, 0, 1, 900);
+        seat(mine, 1, 98, 1); // a hand needs two players
+        PokerPlayer rival = seat(theirs, 0, 2, 950);
+
+        HoldemHand hhand = startHand(mine);
+        assertTrue("expected the deal to commit chips", hhand.getTotalBet(doug) > 0);
+
+        assertEquals("still behind on settled chips", 2, game_.getRank(doug));
+        assertEquals(1, game_.getRank(rival));
     }
 
     @Test
