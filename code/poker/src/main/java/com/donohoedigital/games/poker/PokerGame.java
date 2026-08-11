@@ -488,27 +488,104 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * Return rank of player based on chips
+     * Return rank of player based on chips.  Players holding equal chips share a
+     * rank, so this is one more than the number of players holding strictly more -
+     * the same result the previous sort-based version produced.
+     *
+     * Compares settled chip counts, not live ones - see getSettledChipCount().  A rank
+     * is a comparison across the whole tournament, and tables are not in step with each
+     * other: in an online game they are independent state machines, so at any instant
+     * some are mid-hand and some are between hands.  Comparing live counts sinks
+     * whoever has chips in a pot.  This is reached at arbitrary moments - the Rank
+     * dashboard item recomputes when another table finishes a hand, which lands in the
+     * middle of ours, and PlayerInfo recomputes on every mouse-over.
+     *
+     * Counted in a single pass rather than sorting a copy of the player list.  This
+     * runs every time the rank is displayed, which is at the end of every hand, and in
+     * a large tournament the old version allocated and sorted a 5,625 element list
+     * each time.
+     *
+     * The loop bound is re-read each pass on purpose: players_ can shrink from
+     * another thread (see removePlayer(), called from OnlineManager when a player
+     * switches to observer), and a bound captured up front would index off the end.
      */
     public int getRank(PokerPlayer player)
     {
-        PokerPlayer p;
-        int nLastChips = 0;
-        int nRank = 0;
-        int nChips;
-        List<PokerPlayer> rank = getPlayersByRank();
-        for (int i = 0; i < rank.size(); i++)
+        int nChips = getSettledChipCount(player);
+        int nRank = 1;
+        boolean bFound = false;
+
+        for (int i = 0; i < getNumPlayers(); i++)
         {
-            p = rank.get(i);
-            nChips = p.getChipCount();
-            if (nChips != nLastChips)
+            PokerPlayer p = getPokerPlayerAt(i);
+            if (p == player)
             {
-                nRank = (i + 1);
+                bFound = true;
+                continue;
             }
-            nLastChips = nChips;
-            if (p == player) return nRank;
+            if (getSettledChipCount(p) > nChips) nRank++;
         }
-        throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "No rank for player", player.toString());
+
+        if (!bFound)
+        {
+            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "No rank for player", player.toString());
+        }
+        return nRank;
+    }
+
+    /**
+     * Get a player's chip count as of the last point at which chips were settled -
+     * that is, with nothing committed to a pot yet to be awarded.
+     *
+     * getChipCount() is the live stack, which is decremented the instant a blind,
+     * ante or bet is committed and is not credited back until the pot is awarded.
+     * Comparing live counts across tables while a hand is in progress therefore
+     * understates whoever is in the middle of a hand - which is everyone at the
+     * current table for most of its hand.  Same idea as BUG 420 (see
+     * PokerTable.isRebuyAllowed()).
+     *
+     * Not synchronized on purpose - see PokerTable.isHandInProgress().
+     */
+    public int getSettledChipCount(PokerPlayer player)
+    {
+        PokerTable table = player.getTable();
+        if (table == null) return player.getChipCount();
+
+        // Add back what this player has put in the pot this hand.  Deliberately not
+        // PokerPlayer.getChipCountAtStart(), which BUG 420 uses: that snapshot is taken
+        // in PokerPlayer.newHand(), during HoldemHand.deal(), which runs *after*
+        // PokerTable.startNewHand() has already fired TYPE_NEW_HAND - so anything
+        // recomputing on that event would read the previous hand's value.  Summing the
+        // committed chips is right whenever it is read; before any action it is zero.
+        if (table.isHandInProgress())
+        {
+            HoldemHand hhand = table.getHoldemHand();
+            if (hhand != null) return player.getChipCount() + hhand.getTotalBet(player);
+        }
+
+        // All-computer tables play an entire hand in one shot inside
+        // TournamentDirector.doBettingAllComputer(), which runs at the *first* betting
+        // round of the current table's hand.  So once they have played, they are a hand
+        // ahead of us for as long as our hand lasts; roll them back so every table is
+        // reported as of the same point in the tournament.  HoldemHand.simulateHand()
+        // calls PokerPlayer.newSimulatedHand() before any bets, so getChipCountAtStart()
+        // is their settled prior stack.
+        //
+        // The hand number test is what says "they have played".  Our hand number is
+        // incremented in startNewHand() before the deal, so between our new hand and our
+        // first bet the computer tables are still a hand behind us and their live count
+        // is already the settled one - rolling back there would go a hand too far.
+        if (!isOnlineGame() && table.isAllComputer())
+        {
+            PokerTable current = getCurrentTable();
+            if (current != null && current.isHandInProgress() &&
+                table.getHandNum() >= current.getHandNum())
+            {
+                return player.getChipCountAtStart();
+            }
+        }
+
+        return player.getChipCount();
     }
 
     /**

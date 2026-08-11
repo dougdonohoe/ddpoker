@@ -1534,7 +1534,24 @@ public class PokerTable implements ObjectID
     {
         return hhand_;
     }
-    
+
+    /**
+     * Is a hand in progress at this table - that is, are there chips committed to
+     * a pot which have not yet been awarded?  When this is true, the chip counts of
+     * players at this table are mid-hand and must not be compared against players at
+     * other tables; use PokerGame.getSettledChipCount() instead.  Note that is
+     * deliberately not PokerPlayer.getChipCountAtStart() - that snapshot is not taken
+     * until the deal, which is too late for anything reacting to TYPE_NEW_HAND.
+     * See BUG 420 for the original use of this test, in isRebuyAllowed() below.
+     *
+     * Not synchronized on purpose - this is read from the swing thread while the
+     * tournament director holds this table's monitor.
+     */
+    public boolean isHandInProgress()
+    {
+        return hhand_ != null && hhand_.getRound() != HoldemHand.ROUND_SHOWDOWN;
+    }
+
     /**
      * Set holdem hand (called directly for testing/other usage, normal way is to startNewHand(),
      * which calls this)
@@ -1611,7 +1628,7 @@ public class PokerTable implements ObjectID
         // BUG 420 - use chip count at start of hand to determine if
         // player can rebuy during a hand.  This prevents someone from
         // going all-in and then rebuying
-        if (hhand_ != null && hhand_.getRound() != HoldemHand.ROUND_SHOWDOWN)
+        if (isHandInProgress())
         {
             nChipCount += player.getChipCountAtStart();
         }

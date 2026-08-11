@@ -11,3 +11,7 @@ Thumbs.db
 build
 release
 installer/builds
+
+# AI
+CLAUDE.md
+TODO.md
