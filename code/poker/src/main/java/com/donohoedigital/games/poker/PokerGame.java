@@ -488,27 +488,41 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * Return rank of player based on chips
+     * Return rank of player based on chips.  Players holding equal chips share a
+     * rank, so this is one more than the number of players holding strictly more -
+     * the same result the previous sort-based version produced.
+     *
+     * Counted in a single pass rather than sorting a copy of the player list.  This
+     * runs every time the rank is displayed, which is now at the end of every hand,
+     * and in a large tournament the old version allocated and sorted a 5,625 element
+     * list each time.
+     *
+     * The loop bound is re-read each pass on purpose: players_ can shrink from
+     * another thread (see removePlayer(), called from OnlineManager when a player
+     * switches to observer), and a bound captured up front would index off the end.
      */
     public int getRank(PokerPlayer player)
     {
-        PokerPlayer p;
-        int nLastChips = 0;
-        int nRank = 0;
-        int nChips;
-        List<PokerPlayer> rank = getPlayersByRank();
-        for (int i = 0; i < rank.size(); i++)
+        int nChips = player.getChipCount();
+        int nRank = 1;
+        boolean bFound = false;
+
+        for (int i = 0; i < getNumPlayers(); i++)
         {
-            p = rank.get(i);
-            nChips = p.getChipCount();
-            if (nChips != nLastChips)
+            PokerPlayer p = getPokerPlayerAt(i);
+            if (p == player)
             {
-                nRank = (i + 1);
+                bFound = true;
+                continue;
             }
-            nLastChips = nChips;
-            if (p == player) return nRank;
+            if (p.getChipCount() > nChips) nRank++;
         }
-        throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "No rank for player", player.toString());
+
+        if (!bFound)
+        {
+            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "No rank for player", player.toString());
+        }
+        return nRank;
     }
 
     /**
