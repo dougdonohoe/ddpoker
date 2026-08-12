@@ -36,21 +36,22 @@
 
 set -e
 
-# Verify we have a version
-VERSION=$1
-if [[ -z "$VERSION" ]]; then
-  echo "mac-set-icons-notarize.sh [version]"
+# Verify we have a dmg to work on
+DMG=$1
+if [[ -z "$DMG" ]]; then
+  echo "mac-set-icons-notarize.sh [dmg-file-name]"
   exit 1
 fi
+BASE="${DMG%.dmg}"
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPTDIR"
 DDHOME="$(git rev-parse --show-toplevel)"
 
-SRC="$DDHOME/installer/builds/ddpoker${VERSION}.dmg"
-BAK="/tmp/ddpoker${VERSION}.bak.dmg"
-DST_RW="$DDHOME/installer/builds/ddpoker${VERSION}_rw.dmg"
-DST_ALT="$DDHOME/installer/builds/ddpoker${VERSION}_alt.dmg"
+SRC="$DDHOME/installer/builds/$DMG"
+BAK="/tmp/${BASE}.bak.dmg"
+DST_RW="$DDHOME/installer/builds/${BASE}_rw.dmg"
+DST_ALT="$DDHOME/installer/builds/${BASE}_alt.dmg"
 DST_MNT="/Volumes/dd_poker_dst"
 
 if [[ ! -f "$SRC" ]]; then
