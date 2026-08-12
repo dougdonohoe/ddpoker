@@ -415,40 +415,40 @@ public class PokerTable implements ObjectID
         return players_[nSeat];
     }
 
+    // this table's seats, as the players a rank is counted over.  The whole array is
+    // walked, not getSeats(): addPlayer() seats at a random index in 0..SEATS-1
+    // whatever the table's size, so a shorter bound would miss players in high seats.
+    private final RankUtils.Players rankPlayers_ = new RankUtils.Players()
+    {
+        public int size()
+        {
+            return PokerConstants.SEATS;
+        }
+
+        public PokerPlayer getPlayerAt(int n)
+        {
+            return players_[n];
+        }
+    };
+
     /**
      * Return rank of a player among those seated at this table, based on chips.
-     * Players holding equal chips share a rank, so this is one more than the
-     * number seated here holding strictly more - the same definition
-     * PokerGame.getRank() uses, scoped to one table.
+     * Counted by RankUtils, the same way PokerGame.getRank() counts it, scoped to
+     * one table - so a player's table rank and tournament rank can never disagree
+     * about ties or about which chip count they compare.
      *
      * Returns 0 when the player is not seated here.  Unlike the tournament-wide
      * version that is not an error: this is read for whichever player is moused
-     * over, who may be seated anywhere.
-     *
-     * Compares settled chip counts for the same reason PokerGame.getRank() does -
-     * this is reached on every mouse-over, which lands mid-hand, where live counts
-     * sink whoever has chips in a pot.  See PokerGame.getSettledChipCount().
+     * over, who may be seated anywhere - or, once they are out, nowhere.
      */
     public int getRank(PokerPlayer player)
     {
+        // no game while a table is being demarshalled, and SimulatorDialog builds one
+        // with none at all
         PokerGame game = getGame();
-        int nChips = game.getSettledChipCount(player);
-        int nRank = 1;
-        boolean bFound = false;
+        if (game == null) return 0;
 
-        for (int i = 0; i < PokerConstants.SEATS; i++)
-        {
-            PokerPlayer p = players_[i];
-            if (p == null) continue;
-            if (p == player)
-            {
-                bFound = true;
-                continue;
-            }
-            if (game.getSettledChipCount(p) > nChips) nRank++;
-        }
-
-        return bFound ? nRank : 0;
+        return RankUtils.getRank(game, rankPlayers_, player);
     }
 
     /**

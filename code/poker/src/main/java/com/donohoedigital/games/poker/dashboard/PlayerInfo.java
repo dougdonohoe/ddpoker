@@ -46,6 +46,7 @@ import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.DDLabel;
 import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -60,6 +61,9 @@ import java.awt.event.MouseEvent;
  */
 public class PlayerInfo extends DashboardItem implements TerritorySelectionListener
 {
+    /** pixels between the name above and the top of the position graphic */
+    private static final int BANDS_TOP_GAP = 3;
+
     DDLabel labelInfo_;
     PokerPlayer last_;
     private DDLabel labelName_;
@@ -83,7 +87,6 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
     protected JComponent createBody()
     {
         DDPanel base = new DDPanel();
-        ((BorderLayout) base.getLayout()).setVgap(0);
 
         // the player's name spans the full width, above everything else
         labelName_ = new DDLabel(GuiManager.DEFAULT, STYLE);
@@ -96,12 +99,20 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         DDPanel rows = new DDPanel(GuiManager.DEFAULT, STYLE);
         ((BorderLayout) rows.getLayout()).setHgap(4);
 
+        // Dropped clear of the name above rather than pinned flush to it.  A line of
+        // text carries its own leading and the graphic carries none, so flush against
+        // the name the graphic reads as squashed against it.
         bands_ = new RankBandsPanel();
-        DDPanel bandsTop = new DDPanel();
-        ((BorderLayout) bandsTop.getLayout()).setVgap(0);
-        bandsTop.add(bands_, BorderLayout.NORTH);
+        JComponent bandsTop = GuiUtils.NORTH(bands_);
+        bandsTop.setBorder(BorderFactory.createEmptyBorder(BANDS_TOP_GAP, 0, 0, 0));
 
+        // Top aligned so the first row stays level with the graphic.  A DDLabel
+        // centres vertically by default, which would leave the two out of step
+        // whenever the rows are shorter than the graphic - a single-table practice
+        // game with no rebuys is one row against 25 pixels.
         labelInfo_ = new DDLabel(GuiManager.DEFAULT, STYLE);
+        labelInfo_.setVerticalAlignment(SwingConstants.TOP);
+
         rows.add(bandsTop, BorderLayout.WEST);
         rows.add(labelInfo_, BorderLayout.CENTER);
         base.add(rows, BorderLayout.CENTER);
@@ -121,10 +132,6 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         if (t == null) p = null;
         else p = PokerUtils.getPokerPlayer(context_, t);
 
-        // fall back to ourselves, as the Player Style panel does, so the panel
-        // says something useful before the mouse has been anywhere
-        if (p == null) p = game_.getHumanPlayer();
-
         if (p != last_)
         {
             last_ = p;
@@ -139,7 +146,29 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
     {
         if (!isOpen() || !isDisplayed()) return;
 
-        if (last_ != null && !last_.isObserver())
+        // Fall back to ourselves, as the Player Style panel does, so the panel says
+        // something useful before the mouse has been anywhere.  Done here rather than
+        // where the mouse is read: that only runs once the mouse has crossed the
+        // gameboard, and the panel is drawn - and starts tracking hands - well before.
+        if (last_ == null) last_ = game_.getHumanPlayer();
+
+        // A player who is out has no table.  PokerGame.playerOut() marks them
+        // eliminated but only an online game converts them to an observer, so in a
+        // practice game someone watching the AI after busting is still a plain player
+        // whose seat OtherTables.cleanTable() has already taken away.  There is no
+        // position to report for them, and the rebuy row below needs a table, so they
+        // get the same empty state as no player at all.
+        PokerTable table = last_ == null || last_.isObserver() ? null : last_.getTable();
+        int nTableRank = table == null ? 0 : table.getRank(last_);
+        boolean bSeated = nTableRank > 0;
+
+        // One scale or two, and with it the presence of the Table row.  Decided by the
+        // tournament alone so that both branches below agree: anything else and the
+        // empty state pads to a different height than the filled-in state, and the
+        // panel changes size as the mouse moves on and off the players.
+        boolean bSingleBar = game_.getNumTables() == 1;
+
+        if (bSeated)
         {
             String sRebuy = "";
             TournamentProfile profile = game_.getProfile();
@@ -147,7 +176,6 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             {
                 Object what = null;
 
-                PokerTable table = last_.getTable();
                 int nLast = profile.getLastRebuyLevel();
                 if (table.getLevel() <= nLast)
                 {
@@ -178,13 +206,9 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             if (numLeft == 0) numLeft = game_.getNumPlayers();
             int nTourneyRank = game_.getRank(last_);
 
-            // position at the hovered player's own table.  Rank of 0 means they are
-            // not seated - an observer, or a player already out - and at a single
-            // table the two scales would say the same thing, so the row is dropped.
-            PokerTable table = last_.getTable();
-            int nTableRank = table == null ? 0 : table.getRank(last_);
-            int nTableCount = table == null ? 0 : table.getNumOccupiedSeats();
-            boolean bSingleBar = game_.getNumTables() == 1 || nTableRank == 0 || nTableCount == 0;
+            // position at the hovered player's own table.  Dropped at a single table,
+            // where the two scales would say the same thing.
+            int nTableCount = table.getNumOccupiedSeats();
 
             String sTable = bSingleBar ? "" :
                             PropertyConfig.getMessage("msg.dash.playerinfo.table",
@@ -216,8 +240,9 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         else
         {
             // keep the same height as when filled in, so the panel does not jump
-            // about as the mouse moves on and off the players
-            String sTableSpace = game_.getNumTables() == 1 ? "" :
+            // about as the mouse moves on and off the players.  Each row that the
+            // filled-in state can show is padded for on the same condition it appears.
+            String sTableSpace = bSingleBar ? "" :
                                  PropertyConfig.getMessage("msg.dash.playerinfo.table.space");
             String sOnlineSpace = !game_.isOnlineGame() ? "" :
                                   PropertyConfig.getMessage("msg.dash.playerinfo.online.space");
@@ -226,7 +251,10 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             labelName_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.name.none"));
             labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.none",
                                       sTableSpace, sOnlineSpace, sRebuySpace));
-            bands_.setValues(0, 0, 0, 0, true);
+
+            // empty, but the same number of scales as when filled in - otherwise the
+            // graphic changes shape as the mouse moves on and off the players
+            bands_.setValues(0, 0, 0, 0, bSingleBar);
         }
 
     }
