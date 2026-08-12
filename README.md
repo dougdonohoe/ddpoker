@@ -51,7 +51,15 @@ no longer run a server, but you can run your own using the code in this repo.
 
 ## Installers
 
-See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for the latest Mac, Linux and Windows installers.
+<!-- installers:begin (updated by tools/bin/buildall.pl -github) -->
+Download the latest release, **3.1.6**:
+
+- **Mac**: [ddpoker3_1_6.dmg](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.6/ddpoker3_1_6.dmg)
+- **Windows**: [ddpoker3_1_6.exe](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.6/ddpoker3_1_6.exe)
+- **Linux**: [ddpoker3_1_6.sh](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.6/ddpoker3_1_6.sh)
+<!-- installers:end -->
+
+See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for release notes and older versions.
 
 [<img src="images/install4j_small.png">](https://www.ej-technologies.com/install4j)
 Installers are built by [Donohoe Digital LLC](https://www.donohoedigital.com/) 
@@ -64,7 +72,7 @@ the [Developer Notes](README-DEV.md) explains.
 
 ## TL;DR Running DD Poker From Source
 
-If you are impatient and just want to run the DD Poker game without
+If you are an impatient developer and just want to run the DD Poker game without
 reading all the [developer documentation](README-DEV.md) or worrying
 about servers and databases, follow these steps:
 

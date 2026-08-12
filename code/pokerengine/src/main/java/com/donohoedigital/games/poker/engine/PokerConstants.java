@@ -48,26 +48,37 @@ import com.donohoedigital.p2p.P2PURL;
  */
 public class PokerConstants
 {
-    // version of Poker
-    //public static Version VERSION = new Version(1, 0, true, 8, false, 0, false); // beta
-    //public static Version VERSION = new Version(1, 0, false, 0, true, 1, false); // demo 1
-    //public static Version VERSION = new Version(1, 0, false); // release 1.0 CD
-    //public static Version VERSION = new Version(1, 0, true); // release 1.0 download
-    //public static Version VERSION = new Version(1, 1, false); // release 1.1 CD
-    //public static Version VERSION = new Version(1, 1, true); // release 1.1 download
-    //public static Version VERSION = new Version(1, 2, false, 0, true, 1, false); // release 1.2 demo 1
-    //public static Version VERSION = new Version(1, 2, true); // release 1.2 - Patch 2
-    //public static Version VERSION = new Version(Version.TYPE_BETA, 2, 0, 6, 4, true); // release 2.0 - Beta 6, Patch 4
-    //public static final Version VERSION = new Version(2, 5, 3, true); // release 2.5 - Patch 3
-    //public static final Version VERSION = new Version(3, 0, 5, true); // release 3.0, Patch 5
-    //public static final Version VERSION = new Version(3, 0, 6, true); // release 3.0, Patch 6
-    //public static final Version VERSION = new Version(3, 1, 0, true); // release 3.1 (open sourced!)
-    //public static final Version VERSION = new Version(3, 1, 1, true); // release 3.1.1 (add Windows installer)
-    //public static final Version VERSION = new Version(3, 1, 2, true); // release 3.1.2 (dependency updates)
-    //public static final Version VERSION = new Version(3, 1, 3, true); // release 3.1.3 (Java 11, dependency updates)
-    //public static final Version VERSION = new Version(3, 1, 4, true); // release 3.1.4 (Java 17, dependency updates)
-    //public static final Version VERSION = new Version(3, 1, 5, true); // release 3.1.5 (Java 21, dependency updates)
-    public static final Version VERSION = new Version(3, 1, 6, true); // release 3.1.6 (Java 25, dependency updates)
+    /**
+     * Version history of Poker, most recent first.  The current version is always the first
+     * entry - to ship a new release, just add a line at the top (no commenting/uncommenting
+     * needed).
+     */
+    public static final Version VERSION = latest(
+            new Version(3, 1, 7, true), // release 3.1.7 (memory fix, dashboard improvements)
+            new Version(3, 1, 6, true), // release 3.1.6 (Java 25, dependency updates)
+            new Version(3, 1, 5, true), // release 3.1.5 (Java 21, dependency updates)
+            new Version(3, 1, 4, true), // release 3.1.4 (Java 17, dependency updates)
+            new Version(3, 1, 3, true), // release 3.1.3 (Java 11, dependency updates)
+            new Version(3, 1, 2, true), // release 3.1.2 (dependency updates)
+            new Version(3, 1, 1, true), // release 3.1.1 (add Windows installer)
+            new Version(3, 1, 0, true), // release 3.1 (open sourced!)
+            new Version(3, 0, 6, true), // release 3.0, Patch 6
+            new Version(3, 0, 5, true), // release 3.0, Patch 5
+            new Version(2, 5, 3, true), // release 2.5, Patch 3
+            new Version(Version.TYPE_BETA, 2, 0, 6, 4, true) // release 2.0 - Beta 6, Patch 4
+    );
+
+    // Pre-2.0 history, kept for the record.  These used Version constructors that no longer
+    // exist: 1.2 - Patch 2, 1.2 demo 1, 1.1 (CD and download), 1.0 (CD and download),
+    // 1.0 demo 1, 1.0 beta 8.
+
+    /**
+     * Returns the current (most recent) version, i.e. the first in the history.
+     */
+    private static Version latest(Version... history)
+    {
+        return history[0];
+    }
 
     // OS versions (can be different if specific patches released)
     public static final Version LATEST_MAC = VERSION;

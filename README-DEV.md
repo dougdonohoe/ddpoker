@@ -289,7 +289,10 @@ find the constants and then find usages of those constants.
 
 ### Installers
 
-An alternative to using the installers found in [Releases](https://github.com/dougdonohoe/ddpoker/releases)
+The installers in [Releases](https://github.com/dougdonohoe/ddpoker/releases) are built with
+`install4j` — see [Appendix H](#appendix-h-releasing-a-new-version) for the release process.
+
+An alternative to using those installers
 is to distribute an all-in-one `.jar` file by doing this:
 
 ```shell
@@ -654,3 +657,72 @@ current working directory.  To preview the site run:
 python3 -m http.server 8000
 ```
 
+
+## Appendix H: Releasing a New Version
+
+### Prep
+
+* Add the new version to the top of the `VERSION` history in
+  `code/pokerengine/src/main/java/com/donohoedigital/games/poker/engine/PokerConstants.java`
+  (most recent first - nothing needs commenting out).
+* Add a matching entry at the top of
+  `code/poker/src/main/resources/config/poker/help/whatsnew.html`.  The release notes
+  are generated from this entry, so the version in its header must match the new version
+  exactly.
+* Commit everything, since the GitHub release tags the code.
+* Plug in the code signing USB token.
+* Have KeePassXC ready for the signing passwords.
+
+### Build and release
+
+```shell
+# Build everything to ~/builds/poker3.x/full/ddpoker/installer/builds
+buildall -full -clean
+
+# Inspect / validate the installers if desired
+
+# Rehearse the release: drafts the notes, echoes the gh command, changes nothing
+buildall -full -github-dryrun
+
+# Release to GitHub
+buildall -full -github
+```
+
+`-full` builds in a **separate clone** at `~/builds/poker3.x/full/ddpoker`, not this
+working tree.  `-github` skips the git, mvn, unpack, buildrelease and installer steps,
+assuming a `-full` run already produced and validated the installers.
+
+### What `-github` does
+
+1. Checks the build clone isn't behind `origin/main` and that all three installers exist,
+   failing before anything is published.  Since `-github` skips the git step, a stale clone
+   means both a bad README push and installers built from old code - re-run `-full` if it
+   complains.
+2. Generates release notes from the `whatsnew.html` entry for this version into
+   `installer/builds/release_notes_<version>.md`, converting each `<li>` to a Markdown
+   bullet (`<tt>` becomes code, `<b>` becomes bold), then appending a **Full Changelog**
+   compare link against the previous release and the `md5sums.txt` block.
+3. Prints the drafted notes and waits for approval before running `gh release create`.
+4. Rewrites the installer links in `README.md` between the
+   `<!-- installers:begin ... -->` / `<!-- installers:end -->` markers, shows the diff,
+   and asks before committing and pushing.
+5. Runs `git pull --tags` in the directory you launched `buildall` from, so this working
+   tree picks up the new tag and the README commit that were made in the build clone.
+   That last step is skipped, with a note saying why, if you didn't run from a git repo,
+   if that repo isn't on `main`, or if you ran from the build clone itself (`-dev`).  A
+   failure there is only a warning - the release is already published at that point, so a
+   dirty working tree won't be reported as a broken build.
+
+**Do not hand-edit the marked block in `README.md`** - anything inside those markers is
+regenerated.  Put wording you want kept outside them.
+
+### Developing the installer locally
+
+* `install4j` has a UI for editing `installer/install4j/poker.install4j`; under _Build_
+  you can selectively choose which media files to build.
+* Use `buildall -dev` to build into this working tree instead of the build clone.
+* The `-nogit`, `-nomvn`, `-nounpack`, `-nobuildrelease`, `-noinstaller` and `-nonotarize`
+  options skip individual steps, which saves a lot of time when iterating.  Run `buildall`
+  with no arguments to list them all.
+* Installer file names come from the `mediaFileName` attribute on each media set in
+  `poker.install4j` and must stay in step with the `@PLATFORMS` table in `buildall.pl`.

@@ -8,7 +8,7 @@
     <codeSigning macEnabled="true" macPkcs12File="../../target/developerID_application.p12" windowsEnabled="true" windowsKeySource="pkcs11" windowsPkcs11Library="/usr/local/lib/libeTPkcs11.dylib">
       <windowsPkcs11Identifier issuer="Sectigo Public Code Signing CA R36" serial="b188553e484920219014bcbae1b277c5" subject="Donohoe Digital LLC" />
     </codeSigning>
-    <jreBundles jdkProviderId="Corretto" release="25/25.0.1.8.1" />
+    <jreBundles jdkProviderId="Corretto" release="25/25.0.4.7.1" />
   </application>
   <files>
     <mountPoints>
@@ -1005,14 +1005,13 @@ return true;
     </widgetStyles>
   </installerGui>
   <mediaSets>
-    <windows name="Windows" id="4" installDir="ddpoker3" failOnPostProcessorError="true" architecture="64" />
-    <unixInstaller name="Unix Installer" id="15" installDir="ddpoker3" customInstallBaseDir="/usr/local/games">
+    <windows name="Windows" id="4" mediaFileName="ddpoker_windows_${compiler:sys.version}" installDir="ddpoker3" failOnPostProcessorError="true" architecture="64" />
+    <unixInstaller name="Unix Installer" id="15" mediaFileName="ddpoker_linux_${compiler:sys.version}" installDir="ddpoker3" customInstallBaseDir="/usr/local/games">
       <excludedBeans>
-        <bean refId="13" />
         <bean refId="50" />
       </excludedBeans>
     </unixInstaller>
-    <macosArchive name="macOS Single Bundle Archive" id="201" volumeName="${compiler:sys.fullName}" architecture="universal" dmgStylingMode="none" launcherId="2">
+    <macosArchive name="macOS Single Bundle Archive" id="201" mediaFileName="ddpoker_mac_${compiler:sys.version}" volumeName="${compiler:sys.fullName}" architecture="universal" dmgStylingMode="none" launcherId="2">
       <topLevelFiles>
         <symlink name="&quot; &quot;" target="/Applications" />
         <file name=".DS_Store" file="./custom/DS_Store" />
