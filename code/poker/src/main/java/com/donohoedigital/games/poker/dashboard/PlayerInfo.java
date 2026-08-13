@@ -34,15 +34,19 @@ package com.donohoedigital.games.poker.dashboard;
 
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameState;
 import com.donohoedigital.games.config.Territory;
 import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.engine.Gameboard;
 import com.donohoedigital.games.engine.TerritorySelectionListener;
+import com.donohoedigital.games.poker.PokerGame;
 import com.donohoedigital.games.poker.PokerPlayer;
 import com.donohoedigital.games.poker.PokerTable;
 import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.online.TournamentDirector;
 import com.donohoedigital.gui.DDLabel;
 import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.GuiManager;
@@ -51,6 +55,7 @@ import com.donohoedigital.gui.GuiUtils;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -61,8 +66,8 @@ import java.awt.event.MouseEvent;
  */
 public class PlayerInfo extends DashboardItem implements TerritorySelectionListener
 {
-    /** pixels between the name above and the top of the position graphic */
-    private static final int BANDS_TOP_GAP = 3;
+    /** pixels between the name and the rows below it */
+    private static final int NAME_GAP = 4;
 
     DDLabel labelInfo_;
     PokerPlayer last_;
@@ -78,15 +83,98 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         // tournament plays, and the mouse can sit still across many hands, so
         // without them the figures freeze at whatever they were when hovered.
         // TYPE_END_HAND is the settled moment - see the note in Rank.
-        trackTableEvents(PokerTableEvent.TYPE_PLAYER_REBUY |
-                         PokerTableEvent.TYPE_END_HAND |
-                         PokerTableEvent.TYPE_NEW_HAND);
+        //
+        // TYPE_PLAYER_CHIPS_CHANGED covers the one way chips move outside of a hand -
+        // the cheat menu's change-chip-count option - which is a shipped user option,
+        // not a debug build flag.  Rank tracks it for the same reason.
+        //
+        // Those are enough in a practice game, where the other tables are played out
+        // inside our own hand, but not online, where they are independent: we only
+        // ever listen to our own table, so nothing above fires when another table
+        // finishes a hand or a player.  The rest of this mirrors Rank, which reports
+        // the same two figures and needs them current for the same reasons -
+        // STATE_NEW_LEVEL_CHECK included, since clients do not receive
+        // PROP_PLAYER_FINISHED.
+        int nEvents = PokerTableEvent.TYPE_PLAYER_REBUY |
+                      PokerTableEvent.TYPE_END_HAND |
+                      PokerTableEvent.TYPE_NEW_HAND |
+                      PokerTableEvent.TYPE_PLAYER_CHIPS_CHANGED;
+        if (game_.isOnlineGame()) nEvents |= PokerTableEvent.TYPE_STATE_CHANGED;
+        trackTableEvents(nEvents);
+
+        game_.addPropertyChangeListener(PokerGame.PROP_GAME_LOADED, this);
+        game_.addPropertyChangeListener(PokerGame.PROP_GAME_OVER, this);
+        game_.addPropertyChangeListener(PokerGame.PROP_PLAYER_FINISHED, this);
+
         PokerUtils.getGameboard().addTerritorySelectionListener(this);
+    }
+
+    /**
+     * Only the level check is of interest among the state changes - it runs after
+     * clean-up, so the number of players left is settled by then.  Everything else
+     * we track updates unconditionally, as the superclass does.
+     */
+    @Override
+    public void tableEventOccurred(PokerTableEvent event)
+    {
+        if (event.getType() == PokerTableEvent.TYPE_STATE_CHANGED &&
+            event.getNew() != PokerTable.STATE_NEW_LEVEL_CHECK) return;
+
+        super.tableEventOccurred(event);
+    }
+
+    // these arrive on the game's thread, not the swing one - unlike the table events,
+    // which the superclass already delivers in swing.  We set label text directly.
+    private final Runnable updateInfoRunner_ = new Runnable()
+    {
+        public void run()
+        {
+            // invoke() is invokeLater from the game's thread, so the game can be torn
+            // down before we run: finish() clears players_ and the rank lookup then
+            // throws.  isDisplayed() is no help - bUiCreated_ is never reset - so this
+            // is the same guard updateAll() uses, for the same reason.
+            if (!game_.isFinished()) updateInfo();
+        }
+    };
+
+    /**
+     * Track the tournament-wide changes our own table does not tell us about - see
+     * the note in the constructor, and the same three in Rank.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt)
+    {
+        String name = evt.getPropertyName();
+
+        if (name.equals(PokerGame.PROP_GAME_LOADED))
+        {
+            // a load of another table's state can move everyone's position
+            GameState state = (GameState) evt.getOldValue();
+            PokerSaveDetails pdetails = (PokerSaveDetails) state.getSaveDetails().getCustomInfo();
+            if (pdetails.isOtherTableUpdate())
+            {
+                if (TournamentDirector.DEBUG_CLEANUP_TABLE) logger.debug("Update player info on other table update");
+                GuiUtils.invoke(updateInfoRunner_);
+            }
+        }
+        else if (name.equals(PokerGame.PROP_GAME_OVER) ||
+                 name.equals(PokerGame.PROP_PLAYER_FINISHED))
+        {
+            GuiUtils.invoke(updateInfoRunner_);
+        }
+        super.propertyChange(evt);
     }
 
     protected JComponent createBody()
     {
         DDPanel base = new DDPanel();
+
+        // Dropped clear of the name rather than pinned flush to it: a line of text
+        // carries its own leading and the graphic carries none, so flush against the
+        // name the graphic reads as squashed against it.  On base's gap so that the
+        // rows and the graphic drop together - the same 4 the Player Style panel puts
+        // between its own two halves.
+        ((BorderLayout) base.getLayout()).setVgap(NAME_GAP);
 
         // the player's name spans the full width, above everything else
         labelName_ = new DDLabel(GuiManager.DEFAULT, STYLE);
@@ -99,12 +187,7 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         DDPanel rows = new DDPanel(GuiManager.DEFAULT, STYLE);
         ((BorderLayout) rows.getLayout()).setHgap(4);
 
-        // Dropped clear of the name above rather than pinned flush to it.  A line of
-        // text carries its own leading and the graphic carries none, so flush against
-        // the name the graphic reads as squashed against it.
         bands_ = new RankBandsPanel();
-        JComponent bandsTop = GuiUtils.NORTH(bands_);
-        bandsTop.setBorder(BorderFactory.createEmptyBorder(BANDS_TOP_GAP, 0, 0, 0));
 
         // Top aligned so the first row stays level with the graphic.  A DDLabel
         // centres vertically by default, which would leave the two out of step
@@ -113,7 +196,7 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         labelInfo_ = new DDLabel(GuiManager.DEFAULT, STYLE);
         labelInfo_.setVerticalAlignment(SwingConstants.TOP);
 
-        rows.add(bandsTop, BorderLayout.WEST);
+        rows.add(GuiUtils.NORTH(bands_), BorderLayout.WEST);
         rows.add(labelInfo_, BorderLayout.CENTER);
         base.add(rows, BorderLayout.CENTER);
 
@@ -150,16 +233,26 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         // something useful before the mouse has been anywhere.  Done here rather than
         // where the mouse is read: that only runs once the mouse has crossed the
         // gameboard, and the panel is drawn - and starts tracking hands - well before.
-        if (last_ == null) last_ = game_.getHumanPlayer();
+        // Into a local, so last_ goes on meaning "what the mouse is on".
+        PokerPlayer player = last_ != null ? last_ : game_.getHumanPlayer();
 
-        // A player who is out has no table.  PokerGame.playerOut() marks them
-        // eliminated but only an online game converts them to an observer, so in a
-        // practice game someone watching the AI after busting is still a plain player
-        // whose seat OtherTables.cleanTable() has already taken away.  There is no
-        // position to report for them, and the rebuy row below needs a table, so they
-        // get the same empty state as no player at all.
-        PokerTable table = last_ == null || last_.isObserver() ? null : last_.getTable();
-        int nTableRank = table == null ? 0 : table.getRank(last_);
+        // Someone who is out is placed by where they finished, never by the chips in
+        // front of them - they have none, so counting chips would tie every loser for
+        // second.  PokerGame.playerOut() records the place, for the winner too.  Same
+        // rule as Rank, which prefers getPlace() over getRank() for exactly this.
+        int nPlace = player == null ? 0 : player.getPlace();
+        boolean bOut = nPlace > 0;
+
+        // No table means no seat to report and no rebuys to count.  A busted player
+        // keeps their PokerPlayer but loses their seat: processRemovedPlayers() makes
+        // them an observer, and that runs on the host - which in a practice game is
+        // the human, so this is not an online-only path.  It does not happen at once,
+        // though.  Both TournamentDirector.cleanTables() at the end of a tournament
+        // and CheckEndHand when a practice player busts deliberately leave them
+        // seated so the display still shows them, which is why having a seat cannot
+        // stand in for still being in.
+        PokerTable table = player == null || player.isObserver() ? null : player.getTable();
+        int nTableRank = table == null ? 0 : table.getRank(player);
         boolean bSeated = nTableRank > 0;
 
         // One scale or two, and with it the presence of the Table row.  Decided by the
@@ -168,7 +261,7 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
         // panel changes size as the mouse moves on and off the players.
         boolean bSingleBar = game_.getNumTables() == 1;
 
-        if (bSeated)
+        if (bSeated || bOut)
         {
             String sRebuy = "";
             TournamentProfile profile = game_.getProfile();
@@ -176,11 +269,16 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
             {
                 Object what = null;
 
+                // an out player has nothing left to rebuy into, and without a table
+                // there is no level to read anyway - both fall through to "none" below.
+                // Out has to be tested in its own right: cleanTable() eliminates a
+                // busted player but deliberately leaves them seated, so inside the
+                // rebuy levels they still have a table to read a level from.
                 int nLast = profile.getLastRebuyLevel();
-                if (table.getLevel() <= nLast)
+                if (!bOut && table != null && table.getLevel() <= nLast)
                 {
                     int nMax = profile.getMaxRebuys();
-                    int nRebuys = last_.getNumRebuys() + last_.getNumRebuysPending();
+                    int nRebuys = player.getNumRebuys() + player.getNumRebuysPending();
                     int nLeft = nMax - nRebuys;
 
                     if (nMax == 0)
@@ -201,41 +299,59 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
                 sRebuy = PropertyConfig.getMessage("msg.dash.rebuy", what);
             }
 
-            int numLeft = game_.getNumPlayers() - game_.getNumPlayersOut();
-            // if end of tournament, list number of players in tournament
-            if (numLeft == 0) numLeft = game_.getNumPlayers();
-            int nTourneyRank = game_.getRank(last_);
+            // The field the position is read against.  Someone who is out finished
+            // among everyone who entered - "25th of 24" otherwise, and at the end of
+            // the tournament nobody is left at all, which is the case the old count
+            // had to special-case.  A player still in it is placed among those still
+            // in it.
+            int nTourneyRank;
+            int nTourneyCount;
+            if (bOut)
+            {
+                nTourneyRank = nPlace;
+                nTourneyCount = game_.getNumPlayers();
+            }
+            else
+            {
+                nTourneyRank = game_.getRank(player);
+                nTourneyCount = game_.getNumPlayers() - game_.getNumPlayersOut();
+            }
 
-            // position at the hovered player's own table.  Dropped at a single table,
-            // where the two scales would say the same thing.
-            int nTableCount = table.getNumOccupiedSeats();
+            // Position at the hovered player's own table.  Dropped at a single table,
+            // where the two scales would say the same thing, and left blank - but
+            // still padded for - when the player is out and has no seat to report.
+            int nTableCount = bSeated ? table.getNumOccupiedSeats() : 0;
 
-            String sTable = bSingleBar ? "" :
-                            PropertyConfig.getMessage("msg.dash.playerinfo.table",
-                                      PropertyConfig.getPlace(nTableRank),
-                                      nTableCount);
+            String sTable = "";
+            if (!bSingleBar)
+            {
+                sTable = bSeated ? PropertyConfig.getMessage("msg.dash.playerinfo.table",
+                                             PropertyConfig.getPlace(nTableRank),
+                                             nTableCount)
+                                 : PropertyConfig.getMessage("msg.dash.playerinfo.table.space");
+            }
 
             // Disconnects and sit-outs can only happen in an online game - nothing in
             // a practice game sets either flag, so both counters would read zero for
             // the whole tournament.  Leave the rows out rather than show dead text.
             String sOnline = !game_.isOnlineGame() ? "" :
                              PropertyConfig.getMessage("msg.dash.playerinfo.online",
-                                      last_.getHandsPlayedDisconnected(),
-                                      last_.getHandsPlayedSitout());
+                                      player.getHandsPlayedDisconnected(),
+                                      player.getHandsPlayedSitout());
 
             labelName_.setText(PropertyConfig.getMessage("msg.dash.playerinfo.name",
-                                      Utils.encodeHTML(last_.getName())));
+                                      Utils.encodeHTML(player.getName())));
 
             // the table row follows the tournament row directly, so the two positions
             // always read together and stay beside the graphic
             labelInfo_.setText(PropertyConfig.getMessage("msg.dash.playerinfo",
                                       PropertyConfig.getPlace(nTourneyRank),
-                                      numLeft,
+                                      nTourneyCount,
                                       sTable,
                                       sOnline,
                                       sRebuy
             ));
-            bands_.setValues(nTourneyRank, numLeft, nTableRank, nTableCount, bSingleBar);
+            bands_.setValues(nTourneyRank, nTourneyCount, nTableRank, nTableCount, bSingleBar);
         }
         else
         {

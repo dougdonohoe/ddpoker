@@ -54,13 +54,17 @@ import java.awt.*;
  */
 public class RankBandsPanel extends DDPanel
 {
-    // panel geometry - matches StyleQuadrantsGridPanel's 25x25
+    // Panel geometry - matches StyleQuadrantsGridPanel's 25x25.  A scale is BAR_WIDTH
+    // wide with its border drawn a pixel outside that, so the two of them span x=0..10
+    // and x=14..24, leaving three clear columns down the middle.  Worth the space: the
+    // panel is not opaque, so a one-pixel gap between two dark grey borders reads as a
+    // seam rather than as two scales.
     private static final int SIZE = 25;
     private static final int BAR_WIDTH = 9;
     private static final int BAR_HEIGHT = 20;
     private static final int BAR_TOP = 2;
-    private static final int LEFT_BAR_X = 2;
-    private static final int RIGHT_BAR_X = 14;
+    private static final int LEFT_BAR_X = 1;
+    private static final int RIGHT_BAR_X = 15;
     private static final int SINGLE_BAR_X = (SIZE - BAR_WIDTH) / 2;
 
     /** never divide a scale into more bands than this */
@@ -85,7 +89,6 @@ public class RankBandsPanel extends DDPanel
 
     public RankBandsPanel()
     {
-        setDoubleBuffered(true);
         setPreferredSize(new Dimension(SIZE, SIZE));
     }
 
@@ -141,11 +144,9 @@ public class RankBandsPanel extends DDPanel
     }
 
     @Override
-    public void paintComponent(Graphics g1)
+    public void paintComponent(Graphics g)
     {
-        super.paintComponent(g1);
-
-        Graphics2D g = (Graphics2D) g1;
+        super.paintComponent(g);
 
         if (bSingleBar_)
         {
@@ -163,7 +164,7 @@ public class RankBandsPanel extends DDPanel
      * filled over the band the player falls in, so the scale shows above and below it.
      * No per-band divider lines: at two pixels a band there is no room for them.
      */
-    private void paintScale(Graphics2D g, int nX, int nRank, int nCount)
+    private void paintScale(Graphics g, int nX, int nRank, int nCount)
     {
         int nBands = getNumBands(nCount);
 
@@ -171,13 +172,16 @@ public class RankBandsPanel extends DDPanel
         g.fillRect(nX, BAR_TOP, BAR_WIDTH, BAR_HEIGHT);
 
         // marker - only when we actually have a player
-        int nIndex = getBandIndex(nRank, nCount, nBands);
-        if (nRank > 0 && nIndex >= 0)
+        if (nRank > 0)
         {
-            int nTop = getBandOffset(nIndex, nBands);
-            int nBottom = getBandOffset(nIndex + 1, nBands);
-            g.setColor(MARKER);
-            g.fillRect(nX, BAR_TOP + nTop, BAR_WIDTH, nBottom - nTop);
+            int nIndex = getBandIndex(nRank, nCount, nBands);
+            if (nIndex >= 0)
+            {
+                int nTop = getBandOffset(nIndex, nBands);
+                int nBottom = getBandOffset(nIndex + 1, nBands);
+                g.setColor(MARKER);
+                g.fillRect(nX, BAR_TOP + nTop, BAR_WIDTH, nBottom - nTop);
+            }
         }
 
         // border last so it is never painted over

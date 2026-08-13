@@ -103,7 +103,9 @@ public class PokerTableRankTest
      */
     private HoldemHand startHand(PokerTable table)
     {
-        table.setButton(1); // seat 0 posts the big blind, so it commits a useful amount
+        // the button, and with it the blinds, has to land somewhere - which seat ends
+        // up posting depends on how many are seated, so each caller says for itself
+        table.setButton(1);
         HoldemHand hhand = new HoldemHand(table);
         table.setHoldemHand(hhand);
         hhand.deal();
@@ -142,16 +144,24 @@ public class PokerTableRankTest
      * The seat array is walked in full rather than up to getSeats(): addPlayer() seats
      * at a random index in 0..SEATS-1 whatever the table's size, so a player can sit in
      * a high seat at a short table.  Ranking to a shorter bound would not see them.
+     *
+     * The table has to be genuinely short for this to test anything - at the default
+     * ten seats the two bounds are the same number and the test passes either way.
+     * The profile must be set before the table is built, since getSeats() caches.
      */
     @Test
     public void countsPlayersInEverySeat()
     {
+        game_.getProfile().getMap().setInteger(TournamentProfile.PARAM_TABLE_SEATS, 6);
         PokerTable table = table(1);
+        assertTrue("expected a short table", table.getSeats() < PokerConstants.SEATS);
+
         PokerPlayer low = seat(table, 0, 1, 500);
         PokerPlayer high = seat(table, PokerConstants.SEATS - 1, 2, 1500);
 
         assertEquals(1, table.getRank(high));
-        assertEquals("the player in the last seat has to be counted", 2, table.getRank(low));
+        assertEquals("the player past the last seat of a short table has to be counted",
+                     2, table.getRank(low));
     }
 
     /**
@@ -200,7 +210,9 @@ public class PokerTableRankTest
     }
 
     /**
-     * SimulatorDialog builds a table with no game behind it.
+     * SimulatorDialog builds a table with no game behind it.  The player is seated, so
+     * this fails if the null-game guard goes: without it the answer would come from
+     * counting, and a seated player counts as first rather than as not found.
      */
     @Test
     public void returnsZeroWhenTableHasNoGame()
@@ -208,8 +220,41 @@ public class PokerTableRankTest
         PokerTable orphan = new PokerTable(null, 0);
         PokerPlayer p = new PokerPlayer(1, "P1", true);
         p.setChipCount(1000);
+        orphan.setPlayer(p, 0);
 
-        assertEquals(0, orphan.getRank(p));
+        assertEquals("no game to read chip counts through, seated or not",
+                     0, orphan.getRank(p));
+    }
+
+    /**
+     * A player with nothing left is still seated, so they rank last rather than 0 -
+     * the same 0 an unseated player gets, which is the confusion worth pinning down.
+     */
+    @Test
+    public void brokePlayerWhoIsStillSeatedRanksLastNotZero()
+    {
+        PokerTable table = table(1);
+        seat(table, 0, 1, 1000);
+        seat(table, 1, 2, 900);
+        PokerPlayer broke = seat(table, 2, 3, 0);
+
+        assertEquals(3, table.getRank(broke));
+    }
+
+    /**
+     * Table-scoped twin of PokerGameRankTest.allPlayersBrokeRanksFirstRatherThanZero.
+     * Both count through RankUtils, so a table where nobody has chips has to answer the
+     * same way the tournament-wide version does - first, not the not-seated-here 0.
+     */
+    @Test
+    public void allPlayersAtThisTableBrokeRankFirstRatherThanZero()
+    {
+        PokerTable table = table(1);
+        PokerPlayer a = seat(table, 0, 1, 0);
+        PokerPlayer b = seat(table, 1, 2, 0);
+
+        assertEquals(1, table.getRank(a));
+        assertEquals(1, table.getRank(b));
     }
 
     /**
@@ -223,15 +268,23 @@ public class PokerTableRankTest
         // seats 1 and 2 take the button and the small blind, which puts the big blind
         // on the leader in seat 3 and leaves the rival in seat 0 posting nothing
         PokerTable table = table(1);
-        PokerPlayer rival = seat(table, 0, 2, 999);
+        PokerPlayer rival = seat(table, 0, 2, 500);
         seat(table, 1, 3, 500);
         seat(table, 2, 4, 500);
         PokerPlayer leader = seat(table, 3, 1, 1000);
         HoldemHand hhand = startHand(table);
 
         assertTrue("expected a hand in progress", table.isHandInProgress());
-        assertTrue("expected the leader to post a blind", hhand.getTotalBet(leader) > 0);
-        assertEquals("the rival must not have posted", 0, hhand.getTotalBet(rival));
+        int nCommitted = hhand.getTotalBet(leader);
+        int nRivalCommitted = hhand.getTotalBet(rival);
+        assertTrue("expected the blind to cost the leader more than the rival paid",
+                   nCommitted - nRivalCommitted > 1);
+
+        // Leave the rival one chip behind on settled counts, which puts them ahead on
+        // live ones - the leader has more in the pot.  Derived from what the deal
+        // actually charged rather than assuming it: the stakes belong to the profile,
+        // and a failure here should be about ranking, not about level one being 1/2.
+        rival.setChipCount(leader.getChipCount() + nCommitted - nRivalCommitted - 1);
         assertTrue("the leader's live count must have dropped below the rival's",
                    leader.getChipCount() < rival.getChipCount());
 
@@ -241,23 +294,27 @@ public class PokerTableRankTest
 
     /**
      * Heads-up, where both players post every hand: the button takes the small blind
-     * and the other the big.  The blinds differ by one chip, so two stacks a chip apart
-     * come out of the deal holding exactly the same live count - a live comparison
-     * would tie them and rank both first.  Settled counts still tell them apart.
+     * and the other the big.  Two stacks close enough together can come out of the deal
+     * holding the same live count - a live comparison would tie them and rank both
+     * first.  Settled counts still tell them apart, by the difference between the posts.
      */
     @Test
     public void usesSettledChipsHeadsUp()
     {
         PokerTable table = table(1);
         PokerPlayer leader = seat(table, 0, 1, 1000);
-        PokerPlayer rival = seat(table, 1, 2, 999);
+        PokerPlayer rival = seat(table, 1, 2, 1000);
         HoldemHand hhand = startHand(table);
 
         assertTrue("expected a hand in progress", table.isHandInProgress());
         assertTrue("expected both players to post", hhand.getTotalBet(leader) > 0 &&
                                                     hhand.getTotalBet(rival) > 0);
-        assertEquals("the blinds must leave the live counts level",
-                     leader.getChipCount(), rival.getChipCount());
+        assertTrue("the button takes the small blind, so seat 0 must have posted more",
+                   hhand.getTotalBet(leader) > hhand.getTotalBet(rival));
+
+        // level the live counts, whatever the blinds cost: settled is live plus what is
+        // in the pot, so the big blind stays ahead by the difference between the posts
+        rival.setChipCount(leader.getChipCount());
 
         assertEquals("settled counts still put the leader first", 1, table.getRank(leader));
         assertEquals("and the rival second, where a live count would tie them",

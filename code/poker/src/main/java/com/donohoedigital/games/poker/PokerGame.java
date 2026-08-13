@@ -514,6 +514,9 @@ public class PokerGame extends Game implements PlayerActionListener
      *
      * Every player in the tournament is in this list, so not finding one is an error -
      * unlike the table-scoped version, where it just means "seated elsewhere".
+     *
+     * See RankUtils for why settled chip counts are compared rather than live ones,
+     * and for what re-reading the list size on every pass does and does not buy.
      */
     public int getRank(PokerPlayer player)
     {

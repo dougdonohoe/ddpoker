@@ -46,11 +46,6 @@ public class RankUtils
      * Deliberately an indexed list rather than a java.util.List: neither caller has
      * one to hand, and copying into one on every call is exactly what counting in a
      * single pass exists to avoid.
-     *
-     * size() is re-read on every pass of the loop on purpose.  PokerGame's list can
-     * shrink from another thread (see PokerGame.removePlayer(), called from
-     * OnlineManager when a player switches to observer), and a bound captured up
-     * front would index off the end.
      */
     public interface Players
     {
@@ -87,6 +82,11 @@ public class RankUtils
         int nRank = 1;
         boolean bFound = false;
 
+        // size() is re-read on every pass on purpose.  PokerGame's list can shrink
+        // from another thread (see PokerGame.removePlayer(), called from OnlineManager
+        // when a player switches to observer), and a bound captured up front would
+        // index off the end.  It does not close the window between reading size() and
+        // reading the slot - that race is older than this method and unchanged by it.
         for (int i = 0; i < players.size(); i++)
         {
             PokerPlayer p = players.getPlayerAt(i);
