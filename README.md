@@ -52,11 +52,11 @@ no longer run a server, but you can run your own using the code in this repo.
 ## Installers
 
 <!-- installers:begin (updated by tools/bin/buildall.pl -github) -->
-Download the latest release, **3.1.6**:
+Download the latest release, **3.1.7**:
 
-- **Mac**: [ddpoker3_1_6.dmg](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.6/ddpoker3_1_6.dmg)
-- **Windows**: [ddpoker3_1_6.exe](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.6/ddpoker3_1_6.exe)
-- **Linux**: [ddpoker3_1_6.sh](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.6/ddpoker3_1_6.sh)
+- **Mac**: [ddpoker_mac_3_1_7.dmg](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.7/ddpoker_mac_3_1_7.dmg)
+- **Windows**: [ddpoker_windows_3_1_7.exe](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.7/ddpoker_windows_3_1_7.exe)
+- **Linux**: [ddpoker_linux_3_1_7.sh](https://github.com/dougdonohoe/ddpoker/releases/download/3.1.7/ddpoker_linux_3_1_7.sh)
 <!-- installers:end -->
 
 See [Releases](https://github.com/dougdonohoe/ddpoker/releases) for release notes and older versions.
