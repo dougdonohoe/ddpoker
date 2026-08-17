@@ -59,6 +59,10 @@ if [[ ! -f "$SRC" ]]; then
   exit 1
 fi
 
+# scratch space for this run, cleaned up however we exit
+SCRATCH="$(mktemp -d)"
+trap 'rm -rf "$SCRATCH"' EXIT
+
 # make read/write copy of installer
 rm -f "$DST_RW"
 hdiutil convert "$SRC" -format UDRW -o "$DST_RW"
@@ -97,17 +101,22 @@ rm -rf "$DST_RW"
 
 # attach icon to new dmg  (this apparently only works on local mac; doesn't stick after download,
 # but keeping around since I like it locally and it was a pain to figure out)
-TMP_ICN=/tmp/icons_copy.icns
-TMP_RSRC=/tmp/icons_copy.rsrc
+TMP_ICN="$SCRATCH/icons_copy.icns"
+TMP_RSRC="$SCRATCH/icons_copy.rsrc"
 cp "${DDHOME}/installer/install4j/custom/ddpokerinstaller.icns" "$TMP_ICN"
 sips -i "$TMP_ICN"
 DeRez -only icns "$TMP_ICN" > "$TMP_RSRC"
 Rez -append "$TMP_RSRC" -o "$DST_ALT"
 SetFile -a C "$DST_ALT"
 
-# Copy new one back over original, backing up original to /tmp
+# Copy new one back over original, backing up original to /tmp.  The backup is
+# deleted once notarization succeeds; if anything below fails it is left in place
+# so the install4j dmg can be recovered.
 mv -v "$SRC" "$BAK"
 mv -v "$DST_ALT" "$SRC"
 
 # Sign and notarize new one
 ~/work/donohoe/installer/mac-sign-notarize.sh "$SRC"
+
+# notarized dmg is good, so the backup has no further use
+rm -vf "$BAK"
