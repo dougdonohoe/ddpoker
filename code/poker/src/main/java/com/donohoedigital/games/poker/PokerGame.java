@@ -487,46 +487,42 @@ public class PokerGame extends Game implements PlayerActionListener
         return getPokerPlayerFromID(GamePlayer.HOST_ID);
     }
 
+    // this game's players, as the players a rank is counted over.  Held as a field so
+    // that counting a rank allocates nothing.
+    private final RankUtils.Players rankPlayers_ = new RankUtils.Players()
+    {
+        public int size()
+        {
+            return getNumPlayers();
+        }
+
+        public PokerPlayer getPlayerAt(int n)
+        {
+            return getPokerPlayerAt(n);
+        }
+    };
+
     /**
-     * Return rank of player based on chips.  Players holding equal chips share a
-     * rank, so this is one more than the number of players holding strictly more -
-     * the same result the previous sort-based version produced.
+     * Return rank of player based on chips, across the whole tournament.  Players
+     * holding equal chips share a rank, so this is one more than the number of players
+     * holding strictly more - the same result the previous sort-based version produced.
      *
-     * Compares settled chip counts, not live ones - see getSettledChipCount().  A rank
-     * is a comparison across the whole tournament, and tables are not in step with each
-     * other: in an online game they are independent state machines, so at any instant
-     * some are mid-hand and some are between hands.  Comparing live counts sinks
-     * whoever has chips in a pot.  This is reached at arbitrary moments - the Rank
-     * dashboard item recomputes when another table finishes a hand, which lands in the
-     * middle of ours, and PlayerInfo recomputes on every mouse-over.
+     * Counted in a single pass by RankUtils rather than by sorting a copy of the player
+     * list.  This runs every time the rank is displayed, which is at the end of every
+     * hand, and in a large tournament the old version allocated and sorted a 5,625
+     * element list each time.  PokerTable.getRank() counts the same way over one table.
      *
-     * Counted in a single pass rather than sorting a copy of the player list.  This
-     * runs every time the rank is displayed, which is at the end of every hand, and in
-     * a large tournament the old version allocated and sorted a 5,625 element list
-     * each time.
+     * Every player in the tournament is in this list, so not finding one is an error -
+     * unlike the table-scoped version, where it just means "seated elsewhere".
      *
-     * The loop bound is re-read each pass on purpose: players_ can shrink from
-     * another thread (see removePlayer(), called from OnlineManager when a player
-     * switches to observer), and a bound captured up front would index off the end.
+     * See RankUtils for why settled chip counts are compared rather than live ones,
+     * and for what re-reading the list size on every pass does and does not buy.
      */
     public int getRank(PokerPlayer player)
     {
-        int nChips = getSettledChipCount(player);
-        int nRank = 1;
-        boolean bFound = false;
+        int nRank = RankUtils.getRank(this, rankPlayers_, player);
 
-        for (int i = 0; i < getNumPlayers(); i++)
-        {
-            PokerPlayer p = getPokerPlayerAt(i);
-            if (p == player)
-            {
-                bFound = true;
-                continue;
-            }
-            if (getSettledChipCount(p) > nChips) nRank++;
-        }
-
-        if (!bFound)
+        if (nRank == 0)
         {
             throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "No rank for player", player.toString());
         }
