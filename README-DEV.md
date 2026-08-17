@@ -11,19 +11,18 @@ make up DD Poker:
 * **Poker Web** — the old Apache Wicket-based DD Poker website, including the "Online Game Portal", which
   shows various information about online games like current games, history, games by player, etc.
 
-## Mac vs. Linux vs. Windows (a note from Doug)
+Development happens on **Mac, Linux, or Windows via WSL2** — all three are the same Unix
+environment as far as this repo is concerned, so there is one set of instructions below.
 
-These instructions are admittedly Mac-centric, largely because that is what I have used
-for the last 15 years.  I've done cursory testing on Linux (see Appendix D for testing tips
-on Ubuntu from Docker/Mac).
+The **Poker Server** and **Poker Web** portal are developed on that Unix environment only.
+They lean on shell scripts, MySQL setup scripts and a local SMTP server, none of which are
+worth porting for the handful of people who would use them.
 
-Even though DD Poker was originally developed
-mainly on Windows (with Cygwin), I haven't used Windows for development in a
-very long time, so apologies to Windows developers for the lack of instructions.
-Cygwin worked back in the day, and I imagine that the Windows Subsystem for Linux (WSL)
-should be helpful here, too.
-
-Feel free to submit a PR with any changes to these docs that would help Linux or Windows users.
+Windows developers should use [WSL2](#windows-via-wsl2).  Running the build natively on
+Windows (PowerShell, no WSL) is possible and is covered in
+[Appendix I](#appendix-i-native-windows-and-powershell), but it covers the **desktop game
+only** and is a secondary path used mainly for testing how the game behaves for Windows
+players — not a fully supported development environment.
 
 ## Prerequisites
 
@@ -46,13 +45,71 @@ in the root of the `ddpoker` repository.
 source ddpoker.rc
 ```
 
-## Mac Installs
+## Platform Setup
+
+### Mac
 
 [Brew](https://brew.sh/) is useful to install Java and Maven:
 
 ```shell
 brew install temurin@25 maven
 ```
+
+### Linux (Ubuntu/Debian)
+
+Ubuntu's own repositories lag behind on JDK versions, so install Java 25 from the
+[Adoptium apt repository](https://adoptium.net/installation/linux/):
+
+```shell
+sudo apt install -y wget apt-transport-https gpg
+
+wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public \
+  | gpg --dearmor | sudo tee /usr/share/keyrings/adoptium.gpg > /dev/null
+
+echo "deb [signed-by=/usr/share/keyrings/adoptium.gpg] https://packages.adoptium.net/artifactory/deb \
+$(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" \
+  | sudo tee /etc/apt/sources.list.d/adoptium.list
+
+sudo apt update
+sudo apt install -y temurin-25-jdk maven
+```
+
+The `JAVA_HOME` auto-detection in `ddpoker.rc` is Mac-only (it uses `/usr/libexec/java_home`),
+but the apt package above puts Java 25 on your `PATH`, and sourcing `ddpoker.rc` will confirm
+the version for you.
+
+For Docker on Linux, either Docker Desktop or just the Docker Engine will do.
+
+### Windows via WSL2
+
+[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) runs a real Ubuntu on your
+Windows machine, which makes Windows development identical to Linux development — same
+shell, same scripts, same commands as the rest of this document.  Modern WSL includes
+**WSLg**, so DD Poker opens as an ordinary window on your Windows desktop with no X
+server to configure (unlike the Docker approach in _Appendix D_).
+
+From PowerShell, install WSL and Ubuntu:
+
+```powershell
+wsl --install -d Ubuntu
+```
+
+Reboot if prompted, then open the Ubuntu terminal and follow the
+[Linux (Ubuntu/Debian)](#linux-ubuntudebian) instructions above to install Java and Maven.
+
+Two Windows-side details:
+
+* Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) on **Windows**,
+  not inside WSL.  Then, in **Settings → Resources → WSL Integration**, enable integration
+  for your Ubuntu distro so the `docker` command works inside WSL.  This is what lets the
+  MySQL container in _Appendix A_ work from WSL.
+* **Clone the repo into the WSL filesystem** (e.g. `~/work/ddpoker`), not under `/mnt/c`.
+  Reaching the Windows drive from WSL goes over a slow filesystem bridge — in the sister
+  DD Photos repo, the same warm build took **64s** from `/mnt/c` versus **2.4s** from
+  `~/work`.  Windows tools can still reach the WSL copy via
+  `\\wsl$\Ubuntu\home\<user>\work` if needed.
+
+Verify WSLg is working with `echo $DISPLAY` (it should print something like `:0`).
 
 ## Compile Code
 
@@ -94,6 +151,10 @@ the `code/pom.xml` file and prompt you to load it:
 Go to _File → Project Structure... → Project Settings → Project → SDK_ and
 set to Java 25 (you may need to add it (_+ Add SDK_) as a new SDK if not already there).
 
+On Windows, use IntelliJ's
+[WSL support](https://www.jetbrains.com/help/idea/how-to-use-wsl-development-environment-in-product.html)
+to open the checkout living inside WSL (`\\wsl$\Ubuntu\...`).
+
 ## Server Dependencies
 
 To run server code, you need to have MySql running and an SMTP server.  See the
@@ -102,6 +163,10 @@ appendices below for more details:
 * `Appendix A` Setup Database via Docker
 * `Appendix B` Setup Email SMTP server on Mac
 * `Appendix C` Setup Database directly on a Mac
+
+The server-side setup assumes a Unix shell — Mac, Linux, or WSL2.  See
+[Appendix I](#appendix-i-native-windows-and-powershell) for what native Windows does and
+does not cover.
 
 ## Run Tests
 
@@ -176,7 +241,7 @@ we don't want to deal with at this time.
 Here is a brief overview of the modules in this repo, in the order maven builds them, which
 means the later modules are dependent on one or more of the earlier modules.
 
-* `common` - core functionality including configuration, logging, xml, properties, various utils
+* `common` - core functionality including configuration, logging, XML, properties, various utils
 * `mail` - email sending tools
 * `gui` - GUI infrastructure extending Java Swing
 * `installer` - custom installer logic (e.g., cleanup)
@@ -305,6 +370,9 @@ This creates a `poker-3.0-jar-with-dependencies.jar` in the `target` directory. 
 distribute this `.jar` file and run it like so:
 
 ```shell
+java -jar target/poker-3.0-jar-with-dependencies.jar
+
+# Test it from code/poker
 java -jar poker-3.0-jar-with-dependencies.jar
 ```
 
@@ -313,6 +381,9 @@ you can get a dock icon:
 
 ```shell
 java -Xdock:icon=ddpokericon.icns -jar poker-3.0-jar-with-dependencies.jar
+
+# Test it from code/poker
+java -Xdock:icon=../../installer/install4j/custom/ddpokericon.icns -jar target/poker-3.0-jar-with-dependencies.jar
 ```
 
 ### Questionable Features
@@ -358,26 +429,53 @@ code (`GameboardTerritoryManager`, `GameboardBorderManager` and base `GameManage
 
 ### Preferences
 
-Preferences set in the game are saved using Java Preferences API, which on a Mac can be found
-in `com.donohoedigital.poker3.plist`.  To view the contents of this file:
+Preferences set in the game are saved using the Java Preferences API, under the
+`com/donohoedigital/poker3` node (see `Prefs.getUserRootPrefs()`).  Where that actually
+lives is up to the JDK and differs per platform:
+
+| Platform    | Location                                                                       |
+|-------------|--------------------------------------------------------------------------------|
+| Mac         | `~/Library/Preferences/com.donohoedigital.poker3.plist`                        |
+| Linux / WSL | `~/.java/.userPrefs/com/donohoedigital/poker3/` (a tree of `prefs.xml` files)  |
+| Windows     | Registry key `HKCU\Software\JavaSoft\Prefs\com\donohoedigital\poker3`          |
+
+Default values for items in the Options dialog are set in
+`code/poker/src/main/resources/config/poker/client.properties`, and actual values
+set by the user are stored in the platform location above.
+
+To view the current contents:
 
 ```shell
-cd ~/Library/Preferences
-plutil -convert xml1 com.donohoedigital.poker3.plist -o -
+# Mac
+plutil -convert xml1 ~/Library/Preferences/com.donohoedigital.poker3.plist -o -
+
+# Linux / WSL
+cat ~/.java/.userPrefs/com/donohoedigital/poker3/prefs.xml
 ```
 
-Default values for items in Options dialog are set in
-`code/poker/src/main/resources/config/poker/client.properties`, and actual values
-set by the user are stored in the `.plist` file.
+```powershell
+# Windows
+Get-ChildItem -Recurse 'HKCU:\Software\JavaSoft\Prefs\com\donohoedigital\poker3'
+```
 
-If you want to clear all preferences, on a Mac, you need to delete the `.plist` file
-**AND** restart the `cfprefsd` service, which can keep preferences values in
-memory.
+Note that on Linux and Windows the node names are escaped by the JDK (mixed-case names get
+encoded), so some of the directory and key names look like line noise.  That is expected.
+
+To clear all preferences:
 
 ```shell
+# Mac - must also restart cfprefsd, which caches preferences in memory
 cd ~/Library/Preferences
 rm -f com.donohoedigital.poker3.plist
 killall -u $USER cfprefsd
+
+# Linux / WSL
+rm -rf ~/.java/.userPrefs/com/donohoedigital/poker3
+```
+
+```powershell
+# Windows
+Remove-Item -Recurse 'HKCU:\Software\JavaSoft\Prefs\com\donohoedigital\poker3'
 ```
 
 ### Classpath and Dependency Tree
@@ -538,6 +636,10 @@ Follow the instructions above to create the database tables (via `reset_db.sh`).
 
 ## Appendix D: Testing on Ubuntu via Docker
 
+**NOTE**: this is for running Linux from a Mac.  If you are on Windows via
+[WSL2](#windows-via-wsl2), you already have a real Ubuntu with WSLg handling the display,
+so none of this is necessary.
+
 It is possible to run DD Poker in Ubuntu in Docker and display it on your Mac, but
 it can be a little finicky.  Here's what I got to work with help from
 [this helpful gist](https://gist.github.com/cschiewek/246a244ba23da8b9f0e7b11a68bf3285).
@@ -569,8 +671,8 @@ xhost + localhost
 # Build docker image
 docker build -f Dockerfile.ubuntu.docker -t pokerubuntu .
 
-# Run it, mapping ddpoker dir and maven .m2 dir to the image
-docker run -it --rm -v $(pwd):$(pwd) -v $HOME/.m2:/root/.m2 \
+# Run it, mapping ddpoker dir and maven .m2-ubuntu dir to the image
+docker run -it --rm -v $(pwd):$(pwd) -v $HOME/.m2-ubuntu:/root/.m2 \
   -w $(pwd) -e DISPLAY=host.docker.internal:0 pokerubuntu
 ```
 
@@ -593,7 +695,12 @@ You can run GitHub actions locally using the [`act`](https://nektosact.com/) too
 To install `act`:
 
 ```shell
+# Mac
 brew install act
+
+# Linux / WSL - there is no apt package
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/nektos/act/master/install.sh \
+  | sudo bash -s -- -b /usr/local/bin
 ```
 
 The `act-ddpoker` alias uses a custom Docker image you need to build once:
@@ -635,6 +742,8 @@ verify:
   * verify game can start an online game (adjust online settings using server's IP)
   * verify global *Online Lobby*
 * Start game from Ubuntu Docker
+* Build and start the game natively on Windows via `.\mvn` (see
+  [Appendix I](#appendix-i-native-windows-and-powershell))
 * Build `act` docker image and running `act-ddpoker` (remember to stop MySQL)
 
 ## Appendix G: DD Poker Website
@@ -726,3 +835,106 @@ regenerated.  Put wording you want kept outside them.
   with no arguments to list them all.
 * Installer file names come from the `mediaFileName` attribute on each media set in
   `poker.install4j` and must stay in step with the `@PLATFORMS` table in `buildall.pl`.
+
+## Appendix I: Native Windows and PowerShell
+
+Everything above assumes a Unix shell — Mac, Linux, or Windows via
+[WSL2](#windows-via-wsl2), which is the recommended way to develop on Windows.
+
+This appendix covers building and running **natively on Windows**, from PowerShell, with no
+WSL involved.  The reason to do this is to exercise the game the way Windows players
+actually experience it — native file dialogs, DPI scaling, the registry-backed preferences.
+It is a testing environment, not a fully supported development one.
+
+Scope is the **desktop game only**.  The Poker Server and the Wicket-based Poker Web portal
+are not supported here; see [Known gaps](#known-gaps) at the end.
+
+### Setup
+
+Install the JDK by downloading the **Temurin 25 `.msi`** from
+[adoptium.net](https://adoptium.net/temurin/releases/?version=25) and running it — accept
+the defaults, and let it set `JAVA_HOME` and update your `PATH`.  If you prefer the command
+line, `winget` installs the same package:
+
+```powershell
+winget install EclipseAdoptium.Temurin.25.JDK
+```
+
+Note that a bare `winget install java` does *not* get you a JDK 25 — the package ID above is
+what pins the version.
+
+**Maven does not need to be installed.**  There is no `winget` package for Apache Maven, so
+this repo ships the [Maven Wrapper](https://maven.apache.org/wrapper/) as `mvn.cmd` in the
+repo root.  Invoke it as `.\mvn` and it behaves like a normal `mvn`, downloading a
+known-good Maven on first use and caching it under `~/.m2/wrapper`.  (Mac and Linux
+developers install Maven normally and ignore this file.)
+
+[Git for Windows](https://git-scm.com/download/win) is optional.  You do not need it to
+build or run the game, but it gives you a Git Bash shell if you want to run any of the
+`tools/bin` scripts.
+
+Clone the repo onto your Windows drive, e.g. `C:\Users\<user>\work\ddpoker`.
+
+> **Use a separate clone from your WSL one.**  Each build writes platform-specific paths
+> into `code/*/target/classpath.txt`, so building in one environment leaves the other's
+> `tools/bin` scripts broken until you rebuild.
+
+### Build and run
+
+```powershell
+# build, skipping tests
+.\mvn -f code/pom.xml package -DskipTests=true
+
+# install the modules into your local Maven repository
+.\mvn -f code/pom.xml install -DskipTests=true
+
+# launch DD Poker
+.\mvn -f code/pom.xml -pl poker exec:exec
+```
+
+The `exec:exec` goal is configured in `code/poker/pom.xml` and launches
+`com.donohoedigital.games.poker.PokerMain` with the same JVM options the `poker` script
+uses, less the Mac-only dock icon.  Forward slashes in `-f code/pom.xml` are fine — PowerShell passes the argument
+through untouched, and both Windows and Java accept `/` in paths.
+
+A couple of notes:
+
+* `exec:exec` does not compile anything.  It runs `poker` from `code/poker/target/classes`
+  but picks up every other module as a jar from your local Maven repository, which is why
+  the `install` above is a separate step.  After editing `poker` you need a `package`
+  first, and after editing any other module you need to re-run the `install`.
+* The `install` builds all 21 modules.  You could narrow it with `-pl`, but `poker` pulls in
+  `gameengine`, `pokernetwork` and `db` plus their transitive dependencies, so the list is
+  long and easy to get out of step — a full install is simpler.
+
+### PowerShell quirks worth knowing
+
+* **Quote `-D` arguments containing dots.**  PowerShell splits an unquoted
+  `-Dskip.unit.tests=false` at the first `.`, handing Maven a stray `.unit.tests=false` and
+  failing with *"Unknown lifecycle phase"*.  Quote it:
+
+  ```powershell
+  .\mvn -f code/pom.xml test '-Dskip.unit.tests=false'
+  ```
+
+  `-DskipTests=true` has no dot, so it is fine unquoted.
+* `./mvn` also works in PowerShell — `PATHEXT` contains `.CMD`, so the extensionless name
+  resolves to `mvn.cmd`.  The old `cmd.exe` prompt is the exception: it rejects `./` with
+  *"'.' is not recognized as an internal or external command"*, so use `.\mvn` there.
+* The `ddpoker.rc` aliases and the `tools/bin` scripts (`poker`, `runjava`, `pokerserver`,
+  `pokerweb`, `buildall`) are Bash, so they do not work in PowerShell.  Run them from Git
+  Bash if you need them — `runjava` already handles the Windows classpath separator.
+
+### Known gaps
+
+* **The Poker Server and Poker Web portal are not run natively.**  This is deliberate — they
+  assume a Unix shell, the MySQL setup scripts and a local SMTP server.  Use WSL2, Mac or
+  Linux for server work.
+* **Database provisioning is Unix-side.**  `tools/db/reset_dbs.sh` and its siblings are Bash
+  and expect a `mysql` client on the `PATH`, so creating the `pokertest` database natively
+  is not covered here yet.  The *test code itself is platform-neutral* — point a native
+  Windows build at a reachable `pokertest` database and the whole suite runs; nothing is
+  skipped on Windows.
+* Building installers and running GitHub Actions locally are not exercised here; see
+  [Appendix E](#appendix-e-running-github-actions-locally) and
+  [Appendix H](#appendix-h-releasing-a-new-version), both of which assume a Unix shell.

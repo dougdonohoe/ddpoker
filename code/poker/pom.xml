@@ -94,6 +94,27 @@
           </descriptorRefs>
         </configuration>
       </plugin>
+
+      <!-- Run the game with 'mvn exec:exec' - the same JVM options the poker
+           script uses, but without needing bash (see README-DEV.md). -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <executable>${java.home}/bin/java</executable>
+          <arguments>
+            <argument>-Dfile.encoding=UTF-8</argument>
+            <argument>-Dsun.java2d.noddraw=true</argument>
+            <argument>-Dlog4j.rootLogger=DEBUG, Console</argument>
+            <argument>-Xms32m</argument>
+            <argument>-Xmx512m</argument>
+            <argument>-classpath</argument>
+            <classpath/>
+            <argument>com.donohoedigital.games.poker.PokerMain</argument>
+          </arguments>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
