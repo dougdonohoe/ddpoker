@@ -93,10 +93,10 @@ public class MenuBackground extends DDScrollPane
         GuiManager.setLabelAsMessage(version, GameEngine.getGameEngine().getVersion().toString());
 
         Dimension size = version.getPreferredSize();
-        int nShift = Utils.ISMAC ? 15 : 3; // 15 to move over for mac grow box
+        int nShift = 22;
         XYConstraints xy = new XYConstraints(pref.width - size.width - nShift - nBorderAdjust,
-                                             pref.height - size.height - 3 - nBorderAdjust,
-                                             size.width, size.height);
+                                             pref.height - size.height - 4 - nBorderAdjust,
+                                             size.width + 5, size.height);
         base.add(version, xy);
 
         // first place image
