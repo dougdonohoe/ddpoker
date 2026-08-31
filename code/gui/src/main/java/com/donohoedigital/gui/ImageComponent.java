@@ -89,6 +89,7 @@ public class ImageComponent extends JComponent implements Icon
     private boolean bRefreshBuffer_ = false;
     private BufferedImage buffer_ = null;
     private boolean bCenter_ = true;
+    private Object interpolation_ = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
     static int nColor_ = -1;
 
     /**
@@ -156,6 +157,7 @@ public class ImageComponent extends JComponent implements Icon
         sName_ = copy.sName_;
         dScaleFactor_ = copy.dScaleFactor_;
         bimage_ = copy.bimage_;
+        interpolation_ = copy.interpolation_;
         init();
     }
 
@@ -396,6 +398,28 @@ public class ImageComponent extends JComponent implements Icon
     }
 
     /**
+     * Set the interpolation used when the image is drawn at a size other than its natural
+     * size.  Default is {@link RenderingHints#VALUE_INTERPOLATION_BILINEAR}.  Note this
+     * applies to HiDPI displays even when the image is drawn at its natural size in logical
+     * pixels, since the device transform still scales it up.  Pass
+     * {@link RenderingHints#VALUE_INTERPOLATION_BICUBIC} for sharper (but costlier) results
+     * on images that are painted rarely.
+     */
+    public void setInterpolation(Object interpolation)
+    {
+        interpolation_ = interpolation;
+    }
+
+    /**
+     * Apply this component's interpolation hint, returning the previous value so the caller
+     * can restore it with {@link RenderUtils#restoreInterpolation}
+     */
+    private Object applyInterpolation(Graphics2D g)
+    {
+        return RenderUtils.applyInterpolation(g, interpolation_);
+    }
+
+    /**
      * Set whether image is scaled to fit size of this component.  Default is true
      */
     public void setScaleToFit(boolean b)
@@ -459,6 +483,22 @@ public class ImageComponent extends JComponent implements Icon
         if (bHidden_) return;
 
         Graphics2D g = (Graphics2D) g1;
+        Object oldInterpolation = applyInterpolation(g);
+        try
+        {
+            paintImage(g);
+        }
+        finally
+        {
+            RenderUtils.restoreInterpolation(g, oldInterpolation);
+        }
+    }
+
+    /**
+     * Paint the image itself.  Interpolation hint is already set by the caller.
+     */
+    private void paintImage(Graphics2D g)
+    {
         g.getClipBounds(bounds_);
         Image drawThis = whatToDraw();
 
@@ -496,6 +536,7 @@ public class ImageComponent extends JComponent implements Icon
                             //LoggingConfig.debugPrintMemory("After new buffer");
                         }
                         Graphics2D gBuffer = (Graphics2D) buffer_.getGraphics();
+                        applyInterpolation(gBuffer);
 
                         // if a parentTile is specified, paint that first
                         paintParentTile(gBuffer);
@@ -687,10 +728,18 @@ public class ImageComponent extends JComponent implements Icon
      */
     private void drawImageAt(Graphics2D g, Image image, int x, int y, int width, int height)
     {
-        g.drawImage(image, x, y, (x + width), (y + height),
-                    imagebounds_.x, imagebounds_.y,
-                    (imagebounds_.x + imagebounds_.width), (imagebounds_.y + imagebounds_.height),
-                    this);
+        Object oldInterpolation = applyInterpolation(g);
+        try
+        {
+            g.drawImage(image, x, y, (x + width), (y + height),
+                        imagebounds_.x, imagebounds_.y,
+                        (imagebounds_.x + imagebounds_.width), (imagebounds_.y + imagebounds_.height),
+                        this);
+        }
+        finally
+        {
+            RenderUtils.restoreInterpolation(g, oldInterpolation);
+        }
     }
 
     /**

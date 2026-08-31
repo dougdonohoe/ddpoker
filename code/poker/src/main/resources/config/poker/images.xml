@@ -129,7 +129,12 @@
   <image name="pokermenu" location="pokermenu.png"/>
   <image name="pokermenu-demo" location="pokermenu-demo.png"/>
   <image name="pokerdialog" location="pokerdialog.png"/>
+  <!-- dialog title bar icon; drawn at 20 logical px, larger variants for scaled displays
+       (see DDMultiResIcon) - 125% needs 25 real pixels, 150% needs 30, 200% needs 40 -->
   <image name="pokerbannerwintitle" location="poker-banner-wintitle.png"/>
+  <image name="pokerbannerwintitle.32" location="pokericon32.png"/>
+  <image name="pokerbannerwintitle.48" location="pokericon48.png"/>
+  <image name="pokerbannerwintitle.128" location="pokericon128.png"/>
   <image name="serverconnect" location="serverconnect.png"/>
   <image name="info" location="info.png"/>
   <image name="resize" location="resize.png"/>

@@ -122,11 +122,32 @@ public class DDImageButton extends DDButton
     }
 
     /**
-     * Override to make public
+     * Override to make public, and to smooth the icon on scaled displays.
+     *
+     * <p>The icons here are plain {@link ImageIcon}s, which draw at their natural size with no
+     * interpolation hint, so Java 2D's nearest-neighbor default stair-steps them wherever the
+     * device transform scales (e.g. Windows at 125%).  Setting the hint here rather than on the
+     * icon works because {@link JComponent#paintComponent} hands the UI a {@code g.create()}
+     * copy, which inherits rendering hints.  Bilinear rather than bicubic: these are small
+     * icons that repaint on rollover, and bicubic can ring around the edges at this size.
      */
     @Override
     public void paintComponent(Graphics g1)
     {
-        super.paintComponent(g1);
+        if (!(g1 instanceof Graphics2D g2))
+        {
+            super.paintComponent(g1);
+            return;
+        }
+
+        Object old = RenderUtils.applyInterpolation(g2, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        try
+        {
+            super.paintComponent(g1);
+        }
+        finally
+        {
+            RenderUtils.restoreInterpolation(g2, old);
+        }
     }
 }

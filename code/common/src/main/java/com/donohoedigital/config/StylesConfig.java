@@ -275,7 +275,7 @@ public class StylesConfig extends XMLConfigFileLoader
             boolean bBold = BBold == null ? false : BBold;
 
             int nStyle = Font.PLAIN;
-            if (bItalic && bBold) nStyle = Font.BOLD & Font.ITALIC;
+            if (bItalic && bBold) nStyle = Font.BOLD | Font.ITALIC;
             else if (bItalic) nStyle = Font.ITALIC;
             else if (bBold) nStyle = Font.BOLD;
 

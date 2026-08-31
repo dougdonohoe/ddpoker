@@ -375,7 +375,7 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
         ApplicationError.assertNotNull(frame, "BaseFrame is null");
         dialog_.setBaseFrame(frame);
 
-        ImageIcon winicon = ImageConfig.getImageIcon(gamephase_.getString("dialog-windowtitle-image", "dialog-windowtitle-image"));
+        Icon winicon = DDMultiResIcon.load(gamephase_.getString("dialog-windowtitle-image", "dialog-windowtitle-image"));
         dialog_.setFrameIcon(winicon);
         dialog_.setIconifiable(gamephase_.getBoolean("dialog-iconifiable", false));
         back_ = new DialogBackground(context_, gamephase_, this, bNoShowOption_, sNoShowCheckboxName_);
