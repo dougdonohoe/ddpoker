@@ -81,7 +81,7 @@ public class DDImageView extends DDView
 
 		if (image_ == null)
 		{
-            logger.warn( "No image for src " + src);
+            logger.warn("No image for src {}", src);
 			return;
 		}
         
@@ -92,14 +92,14 @@ public class DDImageView extends DDView
         boolean nHeightChanged = false;
         
         String sValue = (String) getElement().getAttributes().getAttribute(HTML.Attribute.WIDTH);
-        if (sValue != null && sValue.length() > 0)
+        if (sValue != null && !sValue.isEmpty())
         {
             nWidth_ = Integer.parseInt(sValue);
             nWidthChanged = true;
         }
         
         sValue = (String) getElement().getAttributes().getAttribute(HTML.Attribute.HEIGHT);
-        if (sValue != null && sValue.length() > 0)
+        if (sValue != null && !sValue.isEmpty())
         {
             nHeight_ = Integer.parseInt(sValue);
             nHeightChanged = true;
@@ -118,7 +118,7 @@ public class DDImageView extends DDView
         }
 
         sValue = (String) getElement().getAttributes().getAttribute(YADJ);
-        if (sValue != null && sValue.length() > 0)
+        if (sValue != null && !sValue.isEmpty())
         {
             nYadj_ = Integer.parseInt(sValue);
         }
@@ -134,8 +134,22 @@ public class DDImageView extends DDView
         Rectangle rect = (a instanceof Rectangle) ? (Rectangle)a :
                          a.getBounds();
 
-        g.drawImage(image_, rect.x, rect.y+nYadj_, rect.x+nWidth_, rect.y+nHeight_+nYadj_,
-                                0, 0, image_.getWidth(), image_.getHeight(), null);
+        // Help/HTML content paints rarely, so pay for bicubic.  Without an interpolation hint
+        // Java 2D uses nearest-neighbor, which stair-steps these images on a scaled display
+        // (e.g. Windows at 125%) even when they are drawn at their natural size, since the
+        // device transform still scales them up.
+        Object old = null;
+        Graphics2D g2 = (g instanceof Graphics2D) ? (Graphics2D) g : null;
+        if (g2 != null) old = RenderUtils.applyInterpolation(g2, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        try
+        {
+            g.drawImage(image_, rect.x, rect.y+nYadj_, rect.x+nWidth_, rect.y+nHeight_+nYadj_,
+                                    0, 0, image_.getWidth(), image_.getHeight(), null);
+        }
+        finally
+        {
+            if (g2 != null) RenderUtils.restoreInterpolation(g2, old);
+        }
     }
     
     /** Determines the preferred span for this view along an
@@ -144,7 +158,7 @@ public class DDImageView extends DDView
      * @param axis may be either <code>View.X_AXIS</code> or
      * 		<code>View.Y_AXIS</code>
      * @return   the span the view would like to be rendered into.
-     *           Typically the view is told to render into the span
+     *           Typically, the view is told to render into the span
      *           that is returned, although there is no guarantee.
      *           The parent may choose to resize or break the view
      * @see View#getPreferredSpan

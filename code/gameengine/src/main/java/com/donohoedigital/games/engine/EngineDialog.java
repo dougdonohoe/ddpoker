@@ -78,7 +78,7 @@ public class EngineDialog extends InternalDialog
      */
     public void init(GamePhase gamephase, String sTitle, boolean bResizable)
     {
-        ImageIcon winicon = ImageConfig.getImageIcon(gamephase.getString("dialog-windowtitle-image", "dialog-windowtitle-image"));
+        Icon winicon = DDMultiResIcon.load(gamephase.getString("dialog-windowtitle-image", "dialog-windowtitle-image"));
         setFrameIcon(winicon);
         setIconifiable(true);
         setResizable(bResizable);

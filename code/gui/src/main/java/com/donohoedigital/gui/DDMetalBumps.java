@@ -36,6 +36,8 @@ import com.donohoedigital.config.ImageDef;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
@@ -43,7 +45,13 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 /**
- * Implements the bump pattern used by various widgets
+ * Implements the bump pattern used by various widgets.
+ *
+ * <p>The pattern is one pixel on, one pixel off, which does not survive being upscaled by the
+ * device transform: at the fractional scales Windows uses (125%, 150%, 175%) each dot lands on a
+ * fractional device pixel and the texture turns into a soft, banded wash.  macOS only ever
+ * reports a whole-number scale, so the same code looks fine there.  The tile is therefore built
+ * at device resolution and blitted 1:1 - see {@link #paintIcon}.
  */
 public class DDMetalBumps implements Icon {
 
@@ -62,9 +70,9 @@ public class DDMetalBumps implements Icon {
         setBumpColors(newTopColor, newShadowColor, newBackColor);
     }
 
-    private BumpBuffer getBuffer(GraphicsConfiguration gc, Color aTopColor,
+    private BumpBuffer getBuffer(GraphicsConfiguration gc, double scale, Color aTopColor,
                                  Color aShadowColor, Color aBackColor) {
-        if (buffer != null && buffer.hasSameConfiguration(gc, aTopColor, aShadowColor, aBackColor)) {
+        if (buffer != null && buffer.hasSameConfiguration(gc, scale, aTopColor, aShadowColor, aBackColor)) {
             return buffer;
         }
         BumpBuffer result = null;
@@ -73,13 +81,13 @@ public class DDMetalBumps implements Icon {
 
         while (elements.hasMoreElements()) {
             BumpBuffer aBuffer = elements.nextElement();
-            if (aBuffer.hasSameConfiguration(gc, aTopColor, aShadowColor, aBackColor)) {
+            if (aBuffer.hasSameConfiguration(gc, scale, aTopColor, aShadowColor, aBackColor)) {
                 result = aBuffer;
                 break;
             }
         }
         if (result == null) {
-            result = new BumpBuffer(gc, topColor, shadowColor, backColor);
+            result = new BumpBuffer(gc, scale, aTopColor, aShadowColor, aBackColor);
             buffers.addElement(result);
         }
         return result;
@@ -101,16 +109,41 @@ public class DDMetalBumps implements Icon {
     }
 
     public void paintIcon(Component c, Graphics g, int x, int y) {
-        GraphicsConfiguration gc = (g instanceof Graphics2D) ? ((Graphics2D) g).getDeviceConfiguration() : null;
+        Graphics2D g2 = (g instanceof Graphics2D) ? (Graphics2D) g : null;
+        GraphicsConfiguration gc = (g2 == null) ? null : g2.getDeviceConfiguration();
+        double scale = RenderUtils.getDeviceScale(g2);
 
-        buffer = getBuffer(gc, topColor, shadowColor, backColor);
+        buffer = getBuffer(gc, scale, topColor, shadowColor, backColor);
 
+        if (scale == 1.0d) {
+            tile(g, x, y, getIconWidth(), getIconHeight());
+            return;
+        }
+
+        // Paint in device space with the transform reset, so the device-resolution tile is
+        // blitted one for one with no resampling.  Changing the transform does not disturb the
+        // clip already set on g2.
+        AffineTransform old = g2.getTransform();
+        Point2D origin = old.transform(new Point2D.Double(x, y), null);
+        Point2D corner = old.transform(new Point2D.Double(x + getIconWidth(), y + getIconHeight()), null);
+        int devX = (int) Math.round(origin.getX());
+        int devY = (int) Math.round(origin.getY());
+        try {
+            g2.setTransform(new AffineTransform());
+            tile(g2, devX, devY,
+                    (int) Math.round(corner.getX()) - devX,
+                    (int) Math.round(corner.getY()) - devY);
+        } finally {
+            g2.setTransform(old);
+        }
+    }
+
+    /** Tile the buffer over the given rectangle, in whatever space {@code g} is currently in. */
+    private void tile(Graphics g, int x, int y, int width, int height) {
         int bufferWidth = buffer.getImageSize().width;
         int bufferHeight = buffer.getImageSize().height;
-        int iconWidth = getIconWidth();
-        int iconHeight = getIconHeight();
-        int x2 = x + iconWidth;
-        int y2 = y + iconHeight;
+        int x2 = x + width;
+        int y2 = y + height;
         int savex = x;
 
         while (y < y2) {
@@ -138,25 +171,29 @@ public class DDMetalBumps implements Icon {
 
 class BumpBuffer {
 
+    /** Logical pixels covered by one tile.  The image itself is this times the device scale. */
     static final int IMAGE_SIZE = 64;
-    static Dimension imageSize = new Dimension(IMAGE_SIZE, IMAGE_SIZE);
 
     transient Image image;
     Color topColor;
     Color shadowColor;
     Color backColor;
     private final GraphicsConfiguration gc;
+    private final double scale;
+    private final Dimension imageSize;
 
-    public BumpBuffer(GraphicsConfiguration gc, Color aTopColor, Color aShadowColor, Color aBackColor) {
+    public BumpBuffer(GraphicsConfiguration gc, double scale, Color aTopColor, Color aShadowColor, Color aBackColor) {
         this.gc = gc;
+        this.scale = scale;
         topColor = aTopColor;
         shadowColor = aShadowColor;
         backColor = aBackColor;
+        imageSize = new Dimension(dev(IMAGE_SIZE), dev(IMAGE_SIZE));
         createImage();
         fillBumpBuffer();
     }
 
-    public boolean hasSameConfiguration(GraphicsConfiguration gc,
+    public boolean hasSameConfiguration(GraphicsConfiguration gc, double aScale,
                                         Color aTopColor, Color aShadowColor,
                                         Color aBackColor) {
         if (this.gc != null) {
@@ -166,36 +203,47 @@ class BumpBuffer {
         } else if (gc != null) {
             return false;
         }
-        return topColor.equals(aTopColor) && shadowColor.equals(aShadowColor) && backColor.equals(aBackColor);
+        return scale == aScale &&
+               topColor.equals(aTopColor) && shadowColor.equals(aShadowColor) && backColor.equals(aBackColor);
     }
 
     public Image getImage() {
         return image;
     }
 
+    /** Size of the tile in device pixels. */
     public Dimension getImageSize() {
         return imageSize;
+    }
+
+    /** Device pixel position/size for a coordinate expressed in the pattern's logical pixels. */
+    private int dev(int logical) {
+        return (int) Math.round(logical * scale);
     }
 
     private void fillBumpBuffer() {
         Graphics g = image.getGraphics();
 
+        // four dots have to fit within each 4-logical-pixel cell, so a dot can be no wider than
+        // the scale factor rounded down (1 device pixel at 125%, 2 at 200%)
+        int dot = Math.max(1, (int) Math.floor(scale));
+
         g.setColor(backColor);
-        g.fillRect(0, 0, IMAGE_SIZE, IMAGE_SIZE);
+        g.fillRect(0, 0, imageSize.width, imageSize.height);
 
         g.setColor(topColor);
         for (int x = 0; x < IMAGE_SIZE; x += 4) {
             for (int y = 0; y < IMAGE_SIZE; y += 4) {
-                g.drawLine(x, y, x, y);
-                g.drawLine(x + 2, y + 2, x + 2, y + 2);
+                g.fillRect(dev(x), dev(y), dot, dot);
+                g.fillRect(dev(x + 2), dev(y + 2), dot, dot);
             }
         }
 
         g.setColor(shadowColor);
         for (int x = 0; x < IMAGE_SIZE; x += 4) {
             for (int y = 0; y < IMAGE_SIZE; y += 4) {
-                g.drawLine(x + 1, y + 1, x + 1, y + 1);
-                g.drawLine(x + 3, y + 3, x + 3, y + 3);
+                g.fillRect(dev(x + 1), dev(y + 1), dot, dot);
+                g.fillRect(dev(x + 3), dev(y + 3), dot, dot);
             }
         }
         g.dispose();
@@ -203,11 +251,11 @@ class BumpBuffer {
 
     private void createImage() {
         if (gc != null) {
-            image = gc.createCompatibleImage(IMAGE_SIZE, IMAGE_SIZE);
+            image = gc.createCompatibleImage(imageSize.width, imageSize.height);
         } else {
             int[] cmap = {backColor.getRGB(), topColor.getRGB(), shadowColor.getRGB()};
             IndexColorModel icm = new IndexColorModel(8, 3, cmap, 0, false, -1, DataBuffer.TYPE_BYTE);
-            image = ImageDef.createBufferedImage(IMAGE_SIZE, IMAGE_SIZE, BufferedImage.TYPE_BYTE_INDEXED, icm);
+            image = ImageDef.createBufferedImage(imageSize.width, imageSize.height, BufferedImage.TYPE_BYTE_INDEXED, icm);
         }
     }
 }
