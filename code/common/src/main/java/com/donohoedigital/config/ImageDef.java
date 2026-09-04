@@ -228,10 +228,11 @@ public class ImageDef
      */
     public static BufferedImage getBufferedImage(File file)
     {
-        URL url = null;
+        URL url;
         try
         {
-            url = new URL("file:"+file.getAbsolutePath());
+            // toURI() escapes spaces and other characters illegal in a URL
+            url = file.toURI().toURL();
         }
         catch (MalformedURLException e)
         {

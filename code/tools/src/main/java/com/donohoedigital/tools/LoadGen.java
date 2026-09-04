@@ -631,9 +631,9 @@ public class LoadGen
 
             try
             {
-                url = new URL(sURL);
+                url = URI.create(sURL).toURL();
             }
-            catch (MalformedURLException me)
+            catch (MalformedURLException | IllegalArgumentException me)
             {
                 throw new Exception("MALFORMED_URL: " + me.toString());
             }

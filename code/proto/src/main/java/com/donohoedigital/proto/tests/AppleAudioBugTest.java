@@ -34,6 +34,7 @@ package com.donohoedigital.proto.tests;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -57,8 +58,8 @@ public class AppleAudioBugTest
 
         try
         {
-            //url = new URL("file:/Users/donohoe/work/ddpoker/code/common/target/test-classes/config/testapp/audio/bell.wav");
-            url = new URL("file:/Users/donohoe/work/ddpoker/code/poker/src/main/resources/config/poker/audio/bell.wav");
+            //url = URI.create("file:/Users/donohoe/work/ddpoker/code/common/target/test-classes/config/testapp/audio/bell.wav").toURL();
+            url = URI.create("file:/Users/donohoe/work/ddpoker/code/poker/src/main/resources/config/poker/audio/bell.wav").toURL();
             stream = AudioSystem.getAudioInputStream(url);
         }
         catch (UnsupportedAudioFileException | IOException uafe)

@@ -82,11 +82,11 @@ public class Peer2PeerMulticast implements Runnable
 			ms_ = new MulticastSocket(nPort_);
 
 			// set right interface
-            setInterface();
+            NetworkInterface nic = setInterface();
             
             // join the group, set TTL
             ms_.setTimeToLive(32);
-            ms_.joinGroup(ia_);
+            ms_.joinGroup(new InetSocketAddress(ia_, nPort_), nic);
         } 
         catch (UnknownHostException uhe)
         {
@@ -102,7 +102,7 @@ public class Peer2PeerMulticast implements Runnable
      * Fix for java.net.SocketException: Can't assign requested address
      * https://stackoverflow.com/questions/18747134/getting-cant-assign-requested-address-java-net-socketexception-using-ehcache
      */
-    private void setInterface() throws SocketException {
+    private NetworkInterface setInterface() throws SocketException {
         Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
         while (networkInterfaces.hasMoreElements()) {
             NetworkInterface networkInterface = networkInterfaces.nextElement();
@@ -114,14 +114,17 @@ public class Peer2PeerMulticast implements Runnable
                         && !inetAddress.isLinkLocalAddress()
                         && !inetAddress.isLoopbackAddress()
                         && !inetAddress.isMulticastAddress()) {
-                    ms_.setNetworkInterface(NetworkInterface.getByName(networkInterface.getName()));
+                    NetworkInterface nic = NetworkInterface.getByName(networkInterface.getName());
+                    ms_.setNetworkInterface(nic);
                     //logger.debug("Setting " + networkInterface);
-                    return;
+                    return nic;
                 } else {
                     //logger.debug("Not setting " + networkInterface);
                 }
             }
         }
+        // null tells joinGroup() to use the interface chosen by the OS
+        return null;
     }
 
     /**

@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -102,11 +103,13 @@ public class DDMessenger
         URL url = null;
        
         try {
-            url = new URL(sURL);
+            url = URI.create(sURL).toURL();
             return sendMessage(url, send);
         }
-        catch (MalformedURLException me)
+        catch (MalformedURLException | IllegalArgumentException me)
         {
+            // URI.create() throws IllegalArgumentException where new URL() threw
+            // MalformedURLException - both mean the same thing to callers
             throw new ApplicationError(me);
         }
     }
@@ -263,11 +266,13 @@ public class DDMessenger
         URL url = null;
        
         try {
-            url = new URL(sURL);
+            url = URI.create(sURL).toURL();
             return getURL(url, writer, sPostContentType, reader, null, options);
         }
-        catch (MalformedURLException me)
+        catch (MalformedURLException | IllegalArgumentException me)
         {
+            // URI.create() throws IllegalArgumentException where new URL() threw
+            // MalformedURLException - both mean the same thing to callers
             throw new ApplicationError(me);
         }
     }

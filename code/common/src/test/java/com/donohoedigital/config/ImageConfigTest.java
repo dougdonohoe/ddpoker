@@ -35,7 +35,12 @@ package com.donohoedigital.config;
 import com.donohoedigital.base.*;
 import junit.framework.*;
 
+import org.apache.commons.io.FileUtils;
+
 import java.awt.image.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Created by IntelliJ IDEA.
@@ -60,6 +65,32 @@ public class ImageConfigTest extends TestCase
         {
             BufferedImage img = def.getBufferedImage();
             assertNotNull(img);
+        }
+    }
+
+    /**
+     * A file path can legally contain characters ('#', '%') that are not legal in a
+     * URL.  ImageDef must escape them, which File.toURI() does and "file:" + path did not.
+     */
+    public void testGetBufferedImageFromAwkwardlyNamedFile() throws IOException
+    {
+        Path dir = Files.createTempDirectory("ImageConfigTest");
+        Path source = Path.of("src/test/resources/config/testapp/images/donohoedigital.gif");
+        assertTrue(source + " not found - is the test running from the common module?",
+                   Files.exists(source));
+
+        try
+        {
+            for (String name : new String[]{"plain.gif", "with space.gif", "with#hash.gif", "with%pct.gif"})
+            {
+                Path copy = dir.resolve(name);
+                Files.copy(source, copy);
+                assertNotNull(name, ImageDef.getBufferedImage(copy.toFile()));
+            }
+        }
+        finally
+        {
+            FileUtils.deleteDirectory(dir.toFile());
         }
     }
 }

@@ -57,8 +57,6 @@ public class Prefs
             // because default is /etc
             String userRoot = System.getProperty("user.home");
             System.setProperty("java.util.prefs.systemRoot", userRoot + "/.java");
-            // TODO: this is probably broken now
-            System.setProperty("javax.xml.transform.TransformerFactory", "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
         }
     }
 
