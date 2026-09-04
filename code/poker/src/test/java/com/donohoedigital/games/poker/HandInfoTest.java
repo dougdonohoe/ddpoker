@@ -36,10 +36,10 @@ import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.games.poker.engine.Card;
 import com.donohoedigital.games.poker.engine.HandSorted;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static com.donohoedigital.games.poker.engine.Card.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HandInfoTest {
 
@@ -88,8 +88,8 @@ public class HandInfoTest {
         System.out.println(sName + " - " + info + " fastscore=" + fastScore + " fasterScore=" + fasterScore);
         System.out.println(info.toStringDebug());
         System.out.println();
-        assertEquals("Score doesn't match expected", expected, fastScore);
-        assertEquals("Fast doesn't match score", info.getScore(), fastScore);
-        assertEquals("Faster doesn't match score", info.getScore(), fasterScore);
+        assertEquals(expected, fastScore, "Score doesn't match expected");
+        assertEquals(info.getScore(), fastScore, "Fast doesn't match score");
+        assertEquals(info.getScore(), fasterScore, "Faster doesn't match score");
     }
 }

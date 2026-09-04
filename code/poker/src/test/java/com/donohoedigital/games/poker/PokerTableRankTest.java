@@ -36,11 +36,11 @@ import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.model.TournamentProfile;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Verifies PokerTable.getRank() ranks a player among those seated at one table, using
@@ -56,7 +56,7 @@ public class PokerTableRankTest
 {
     private PokerGame game_;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
@@ -135,9 +135,9 @@ public class PokerTableRankTest
         PokerPlayer d = seat(table, 3, 4, 700);
 
         assertEquals(1, table.getRank(a));
-        assertEquals("tied players share the better rank", 2, table.getRank(b));
-        assertEquals("tied players share the better rank", 2, table.getRank(c));
-        assertEquals("the rank after a tie skips the shared spot", 4, table.getRank(d));
+        assertEquals(2, table.getRank(b), "tied players share the better rank");
+        assertEquals(2, table.getRank(c), "tied players share the better rank");
+        assertEquals(4, table.getRank(d), "the rank after a tie skips the shared spot");
     }
 
     /**
@@ -154,14 +154,13 @@ public class PokerTableRankTest
     {
         game_.getProfile().getMap().setInteger(TournamentProfile.PARAM_TABLE_SEATS, 6);
         PokerTable table = table(1);
-        assertTrue("expected a short table", table.getSeats() < PokerConstants.SEATS);
+        assertTrue(table.getSeats() < PokerConstants.SEATS, "expected a short table");
 
         PokerPlayer low = seat(table, 0, 1, 500);
         PokerPlayer high = seat(table, PokerConstants.SEATS - 1, 2, 1500);
 
         assertEquals(1, table.getRank(high));
-        assertEquals("the player past the last seat of a short table has to be counted",
-                     2, table.getRank(low));
+        assertEquals(2, table.getRank(low), "the player past the last seat of a short table has to be counted");
     }
 
     /**
@@ -179,8 +178,8 @@ public class PokerTableRankTest
         seat(theirs, 0, 3, 9000);
         seat(theirs, 1, 4, 8000);
 
-        assertEquals("first of two here", 1, ours.getRank(shortStack));
-        assertEquals("but third of four overall", 3, game_.getRank(shortStack));
+        assertEquals(1, ours.getRank(shortStack), "first of two here");
+        assertEquals(3, game_.getRank(shortStack), "but third of four overall");
     }
 
     @Test
@@ -222,8 +221,7 @@ public class PokerTableRankTest
         p.setChipCount(1000);
         orphan.setPlayer(p, 0);
 
-        assertEquals("no game to read chip counts through, seated or not",
-                     0, orphan.getRank(p));
+        assertEquals(0, orphan.getRank(p), "no game to read chip counts through, seated or not");
     }
 
     /**
@@ -274,21 +272,19 @@ public class PokerTableRankTest
         PokerPlayer leader = seat(table, 3, 1, 1000);
         HoldemHand hhand = startHand(table);
 
-        assertTrue("expected a hand in progress", table.isHandInProgress());
+        assertTrue(table.isHandInProgress(), "expected a hand in progress");
         int nCommitted = hhand.getTotalBet(leader);
         int nRivalCommitted = hhand.getTotalBet(rival);
-        assertTrue("expected the blind to cost the leader more than the rival paid",
-                   nCommitted - nRivalCommitted > 1);
+        assertTrue(nCommitted - nRivalCommitted > 1, "expected the blind to cost the leader more than the rival paid");
 
         // Leave the rival one chip behind on settled counts, which puts them ahead on
         // live ones - the leader has more in the pot.  Derived from what the deal
         // actually charged rather than assuming it: the stakes belong to the profile,
         // and a failure here should be about ranking, not about level one being 1/2.
         rival.setChipCount(leader.getChipCount() + nCommitted - nRivalCommitted - 1);
-        assertTrue("the leader's live count must have dropped below the rival's",
-                   leader.getChipCount() < rival.getChipCount());
+        assertTrue(leader.getChipCount() < rival.getChipCount(), "the leader's live count must have dropped below the rival's");
 
-        assertEquals("settled counts still put the leader first", 1, table.getRank(leader));
+        assertEquals(1, table.getRank(leader), "settled counts still put the leader first");
         assertEquals(2, table.getRank(rival));
     }
 
@@ -306,19 +302,17 @@ public class PokerTableRankTest
         PokerPlayer rival = seat(table, 1, 2, 1000);
         HoldemHand hhand = startHand(table);
 
-        assertTrue("expected a hand in progress", table.isHandInProgress());
-        assertTrue("expected both players to post", hhand.getTotalBet(leader) > 0 &&
-                                                    hhand.getTotalBet(rival) > 0);
-        assertTrue("the button takes the small blind, so seat 0 must have posted more",
-                   hhand.getTotalBet(leader) > hhand.getTotalBet(rival));
+        assertTrue(table.isHandInProgress(), "expected a hand in progress");
+        assertTrue(hhand.getTotalBet(leader) > 0 &&
+                                                    hhand.getTotalBet(rival) > 0, "expected both players to post");
+        assertTrue(hhand.getTotalBet(leader) > hhand.getTotalBet(rival), "the button takes the small blind, so seat 0 must have posted more");
 
         // level the live counts, whatever the blinds cost: settled is live plus what is
         // in the pot, so the big blind stays ahead by the difference between the posts
         rival.setChipCount(leader.getChipCount());
 
-        assertEquals("settled counts still put the leader first", 1, table.getRank(leader));
-        assertEquals("and the rival second, where a live count would tie them",
-                     2, table.getRank(rival));
+        assertEquals(1, table.getRank(leader), "settled counts still put the leader first");
+        assertEquals(2, table.getRank(rival), "and the rival second, where a live count would tie them");
     }
 
     /**
@@ -338,8 +332,7 @@ public class PokerTableRankTest
         for (int i = 0; i < game_.getNumPlayers(); i++)
         {
             PokerPlayer p = game_.getPokerPlayerAt(i);
-            assertEquals("table and tournament rank differ for " + p.getName(),
-                         game_.getRank(p), table.getRank(p));
+            assertEquals(game_.getRank(p), table.getRank(p), "table and tournament rank differ for " + p.getName());
         }
     }
 }

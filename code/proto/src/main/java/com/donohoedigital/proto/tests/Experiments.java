@@ -33,7 +33,6 @@
 package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.Utils;
-import junit.framework.TestCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.util.convert.converter.DateConverter;
@@ -47,6 +46,9 @@ import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -55,10 +57,11 @@ import java.util.Properties;
  * Time: 12:53:22 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Experiments extends TestCase
+public class Experiments
 {
     private Logger logger = LogManager.getLogger(Experiments.class);
 
+    @Test
     public void testNullEquals()
     {
         String foo = null;
@@ -67,6 +70,7 @@ public class Experiments extends TestCase
         logger.debug("bar.equals(foo): " + bar.equals(foo));
     }
 
+    @Test
     public void testResourceLoader()
     {
         ClassLoader cl = getClass().getClassLoader();
@@ -84,6 +88,7 @@ public class Experiments extends TestCase
         }
     }
 
+    @Test
     public void testSpringResolver()
     {
         PathMatchingResourcePatternResolver match;
@@ -102,6 +107,7 @@ public class Experiments extends TestCase
         }
     }
 
+    @Test
     public void testPrimitiveArray()
     {
         byte[] data = new byte[0];
@@ -110,6 +116,7 @@ public class Experiments extends TestCase
     }
 
     @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
+    @Test
     public void testNoLog4j()
     {
         System.out.println("Before log4j logger call");
@@ -119,6 +126,7 @@ public class Experiments extends TestCase
         System.out.println("After log4j logger call");
     }
 
+    @Test
     public void testNullInstanceOf()
     {
         Object foo = null;
@@ -128,9 +136,10 @@ public class Experiments extends TestCase
             logger.debug("never true");
         }
 
-        assertTrue("null instanceof works if we get here", true);
+        assertTrue(true, "null instanceof works if we get here");
     }
 
+    @Test
     public void testURLEncoder()
     {
         String dot = ".|";
@@ -145,6 +154,7 @@ public class Experiments extends TestCase
         }
     }
 
+    @Test
     public void testEncodeSlash()
     {
         String enc = "><//'>";
@@ -152,11 +162,13 @@ public class Experiments extends TestCase
         logger.debug("ENCODE: " + enc);
     }
 
+    @Test
     public void testReplacePercent()
     {
         logger.debug("PERCENT: " + "%and%that%".replaceAll("%", "\\\\%"));
     }
 
+    @Test
     public void testDateConverter()
     {
         DateConverter c = new DateConverter();
@@ -166,6 +178,7 @@ public class Experiments extends TestCase
         logger.debug("Reversed: " + c.convertToObject(s, null));
     }
 
+    @Test
     public void testUser()
     {
         Properties props = System.getProperties();

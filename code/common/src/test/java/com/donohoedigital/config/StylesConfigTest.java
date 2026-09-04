@@ -33,9 +33,11 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import junit.framework.*;
 
 import java.awt.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,10 +46,11 @@ import java.awt.*;
  * Time: 9:49:51 AM
  * To change this template use File | Settings | File Templates.
  */
-public class StylesConfigTest extends TestCase
+public class StylesConfigTest
 {
     //private static Logger logger = LogManager.getLogger(StylesConfigTest.class);
 
+    @Test
     public void testLoad()
     {
         if (Utils.ISMAC) return; // doesn't play nicely on mac

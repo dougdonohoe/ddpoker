@@ -32,9 +32,11 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
 import org.apache.logging.log4j.*;
 import com.donohoedigital.base.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,9 +45,10 @@ import com.donohoedigital.base.*;
  * Time: 9:49:51 AM
  * To change this template use File | Settings | File Templates.
  */
-public class HelpConfigTest extends TestCase
+public class HelpConfigTest
 {
     private static Logger logger = LogManager.getLogger(HelpConfigTest.class);
+    @Test
     public void testLoad()
     {
         if (Utils.ISMAC) return; // doesn't play nicely on mac

@@ -39,18 +39,17 @@ import com.donohoedigital.games.server.model.Registration;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,7 +58,7 @@ import static org.junit.Assert.*;
  * Time: 2:44:16 PM
  * To change this template use File | Settings | File Templates.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class RegistrationTest
@@ -82,14 +81,14 @@ public class RegistrationTest
         assertNotNull(newProfile.getId());
 
         Registration fetch = dao.get(newProfile.getId());
-        assertEquals("name should match", newProfile.getName(), fetch.getName());
+        assertEquals(newProfile.getName(), fetch.getName(), "name should match");
 
         String key = "1111-1111-1111-1111";
         newProfile.setLicenseKey(key);
         dao.update(newProfile);
 
         Registration updated = dao.get(newProfile.getId());
-        assertEquals("key should match", key, updated.getLicenseKey());
+        assertEquals(key, updated.getLicenseKey(), "key should match");
     }
 
     @Test
@@ -147,33 +146,33 @@ public class RegistrationTest
         assertNotNull(save2.getId());
 
         // match exact
-        assertTrue("Exact same should be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Exact same should be a duplicate");
 
         // different email
         likeSave1.setEmail(differentEmail);
-        assertTrue("Different email should still be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Different email should still be a duplicate");
 
         likeSave1.setIp(differentIp);
-        assertTrue("Different ip should still be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Different ip should still be a duplicate");
 
         likeSave1.setHostNameModified("modify.this.com");
-        assertFalse("Different host, now should be no longer be a duplicate", dao.isDuplicate(likeSave1));
+        assertFalse(dao.isDuplicate(likeSave1), "Different host, now should be no longer be a duplicate");
 
         // different registration type
         likeSave1.setEmail(save1.getIp());
         likeSave1.setHostNameModified(save1.getHostNameModified());
         likeSave1.setIp(save1.getIp());
-        assertTrue("Revert back email/host/ip same should be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Revert back email/host/ip same should be a duplicate");
         likeSave1.setType(Registration.Type.ACTIVATION);
-        assertTrue("Activation type should be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Activation type should be a duplicate");
         likeSave1.setHostNameModified(null);
-        assertTrue("null host should be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "null host should be a duplicate");
 
         // something marked as duplicate
-        assertFalse("Marked as duplicate should not be a duplicate", dao.isDuplicate(likeSave2));
+        assertFalse(dao.isDuplicate(likeSave2), "Marked as duplicate should not be a duplicate");
 
         // totally different key
-        assertFalse("Different key should not be a duplicate", dao.isDuplicate(different));
+        assertFalse(dao.isDuplicate(different), "Different key should not be a duplicate");
     }
 
     @Test
@@ -223,37 +222,37 @@ public class RegistrationTest
         assertNotNull(save3.getId());
 
         // match exact
-        assertTrue("Exact same should be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Exact same should be a duplicate");
 
         // different ip/null host
         likeSave1.setIp(differentIp);
         likeSave1.setHostNameModified(null);
-        assertFalse("Different ip (null host) should not be a duplicate", dao.isDuplicate(likeSave1));
+        assertFalse(dao.isDuplicate(likeSave1), "Different ip (null host) should not be a duplicate");
 
         // different ip/same host
         likeSave1.setIp(differentIp);
         likeSave1.setHostNameModified(save1.getHostNameModified());
-        assertTrue("Different ip (same host) should be a duplicate", dao.isDuplicate(likeSave1));
+        assertTrue(dao.isDuplicate(likeSave1), "Different ip (same host) should be a duplicate");
 
         // different ip/different host
         likeSave1.setIp(differentIp);
         likeSave1.setHostNameModified("extra." + save1.getHostName());
-        assertFalse("Different ip (diff host) should not be a duplicate", dao.isDuplicate(likeSave1));
+        assertFalse(dao.isDuplicate(likeSave1), "Different ip (diff host) should not be a duplicate");
 
         // different registration type
         likeSave1.setType(Registration.Type.REGISTRATION);
-        assertFalse("Registration type should not be a duplicate", dao.isDuplicate(likeSave1));
+        assertFalse(dao.isDuplicate(likeSave1), "Registration type should not be a duplicate");
 
         // something marked as duplicate
-        assertFalse("Marked as duplicate should not be a duplicate", dao.isDuplicate(likeSave2));
+        assertFalse(dao.isDuplicate(likeSave2), "Marked as duplicate should not be a duplicate");
 
         // null host should be duplicate
-        assertTrue("Null host in db should be duplicate", dao.isDuplicate(likeSave3));
+        assertTrue(dao.isDuplicate(likeSave3), "Null host in db should be duplicate");
         likeSave3.setIp(differentIp);
-        assertFalse("Null host in db, different ip should not be a duplicate", dao.isDuplicate(likeSave3));
+        assertFalse(dao.isDuplicate(likeSave3), "Null host in db, different ip should not be a duplicate");
 
         // totally different key
-        assertFalse("Different key should not be a duplicate", dao.isDuplicate(different));
+        assertFalse(dao.isDuplicate(different), "Different key should not be a duplicate");
     }
 
     @Test
@@ -340,7 +339,7 @@ public class RegistrationTest
         {
             int expected = numSuspect - nMin + 1;
             List<String> list = dao.getAllSuspectKeys(nMin);
-            assertEquals("nMin:" + nMin + " size=" + list.size() + " matches expected=" + expected, list.size(), expected);
+            assertEquals(list.size(), expected, "nMin:" + nMin + " size=" + list.size() + " matches expected=" + expected);
 
             for (String key : list)
             {

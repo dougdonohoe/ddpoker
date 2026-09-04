@@ -34,9 +34,11 @@ package com.donohoedigital.games.poker.server;
 
 import com.donohoedigital.config.*;
 import com.donohoedigital.games.poker.service.helper.*;
-import junit.framework.*;
 
 import java.net.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,12 +47,13 @@ import java.net.*;
  * Time: 10:57:08 AM
  * To change this template use File | Settings | File Templates.
  */
-public class DisallowedManagerTest extends TestCase
+public class DisallowedManagerTest
 {
     //private static final Logger logger = LogManager.getLogger(DisallowedManagerTest.class);
 
     DisallowedManager manager = new DisallowedManager();
 
+    @Test
     public void testInvalid()
     {
         assertTrue(manager.isNameValid("Dexter"));
@@ -69,6 +72,7 @@ public class DisallowedManagerTest extends TestCase
 
     }
 
+    @Test
     public void testUTF8()
     {
         verifyFile("greek.utf8.txt");

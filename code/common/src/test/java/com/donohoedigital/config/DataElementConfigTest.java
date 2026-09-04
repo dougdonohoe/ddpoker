@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
 import org.apache.logging.log4j.*;
 
 import java.util.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,7 +46,7 @@ import java.util.*;
  * Time: 8:28:44 AM
  * To change this template use File | Settings | File Templates.
  */
-public class DataElementConfigTest extends TestCase
+public class DataElementConfigTest
 {
     private static Logger logger = LogManager.getLogger(DataElementConfigTest.class);
 
@@ -56,6 +58,7 @@ public class DataElementConfigTest extends TestCase
     }
 
     @SuppressWarnings({"SuspiciousMethodCalls"})
+    @Test
     public void testLoad()
     {
         DataElementConfig dec = load();
@@ -78,6 +81,7 @@ public class DataElementConfigTest extends TestCase
      * Enumeration values must come back in the order they are declared in the
      * xsd - combo boxes are populated straight from this list.
      */
+    @Test
     public void testEnumerationOrder()
     {
         DataElement dogs = load().get("dogs");
@@ -89,6 +93,7 @@ public class DataElementConfigTest extends TestCase
      * Display values are looked up from list.&lt;element&gt;.&lt;value&gt; properties
      * (see testapp/client.properties)
      */
+    @Test
     public void testDisplayValues()
     {
         DataElement dogs = load().get("dogs");
@@ -102,20 +107,22 @@ public class DataElementConfigTest extends TestCase
      * &lt;xsd:include schemaLocation="classpath:..."/&gt; - types declared only
      * there must be present too.
      */
+    @Test
     public void testClasspathIncludeIsFollowed()
     {
         DataElement territoryType = load().get("territoryType");
-        assertNotNull("territoryType comes from the included global data-elements.xsd", territoryType);
+        assertNotNull(territoryType, "territoryType comes from the included global data-elements.xsd");
         assertEquals(Arrays.asList("land", "water", "edge", "decoration"), territoryType.getListValues());
     }
 
     /**
      * A named simple type with no enumeration is still registered, but is not a list
      */
+    @Test
     public void testNonEnumeratedTypeIsNotAList()
     {
         DataElement string = load().get("string");
-        assertNotNull("plain simple types are registered too", string);
+        assertNotNull(string, "plain simple types are registered too");
         assertFalse(string.isList());
         assertNull(string.getListValues());
     }

@@ -36,15 +36,15 @@ import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.games.poker.model.TournamentProfile;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.List;
 import java.util.Random;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Verifies PokerGame.getRank() counts in a single pass without changing the answer the
@@ -55,7 +55,7 @@ public class PokerGameRankTest
 {
     private PokerGame game_;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
@@ -146,9 +146,9 @@ public class PokerGameRankTest
         PokerPlayer d = add(4, 700);
 
         assertEquals(1, game_.getRank(a));
-        assertEquals("tied players share the better rank", 2, game_.getRank(b));
-        assertEquals("tied players share the better rank", 2, game_.getRank(c));
-        assertEquals("the rank after a tie skips the shared spot", 4, game_.getRank(d));
+        assertEquals(2, game_.getRank(b), "tied players share the better rank");
+        assertEquals(2, game_.getRank(c), "tied players share the better rank");
+        assertEquals(4, game_.getRank(d), "the rank after a tie skips the shared spot");
     }
 
     @Test
@@ -178,8 +178,7 @@ public class PokerGameRankTest
         for (int i = 0; i < game_.getNumPlayers(); i++)
         {
             PokerPlayer p = game_.getPokerPlayerAt(i);
-            assertEquals("rank differs for " + p.getName() + " with $" + p.getChipCount(),
-                         legacyRank(p), game_.getRank(p));
+            assertEquals(legacyRank(p), game_.getRank(p), "rank differs for " + p.getName() + " with $" + p.getChipCount());
         }
     }
 
@@ -196,7 +195,7 @@ public class PokerGameRankTest
 
         assertEquals(1, game_.getRank(a));
         assertEquals(1, game_.getRank(b));
-        assertEquals("legacy version returned 0 here", 0, legacyRank(a));
+        assertEquals(0, legacyRank(a), "legacy version returned 0 here");
     }
 
     /**
@@ -234,10 +233,10 @@ public class PokerGameRankTest
         allin.setChipCount(0);
 
         List<PokerPlayer> rank = game_.getPlayersByRank();
-        assertEquals("live players stay ahead of finishers", leader, rank.get(0));
-        assertEquals("an all-in player is still a live player", allin, rank.get(1));
-        assertEquals("paid finishers keep their index", third, rank.get(2));
-        assertEquals("paid finishers keep their index", fourth, rank.get(3));
+        assertEquals(leader, rank.get(0), "live players stay ahead of finishers");
+        assertEquals(allin, rank.get(1), "an all-in player is still a live player");
+        assertEquals(third, rank.get(2), "paid finishers keep their index");
+        assertEquals(fourth, rank.get(3), "paid finishers keep their index");
     }
 
     /**
@@ -261,13 +260,12 @@ public class PokerGameRankTest
         // hands.  Park the rival between my live count and my settled one.
         HoldemHand hhand = startHand(mine);
         int nCommitted = hhand.getTotalBet(doug);
-        assertTrue("expected the deal to commit chips", nCommitted > 1);
+        assertTrue(nCommitted > 1, "expected the deal to commit chips");
         rival.setChipCount(1000 - nCommitted + 1);
 
-        assertTrue("live counts would invert these two",
-                   doug.getChipCount() < rival.getChipCount());
+        assertTrue(doug.getChipCount() < rival.getChipCount(), "live counts would invert these two");
 
-        assertEquals("chips in the pot must not cost me a place", 1, game_.getRank(doug));
+        assertEquals(1, game_.getRank(doug), "chips in the pot must not cost me a place");
         assertEquals(2, game_.getRank(rival));
     }
 
@@ -286,9 +284,9 @@ public class PokerGameRankTest
         PokerPlayer rival = seat(theirs, 0, 2, 950);
 
         HoldemHand hhand = startHand(mine);
-        assertTrue("expected the deal to commit chips", hhand.getTotalBet(doug) > 0);
+        assertTrue(hhand.getTotalBet(doug) > 0, "expected the deal to commit chips");
 
-        assertEquals("still behind on settled chips", 2, game_.getRank(doug));
+        assertEquals(2, game_.getRank(doug), "still behind on settled chips");
         assertEquals(1, game_.getRank(rival));
     }
 

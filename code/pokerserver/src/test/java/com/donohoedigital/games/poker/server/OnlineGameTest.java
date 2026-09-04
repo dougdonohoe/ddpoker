@@ -43,20 +43,19 @@ import com.donohoedigital.games.poker.model.OnlineGame;
 import com.donohoedigital.games.poker.model.util.OnlineGameList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -65,7 +64,7 @@ import static org.junit.Assert.*;
  * Time: 2:44:16 PM
  * To change this template use File | Settings | File Templates.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class OnlineGameTest
@@ -88,14 +87,14 @@ public class OnlineGameTest
         assertNotNull(newGame.getId());
 
         OnlineGame fetch = dao.get(newGame.getId());
-        assertEquals("license key should match", newGame.getLicenseKey(), fetch.getLicenseKey());
+        assertEquals(newGame.getLicenseKey(), fetch.getLicenseKey(), "license key should match");
 
         String key = "1111-1111-1111-1111";
         newGame.setLicenseKey(key);
         dao.update(newGame);
 
         OnlineGame updated = dao.get(newGame.getId());
-        assertEquals("key should match", key, updated.getLicenseKey());
+        assertEquals(key, updated.getLicenseKey(), "key should match");
     }
 
     @Test
@@ -167,8 +166,8 @@ public class OnlineGameTest
             OnlineGameList fetch = dao.getByMode(count, fetched, pagesize, modes, null, null, null, true);
             fetched += fetch.size();
 
-            assertEquals("total rows should match", expectedCount, fetch.getTotalSize());
-            assertTrue("rows returned should be <= pagesize", fetch.size() <= pagesize);
+            assertEquals(expectedCount, fetch.getTotalSize(), "total rows should match");
+            assertTrue(fetch.size() <= pagesize, "rows returned should be <= pagesize");
             if (fetch.isEmpty()) break;
 
             // sorting by mode first, verify that first half are REG
@@ -195,7 +194,7 @@ public class OnlineGameTest
             }
         }
 
-        assertEquals("total fetched should equal all games", gameCount, fetched);
+        assertEquals(gameCount, fetched, "total fetched should equal all games");
 
         // test fetch of just end/stop and sort normally
         pagesize = 4;
@@ -211,8 +210,8 @@ public class OnlineGameTest
             OnlineGameList fetch = dao.getByMode(count, fetched, pagesize, modes2, null, null, null, false);
             fetched += fetch.size();
 
-            assertEquals("total rows should match", expectedCount, fetch.getTotalSize());
-            assertTrue("rows returned should be <= pagesize", fetch.size() <= pagesize);
+            assertEquals(expectedCount, fetch.getTotalSize(), "total rows should match");
+            assertTrue(fetch.size() <= pagesize, "rows returned should be <= pagesize");
             if (fetch.isEmpty()) break;
 
             // sorting by mode first, verify that first half are REG
@@ -223,15 +222,15 @@ public class OnlineGameTest
                 int name = Integer.parseInt(og.getHostPlayer());
                 long date = og.getEndDate().getTime();
 
-                assertTrue(date + " <= " + lastDate, date <= lastDate);
-                if (date == lastDate) assertTrue(name + " > " + lastName, name > lastName);
+                assertTrue(date <= lastDate, date + " <= " + lastDate);
+                if (date == lastDate) assertTrue(name > lastName, name + " > " + lastName);
 
                 lastName = name;
                 lastDate = date;
             }
         }
 
-        assertEquals("total fetched should equal half of games", fetched, expectedCount);
+        assertEquals(fetched, expectedCount, "total fetched should equal half of games");
 
         // test fetch of just each type
         for (int i = OnlineGame.MODE_REG; i <= OnlineGame.MODE_END; i++)
@@ -248,8 +247,8 @@ public class OnlineGameTest
                 OnlineGameList fetch = dao.getByMode(count, fetched, pagesize, modes3, null, null, null, false);
                 fetched += fetch.size();
 
-                assertEquals("total rows should match", expectedCount, fetch.getTotalSize());
-                assertTrue("rows returned should be <= pagesize", fetch.size() <= pagesize);
+                assertEquals(expectedCount, fetch.getTotalSize(), "total rows should match");
+                assertTrue(fetch.size() <= pagesize, "rows returned should be <= pagesize");
                 if (fetch.isEmpty()) break;
 
                 // verify ordering correct
@@ -275,13 +274,13 @@ public class OnlineGameTest
                             date = og.getCreateDate().getTime();
                     }
 
-                    assertTrue(modes3[0] + " " + date + " <= " + lastDate, date <= lastDate);
+                    assertTrue(date <= lastDate, modes3[0] + " " + date + " <= " + lastDate);
 
                     lastDate = date;
                 }
             }
 
-            assertEquals("total fetched should equal half of games", fetched, expectedCount);
+            assertEquals(fetched, expectedCount, "total fetched should equal half of games");
         }
     }
 

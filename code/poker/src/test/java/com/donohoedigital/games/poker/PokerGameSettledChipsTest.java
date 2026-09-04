@@ -35,12 +35,12 @@ package com.donohoedigital.games.poker;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.games.poker.model.TournamentProfile;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Verifies PokerGame.getSettledChipCount() reports a player's chips as of the last
@@ -53,7 +53,7 @@ public class PokerGameSettledChipsTest
 {
     private PokerGame game_;
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
@@ -103,16 +103,14 @@ public class PokerGameSettledChipsTest
         PokerPlayer doug = seat(table, 0, 1, "Doug", 1000);
         seat(table, 1, 99, "Opponent", 1000); // a hand needs two players
         HoldemHand hhand = startHand(table);
-        assertTrue("expected a hand in progress", table.isHandInProgress());
+        assertTrue(table.isHandInProgress(), "expected a hand in progress");
 
         // dealing posts the blinds, which is chips out of the stack and into the pot
         int nCommitted = hhand.getTotalBet(doug);
-        assertTrue("expected the deal to commit chips", nCommitted > 0);
+        assertTrue(nCommitted > 0, "expected the deal to commit chips");
 
-        assertEquals("live count is down by what is in the pot",
-                     1000 - nCommitted, doug.getChipCount());
-        assertEquals("settled count is the stack before it went in",
-                     1000, game_.getSettledChipCount(doug));
+        assertEquals(1000 - nCommitted, doug.getChipCount(), "live count is down by what is in the pot");
+        assertEquals(1000, game_.getSettledChipCount(doug), "settled count is the stack before it went in");
     }
 
     /**
@@ -131,14 +129,13 @@ public class PokerGameSettledChipsTest
         // won the last hand - live count is now settled at 1400, but the snapshot still
         // holds 1000 until the next deal calls PokerPlayer.newHand()
         doug.setChipCount(1400);
-        assertEquals("snapshot is deliberately stale here", 1000, doug.getChipCountAtStart());
+        assertEquals(1000, doug.getChipCountAtStart(), "snapshot is deliberately stale here");
 
         // new hand created and TYPE_NEW_HAND fired; deal() has not run
         table.setHoldemHand(new HoldemHand(table));
         assertTrue(table.isHandInProgress());
 
-        assertEquals("must not report the previous hand's snapshot",
-                     1400, game_.getSettledChipCount(doug));
+        assertEquals(1400, game_.getSettledChipCount(doug), "must not report the previous hand's snapshot");
     }
 
     @Test
@@ -146,7 +143,7 @@ public class PokerGameSettledChipsTest
     {
         PokerTable table = table(1);
         PokerPlayer doug = seat(table, 0, 1, "Doug", 1000);
-        assertFalse("expected no hand in progress", table.isHandInProgress());
+        assertFalse(table.isHandInProgress(), "expected no hand in progress");
 
         // pot awarded - the live count is the settled count once the hand is over
         doug.setChipCount(1400);
@@ -182,17 +179,15 @@ public class PokerGameSettledChipsTest
         // my table is mid-hand, theirs is between hands
         HoldemHand hhand = startHand(mine);
         int nCommitted = hhand.getTotalBet(doug);
-        assertTrue("expected the deal to commit chips", nCommitted > 1);
+        assertTrue(nCommitted > 1, "expected the deal to commit chips");
 
         // park the rival between my live count and my settled one
         rival.setChipCount(1000 - nCommitted + 1);
 
         // live counts have me behind, which is the bug
-        assertTrue("live comparison sinks the mid-hand player",
-                   doug.getChipCount() < rival.getChipCount());
+        assertTrue(doug.getChipCount() < rival.getChipCount(), "live comparison sinks the mid-hand player");
 
         // settled counts have me ahead, which is the truth
-        assertTrue("settled comparison keeps the mid-hand player ahead",
-                   game_.getSettledChipCount(doug) > game_.getSettledChipCount(rival));
+        assertTrue(game_.getSettledChipCount(doug) > game_.getSettledChipCount(rival), "settled comparison keeps the mid-hand player ahead");
     }
 }

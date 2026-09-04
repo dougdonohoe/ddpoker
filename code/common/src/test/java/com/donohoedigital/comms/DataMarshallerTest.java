@@ -32,7 +32,9 @@
  */
 package com.donohoedigital.comms;
 
-import junit.framework.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,8 +43,9 @@ import junit.framework.*;
  * Time: 1:37:52 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DataMarshallerTest extends TestCase
+public class DataMarshallerTest
 {
+    @Test
     public void testStatic()
     {
         new DataMarshaller();

@@ -38,12 +38,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import junit.framework.TestCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -53,9 +55,10 @@ import java.util.List;
  *
  * Test of Hibernate/JPA without Spring.
  */
-public class HibernateTest extends TestCase
+public class HibernateTest
 {
     @SuppressWarnings({"RawUseOfParameterizedType"})
+    @Test
     public void testHibernate() throws FileNotFoundException
     {
         Logger logger = LogManager.getLogger(HibernateTest.class);

@@ -32,7 +32,9 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,8 +43,9 @@ import junit.framework.*;
  * Time: 9:49:51 AM
  * To change this template use File | Settings | File Templates.
  */
-public class AudioConfigTest extends TestCase
+public class AudioConfigTest
 {
+    @Test
     public void testLoad()
     {
         String[] modules = {"common", "testapp"};

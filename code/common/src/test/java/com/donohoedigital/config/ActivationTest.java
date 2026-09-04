@@ -32,8 +32,10 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
 import org.apache.logging.log4j.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,10 +44,11 @@ import org.apache.logging.log4j.*;
  * Time: 4:24:58 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ActivationTest extends TestCase
+public class ActivationTest
 {
     private static final Logger logger = LogManager.getLogger(ActivationTest.class);
 
+    @Test
     public void testGuid()
     {
         String key = Activation.createKeyFromGuid(22, "BD4206D4-72B0-EA5D-6FF7-1B50F92CCD49", null);
@@ -57,6 +60,7 @@ public class ActivationTest extends TestCase
         }
     }
 
+    @Test
     public void testValidate()
     {
         assertTrue(Activation.validate(22, "2200-0024-9421-5725", null));

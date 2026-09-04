@@ -39,20 +39,23 @@ import com.rometools.rome.feed.rss.Item;
 import com.rometools.rome.feed.rss.Source;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.WireFeedOutput;
-import junit.framework.*;
 
 import java.util.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Doug Donohoe
  */
-public class RssTest extends TestCase
+public class RssTest
 {
     //private static final Logger logger = LogManager.getLogger(RssTest.class);
 
     /**
      * This test basically verifies dependencies for rome (rss) are working
      */
+    @Test
     public void testRSS()
     {
         Channel channel = new Channel("rss_2.0");

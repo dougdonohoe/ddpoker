@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
-
 import java.io.*;
 import java.net.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,8 +45,9 @@ import java.net.*;
  * Time: 5:22:52 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConfigUtilsTest extends TestCase
+public class ConfigUtilsTest
 {
+    @Test
     public void testCopyUrl()
     {
         URL url = new MatchingResources("classpath*:com/donohoedigital/config/ConfigUtilsTest.class").getSingleRequiredResourceURL();
