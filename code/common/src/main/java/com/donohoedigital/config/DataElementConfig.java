@@ -40,38 +40,38 @@ package com.donohoedigital.config;
 
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.xerces.impl.dv.XSSimpleType;
-import org.apache.xerces.impl.xs.SchemaGrammar;
-import org.apache.xerces.impl.xs.XMLSchemaLoader;
-import org.apache.xerces.xni.XNIException;
-import org.apache.xerces.xni.grammars.Grammar;
-import org.apache.xerces.xni.parser.XMLErrorHandler;
-import org.apache.xerces.xni.parser.XMLInputSource;
-import org.apache.xerces.xni.parser.XMLParseException;
-import org.apache.xerces.xs.XSNamedMap;
-import org.apache.xerces.xs.XSObject;
-import org.apache.xerces.xs.XSTypeDefinition;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.input.SAXBuilder;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * Loads data-elements.xsd file defined in the appconfig file
+ * Loads data-elements.xsd file defined in the appconfig file.
+ * <p>
+ * Only the named &lt;xsd:simpleType&gt; declarations are of interest: their
+ * &lt;xsd:enumeration&gt; values become the list backing a {@link DataElement}
+ * (and thus a combo box).  The file is read with JDOM rather than a schema
+ * processor since no validation of the schema itself is required.
  *
  * @author donohoe
  */
-public class DataElementConfig extends HashMap<String, DataElement> implements XMLErrorHandler
+public class DataElementConfig extends HashMap<String, DataElement>
 {
-    static Logger logger = LogManager.getLogger(DataElementConfig.class);
+    /**
+     * The XML Schema namespace that data-elements.xsd files are written in
+     */
+    private static final Namespace XSD = Namespace.getNamespace("http://www.w3.org/2001/XMLSchema");
 
     private static DataElementConfig dataConfig = null;
-
-    private final SchemaGrammar sgrammar_;
-    private int nWarn_ = 0;
-    private int nError_ = 0;
-    private int nFatal_ = 0;
 
     /**
      * DataElements for app unless elements from given module exist
@@ -104,28 +104,96 @@ public class DataElementConfig extends HashMap<String, DataElement> implements X
             schema = new MatchingResources(base + valsubpath).getSingleResourceURL();
         }
 
-        // load grammar
-        sgrammar_ = loadGrammar(schema);
-
-        // load elements from grammar
-        loadDataElements();
+        // load elements from the schema and everything it includes
+        loadDataElements(schema, new HashSet<>());
     }
 
     /**
-     * Load all data definitions from xsd (simple types) and store as DataElement's
+     * Load all data definitions from the given xsd (simple types) and store as
+     * DataElement's, recursing into every &lt;xsd:include&gt; first so that a
+     * type redefined locally wins over the one it was included from.
      */
-    private void loadDataElements()
+    private void loadDataElements(URL url, Set<String> visited)
     {
-        XSNamedMap map = sgrammar_.getComponents(XSTypeDefinition.SIMPLE_TYPE);
-        XSObject obj;
-        int nNum = map.getLength();
-        for (int i = 0; i < nNum; i++)
+        // guard against an include cycle or a diamond include
+        if (url == null || !visited.add(url.toString())) return;
+
+        Element schema = parse(url);
+
+        // includes first, so locally declared types overwrite included ones
+        for (Element include : schema.getChildren("include", XSD))
         {
-            obj = map.item(i);
-            if (obj instanceof XSSimpleType)
-            {
-                put(obj.getName(), new DataElement(obj.getName(), (XSSimpleType) obj));
-            }
+            loadDataElements(resolveInclude(url, include.getAttributeValue("schemaLocation")), visited);
+        }
+
+        for (Element simpleType : schema.getChildren("simpleType", XSD))
+        {
+            String sName = simpleType.getAttributeValue("name");
+            if (sName == null) continue; // anonymous type - not addressable, skip
+
+            List<String> values = getEnumerationValues(simpleType);
+            put(sName, values.isEmpty() ? new DataElement(sName) : new DataElement(sName, values));
+        }
+    }
+
+    /**
+     * Return the &lt;xsd:enumeration&gt; values of a simple type's restriction, in
+     * document order.  Empty if the type is not an enumeration.
+     */
+    private static List<String> getEnumerationValues(Element simpleType)
+    {
+        List<String> values = new ArrayList<>();
+
+        Element restriction = simpleType.getChild("restriction", XSD);
+        if (restriction == null) return values;
+
+        for (Element enumeration : restriction.getChildren("enumeration", XSD))
+        {
+            String sValue = enumeration.getAttributeValue("value");
+            if (sValue != null) values.add(sValue);
+        }
+
+        return values;
+    }
+
+    /**
+     * Resolve a schemaLocation.  "classpath:" (and "file:") locations go through
+     * {@link CachedEntityResolver}; anything else is resolved relative to the
+     * including document.
+     */
+    private static URL resolveInclude(URL parent, String sLocation)
+    {
+        if (sLocation == null) return null;
+
+        try
+        {
+            URL url = CachedEntityResolver.instance().getMatch(sLocation);
+            return url != null ? url : parent.toURI().resolve(sLocation).toURL();
+        }
+        catch (Exception e)
+        {
+            throw new ApplicationError(ErrorCodes.ERROR_XSD_PARSE_FAILED,
+                                       "Unable to resolve include " + sLocation + " in " + parent, e,
+                                       "Check the schemaLocation is a valid classpath: or relative reference");
+        }
+    }
+
+    /**
+     * Parse the given xsd and return its root &lt;xsd:schema&gt; element
+     */
+    private static Element parse(URL url)
+    {
+        try
+        {
+            // no validation - this is a schema, not an instance document
+            Document doc = new SAXBuilder().build(url);
+            return doc.getRootElement();
+        }
+        catch (JDOMException | IOException e)
+        {
+            throw new ApplicationError(ErrorCodes.ERROR_XSD_PARSE_FAILED,
+                                       "Unable to parse " + url, e,
+                                       "Resolve the XML error indicated above");
         }
     }
 
@@ -136,92 +204,5 @@ public class DataElementConfig extends HashMap<String, DataElement> implements X
     public static DataElement getDataElement(String sName)
     {
         return dataConfig.get(sName);
-    }
-
-    /**
-     * load the grammar
-     */
-    private SchemaGrammar loadGrammar(URL url) throws ApplicationError
-    {
-        SchemaGrammar sgrammar = null;
-        Exception error = null;
-        String sURLpath = url.toString();
-        XMLSchemaLoader loader = new XMLSchemaLoader();
-        loader.setErrorHandler(this);
-        loader.setEntityResolver(CachedEntityResolver.instance());
-        XMLInputSource source = new XMLInputSource("Donohoe Digital data-elements", sURLpath, null);
-        try
-        {
-            Grammar grammar = loader.loadGrammar(source);
-            sgrammar = (SchemaGrammar) grammar;
-        }
-        catch (Exception e)
-        {
-            error = e;
-        }
-
-        if (nWarn_ > 0)
-        {
-            logger.warn("Summary: " + nWarn_ + " warnings found loading " + sURLpath);
-        }
-
-        if (nError_ > 0)
-        {
-            logger.error("Summary: " + nError_ + " errors found loading " + sURLpath);
-        }
-
-        if (nFatal_ > 0)
-        {
-            logger.fatal("Summary: " + nFatal_ + " fatal errors found loading " + sURLpath);
-        }
-
-        if (nError_ > 0 || nFatal_ > 0 || error != null)
-        {
-            // if no errors recorded, but we have an exception, throw that up the chain
-            if (nError_ == 0 && nFatal_ == 0)
-            {
-                throw new ApplicationError(ErrorCodes.ERROR_XSD_PARSE_FAILED, error);
-            }
-            // otherwise, just record errors
-            else
-            {
-                throw new ApplicationError(ErrorCodes.ERROR_XSD_PARSE_FAILED,
-                                           nError_ + " error(s) and " + nFatal_ + " fatal error(s) loading " + sURLpath,
-                                           "Resolve ERROR and/or FATAL issues indicated in log output");
-            }
-        }
-
-        return sgrammar;
-    }
-
-    ///
-    /// XMLErrorHandler methods
-    ///
-    public void warning(String domain, String key,
-                        XMLParseException exception) throws XNIException
-    {
-        nWarn_++;
-        logger.warn(getMessage(domain, key, exception));
-    }
-
-    public void error(String domain, String key,
-                      XMLParseException exception) throws XNIException
-    {
-        nError_++;
-        logger.error(getMessage(domain, key, exception));
-    }
-
-
-    public void fatalError(String domain, String key,
-                           XMLParseException exception) throws XNIException
-    {
-        nFatal_++;
-        logger.fatal(getMessage(domain, key, exception));
-    }
-
-    private String getMessage(String domain, String key, XMLParseException e)
-    {
-        return domain + " [" + key + "] " +
-               e.getMessage() + " at line " + e.getLineNumber();
     }
 }

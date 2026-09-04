@@ -45,6 +45,7 @@ import com.donohoedigital.comms.DDMessenger;
 import com.donohoedigital.config.PropertyConfig;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -97,10 +98,12 @@ public class EngineMessenger extends DDMessenger
             sb_.append(msg.getCategory());
             sb_.append("/key.");
             sb_.append(msg.getKey());
-            url = new URL(sb_.toString());
+            url = URI.create(sb_.toString()).toURL();
         }
-        catch (MalformedURLException me)
+        catch (MalformedURLException | IllegalArgumentException me)
         {
+            // URI.create() throws IllegalArgumentException where new URL() threw
+            // MalformedURLException - both mean the same thing to callers
             throw new ApplicationError(me);
         }
         return url;

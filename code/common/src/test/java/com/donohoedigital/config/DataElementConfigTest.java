@@ -48,12 +48,17 @@ public class DataElementConfigTest extends TestCase
 {
     private static Logger logger = LogManager.getLogger(DataElementConfigTest.class);
 
-    @SuppressWarnings({"SuspiciousMethodCalls"})
-    public void testLoad()
+    private DataElementConfig load()
     {
         String[] modules = {"common", "testapp"};
         new PropertyConfig("testapp", modules, ApplicationType.CLIENT, null, true);
-        DataElementConfig dec = new DataElementConfig("testapp", null);
+        return new DataElementConfig("testapp", null);
+    }
+
+    @SuppressWarnings({"SuspiciousMethodCalls"})
+    public void testLoad()
+    {
+        DataElementConfig dec = load();
 
         DataElement dogs = dec.get("dogs");
         assertNotNull(dogs);
@@ -67,5 +72,51 @@ public class DataElementConfigTest extends TestCase
         assertTrue(values.contains("dexter"));
         assertTrue(values.contains("zorro"));
         assertFalse(values.contains("rugby"));
+    }
+
+    /**
+     * Enumeration values must come back in the order they are declared in the
+     * xsd - combo boxes are populated straight from this list.
+     */
+    public void testEnumerationOrder()
+    {
+        DataElement dogs = load().get("dogs");
+        assertTrue(dogs.isList());
+        assertEquals(Arrays.asList("tahoe", "dexter", "zorro"), dogs.getListValues());
+    }
+
+    /**
+     * Display values are looked up from list.&lt;element&gt;.&lt;value&gt; properties
+     * (see testapp/client.properties)
+     */
+    public void testDisplayValues()
+    {
+        DataElement dogs = load().get("dogs");
+        assertEquals("Tahoe", dogs.getDisplayValue("tahoe"));
+        assertEquals("Dexter", dogs.getDisplayValue("dexter"));
+        assertEquals("Zorro", dogs.getDisplayValue("zorro"));
+    }
+
+    /**
+     * testapp's data-elements.xsd pulls in the global one with
+     * &lt;xsd:include schemaLocation="classpath:..."/&gt; - types declared only
+     * there must be present too.
+     */
+    public void testClasspathIncludeIsFollowed()
+    {
+        DataElement territoryType = load().get("territoryType");
+        assertNotNull("territoryType comes from the included global data-elements.xsd", territoryType);
+        assertEquals(Arrays.asList("land", "water", "edge", "decoration"), territoryType.getListValues());
+    }
+
+    /**
+     * A named simple type with no enumeration is still registered, but is not a list
+     */
+    public void testNonEnumeratedTypeIsNotAList()
+    {
+        DataElement string = load().get("string");
+        assertNotNull("plain simple types are registered too", string);
+        assertFalse(string.isList());
+        assertNull(string.getListValues());
     }
 }

@@ -143,7 +143,6 @@ public class Support extends OptionMenu
      * clipboard
      */
     @Override
-    @SuppressWarnings({"CallToRuntimeExecWithNonConstantString"})
     public boolean processButton(GameButton button)
     {
         if (button.getName().startsWith("copylog"))
@@ -154,41 +153,10 @@ public class Support extends OptionMenu
         else if (button.getName().startsWith("myfiles"))
         {
             File f = ConfigManager.getUserHome();
-            if (Utils.ISMAC)
+            if (!Utils.openFolder(f))
             {
-                try
-                {
-                    Runtime.getRuntime().exec("/usr/bin/open " + f.getAbsolutePath());
-                }
-                catch (Throwable e)
-                {
-                    logger.error("Unable to exec: " + Utils.formatExceptionText(e));
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.error.myfiles", f.getAbsolutePath()));
-                }
-            }
-            else if (Utils.ISWINDOWS)
-            {
-                try
-                {
-                    Runtime.getRuntime().exec("explorer " + f.getAbsolutePath());
-                }
-                catch (Throwable e)
-                {
-                    logger.error("Unable to exec: " + Utils.formatExceptionText(e));
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.error.myfiles", f.getAbsolutePath()));
-                }
-            }
-            else if (Utils.ISLINUX)
-            {
-                try
-                {
-                    Runtime.getRuntime().exec("/usr/bin/gnome-open " + f.getAbsolutePath());
-                }
-                catch (Throwable e)
-                {
-                    logger.error("Unable to exec: " + Utils.formatExceptionText(e));
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.error.myfiles", f.getAbsolutePath()));
-                }
+                logger.error("Unable to open folder: " + f.getAbsolutePath());
+                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.error.myfiles", f.getAbsolutePath()));
             }
         }
         return super.processButton(button);

@@ -56,7 +56,8 @@ public class MulticastSender
 			MulticastSocket ms = new MulticastSocket();
 
 			//Join the multicast group
-			ms.joinGroup(ia); 
+			// null interface defers to the OS default, as the old joinGroup(InetAddress) did
+			ms.joinGroup(new InetSocketAddress(ia, recvPort), null);
 
 			// send the message with a Time-To-Live (TTL)=1
             int ttl = ms.getTimeToLive();
@@ -71,7 +72,7 @@ public class MulticastSender
             ms.setTimeToLive(ttl);
 
 			// tidy up - leave the group and close the socket
-			ms.leaveGroup(ia);
+			ms.leaveGroup(new InetSocketAddress(ia, recvPort), null);
 			ms.close();
 		} 
 		catch (IOException e) {}

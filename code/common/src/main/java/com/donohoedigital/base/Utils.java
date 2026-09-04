@@ -1184,40 +1184,96 @@ public class Utils
     }
 
     /**
-     * open a url in an external browser
+     * Open a URL in the OS default browser.
      */
-    @SuppressWarnings({"CallToRuntimeExecWithNonConstantString"})
     public static void openURL(String sURL)
     {
+        // Prefer java.awt.Desktop - works on macOS, Windows, and modern Linux with a DE
+        if (Desktop.isDesktopSupported())
+        {
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.BROWSE))
+            {
+                try
+                {
+                    desktop.browse(new URI(sURL));
+                    return;
+                }
+                catch (Exception e)
+                {
+                    System.err.println("openURL Desktop.browse error: " + formatExceptionText(e));
+                }
+            }
+        }
+
+        // Platform-specific fallbacks for headless or unsupported Desktop environments
         try
         {
             if (ISMAC)
             {
-                Runtime.getRuntime().exec("/usr/bin/open " + sURL);
-            }
-            else if (ISWIN9X || ISWINNT)
-            {
-                String sCmd = (ISWIN9X ? "command.com" : "cmd.exe");
-
-                Runtime.getRuntime().exec(new String[]
-                        {
-                                sCmd,
-                                "/c",
-                                "start",
-                                "\"\"",
-                                '"' + sURL + '"'
-                        });
-
+                new ProcessBuilder("/usr/bin/open", sURL).start();
             }
             else if (ISLINUX)
             {
-                Runtime.getRuntime().exec("/usr/bin/gnome-open " + sURL);
+                // xdg-open is the modern cross-DE standard (replaces gnome-open)
+                new ProcessBuilder("xdg-open", sURL).start();
             }
         }
-        catch (Exception ie)
+        catch (Exception e)
         {
-            System.err.println("openURL error: " + formatExceptionText(ie));
+            System.err.println("openURL error: " + formatExceptionText(e));
         }
+    }
+
+    /**
+     * Open a folder (or reveal a file) in the OS default file manager.
+     * Returns true if a file manager was successfully launched.
+     */
+    public static boolean openFolder(File folder)
+    {
+        // Prefer java.awt.Desktop - works on macOS, Windows, and modern Linux with a DE
+        if (Desktop.isDesktopSupported())
+        {
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.OPEN))
+            {
+                try
+                {
+                    desktop.open(folder);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    System.err.println("openFolder Desktop.open error: " + formatExceptionText(e));
+                }
+            }
+        }
+
+        // Platform-specific fallbacks for headless or unsupported Desktop environments
+        try
+        {
+            if (ISMAC)
+            {
+                new ProcessBuilder("/usr/bin/open", folder.getAbsolutePath()).start();
+                return true;
+            }
+            else if (ISWINDOWS)
+            {
+                new ProcessBuilder("explorer", folder.getAbsolutePath()).start();
+                return true;
+            }
+            else if (ISLINUX)
+            {
+                new ProcessBuilder("xdg-open", folder.getAbsolutePath()).start();
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+            System.err.println("openFolder error: " + formatExceptionText(e));
+        }
+
+        return false;
     }
 //    
 //    public static void main(String args[])

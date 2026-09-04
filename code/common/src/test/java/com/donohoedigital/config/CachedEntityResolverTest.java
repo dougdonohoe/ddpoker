@@ -32,66 +32,42 @@
  */
 package com.donohoedigital.config;
 
-import org.xml.sax.*;
+import junit.framework.TestCase;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
- * Created by IntelliJ IDEA.
- * User: donohoe
- * Date: Apr 9, 2008
- * Time: 3:30:38 PM
- * To change this template use File | Settings | File Templates.
+ * Covers the two schemes {@link CachedEntityResolver} understands, which is how
+ * &lt;xsd:include schemaLocation="classpath:..."/&gt; is resolved when the JDK
+ * parser validates a config file.
  */
-public class CachedEntityResolver implements EntityResolver
+public class CachedEntityResolverTest extends TestCase
 {
-    private final Map<String, URL> matches = new HashMap<>();
-
-    private static CachedEntityResolver resolver = null;
-
-    public synchronized static CachedEntityResolver instance()
+    public void testResolvesClasspath() throws MalformedURLException
     {
-        if (resolver == null)
-        {
-            resolver = new CachedEntityResolver();
-        }
-        return resolver;
+        URL url = CachedEntityResolver.instance().getMatch("classpath:config/xml-schema/data-elements.xsd");
+        assertNotNull(url);
+        assertTrue(url.toString(), url.toString().endsWith("config/xml-schema/data-elements.xsd"));
     }
 
-    private CachedEntityResolver()
+    public void testResolvesFile() throws MalformedURLException
     {
+        URL url = CachedEntityResolver.instance().getMatch("file:/tmp/whatever.xsd");
+        assertNotNull(url);
+        assertEquals("file", url.getProtocol());
+        assertEquals("/tmp/whatever.xsd", url.getPath());
     }
 
-    public URL getMatch(String name) throws MalformedURLException
+    public void testUnknownSchemeReturnsNull() throws MalformedURLException
     {
-        URL url = matches.get(name);
-        if (url == null)
-        {
-            // if it starts with file:, we've already resolved it
-            if (name.startsWith("file:"))
-            {
-                url = URI.create(name).toURL();
-            }
-            else if (name.startsWith("classpath:"))
-            {
-                //logger.debug("Resolving XML include: " + name);
-                String search = name.replace("classpath:", "classpath*:"); // * not allowed in XML file
-                url = new MatchingResources(search).getSingleRequiredResourceURL();
-            }
-            if (url != null) matches.put(name, url);
-        }
-        return url;
+        assertNull(CachedEntityResolver.instance().getMatch("config/xml-schema/data-elements.xsd"));
     }
 
-    /**
-     * Resolve include statements
-     */
-    public InputSource resolveEntity(String publicId, String systemId) throws IOException
+    public void testResultIsCached() throws MalformedURLException
     {
-        URL url = getMatch(systemId);
-        if (url == null) return null;
-        return new InputSource(url.openStream());
+        CachedEntityResolver resolver = CachedEntityResolver.instance();
+        String name = "classpath:config/xml-schema/data-elements.xsd";
+        assertSame(resolver.getMatch(name), resolver.getMatch(name));
     }
 }

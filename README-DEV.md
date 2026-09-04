@@ -123,6 +123,12 @@ mvn-package-notests
 
 After you have run this, any of the scripts discussed below should just work.
 
+The build compiles with `-Xlint:deprecation,removal` (see `maven-compiler-plugin` in
+`code/pom.xml`), so any use of a deprecated JDK API is reported with its file and line
+number.  The tree is currently free of them — please keep it that way rather than letting
+the warnings pile up again.  Warnings do not fail the build, since a dependency bump can
+introduce one that has nothing to do with the change being made.
+
 ## Poker Game
 
 To run the desktop poker game, either run `PokerMain` in IntelliJ or use the script:

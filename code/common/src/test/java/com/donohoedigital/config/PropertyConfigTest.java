@@ -34,6 +34,8 @@ package com.donohoedigital.config;
 
 import junit.framework.TestCase;
 
+import java.util.Locale;
+
 /**
  * Created by IntelliJ IDEA.
  * User: donohoe
@@ -71,5 +73,14 @@ public class PropertyConfigTest extends TestCase
 
         // override in unit-tester.properties
         assertTrue(PropertyConfig.getRequiredBooleanProperty("override.set"));
+    }
+
+    public void testGetLocale()
+    {
+        assertSame(Locale.US, PropertyConfig.getLocale(null));
+        assertEquals("fr", PropertyConfig.getLocale("fr").getLanguage());
+
+        // locales are cached, so the same string yields the same instance
+        assertSame(PropertyConfig.getLocale("de"), PropertyConfig.getLocale("de"));
     }
 }

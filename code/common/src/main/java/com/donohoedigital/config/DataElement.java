@@ -40,10 +40,6 @@ package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
 import org.apache.logging.log4j.*;
-import org.apache.xerces.impl.dv.ValidatedInfo;
-import org.apache.xerces.impl.dv.XSSimpleType;
-import org.apache.xerces.impl.validation.ValidationState;
-import org.apache.xerces.xs.StringList;
 
 import java.util.*;
 
@@ -55,7 +51,6 @@ public class DataElement
 
     static Logger logger = LogManager.getLogger(DataElement.class);
 
-    XSSimpleType xsType_;
     List<?> values_;
     List<String> displayValues_;
     protected boolean bList_ = false;
@@ -73,26 +68,28 @@ public class DataElement
     }
 
     /**
-     * Creates a new instance of DataElement
+     * Creates a new instance of DataElement from the enumerated values of an
+     * XSD simple type.  Display values are looked up from the properties files.
      */
-    public DataElement(String sName, XSSimpleType xsType)
+    public DataElement(String sName, List<String> values)
     {
         sName_ = sName;
-
-        if ((xsType != null) && xsType.isDefinedFacet(XSSimpleType.FACET_ENUMERATION))
+        bList_ = true;
+        values_ = values;
+        displayValues_ = new ArrayList<>(values.size());
+        for (String value : values)
         {
-            bList_ = true;
-            StringList lexi = xsType.getLexicalEnumeration();
-            int nLen = lexi.getLength();
-            List<String> values = new ArrayList<>(nLen);
-            values_ = values;
-            displayValues_ = new ArrayList<>(nLen);
-            for (int i = 0; i < nLen; i++)
-            {
-                values.add(lexi.item(i));
-                displayValues_.add(fetchDisplayValue(values_.get(i)));
-            }
+            displayValues_.add(fetchDisplayValue(value));
         }
+    }
+
+    /**
+     * Creates a new instance of DataElement for an XSD simple type that has no
+     * enumerated values, and so cannot be displayed as a list.
+     */
+    public DataElement(String sName)
+    {
+        sName_ = sName;
     }
 
     /**
@@ -186,30 +183,6 @@ public class DataElement
         {
             return sDisplayValue;
         }
-    }
-
-    /**
-     * validate
-     */
-    public boolean isValid(String sValue)
-    {
-        try
-        {
-            ValidationState vstate = new ValidationState();
-            ValidatedInfo info = new ValidatedInfo();
-
-            vstate.setExtraChecking(false);
-            vstate.setFacetChecking(true);
-
-            xsType_.validate(sValue, vstate, info);
-
-            return true;
-        }
-        catch (Exception e)
-        {
-            // invalid if exception thrown
-        }
-        return false;
     }
 
 }

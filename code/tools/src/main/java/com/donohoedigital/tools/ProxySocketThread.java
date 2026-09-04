@@ -49,6 +49,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -88,10 +89,10 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
             //options_.sConnectDestViaProxy = sDestHostPort_;
             
             // Regular proxies
-            proxy_ = new URL("http://81.192.163.131:80"); // working
+            proxy_ = URI.create("http://81.192.163.131:80").toURL(); // working
             options_.bProxyPassThru = true;
             
-        } catch (MalformedURLException mfe)
+        } catch (MalformedURLException | IllegalArgumentException mfe)
         {
             throw new ApplicationError(mfe);
         }
@@ -106,7 +107,7 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
         // Data sent is controlled via options_ use in DDMessenger and
         // cooresponding methods in DDHttpClient
         DDMessenger msg = new DDMessenger();
-        proxy_ = new URL(request_.getRequestURI());
+        proxy_ = URI.create(request_.getRequestURI()).toURL();
         DDMessenger.ReturnData data = msg.getURL(proxy_, this, null, null, this, options_);
         
         // debug output

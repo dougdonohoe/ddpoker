@@ -509,7 +509,7 @@ public class PropertyConfig extends Properties
                 Locale locale = locales_.get(sLocale);
                 if (locale == null)
                 {
-                    locale = new Locale(sLocale, "", "");
+                    locale = Locale.of(sLocale);
                     locales_.put(sLocale, locale);
                 }
                 return locale;

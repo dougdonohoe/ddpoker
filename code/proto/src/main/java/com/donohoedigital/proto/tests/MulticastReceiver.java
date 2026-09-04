@@ -55,7 +55,8 @@ public class MulticastReceiver
 			DatagramPacket dp = new DatagramPacket(new byte[128], 128);
 
 			//Join a multicast group and wait for some action
-			ms.joinGroup(ia); 
+			// null interface defers to the OS default, as the old joinGroup(InetAddress) did
+			ms.joinGroup(new InetSocketAddress(ia, port), null);
 			System.out.println( "waiting for a packet from "+ia+"...");
             boolean bDone = false;
             while (!bDone)
@@ -66,7 +67,7 @@ public class MulticastReceiver
                 System.out.println( new String(dp.getData() ));
             }
 
-			ms.leaveGroup(ia);
+			ms.leaveGroup(new InetSocketAddress(ia, port), null);
 			ms.close();
 		} 
 		catch (IOException e) {}
