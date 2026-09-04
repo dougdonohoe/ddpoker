@@ -36,15 +36,14 @@ import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.games.poker.model.TournamentProfile;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.io.IOException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /*
  * The purpose of this test is to provide a rudimentary way to very our hsqldb
@@ -56,8 +55,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class PokerDatabaseTest {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    @TempDir
+    File tempFolder;
 
     /**
      * Unfortunately, there aren't many unit tests of the core poker logic.  In
@@ -75,7 +74,9 @@ public class PokerDatabaseTest {
         new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
 
         // we need a player profile
-        File profileFile = tempFolder.newFile("profile.999.dat");
+        File profileFile = new File(tempFolder, "profile.999.dat");
+        //noinspection ResultOfMethodCallIgnored
+        profileFile.createNewFile();
         PlayerProfile profile = new PlayerProfile("poker-database-test");
         profile.setEmail("test@test.com");
         profile.setName("test");
@@ -83,7 +84,9 @@ public class PokerDatabaseTest {
         //profile.save(); // Not necessary to actually save it
 
         // we need a database, in a temp place
-        File tempDir = tempFolder.newFolder("poker-database-test");
+        File tempDir = new File(tempFolder, "poker-database-test");
+        //noinspection ResultOfMethodCallIgnored
+        tempDir.mkdirs();
         PokerDatabase.init(profile, tempDir);
 
         // we need a game, tournament, poker player, table and hand

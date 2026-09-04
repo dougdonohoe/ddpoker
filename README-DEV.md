@@ -916,11 +916,11 @@ A couple of notes:
 ### PowerShell quirks worth knowing
 
 * **Quote `-D` arguments containing dots.**  PowerShell splits an unquoted
-  `-Dskip.unit.tests=false` at the first `.`, handing Maven a stray `.unit.tests=false` and
-  failing with *"Unknown lifecycle phase"*.  Quote it:
+  `-Ddependency.classpath.outputFile=/tmp/t` at the first `.`, handing Maven a stray
+  `.classpath.outputFile=/tmp/t` and failing with *"Unknown lifecycle phase"*.  Quote it:
 
   ```powershell
-  .\mvn -f code/pom.xml test '-Dskip.unit.tests=false'
+  .\mvn -f code/pom.xml dependency:tree '-Ddependency.classpath.outputFile=/tmp/t'
   ```
 
   `-DskipTests=true` has no dot, so it is fine unquoted.

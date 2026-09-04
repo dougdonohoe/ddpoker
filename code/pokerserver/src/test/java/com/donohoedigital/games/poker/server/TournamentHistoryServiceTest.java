@@ -40,16 +40,16 @@ import com.donohoedigital.games.poker.service.OnlineGameService;
 import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.service.TournamentHistoryService;
 import org.apache.logging.log4j.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.donohoedigital.games.poker.model.TournamentHistory.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -58,7 +58,7 @@ import static org.junit.Assert.assertEquals;
  * Time: 2:52:25 PM
  * Test items in TournamentHistoryService that are more than pass-throughs to the TournamentHistory DAO
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class TournamentHistoryServiceTest

@@ -35,18 +35,17 @@ package com.donohoedigital.games.server;
 import com.donohoedigital.games.server.dao.UpgradedKeyDao;
 import com.donohoedigital.games.server.model.UpgradedKey;
 import org.apache.logging.log4j.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -56,7 +55,7 @@ import static org.junit.Assert.*;
  * To change this template use File | Settings | File Templates.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class UpgradedKeyTest
@@ -76,14 +75,14 @@ public class UpgradedKeyTest
         assertNotNull(newKey.getId());
 
         UpgradedKey fetch = dao.get(newKey.getId());
-        assertEquals("name should match", newKey.getLicenseKey(), fetch.getLicenseKey());
+        assertEquals(newKey.getLicenseKey(), fetch.getLicenseKey(), "name should match");
 
         String key = "1111-1111-1111-1111";
         newKey.setLicenseKey(key);
         dao.update(newKey);
 
         UpgradedKey updated = dao.get(newKey.getId());
-        assertEquals("key should match", key, updated.getLicenseKey());
+        assertEquals(key, updated.getLicenseKey(), "key should match");
     }
 
     @Test

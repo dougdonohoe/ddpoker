@@ -32,11 +32,15 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.TestCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,14 +49,14 @@ import java.io.File;
  * Time: 8:16:40 AM
  * To change this template use File | Settings | File Templates.
  */
-public class LoggingConfigTest extends TestCase {
+public class LoggingConfigTest {
     public static final String UNITTEST_APPNAME = "unittests";
     private static final TestRuntimeDirectory runtime = new TestRuntimeDirectory();
 
     /**
      * On setup, verify no temp files exist
      */
-    @Override
+    @BeforeEach
     protected void setUp() {
         LoggingConfig.reset();
         checkDirectoryDoesntExist(runtime.getServerHome());
@@ -69,6 +73,7 @@ public class LoggingConfigTest extends TestCase {
     /**
      * Test client
      */
+    @Test
     public void testClient() {
         process(new LoggingConfig(UNITTEST_APPNAME, ApplicationType.CLIENT, runtime, false),
                 runtime.getClientHome(null), "GUI", true);
@@ -77,6 +82,7 @@ public class LoggingConfigTest extends TestCase {
     /**
      * Test headless client
      */
+    @Test
     public void testHeadlessClient() {
         process(new LoggingConfig(UNITTEST_APPNAME, ApplicationType.HEADLESS_CLIENT, runtime, false),
                 runtime.getClientHome(null), "GUI", true);
@@ -85,6 +91,7 @@ public class LoggingConfigTest extends TestCase {
     /**
      * Test server
      */
+    @Test
     public void testServer() {
         process(new LoggingConfig(UNITTEST_APPNAME, ApplicationType.SERVER, runtime, false),
                 runtime.getServerHome(), "SRV", true);
@@ -93,6 +100,7 @@ public class LoggingConfigTest extends TestCase {
     /**
      * Test command line
      */
+    @Test
     public void testCommandLine() {
         process(new LoggingConfig(UNITTEST_APPNAME, ApplicationType.COMMAND_LINE, runtime, false),
                 runtime.getServerHome(), "CLI", false);
@@ -101,11 +109,13 @@ public class LoggingConfigTest extends TestCase {
     /**
      * Test webapp
      */
+    @Test
     public void testWebapp() {
         process(new LoggingConfig(UNITTEST_APPNAME, ApplicationType.WEBAPP, runtime, false),
                 runtime.getServerHome(), "WEB", true);
     }
 
+    @Test
     public void testOverride() {
         process(new LoggingConfig("unit-test-override", ApplicationType.HEADLESS_CLIENT, runtime, false),
                 runtime.getClientHome(null), "OVER", true);
@@ -134,14 +144,14 @@ public class LoggingConfigTest extends TestCase {
             String[] lines = tee.getCapturedLines();
             assertEquals(expected, lines.length);
             String line = lines[expected - 1];
-            assertTrue("should contain " + slug + " [main", line.contains(" " + slug + " [main"));
-            assertTrue("Stdout file should contain message: " + message, line.contains(message));
+            assertTrue(line.contains(" " + slug + " [main"), "should contain " + slug + " [main");
+            assertTrue(line.contains(message), "Stdout file should contain message: " + message);
 
             if (verifyLogfile) {
                 ConfigUtils.verifyFile(logging.getLogFile());
                 String contents = ConfigUtils.readFile(logging.getLogFile());
-                assertTrue("should contain " + slug + " [main", contents.contains(" " + slug + " [main"));
-                assertTrue("Log file should contain message: " + message, contents.contains(message));
+                assertTrue(contents.contains(" " + slug + " [main"), "should contain " + slug + " [main");
+                assertTrue(contents.contains(message), "Log file should contain message: " + message);
             }
         } finally {
             tee.restoreOriginal();
@@ -152,7 +162,7 @@ public class LoggingConfigTest extends TestCase {
     /**
      * remove temp directories
      */
-    @Override
+    @AfterEach
     protected void tearDown() {
         // remove directories
         cleanup(runtime.getServerHome());

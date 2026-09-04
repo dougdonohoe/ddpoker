@@ -75,11 +75,23 @@
     <spring.version>6.2.19</spring.version>
     <hibernate.version>6.6.56.Final</hibernate.version>
     <jetty.version>12.1.12</jetty.version>
-    <junit.version>4.13.2</junit.version>
+    <junit.version>5.14.4</junit.version>
     <wicket.version>10.11.0</wicket.version>
     <wicket.jquery.ui.version>10.0.0-M1</wicket.jquery.ui.version>
     <dependency.classpath.outputFile>target/classpath.txt</dependency.classpath.outputFile>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
 
@@ -124,6 +136,12 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.5.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.4</version>
       </plugin>
 
     </plugins>

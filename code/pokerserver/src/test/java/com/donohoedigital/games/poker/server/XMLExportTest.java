@@ -37,16 +37,19 @@ import com.donohoedigital.games.config.*;
 import com.donohoedigital.games.poker.model.*;
 import com.donohoedigital.xml.*;
 import com.donohoedigital.base.*;
-import junit.framework.*;
 import org.apache.logging.log4j.*;
 
 import java.util.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Doug Donohoe
  */
-public class XMLExportTest extends TestCase
+public class XMLExportTest
 {
+    @Test
     public void testSimpleXMLEncoder()
     {
         // setup config manager (so we know where profiles live)

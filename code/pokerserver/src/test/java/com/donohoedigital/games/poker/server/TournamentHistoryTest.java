@@ -41,19 +41,18 @@ import com.donohoedigital.games.poker.model.OnlineProfile;
 import com.donohoedigital.games.poker.model.TournamentHistory;
 import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
 import org.apache.logging.log4j.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -62,7 +61,7 @@ import static org.junit.Assert.*;
  * Time: 2:44:16 PM
  * Test TournamentHistory DAO
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class TournamentHistoryTest
@@ -90,14 +89,14 @@ public class TournamentHistoryTest
         assertNotNull(newHistory.getId());
 
         TournamentHistory fetch = histDao.get(newHistory.getId());
-        assertEquals("name should match", newHistory.getPlayerName(), fetch.getPlayerName());
+        assertEquals(newHistory.getPlayerName(), fetch.getPlayerName(), "name should match");
 
         int prize = 12345;
         newHistory.setPrize(prize);
         histDao.update(newHistory);
 
         TournamentHistory updated = histDao.get(newHistory.getId());
-        assertEquals("prize should match", prize, updated.getPrize());
+        assertEquals(prize, updated.getPrize(), "prize should match");
     }
 
     @Test
@@ -313,7 +312,7 @@ public class TournamentHistoryTest
         assertEquals(list.size(), histCount / 2);
         for (TournamentHistory hist : list)
         {
-            assertEquals(hist.getPlayerName() + " == " + one.getName(), hist.getPlayerName(), one.getName());
+            assertEquals(hist.getPlayerName(), one.getName(), hist.getPlayerName() + " == " + one.getName());
         }
 
         list = histDao.getAllForGame(null, 0, histCount, game1.getId());

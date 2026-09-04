@@ -34,16 +34,17 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.games.server.model.Registration;
 import com.donohoedigital.games.server.service.RegistrationService;
-import junit.framework.TestCase;
 import org.apache.logging.log4j.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.FileNotFoundException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,9 +53,9 @@ import java.io.FileNotFoundException;
  * Time: 9:08:21 PM
  * Simple Spring test - configure logging, load app context, get a bean
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
-public class SpringCreatedServiceTest extends TestCase
+public class SpringCreatedServiceTest
 {
     private final Logger logger = LogManager.getLogger(SpringCreatedServiceTest.class);
 

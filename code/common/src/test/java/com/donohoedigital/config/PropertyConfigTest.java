@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.TestCase;
-
 import java.util.Locale;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,8 +44,9 @@ import java.util.Locale;
  * Time: 4:43:12 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PropertyConfigTest extends TestCase
+public class PropertyConfigTest
 {
+    @Test
     public void testLoadClient()
     {
         System.getProperties().setProperty("user.name", "unit-tester");
@@ -75,6 +77,7 @@ public class PropertyConfigTest extends TestCase
         assertTrue(PropertyConfig.getRequiredBooleanProperty("override.set"));
     }
 
+    @Test
     public void testGetLocale()
     {
         assertSame(Locale.US, PropertyConfig.getLocale(null));

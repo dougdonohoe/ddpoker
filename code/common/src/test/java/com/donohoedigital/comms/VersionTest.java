@@ -32,10 +32,13 @@
  */
 package com.donohoedigital.comms;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class VersionTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
 
+public class VersionTest {
+
+    @Test
     public void testParseVersion() {
         // major/minor
         Version v = new Version("3.1");

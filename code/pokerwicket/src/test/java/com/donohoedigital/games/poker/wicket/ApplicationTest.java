@@ -39,7 +39,6 @@ import com.donohoedigital.games.poker.service.OnlineGameService;
 import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.wicket.pages.online.Search;
 import com.donohoedigital.games.server.service.BannedKeyService;
-import junit.framework.TestCase;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.wicket.spring.test.ApplicationContextMock;
@@ -47,8 +46,11 @@ import org.apache.wicket.util.tester.WicketTester;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,7 +59,7 @@ import static org.easymock.EasyMock.*;
  * Time: 10:47:51 AM
  * Rudimentary test which uses mocking and WicketTester
  */
-public class ApplicationTest extends TestCase
+public class ApplicationTest
 {
     Logger logger = LogManager.getLogger(ApplicationTest.class);
 
@@ -67,7 +69,7 @@ public class ApplicationTest extends TestCase
 
     private final String searchString = "+";
 
-    @Override
+    @BeforeEach
     public void setUp()
     {
         new ConfigManager("test", ApplicationType.WEBAPP);
@@ -114,6 +116,7 @@ public class ApplicationTest extends TestCase
         tester = new WicketTester(wicketApplication);
     }
 
+    @Test
     public void testSearch()
     {
         // start and render the test page

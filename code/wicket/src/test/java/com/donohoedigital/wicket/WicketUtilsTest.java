@@ -33,12 +33,14 @@
 package com.donohoedigital.wicket;
 
 import com.donohoedigital.wicket.converters.ParamDateConverter;
-import junit.framework.TestCase;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,8 +49,9 @@ import java.util.GregorianCalendar;
  * Time: 10:30:48 AM
  * To change this template use File | Settings | File Templates.
  */
-public class WicketUtilsTest extends TestCase
+public class WicketUtilsTest
 {
+	@Test
 	public void testDate()
 	{
         ParamDateConverter conv = new ParamDateConverter();

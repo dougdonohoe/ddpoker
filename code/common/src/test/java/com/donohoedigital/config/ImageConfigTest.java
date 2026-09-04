@@ -33,7 +33,6 @@
 package com.donohoedigital.config;
 
 import com.donohoedigital.base.*;
-import junit.framework.*;
 
 import org.apache.commons.io.FileUtils;
 
@@ -41,6 +40,9 @@ import java.awt.image.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,10 +51,11 @@ import java.nio.file.Path;
  * Time: 9:49:51 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ImageConfigTest extends TestCase
+public class ImageConfigTest
 {
     //private static Logger logger = LogManager.getLogger(ImageConfigTest.class);
 
+    @Test
     public void testLoad()
     {
         String[] modules = {"common", "testapp"};
@@ -72,12 +75,13 @@ public class ImageConfigTest extends TestCase
      * A file path can legally contain characters ('#', '%') that are not legal in a
      * URL.  ImageDef must escape them, which File.toURI() does and "file:" + path did not.
      */
+    @Test
     public void testGetBufferedImageFromAwkwardlyNamedFile() throws IOException
     {
         Path dir = Files.createTempDirectory("ImageConfigTest");
         Path source = Path.of("src/test/resources/config/testapp/images/donohoedigital.gif");
-        assertTrue(source + " not found - is the test running from the common module?",
-                   Files.exists(source));
+        assertTrue(Files.exists(source),
+                   source + " not found - is the test running from the common module?");
 
         try
         {
@@ -85,7 +89,7 @@ public class ImageConfigTest extends TestCase
             {
                 Path copy = dir.resolve(name);
                 Files.copy(source, copy);
-                assertNotNull(name, ImageDef.getBufferedImage(copy.toFile()));
+                assertNotNull(ImageDef.getBufferedImage(copy.toFile()), name);
             }
         }
         finally

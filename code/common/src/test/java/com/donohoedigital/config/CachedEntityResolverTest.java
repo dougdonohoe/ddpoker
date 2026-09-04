@@ -32,25 +32,28 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.TestCase;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Covers the two schemes {@link CachedEntityResolver} understands, which is how
  * &lt;xsd:include schemaLocation="classpath:..."/&gt; is resolved when the JDK
  * parser validates a config file.
  */
-public class CachedEntityResolverTest extends TestCase
+public class CachedEntityResolverTest
 {
+    @Test
     public void testResolvesClasspath() throws MalformedURLException
     {
         URL url = CachedEntityResolver.instance().getMatch("classpath:config/xml-schema/data-elements.xsd");
         assertNotNull(url);
-        assertTrue(url.toString(), url.toString().endsWith("config/xml-schema/data-elements.xsd"));
+        assertTrue(url.toString().endsWith("config/xml-schema/data-elements.xsd"), url.toString());
     }
 
+    @Test
     public void testResolvesFile() throws MalformedURLException
     {
         URL url = CachedEntityResolver.instance().getMatch("file:/tmp/whatever.xsd");
@@ -59,11 +62,13 @@ public class CachedEntityResolverTest extends TestCase
         assertEquals("/tmp/whatever.xsd", url.getPath());
     }
 
+    @Test
     public void testUnknownSchemeReturnsNull() throws MalformedURLException
     {
         assertNull(CachedEntityResolver.instance().getMatch("config/xml-schema/data-elements.xsd"));
     }
 
+    @Test
     public void testResultIsCached() throws MalformedURLException
     {
         CachedEntityResolver resolver = CachedEntityResolver.instance();

@@ -32,13 +32,15 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
 import org.apache.logging.log4j.*;
 import org.springframework.core.io.*;
 
 import java.lang.annotation.*;
 import java.net.*;
 import java.util.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,10 +49,11 @@ import java.util.*;
  * Time: 3:19:51 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MatchingResourcesTest extends TestCase
+public class MatchingResourcesTest
 {
     Logger logger = LogManager.getLogger(MatchingResourcesTest.class);
 
+    @Test
     public void testFindResources()
     {
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/ConfigUtils.class");
@@ -64,6 +67,7 @@ public class MatchingResourcesTest extends TestCase
         assertTrue(none.length == 0);
     }
 
+    @Test
     public void testFindResource()
     {
         Resource thiz = new MatchingResources("classpath*:com/donohoedigital/config/MatchingResourcesTest.class").getSingleRequiredResource();
@@ -93,6 +97,7 @@ public class MatchingResourcesTest extends TestCase
 
     }
 
+    @Test
     public void testToString()
     {
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/*.class");
@@ -140,6 +145,7 @@ public class MatchingResourcesTest extends TestCase
     {
     }
 
+    @Test
     public void testMatchingAnno()
     {
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/*.class");
@@ -149,6 +155,7 @@ public class MatchingResourcesTest extends TestCase
         assertEquals(2, matches.size());
     }
 
+    @Test
     public void testMatchingImpl()
     {
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/*.class");
@@ -164,6 +171,7 @@ public class MatchingResourcesTest extends TestCase
         assertFalse(matches.contains(MatchTest2.class));
     }
 
+    @Test
     public void testGetSubclasses()
     {
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/*.class");

@@ -32,12 +32,14 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import junit.framework.*;
 import org.springframework.context.support.*;
 import org.springframework.context.*;
 import org.springframework.util.*;
 
 import java.io.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,19 +49,21 @@ import java.io.*;
  *
  * Simple Spring test - configure logging, load app context, get a bean
  */
-public class ConfigTest extends TestCase
+public class ConfigTest
 {
     /**
      * Load app config
      */
+    @Test
     public void testSpring() throws FileNotFoundException
     {
         String[] contextPaths = new String[] {"app-context-configtest.xml"};
         ApplicationContext ctx = new ClassPathXmlApplicationContext(contextPaths);
         String test = (String) ctx.getBean("test");
-        assertEquals("test bean", "Test", test);
+        assertEquals("Test", test, "test bean");
     }
 
+    @Test
     public void testTrue()
     {
         assertTrue(true);

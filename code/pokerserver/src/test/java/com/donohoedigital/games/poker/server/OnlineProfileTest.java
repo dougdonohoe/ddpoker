@@ -38,19 +38,18 @@ import com.donohoedigital.games.poker.dao.OnlineProfileDao;
 import com.donohoedigital.games.poker.model.OnlineProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URL;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,7 +58,7 @@ import static org.junit.Assert.*;
  * Time: 2:44:16 PM
  * To change this template use File | Settings | File Templates.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class OnlineProfileTest
@@ -81,15 +80,15 @@ public class OnlineProfileTest
         assertNotNull(newProfile.getId());
 
         OnlineProfile fetch = dao.get(newProfile.getId());
-        assertEquals("name should match", newProfile.getName(), fetch.getName());
-        assertEquals("passwords should match", sPassword, fetch.getPassword());
+        assertEquals(newProfile.getName(), fetch.getName(), "name should match");
+        assertEquals(sPassword, fetch.getPassword(), "passwords should match");
 
         String key = "1111-1111-1111-1111";
         newProfile.setLicenseKey(key);
         dao.update(newProfile);
 
         OnlineProfile updated = dao.get(newProfile.getId());
-        assertEquals("key should match", key, updated.getLicenseKey());
+        assertEquals(key, updated.getLicenseKey(), "key should match");
     }
 
     @Test
@@ -252,7 +251,7 @@ public class OnlineProfileTest
 
         OnlineProfile fetch = dao.get(newProfile.getId());
         assertNotSame(newProfile, fetch);
-        assertEquals("name should match", newProfile.getName(), fetch.getName());
+        assertEquals(newProfile.getName(), fetch.getName(), "name should match");
         assertEquals(utf8, fetch.getName());
         logger.debug("Name: " + utf8);
     }

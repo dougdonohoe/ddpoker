@@ -32,7 +32,9 @@
  */
 package com.donohoedigital.base;
 
-import junit.framework.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,8 +43,9 @@ import junit.framework.*;
  * Time: 2:15:08 PM
  * To change this template use File | Settings | File Templates.
  */
-public class UtilsTest extends TestCase
+public class UtilsTest
 {
+    @Test
     public void testIsOs()
     {
         assertTrue(Utils.isLinux("linux"));
@@ -60,6 +63,7 @@ public class UtilsTest extends TestCase
         assertFalse(Utils.isWindows("mac os x"));
     }
 
+    @Test
     public void testJoin()
     {
         assertEquals("a | b", Utils.joinWithDelimiter(" | ", "a", null, "b"));

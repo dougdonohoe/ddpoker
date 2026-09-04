@@ -48,7 +48,7 @@ alias mvn-install='(cd $CODE;mvn install)'
 alias mvn-clean='(cd $CODE;mvn clean)'
 alias mvn-package-notests='(cd $CODE;mvn package -DskipTests=true)'
 alias mvn-package='(cd $CODE;mvn package)'
-alias mvn-test='(cd $CODE;mvn test -Dskip.unit.tests=false)'
+alias mvn-test='(cd $CODE;mvn test)'
 alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t'
 
 # act shortcut

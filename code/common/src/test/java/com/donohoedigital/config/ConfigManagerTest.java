@@ -32,7 +32,9 @@
  */
 package com.donohoedigital.config;
 
-import junit.framework.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,8 +43,9 @@ import junit.framework.*;
  * Time: 2:53:20 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConfigManagerTest extends TestCase
+public class ConfigManagerTest
 {
+    @Test
     public void testCreate()
     {
         new ConfigManager("testapp", ApplicationType.COMMAND_LINE);

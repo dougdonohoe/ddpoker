@@ -32,11 +32,14 @@
  */
 package com.donohoedigital.base;
 
-import junit.framework.*;
 import org.apache.logging.log4j.*;
 
 import java.util.*;
 import java.util.concurrent.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,7 +48,7 @@ import java.util.concurrent.*;
  * Time: 3:18:07 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ManagedQueueTest extends TestCase
+public class ManagedQueueTest
 {
     private static final Logger logger = LogManager.getLogger(ManagedQueueTest.class);
 
@@ -53,7 +56,7 @@ public class ManagedQueueTest extends TestCase
     private final List<SampleItem> messages = new ArrayList<SampleItem>();
     private static final SampleItem SAMPLE = new SampleItem();
 
-    @Override
+    @BeforeEach
     public void setUp()
     {
         mainThread = Thread.currentThread();
@@ -101,6 +104,7 @@ public class ManagedQueueTest extends TestCase
         }
     }
 
+    @Test
     public void testQueue()
     {
         TestQueue queue = new TestQueue(10, 100, 0);
@@ -110,10 +114,11 @@ public class ManagedQueueTest extends TestCase
             queue.add(SAMPLE);
         }
         queue.stop(true);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
         assertEquals(num, messages.size());
     }
 
+    @Test
     public void testSlowAdd()
     {
         delay = 100;
@@ -122,10 +127,11 @@ public class ManagedQueueTest extends TestCase
         queue.add(SAMPLE); // second one fills up queue
         queue.add(SAMPLE); // should time out once (visual test - WARN message should show up in log)
         queue.stop(true);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
         assertEquals(3, messages.size());
     }
 
+    @Test
     public void testOverflow()
     {
         delay = TimeConstants.SECOND;
@@ -142,9 +148,10 @@ public class ManagedQueueTest extends TestCase
             logger.debug("Expected error: " + o.getMessage());
         }
         queue.stop(false);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
     }
 
+    @Test
     public void testQuitEarly()
     {
         delay = TimeConstants.MILLISECOND * 10;
@@ -155,10 +162,11 @@ public class ManagedQueueTest extends TestCase
             queue.add(SAMPLE);
         }
         queue.stop(false);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
-        assertTrue("Not all messages should have been processed", num > messages.size());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
+        assertTrue(num > messages.size(), "Not all messages should have been processed");
     }
 
+    @Test
     public void testInterrupt()
     {
         TestQueue queue = new TestQueue(10, 100, 100);
@@ -174,23 +182,25 @@ public class ManagedQueueTest extends TestCase
             }
         }
         queue.stop(true);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
         assertEquals(num, messages.size());
     }
 
+    @Test
     public void testInterruptDuringShutdown()
     {
         delay = TimeConstants.SECOND * 2;
         TestQueue queue = new TestQueue(1, 1, 1);
         queue.add(SAMPLE); // first gets processed right away, but held up by delay
         queue.add(SAMPLE); // second one fills up queue (use handleMessage for code coverage)
-        assertTrue("max one message should have been processed", messages.size() <= 1);
+        assertTrue(messages.size() <= 1, "max one message should have been processed");
         new Interrupter(Thread.currentThread()).start();
         queue.stop(true); // waits because queue is full, should be interrupted
-        assertFalse("thread dead", queue.getProcessor().isAlive());
-        assertTrue("max one message should have been processed", messages.size() <= 1);
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
+        assertTrue(messages.size() <= 1, "max one message should have been processed");
     }
 
+    @Test
     public void testQuitNoItemsNoFinish()
     {
         TestQueue queue = new TestQueue(1, 1, 1);
@@ -199,16 +209,17 @@ public class ManagedQueueTest extends TestCase
         queue.stop(false);
         long after = System.currentTimeMillis();
         assertTrue(after - now < ManagedQueue.WAIT_FOR_THREAD_FINISH);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
     }
 
+    @Test
     public void testInterruptDuringAdd()
     {
         delay = TimeConstants.SECOND * 1;
         TestQueue queue = new TestQueue(1, TimeConstants.MINUTE, 100);
         queue.add(SAMPLE); // first gets processed right away, but held up by delay
         queue.add(SAMPLE); // second one fills up queue (use handleMessage for code coverage)
-        assertTrue("max one message should have been processed", messages.size() <= 1);
+        assertTrue(messages.size() <= 1, "max one message should have been processed");
         new Interrupter(Thread.currentThread()).start();
         try
         {
@@ -220,7 +231,7 @@ public class ManagedQueueTest extends TestCase
             logger.debug("Expected error: " + o.getMessage());
         }
         queue.stop(true);
-        assertFalse("thread dead", queue.getProcessor().isAlive());
+        assertFalse(queue.getProcessor().isAlive(), "thread dead");
     }
 
     private class Interrupter extends Thread

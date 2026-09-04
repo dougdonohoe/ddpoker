@@ -32,12 +32,12 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <p/>
  * Test items in OnlineProfileService that are more than pass-throughs to the OnlineProfile DAO
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-pokerservertests.xml"})
 public class OnlineProfileServiceDummyTest

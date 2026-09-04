@@ -35,19 +35,18 @@ package com.donohoedigital.games.server;
 import com.donohoedigital.games.server.dao.BannedKeyDao;
 import com.donohoedigital.games.server.model.BannedKey;
 import org.apache.logging.log4j.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,7 +56,7 @@ import static org.junit.Assert.*;
  * To change this template use File | Settings | File Templates.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
 @ContextConfiguration(locations = {"/app-context-jpatests.xml"})
 public class BannedKeyTest {
@@ -79,14 +78,14 @@ public class BannedKeyTest {
         assertNotNull(nullComment.getId());
 
         BannedKey fetch = dao.get(newKey.getId());
-        assertEquals("name should match", newKey.getKey(), fetch.getKey());
+        assertEquals(newKey.getKey(), fetch.getKey(), "name should match");
 
         String key = "1111-1111-1111-1111";
         newKey.setKey(key);
         dao.update(newKey);
 
         BannedKey updated = dao.get(newKey.getId());
-        assertEquals("key should match", key, updated.getKey());
+        assertEquals(key, updated.getKey(), "key should match");
     }
 
     @Test
