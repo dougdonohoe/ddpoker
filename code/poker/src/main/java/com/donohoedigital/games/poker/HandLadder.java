@@ -231,7 +231,7 @@ public class HandLadder
         if (getHandRank() > 1)
         {
             buf.append("<tr>");
-            buf.append("<td><font color=\"white\"><b>Stronger Hands - " + PokerConstants.formatPercent(strongerPercent) + "%</b></font></td>");
+            buf.append("<td><font color=\"white\"><b>Stronger Hands - ").append(PokerConstants.formatPercent(strongerPercent)).append("%</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Count</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Probability</b></font></td>");
             buf.append("</tr>");
@@ -292,7 +292,7 @@ public class HandLadder
         if (getHandRank() < totalCount_)
         {
             buf.append("<tr>");
-            buf.append("<td><font color=\"white\"><b>Equal or Weaker Hands - " + PokerConstants.formatPercent(lessEqualPercent) + "%</b></font></td>");
+            buf.append("<td><font color=\"white\"><b>Equal or Weaker Hands - ").append(PokerConstants.formatPercent(lessEqualPercent)).append("%</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Count</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Probability</b></font></td>");
             buf.append("</tr>");

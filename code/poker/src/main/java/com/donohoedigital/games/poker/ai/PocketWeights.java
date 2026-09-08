@@ -159,7 +159,7 @@ public class PocketWeights
 
         if (community == null) return 0.0f;
 
-        boolean preflop = (community.size() == 0);
+        boolean preflop = (community.isEmpty());
 
         PocketRanks ranks = null;
 
@@ -228,7 +228,7 @@ public class PocketWeights
     {
         Hand community = hhand_.getCommunity();
 
-        if (community.size() == 0)
+        if (community.isEmpty())
         {
             throw new ApplicationError("PocketWeights.getBiasedEffectiveHandStrength() called before the flop.");
         }
@@ -311,7 +311,7 @@ public class PocketWeights
     {
         Hand community = hhand_.getCommunity();
 
-        boolean bPreFlop = community.size() == 0;
+        boolean bPreFlop = community.isEmpty();
 
         PocketRanks ranks = null;
 

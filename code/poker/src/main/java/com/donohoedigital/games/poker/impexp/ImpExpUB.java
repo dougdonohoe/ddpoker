@@ -268,7 +268,7 @@ public class ImpExpUB implements ImpExp
 
         buf.append(newline);
 
-        if (ieHand.community.size() > 0)
+        if (!ieHand.community.isEmpty())
         {
             if (flop.length() == 0)
             {

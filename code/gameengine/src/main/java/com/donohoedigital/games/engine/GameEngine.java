@@ -1088,7 +1088,7 @@ public abstract class GameEngine extends BaseApp
         boolean remove(GameContext context)
         {
             ApplicationError.assertTrue(contexts.remove(context), "Window not found in list", context.getWindow().getName());
-            return contexts.size() == 0;
+            return contexts.isEmpty();
         }
 
         // GameContext 1st window

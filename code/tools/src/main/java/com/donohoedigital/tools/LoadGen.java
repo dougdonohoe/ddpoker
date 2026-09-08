@@ -43,6 +43,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -664,8 +665,8 @@ public class LoadGen
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("content-type", sPostContentType);
                     OutputStream o = conn.getOutputStream();
-                    o.write(sPost.getBytes());
-                    o.write("\n".getBytes()); // for War!
+                    o.write(sPost.getBytes(StandardCharsets.UTF_8));
+                    o.write("\n".getBytes(StandardCharsets.UTF_8)); // for War!
                     o.close();
                 }
 

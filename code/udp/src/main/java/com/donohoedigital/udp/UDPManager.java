@@ -525,7 +525,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
         // cleanup links
         synchronized(links_)
         {
-            while (links_.size() > 0)
+            while (!links_.isEmpty())
             {
                 UDPLink link = links_.remove(0);
                 link.finish(false);

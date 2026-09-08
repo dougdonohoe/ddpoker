@@ -51,6 +51,7 @@ import java.io.OutputStream;
 import java.net.*;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -290,7 +291,7 @@ public class DDHttpClient
             if (options_.sUsername != null && options_.sPassword != null)
             {
                 String sEncode = options_.sUsername + ':' + options_.sPassword;
-                sEncode = Base64.encodeBytes(sEncode.getBytes());
+                sEncode = Base64.encodeBytes(sEncode.getBytes(StandardCharsets.UTF_8));
                 sb.append("Authorization: Basic ").append(sEncode).append(CRLF);
             }
 

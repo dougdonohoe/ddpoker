@@ -212,7 +212,7 @@ public class BorderPoint extends MapPoint
     public Border getCurrentBorder()
     {
         // if no border set, but we have borders, return 1st border
-        if (bCurrentBorder_ == null && myBorders_.size() > 0)
+        if (bCurrentBorder_ == null && !myBorders_.isEmpty())
         {
             bCurrentBorder_ = myBorders_.getBorder(0);
         }

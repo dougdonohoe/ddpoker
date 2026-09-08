@@ -159,7 +159,7 @@ public class Experiments
     public void testEncodeSlash()
     {
         String enc = "><//'>";
-        enc = enc.replaceAll("/", "&#47;");
+        enc = enc.replace("/", "&#47;");
         logger.debug("ENCODE: " + enc);
     }
 

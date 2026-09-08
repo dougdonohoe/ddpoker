@@ -181,7 +181,7 @@ public class Borders extends TreeSet<Border> {
         {
             border = iter.next();
             // don't bother writing out if not 1 point in the border
-            if (border.getBorderPoints().size() > 0)
+            if (!border.getBorderPoints().isEmpty())
             {
                 //sName = border.getTerritory1().getName() + "." + border.getTerritory2().getName() + ".xml";
                 //sName = sName.replace(' ', '_');

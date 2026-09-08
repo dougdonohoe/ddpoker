@@ -38,6 +38,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -337,6 +338,6 @@ public class SecurityUtils
      */
     public static String getMD5Hash(String s, byte[] key)
     {
-        return hash(s.getBytes(), key, "MD5");
+        return hash(s.getBytes(StandardCharsets.UTF_8), key, "MD5");
     }
 }

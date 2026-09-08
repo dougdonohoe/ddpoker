@@ -140,7 +140,7 @@ public class WorkerPool
         WorkerThread worker = null;
 
         synchronized (idle_) {
-            if (idle_.size() > 0) {
+            if (!idle_.isEmpty()) {
                 worker = (WorkerThread) idle_.remove(0);
             }
         }

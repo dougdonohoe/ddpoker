@@ -799,7 +799,7 @@ public class Hand extends DMArrayList<Card>
 
     public String toHTML()
     {
-        if (size() == 0) return "";
+        if (isEmpty()) return "";
 
         StringBuilder buf = new StringBuilder();
 

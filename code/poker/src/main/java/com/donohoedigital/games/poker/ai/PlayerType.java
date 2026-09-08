@@ -323,7 +323,7 @@ public class PlayerType extends BaseProfile
 
         if (sDesc != null && sDesc.length() > 0)
         {
-            buf.append(Utils.encodeHTML(sDesc).replaceAll("\n", "<BR>\n"));
+            buf.append(Utils.encodeHTML(sDesc).replace("\n", "<BR>\n"));
             buf.append("<BR><BR>");
         }
 
@@ -482,7 +482,7 @@ public class PlayerType extends BaseProfile
         {
             List<BaseProfile> profiles = getProfileListCached(details);
 
-            if (profiles.size() == 0)
+            if (profiles.isEmpty())
             {
                 throw new ApplicationError("No computer player types defined!");
             }

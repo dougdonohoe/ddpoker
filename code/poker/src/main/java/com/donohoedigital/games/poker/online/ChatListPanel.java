@@ -421,7 +421,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
     public void mouseReleased(MouseEvent e)
     {
         if (!GuiUtils.isPopupTrigger(e, false)) return;
-        if (getItems().size() == 0) return;
+        if (getItems().isEmpty()) return;
 
         DDPopupMenu menu = new DDPopupMenu();
 
@@ -494,16 +494,16 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
 
         // header
         StringBuilder sb = new StringBuilder("<HTML><HEAD><TITLE>");
-        sb.append("DD Poker Chat Export - " + sDate);
+        sb.append("DD Poker Chat Export - ").append(sDate);
         sb.append("</TITLE><BASE href=\"http://www.ddpoker.com/\"></HEAD><BODY>\n");
 
         // top table
         sb.append("<TABLE CELLSPACING=\"2\" CELLPADDING=\"0\"><TR>\n");
         sb.append("<TD><img src=\"images/pokericon32.jpg\">&nbsp;&nbsp;</TD><TD COLSPAN=2 style=\"font-size: 23px;\">DD Poker Chat Export</TD></TR>\n");
         sb.append("<TR><TD></TD><TD style=\"font-size: 15px;\"><B>Date:&nbsp;&nbsp;</B></TD>");
-        sb.append("<TD style=\"font-size: 15px;\">" + sDate + "</TD></TR>\n");
+        sb.append("<TD style=\"font-size: 15px;\">").append(sDate).append("</TD></TR>\n");
         sb.append("<TR><TD></TD><TD style=\"font-size: 15px;\"><B>Where:&nbsp;&nbsp;</B></TD>");
-        sb.append("<TD style=\"font-size: 15px;\">" + sDetails + "</TD></TR>\n");
+        sb.append("<TD style=\"font-size: 15px;\">").append(sDetails).append("</TD></TR>\n");
         sb.append("</TD></TR></TABLE><BR>");
 
         // chat
@@ -519,7 +519,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
             s = msg.sMsg;//html.getText();
 
             // <ddimg width="12" src="icon-small" yadj="-3" height="12">
-            s = s.replaceAll("ddimg", "img");
+            s = s.replace("ddimg", "img");
 
             // results piece (jpg)
             s = s.replaceAll("src=\"(results-[0-9a-zA-Z\\-]+)\"", "src=\"gamehelp/images/$1.jpg\"");
@@ -542,7 +542,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
 
         // hash
         String sHash = SecurityUtils.getMD5Hash(sb.toString(), PokerConstants.CHAT_BYTES);
-        sb.append("<!-- " + sHash + " -->");
+        sb.append("<!-- ").append(sHash).append(" -->");
 
         return sb.toString();
     }

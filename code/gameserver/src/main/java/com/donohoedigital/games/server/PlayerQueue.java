@@ -146,7 +146,7 @@ public class PlayerQueue extends ServerDataFile
         // keep getting head of list (earlier messages are first)
         // remove from head of list as long as timestamp is less
         // than or equal to the given timestamp
-        while (!bDone && msgList_.size() > 0)
+        while (!bDone && !msgList_.isEmpty())
         {
             msg = (EngineMessage) msgList_.get(0);
             if (msg.getCreateTimeStamp() <= timestamp)

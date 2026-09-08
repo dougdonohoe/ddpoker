@@ -270,7 +270,7 @@ public class HandHistoryPanel extends DDPanel
 
         handsList_.setItems(hands_);
 
-        if (hands_.size() == 0)
+        if (hands_.isEmpty())
         {
             titleLabel_.setText(PropertyConfig.getMessage("msg.nohistory"));
             pagingLabel_.setText("");
@@ -393,7 +393,7 @@ public class HandHistoryPanel extends DDPanel
             {
                 handHTML = hand.toHTML();
 
-                if (community.size() > 0)
+                if (!community.isEmpty())
                 {
                     info.getScore(hand, community);
                     handShown = "&nbsp;-&nbsp;" + info.toString(", ", false);

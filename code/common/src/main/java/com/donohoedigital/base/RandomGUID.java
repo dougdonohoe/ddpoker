@@ -18,6 +18,7 @@
  */
 package com.donohoedigital.base;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -178,7 +179,7 @@ public class RandomGUID extends Object
             sbValueBeforeMD5.append(Long.toString(rand));
 
             valueBeforeMD5 = sbValueBeforeMD5.toString();
-            md5.update(valueBeforeMD5.getBytes());
+            md5.update(valueBeforeMD5.getBytes(StandardCharsets.UTF_8));
 
             byte[] array = md5.digest();
             StringBuilder sb = new StringBuilder();

@@ -241,7 +241,7 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
         private void update()
         {
             // skip repaint if nothing changed
-            if (udp_ == null && list.size() == 0) return;
+            if (udp_ == null && list.isEmpty()) return;
 
             // get list
             list.clear();

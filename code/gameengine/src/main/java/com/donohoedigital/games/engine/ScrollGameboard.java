@@ -1028,7 +1028,7 @@ public class ScrollGameboard extends JViewport implements
         panel.removeMouseWheelListener(handler_);
         handler_.init();
         topPanels_.pop();
-        if (topPanels_.size() > 0)
+        if (!topPanels_.isEmpty())
         {
             topPanel_ = topPanels_.peek();
         }
@@ -1042,7 +1042,7 @@ public class ScrollGameboard extends JViewport implements
      */
     public boolean isModalMode()
     {
-        return topPanels_.size() > 0;
+        return !topPanels_.isEmpty();
     }
     
     /**

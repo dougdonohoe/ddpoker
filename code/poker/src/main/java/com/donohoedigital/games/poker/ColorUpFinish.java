@@ -217,7 +217,7 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
             if (player == null) continue;
 
             // repaint players with non-empty hands
-            if (player.getHand().size() > 0)
+            if (!player.getHand().isEmpty())
             {
                 repaint(player);
             }

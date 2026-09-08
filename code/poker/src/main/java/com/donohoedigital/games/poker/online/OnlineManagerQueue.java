@@ -144,7 +144,7 @@ public class OnlineManagerQueue implements Runnable
         
         //logger.info("Shutting down OnlineMessageQueue...");
         ArrayList list = getMessageQueue();
-        if (list != null && list.size() > 0)
+        if (list != null && !list.isEmpty())
         {
             logger.warn("Left " + list.size() + " messages to send");
         }
@@ -258,7 +258,7 @@ public class OnlineManagerQueue implements Runnable
      */
     private synchronized ArrayList getMessageQueue()
     {
-        if (msgQ_.size() == 0) return null; // avoid new object if empty
+        if (msgQ_.isEmpty()) return null; // avoid new object if empty
         
         ArrayList list = msgQ_;
         msgQ_ = new ArrayList();
@@ -288,7 +288,7 @@ public class OnlineManagerQueue implements Runnable
 
         Qentry msg;
         int index = 0;
-        while (list.size() > 0)
+        while (!list.isEmpty())
         {
             msg = null;
 

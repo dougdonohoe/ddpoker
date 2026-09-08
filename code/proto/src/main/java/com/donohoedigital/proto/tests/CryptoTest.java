@@ -39,6 +39,8 @@
 package com.donohoedigital.proto.tests;
 
 
+import java.nio.charset.StandardCharsets;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -64,7 +66,7 @@ public class CryptoTest {
         Cipher cipher = Cipher.getInstance("Blowfish");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
         byte[] encrypted = 
-            cipher.doFinal("This is just an example".getBytes());
+            cipher.doFinal("This is just an example".getBytes(StandardCharsets.UTF_8));
         
         Cipher cipher2 = Cipher.getInstance("Blowfish");
         cipher2.init(Cipher.DECRYPT_MODE, skeySpec);

@@ -604,7 +604,7 @@ public class ExplicitConstraints implements Serializable, Cloneable {
     }
 
     private String infiniteMsg(String attribute, ExplicitLayout layout) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Component [] components;
         int index;
         components = layout.getContainer().getComponents();

@@ -591,9 +591,9 @@ public String getFileName() {
     {
         String sBreak = "<BR><BR>";
         String sDesc = Utils.encodeHTML(getDescription());
-        return (sDesc != null ? sDesc.replaceAll("\n", "<BR>\n") + sBreak : "") +
+        return (sDesc != null ? sDesc.replace("\n", "<BR>\n") + sBreak : "") +
                 "<DIV>" +
-                "<DDHANDGROUP CARDS=\"" + getSummary().replaceAll(" ", "") + "\">" +
+                "<DDHANDGROUP CARDS=\"" + getSummary().replace(" ", "") + "\">" +
                 "</DIV>";
     }
 
@@ -740,7 +740,7 @@ public String getFileName() {
 
         if (getClassCount() > 0)
         {
-            map_.setString("hands", getSummary().replaceAll(" ", "") + "|" + Integer.toString(getStrength()));
+            map_.setString("hands", getSummary().replace(" ", "") + "|" + Integer.toString(getStrength()));
         }
         else
         {

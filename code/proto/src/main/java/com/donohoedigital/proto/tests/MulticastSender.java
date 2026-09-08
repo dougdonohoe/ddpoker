@@ -36,6 +36,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
+import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 
 public class MulticastSender 
@@ -52,7 +53,7 @@ public class MulticastSender
 
 			// create a datagram with a suitable message
 			String str = "Hello from: "+InetAddress.getLocalHost();
-			byte[] data = str.getBytes();
+			byte[] data = str.getBytes(StandardCharsets.UTF_8);
 			DatagramPacket dp = new DatagramPacket(data, data.length, ia, recvPort);
 
 			// create a multicast socket bound to any local port
@@ -69,7 +70,7 @@ public class MulticastSender
             for (int i = 0; i < 1000; i++)
             {
                 sData = "Message " + i + "  stuff stuff asd sdfa asdf asdf as asasdf asdfsaf sadflj asfasasjflj";
-                dp.setData(sData.getBytes());
+                dp.setData(sData.getBytes(StandardCharsets.UTF_8));
                 ms.send(dp);
             }
             ms.setTimeToLive(ttl);

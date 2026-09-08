@@ -144,7 +144,7 @@ public class ChipLeaderPanel extends DDTabPanel
         setBorderLayoutGap(10,0);
 
         // current players
-        if (current.size() > 0)
+        if (!current.isEmpty())
         {
             DDPanel top = new DDPanel();
             top.setBorderLayoutGap(5, 10);

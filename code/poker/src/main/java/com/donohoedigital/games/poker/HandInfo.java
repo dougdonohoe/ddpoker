@@ -1019,15 +1019,14 @@ public class HandInfo implements Comparable<HandInfo>
     {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n--- "+player_.getName()+" ---- " + all_ +"\n");
+        sb.append("\n--- ").append(player_.getName()).append(" ---- ").append(all_).append("\n");
 
         // normal to string
         sb.append(this);
         sb.append("\n");
 
         // suits
-        sb.append("Spades: " + nSpades_ + "  Hearts: " + nHearts_ +
-                "  Diamonds: " + nDiamonds_ + "  Clubs: " + nClubs_ + "\n");
+        sb.append("Spades: ").append(nSpades_).append("  Hearts: ").append(nHearts_).append("  Diamonds: ").append(nDiamonds_).append("  Clubs: ").append(nClubs_).append("\n");
 
         // ranks
         String sValue;
@@ -1047,18 +1046,18 @@ public class HandInfo implements Comparable<HandInfo>
         for (int i = 0; i < seq_.size(); i++)
         {
             seq = seq_.get(i);
-            sb.append("Seq " + (i+1) +": "+seq+"\n");
+            sb.append("Seq ").append(i + 1).append(": ").append(seq).append("\n");
         }
 
         // straight flush seq
         for (int i = 0; i < seqFlush_.size(); i++)
         {
             seq = seqFlush_.get(i);
-            sb.append("SeqFlush " + (i+1) +": "+seq+"\n");
+            sb.append("SeqFlush ").append(i + 1).append(": ").append(seq).append("\n");
         }
 
         // pairs, quads, trips
-        sb.append("Pairs: " + nPairs_ + "  Trips: " + nTrips_ + "  Quads: " + nQuads_);
+        sb.append("Pairs: ").append(nPairs_).append("  Trips: ").append(nTrips_).append("  Quads: ").append(nQuads_);
         return sb.toString();
     }
 }
