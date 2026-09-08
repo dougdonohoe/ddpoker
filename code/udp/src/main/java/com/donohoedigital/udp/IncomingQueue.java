@@ -225,7 +225,7 @@ public class IncomingQueue
                 // debug
                 if (UDPServer.DEBUG_INCOMING)
                 {
-                    logger.debug("  *** dispatching " + data.toStringShort());
+                    logger.debug("  *** dispatching {}", data.toStringShort());
                 }
 
                 // pass completed message on to handlers

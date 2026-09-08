@@ -399,7 +399,7 @@ public class UDPMessage
         }
         catch (UnknownHostException uhe) // only thrown if addr incorrect size, but log something just in case
         {
-            logger.warn("Error getting address: " + Utils.formatExceptionText(uhe));
+            logger.warn("Error getting address: {}", Utils.formatExceptionText(uhe));
             return new InetSocketAddress("0.0.0.0", nPort);
         }
     }
@@ -450,7 +450,7 @@ public class UDPMessage
         for (UDPData data : data_)
         {
             if (data.getType() == UDPData.Type.MTU_TEST) continue;
-            logger.debug("  OUT "+data.toStringShort() + " " + link.toStringNameIP());
+            logger.debug("  OUT {} {}", data.toStringShort(), link.toStringNameIP());
         }
     }
 

@@ -239,7 +239,7 @@ public abstract class GameServer extends Thread
         }
 
         // log version
-        logger.info("Java version: " + System.getProperties().get("java.runtime.version"));
+        logger.info("Java version: {}", System.getProperties().get("java.runtime.version"));
     }
 
     /**
@@ -275,7 +275,7 @@ public abstract class GameServer extends Thread
         String sSocketThreadClass = PropertyConfig.getStringProperty("settings.server.thread.class", SocketThread.class.getName(), false);
 
         // display info
-        logger.info("Listening on port(s) " + sPort_ + ";  threads: " + nThreads);
+        logger.info("Listening on port(s) {};  threads: {}", sPort_, nThreads);
 
         // record current time
         nLastLogTime_ = System.currentTimeMillis();
@@ -322,7 +322,7 @@ public abstract class GameServer extends Thread
                     {
                         activeIPs.add(i);
                         configIPs.remove(i.getHostAddress());
-                        logger.info("Using specific address: " + i.getHostAddress());
+                        logger.info("Using specific address: {}", i.getHostAddress());
                     }
                 }
             }
@@ -345,7 +345,7 @@ public abstract class GameServer extends Thread
                 nPort = Integer.parseInt(port);
 
                 // set the port the server channel will listen to
-                logger.info("Processing port " + nPort + "...");
+                logger.info("Processing port {}...", nPort);
 
                 for (InetAddress i : activeIPs)
                 {
@@ -353,7 +353,7 @@ public abstract class GameServer extends Thread
                     channel = ServerSocketChannel.open();
                     socket = channel.socket();
 
-                    logger.info("Binding: " + i.getHostAddress() + ":" + nPort);
+                    logger.info("Binding: {}:{}", i.getHostAddress(), nPort);
 
                     try
                     {
@@ -361,7 +361,7 @@ public abstract class GameServer extends Thread
                     }
                     catch (SocketException be)
                     {
-                        logger.error("Unable to bind: " + Utils.getExceptionMessage(be));
+                        logger.error("Unable to bind: {}", Utils.getExceptionMessage(be));
                         continue;
                     }
 
@@ -383,7 +383,7 @@ public abstract class GameServer extends Thread
             }
             catch (NumberFormatException nfe)
             {
-                logger.error("Unable to parse: " + port);
+                logger.error("Unable to parse: {}", port);
             }
         }
 
@@ -397,7 +397,7 @@ public abstract class GameServer extends Thread
         // store first port as preferred
         if (!channels_.isEmpty())
         {
-            logger.info("Preferred TCP (online server) address set to " + Utils.getLocalAddressPort(getDefaultChannel()));
+            logger.info("Preferred TCP (online server) address set to {}", Utils.getLocalAddressPort(getDefaultChannel()));
         }
 
         // create pool
@@ -421,7 +421,7 @@ public abstract class GameServer extends Thread
             catch (IOException e2)
             {
                 if (!bBindFailover_) throw e2;
-                logger.info("Failed binding to " + ia.getHostAddress() + ":" + nPort + ", trying port " + (nPort + 1));
+                logger.info("Failed binding to {}:{}, trying port {}", ia.getHostAddress(), nPort, (nPort + 1));
                 nPort++;
                 e = e2;
             }
@@ -516,7 +516,7 @@ public abstract class GameServer extends Thread
                 // in particular on Linux
                 if (!bDone_ && !Utils.getExceptionMessage(t).contains("Interrupted system call"))
                 {
-                    logger.error("selector.select() error: " + Utils.formatExceptionText(t));
+                    logger.error("selector.select() error: {}", Utils.formatExceptionText(t));
                 }
                 continue;
             }
@@ -542,7 +542,7 @@ public abstract class GameServer extends Thread
                         }
                         catch (IOException ioe)
                         {
-                            logger.error("registerChannel error: " + Utils.formatExceptionText(ioe));
+                            logger.error("registerChannel error: {}", Utils.formatExceptionText(ioe));
                         }
 
                     }
@@ -550,7 +550,7 @@ public abstract class GameServer extends Thread
             }
             catch (Throwable t)
             {
-                logger.error("processing error: " + Utils.formatExceptionText(t));
+                logger.error("processing error: {}", Utils.formatExceptionText(t));
             }
         }
 
@@ -609,7 +609,7 @@ public abstract class GameServer extends Thread
         {
             try
             {
-                logger.info("GameServer closing " + Utils.getLocalAddressPort(channel));
+                logger.info("GameServer closing {}", Utils.getLocalAddressPort(channel));
                 channel.socket().close();
             }
             catch (Throwable ignore)
@@ -644,7 +644,7 @@ public abstract class GameServer extends Thread
                 // Is a new connection coming in?
                 if (key.isAcceptable())
                 {
-                    if (DEBUG_ONLINE) logger.debug("[" + nNum_ + "] ACCEPTING NEW CONNECTION");
+                    if (DEBUG_ONLINE) logger.debug("[{}] ACCEPTING NEW CONNECTION", nNum_);
 
                     ServerSocketChannel server = (ServerSocketChannel) key.channel();
                     SocketChannel channel = server.accept();
@@ -655,13 +655,13 @@ public abstract class GameServer extends Thread
                     channel.socket().setSendBufferSize(64 * 1024);
                     channel.socket().setReceiveBufferSize(64 * 1024);
 
-                    if (DEBUG_ONLINE) logger.debug("[" + nNum_ + "] ACCEPTED " + Utils.getIPAddress(channel));
+                    if (DEBUG_ONLINE) logger.debug("[{}] ACCEPTED {}", nNum_, Utils.getIPAddress(channel));
 
                     // register for read; no need to wake since this in
                     // same thread that select() is called
                     registerChannel(channel, SelectionKey.OP_READ);
 
-                    if (DEBUG_ONLINE) logger.debug("[" + nNum_ + "] REGISTERED " + Utils.getIPAddress(channel));
+                    if (DEBUG_ONLINE) logger.debug("[{}] REGISTERED {}", nNum_, Utils.getIPAddress(channel));
                 }
                 // is there data to read on this channel?
                 else if (key.isReadable())
@@ -675,12 +675,12 @@ public abstract class GameServer extends Thread
                 //}
                 else
                 {
-                    logger.debug("[" + nNum_ + "] NOTHING TO DO: key ready ops are " + key.readyOps());
+                    logger.debug("[{}] NOTHING TO DO: key ready ops are {}", nNum_, key.readyOps());
                 }
             }
             catch (IOException ioe)
             {
-                logger.error("processSelection error: " + Utils.formatExceptionText(ioe));
+                logger.error("processSelection error: {}", Utils.formatExceptionText(ioe));
             }
 
             // remove key from selected set, as it has been handled
@@ -704,9 +704,7 @@ public abstract class GameServer extends Thread
     {
         if (!isLogStatus()) return;
 
-        logger.info("STATUS:  available workers: " + pool_.getNumIdleWorkers() +
-                    ",  hits: " + nHits_ +
-                    ",  misses: " + nRunningNoWorkerCnt_);
+        logger.info("STATUS:  available workers: {},  hits: {},  misses: {}", pool_.getNumIdleWorkers(), nHits_, nRunningNoWorkerCnt_);
         nRunningNoWorkerCnt_ = 0;
         nHits_ = 0;
     }
@@ -794,7 +792,7 @@ public abstract class GameServer extends Thread
         }
         catch (Throwable notUsed)
         {
-            logger.warn("Ignored exception: " + Utils.formatExceptionText(notUsed));
+            logger.warn("Ignored exception: {}", Utils.formatExceptionText(notUsed));
         }
 
         // showdown output so remote client gets socket closed
@@ -850,8 +848,8 @@ public abstract class GameServer extends Thread
             // to allow time for another thread to finish
             if (nElapsedNoWorkerTime_ >= LOG_UNAVAIL)
             {
-                logger.warn("*** NO worker thread available for " + nElapsedNoWorkerTime_ + " millis " +
-                            "(sleep is " + SLEEP_UNAVAIL + "), current ip=" + Utils.getIPAddress(channel));
+                logger.warn("*** NO worker thread available for {} millis " +
+                    "(sleep is {}), current ip={}", nElapsedNoWorkerTime_, SLEEP_UNAVAIL, Utils.getIPAddress(channel));
                 nElapsedNoWorkerTime_ = 0;
             }
 
@@ -870,7 +868,7 @@ public abstract class GameServer extends Thread
         nHits_++;
 
         // we have a worker, so process it
-        if (DEBUG_ONLINE) logger.debug("[" + nNum + "] READING " + Utils.getIPAddress(channel));
+        if (DEBUG_ONLINE) logger.debug("[{}] READING {}", nNum, Utils.getIPAddress(channel));
 
         // need to cancel key otherwise can't change blocking for replies
         key.cancel();

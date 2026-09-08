@@ -102,7 +102,7 @@ public class JspFile
                     File logDir = new File(new DefaultRuntimeDirectory().getServerHome(), "log");
                     File scratch = new File(logDir, "jsp-" + ConfigManager.getAppName());
                     ConfigUtils.verifyNewDirectory(scratch);
-                    logger.info("JSP File scratch in " + scratch.getAbsolutePath());
+                    logger.info("JSP File scratch in {}", scratch.getAbsolutePath());
                     ServletConfig config = new EmbeddedServletConfig("jsp", scratch.getAbsolutePath());
                     config.getServletContext().setAttribute(InstanceManager.class.getName(), new SimpleInstanceManager());
                     jsp_.init(config);

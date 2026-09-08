@@ -290,7 +290,7 @@ public class ImageDef
         }
         catch (Throwable e)
         {
-            logger.error("Error creating buffered image from " + url);
+            logger.error("Error creating buffered image from {}", url);
             logger.error(Utils.formatExceptionText(e));
         }
         return null;

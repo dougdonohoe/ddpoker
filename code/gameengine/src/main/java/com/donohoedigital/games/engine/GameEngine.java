@@ -170,7 +170,7 @@ public abstract class GameEngine extends BaseApp
             sOverrideKey_ = getCommandLineOptions().getString("key", null);
             if (sOverrideKey_ != null)
             {
-                logger.debug("Activation key set to " + sOverrideKey_);
+                logger.debug("Activation key set to {}", sOverrideKey_);
             }
         }
 
@@ -191,10 +191,8 @@ public abstract class GameEngine extends BaseApp
                 isBannedLicenseKey(sKey))
             {
                 // TODO: remove debug once bug figured out
-                logger.debug("Activation needed, sKey=" + sKey +
-                             " validate: " + !Activation.validate(getKeyStart(), sKey, getLocale()) +
-                             " (keystart = " + getKeyStart() + " locale= " + getLocale() + ")" +
-                             " isBanned?: " + isBannedLicenseKey(sKey));
+                logger.debug("Activation needed, sKey={} validate: {} (keystart = {} locale= {})" +
+                    " isBanned?: {}", sKey, !Activation.validate(getKeyStart(), sKey, getLocale()), getKeyStart(), getLocale(), isBannedLicenseKey(sKey));
 
                 activationNeeded = true;
             }
@@ -492,7 +490,7 @@ public abstract class GameEngine extends BaseApp
         if (key == null && isAutoGenLicenseKey())
         {
             key = Activation.createKeyFromGuid(getKeyStart(), getGUID(), getLocale());
-            logger.debug("KEY: " + key);
+            logger.debug("KEY: {}", key);
             node.put(Activation.REGKEY, key);
         }
         return key;

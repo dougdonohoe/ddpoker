@@ -71,7 +71,7 @@ public class RegistrationServiceTest
         Registration reg = ServerTestData.createRegistration("RegistrationServiceTest", "9999-8888-7777-6666");
         service.saveRegistration(reg);
 
-        logger.info("Saved: " + reg);
+        logger.info("Saved: {}", reg);
         assertNotNull(reg.getId());
 
         Registration reg2 = ServerTestData.createRegistration("RegistrationServiceTest", "9999-8888-7777-6666");

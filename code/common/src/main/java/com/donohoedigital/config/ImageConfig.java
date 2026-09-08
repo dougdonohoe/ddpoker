@@ -100,7 +100,7 @@ public class ImageConfig extends XMLConfigFileLoader
         ImageDef image = getImageDef(sName);
         if (image == null) 
         {
-            iLogger.warn("No image found for " + sName);
+            iLogger.warn("No image found for {}", sName);
             return null;
         }
         return image.getImageIcon();
@@ -129,7 +129,7 @@ public class ImageConfig extends XMLConfigFileLoader
         ImageDef image = getImageDef(sName);
         if (image == null) 
         {
-            iLogger.warn("No image found for " + sName);
+            iLogger.warn("No image found for {}", sName);
             return null;
         }
         return image.getAnimatedImageIcon();
@@ -143,7 +143,7 @@ public class ImageConfig extends XMLConfigFileLoader
         ImageDef image = getImageDef(sName);
         if (image == null) 
         {
-            iLogger.warn("No image found for cursor " + sName);
+            iLogger.warn("No image found for cursor {}", sName);
             return null;
         }
 
@@ -204,7 +204,7 @@ public class ImageConfig extends XMLConfigFileLoader
         {
             if (bReportMissing && !sName.contains("default"))
             {
-                iLogger.warn("No image found for " + sName);
+                iLogger.warn("No image found for {}", sName);
             }
             return null;
         }
@@ -272,7 +272,7 @@ public class ImageConfig extends XMLConfigFileLoader
             url = new MatchingResources("classpath*:config/" + location).getSingleResourceURL();
             if (url == null)
             {
-                iLogger.warn("Image " + sName + " not found at " + location + ".  Skipping");
+                iLogger.warn("Image {} not found at {}.  Skipping", sName, location);
                 return;
             }
         }

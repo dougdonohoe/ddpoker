@@ -88,7 +88,7 @@ public class TournamentHistoryServiceImpl implements TournamentHistoryService
         {
             if (hist.getNumPlayers() != num || !hist.getTournamentName().equals(name))
             {
-                if (logger != null) logger.info("  UPDATING history " + hist.getId() + ": "+ name + " ("+num+" players)");
+                if (logger != null) logger.info("  UPDATING history {}: {} ({} players)", hist.getId(), name, num);
                 hist.setNumPlayers(num);
                 hist.setTournamentName(name);
             }

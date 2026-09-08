@@ -137,7 +137,7 @@ public abstract class BaseDataFile
         long lastMod2 = file_.lastModified();
         if (lastMod_ != 0 && lastMod2 != lastMod_)
         {
-            logger.warn("Saving file " + file_.getAbsolutePath() + ", but last modified changed from " + lastMod_ + " to " + lastMod2);
+            logger.warn("Saving file {}, but last modified changed from {} to {}", file_.getAbsolutePath(), lastMod_, lastMod2);
         }
         
         // this actually changes last mod date!

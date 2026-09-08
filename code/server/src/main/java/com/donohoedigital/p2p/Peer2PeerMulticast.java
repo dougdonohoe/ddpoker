@@ -79,7 +79,7 @@ public class Peer2PeerMulticast implements Runnable
         sIP_ = PropertyConfig.getRequiredStringProperty("settings.multicast.address");
 
 
-        logger.info("Multicast using " + sIP_ + ":"+nPort_);
+        logger.info("Multicast using {}:{}", sIP_, nPort_);
         try {   
             // multicast address we listen to
             ia_ = InetAddress.getByName(sIP_);
@@ -205,21 +205,18 @@ public class Peer2PeerMulticast implements Runnable
                 if (!bDone_)
                 {
                     String data = new String(dp.getData(), 0, dp.getLength());
-                    logger.error("receive() socket error: [" + Utils.getPrintableString(data, 1000) + "]; "
-                             + Utils.formatExceptionText(se));
+                    logger.error("receive() socket error: [{}]; {}", Utils.getPrintableString(data, 1000), Utils.formatExceptionText(se));
                 }
             }
             catch (IOException ioe)
             {
                 String data = new String(dp.getData(), 0, dp.getLength());
-                logger.error("receive() ioerror: [" + Utils.getPrintableString(data, 1000) + "]; "
-                             + Utils.formatExceptionText(ioe));
+                logger.error("receive() ioerror: [{}]; {}", Utils.getPrintableString(data, 1000), Utils.formatExceptionText(ioe));
             }        
             catch (Throwable t)
             {
                 String data = new String(dp.getData(), 0, dp.getLength());
-                logger.error("receive() error: [" + Utils.getPrintableString(data, 1000) + "]; "
-                             + Utils.formatExceptionText(t));
+                logger.error("receive() error: [{}]; {}", Utils.getPrintableString(data, 1000), Utils.formatExceptionText(t));
             }
         }
         

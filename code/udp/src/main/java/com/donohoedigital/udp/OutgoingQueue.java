@@ -114,7 +114,7 @@ public class OutgoingQueue extends Thread
             }
             catch (Throwable t)
             {
-                logger.error("OutgoingQueue error: " + Utils.formatExceptionText(t));                
+                logger.error("OutgoingQueue error: {}", Utils.formatExceptionText(t));                
             }
         }
         logger.info("OutgoingQueue Done.");

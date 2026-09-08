@@ -1356,8 +1356,7 @@ public class PokerGame extends Game implements PlayerActionListener
                         if (peek.isHuman() && table.getNumOccupiedSeats() > 0 && !table.isAllComputer())
                         {
                             idx = DiceRoller.rollDieInt(players.size()) - 1;
-                            logger.debug("TESTING: skip placing " + peek.getName() + " on table " + table.getName() +
-                                         " new index to check: " + idx);
+                            logger.debug("TESTING: skip placing {} on table {} new index to check: {}", peek.getName(), table.getName(), idx);
                         }
                         else bDone = true;
                     }
@@ -1549,7 +1548,7 @@ public class PokerGame extends Game implements PlayerActionListener
 
         if (nChips != (nBought + nExtraChips_))
         {
-            logger.error("Chip count off.  Bought=" + nBought + "   chips=" + nChips + "   nExtra=" + nExtraChips_);
+            logger.error("Chip count off.  Bought={}   chips={}   nExtra={}", nBought, nChips, nExtraChips_);
         }
     }
 
@@ -2183,7 +2182,7 @@ public class PokerGame extends Game implements PlayerActionListener
                 removeTable(table);
                 if (TournamentDirector.DEBUG_CLEANUP_TABLE)
                 {
-                    logger.debug("Removed on load: " + table.getName());
+                    logger.debug("Removed on load: {}", table.getName());
                 }
             }
         }
@@ -2224,7 +2223,7 @@ public class PokerGame extends Game implements PlayerActionListener
                 String sSavedIP = getLocalIP();
                 if (!sSavedIP.equals(sIP) && !sIP.equals("127.0.0.1"))
                 {
-                    logger.info("Updating local ip from: " + sSavedIP + " to: " + sIP);
+                    logger.info("Updating local ip from: {} to: {}", sSavedIP, sIP);
                     setLocalIP(sIP);
                     // TODO: notify user and check about public ip
                 }
@@ -2287,7 +2286,7 @@ public class PokerGame extends Game implements PlayerActionListener
                     // info message
                     if (player.isHuman())
                     {
-                        logger.info("Key in save file updated to current key for: " + player.getName());
+                        logger.info("Key in save file updated to current key for: {}", player.getName());
                     }
                 }
             }

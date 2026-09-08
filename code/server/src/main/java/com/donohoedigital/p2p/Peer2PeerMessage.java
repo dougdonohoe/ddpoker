@@ -352,7 +352,7 @@ public class Peer2PeerMessage implements DDMessageTransporter
             // if we read data, check out first read for invalid information
             if (count != 0)
             {
-                if (DEBUG) logger.debug("Read " + count);
+                if (DEBUG) logger.debug("Read {}", count);
                 //logger.debug("Read " + count + ": <" + Utils.decode(buffer_.array(), 0, buffer_.position())+">");
                              
                 // see if we are full
@@ -373,7 +373,7 @@ public class Peer2PeerMessage implements DDMessageTransporter
                 }
                 
                 nSleep += READ_WAIT_MILLIS;
-                if (DEBUG) logger.debug("Sleeping... position is " + buffer.position() + " capacity is " + buffer.capacity());
+                if (DEBUG) logger.debug("Sleeping... position is {} capacity is {}", buffer.position(), buffer.capacity());
                 Utils.sleepMillis(READ_WAIT_MILLIS);
             }
         }

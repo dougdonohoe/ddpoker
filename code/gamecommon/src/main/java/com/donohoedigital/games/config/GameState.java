@@ -264,11 +264,11 @@ public class GameState extends MsgState implements SaveFile
     {
         if (bCheckEmpty && !entries_.isEmpty())
         {
-            logger.warn("GameState resetAfterRead: " + sName_ + ": has " + entries_.size() + " entries left.");
+            logger.warn("GameState resetAfterRead: {}: has {} entries left.", sName_, entries_.size());
             for (int i = 0; i < entries_.size(); i++)
             {
                 GameStateEntry entry = entries_.get(i);
-                logger.debug("Entry["+i+"]: " + entry.marshal(null));
+                logger.debug("Entry[{}]: {}", i, entry.marshal(null));
             }
         }
         reset();
@@ -356,25 +356,25 @@ public class GameState extends MsgState implements SaveFile
         {
             if (bak.exists() && !bak.delete())
             {
-                logger.warn("Unable to delete " + bak.getName());
+                logger.warn("Unable to delete {}", bak.getName());
             }
             
             if (!file_.renameTo(bak))
             {
-                logger.warn("Unable to rename " + file_.getName() + " to " + bak.getName());             
+                logger.warn("Unable to rename {} to {}", file_.getName(), bak.getName());             
             }
         }
         
         // move temp file to existing file
         if (!tmp.renameTo(file_))
         {
-            logger.warn("Unable to rename " + tmp.getName() + " to " + file_.getName());
+            logger.warn("Unable to rename {} to {}", tmp.getName(), file_.getName());
         }
         
         // cleanup backup file
         if (bak.exists() && !bak.delete())
         {
-            logger.warn("Unable to delete " + bak.getName());
+            logger.warn("Unable to delete {}", bak.getName());
         }
         
     }
@@ -878,8 +878,7 @@ public class GameState extends MsgState implements SaveFile
             }
             catch (Throwable e)
             {
-                logger.error("Error loading " + file.getAbsolutePath() + ": " +
-                             Utils.formatExceptionText(e));
+                logger.error("Error loading {}: {}", file.getAbsolutePath(), Utils.formatExceptionText(e));
             }
         }
 

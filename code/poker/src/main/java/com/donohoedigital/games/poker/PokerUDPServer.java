@@ -129,7 +129,7 @@ public class PokerUDPServer extends UDPServer implements PokerConnectionServer, 
         {
             PokerGame game = (PokerGame) main_.getDefaultContext().getGame();
             PokerPlayer p = game.getPokerPlayerFromConnection(connection);
-            logger.warn("No link found for " + p.getName() + " ("+connection+"), skipping message");
+            logger.warn("No link found for {} ({}), skipping message", p.getName(), connection);
             return 0;
         }
 

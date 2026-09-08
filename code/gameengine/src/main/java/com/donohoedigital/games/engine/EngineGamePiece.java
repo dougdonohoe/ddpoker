@@ -223,7 +223,7 @@ public abstract class EngineGamePiece extends GamePiece {
         // get point at which we draw this piece
         TerritoryPoint tp = t.getTerritoryPoint(tpName_);
         if (tp == null) {
-            logger.warn("No '" + tpName_ + "' territory point defined for " + t.getName());
+            logger.warn("No '{}' territory point defined for {}", tpName_, t.getName());
             return;
         }
         
@@ -278,7 +278,7 @@ public abstract class EngineGamePiece extends GamePiece {
         
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT_DETAILS))
         {
-            logger.debug("Drawing " + getTerritory().getName() + ":" + getName());
+            logger.debug("Drawing {}:{}", getTerritory().getName(), getName());
         }
         drawImageAt(g, ic, nNum, nHiddenNum, 0, x, y, width, height, board.dScale_);
     }

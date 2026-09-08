@@ -159,7 +159,7 @@ public abstract class GameManager extends BaseApp implements KeyListener, Status
         }
         catch (ApplicationError e)
         {
-            logger.warn("Error trying to save: " + e.toString());
+            logger.warn("Error trying to save: {}", e.toString());
         }
     }
     

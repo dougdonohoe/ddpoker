@@ -857,7 +857,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
             {
                 case SWING_REPAINT_SEAT:
                     if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
-                        logger.debug("SwingIt calling repaintTerritory for " + p.getName());
+                        logger.debug("SwingIt calling repaintTerritory for {}", p.getName());
                     board_.repaintTerritory(PokerUtils.getTerritoryForTableSeat(p.getTable(), p.getSeat()));
                     break;
 
@@ -905,7 +905,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         PokerTable table = event.getTable();
         HoldemHand hhand = table.getHoldemHand();
 
-        if (TournamentDirector.DEBUG_EVENT_DISPLAY) logger.debug("Event received: " + event.toString());
+        if (TournamentDirector.DEBUG_EVENT_DISPLAY) logger.debug("Event received: {}", event.toString());
         switch (event.getType())
         {
             // new players added, repaint all

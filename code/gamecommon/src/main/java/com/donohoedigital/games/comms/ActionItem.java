@@ -251,16 +251,14 @@ public class ActionItem extends DMTypedHashMap
         if (l == null)
         {
             // BUG 199 - don't throw exception.  Log error and return false.
-            logger.warn("Setting player acted, but player not part of this action: " + 
-                                    id + "(action " + getActionID() +")");
+            logger.warn("Setting player acted, but player not part of this action: {}(action {})", id, getActionID());
             return false;
         }
         
         if (!l.equals(INIT_LONG))
         {
             // BUG 199 - don't throw exception.  Log error and return false.
-            logger.warn("Setting player acted, but player already acted " +
-                                    id + "(action " + getActionID() +")");
+            logger.warn("Setting player acted, but player already acted {}(action {})", id, getActionID());
             return false;
         }
         setLong(sId, Utils.getCurrentTimeStamp());

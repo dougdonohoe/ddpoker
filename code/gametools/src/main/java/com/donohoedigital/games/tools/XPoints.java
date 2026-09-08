@@ -236,7 +236,7 @@ public class XPoints extends XConnectorLines implements KeyListener,
         // add to list of everything - which checks for duplicates
         if (allPoints_.contains(point))
         {
-            logger.warn("New border point already exists as a defined point.  Ignoring it! - " + point.longDesc(null));
+            logger.warn("New border point already exists as a defined point.  Ignoring it! - {}", point.longDesc(null));
             return;
         }
 

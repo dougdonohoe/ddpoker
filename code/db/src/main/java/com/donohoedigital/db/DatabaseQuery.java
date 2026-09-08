@@ -602,7 +602,7 @@ public class DatabaseQuery
         }
         catch (SQLException e)
         {
-            logger.warn("Exception on close: " + Utils.formatExceptionText(e));
+            logger.warn("Exception on close: {}", Utils.formatExceptionText(e));
         }
         finally
         {
@@ -617,7 +617,7 @@ public class DatabaseQuery
             }
             catch (SQLException e)
             {
-                logger.warn("Exception on close: " + Utils.formatExceptionText(e));
+                logger.warn("Exception on close: {}", Utils.formatExceptionText(e));
             }
         }
 

@@ -252,12 +252,12 @@ public class Activate extends BasePhase implements PropertyChangeListener
                     String local = localaddr.getHostAddress();
                     if (local == null || local.equals("127.0.0.1") || local.equals("0.0.0.0"))
                     {
-                        logger.warn("Skipping verification: no local address: " + local);
+                        logger.warn("Skipping verification: no local address: {}", local);
                         bVerify = false;
                     }
                     else
                     {
-                        logger.info("Verifying from local addr: " + localaddr.getHostAddress());
+                        logger.info("Verifying from local addr: {}", localaddr.getHostAddress());
                     }
                 }
                 catch (UnknownHostException uhe)

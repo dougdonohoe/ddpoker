@@ -121,11 +121,7 @@ public class HandStrength
 
         if (DEBUG && TESTING(EngineConstants.TESTING_AI_DEBUG))
         {
-            logger.debug("STRENGTH for " + hole +"," + community+ ": " +
-                nAhead + " wins   " +
-                nTied +  " ties   " +
-                nBehind +" lose   " +
-                HandStat.fPerc.form(nStrength));
+            logger.debug("STRENGTH for {},{}: {} wins   {} ties   {} lose   {}", hole, community, nAhead, nTied, nBehind, HandStat.fPerc.form(nStrength));
         }
         return nStrength;
     }
@@ -139,7 +135,7 @@ public class HandStrength
         float nStrength = getStrength(hole, community);
         if (DEBUG && TESTING(EngineConstants.TESTING_AI_DEBUG))
         {
-            logger.debug(" raised to " + nOpponents + ": " + HandStat.fPerc.form(Math.pow(nStrength, nOpponents)));
+            logger.debug(" raised to {}: {}", nOpponents, HandStat.fPerc.form(Math.pow(nStrength, nOpponents)));
         }
         return getStrength(nStrength, nOpponents);
     }

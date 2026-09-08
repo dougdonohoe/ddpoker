@@ -127,7 +127,7 @@ public class TournamentHistoryServiceTest
         // spit them out - no easy way to verify, so eyeballing :-(
         for (TournamentHistory hist : allForGame)
         {
-            logger.info("RETURN: " + hist);
+            logger.info("RETURN: {}", hist);
             assertEquals(game.getTournament().getName(), hist.getTournamentName());
             assertEquals(list.size(), hist.getNumPlayers());
         }

@@ -86,7 +86,7 @@ public class WorkerPool
     {
         if (bInfo)
         {
-            logger.info("Growing worker pool by " + nWorkers + " to " + (nWorkers + workers_.size()) + " workers.");
+            logger.info("Growing worker pool by {} to {} workers.", nWorkers, (nWorkers + workers_.size()));
         }
         WorkerThread thread;
         for (int i = 0; i < nWorkers; i++)

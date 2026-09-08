@@ -310,7 +310,7 @@ public class EngineWindow extends BaseFrame
        public void actionPerformed(ActionEvent e)
        {
             TOGGLE(UDPServer.TESTING_UDP);
-            logger.debug("UDP flags turned " + (TESTING(UDPServer.TESTING_UDP) ? "on":"off"));
+            logger.debug("UDP flags turned {}", (TESTING(UDPServer.TESTING_UDP) ? "on" : "off"));
             UDPServer.setDebugFlags();
        }
     }
@@ -323,7 +323,7 @@ public class EngineWindow extends BaseFrame
        public void actionPerformed(ActionEvent e)
        {
             TOGGLE(EngineConstants.TESTING_UDP_APP);
-            logger.debug("UDP APP flags turned " + (TESTING(EngineConstants.TESTING_UDP_APP) ? "on":"off"));
+            logger.debug("UDP APP flags turned {}", (TESTING(EngineConstants.TESTING_UDP_APP) ? "on" : "off"));
        }
     }
 

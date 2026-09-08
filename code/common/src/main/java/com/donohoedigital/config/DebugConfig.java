@@ -93,7 +93,7 @@ public class DebugConfig
         boolean b = PropertyConfig.getBooleanProperty(sName, false, false);
         if (b)
         {
-            logger.debug("Debug setting " + sName + " is on.");
+            logger.debug("Debug setting {} is on.", sName);
         }
         return b;
     }

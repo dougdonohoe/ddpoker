@@ -447,8 +447,7 @@ public class PokerServlet extends EngineServlet
 
         if (sErrorKey != null || sErrorMsg != null)
         {
-            logger.info("P2P connect test failed from " + ddreceived.getKey() + " [" +
-                        request.getRemoteAddr() + "] to " + url + ": " + sErrorKey);
+            logger.info("P2P connect test failed from {} [{}] to {}: {}", ddreceived.getKey(), request.getRemoteAddr(), url, sErrorKey);
             ret.setCategory(EngineMessage.CAT_APPL_ERROR);
             if (sErrorMsg != null)
                 ret.setApplicationErrorMessage(sErrorMsg);
@@ -457,8 +456,7 @@ public class PokerServlet extends EngineServlet
         }
         else
         {
-            logger.info("P2P connect test succeeded from " + ddreceived.getKey() + " [" +
-                        request.getRemoteAddr() + "] to " + url);
+            logger.info("P2P connect test succeeded from {} [{}] to {}", ddreceived.getKey(), request.getRemoteAddr(), url);
         }
 
         return ret;
@@ -579,7 +577,7 @@ public class PokerServlet extends EngineServlet
         // FIX: make this end-game stuff more robust.  Should send down everything from the client so we can deal with this
         if (game == null)
         {
-            logger.error("Unable to save ended game because it didn't exist in database: " + game + ";   histories:  " + histories);
+            logger.error("Unable to save ended game because it didn't exist in database: {};   histories:  {}", game, histories);
         }
 
         // Send an empty response.
@@ -1011,14 +1009,14 @@ public class PokerServlet extends EngineServlet
     {
         if (TESTING(TESTING_SKIP_EMAIL))
         {
-            logger.info("Skipping profile email to " + sTo + "; name=" + sName + ", password=" + sPassword);
+            logger.info("Skipping profile email to {}; name={}, password={}", sTo, sName, sPassword);
             return;
         }
         // if flag is on, send all emails to override address
         if (TESTING(TESTING_PROFILE_OVERRIDE_EMAIL))
         {
             String overrideEmail = PropertyConfig.getStringProperty(TESTING_PROFILE_OVERRIDE_EMAIL_TO, null, true);
-            logger.info("Sending profile email to " + overrideEmail + " for " + sTo + "; name=" + sName + ", password=" + sPassword);
+            logger.info("Sending profile email to {} for {}; name={}, password={}", overrideEmail, sTo, sName, sPassword);
             sTo = overrideEmail;
         }
         if (sTo == null) return; // null for key verification so skip email

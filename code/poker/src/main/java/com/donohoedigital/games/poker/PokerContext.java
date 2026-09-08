@@ -218,7 +218,7 @@ public class PokerContext extends GameContext
             t = game.getTable(i);
             if (t.isAllComputer()) continue;
 
-            logger.debug("**** Holdem hand on " + t.getName() + ((current == t) ? " (current)" : "") + " when error occurred: ");
+            logger.debug("**** Holdem hand on {}{} when error occurred: ", t.getName(), ((current == t) ? " (current)" : ""));
             hhand = t.getHoldemHand();
             if (hhand != null)
             {

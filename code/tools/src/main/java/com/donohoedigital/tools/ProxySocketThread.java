@@ -112,9 +112,8 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
         DDMessenger.ReturnData data = msg.getURL(proxy_, this, null, null, this, options_);
         
         // debug output
-        logger.debug("DATA: " + data.getOut().size() + " bytes ->"+
-                    "\n========= OUTPUT =========\n" + Utils.decodeBasic(data.getOut().getBuffer(), 0, data.getOut().size()) +
-                      "=========  END   =========");
+        logger.debug("DATA: {} bytes ->" +
+            "\n========= OUTPUT =========\n{}=========  END   =========", data.getOut().size(), Utils.decodeBasic(data.getOut().getBuffer(), 0, data.getOut().size()));
         
         // return results to client
         OutputStream out = response_.getOutputStream3();
@@ -138,14 +137,13 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
         }
         
         // we send the entire buffer
-        logger.debug("Sending DATA to " + proxy_ + " ->\n========= INPUT =========\n" + sData +
-                       "=========  END  =========");
+        logger.debug("Sending DATA to {} ->\n========= INPUT =========\n{}=========  END  =========", proxy_, sData);
         writer.write(sData.getBytes(StandardCharsets.UTF_8));
     }
 
     /** DDMessageListener - output progress **/
     public void updateStep(int nStep) {
-        logger.debug("Step: " + ProxyServlet.getSteps()[nStep]);
+        logger.debug("Step: {}", ProxyServlet.getSteps()[nStep]);
     }
     
     /** DDMessageListener not used **/

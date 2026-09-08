@@ -69,7 +69,7 @@ public class TableExporter implements DDTable.Exporter
         if (oResult != null && oResult instanceof File)
         {
             File file = (File) oResult;
-            logger.info("Exporting table to " + file.getAbsolutePath());
+            logger.info("Exporting table to {}", file.getAbsolutePath());
             ConfigUtils.writeFile((File)oResult, table.toCSV(true), false);
         }
 

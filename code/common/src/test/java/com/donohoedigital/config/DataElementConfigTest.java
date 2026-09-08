@@ -71,7 +71,7 @@ public class DataElementConfigTest
         List<?> values = dogs.getListValues();
         for (Object o : values)
         {
-            logger.info("Value: " + o);
+            logger.info("Value: {}", o);
         }
         assertTrue(values.contains("tahoe"));
         assertTrue(values.contains("dexter"));

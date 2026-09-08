@@ -133,11 +133,11 @@ public class DDMailer extends BaseCommandLineApp
         // get key
         sKey_ = htOptions_.getString("key");
         sFrom_ = htOptions_.getString("from");
-        logger.info("Message key: " + sKey_);
-        logger.info("From: " + sFrom_);
+        logger.info("Message key: {}", sKey_);
+        logger.info("From: {}", sFrom_);
 
         // debug?
-        if (DEBUG && TESTTO != null) logger.debug("DEBUG:  all mail goes to " + TESTTO);
+        if (DEBUG && TESTTO != null) logger.debug("DEBUG:  all mail goes to {}", TESTTO);
 
         // load params file
         String sFile = htOptions_.getString("file");
@@ -204,13 +204,13 @@ public class DDMailer extends BaseCommandLineApp
 
             if (bProcess)
             {
-                logger.debug("SENDING to " + sEmail);
+                logger.debug("SENDING to {}", sEmail);
                 sendEmail(sEmail, PropertyConfig.getMessage("email." + sKey_ + ".sub", o),
                           PropertyConfig.getMessage("email." + sKey_, o));
             }
             else
             {
-                logger.debug("SKIPPING " + sEmail);
+                logger.debug("SKIPPING {}", sEmail);
             }
 
             if (DEBUG && (i + 1) == LIMIT) break;

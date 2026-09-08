@@ -3294,7 +3294,7 @@ public class RuleEngine implements AIConstants
 
     private void logResults(V2Player player)
     {
-        logger.debug("RuleEngine results for " + player.getPokerPlayer().getName());
+        logger.debug("RuleEngine results for {}", player.getPokerPlayer().getName());
 
         for (int outcome = 0; outcome < outcomeNames_.size(); ++outcome)
         {
@@ -3323,11 +3323,11 @@ public class RuleEngine implements AIConstants
                 }
                 if ((sum * 100.0) > 0.0f)
                 {
-                    logger.debug("    " + getFactorLabel(factor) + " +" + (int) (sum * 100.0));
+                    logger.debug("    {} +{}", getFactorLabel(factor), (int) (sum * 100.0));
                 }
                 else if ((sum * 100.0) < 0.0f)
                 {
-                    logger.debug("    " + getFactorLabel(factor) + " " + (int) (sum * 100.0));
+                    logger.debug("    {} {}", getFactorLabel(factor), (int) (sum * 100.0));
                 }
             }
 
@@ -3335,11 +3335,11 @@ public class RuleEngine implements AIConstants
 
             if (score >= 0)
             {
-                logger.debug("==> +" + score);
+                logger.debug("==> +{}", score);
             }
             else
             {
-                logger.debug("==> " + score);
+                logger.debug("==> {}", score);
             }
         }
     }

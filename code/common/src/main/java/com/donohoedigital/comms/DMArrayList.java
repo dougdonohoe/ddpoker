@@ -143,8 +143,7 @@ public class DMArrayList<E> extends ArrayList<E> implements DataMarshal
             }
             else
             {
-                logger.debug("Warning: skipping unsupported array entry #" + i + 
-                                " class is "+(oValue != null ? oValue.getClass().getName():"null"));
+                logger.debug("Warning: skipping unsupported array entry #{} class is {}", i, (oValue != null ? oValue.getClass().getName() : "null"));
             }
         }
         return list.marshal(state);

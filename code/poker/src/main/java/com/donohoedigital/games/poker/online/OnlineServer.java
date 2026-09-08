@@ -110,7 +110,7 @@ public class OnlineServer
         // since failing to remove the game should not affect the user interaction
         OnlineMessage reqOnlineMsg = new OnlineMessage(OnlineMessage.CAT_WAN_GAME_REMOVE);
         OnlineGame onlineGame = createOnlineGame(game.getGameContext());
-        logger.debug("Sending game: " + onlineGame);
+        logger.debug("Sending game: {}", onlineGame);
         reqOnlineMsg.setWanGame(onlineGame.getData());
         EngineMessage reqEngineMsg = new EngineMessage();
         reqOnlineMsg.getData().copyTo(reqEngineMsg);
@@ -207,9 +207,9 @@ public class OnlineServer
         int category = bDone ? OnlineMessage.CAT_WAN_GAME_END : OnlineMessage.CAT_WAN_GAME_STOP;
         OnlineGame onlineGame = getServerGame(game.getGameContext(), category);
         OnlineMessage reqOnlineMsg = new OnlineMessage(category);
-        logger.debug("Sending game: " + onlineGame);
+        logger.debug("Sending game: {}", onlineGame);
         reqOnlineMsg.setWanGame(onlineGame.getData());
-        logger.debug("Sending histories: " + histories);
+        logger.debug("Sending histories: {}", histories);
         if (histories != null) reqOnlineMsg.setWanHistories(histories);
         EngineMessage reqEngineMsg = new EngineMessage();
         reqOnlineMsg.getData().copyTo(reqEngineMsg);
@@ -290,7 +290,7 @@ public class OnlineServer
 
         if (resMsg.getStatus() == DDMessageListener.STATUS_APPL_ERROR)
         {
-            logger.error("WAN Game server error: " + resMsg.getApplicationErrorMessage());
+            logger.error("WAN Game server error: {}", resMsg.getApplicationErrorMessage());
         }
     }
 }

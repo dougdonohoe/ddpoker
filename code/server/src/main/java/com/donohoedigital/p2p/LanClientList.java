@@ -110,7 +110,7 @@ public class LanClientList
                 break;
                 
             default:
-                logger.warn("Received message with incorrect category: " + msg);
+                logger.warn("Received message with incorrect category: {}", msg);
                 return;
         }
     }

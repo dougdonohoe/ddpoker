@@ -106,7 +106,7 @@ public class HostStart extends ChainPhase implements ActionListener
         // log
         String sURL = game_.getPublicConnectURL();
         if (sURL == null) sURL = game_.getLanConnectURL();
-        logger.info("Registration closed, online game starting with " + nNumHumans + " humans and " + nNumAI + " ai: " + sURL);
+        logger.info("Registration closed, online game starting with {} humans and {} ai: {}", nNumHumans, nNumAI, sURL);
 
         // if num players doesn't match profile, need to update profile
         // and, potentially, payout structure

@@ -306,7 +306,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 dump.setText("Dump");
                 buttonbase.add(dump);
                 dump.addActionListener(e ->
-                    logger.debug("Thread dump:\n" + Utils.getAllStacktraces()));
+                    logger.debug("Thread dump:\n{}", Utils.getAllStacktraces()));
             }
         }
         else
@@ -617,7 +617,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             PokerPlayer player = game_.getPokerPlayerFromID(nFrom);
             if (player == null)
             {
-                logger.warn("No player for chat, id=" + nFrom + " msg=" + sMsg);
+                logger.warn("No player for chat, id={} msg={}", nFrom, sMsg);
                 return;
             }
 
@@ -791,14 +791,14 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
     {
 
         test_ = new TestThread();
-        logger.debug("<<<<<<<<<<<<<<<<<<<< Started Test " + test_.nTestNum);
+        logger.debug("<<<<<<<<<<<<<<<<<<<< Started Test {}", test_.nTestNum);
         test_.start();
     }
 
     private void stopTest()
     {
         test_.finish();
-        logger.debug(">>>>>>>>>>>>>>>>>>>> Stopped Test " + test_.nTestNum);
+        logger.debug(">>>>>>>>>>>>>>>>>>>> Stopped Test {}", test_.nTestNum);
         test_ = null;
     }
 

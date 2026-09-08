@@ -88,7 +88,7 @@ public class ThreadPool
     {
         if (bInfo)
         {
-            logger.info("Growing thread pool by " + nWorkers + " to " + (nWorkers + workers_.size()) + " workers.");
+            logger.info("Growing thread pool by {} to {} workers.", nWorkers, (nWorkers + workers_.size()));
         }
         SocketThread thread;
         for (int i = 0; i < nWorkers; i++)

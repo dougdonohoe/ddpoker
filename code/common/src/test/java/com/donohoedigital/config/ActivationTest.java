@@ -53,7 +53,7 @@ public class ActivationTest
     public void testGuid()
     {
         String key = Activation.createKeyFromGuid(22, "BD4206D4-72B0-EA5D-6FF7-1B50F92CCD49", null);
-        logger.debug("Key: " + key + " length: " + key.length());
+        logger.debug("Key: {} length: {}", key, key.length());
 
         for (String guid : new String[]{"foo", "BD4206D4-72B0-EA5D-6FF7-1B50F92CCD4z"})
         {
@@ -85,7 +85,7 @@ public class ActivationTest
         }
         catch (Exception e)
         {
-            logger.debug("Expected exception: " + e.getMessage());
+            logger.debug("Expected exception: {}", e.getMessage());
         }
     }
 }

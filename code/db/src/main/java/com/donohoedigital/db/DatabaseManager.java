@@ -140,7 +140,7 @@ public class DatabaseManager
         database.init();
         hmDatabases_.put(name, database);
 
-        logger.info("Loaded database: " + database);
+        logger.info("Loaded database: {}", database);
     }
 
     /**

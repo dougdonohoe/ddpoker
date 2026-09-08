@@ -87,7 +87,7 @@ public class DispatchQueue extends Thread
             }
             catch (Throwable t)
             {
-                logger.error("DispatchQueue error: " + Utils.formatExceptionText(t));
+                logger.error("DispatchQueue error: {}", Utils.formatExceptionText(t));
             }
         }
         logger.info("DispatchQueue Done.");

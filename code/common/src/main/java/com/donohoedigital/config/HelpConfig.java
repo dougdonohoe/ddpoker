@@ -156,7 +156,7 @@ public class HelpConfig extends XMLConfigFileLoader
         URL url = new MatchingResources("classpath*:config/" + location).getSingleResourceURL();
         if (url == null)
         {
-            hLogger.warn("Help " + sName + " not found at " + location + ".  Skipping");
+            hLogger.warn("Help {} not found at {}.  Skipping", sName, location);
             return;
         }
         

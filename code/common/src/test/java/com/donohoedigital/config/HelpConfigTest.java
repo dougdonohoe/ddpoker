@@ -62,7 +62,7 @@ public class HelpConfigTest
             HelpTopic ht = HelpConfig.getHelpTopic("test"+i);
             String contents = ht.getContents();
             assertNotNull(contents);
-            logger.info("Topic " + i + ": " + contents.trim());
+            logger.info("Topic {}: {}", i, contents.trim());
         }
     }
 }

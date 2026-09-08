@@ -232,8 +232,7 @@ public class OnlineGameServiceImpl implements OnlineGameService
                 {
                     // No associated profile.  Will only happen if the client profile becomes out of
                     // sync with the server profile or someone altered their profile definition.
-                    logger.warn("Missing profile in history: " + history.getPlayerName() +
-                                " for game id=" + game.getId());
+                    logger.warn("Missing profile in history: {} for game id={}", history.getPlayerName(), game.getId());
                     history.setPlayerType(PLAYER_TYPE_LOCAL); // force local
                 }
             }

@@ -213,7 +213,7 @@ public class Borders extends TreeSet<Border> {
             borderwriter.close();
         }
         
-        logger.info("Saved " + id + " border files");
+        logger.info("Saved {} border files", id);
         
         writer.printElementLine(NUMBORDERFILES, id, nIndent);
         writer.printNewLine();

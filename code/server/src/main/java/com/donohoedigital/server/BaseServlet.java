@@ -168,7 +168,7 @@ public abstract class BaseServlet extends HttpServlet
         catch (ApplicationError ae)
         {
             String s = Utils.formatExceptionText(ae);
-            logger.error("Error processing message: " + received.toString(), ae);
+            logger.error("Error processing message: {}", received.toString(), ae);
             Throwable orig = ae.getException();
             
             ret = createNewMessage();
@@ -188,7 +188,7 @@ public abstract class BaseServlet extends HttpServlet
         catch (Throwable t)
         {
             String s = Utils.formatExceptionText(t);
-            logger.error("Error processing message: " + received.toString(), t);
+            logger.error("Error processing message: {}", received.toString(), t);
             
             ret = createNewMessage();
             ret.setCategory(DDMessage.CAT_ERROR);

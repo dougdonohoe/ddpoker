@@ -177,7 +177,7 @@ public class DataElement
 
         if (sDisplayValue == null)
         {
-            logger.warn("WARNING: No display value for " + sName_ + "." + oValue);
+            logger.warn("WARNING: No display value for {}.{}", sName_, oValue);
 
             return oValue.toString();
         }

@@ -375,7 +375,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
             else
             {
                 if (dialog_ != null) dialog_.removeDialog();
-                logger.info("Loading saved game: " + selected_.getFile().getAbsolutePath());
+                logger.info("Loading saved game: {}", selected_.getFile().getAbsolutePath());
                 LoadSavedGame.loadGame(context_, selected_);
             }
         }

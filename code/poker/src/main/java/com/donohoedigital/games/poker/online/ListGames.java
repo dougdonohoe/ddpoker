@@ -427,7 +427,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
             context_.setGame(game);
 
             // log it
-            logger.info("Joining game " + sConnect + "...");
+            logger.info("Joining game {}...", sConnect);
 
             // have online manager do join, which returns true
             // if successful (in which case it places the game into
@@ -523,7 +523,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
         }
         catch (Throwable e)
         {
-            logger.info("Unable to get password for profile: " + profile_.getName());
+            logger.info("Unable to get password for profile: {}", profile_.getName());
             resetProfile();
             return false;
         }

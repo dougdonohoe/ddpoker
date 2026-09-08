@@ -184,8 +184,7 @@ public class NameValueToken implements DataMarshal
             }
             else
             {
-                logger.debug("Warning: skipping unsupported map entry '" + sName + 
-                                "' class is "+(oValue != null ? oValue.getClass().getName():"null"));
+                logger.debug("Warning: skipping unsupported map entry '{}' class is {}", sName, (oValue != null ? oValue.getClass().getName() : "null"));
             }
         }
     }

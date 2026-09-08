@@ -231,9 +231,8 @@ public abstract class ManagedQueue<T>
         {
             if (!queue.offer(item, waitLimitWarningMillis, TimeUnit.MILLISECONDS))
             {
-                logger.warn("Exceeded " + waitLimitWarningMillis +
-                            " milliseconds waiting to add item: " + item);
-                logger.debug("All stacktraces at this time: \n" + Utils.getAllStacktraces());
+                logger.warn("Exceeded {} milliseconds waiting to add item: {}", waitLimitWarningMillis, item);
+                logger.debug("All stacktraces at this time: \n{}", Utils.getAllStacktraces());
                 if (waitLimitErrorMillis <= 0 || !queue.offer(item, waitLimitErrorMillis, TimeUnit.MILLISECONDS))
                 {
                     throw new ApplicationError("Exceeded " + waitLimitErrorMillis +
