@@ -673,56 +673,35 @@ public class PocketWeights
                 return;
             case HandAction.ACTION_FOLD:
             case HandAction.ACTION_CHECK:
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs < .75f) ? (weight+1f)/2f : weight/2f;
-                        //return ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f;
-                        //return (rhs < .8f) ? ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f : 0f;
-                        return (float) (0.75d + Math.sin(1.25d * Math.PI * (rhs - npot) + Math.PI / 2.0d) / 4.0d) * weight;
-                        //return (1.0f-rhs)*weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs < .75f) ? (weight+1f)/2f : weight/2f;
+                    //return ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f;
+                    //return (rhs < .8f) ? ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f : 0f;
+                    (float) (0.75d + Math.sin(1.25d * Math.PI * (rhs - npot) + Math.PI / 2.0d) / 4.0d) * weight;
                 break;
             case HandAction.ACTION_CALL:
                 //bias = ((float)amount) / ((float)potSize);
                 // asymptotically approaches zero with higher pot odds
                 bias = 1.0f / ((((float) potSize_) / ((float) amount)) + 1.0f);
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs > .75f) ? (weight+1f)/2f : weight/2f;
-                        //return (rhs > .6f) ? ((float)(Math.pow((rhs-.6f)/.4f,2d))+weight)/2f : 0f;
-                        return (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) * weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs > .75f) ? (weight+1f)/2f : weight/2f;
+                    //return (rhs > .6f) ? ((float)(Math.pow((rhs-.6f)/.4f,2d))+weight)/2f : 0f;
+                    (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) * weight;
                 break;
             case HandAction.ACTION_BET:
                 bias = ((float) amount) / ((float) potSize_);
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs > .85f) ? (weight+1f)/2f : weight/2f;
-                        //return Math.min(weight+rhs*rhs, 1f);
-                        //return (rhs > .85f) ? ((float)(Math.pow((rhs-.85f)/.15f,2d))+weight)/2f : 0f;
-                        return (float) (Math.pow(0.9d * (rhs + npot), 2.0d) + 0.1d) * weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs > .85f) ? (weight+1f)/2f : weight/2f;
+                    //return Math.min(weight+rhs*rhs, 1f);
+                    //return (rhs > .85f) ? ((float)(Math.pow((rhs-.85f)/.15f,2d))+weight)/2f : 0f;
+                    (float) (Math.pow(0.9d * (rhs + npot), 2.0d) + 0.1d) * weight;
                 break;
             case HandAction.ACTION_RAISE:
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs > .9f) ? ((float)(Math.pow((rhs-.9f)/.1f,2d))+weight)/2f : 0f;
-                        //return (rhs > .95f) ? (weight+1f)/2f : weight/2f;
-                        return (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) *
-                               (float) (Math.pow(0.9d * (rhs + npot + ppot), 20.0d) + 0.1d) * weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs > .9f) ? ((float)(Math.pow((rhs-.9f)/.1f,2d))+weight)/2f : 0f;
+                    //return (rhs > .95f) ? (weight+1f)/2f : weight/2f;
+                    (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) *
+                        (float) (Math.pow(0.9d * (rhs + npot + ppot), 20.0d) + 0.1d) * weight;
                 break;
             default:
                 throw new ApplicationError("Unhandled action type " + actionType);

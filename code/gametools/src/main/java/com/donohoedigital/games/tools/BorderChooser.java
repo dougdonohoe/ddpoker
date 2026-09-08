@@ -214,9 +214,7 @@ public class BorderChooser extends InternalDialog implements ActionListener
             nIndex_ = nIndex;
             getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             getSelectionModel().addListSelectionListener(
-                    new ListSelectionListener() {
-                        public void valueChanged(ListSelectionEvent e) { myValueChanged(e); }
-                    }
+                e -> myValueChanged(e)
             );
         }
         

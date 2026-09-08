@@ -226,11 +226,6 @@ public class DashboardClock extends DashboardItem implements GameClockListener
     }
 
     // runnable for invoking clock ticked event in swing thread
-    private Runnable updateTimeRunner_ = new Runnable()
-                        {
-                            public void run()
-                            {
-                                updateTime();
-                            }
-                        };
+    private Runnable updateTimeRunner_ = () ->
+        updateTime();
 }

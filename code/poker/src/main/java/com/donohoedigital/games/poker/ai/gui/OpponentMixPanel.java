@@ -38,8 +38,6 @@ import com.donohoedigital.games.poker.ai.PlayerType;
 import com.donohoedigital.gui.*;
 
 import javax.swing.BorderFactory;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -130,13 +128,8 @@ public class OpponentMixPanel extends DDTabPanel
             fPercent_.setBigStep(10);
             addMouseListeners(fPercent_); // add manually since not in hierarchy when panel created
             fPercent_.addChangeListener(
-                new ChangeListener()
-                {
-                    public void stateChanged(ChangeEvent e)
-                    {
-                        percentValueChanged();
-                    }
-                }
+                e ->
+                    percentValueChanged()
             );
 
             addMouseWheelListener(fPercent_.getTextField());

@@ -53,8 +53,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -118,27 +116,21 @@ public class PlayerListDialog extends DialogPhase implements PropertyChangeListe
         // buttons
         add_ = new GlassButton("add", "Glass");
         text_.setDefaultOverride(add_);
-        add_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                list_.add(getName(true), null, false);
-                model_.fireTableDataChanged();
-                propertyChange(null); // force selection of new row
-                updateTextFromList();
-                text_.selectAll(); // allow quick adds
-            }
+        add_.addActionListener(e -> {
+            list_.add(getName(true), null, false);
+            model_.fireTableDataChanged();
+            propertyChange(null); // force selection of new row
+            updateTextFromList();
+            text_.selectAll(); // allow quick adds
         });
         add_.setBorderGap(2,5,2,6);
 
         delete_ = new GlassButton("delete", "Glass");
-        delete_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                list_.remove(getName(true), false);
-                model_.fireTableDataChanged();
-                if (model_.getRowCount() > 0) table_.getSelectionModel().setSelectionInterval(0,0); // allow quick deletes
-                updateTextFromList();
-            }
+        delete_.addActionListener(e -> {
+            list_.remove(getName(true), false);
+            model_.fireTableDataChanged();
+            if (model_.getRowCount() > 0) table_.getSelectionModel().setSelectionInterval(0, 0); // allow quick deletes
+            updateTextFromList();
         });
         delete_.setBorderGap(2,5,2,6);
 

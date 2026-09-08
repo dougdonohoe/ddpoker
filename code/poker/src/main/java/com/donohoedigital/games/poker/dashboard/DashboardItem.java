@@ -53,8 +53,6 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.TimerTask;
@@ -217,21 +215,11 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
             header_ = new DashboardHeader("DashboardHeader", false);
             header_.setText(getTitle());
             header_.addAncestorListener(this);
-            header_.check_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    setOpen(header_.check_.isSelected());
-                }
-            });
+            header_.check_.addActionListener(e ->
+                setOpen(header_.check_.isSelected()));
 
-            header_.delete_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    setInDashboard(header_.delete_.isSelected());
-                }
-            });
+            header_.delete_.addActionListener(e ->
+                setInDashboard(header_.delete_.isSelected()));
         }
 
         if (body_ == null)
@@ -459,13 +447,8 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
     }
 
     // runnable for invoking table changed event in swing thread
-    private Runnable tableChangedRunner_ = new Runnable()
-    {
-        public void run()
-        {
-            tableChanged(game_.getCurrentTable());
-        }
-    };
+    private Runnable tableChangedRunner_ = () ->
+        tableChanged(game_.getCurrentTable());
 
     /**
      * Game property changed - we track current table

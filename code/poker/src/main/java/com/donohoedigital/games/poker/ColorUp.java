@@ -95,12 +95,8 @@ public class ColorUp extends ChainPhase
             PokerUtils.getPokerGameboard().repaintAll();
 
             // do rest after repaint occurs
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run()
-                {
-                    nextPhase();
-                }
-            });
+            SwingUtilities.invokeLater(() ->
+                nextPhase());
         }
         else
         {

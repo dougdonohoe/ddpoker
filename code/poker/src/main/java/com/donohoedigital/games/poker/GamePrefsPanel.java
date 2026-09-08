@@ -58,8 +58,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -297,24 +295,16 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             fxvolume.setEditable(true);
             fx = OptionMenu.add(new OptionBoolean(NODE, EngineConstants.PREF_FX, OSTYLE, map_, true, fxvolume), audiobase);
 
-            fx.addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
-                    AudioConfig.setMuteFX(!box.isSelected());
-                    playFX();
-                }
+            fx.addChangeListener(e -> {
+                DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
+                AudioConfig.setMuteFX(!box.isSelected());
+                playFX();
             });
 
-            fxvolume.getSpinner().addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
-                    AudioConfig.setFXGain(spinner.getValue());
-                    playFX();
-                }
+            fxvolume.getSpinner().addChangeListener(e -> {
+                DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
+                AudioConfig.setFXGain(spinner.getValue());
+                playFX();
             });
 
             // background music
@@ -323,23 +313,15 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             muvolume.setEditable(true);
             music = OptionMenu.add(new OptionBoolean(NODE, EngineConstants.PREF_BGMUSIC, OSTYLE, map_, true, muvolume), audiobase);
 
-            music.addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
-                    AudioConfig.setMuteBGMusic(!box.isSelected());
-                }
+            music.addChangeListener(e -> {
+                DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
+                AudioConfig.setMuteBGMusic(!box.isSelected());
             });
 
-            muvolume.getSpinner().addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
+            muvolume.getSpinner().addChangeListener(e -> {
 
-                    DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
-                    AudioConfig.setBGMusicGain(spinner.getValue());
-                }
+                DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
+                AudioConfig.setBGMusicGain(spinner.getValue());
             });
 
             // size fx, music to same

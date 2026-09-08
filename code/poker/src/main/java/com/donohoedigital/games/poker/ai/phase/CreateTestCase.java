@@ -62,8 +62,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -108,13 +106,8 @@ public class CreateTestCase extends DialogPhase
         base.setPreferredSize(new Dimension(200, 200));
 
         this.getMatchingButton("results").addActionListener(
-                new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        AITest.test(context_);
-                    }
-                }
+            e ->
+                AITest.test(context_)
         );
 
         return base;

@@ -86,13 +86,8 @@ public class ObserversDash extends DashboardItem
     }
 
     // runnable for setting label text in swing thread
-    private Runnable updateRunner_ = new Runnable()
-                        {
-                            public void run()
-                            {
-                                updateAll();
-                            }
-                        };
+    private Runnable updateRunner_ = () ->
+        updateAll();
 
     /**
      * update observer list

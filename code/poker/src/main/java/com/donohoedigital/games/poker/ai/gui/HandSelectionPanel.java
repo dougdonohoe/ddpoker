@@ -43,8 +43,6 @@ import com.donohoedigital.gui.DDPanel;
 import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class HandSelectionPanel extends DDPanel
 {
@@ -75,44 +73,32 @@ public class HandSelectionPanel extends DDPanel
         handSelectionHup_ = new DDComboBox(handSelectionElement, sStyle);
 
 
-        handSelectionFull_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
+        handSelectionFull_.addActionListener(e -> {
+            profile_.setHandSelectionFull((HandSelectionScheme) handSelectionFull_.getSelectedItem());
+            if (changeListener != null)
             {
-                profile_.setHandSelectionFull((HandSelectionScheme)handSelectionFull_.getSelectedItem());
-                if (changeListener != null)
-                {
-                    changeListener.stateChanged(null);
-                }
+                changeListener.stateChanged(null);
             }
         });
-        handSelectionShort_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
+        handSelectionShort_.addActionListener(e -> {
+            profile_.setHandSelectionShort((HandSelectionScheme) handSelectionShort_.getSelectedItem());
+            if (changeListener != null)
             {
-                profile_.setHandSelectionShort((HandSelectionScheme)handSelectionShort_.getSelectedItem());
-                if (changeListener != null)
-                {
-                    changeListener.stateChanged(null);
-                }
+                changeListener.stateChanged(null);
             }
         });
-        handSelectionVeryShort_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
+        handSelectionVeryShort_.addActionListener(e -> {
+            profile_.setHandSelectionVeryShort((HandSelectionScheme) handSelectionVeryShort_.getSelectedItem());
+            if (changeListener != null)
             {
-                profile_.setHandSelectionVeryShort((HandSelectionScheme)handSelectionVeryShort_.getSelectedItem());
-                if (changeListener != null)
-                {
-                    changeListener.stateChanged(null);
-                }
+                changeListener.stateChanged(null);
             }
         });
-        handSelectionHup_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
+        handSelectionHup_.addActionListener(e -> {
+            profile_.setHandSelectionHup((HandSelectionScheme) handSelectionHup_.getSelectedItem());
+            if (changeListener != null)
             {
-                profile_.setHandSelectionHup((HandSelectionScheme)handSelectionHup_.getSelectedItem());
-                if (changeListener != null)
-                {
-                    changeListener.stateChanged(null);
-                }
+                changeListener.stateChanged(null);
             }
         });
 

@@ -53,8 +53,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.
@@ -107,16 +105,12 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
         base.add(status_, BorderLayout.CENTER);
 
         details_ = new DDCheckBox("showdetails2", STYLE);
-        details_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        details_.addActionListener(e -> {
+            if (!details_.isSelected())
             {
-                if (!details_.isSelected())
+                if (error_ != null)
                 {
-                    if (error_ != null)
-                    {
-                        error_.removeDialog();
-                    }
+                    error_.removeDialog();
                 }
             }
         });
@@ -143,13 +137,10 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
     {
         if (PokerUtils.getPokerGameboard() != null)
         {
-            GuiUtils.invoke(new Runnable() {
-                public void run()
-                {
-                    game_.setInputMode(PokerTableInput.MODE_QUITSAVE);
-                    PokerUtils.clearCards(true);
-                    PokerUtils.clearResults(game_.getGameContext(), true);
-                }
+            GuiUtils.invoke(() -> {
+                game_.setInputMode(PokerTableInput.MODE_QUITSAVE);
+                PokerUtils.clearCards(true);
+                PokerUtils.clearResults(game_.getGameContext(), true);
             });
         }
     }
@@ -159,12 +150,8 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
      */
     private void updateStatusInSwing()
     {
-        GuiUtils.invoke(new Runnable() {
-            public void run()
-            {
-                updateStatus(false);
-            }
-        });
+        GuiUtils.invoke(() ->
+            updateStatus(false));
     }
 
     /**
@@ -233,15 +220,12 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
         {
             if (nAttempts_ == 0)
             {
-                GuiUtils.invokeAndWait(new Runnable() {
-                    public void run()
-                    {
-                        DDMessage init = new DDMessage();
-                        init.setStatus(DDMessageListener.STATUS_APPL_ERROR);
-                        init.setApplicationErrorMessage(PropertyConfig.getMessage(
-                                bInGame_ ? "msg.msgerror.disconnect.p2p.game" : "msg.msgerror.disconnect.p2p.lobby"));
-                        handleError(init, false);
-                    }
+                GuiUtils.invokeAndWait(() -> {
+                    DDMessage init = new DDMessage();
+                    init.setStatus(DDMessageListener.STATUS_APPL_ERROR);
+                    init.setApplicationErrorMessage(PropertyConfig.getMessage(
+                        bInGame_ ? "msg.msgerror.disconnect.p2p.game" : "msg.msgerror.disconnect.p2p.lobby"));
+                    handleError(init, false);
                 });
             }
             Utils.sleepMillis(nAttempts_ == 0 ? 1000 : 5000);
@@ -252,28 +236,25 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
             // if aborting, continue
             if (bAbort_) continue;
 
-            GuiUtils.invokeAndWait(new Runnable() {
-                public void run()
-                {
-                    if (game_.getOnlineMode() == PokerGame.MODE_CANCELLED) bAbort_ = true;
+            GuiUtils.invokeAndWait(() -> {
+                if (game_.getOnlineMode() == PokerGame.MODE_CANCELLED) bAbort_ = true;
 
-                    if (bAbort_) return;
-                    status_.setIcon(YELLOWLED);
-                    logger.debug("Attempting to reconnect...");
-                    Object o = mgr_.joinGame(local_.isObserver(), true, false);
-                    nAttempts_++;
-                    if (o == Boolean.TRUE)
-                    {
-                        DDMessage reconnect = new DDMessage();
-                        reconnect.setStatus(DDMessageListener.STATUS_OK);
-                        handleError(reconnect, false);
-                        bReconnected_ = true;
-                    }
-                    else
-                    {
-                        status_.setIcon(REDLED);
-                        if (o instanceof DDMessage) handleError((DDMessage) o, true);
-                    }
+                if (bAbort_) return;
+                status_.setIcon(YELLOWLED);
+                logger.debug("Attempting to reconnect...");
+                Object o = mgr_.joinGame(local_.isObserver(), true, false);
+                nAttempts_++;
+                if (o == Boolean.TRUE)
+                {
+                    DDMessage reconnect = new DDMessage();
+                    reconnect.setStatus(DDMessageListener.STATUS_OK);
+                    handleError(reconnect, false);
+                    bReconnected_ = true;
+                }
+                else
+                {
+                    status_.setIcon(REDLED);
+                    if (o instanceof DDMessage) handleError((DDMessage) o, true);
                 }
             });
         }

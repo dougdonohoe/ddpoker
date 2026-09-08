@@ -402,12 +402,10 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         // if no profiles, show msg
         if (bFileMode_ && profilePanels_.size() == 0) {
             SwingUtilities.invokeLater(
-            new Runnable() {
-                public void run() {
-                    String sMsg = PropertyConfig.getMessage("msg.needprofile"+sMsgName_);
-                    EngineUtils.displayInformationDialog(context_, sMsg, "msg.needprofile.title"+sMsgName_, null);
-                }
-            });
+                () -> {
+                    String sMsg = PropertyConfig.getMessage("msg.needprofile" + sMsgName_);
+                    EngineUtils.displayInformationDialog(context_, sMsg, "msg.needprofile.title" + sMsgName_, null);
+                });
         }
     }
     
@@ -468,19 +466,17 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         
         // request focus
         SwingUtilities.invokeLater(
-        new Runnable() {
-            public void run() {
+            () -> {
                 // request focus
                 requestFocus();
-                
+
                 // scroll to visible (after display so it adjusts for new)
                 if (selectedPanel_ != null) {
                     Point loc = selectedPanel_.getLocation();
                     loc = SwingUtilities.convertPoint(selectedPanel_.getParent(), loc, scroll_.getViewport());
-                    scroll_.getViewport().scrollRectToVisible(new Rectangle(loc,selectedPanel_.getSize()));
+                    scroll_.getViewport().scrollRectToVisible(new Rectangle(loc, selectedPanel_.getSize()));
                 }
-            }
-        });
+            });
         
         // notify
         fireStateChanged();

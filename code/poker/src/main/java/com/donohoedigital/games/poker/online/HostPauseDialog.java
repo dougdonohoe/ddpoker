@@ -74,12 +74,8 @@ public class HostPauseDialog extends DialogPhase
     {
         if (impl_ != null && impl_.bAutoClose_)
         {
-            GuiUtils.invoke(new Runnable() {
-                public void run()
-                {
-                    impl_.removeDialog();
-                }
-            });
+            GuiUtils.invoke(() ->
+                impl_.removeDialog());
         }
     }
 

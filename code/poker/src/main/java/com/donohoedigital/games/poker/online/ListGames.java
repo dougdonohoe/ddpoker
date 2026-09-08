@@ -144,25 +144,21 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
         connectText_.addPropertyChangeListener("value", this);
         connectLabel_ = w.label;
         pubPaste_ = w.button;
-        pubPaste_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        pubPaste_.addActionListener(e -> {
+            Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable value = clip.getContents(null);
+            if (value.isDataFlavorSupported(DataFlavor.stringFlavor))
             {
-                Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-                Transferable value = clip.getContents(null);
-                if (value.isDataFlavorSupported(DataFlavor.stringFlavor))
+                try
                 {
-                    try
+                    String s = (String) value.getTransferData(DataFlavor.stringFlavor);
+                    if (s != null)
                     {
-                        String s = (String) value.getTransferData(DataFlavor.stringFlavor);
-                        if (s != null)
-                        {
-                            connectText_.setText(s);
-                        }
+                        connectText_.setText(s);
                     }
-                    catch (Throwable ignored)
-                    {
-                    }
+                }
+                catch (Throwable ignored)
+                {
                 }
             }
         });
@@ -295,13 +291,9 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
         public void run()
         {
             Utils.sleepMillis(500);
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
-                    button.setEnabled(true);
-                    button.doClick();
-                }
+            SwingUtilities.invokeLater(() -> {
+                button.setEnabled(true);
+                button.doClick();
             });
         }
     }

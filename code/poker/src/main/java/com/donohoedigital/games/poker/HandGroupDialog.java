@@ -45,8 +45,6 @@ import javax.swing.JComponent;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -99,13 +97,8 @@ public class HandGroupDialog extends OptionMenuDialog implements PropertyChangeL
         desc_ = new GlassButton("description", "Glass");
         desc_.setPreferredSize(new Dimension(80, 24));
         desc_.setBorderGap(0, 0, 0, 0);
-        desc_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setDescription();
-            }
-        });
+        desc_.addActionListener(e ->
+            setDescription());
         topformat.add(desc_, BorderLayout.EAST);
 
         base_.add(top, BorderLayout.NORTH);

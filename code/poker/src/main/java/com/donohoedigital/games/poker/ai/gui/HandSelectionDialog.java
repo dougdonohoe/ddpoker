@@ -52,8 +52,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
@@ -119,13 +117,8 @@ public class HandSelectionDialog extends OptionMenuDialog
         DDButton desc = new GlassButton("description", "Glass");
         desc.setPreferredSize(new Dimension(80, 24));
         desc.setBorderGap(0, 0, 0, 0);
-        desc.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setDescription();
-            }
-        });
+        desc.addActionListener(e ->
+            setDescription());
 
         topButtons.setLayout(new GridLayout(1, 2, 4, 0));
         topButtons.add(desc);

@@ -496,13 +496,11 @@ public class ScrollGameboard extends JViewport implements
         board_.setScrolling(true);
         if (SCROLL_THREAD == null)
         {
-            SCROLL_THREAD = new Thread(new Runnable() {
-                    public void run() {
-                            while (bSCROLL) {
-                                scrollBoardAndWait();
-                            }
-                    }
-                }, "ScrollThread");
+            SCROLL_THREAD = new Thread(() -> {
+                while (bSCROLL) {
+                    scrollBoardAndWait();
+                }
+            }, "ScrollThread");
             SCROLL_THREAD.start();
         }
     }
@@ -545,10 +543,8 @@ public class ScrollGameboard extends JViewport implements
         {
             Utils.sleepMillis(CLICKTOSCROLL ? SCROLL_DELAY_MILLIS : SCROLL_DELAY_MILLIS_AUTO);
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {     
-                            if (bSCROLL && (bMOUSEDOWN || !CLICKTOSCROLL)) scrollBoard();
-                    }
+                () -> {
+                    if (bSCROLL && (bMOUSEDOWN || !CLICKTOSCROLL)) scrollBoard();
                 }
             );
         }

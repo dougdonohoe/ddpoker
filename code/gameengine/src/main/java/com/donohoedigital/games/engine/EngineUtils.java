@@ -559,18 +559,14 @@ public class EngineUtils
         
         // sleep in sep thread before turning led off
         Thread tWait = new Thread(
-            new Runnable() {
-                public void run() {
-                        Utils.sleepMillis(100);
-                        // need to invoke later so happens from swing thread
-                        SwingUtilities.invokeLater(
-                            new Runnable() {
-                                public void run() {
-                                    if (ledconnect_ != null) ledconnect_.setIcon(ledyellowoff_);
-                                }
-                            }
-                        );
-                }
+            () -> {
+                Utils.sleepMillis(100);
+                // need to invoke later so happens from swing thread
+                SwingUtilities.invokeLater(
+                    () -> {
+                        if (ledconnect_ != null) ledconnect_.setIcon(ledyellowoff_);
+                    }
+                );
             }
         );
         tWait.start();
@@ -665,11 +661,8 @@ public class EngineUtils
         if (cancelables_ == null || cancelables_.size() == 0) return;
 
         // run in swing loop since possible closing dialogs
-        GuiUtils.invoke(new Runnable() {
-            public void run() {
-                EngineUtils.cancel();
-            }
-        });
+        GuiUtils.invoke(() ->
+            EngineUtils.cancel());
     }
 
     /**

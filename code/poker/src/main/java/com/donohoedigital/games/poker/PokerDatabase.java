@@ -50,7 +50,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
@@ -310,13 +309,7 @@ public class PokerDatabase
 
         final String databaseName = getActualDatabaseName(profile);
 
-        File[] files = databaseDir.listFiles(new FilenameFilter()
-        {
-            public boolean accept(File dir, String name)
-            {
-                return name.startsWith(databaseName + ".");
-            }
-        });
+        File[] files = databaseDir.listFiles((dir, name) -> name.startsWith(databaseName + "."));
 
         for (int i = 0; i < files.length; ++i)
         {

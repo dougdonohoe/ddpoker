@@ -306,14 +306,10 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             GlassButton invitees = new GlassButton("invitees", "Glass");
             invitees.setBorderGap(2, 4, 2, 4);
             invitees.setPreferredSize(new Dimension(75, 15));
-            invitees.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    TypedHashMap params = new TypedHashMap();
-                    params.setObject(PlayerListDialog.PARAM_PLAYER_LIST, profile_.getInvitees());
-                    context_.processPhaseNow("InvitedPlayerList", params);
-                }
+            invitees.addActionListener(e -> {
+                TypedHashMap params = new TypedHashMap();
+                params.setObject(PlayerListDialog.PARAM_PLAYER_LIST, profile_.getInvitees());
+                context_.processPhaseNow("InvitedPlayerList", params);
             });
 
             OptionBoolean obs = new OptionBoolean(null, TournamentProfile.PARAM_INVITE_OBS, STYLE, dummy_, true);
@@ -1102,13 +1098,8 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         // clear button
         clear_ = new GlassButton("clear", "Glass");
         left.add(GuiUtils.NORTH(GuiUtils.CENTER(clear_)), BorderLayout.CENTER);
-        clear_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                clearSpots();
-            }
-        });
+        clear_.addActionListener(e ->
+            clearSpots());
 
         // amount fields
         DDPanel center = new DDPanel();

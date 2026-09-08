@@ -42,7 +42,7 @@ import com.donohoedigital.games.poker.model.TournamentHistory;
 import com.donohoedigital.gui.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.AncestorEvent;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -113,13 +113,8 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
         GlassButton change = new GlassButton("changeprofile", "Glass");
         topinfo.add(change, BorderLayout.EAST);
-        change.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                context_.processPhase("PlayerProfileOptions");
-            }
-        });
+        change.addActionListener(e ->
+            context_.processPhase("PlayerProfileOptions"));
 
         DDScrollTable scrollOut = new DDScrollTable
                 (GuiManager.DEFAULT, "PokerPrefsPlayerList", "BrushedMetal", RESULTS_NAMES, RESULTS_WIDTHS);
@@ -152,13 +147,8 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
         tabs_ = new DDTabbedPane(style, "BrushedMetal", JTabbedPane.TOP);
         tabs_.setOpaque(false);
-        tabs_.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
-            {
-                checkDetailsButton();
-            }
-        });
+        tabs_.addChangeListener(e ->
+            checkDetailsButton());
 
         base.add(GuiUtils.CENTER(top), BorderLayout.NORTH);
         DDPanel overlay = new DDPanel();
@@ -187,25 +177,21 @@ public class StatisticsViewer extends BasePhase implements ActionListener
         tabs_.addTab(PropertyConfig.getMessage("msg.handhistory.turn"), ic, new ByRoundPanel(HoldemHand.ROUND_TURN), null);
         tabs_.addTab(PropertyConfig.getMessage("msg.handhistory.river"), ic, new ByRoundPanel(HoldemHand.ROUND_RIVER), null);
 
-        finishTable_.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent e)
+        finishTable_.getSelectionModel().addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) return;
+
+            if (finishTable_.getSelectedRow() < 0)
             {
-                if (e.getValueIsAdjusting()) return;
+                finishTable_.setRowSelectionInterval(0, 0);
+                finishTable_.repaint();
+            }
+            else
+            {
+                Component c = tabs_.getSelectedComponent();
 
-                if (finishTable_.getSelectedRow() < 0)
-                {
-                    finishTable_.setRowSelectionInterval(0, 0);
-                    finishTable_.repaint();
-                }
-                else
-                {
-                    Component c = tabs_.getSelectedComponent();
-
-                    if (c instanceof OverallPanel) ((OverallPanel)c).refresh();
-                    if (c instanceof ByHandPanel) ((ByHandPanel)c).refresh();
-                    if (c instanceof ByRoundPanel) ((ByRoundPanel)c).refresh();
-                }
+                if (c instanceof OverallPanel) ((OverallPanel) c).refresh();
+                if (c instanceof ByHandPanel) ((ByHandPanel) c).refresh();
+                if (c instanceof ByRoundPanel) ((ByRoundPanel) c).refresh();
             }
         });
     }
@@ -685,13 +671,8 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
             table_ = scrollTable.getDDTable();
 
-            table_.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-            {
-                public void valueChanged(ListSelectionEvent e)
-                {
-                    checkDetailsButton();
-                }
-            });
+            table_.getSelectionModel().addListSelectionListener(e ->
+                checkDetailsButton());
             table_.addMouseListener(new MouseListener()
             {
                 public void mouseClicked(MouseEvent e)
@@ -978,13 +959,8 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
             table_ = scrollTable.getDDTable();
 
-            table_.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-            {
-                public void valueChanged(ListSelectionEvent e)
-                {
-                    checkDetailsButton();
-                }
-            });
+            table_.getSelectionModel().addListSelectionListener(e ->
+                checkDetailsButton());
             table_.addMouseListener(new MouseListener()
             {
                 public void mouseClicked(MouseEvent e)

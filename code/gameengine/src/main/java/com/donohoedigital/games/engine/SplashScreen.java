@@ -225,13 +225,8 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
         }
 
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        engine_.showMainWindow();
-                    }
-                }
+            () ->
+                engine_.showMainWindow()
         );
     }
 

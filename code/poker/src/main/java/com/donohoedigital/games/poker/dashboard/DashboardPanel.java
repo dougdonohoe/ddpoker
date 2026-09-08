@@ -45,8 +45,6 @@ import javax.swing.border.Border;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.
@@ -192,16 +190,12 @@ public class DashboardPanel extends DDPanel
                              edit,
                              ContainerEF.right(dashBG).subtract(ComponentEF.preferredWidth(edit)),
                              ContainerEF.top(dashBG).add(5)));
-        edit.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                TypedHashMap params = new TypedHashMap();
-                params.setObject(DashboardEditorDialog.PARAM_DASHMGR, mgr_);
-                mgr_.getGame().getGameContext().processPhaseNow("DashboardEditorDialog", params);
-                sync();
-                mgr_.stateChanged();
-            }
+        edit.addActionListener(e -> {
+            TypedHashMap params = new TypedHashMap();
+            params.setObject(DashboardEditorDialog.PARAM_DASHMGR, mgr_);
+            mgr_.getGame().getGameContext().processPhaseNow("DashboardEditorDialog", params);
+            sync();
+            mgr_.stateChanged();
         });
 
         return dashBG;

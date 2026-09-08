@@ -57,7 +57,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -199,84 +198,44 @@ public class PlayerProfileDialog extends DialogPhase implements PropertyChangeLi
 
         if (profile_.isOnline())
         {
-            emailButton_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doButton(e);
-                }
-            });
+            emailButton_.addActionListener(e ->
+                doButton(e));
 
             if (passwordButton_ != null)
             {
-                passwordButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                passwordButton_.addActionListener(e ->
+                    doButton(e));
             }
 
             if (sendButton_ != null)
             {
-                sendButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                sendButton_.addActionListener(e ->
+                    doButton(e));
             }
 
             if (resetButton_ != null)
             {
-                resetButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                resetButton_.addActionListener(e ->
+                    doButton(e));
             }
 
             if (syncButton_ != null)
             {
-                syncButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                syncButton_.addActionListener(e ->
+                    doButton(e));
             }
         }
 
         if (noRadio_ != null)
         {
-            noRadio_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doRadio();
-                }
-            });
+            noRadio_.addActionListener(e ->
+                doRadio());
 
-            newRadio_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doRadio();
-                }
-            });
+            newRadio_.addActionListener(e ->
+                doRadio());
 
-            existRadio_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doRadio();
-                }
-            });
+            existRadio_.addActionListener(e ->
+                doRadio());
         }
 
         checkButtons();

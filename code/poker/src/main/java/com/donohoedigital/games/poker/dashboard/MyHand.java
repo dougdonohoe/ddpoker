@@ -148,12 +148,8 @@ public class MyHand extends DashboardItem
     {
         if (impl_ != null && impl_.isDisplayed() && !table.isZipMode())
         {
-            GuiUtils.invoke(new Runnable() {
-                public void run()
-                {
-                    impl_.updateAll();
-                }
-            });
+            GuiUtils.invoke(() ->
+                impl_.updateAll());
         }
     }
 

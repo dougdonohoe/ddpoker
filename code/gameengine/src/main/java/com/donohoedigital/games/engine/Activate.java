@@ -51,8 +51,6 @@ import com.donohoedigital.gui.*;
 import javax.swing.BorderFactory;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -152,13 +150,8 @@ public class Activate extends BasePhase implements PropertyChangeListener
 
         // finish registerButton setup
         reg_.setDefaultOverride(registerButton_);
-        registerButton_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                activate();
-            }
-        });
+        registerButton_.addActionListener(e ->
+            activate());
         DDPanel actButtonBase = new DDPanel();
         actButtonBase.add(registerButton_, BorderLayout.NORTH);
         actButtonBase.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
@@ -181,22 +174,13 @@ public class Activate extends BasePhase implements PropertyChangeListener
         DDPanel demoButtonBase = new DDPanel();
         demoButtonBase.setLayout(new GridLayout(2, 1, 0, 5));
         DDButton demoButton = new GlassButton("demo", "Glass");
-        demoButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                engine_.setDemoMode();
-            }
-        });
+        demoButton.addActionListener(e ->
+            engine_.setDemoMode());
         DDButton orderButton = new GlassButton("order", "Glass");
-        orderButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                engine_.setActivationNeeded(false); // temporary so can show order dialog
-                context_.processPhaseNow("Order", null);
-                engine_.setActivationNeeded(true);
-            }
+        orderButton.addActionListener(e -> {
+            engine_.setActivationNeeded(false); // temporary so can show order dialog
+            context_.processPhaseNow("Order", null);
+            engine_.setActivationNeeded(true);
         });
         demoButtonBase.add(demoButton);
         demoButtonBase.add(orderButton);

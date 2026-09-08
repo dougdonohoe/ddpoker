@@ -55,7 +55,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -126,14 +125,10 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         TypedHashMap dummy = new TypedHashMap();
         numOpponents_ = new OptionInteger(null, "numopp", STYLE, dummy, null, 1, 9, -1, true);
         numOpponents_.addChangeListener(this);
-        numOpponents_.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
+        numOpponents_.addChangeListener(e -> {
+            if (numOpponents_.getSpinner().isValidData())
             {
-                if (numOpponents_.getSpinner().isValidData())
-                {
-                    updateNumOpponents();
-                }
+                updateNumOpponents();
             }
         });
         controlbase.add(numOpponents_);
@@ -150,13 +145,8 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         group.add(simcombo_);
         simbase.add(simcombo_, BorderLayout.WEST);
         // listener to control # sims
-        ActionListener comboListener = new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                numSims_.setEnabled(simcombo_.isSelected());
-            }
-        };
+        ActionListener comboListener = e ->
+            numSims_.setEnabled(simcombo_.isSelected());
 
         allcombo_ = new DDRadioButton("allcombos", STYLE);
         group.add(allcombo_);
@@ -193,42 +183,33 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         pb.setBorderLayoutGap(0, 5);
 
         run_ = new GlassButton("run", "Glass");
-        run_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        run_.addActionListener(e -> {
+            sim_.bSimRunning_ = true;
+            bStopRequested_ = false;
+            clearResults();
+            run_.setEnabled(false);
+            numSims_.setEnabled(false);
+            numOpponents_.setEnabled(false);
+            allcombo_.setEnabled(false);
+            simcombo_.setEnabled(false);
+            stop_.setEnabled(true);
+            if (simcombo_.isSelected())
             {
-                sim_.bSimRunning_ = true;
-                bStopRequested_ = false;
-                clearResults();
-                run_.setEnabled(false);
-                numSims_.setEnabled(false);
-                numOpponents_.setEnabled(false);
-                allcombo_.setEnabled(false);
-                simcombo_.setEnabled(false);
-                stop_.setEnabled(true);
-                if (simcombo_.isSelected())
+                if (bDemo_)
                 {
-                    if (bDemo_)
-                    {
-                        EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.showdown.demo"));
-                    }
-                    runSimulator();
+                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.showdown.demo"));
                 }
-                else
-                {
-                    runIterator();
-                }
+                runSimulator();
+            }
+            else
+            {
+                runIterator();
             }
         });
         stop_ = new GlassButton("stop", "Glass");
         stop_.setEnabled(false);
-        stop_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setStopRequested();
-            }
-        });
+        stop_.addActionListener(e ->
+            setStopRequested());
 
         pb.add(run_, BorderLayout.WEST);
         pb.add(progress_, BorderLayout.CENTER);
@@ -470,17 +451,13 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
 
         final StatResult[] stats = (StatResult[]) oResult;
 
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
+        SwingUtilities.invokeLater(() -> {
+            StatResult stat;
+            for (int i = 0;i < stats.length;i++)
             {
-                StatResult stat;
-                for (int i = 0; i < stats.length; i++)
-                {
-                    stat = stats[i];
-                    if (stat == null) continue;
-                    setResults(i, stat.toHTML("msg.showdown.results"));
-                }
+                stat = stats[i];
+                if (stat == null) continue;
+                setResults(i, stat.toHTML("msg.showdown.results"));
             }
         });
     }

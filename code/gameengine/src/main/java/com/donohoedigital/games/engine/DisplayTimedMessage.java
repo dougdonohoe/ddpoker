@@ -100,11 +100,8 @@ public class DisplayTimedMessage extends DisplayMessage implements CancelablePha
                 nSecondsLeft_--;
                 if (nSecondsLeft_ <= 0)
                 {
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run()
-                        {
-                            if (cancelButton_ != null) cancelButton_.doClick();
-                        }
+                    SwingUtilities.invokeLater(() -> {
+                        if (cancelButton_ != null) cancelButton_.doClick();
                     });
                     return;
                 }
@@ -142,13 +139,11 @@ public class DisplayTimedMessage extends DisplayMessage implements CancelablePha
      */
     private void updateTimer()
     {
-        GuiUtils.invoke(new Runnable() {
-            public void run() {
-                String sSeconds = PropertyConfig.getMessage(nSecondsLeft_ == 1 ? "msg.seconds.singular" : "msg.seconds.plural",
-                                                            nSecondsLeft_);
+        GuiUtils.invoke(() -> {
+            String sSeconds = PropertyConfig.getMessage(nSecondsLeft_ == 1 ? "msg.seconds.singular" : "msg.seconds.plural",
+                nSecondsLeft_);
 
-                timer_.setText(PropertyConfig.getMessage("msg.dialog.timer", sSeconds));
-            }
+            timer_.setText(PropertyConfig.getMessage("msg.dialog.timer", sSeconds));
         });
     }
 

@@ -348,15 +348,11 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
                 // show error dialog to user and restart
                 SwingUtilities.invokeLater(
-                        new Runnable()
-                        {
-                            public void run()
-                            {
-                                EngineUtils.displayInformationDialog(context_, Utils.fixHtmlTextFor15(
-                                        PropertyConfig.getMessage("msg.tderror")));
-                                context_.restart();
-                            }
-                        }
+                    () -> {
+                        EngineUtils.displayInformationDialog(context_, Utils.fixHtmlTextFor15(
+                            PropertyConfig.getMessage("msg.tderror")));
+                        context_.restart();
+                    }
                 );
             }
 

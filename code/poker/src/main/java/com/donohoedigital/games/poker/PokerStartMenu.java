@@ -345,14 +345,10 @@ public class PokerStartMenu extends StartMenu
             {
                 bCheck = false;
                 SwingUtilities.invokeLater(
-                        new Runnable()
-                        {
-                            public void run()
-                            {
-                                licenseCheck();
-                                profileCheck();
-                            }
-                        }
+                    () -> {
+                        licenseCheck();
+                        profileCheck();
+                    }
                 );
             }
         }

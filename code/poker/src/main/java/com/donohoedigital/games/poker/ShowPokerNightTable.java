@@ -49,8 +49,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -156,40 +154,20 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
         labelDetails_ = new DisplayLabel(430 / NF3, 120 / NF3, 790 / W, 790 / H, 430f / W, LEFT, TOP);
 
         // listeners/borders
-        buttonRewind_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                rewind();
-            }
-        });
+        buttonRewind_.addActionListener(e ->
+            rewind());
         buttonRewind_.setBorderGap(0, 0, 0, 0);
 
         buttonStartPause_.addActionListener(
-                new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        game_.getGameClock().toggle();
-                    }
-                });
+            e ->
+                game_.getGameClock().toggle());
 
-        buttonForward_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                forward();
-            }
-        });
+        buttonForward_.addActionListener(e ->
+            forward());
         buttonForward_.setBorderGap(0, 0, 0, 0);
 
-        buttonEdit_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                edit();
-            }
-        });
+        buttonEdit_.addActionListener(e ->
+            edit());
 
         // customizations
         customizeLabel(labelTime_, 10);
@@ -513,13 +491,9 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
     }
 
     // runnable for in swing thread
-    private Runnable update_ = new Runnable()
-    {
-        public void run()
-        {
-            updateLevel();
-            checkButtons();
-        }
+    private Runnable update_ = () -> {
+        updateLevel();
+        checkButtons();
     };
 
     /**

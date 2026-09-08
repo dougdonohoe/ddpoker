@@ -1076,20 +1076,16 @@ public class OnlineManager implements ChatManager
 
         // need to update from Swing thread
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        String sKey = bBan ? "msg.cancel.client.ban" :
-                                      game_.isInProgress() ? "msg.cancel.client.play" :
-                                      "msg.cancel.client.reg";
+            () -> {
+                String sKey = bBan ? "msg.cancel.client.ban" :
+                    game_.isInProgress() ? "msg.cancel.client.play" :
+                        "msg.cancel.client.reg";
 
-                        PokerPlayer host = getHost();
-                        EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage(sKey,
-                                                                                                 Utils.encodeHTML(host.getName())));
-                        context_.restart();
-                    }
-                }
+                PokerPlayer host = getHost();
+                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage(sKey,
+                    Utils.encodeHTML(host.getName())));
+                context_.restart();
+            }
         );
     }
 

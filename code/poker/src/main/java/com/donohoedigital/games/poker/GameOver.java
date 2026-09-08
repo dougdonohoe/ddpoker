@@ -53,8 +53,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Doug Donohoe
@@ -135,13 +133,8 @@ public class GameOver extends DialogPhase
                                                bOnline_ ? PokerUtils.DEMO_LIMIT_ONLINE : PokerUtils.DEMO_LIMIT);
 
             GlassButton order = new GlassButton("order", "Glass");
-            order.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    context_.processPhase("Order");
-                }
-            });
+            order.addActionListener(e ->
+                context_.processPhase("Order"));
             back_.getButtonBox().addButton(order);
             removeMatchingButton("yesWatch");
         }

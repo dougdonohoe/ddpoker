@@ -410,15 +410,11 @@ public class Help extends BasePhase implements ListSelectionListener,
             // not sure - so this hack makes it less "flashy"
             html_.setSkipNextRepaint(true);
             SwingUtilities.invokeLater(
-                    new Runnable()
-                    {
-                        public void run()
-                        {
-                            //logger.debug(selected_.getName() + " scrollRectToVisible: "+ selected_.getScrollPosition());
-                            html_.scrollRectToVisible(selected_.getScrollPosition());
-                            html_.paintImmediately(0, 0, html_.getWidth(), html_.getHeight());
-                        }
-                    }
+                () -> {
+                    //logger.debug(selected_.getName() + " scrollRectToVisible: "+ selected_.getScrollPosition());
+                    html_.scrollRectToVisible(selected_.getScrollPosition());
+                    html_.paintImmediately(0, 0, html_.getWidth(), html_.getHeight());
+                }
             );
 
         }
