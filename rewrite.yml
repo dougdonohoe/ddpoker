@@ -1,0 +1,144 @@
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# DD Poker - Source Code
+# Copyright (c) 2003-2026 Doug Donohoe
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# For the full License text, please see the LICENSE.txt file
+# in the root directory of this project.
+#
+# The "DD Poker" and "Donohoe Digital" names and logos, as well as any images,
+# graphics, text, and documentation found in this repository (including but not
+# limited to written documentation, website content, and marketing materials)
+# are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives
+# 4.0 International License (CC BY-NC-ND 4.0). You may not use these assets
+# without explicit written permission for any uses not covered by this License.
+# For the full License text, please see the LICENSE-CREATIVE-COMMONS.txt file
+# in the root directory of this project.
+#
+# For inquiries regarding commercial licensing of this source code or
+# the use of names, logos, images, text, or other assets, please contact
+# doug [at] donohoe [dot] info.
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# OpenRewrite recipe definitions for the Java modernization sweep.
+# See the "Code Modernization" section of README-DEV.md for how to run these.
+# Recipes are grouped so each one lands as a single reviewable PR.
+# =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.TypeCleanup
+displayName: Generics and type cleanup
+description: >
+  Diamond operator, redundant casts and C-style array declarations.
+  The lowest-risk group - none of these change behaviour.
+  NOTE: org.openrewrite.java.RemoveUnusedImports is deliberately NOT here.  It expands
+  star imports (import javax.swing.* becomes one line per class), which this code base
+  uses on purpose - it would touch ~370 files for no benefit.
+recipeList:
+  - org.openrewrite.staticanalysis.UseDiamondOperator
+  - org.openrewrite.staticanalysis.RemoveRedundantTypeCast
+  - org.openrewrite.staticanalysis.UseJavaStyleArrayDeclarations
+  - org.openrewrite.staticanalysis.UnnecessaryExplicitTypeArguments
+  - org.openrewrite.staticanalysis.NoEmptyCollectionWithRawType
+  - org.openrewrite.staticanalysis.RemoveExtraSemicolons
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.Lambdas
+displayName: Lambdas and method references
+description: >
+  Replace anonymous implementations of functional interfaces with lambdas, and lambdas
+  that merely delegate with method references. Mostly Swing listeners in gui/ and poker/.
+  Anonymous classes that hold state or reference the enclosing instance are left alone.
+recipeList:
+  - org.openrewrite.staticanalysis.UseLambdaForFunctionalInterface
+  - org.openrewrite.staticanalysis.ReplaceLambdaWithMethodReference
+  - org.openrewrite.staticanalysis.LambdaBlockToExpression
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.StringsAndCollections
+displayName: String and collection API modernization
+description: >
+  isEmpty() over size() == 0, contains() over indexOf(), constant-first equals(),
+  valueOf() over wrapper constructors, StringBuilder over StringBuffer, and friends.
+recipeList:
+  - org.openrewrite.staticanalysis.IsEmptyCallOnCollections
+  - org.openrewrite.staticanalysis.IndexOfReplaceableByContains
+  - org.openrewrite.staticanalysis.EqualsAvoidsNull
+  - org.openrewrite.staticanalysis.StringLiteralEquality
+  - org.openrewrite.staticanalysis.NoValueOfOnStringType
+  - org.openrewrite.staticanalysis.NoToStringOnStringType
+  - org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
+  - org.openrewrite.staticanalysis.UseStandardCharset
+  - org.openrewrite.staticanalysis.ExplicitCharsetOnStringGetBytes
+  - org.openrewrite.staticanalysis.UseListSort
+  - org.openrewrite.staticanalysis.UseStringReplace
+  - org.openrewrite.staticanalysis.ChainStringBuilderAppendCalls
+  - org.openrewrite.staticanalysis.ReplaceStringBufferWithStringBuilder
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.FinalAndModifiers
+displayName: Final fields and modifier hygiene
+description: >
+  Mark private fields final where they are assigned exactly once, drop redundant
+  modifiers, and add missing @Override.  Deliberately does NOT finalize locals or
+  parameters (see FinalizeLocalVariables) - that is line noise, not information.
+  REVIEW: verify Hibernate entity classes are untouched before applying.
+recipeList:
+  - org.openrewrite.staticanalysis.FinalizePrivateFields
+  - org.openrewrite.staticanalysis.FinalClass
+  - org.openrewrite.staticanalysis.ModifierOrder
+  - org.openrewrite.staticanalysis.StaticAccessViaInstance
+  - org.openrewrite.staticanalysis.MissingOverrideAnnotation
+  - org.openrewrite.staticanalysis.NestedEnumsAreNotStatic
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.ParameterizedLogging
+displayName: Parameterized logging
+description: >
+  Rewrite log.debug("x " + y) as log.debug("x {}", y) so the concatenation no longer
+  happens when the level is disabled.
+recipeList:
+  - org.openrewrite.java.logging.ParameterizedLogging
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.DeadCode
+displayName: Dead code removal
+description: >
+  RISKY - Hibernate, Wicket and the gameengine XML save-game code all reach members
+  reflectively, and OpenRewrite cannot see those references.  Always dryRun and review
+  each deletion against a grep of .java, .html and .xml before applying.
+recipeList:
+  - org.openrewrite.staticanalysis.RemoveUnusedPrivateFields
+  - org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods
+  - org.openrewrite.staticanalysis.RemoveUnusedLocalVariables
+  - org.openrewrite.staticanalysis.UnnecessaryThrows
+  - org.openrewrite.staticanalysis.RemoveUnneededBlock
+  - org.openrewrite.staticanalysis.CatchClauseOnlyRethrows
+  - org.openrewrite.staticanalysis.UnnecessaryReturnAsLastStatement
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.RedundantInitializers
+displayName: Redundant field initializers
+description: >
+  Drop "= null", "= false", "= 0" from field declarations, where the JVM already
+  guarantees that value.  Safe (fields only, never locals) but touches ~730 lines and
+  IntelliJ does not flag it by default, so it is kept opt-in rather than folded into
+  TypeCleanup.
+recipeList:
+  - org.openrewrite.staticanalysis.ExplicitInitialization
