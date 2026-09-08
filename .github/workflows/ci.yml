@@ -34,9 +34,11 @@ on:
   push:
     branches:
       - main
+      - code-fixes
   pull_request:
     branches:
       - main
+      - code-fixes
 
 jobs:
   test:
