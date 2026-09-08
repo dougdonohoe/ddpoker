@@ -291,11 +291,8 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
 
             // do processing
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                            doAI();
-                    }
-                }
+                () ->
+                    doAI()
             );
         }
     }
@@ -480,11 +477,8 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             else
             {
                  SwingUtilities.invokeLater(
-                            new Runnable() {
-                                public void run() {
-                                    game_.setInputMode(PokerTableInput.MODE_RECHECK, hhand_, player_);
-                                }
-                            }
+                     () ->
+                         game_.setInputMode(PokerTableInput.MODE_RECHECK, hhand_, player_)
                             );
                 return null;
             }

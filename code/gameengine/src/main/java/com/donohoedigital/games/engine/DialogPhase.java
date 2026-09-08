@@ -53,8 +53,6 @@ import javax.swing.JComponent;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -392,14 +390,10 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
         if (bNoShowOption_)
         {
             back_.getNoShowCheckBox().addActionListener(
-                    new ActionListener()
-                    {
-                        public void actionPerformed(ActionEvent e)
-                        {
-                            Preferences prefs = Prefs.getUserPrefs(EnginePrefs.NODE_DIALOG_PHASE);
-                            prefs.putBoolean(sNoShowKey_, back_.getNoShowCheckBox().isSelected());
-                        }
-                    });
+                e -> {
+                    Preferences prefs = Prefs.getUserPrefs(EnginePrefs.NODE_DIALOG_PHASE);
+                    prefs.putBoolean(sNoShowKey_, back_.getNoShowCheckBox().isSelected());
+                });
         }
 
         ///

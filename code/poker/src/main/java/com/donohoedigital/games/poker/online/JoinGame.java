@@ -56,8 +56,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
@@ -96,18 +94,14 @@ public class JoinGame extends ListGames
         pub.add(inside, BorderLayout.CENTER);
 
         GlassButton find = new GlassButton("okayfind", "Glass");
-        find.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        find.addActionListener(e -> {
+            if (engine_.isDemo())
             {
-                if (engine_.isDemo())
-                {
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo2"));
-                }
-                else
-                {
-                    context_.processPhase("FindGames");
-                }
+                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo2"));
+            }
+            else
+            {
+                context_.processPhase("FindGames");
             }
         });
         inside.add(find, BorderLayout.WEST);
@@ -453,13 +447,11 @@ public class JoinGame extends ListGames
 
             // run in swing thread
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                        String sKey = getSelectedRowKey();
-                        getClientList();
-                        fireTableDataChanged();
-                        selectRow(sKey);
-                    }
+                () -> {
+                    String sKey = getSelectedRowKey();
+                    getClientList();
+                    fireTableDataChanged();
+                    selectRow(sKey);
                 }
             );
         }

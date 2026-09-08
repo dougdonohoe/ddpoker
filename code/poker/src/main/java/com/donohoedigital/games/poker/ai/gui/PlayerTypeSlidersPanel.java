@@ -43,7 +43,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -92,13 +91,8 @@ public class PlayerTypeSlidersPanel extends DDPanel
 
             pill_ = new MyPillPanel("DashboardHeader", itemx.getLabel());
             pill_.setExpanded(itemx.isExpanded());
-            pill_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    pillClicked();
-                }
-            });
+            pill_.addActionListener(e ->
+                pillClicked());
 
             value_ = new DDLabel(GuiManager.DEFAULT, sStyle);
             value_.setPreferredWidth(30);

@@ -126,16 +126,12 @@ public class PlayerInfo extends DashboardItem implements TerritorySelectionListe
 
     // these arrive on the game's thread, not the swing one - unlike the table events,
     // which the superclass already delivers in swing.  We set label text directly.
-    private final Runnable updateInfoRunner_ = new Runnable()
-    {
-        public void run()
-        {
-            // invoke() is invokeLater from the game's thread, so the game can be torn
-            // down before we run: finish() clears players_ and the rank lookup then
-            // throws.  isDisplayed() is no help - bUiCreated_ is never reset - so this
-            // is the same guard updateAll() uses, for the same reason.
-            if (!game_.isFinished()) updateInfo();
-        }
+    private final Runnable updateInfoRunner_ = () -> {
+        // invoke() is invokeLater from the game's thread, so the game can be torn
+        // down before we run: finish() clears players_ and the rank lookup then
+        // throws.  isDisplayed() is no help - bUiCreated_ is never reset - so this
+        // is the same guard updateAll() uses, for the same reason.
+        if (!game_.isFinished()) updateInfo();
     };
 
     /**

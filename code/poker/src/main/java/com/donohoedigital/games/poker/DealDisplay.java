@@ -354,17 +354,13 @@ public class DealDisplay extends ChainPhase implements Runnable
         {
             final Territory tParam = t;
             GuiUtils.invokeAndWait(
-                    new Runnable()
+                () -> {
+                    // check null for clearer exit
+                    if (PokerUtils.getGameboard() != null)
                     {
-                        public void run()
-                        {
-                            // check null for clearer exit
-                            if (PokerUtils.getGameboard() != null)
-                            {
-                                PokerUtils.getGameboard().repaintTerritory(tParam, true);
-                            }
-                        }
+                        PokerUtils.getGameboard().repaintTerritory(tParam, true);
                     }
+                }
             );
 
             // sleep

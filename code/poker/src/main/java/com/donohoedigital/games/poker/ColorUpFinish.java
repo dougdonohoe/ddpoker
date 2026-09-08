@@ -163,11 +163,8 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
 
             // do processing
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                            playerActionPerformed(0,0);
-                    }
-                }
+                () ->
+                    playerActionPerformed(0, 0)
             );
         }
     }
@@ -252,11 +249,8 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
     {
         final Territory t = PokerUtils.getTerritoryForTableSeat(table_, player.getSeat());
         GuiUtils.invokeAndWait(
-            new Runnable() {
-                public void run() {
-                    PokerUtils.getGameboard().repaintTerritory(t, true);
-                }
-            }
+            () ->
+                PokerUtils.getGameboard().repaintTerritory(t, true)
         );
     }
     

@@ -53,7 +53,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
@@ -159,53 +158,44 @@ public class HistoryExportDialog extends FileChooserDialog
         base_.remove(choose_);
         base_.add(wait, BorderLayout.CENTER);
 
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
+        SwingUtilities.invokeLater(() -> {
+            Integer handID = (Integer) gamephase_.getObject(PARAM_HAND_ID);
+
+            if (handID != null)
             {
-                Integer handID = (Integer)gamephase_.getObject(PARAM_HAND_ID);
-
-                if (handID != null)
-                {
-                    exp_ = new PokerDatabase.ExportSummary();
-                    exp_.handIDs = new ArrayList();
-                    exp_.handIDs.add(handID);
-                    exp_.tournamentCount = 1;
-                }
-                else
-                {
-                    String where = (String)gamephase_.getObject("where");
-                    BindArray bindArray = (BindArray)gamephase_.getObject("bindArray");
-
-                    exp_ = PokerDatabase.getExportSummary(where, bindArray);
-                }
-
-                ActionListener actionListener = new ActionListener()
-                    {
-                        public void actionPerformed(ActionEvent e)
-                        {
-                            checkButtons();
-                        }
-                    };
-
-                cbxHands_.setText(PropertyConfig.getMessage(
-                                    "msg.handtranscriptcount" + (exp_.handIDs.size() != 1 ? ".plural" : ".singular"),
-                                    exp_.handIDs.size()));
-                cbxHands_.setSelected(true);
-
-                cbxHands_.addActionListener(actionListener);
-
-                cbxTournaments_.setText(PropertyConfig.getMessage(
-                                    "msg.tourneysummarycount" + (exp_.tournamentCount != 1 ? ".plural" : ".singular"),
-                                    exp_.tournamentCount));
-
-                cbxTournaments_.addActionListener(actionListener);
-
-                base_.remove(wait);
-                base_.add(choose_, BorderLayout.CENTER);
-
-                checkButtons();
+                exp_ = new PokerDatabase.ExportSummary();
+                exp_.handIDs = new ArrayList();
+                exp_.handIDs.add(handID);
+                exp_.tournamentCount = 1;
             }
+            else
+            {
+                String where = (String) gamephase_.getObject("where");
+                BindArray bindArray = (BindArray) gamephase_.getObject("bindArray");
+
+                exp_ = PokerDatabase.getExportSummary(where, bindArray);
+            }
+
+            ActionListener actionListener = e ->
+                checkButtons();
+
+            cbxHands_.setText(PropertyConfig.getMessage(
+                "msg.handtranscriptcount" + (exp_.handIDs.size() != 1 ? ".plural" : ".singular"),
+                exp_.handIDs.size()));
+            cbxHands_.setSelected(true);
+
+            cbxHands_.addActionListener(actionListener);
+
+            cbxTournaments_.setText(PropertyConfig.getMessage(
+                "msg.tourneysummarycount" + (exp_.tournamentCount != 1 ? ".plural" : ".singular"),
+                exp_.tournamentCount));
+
+            cbxTournaments_.addActionListener(actionListener);
+
+            base_.remove(wait);
+            base_.add(choose_, BorderLayout.CENTER);
+
+            checkButtons();
         });
 
         return base_;
@@ -305,13 +295,8 @@ public class HistoryExportDialog extends FileChooserDialog
                     }
                     finally
                     {
-                        SwingUtilities.invokeLater(new Runnable()
-                        {
-                            public void run()
-                            {
-                                removeDialog();
-                            }
-                        });
+                        SwingUtilities.invokeLater(() ->
+                            removeDialog());
                     }
                 }
             }.start();

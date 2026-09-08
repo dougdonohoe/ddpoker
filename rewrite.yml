@@ -78,12 +78,13 @@ type: specs.openrewrite.org/v1beta/recipe
 name: com.donohoedigital.Lambdas
 displayName: Lambdas and method references
 description: >
-  Replace anonymous implementations of functional interfaces with lambdas, and lambdas
-  that merely delegate with method references. Mostly Swing listeners in gui/ and poker/.
-  Anonymous classes that hold state or reference the enclosing instance are left alone.
+  Replace anonymous implementations of functional interfaces with lambdas.  Mostly Swing
+  listeners and Runnables in poker/ and gameengine/.  Anonymous classes that hold state or
+  refer to the enclosing instance via a bare "this" are left alone - "this" means the
+  anonymous instance inside an anonymous class but the enclosing one inside a lambda.
+  NOTE: ReplaceLambdaWithMethodReference is NOT here - see MethodReferences below.
 recipeList:
   - org.openrewrite.staticanalysis.UseLambdaForFunctionalInterface
-  - org.openrewrite.staticanalysis.ReplaceLambdaWithMethodReference
   - org.openrewrite.staticanalysis.LambdaBlockToExpression
 
 ---
@@ -200,3 +201,18 @@ styleConfigs:
         - import all other imports
         - <blank line>
         - import static all other imports
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.MethodReferences
+displayName: Method references
+description: >
+  Replace lambdas that merely delegate with method references, e.g. () -> updateAll()
+  becomes this::updateAll.
+  REVIEW EVERY CHANGE.  This recipe confuses a superclass with an enclosing class.  In
+  gameengine/SendMessageDialog.java, which extends DialogPhase, it emitted
+  "DialogPhase.this::removeDialog" - illegal, because DialogPhase is a supertype rather
+  than an enclosing instance, and the gameengine module stopped compiling.  Kept opt-in
+  for that reason.
+recipeList:
+  - org.openrewrite.staticanalysis.ReplaceLambdaWithMethodReference

@@ -50,12 +50,12 @@ import com.donohoedigital.gui.GuiManager;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class AITest
@@ -107,35 +107,31 @@ public class AITest
 
             htmlArea = new DDHtmlArea();
 
-            htmlArea.addHyperlinkListener(new HyperlinkListener()
-            {
-                public void hyperlinkUpdate(HyperlinkEvent e)
+            htmlArea.addHyperlinkListener(e -> {
+                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
                 {
-                    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
-                    {
-                        File file = new File(e.getDescription());
-                        GameState gameState = GameStateFactory.createGameState(file, false);
+                    File file = new File(e.getDescription());
+                    GameState gameState = GameStateFactory.createGameState(file, false);
 
-                        //PokerGame game = (PokerGame)engine.createGame(gameState);
-                        context_.setGameManager(null);
-                        LoadSavedGame.loadGame(context_, gameState);
-                        PokerGame game = (PokerGame)context_.getGame();
-                        /*
-                        if (game == null)
-                        {
-                            LoadSavedGame.loadGame(engine, gameState);
-                            game = (PokerGame)engine.getGame();
-                        }
-                        else
-                        {
-                            game.loadGame(gameState, true);
-                        }
-                        */
-                        PokerTable table = game.getCurrentTable();
-                        HoldemHand hhand = table.getHoldemHand();
-                        PokerPlayer player = hhand.getCurrentPlayer();
-                        player.setPlayerType(playerType_);
+                    //PokerGame game = (PokerGame)engine.createGame(gameState);
+                    context_.setGameManager(null);
+                    LoadSavedGame.loadGame(context_, gameState);
+                    PokerGame game = (PokerGame) context_.getGame();
+                    /*
+                    if (game == null)
+                    {
+                        LoadSavedGame.loadGame(engine, gameState);
+                        game = (PokerGame)engine.getGame();
                     }
+                    else
+                    {
+                        game.loadGame(gameState, true);
+                    }
+                    */
+                    PokerTable table = game.getCurrentTable();
+                    HoldemHand hhand = table.getHoldemHand();
+                    PokerPlayer player = hhand.getCurrentPlayer();
+                    player.setPlayerType(playerType_);
                 }
             });
 
@@ -146,13 +142,8 @@ public class AITest
 
             GlassButton refreshButton = new GlassButton(GuiManager.DEFAULT,  "BrushedMetal");
             refreshButton.setText("Refresh");
-            refreshButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    refresh();
-                }
-            });
+            refreshButton.addActionListener(e ->
+                refresh());
             buttons.add(refreshButton);
 
             getContentPane().add(scroll, BorderLayout.CENTER);
@@ -209,13 +200,7 @@ public class AITest
 
             File fDir = getTestCaseDir();
 
-            File[] files = fDir.listFiles(new FilenameFilter()
-            {
-                public boolean accept(File dir, String name)
-                {
-                    return (name.endsWith(".ddpokersave"));
-                }
-            });
+            File[] files = fDir.listFiles((dir, name) -> (name.endsWith(".ddpokersave")));
 
             Arrays.sort(files);
 

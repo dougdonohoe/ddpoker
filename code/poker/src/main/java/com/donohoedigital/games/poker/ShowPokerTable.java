@@ -557,13 +557,8 @@ public abstract class ShowPokerTable extends ChainPhase implements
 
         // start bg music
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        EngineUtils.startBackgroundMusic(gamephase_);
-                    }
-                }
+            () ->
+                EngineUtils.startBackgroundMusic(gamephase_)
         );
     }
 

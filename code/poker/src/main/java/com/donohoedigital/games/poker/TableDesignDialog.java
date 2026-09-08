@@ -53,8 +53,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -112,17 +110,13 @@ public class TableDesignDialog extends DialogPhase implements ChangeListener, Pr
         JComponent swapcenter = GuiUtils.CENTER(swap);
         swapcenter.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
         colors.add(swapcenter, BorderLayout.CENTER);
-        swap.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                Color old = profile_.getColorBottom();
-                profile_.setColorBottom(profile_.getColorTop());
-                profile_.setColorTop(old);
-                faux.updateColors(profile_.getColorTop(), profile_.getColorBottom());
-                bottomChooser_.setColor(profile_.getColorBottom());
-                topChooser_.setColor(profile_.getColorTop());
-            }
+        swap.addActionListener(e -> {
+            Color old = profile_.getColorBottom();
+            profile_.setColorBottom(profile_.getColorTop());
+            profile_.setColorTop(old);
+            faux.updateColors(profile_.getColorTop(), profile_.getColorBottom());
+            bottomChooser_.setColor(profile_.getColorBottom());
+            topChooser_.setColor(profile_.getColorTop());
         });
         DDLabelBorder bottom = new DDLabelBorder("bottom", STYLE);
         bottomChooser_ = new ColorChooserPanel(STYLE, profile_.getColorBottom(), "engine.basepanel");

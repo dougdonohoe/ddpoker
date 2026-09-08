@@ -134,15 +134,11 @@ public class DDPagingTable extends DDPanel implements ActionListener
         refreshButton_.setEnabled(false);
 
         // invoke later to allow label to repaint and buttons to disable
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                 // Update the model and panel with the new offset.
-                DDPagingTableModel model = (DDPagingTableModel) table_.getDDTable().getModel();
-                model.refresh(offset_, rowCount_);
-                refreshPagingPanel();
-            }
+        SwingUtilities.invokeLater(() -> {
+            // Update the model and panel with the new offset.
+            DDPagingTableModel model = (DDPagingTableModel) table_.getDDTable().getModel();
+            model.refresh(offset_, rowCount_);
+            refreshPagingPanel();
         });
     }
 

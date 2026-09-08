@@ -42,8 +42,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PokerSimulatorPanel extends DDTabPanel implements DDProgressFeedback
 {
@@ -89,21 +87,13 @@ public class PokerSimulatorPanel extends DDTabPanel implements DDProgressFeedbac
         pb.add(progress_, BorderLayout.CENTER);
 
         run_ = new GlassButton("run", "Glass");
-        run_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                updateStats();
-            }
-        });
+        run_.addActionListener(e ->
+            updateStats());
 
         stop_ = new GlassButton("stop", "Glass");
         stop_.setEnabled(false);
-        stop_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                setStopRequested();
-            }
-        });
+        stop_.addActionListener(e ->
+            setStopRequested());
 
         pb.add(GuiUtils.NORTH(run_), BorderLayout.WEST);
         pb.add(progress_, BorderLayout.CENTER);

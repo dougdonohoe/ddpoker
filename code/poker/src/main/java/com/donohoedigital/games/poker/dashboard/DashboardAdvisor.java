@@ -53,8 +53,6 @@ import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class DashboardAdvisor extends DashboardItem
 {
@@ -97,27 +95,18 @@ public class DashboardAdvisor extends DashboardItem
         DDPanel base = new DDPanel();
 
         DDButton actButton_ = new GlassButton("aidoit", "Glass");
-        actButton_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                Phase phase = context_.getCurrentPhase();
+        actButton_.addActionListener(e -> {
+            Phase phase = context_.getCurrentPhase();
 
-                if (phase instanceof Bet)
-                {
-                    ((Bet) phase).doAI();
-                }
+            if (phase instanceof Bet)
+            {
+                ((Bet) phase).doAI();
             }
         });
 
         DDButton whyButton_ = new GlassButton("tellmewhy", "Glass");
-        whyButton_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                context_.processPhaseNow("AdvisorInfoDialog", null);
-            }
-        });
+        whyButton_.addActionListener(e ->
+            context_.processPhaseNow("AdvisorInfoDialog", null));
 
         /*
         ExplicitLayout layout = new ExplicitLayout();
@@ -190,15 +179,11 @@ public class DashboardAdvisor extends DashboardItem
         }
 
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        setTitle(getTitle());
-                        htmlAdvice_.setText(advice_);
-                        buttons_.setVisible(!NOADVICE.equals(advice_));
-                    }
-                });
+            () -> {
+                setTitle(getTitle());
+                htmlAdvice_.setText(advice_);
+                buttons_.setVisible(!NOADVICE.equals(advice_));
+            });
     }
 
     @Override

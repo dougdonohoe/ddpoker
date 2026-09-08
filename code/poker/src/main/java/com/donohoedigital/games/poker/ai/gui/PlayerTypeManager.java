@@ -43,8 +43,6 @@ import com.donohoedigital.gui.GuiUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PlayerTypeManager extends ProfileManagerPanel
 {
@@ -60,13 +58,8 @@ public class PlayerTypeManager extends ProfileManagerPanel
         roster_ = new GlassButton("roster", "Glass");
         roster_.setPreferredSize(new Dimension(80, 24));
         roster_.setBorderGap(0, 0, 0, 0);
-        roster_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setRoster();
-            }
-        });
+        roster_.addActionListener(e ->
+            setRoster());
 
         summaryBorder_.add(GuiUtils.EAST(roster_), BorderLayout.SOUTH);
     }

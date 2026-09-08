@@ -277,12 +277,8 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
                 case PokerConstants.CHAT_ADMIN_ERROR:
                     // alter chat window
                     SwingUtilities.invokeLater(
-                        new Runnable() {
-                            public void run()
-                            {
-                                chat_.removeBottomControls(context_);
-                            }
-                        }
+                        () ->
+                            chat_.removeBottomControls(context_)
                     );
                     break;
             }
@@ -382,11 +378,8 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
             Collections.sort(list);
 
             // table changed
-            GuiUtils.invoke(new Runnable() {
-                public void run() {
-                    fireTableDataChanged();
-                }
-            });
+            GuiUtils.invoke(() ->
+                fireTableDataChanged());
         }
     }
 

@@ -203,11 +203,8 @@ public class DealCommunity extends ChainPhase implements PlayerActionListener
 
             // do processing
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                            displayCards();
-                    }
-                }
+                () ->
+                    displayCards()
             );
         }
     }

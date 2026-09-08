@@ -415,23 +415,14 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
                 // otherwise, message has been received
                 // sleep in sep thread before generating remove dialog event
                 Thread tWait = new Thread(
-                        new Runnable()
-                        {
-                            public void run()
-                            {
-                                Utils.sleepMillis(nSleep_);
-                                // need to invoke later so happens from swing thread
-                                SwingUtilities.invokeLater(
-                                        new Runnable()
-                                        {
-                                            public void run()
-                                            {
-                                                removeDialog();
-                                            }
-                                        }
-                                );
-                            }
-                        }, "SendMessageDialog"
+                    () -> {
+                        Utils.sleepMillis(nSleep_);
+                        // need to invoke later so happens from swing thread
+                        SwingUtilities.invokeLater(
+                            () ->
+                                removeDialog()
+                        );
+                    }, "SendMessageDialog"
                 );
                 tWait.start();
             }
@@ -622,13 +613,8 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
         status_.setText(sText);
 
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        statusScroll_.getViewport().setViewPosition(ptop);
-                    }
-                }
+            () ->
+                statusScroll_.getViewport().setViewPosition(ptop)
         );
     }
 

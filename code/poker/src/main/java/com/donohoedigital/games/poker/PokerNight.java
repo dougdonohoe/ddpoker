@@ -205,16 +205,12 @@ public class PokerNight extends BasePhase implements GameClockListener
 
                     // show message
                     SwingUtilities.invokeLater(
-                            new Runnable()
-                            {
-                                public void run()
-                                {
-                                    AudioConfig.playFX("attention");
-                                    TypedHashMap params = new TypedHashMap();
-                                    params.setString(DisplayMessage.PARAM_MESSAGE, sMsg);
-                                    context_.processPhaseNow("PokerNightMessage", params);
-                                }
-                            });
+                        () -> {
+                            AudioConfig.playFX("attention");
+                            TypedHashMap params = new TypedHashMap();
+                            params.setString(DisplayMessage.PARAM_MESSAGE, sMsg);
+                            context_.processPhaseNow("PokerNightMessage", params);
+                        });
                 }
                 else
                 {

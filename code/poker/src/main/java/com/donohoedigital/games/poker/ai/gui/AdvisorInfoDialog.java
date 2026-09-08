@@ -473,35 +473,21 @@ public class AdvisorInfoDialog extends DialogPhase
                     }
                 }
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        grid_.repaint();
-                    }
-                });
+                GuiUtils.invoke(() ->
+                    grid_.repaint());
             }
             else
             {
                 grid_.clear();
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        grid_.repaint();
-                    }
-                });
+                GuiUtils.invoke(() ->
+                    grid_.repaint());
 
                 progressBar_.setPercentDone(0);
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        progressPanel_ = GuiUtils.CENTER(progressBar_);
-                        grid_.add(progressPanel_, BorderLayout.CENTER);
-                    }
+                GuiUtils.invoke(() -> {
+                    progressPanel_ = GuiUtils.CENTER(progressBar_);
+                    grid_.add(progressPanel_, BorderLayout.CENTER);
                 });
 
                 Hand community = ai.getCommunity();
@@ -595,13 +581,8 @@ public class AdvisorInfoDialog extends DialogPhase
 
                         ++count;
 
-                        GuiUtils.invoke(new Runnable()
-                        {
-                            public void run()
-                            {
-                                grid_.repaint(500);
-                            }
-                        });
+                        GuiUtils.invoke(() ->
+                            grid_.repaint(500));
 
                         progressBar_.setPercentDone((count*100)/total);
                     }
@@ -614,13 +595,9 @@ public class AdvisorInfoDialog extends DialogPhase
                 //ai.noPotential = false;
                 //RuleEngine.matrix = false;
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        grid_.remove(progressPanel_);
-                        grid_.repaint();
-                    }
+                GuiUtils.invoke(() -> {
+                    grid_.remove(progressPanel_);
+                    grid_.repaint();
                 });
             }
 

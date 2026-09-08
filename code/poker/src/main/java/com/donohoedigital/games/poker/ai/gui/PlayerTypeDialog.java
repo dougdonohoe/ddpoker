@@ -51,8 +51,6 @@ import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
@@ -135,13 +133,8 @@ public class PlayerTypeDialog extends OptionMenuDialog implements PropertyChange
         desc_ = new GlassButton("description", "Glass");
         desc_.setPreferredSize(new Dimension(80, 24));
         desc_.setBorderGap(0, 0, 0, 0);
-        desc_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setDescription();
-            }
-        });
+        desc_.addActionListener(e ->
+            setDescription());
 
         topButtons.setLayout(new GridLayout(1, 2, 4, 0));
         topButtons.add(desc_);

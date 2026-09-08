@@ -124,12 +124,10 @@ public class ButtonDisplay extends ChainPhase implements Runnable
 
         // repaint board
         SwingUtilities.invokeLater(
-            new Runnable() {
-                public void run() {
-                   if (old != null) PokerUtils.getGameboard().repaintTerritory(old, false);
-                    PokerUtils.getGameboard().repaintTerritory(t, false);
+            () -> {
+                if (old != null) PokerUtils.getGameboard().repaintTerritory(old, false);
+                PokerUtils.getGameboard().repaintTerritory(t, false);
 
-                }
             }
         );
     }
