@@ -251,17 +251,17 @@ ordinary builds are unaffected.
 
 Recipes are grouped in `rewrite.yml` (repo root), one group per reviewable change:
 
-| Recipe                                      | What it does                                                      |
-|---------------------------------------------|-------------------------------------------------------------------|
-| `com.donohoedigital.Imports`                 | Remove unused imports, normalize the rest (**run twice**)         |
-| `com.donohoedigital.TypeCleanup`             | Diamond operator, C-style array declarations                      |
-| `com.donohoedigital.Lambdas`                 | Anonymous functional interfaces to lambdas                        |
-| `com.donohoedigital.MethodReferences`        | Delegating lambdas to method references — **review each**         |
-| `com.donohoedigital.StringsAndCollections`   | `isEmpty()`, `contains()`, `valueOf()`, `StringBuilder`, charsets |
-| `com.donohoedigital.FinalAndModifiers`       | `final` private fields and classes, modifier hygiene              |
-| `com.donohoedigital.ParameterizedLogging`    | `log.debug("x " + y)` to `log.debug("x {}", y)` — needs flags     |
-| `com.donohoedigital.RedundantCasts`          | Casts left over from pre-generics code — **review each**          |
-| `com.donohoedigital.RedundantInitializers`   | Drop `= null` / `= false` / `= 0` from field declarations         |
+| Recipe                                     | What it does                                                      |
+|--------------------------------------------|-------------------------------------------------------------------|
+| `com.donohoedigital.Imports`               | Remove unused imports, normalize the rest (**run twice**)         |
+| `com.donohoedigital.TypeCleanup`           | Diamond operator, C-style array declarations                      |
+| `com.donohoedigital.Lambdas`               | Anonymous functional interfaces to lambdas                        |
+| `com.donohoedigital.MethodReferences`      | Delegating lambdas to method references — **review each**         |
+| `com.donohoedigital.StringsAndCollections` | `isEmpty()`, `contains()`, `valueOf()`, `StringBuilder`, charsets |
+| `com.donohoedigital.FinalAndModifiers`     | `final` private fields and classes, modifier hygiene              |
+| `com.donohoedigital.ParameterizedLogging`  | `log.debug("x " + y)` to `log.debug("x {}", y)` — needs flags     |
+| `com.donohoedigital.RedundantCasts`        | Casts left over from pre-generics code — **review each**          |
+| `com.donohoedigital.RedundantInitializers` | Drop `= null` / `= false` / `= 0` from field declarations         |
 
 ```shell
 cd code
@@ -762,7 +762,7 @@ poker
 
 ## Appendix E: Running GitHub Actions Locally
 
-You can run GitHub actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
+You can run GitHub Actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
 
 To install `act`:
 
