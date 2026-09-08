@@ -328,15 +328,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
 
         DDButton paste = new GlassButton("pasteurl", "Glass");
         buttons.add(paste, BorderLayout.CENTER);
-        paste.addActionListener(new ActionListener()
-        {
-            DDTextField _text = text;
-
-            public void actionPerformed(ActionEvent e)
-            {
-                GuiUtils.copyToClipboard(text.getText());
-            }
-        });
+        paste.addActionListener(e -> GuiUtils.copyToClipboard(text.getText()));
 
         if (bUseLastButton)
         {
@@ -345,16 +337,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
             buttons.add(uselast, BorderLayout.EAST);
             if (sLast != null && sLast.length() > 0)
             {
-                uselast.addActionListener(new ActionListener()
-                {
-                    DDTextField _text = text;
-                    String _sLast = sLast;
-
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        text.setText(sLast);
-                    }
-                });
+                uselast.addActionListener(e -> text.setText(sLast));
             }
             else
             {

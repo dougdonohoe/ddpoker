@@ -475,14 +475,9 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
      * invoke in timer thread (to get out of any locks held by
      * callers like TournamentDirector).
      */
-    private PokerTableListener listener_ = new PokerTableListener()
-    {
-        public void tableEventOccurred(final PokerTableEvent event)
-        {
+    private PokerTableListener listener_ = event ->
             // run immediately
             timer.schedule(new TableEventTask(event), 0);
-        }
-    };
 
     /**
      * Task for particular poker table event.  When invoked, runs immediately

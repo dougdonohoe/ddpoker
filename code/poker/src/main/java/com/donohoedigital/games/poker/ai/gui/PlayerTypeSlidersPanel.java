@@ -119,26 +119,24 @@ public class PlayerTypeSlidersPanel extends DDPanel
             {
                 slider_.setValue(itemx.getValue());
                 slider_.setVisible(!itemx.isExpanded());
-                slider_.addChangeListener(new ChangeListener()
-                {
-                    public void stateChanged(ChangeEvent e)
-                    {
-                        AIStrategyNode item = (AIStrategyNode)getItem();
+                slider_.addChangeListener(e -> {
+                        // renamed from 'item' - a lambda shares the enclosing scope, where the
+                        // SliderItemPanel constructor already has 'item' and 'itemx'
+                        AIStrategyNode node = (AIStrategyNode)getItem();
 
                         value_.setText(Integer.toString(slider_.getValue()));
 
                         //if (!bUpdating_ && !((DDSlider)e.getSource()).getValueIsAdjusting())
                         if (!bUpdating_)
                         {
-                            item.setValue(slider_.getValue());
-                            item.propagateValueChange();
+                            node.setValue(slider_.getValue());
+                            node.propagateValueChange();
                             if (PlayerTypeSlidersPanel.changeListener != null)
                             {
                                 PlayerTypeSlidersPanel.changeListener.stateChanged(e);    
                             }
                         }
 
-                    }
                 });
 
                 borderPanel_.add(slider_, BorderLayout.EAST);
