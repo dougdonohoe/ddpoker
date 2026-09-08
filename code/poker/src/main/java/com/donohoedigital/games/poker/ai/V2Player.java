@@ -336,7 +336,7 @@ public class V2Player extends V1Player implements AIConstants
 
         Hand community = new Hand(getCommunity()); // copy because we will be altering
 
-        if (community.size() == 0)
+        if (community.isEmpty())
         {
             return;
         }

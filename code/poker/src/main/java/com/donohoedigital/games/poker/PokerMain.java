@@ -208,7 +208,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
 
         // copy v2 changes
         File userSaveV3 = GameConfigUtils.getSaveDir();
-        File userSaveV2 = new File(userSaveV3.getAbsolutePath().replaceAll("poker3", "poker2"));
+        File userSaveV2 = new File(userSaveV3.getAbsolutePath().replace("poker3", "poker2"));
         if (userSaveV2.exists() && userSaveV2.isDirectory())
         {
             ConfigUtils.copyDir(userSaveV2, userSaveV3, new UpgradeFilter());

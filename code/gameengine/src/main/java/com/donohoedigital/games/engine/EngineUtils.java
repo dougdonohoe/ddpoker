@@ -658,7 +658,7 @@ public class EngineUtils
      */
     public synchronized static void cancelCancelables()
     {
-        if (cancelables_ == null || cancelables_.size() == 0) return;
+        if (cancelables_ == null || cancelables_.isEmpty()) return;
 
         // run in swing loop since possible closing dialogs
         GuiUtils.invoke(() ->

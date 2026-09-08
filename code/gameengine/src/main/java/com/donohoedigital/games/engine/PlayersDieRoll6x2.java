@@ -138,7 +138,7 @@ public class PlayersDieRoll6x2 implements DataMarshal
         for (int i = 0; i < dieRolls.length; i++)
         {
             if (isPlayerEliminated(i)) continue;
-            if ((dieRolls[i].size() == 0) || (
+            if ((dieRolls[i].isEmpty()) || (
                         (dieRolls[i].size() >= nMinRolls) &&
                         ((DieRoll6x2)dieRolls[i].get(dieRolls[i].size() -1)).getSum() == nMax))
             {

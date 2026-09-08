@@ -61,7 +61,7 @@ public class UpgradedKeyImplJpa extends JpaBaseDao<UpgradedKey, Long> implements
         query.setParameter("key", sKey);
 
         List<UpgradedKey> list = (List<UpgradedKey>) query.getResultList();
-        if (list.size() == 0) return null;
+        if (list.isEmpty()) return null;
         return list.get(0);
     }
 

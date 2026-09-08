@@ -601,7 +601,7 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
 
         
         // points
-        if (myPoints_ != null && myPoints_.size() > 0)
+        if (myPoints_ != null && !myPoints_.isEmpty())
         {
             writer.printElementCloseLine();
             int nSize = myPoints_.size();

@@ -262,7 +262,7 @@ public class GameState extends MsgState implements SaveFile
      */
     public void resetAfterRead(boolean bCheckEmpty)
     {
-        if (bCheckEmpty && entries_.size() > 0)
+        if (bCheckEmpty && !entries_.isEmpty())
         {
             logger.warn("GameState resetAfterRead: " + sName_ + ": has " + entries_.size() + " entries left.");
             for (int i = 0; i < entries_.size(); i++)
@@ -551,7 +551,7 @@ public class GameState extends MsgState implements SaveFile
      */
     public GameStateEntry removeEntry()
     {
-        ApplicationError.assertTrue(entries_.size() > 0, "No more entries");
+        ApplicationError.assertTrue(!entries_.isEmpty(), "No more entries");
         return entries_.remove(0);
     }
     
@@ -560,7 +560,7 @@ public class GameState extends MsgState implements SaveFile
      */
     public GameStateEntry peekEntry()
     {
-        if (entries_.size() == 0) return null;
+        if (entries_.isEmpty()) return null;
         return entries_.get(0);
     }
     

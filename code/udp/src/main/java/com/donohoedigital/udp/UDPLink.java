@@ -1486,9 +1486,7 @@ public class UDPLink
         public String toString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.append("AVG: "+ getAverage() + ", OUT: " + dataOut +", RE: " + dataresend +
-                      ", IN: "+ dataIn + ", DUP: "+ dataDups +
-                      ", BIN: " + Utils.formatSizeBytes(bytesIn) + ", BOUT: "+ Utils.formatSizeBytes(bytesOut));
+            sb.append("AVG: ").append(getAverage()).append(", OUT: ").append(dataOut).append(", RE: ").append(dataresend).append(", IN: ").append(dataIn).append(", DUP: ").append(dataDups).append(", BIN: ").append(Utils.formatSizeBytes(bytesIn)).append(", BOUT: ").append(Utils.formatSizeBytes(bytesOut));
 
             return sb.toString();
         }

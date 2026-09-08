@@ -1654,7 +1654,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             OtherTables.consolidateTables(game_, tables);
 
             // safety check - can't have added players in addition to being removed
-            ApplicationError.assertTrue(!(table.getAddedList().size() > 0 && table.isRemoved()),
+            ApplicationError.assertTrue(!(!table.getAddedList().isEmpty() && table.isRemoved()),
                                         "Table removed but has players added", table);
 
             // if table was removed, we need to move observers

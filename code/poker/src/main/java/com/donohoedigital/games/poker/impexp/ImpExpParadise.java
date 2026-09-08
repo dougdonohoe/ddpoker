@@ -395,7 +395,7 @@ public class ImpExpParadise implements ImpExp
 
         buf.append(" | ");
 
-        if (ieHand.community.size() > 0)
+        if (!ieHand.community.isEmpty())
         {
             buf.append("Board: [");
             for (int i = 0; i < ieHand.community.size(); ++i)

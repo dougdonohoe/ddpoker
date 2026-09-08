@@ -76,7 +76,7 @@ public class PocketScores
         }
 
         // compute fingerprint for flop - change triggers cache flush
-        long fpFlop = (community.size() == 0) ? 0 :
+        long fpFlop = (community.isEmpty()) ? 0 :
                       1L << community.getCard(0).getIndex() |
                       1L << community.getCard(1).getIndex() |
                       1L << community.getCard(2).getIndex();

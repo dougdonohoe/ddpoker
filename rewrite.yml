@@ -92,19 +92,24 @@ type: specs.openrewrite.org/v1beta/recipe
 name: com.donohoedigital.StringsAndCollections
 displayName: String and collection API modernization
 description: >
-  isEmpty() over size() == 0, contains() over indexOf(), constant-first equals(),
-  valueOf() over wrapper constructors, StringBuilder over StringBuffer, and friends.
+  isEmpty() over size() == 0, contains() over indexOf(), valueOf() over wrapper
+  constructors, StringBuilder over StringBuffer, explicit charsets, and friends.
+  NOT here, deliberately:
+  - EqualsAvoidsNull.  It rewrites sName.equals("foo") as "foo".equals(sName), which is
+    not behaviour preserving: a null receiver throws NPE today and would silently return
+    false afterwards.  86 sites across 42 files.  Rejected - we do not want Yoda
+    conditions in this code base, and an NPE on an unexpected null is worth seeing.
+  - UseListSort.  It rewrites Collections.sort(list) as list.sort(null); correct, since
+    null means natural ordering, but it reads worse than what it replaces.
 recipeList:
   - org.openrewrite.staticanalysis.IsEmptyCallOnCollections
   - org.openrewrite.staticanalysis.IndexOfReplaceableByContains
-  - org.openrewrite.staticanalysis.EqualsAvoidsNull
   - org.openrewrite.staticanalysis.StringLiteralEquality
   - org.openrewrite.staticanalysis.NoValueOfOnStringType
   - org.openrewrite.staticanalysis.NoToStringOnStringType
   - org.openrewrite.staticanalysis.PrimitiveWrapperClassConstructorToValueOf
   - org.openrewrite.staticanalysis.UseStandardCharset
   - org.openrewrite.staticanalysis.ExplicitCharsetOnStringGetBytes
-  - org.openrewrite.staticanalysis.UseListSort
   - org.openrewrite.staticanalysis.UseStringReplace
   - org.openrewrite.staticanalysis.ChainStringBuilderAppendCalls
   - org.openrewrite.staticanalysis.ReplaceStringBufferWithStringBuilder

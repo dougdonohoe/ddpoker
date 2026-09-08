@@ -244,7 +244,7 @@ public class DDComboBox extends JComboBox implements
 
         List<?> values = elem.getListValues();
 
-        if (values == null || values.size() == 0)
+        if (values == null || values.isEmpty())
         {
             logger.warn("DataElement " + elem.getName() + " has no list values");
             return;

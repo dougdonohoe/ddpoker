@@ -400,7 +400,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         checkButtons();
         
         // if no profiles, show msg
-        if (bFileMode_ && profilePanels_.size() == 0) {
+        if (bFileMode_ && profilePanels_.isEmpty()) {
             SwingUtilities.invokeLater(
                 () -> {
                     String sMsg = PropertyConfig.getMessage("msg.needprofile" + sMsgName_);

@@ -348,7 +348,7 @@ public class PlayerProfile extends BaseProfile
 
         List<TournamentHistory> history = getHistory();
         TournamentHistory hist;
-        if (history.size() == 0)
+        if (history.isEmpty())
         {
             return 0;
         }
@@ -374,7 +374,7 @@ public class PlayerProfile extends BaseProfile
 
         List<TournamentHistory> history = getHistory();
         TournamentHistory hist;
-        if (history.size() == 0)
+        if (history.isEmpty())
         {
             return 0;
         }

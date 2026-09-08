@@ -358,7 +358,7 @@ public class ServerSideGame extends ServerDataFile implements GameInfo
      */
     public ActionItem getLastActionItem()
     {
-        if (actionList_.size() == 0) return null;
+        if (actionList_.isEmpty()) return null;
         return (ActionItem) actionList_.get(actionList_.size() - 1);
     }
 

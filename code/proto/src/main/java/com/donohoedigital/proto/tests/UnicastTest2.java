@@ -206,7 +206,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
                 for (int i = 0; i < nNum; i++)
                 {
                     sb.setLength(0);
-                    sb.append("This is message for the test server to process and handle and stuff " + (i + 1));
+                    sb.append("This is message for the test server to process and handle and stuff ").append(i + 1);
                     if (ADD_EXTRA)
                     {
                         sb.append(" ");

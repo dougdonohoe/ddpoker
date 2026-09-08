@@ -51,6 +51,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class is for testing registrations through a proxy.  We configure
@@ -139,7 +140,7 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
         // we send the entire buffer
         logger.debug("Sending DATA to " + proxy_ + " ->\n========= INPUT =========\n" + sData +
                        "=========  END  =========");
-        writer.write(sData.getBytes());
+        writer.write(sData.getBytes(StandardCharsets.UTF_8));
     }
 
     /** DDMessageListener - output progress **/

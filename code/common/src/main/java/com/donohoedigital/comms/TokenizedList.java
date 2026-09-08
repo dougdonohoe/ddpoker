@@ -103,7 +103,7 @@ public class TokenizedList implements DataMarshal
      */
     private Object nextToken(Class<?> cExpected)
     {
-        ApplicationError.assertTrue(tokens_.size() > 0, "No tokens left");
+        ApplicationError.assertTrue(!tokens_.isEmpty(), "No tokens left");
         Object o = tokens_.remove(0);
         if (o == null) return null;
         ApplicationError.assertTrue(cExpected.isAssignableFrom(o.getClass()), "Next token wrong type", o.getClass().getName());
@@ -115,7 +115,7 @@ public class TokenizedList implements DataMarshal
      */
     public Object peekToken()
     {
-        ApplicationError.assertTrue(tokens_.size() > 0, "No tokens left");
+        ApplicationError.assertTrue(!tokens_.isEmpty(), "No tokens left");
         return tokens_.get(0);
     }
     
@@ -124,7 +124,7 @@ public class TokenizedList implements DataMarshal
      */
     public boolean hasMoreTokens()
     {
-        return(tokens_.size() > 0);
+        return(!tokens_.isEmpty());
     }
     
     /**

@@ -1,5 +1,7 @@
 package com.donohoedigital.base;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * Encodes and decodes to and from Base64 notation.
  *
@@ -765,7 +767,7 @@ public class Base64
         }   // end try
         catch( java.io.UnsupportedEncodingException uee )
         {
-            bytes = s.getBytes();
+            bytes = s.getBytes(StandardCharsets.UTF_8);
         }   // end catch
 		//</change>
         
@@ -1341,7 +1343,7 @@ public class Base64
     
     public static void main(String[] s)
     {
-        System.out.println(s[0] +" equals " + Base64.encodeBytes(s[0].getBytes()));
+        System.out.println(s[0] +" equals " + Base64.encodeBytes(s[0].getBytes(StandardCharsets.UTF_8)));
     }
     
 }   // end class Base64

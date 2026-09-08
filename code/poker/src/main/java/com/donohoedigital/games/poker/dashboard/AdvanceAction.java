@@ -376,7 +376,7 @@ public class AdvanceAction extends DashboardItem implements ActionListener
      */
     public static HandAction getAdvanceAction()
     {
-        if (impl_ != null && impl_.buttons_.size() != 0)
+        if (impl_ != null && !impl_.buttons_.isEmpty())
         {
             HandAction action = impl_._getAdvanceAction();
             impl_.clearButtons();

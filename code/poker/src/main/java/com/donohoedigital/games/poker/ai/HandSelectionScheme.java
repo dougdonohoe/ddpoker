@@ -177,7 +177,7 @@ public class HandSelectionScheme extends BaseProfile
             HandGroup group = handgroups_.get(i);
 
             if (group.getClassCount() > 0) {
-                map_.setString("hands" + i, group.getSummary().replaceAll(" ", "") + "|" + Integer.toString(group.getStrength()));
+                map_.setString("hands" + i, group.getSummary().replace(" ", "") + "|" + Integer.toString(group.getStrength()));
             }
         }
 
@@ -251,7 +251,7 @@ public class HandSelectionScheme extends BaseProfile
         String sDesc = getDescription();
         if (sDesc != null)
         {
-            buf.append(Utils.encodeHTML(sDesc).replaceAll("\n", "<BR>\n"));
+            buf.append(Utils.encodeHTML(sDesc).replace("\n", "<BR>\n"));
             buf.append("<BR>");
         }
 
