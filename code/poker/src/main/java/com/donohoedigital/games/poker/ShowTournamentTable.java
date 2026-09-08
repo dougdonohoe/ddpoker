@@ -655,8 +655,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
         // do remaining start a bit later to allow for
         // UI to draw
-        SwingUtilities.invokeLater(() ->
-            poststart());
+        SwingUtilities.invokeLater(this::poststart);
     }
 
     /**

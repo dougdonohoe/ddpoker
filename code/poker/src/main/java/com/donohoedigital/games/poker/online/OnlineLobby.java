@@ -378,8 +378,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
             Collections.sort(list);
 
             // table changed
-            GuiUtils.invoke(() ->
-                fireTableDataChanged());
+            GuiUtils.invoke(this::fireTableDataChanged);
         }
     }
 

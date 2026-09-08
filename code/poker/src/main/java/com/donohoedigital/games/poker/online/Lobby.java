@@ -534,8 +534,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
      */
     public void propertyChange(PropertyChangeEvent evt)
     {
-        SwingUtilities.invokeLater(() ->
-            updateProfileData());
+        SwingUtilities.invokeLater(this::updateProfileData);
     }
 
     /**
@@ -862,8 +861,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
                 }
 
                 // table changed
-                GuiUtils.invoke(() ->
-                    fireTableDataChanged());
+                GuiUtils.invoke(this::fireTableDataChanged);
             }
         }
     }
@@ -953,8 +951,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
                 {
                     AudioConfig.playFX("observerjoin");
                 }
-                GuiUtils.invoke(() ->
-                    fireTableDataChanged());
+                GuiUtils.invoke(this::fireTableDataChanged);
             }
         }
     }

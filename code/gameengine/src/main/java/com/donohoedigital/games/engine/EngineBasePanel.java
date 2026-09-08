@@ -165,8 +165,7 @@ public class EngineBasePanel extends JPanel
         // Upon change, change focus to this panel (old focus may have been
         // on widget in removed component)
         SwingUtilities.invokeLater(
-            () ->
-                requestFocus()
+            this::requestFocus
         );
     }
 

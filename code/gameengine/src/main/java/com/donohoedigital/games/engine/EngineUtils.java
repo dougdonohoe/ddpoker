@@ -661,8 +661,7 @@ public class EngineUtils
         if (cancelables_ == null || cancelables_.isEmpty()) return;
 
         // run in swing loop since possible closing dialogs
-        GuiUtils.invoke(() ->
-            EngineUtils.cancel());
+        GuiUtils.invoke(EngineUtils::cancel);
     }
 
     /**
