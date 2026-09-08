@@ -53,6 +53,6 @@ public abstract class AliasedPageableServiceProvider<T> extends PageableServiceP
     @Override
     public IModel<T> model(T object)
     {
-        return new AliasedCompoundPropertyModel<T>(new EntityModel<T>(object));
+        return new AliasedCompoundPropertyModel<>(new EntityModel<T>(object));
     }
 }

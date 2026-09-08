@@ -156,7 +156,7 @@ public class DatabaseQuery
         if (joinTables_ == null)
         {
             // Assume common case of one table.
-            joinTables_ = new ArrayList<String>(1);
+            joinTables_ = new ArrayList<>(1);
         }
 
         joinTables_.add(tableName);
@@ -248,7 +248,7 @@ public class DatabaseQuery
 
         if (bindValues_ == null)
         {
-            bindValues_ = new ArrayList<Object>();
+            bindValues_ = new ArrayList<>();
         }
 
         bindValues_.add(bindValue);

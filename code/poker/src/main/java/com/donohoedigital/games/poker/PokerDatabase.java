@@ -1065,7 +1065,7 @@ public class PokerDatabase
 
     public static List<TournamentHistory> getTournamentHistory(PlayerProfile profile)
     {
-        List<TournamentHistory> hist = new ArrayList<TournamentHistory>();
+        List<TournamentHistory> hist = new ArrayList<>();
 
         if (profile == null)
         {
@@ -1564,7 +1564,7 @@ public class PokerDatabase
         Database database = getDatabase();
         Connection conn = database.getConnection();
 
-        List<Integer> hands = new ArrayList<Integer>();
+        List<Integer> hands = new ArrayList<>();
 
         try
         {
@@ -1909,11 +1909,11 @@ public class PokerDatabase
                 pstmt.close();
             }
 
-            PokerPlayer players[] = new PokerPlayer[PokerConstants.SEATS];
-            int over[] = new int[PokerConstants.SEATS];
-            int win[] = new int[PokerConstants.SEATS];
-            int start[] = new int[PokerConstants.SEATS];
-            int end[] = new int[PokerConstants.SEATS];
+            PokerPlayer[] players = new PokerPlayer[PokerConstants.SEATS];
+            int[] over = new int[PokerConstants.SEATS];
+            int[] win = new int[PokerConstants.SEATS];
+            int[] start = new int[PokerConstants.SEATS];
+            int[] end = new int[PokerConstants.SEATS];
 
             pstmt = conn.prepareStatement(
                     "SELECT DISTINCT\n" +
@@ -2537,7 +2537,7 @@ public class PokerDatabase
         String driverURL = DATABASE_DRIVER_URL_PREFIX + clientPath.getAbsolutePath();
 
         // Add the database.
-        Map<String, String> htParams = new HashMap<String, String>();
+        Map<String, String> htParams = new HashMap<>();
         htParams.put(DatabaseManager.PARAM_DRIVER_CLASS, DATABASE_DRIVER_CLASS);
         htParams.put(DatabaseManager.PARAM_DRIVER_URL, driverURL);
         htParams.put(DatabaseManager.PARAM_USERNAME, DATABASE_USERNAME);
@@ -2619,7 +2619,7 @@ public class PokerDatabase
                     "WHERE PLH_HAND_ID=?\n" +
                     "  AND PLH_PLAYER_ID=TPL_ID AND TPL_PROFILE_CREATE_DATE=?");
 
-            String holeCards[] = new String[2];
+            String[] holeCards = new String[2];
 
             try
             {

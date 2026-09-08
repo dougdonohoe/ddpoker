@@ -128,7 +128,7 @@ public class Aliases extends VoidPanel
         @Override
         protected List<OnlineProfile> load()
         {
-            if (user == null) return new ArrayList<OnlineProfile>();
+            if (user == null) return new ArrayList<>();
 
             return profileService.getAllOnlineProfilesForEmail(user.getEmail(), user.getName());
         }

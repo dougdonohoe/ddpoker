@@ -58,7 +58,7 @@ public class PieChartPanel extends DDPanel
         // also compute total of all values
         // and determine if more than one wedge has a non-zero value
 
-        double wedgeValue[] = new double[wedgeCount];
+        double[] wedgeValue = new double[wedgeCount];
         double totalValues = 0;
         int nonZeroWedgeCount = 0;
         int lastNonZeroWedge = 0;
@@ -166,7 +166,7 @@ public class PieChartPanel extends DDPanel
     {
         private static final DefaultPieChartModel INSTANCE = new DefaultPieChartModel();
 
-        private double value_[] = new double[] { 10, 25, 65 };
+        private double[] value_ = new double[] { 10, 25, 65 };
 
         public int getWedgeCount()
         {

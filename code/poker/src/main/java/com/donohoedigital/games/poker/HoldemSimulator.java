@@ -505,7 +505,7 @@ public class HoldemSimulator
         PokerTable table = hhand.getTable();
         PokerPlayer player;
 
-        Hand hands[] = new Hand[10];
+        Hand[] hands = new Hand[10];
 
         for (int seat = 0; seat < 10; ++seat)
         {
@@ -753,7 +753,7 @@ public class HoldemSimulator
         IndexKeeper ik = new IndexKeeper();
         HandInfoFaster fast = new HandInfoFaster();
         Deck deck = new Deck(false);
-        StatResult results[] = new StatResult[hands.length];
+        StatResult[] results = new StatResult[hands.length];
 
         // remove dealt cards from deck
         for (int i = 0; i < results.length; i++)
@@ -764,7 +764,7 @@ public class HoldemSimulator
         deck.removeCards(community);
 
         // create array of all hands plus community at end
-        Hand allhands[] = new Hand[hands.length + 1];
+        Hand[] allhands = new Hand[hands.length + 1];
         System.arraycopy(hands, 0, allhands, 0, hands.length);
         allhands[hands.length] = community;
 
@@ -794,7 +794,7 @@ public class HoldemSimulator
     /**
      * recursive algorithm to iterate through all combinations
      */
-    private static void iterate(HandInfoFaster fast, StatResult results[],
+    private static void iterate(HandInfoFaster fast, StatResult[] results,
                                 Deck deck, Hand[] allhands,
                                 DDProgressFeedback progress,
                                 IndexKeeper ik, int nDeckStartIdx)
@@ -873,7 +873,7 @@ public class HoldemSimulator
         int updateResultsInterval = 50000;
         int updateBarInterval = 10000;
 
-        void nextIndex(Hand allhands[])
+        void nextIndex(Hand[] allhands)
         {
             if (nHandIdx == INIT)
             {
@@ -887,7 +887,7 @@ public class HoldemSimulator
             }
         }
 
-        private void nextHand(Hand allhands[])
+        private void nextHand(Hand[] allhands)
         {
             while (true)
             {
@@ -908,7 +908,7 @@ public class HoldemSimulator
         /**
          * return true if index incremented and still in current hand
          */
-        private boolean nextCard(Hand allhands[])
+        private boolean nextCard(Hand[] allhands)
         {
             Card c;
             boolean bDone = false;

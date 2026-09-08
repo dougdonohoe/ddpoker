@@ -87,7 +87,7 @@ public class ServerSecurityProvider extends com.donohoedigital.base.SecurityProv
         md.update(ID);
         md.update(Utils.encode(SecurityUtils.class.getName())); // For backward compatibility.
 
-        byte raw[] = md.digest();
+        byte[] raw = md.digest();
         int rawLength = raw.length;
         int lenDiff = (getEncryptionKeyLength() - rawLength);
 

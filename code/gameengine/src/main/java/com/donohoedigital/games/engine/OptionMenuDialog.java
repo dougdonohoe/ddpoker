@@ -57,7 +57,7 @@ public abstract class OptionMenuDialog extends DialogPhase implements ChangeList
     private DDHtmlArea text_;
     private DDPanel data_;
     protected DDButton defaultButton_;
-    protected List<DDOption> options_ = new ArrayList<DDOption>();
+    protected List<DDOption> options_ = new ArrayList<>();
 
     /**
      * Create contents

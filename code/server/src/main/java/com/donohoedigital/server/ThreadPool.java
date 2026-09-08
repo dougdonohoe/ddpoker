@@ -50,8 +50,8 @@ public class ThreadPool
     static Logger logger = LogManager.getLogger(ThreadPool.class);
     
     private GameServer server_;
-    private final List<SocketThread> idle_ = new LinkedList<SocketThread>();
-    private final List<SocketThread> workers_ = new ArrayList<SocketThread>();
+    private final List<SocketThread> idle_ = new LinkedList<>();
+    private final List<SocketThread> workers_ = new ArrayList<>();
     private Class<?> socketClass_;
     private BaseServlet servlet_;
 

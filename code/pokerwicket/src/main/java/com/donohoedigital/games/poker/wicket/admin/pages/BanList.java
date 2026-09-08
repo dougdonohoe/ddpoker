@@ -96,7 +96,7 @@ public class BanList extends AdminPokerPage
         CompoundPropertyModel<BanData> formData = new CompoundPropertyModel<>(data);
 
         // form
-        Form<BanData> form = new Form<BanData>("form", formData)
+        Form<BanData> form = new Form<>("form", formData)
         {
             private static final long serialVersionUID = 42L;
 
@@ -256,7 +256,7 @@ public class BanList extends AdminPokerPage
             row.add(DateLabel.forDatePattern("createDate", PropertyConfig.getMessage("msg.format.date")));
 
             // unban
-            Form<String> form = new Form<String>("form", new StringModel(ban.getKey()))
+            Form<String> form = new Form<>("form", new StringModel(ban.getKey()))
             {
                 @Override
                 protected void onSubmit()

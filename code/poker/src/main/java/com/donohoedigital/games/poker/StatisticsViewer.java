@@ -1016,7 +1016,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
         String[] names;
         int[] widths;
 
-        public ResultsModel(List<TournamentHistory> finishes, String names[], int[] widths)
+        public ResultsModel(List<TournamentHistory> finishes, String[] names, int[] widths)
         {
             this.finishes = finishes;
             this.names = names;

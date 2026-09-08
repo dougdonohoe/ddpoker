@@ -75,7 +75,7 @@ public class Roster
                 (",+", ",").replaceAll
                 ("^,|,$", "").split(",");
 
-        List<String> list = new ArrayList<String>(names.length);
+        List<String> list = new ArrayList<>(names.length);
 
         if (names[0].length() == 0) return list;
 

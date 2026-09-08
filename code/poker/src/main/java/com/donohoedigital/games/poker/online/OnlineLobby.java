@@ -298,7 +298,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
      */
     private class PlayerModel extends DefaultTableModel
     {
-        private List<OnlinePlayerInfo> list = new ArrayList<OnlinePlayerInfo>();
+        private List<OnlinePlayerInfo> list = new ArrayList<>();
 
         @Override
         public String getColumnName(int c) {

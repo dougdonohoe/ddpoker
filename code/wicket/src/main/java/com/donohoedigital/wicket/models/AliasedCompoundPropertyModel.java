@@ -90,7 +90,7 @@ public class AliasedCompoundPropertyModel<T> extends CompoundPropertyModel<T>
 	 * aliases to matter.
 	 */
 	@SuppressWarnings({"CollectionDeclaredAsConcreteClass"})
-    private final ArrayList<Alias> aliases = new ArrayList<Alias>(1);
+    private final ArrayList<Alias> aliases = new ArrayList<>(1);
 
 
 	@SuppressWarnings("unchecked")

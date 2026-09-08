@@ -95,7 +95,7 @@ public class WhatIsMyIp implements DDMessageListener
                                  EngineMessage.CAT_PUBLIC_IP);
     }
 
-    public static void main(String args[])
+    public static void main(String[] args)
     {
 
         new ConfigManager("poker", ApplicationType.COMMAND_LINE, false);

@@ -48,7 +48,7 @@ import java.util.*;
 class CustomCachingMetadataReaderFactory extends SimpleMetadataReaderFactory
 {
 
-    private final Map<Resource, MetadataReader> classReaderCache = new HashMap<Resource, MetadataReader>();
+    private final Map<Resource, MetadataReader> classReaderCache = new HashMap<>();
 
 
     /**

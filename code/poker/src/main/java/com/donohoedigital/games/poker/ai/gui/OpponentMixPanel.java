@@ -58,7 +58,7 @@ public class OpponentMixPanel extends DDTabPanel
         String sStyle = "OptionsDialog";
 
         List<BaseProfile> listItems = PlayerType.getProfileList();
-        List<TypeListItem> typeItems = new ArrayList<TypeListItem>();
+        List<TypeListItem> typeItems = new ArrayList<>();
 
         Collections.sort(listItems);
 

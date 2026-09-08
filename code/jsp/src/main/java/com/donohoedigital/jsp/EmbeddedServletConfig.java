@@ -82,7 +82,7 @@ public class EmbeddedServletConfig implements ServletConfig
     @SuppressWarnings({"RawUseOfParameterizedType"})
     public Enumeration<String> getInitParameterNames()
     {
-        List<String> params = new ArrayList<String>();
+        List<String> params = new ArrayList<>();
         return Collections.enumeration(params);
     }
 

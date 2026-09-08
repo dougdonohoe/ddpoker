@@ -93,12 +93,12 @@ public class GameContext
     private GamePhase lastLoopPhase_ = null;
 
     // Stack of GamePhase's that have history=true
-    private Stack<GamePhase> pastPhases_ = new Stack<GamePhase>();
+    private Stack<GamePhase> pastPhases_ = new Stack<>();
 
     // Cached phases are Phase instances that are saved
     // for reuse because they typically retain state (e.g., loop phases and
     // menu phases which has user input
-    private Map<String, Phase> cachedPhases_ = new HashMap<String, Phase>();
+    private Map<String, Phase> cachedPhases_ = new HashMap<>();
 
 
     /**

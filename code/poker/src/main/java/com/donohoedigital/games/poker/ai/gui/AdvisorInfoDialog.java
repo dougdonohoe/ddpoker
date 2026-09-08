@@ -517,7 +517,7 @@ public class AdvisorInfoDialog extends DialogPhase
                 pocket.addCard(Card.BLANK);
                 pocket.addCard(Card.BLANK);
 
-                int suitEquivalenceValues[] = new int[13*13];
+                int[] suitEquivalenceValues = new int[13*13];
 
                 int suitCount = community.getNumSuits();
 

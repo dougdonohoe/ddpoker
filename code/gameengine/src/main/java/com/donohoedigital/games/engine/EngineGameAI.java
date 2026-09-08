@@ -49,7 +49,7 @@ import com.donohoedigital.games.config.*;
 public abstract class EngineGameAI extends GameAI
 {
     protected GamePlayer gamePlayer_;
-    protected Territory my_[];
+    protected Territory[] my_;
     protected int myNum_ = 0;
 
     /** 
@@ -93,7 +93,7 @@ public abstract class EngineGameAI extends GameAI
      */
     protected void determineMyTerritories()
     {
-        Territory ts[] = Territory.getTerritoryArrayCached();
+        Territory[] ts = Territory.getTerritoryArrayCached();
         myNum_ = 0;
         for (int i = 0; i < ts.length; i++)
         {

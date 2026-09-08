@@ -69,7 +69,7 @@ public class UserRegistration extends BasePhase implements PropertyChangeListene
     private DDButton reregButton_;
     private JComponent focus_;
     private RegistrationMessage msg_ = new RegistrationMessage(EngineMessage.CAT_USER_REG);
-    private List<DDOption> options_ = new ArrayList<DDOption>();
+    private List<DDOption> options_ = new ArrayList<>();
     private long nRegTime_ = 0;
     private Preferences prefs_;
     private static String REGTIME = "regtime";

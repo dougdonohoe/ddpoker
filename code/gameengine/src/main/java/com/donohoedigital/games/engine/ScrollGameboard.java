@@ -1002,7 +1002,7 @@ public class ScrollGameboard extends JViewport implements
     
     // handler for modal panels
     ModalHandler handler_ = new ModalHandler();
-    private Stack<JPanel> topPanels_ = new Stack<JPanel>();
+    private Stack<JPanel> topPanels_ = new Stack<>();
     private JPanel topPanel_ = null; // last modal panel
     
     /**

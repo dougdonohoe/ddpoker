@@ -62,7 +62,7 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
     private SimulatorDialog sim_;
     private OptionInteger numOpponents_, numSims_;
     private DDRadioButton allcombo_, simcombo_;
-    private List<DDLabelBorder> opponents_ = new ArrayList<DDLabelBorder>();
+    private List<DDLabelBorder> opponents_ = new ArrayList<>();
     private boolean bStopRequested_ = false;
     private boolean bIterWayBig_;
     private GlassButton run_, stop_;

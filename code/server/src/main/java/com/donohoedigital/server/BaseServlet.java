@@ -61,7 +61,7 @@ public abstract class BaseServlet extends HttpServlet
     private GameServer server;
     
     // used to track current servlet context
-    private static final ThreadLocal<ServletContext> local = new ThreadLocal<ServletContext>();
+    private static final ThreadLocal<ServletContext> local = new ThreadLocal<>();
 
     // settings
     private boolean ddMessageHandler;

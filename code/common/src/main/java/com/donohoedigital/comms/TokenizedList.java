@@ -61,7 +61,7 @@ public class TokenizedList implements DataMarshal
     public static final int TOKEN_READ_ALL = Integer.MAX_VALUE;
     
     // data
-    protected List<DataMarshal> tokens_ = new ArrayList<DataMarshal>();
+    protected List<DataMarshal> tokens_ = new ArrayList<>();
     protected EscapeStringTokenizer tokenizer_;
     
     /**

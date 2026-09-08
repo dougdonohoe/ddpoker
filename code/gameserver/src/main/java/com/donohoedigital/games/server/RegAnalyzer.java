@@ -86,14 +86,14 @@ public class RegAnalyzer
     private int numMac;
     private int numWindows;
     private int numLinux;
-    private List<Counter> monthCnt_ = new ArrayList<Counter>();
-    private List<Counter> weekCnt_ = new ArrayList<Counter>();
-    private List<Counter> dayCnt_ = new ArrayList<Counter>();
+    private List<Counter> monthCnt_ = new ArrayList<>();
+    private List<Counter> weekCnt_ = new ArrayList<>();
+    private List<Counter> dayCnt_ = new ArrayList<>();
     private int[] hourCnt_ = new int[24];
 
     // keys members
-    private List<RegInfo> suspectKeys_ = new ArrayList<RegInfo>();
-    private List<RegInfo> bannedKeys_ = new ArrayList<RegInfo>();
+    private List<RegInfo> suspectKeys_ = new ArrayList<>();
+    private List<RegInfo> bannedKeys_ = new ArrayList<>();
 
     // services
     private BannedKeyService bannedService;

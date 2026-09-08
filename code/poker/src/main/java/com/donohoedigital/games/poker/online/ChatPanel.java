@@ -716,7 +716,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             // replace /[card][card]...[card] with DDCard
             StringBuilder sb = new StringBuilder(sMsg.length());
             char c;
-            char lookahead[] = new char[2];
+            char[] lookahead = new char[2];
             int search = 0;
             for (int i = 0; i < sMsg.length(); i++)
             {
@@ -782,7 +782,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             this.bTable = sMsg.toLowerCase().contains("table");
         }
 
-        private void getLookAhead(char lookahead[], String s, int index)
+        private void getLookAhead(char[] lookahead, String s, int index)
         {
             Arrays.fill(lookahead, ':');
             int look = 0;

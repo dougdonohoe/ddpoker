@@ -306,7 +306,7 @@ public abstract class JpaBaseDao<T extends BaseModel<ID>, ID extends Serializabl
         }
 
         // return all results
-        PagedList<T> list = new PagedList<T>(results);
+        PagedList<T> list = new PagedList<>(results);
         list.setTotalSize(count);
 
         return list;

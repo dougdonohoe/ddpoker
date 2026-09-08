@@ -453,7 +453,7 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
      */
     private SaveTableModel getSavedFileModel()
     {
-        GameState saved[] = GameState.getSaveFileList(sBegin_, SAVE_EXT);
+        GameState[] saved = GameState.getSaveFileList(sBegin_, SAVE_EXT);
         return new SaveTableModel(saved);
     }
     

@@ -123,7 +123,7 @@ public class Territories extends TreeMap {
      */
     public Territory[] getTerritoryArray()
     {
-        Territory array[] = new Territory[size()];
+        Territory[] array = new Territory[size()];
         Set territories = this.keySet();
         Iterator iter = territories.iterator();
         String sTerritoryName;
@@ -136,7 +136,7 @@ public class Territories extends TreeMap {
         return array;
     }
     
-    Territory cached_[];
+    Territory[] cached_;
     /**
      * Get cached copy of territories array
      */
@@ -156,7 +156,7 @@ public class Territories extends TreeMap {
     public void initForGame()
     {   
         // Create path in each territory
-        Territory ts[] = getTerritoryArrayCached();
+        Territory[] ts = getTerritoryArrayCached();
         for (int i = 0; i < ts.length; i++)
         {
             ts[i].initForGame();
@@ -170,7 +170,7 @@ public class Territories extends TreeMap {
     public void createPaths()
     {   
         // Create path in each territory
-        Territory ts[] = getTerritoryArrayCached();
+        Territory[] ts = getTerritoryArrayCached();
         for (int i = 0; i < ts.length; i++)
         {
             ts[i].createPath();
@@ -184,7 +184,7 @@ public class Territories extends TreeMap {
     public void determineAdjacentTerritories(boolean bClearBorders)
     {
         // figure adjacent territories
-        Territory ts[] = getTerritoryArrayCached();
+        Territory[] ts = getTerritoryArrayCached();
         for (int i = 0; i < ts.length; i++)
         {
             ts[i].determineAdjacentTerritories(bClearBorders);

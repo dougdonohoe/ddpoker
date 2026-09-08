@@ -79,7 +79,7 @@ public class NameRangeSearchForm extends VoidPanel
         data.setName(name);
 
         // form
-        form = new StatelessForm<NameRangeSearch>("form", new CompoundPropertyModel<>(data))
+        form = new StatelessForm<>("form", new CompoundPropertyModel<>(data))
         {
             private static final long serialVersionUID = 42L;
 

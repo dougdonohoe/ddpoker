@@ -68,7 +68,7 @@ public class UDPMessage
     private InetSocketAddress srcAddrActual_;
     private InetSocketAddress srcAddrApparent_;
     private InetSocketAddress dstAddr_; // TODO: will this be needed?  In future, could use for UDP tunneling
-    private ArrayList<UDPData> data_ = new ArrayList<UDPData>(5);
+    private ArrayList<UDPData> data_ = new ArrayList<>(5);
 
     // uknown address
     public static final InetSocketAddress ADDRESS_UNKNOWN = new InetSocketAddress("0.0.0.0", 0);

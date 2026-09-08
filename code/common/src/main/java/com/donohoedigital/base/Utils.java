@@ -301,11 +301,11 @@ public class Utils
         Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
 
         // sort map
-        Map<Thread, StackTraceElement[]> smap = new TreeMap<Thread, StackTraceElement[]>(TC);
+        Map<Thread, StackTraceElement[]> smap = new TreeMap<>(TC);
         smap.putAll(map);
         Iterator<Thread> iter = smap.keySet().iterator();
         Thread t;
-        Object stackitems[];
+        Object[] stackitems;
         while (iter.hasNext())
         {
             t = iter.next();
@@ -853,7 +853,7 @@ public class Utils
     public static File[] getFileList(File fDir, String sExt, String sBeginsWith)
     {
         UtilFileFilter filter = new UtilFileFilter(sExt, sBeginsWith);
-        File list[] = fDir.listFiles(filter);
+        File[] list = fDir.listFiles(filter);
         Arrays.sort(list);
         return list;
     }

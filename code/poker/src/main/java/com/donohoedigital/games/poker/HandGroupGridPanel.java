@@ -47,7 +47,7 @@ public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyLi
 {
     //static Logger logger = LogManager.getLogger(HandGroupGridPanel.class);
 
-    private HandButton handButtons[][] = new HandButton[Card.ACE + 1][Card.ACE + 1];
+    private HandButton[][] handButtons = new HandButton[Card.ACE + 1][Card.ACE + 1];
     private DDLabel summaryLabel_;
 
     private HandGroup group_ = null;
@@ -391,8 +391,8 @@ public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyLi
             setBorderGap(0, 0, 0, 0);
             setIsToggle(true);
             setFocusPainted(false);
-            setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
-            setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+            setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
+            setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.emptySet());
             addKeyListener(HandGroupGridPanel.this);
             addFocusListener(HandGroupGridPanel.this);
 

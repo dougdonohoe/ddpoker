@@ -63,7 +63,7 @@ public class ShutdownManager implements Thread.UncaughtExceptionHandler
     }
 
     // shutdown listeners
-    private final List<ShutdownListener> listeners = new ArrayList<ShutdownListener>();
+    private final List<ShutdownListener> listeners = new ArrayList<>();
 
     // shutdown type and reason (default to normal)
     private Type shutdownType = NORMAL;

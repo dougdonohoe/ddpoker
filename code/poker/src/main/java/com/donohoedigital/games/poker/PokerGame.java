@@ -76,7 +76,7 @@ public class PokerGame extends Game implements PlayerActionListener
     public static final String HOME_BEGIN = "home";
 
     // denominations for chips
-    private static final int nChipDenom_[] = new int[]{1, 5, 25, 100, 500, 1000, 5000, 10000, 50000, 100000};
+    private static final int[] nChipDenom_ = new int[]{1, 5, 25, 100, 500, 1000, 5000, 10000, 50000, 100000};
 
     /**
      * Name used in PropertyChangeEvents when current table changed
@@ -104,7 +104,7 @@ public class PokerGame extends Game implements PlayerActionListener
     public static final String PROP_PLAYER_FINISHED = "_busted_";
 
     // game info
-    private DMArrayList<PokerTable> tables_ = new DMArrayList<PokerTable>();
+    private DMArrayList<PokerTable> tables_ = new DMArrayList<>();
     private TournamentProfile profile_;
     private int nLevel_ = 0;
     private boolean bClockMode_ = false;
@@ -293,7 +293,7 @@ public class PokerGame extends Game implements PlayerActionListener
      */
     public List<PokerPlayer> getPokerPlayersCopy()
     {
-        List<PokerPlayer> copy = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> copy = new ArrayList<>();
         for (GamePlayer p : players_)
         {
             copy.add((PokerPlayer) p);
@@ -319,7 +319,7 @@ public class PokerGame extends Game implements PlayerActionListener
     {
         if (profile_ != null)
         {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             int nNum = getNumPlayers();
             for (int i = 0; i < nNum; i++)
             {
@@ -1134,7 +1134,7 @@ public class PokerGame extends Game implements PlayerActionListener
     private void setupComputerPlayers(int nNumPlayers)
     {
         PokerPlayer player;
-        List<String> names = new ArrayList<String>(PokerMain.getPokerMain().getNames());
+        List<String> names = new ArrayList<>(PokerMain.getPokerMain().getNames());
         int nNumHumans = getNumPlayers();
 
         // if we don't have enough names, add more (enough
@@ -1151,7 +1151,7 @@ public class PokerGame extends Game implements PlayerActionListener
             }
         }
 
-        Set<String> hsUsed = new HashSet<String>();
+        Set<String> hsUsed = new HashSet<>();
 
         for (int i = 0; i < nNumHumans; i++)
         {
@@ -1162,7 +1162,7 @@ public class PokerGame extends Game implements PlayerActionListener
         PlayerType playerType;
         String sName;
         String sKey = getPublicUseKey();
-        Map<String, List<String>> hmRoster = new HashMap<String, List<String>>();
+        Map<String, List<String>> hmRoster = new HashMap<>();
         List<String> roster;
         for (int i = getNumPlayers(); i < nNumPlayers; i++)
         {
@@ -1434,7 +1434,7 @@ public class PokerGame extends Game implements PlayerActionListener
             p = getPokerPlayerAt(i);
             if (p.isWaiting())
             {
-                if (wait == null) wait = new ArrayList<PokerPlayer>();
+                if (wait == null) wait = new ArrayList<>();
                 wait.add(p);
             }
         }

@@ -42,7 +42,7 @@ public class HandProbabilityMatrixPanel extends DDPanel
 {
     private HandProbabilityMatrix matrix_;
 
-    private DDPanel panels_[][] = new DDPanel[52][52];
+    private DDPanel[][] panels_ = new DDPanel[52][52];
 
     private static int gridline_ = 1;
     private static int subgridline_ = 1;

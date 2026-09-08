@@ -64,7 +64,7 @@ public class HandSelectionScheme extends BaseProfile
     {
         super(sName);
         map_ = new DMTypedHashMap();
-        handgroups_ = new ArrayList<HandGroup>();
+        handgroups_ = new ArrayList<>();
     }
 
     /**
@@ -141,7 +141,7 @@ public class HandSelectionScheme extends BaseProfile
     {
         if (handgroups_ == null)
         {
-            handgroups_ = new ArrayList<HandGroup>();
+            handgroups_ = new ArrayList<>();
         }
         else
         {
@@ -154,7 +154,7 @@ public class HandSelectionScheme extends BaseProfile
         while ((s = map_.getString("hands" + i)) != null)
         {
             i++;
-            String v[] = s.split("\\|");
+            String[] v = s.split("\\|");
             handgroups_.add(HandGroup.parse(v[0], Integer.parseInt(v[1])));
         }
     }

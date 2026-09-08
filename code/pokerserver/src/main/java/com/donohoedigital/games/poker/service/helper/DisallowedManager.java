@@ -51,8 +51,8 @@ public class DisallowedManager
 {
 
     private static final String DISALLOWED_PATTERN_PREFIX = ":";
-    private static final List<String> disallowedContains = new ArrayList<String>();
-    private static final List<Pattern> disallowedPatterns = new ArrayList<Pattern>();
+    private static final List<String> disallowedContains = new ArrayList<>();
+    private static final List<Pattern> disallowedPatterns = new ArrayList<>();
 
     public DisallowedManager()
     {

@@ -60,7 +60,7 @@ public class AudioConfig extends XMLConfigFileLoader
 
     private static AudioConfig audioConfig = null;
 
-    private Map<String, AudioDef> audios_ = new HashMap<String, AudioDef>();
+    private Map<String, AudioDef> audios_ = new HashMap<>();
 
     private static boolean bMuteFX_ = false;
     private static float fFXGain_ = .8f;

@@ -67,9 +67,9 @@ public class ImageComponent extends JComponent implements Icon
     protected String sName_;
     protected BufferedImage bimage_;
     protected boolean bComposite_ = false;
-    protected BufferedImage composites_[];
-    protected int compositeXs_[];
-    protected int compositeYs_[];
+    protected BufferedImage[] composites_;
+    protected int[] compositeXs_;
+    protected int[] compositeYs_;
     protected int nCompositeHeight_, nCompositeWidth_;
     protected Image grayimage_;
     protected Image hiliteimage_;

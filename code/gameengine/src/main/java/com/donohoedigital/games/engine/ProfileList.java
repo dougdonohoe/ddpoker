@@ -68,7 +68,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
     private GameContext context_;
     private String STYLE;
     private List<BaseProfile> profiles_;
-    private List<ProfilePanel> profilePanels_ = new ArrayList<ProfilePanel>();
+    private List<ProfilePanel> profilePanels_ = new ArrayList<>();
     private DDPanel profilesParent_;
     private DDScrollPane scroll_;
     private BaseProfile selected_ = null;
@@ -549,7 +549,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         ProfilePanel pp;
         
         // manage parent (remove all and re-add so sort order is good)
-        List<ProfilePanel> newPP = new ArrayList<ProfilePanel>();
+        List<ProfilePanel> newPP = new ArrayList<>();
         profilesParent_.removeAll();
         for (BaseProfile aProfiles_ : profiles_)
         {

@@ -49,7 +49,7 @@ public class SendWanGame extends SendMessageDialog
     public static final String PARAM_GAME = "game";
     public static final String PARAM_AUTH = "auth";
 
-    private static final Map<Integer, String> hmMessages_ = new HashMap<Integer, String>();
+    private static final Map<Integer, String> hmMessages_ = new HashMap<>();
 
     static
     {

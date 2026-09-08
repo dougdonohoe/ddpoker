@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class ChatValidate
 {
-    public static void main(String argv[])
+    public static void main(String[] argv)
     {
         if (argv.length == 0)
         {

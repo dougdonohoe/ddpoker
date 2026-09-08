@@ -53,12 +53,12 @@ public class HandLadder
     private int handScore_;
     private int handType_;
 
-    private HandList ladder_[];
+    private HandList[] ladder_;
 
-    private HandList strongerHandsByType_[];
-    private HandList weakerHandsByType_[];
+    private HandList[] strongerHandsByType_;
+    private HandList[] weakerHandsByType_;
 
-    private int countByType_[];
+    private int[] countByType_;
     private int totalCount_;
 
     HandInfoFast handInfo_ = new HandInfoFast();

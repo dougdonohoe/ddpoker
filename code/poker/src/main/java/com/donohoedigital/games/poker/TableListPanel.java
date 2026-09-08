@@ -60,7 +60,7 @@ public class TableListPanel extends DDTabPanel implements ChangeListener, Action
     private PokerGame game_;
     private String STYLE;
     private DDPanel tbls_;
-    private TablePanel tables_[];
+    private TablePanel[] tables_;
     private DDSlider slider_;
     private DDCheckBox showtype_;
 
@@ -221,7 +221,7 @@ public class TableListPanel extends DDTabPanel implements ChangeListener, Action
             clabel.setText("<HTML><B><font color=yellow>"+table.getName()+"</font></B>");
 
             int nNumObs = table.getNumObservers();
-            List<ChipLeaderPanel.RankInfo> players = new ArrayList<ChipLeaderPanel.RankInfo>(PokerConstants.SEATS + nNumObs);
+            List<ChipLeaderPanel.RankInfo> players = new ArrayList<>(PokerConstants.SEATS + nNumObs);
             PokerPlayer p;
             for (int i = 0; i < PokerConstants.SEATS; i++)
             {

@@ -186,7 +186,7 @@ public class OnlineServer
 
             if (histories == null)
             {
-                histories = new DMArrayList<TournamentHistory>();
+                histories = new DMArrayList<>();
             }
 
             history = createTournamentHistory(game, player, nRank);

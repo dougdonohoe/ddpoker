@@ -63,7 +63,7 @@ public class ImageConfig extends XMLConfigFileLoader
 
     private static ImageConfig imageConfig = null;
     
-    private Map<String, ImageDef> images_ = new HashMap<String, ImageDef>();
+    private Map<String, ImageDef> images_ = new HashMap<>();
     
     /** 
      * Creates a new instance of ImageConfig from the Appconfig file 

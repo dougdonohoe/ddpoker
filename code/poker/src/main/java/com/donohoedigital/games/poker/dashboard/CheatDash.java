@@ -54,7 +54,7 @@ import java.util.List;
 public class CheatDash extends DashboardItem implements ChangeListener
 {
     private static CheatDash impl_ = null;
-    private List<DDOption> options_ = new ArrayList<DDOption>();
+    private List<DDOption> options_ = new ArrayList<>();
     private boolean bUpdating_ = false;
 
     /**

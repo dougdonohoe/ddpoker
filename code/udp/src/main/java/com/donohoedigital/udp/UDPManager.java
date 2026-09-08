@@ -57,8 +57,8 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
     // members
     private UDPServer server_;
     private UDPLinkHandler handler_;
-    private final List<UDPManagerMonitor> monitors_ = new ArrayList<UDPManagerMonitor>();
-    private final LinkedBlockingQueue<Object> queue_ = new LinkedBlockingQueue<Object>();
+    private final List<UDPManagerMonitor> monitors_ = new ArrayList<>();
+    private final LinkedBlockingQueue<Object> queue_ = new LinkedBlockingQueue<>();
     private final List<UDPLink> links_ = Collections.synchronizedList(new ArrayList<UDPLink>());
     private List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<UDPLink>());
     boolean bDone_ = false;
@@ -612,7 +612,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
 
         synchronized(links_)
         {
-            links = new ArrayList<UDPLink>(links_.size());
+            links = new ArrayList<>(links_.size());
             links.addAll(links_);
         }
 

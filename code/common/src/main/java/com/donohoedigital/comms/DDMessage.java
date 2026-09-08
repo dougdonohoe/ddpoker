@@ -411,7 +411,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     {
         if (msgdata_ == null)
         {
-            msgdata_ = new ArrayList<MessageData>();
+            msgdata_ = new ArrayList<>();
         }
         return msgdata_;
     }
@@ -445,7 +445,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     /**
      * add string data chunk
      */
-    public void addData(File fDatas[])
+    public void addData(File[] fDatas)
     {
         if (fDatas == null || fDatas.length == 0) return;
         List<MessageData> msgdata = getDataList();
@@ -674,7 +674,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         if (msgdata_ != null && !msgdata_.isEmpty())
         {
             int nNumData = msgdata_.size();
-            DMArrayList<Integer> sizes = new DMArrayList<Integer>(nNumData);
+            DMArrayList<Integer> sizes = new DMArrayList<>(nNumData);
             MessageData data;
             
             for (int i = 0; i < nNumData; i++)

@@ -59,7 +59,7 @@ public class DDMailer extends BaseCommandLineApp
     private String sKey_;
     private File file_;
     private String sFrom_;
-    private List<Object[]> params_ = new ArrayList<Object[]>();
+    private List<Object[]> params_ = new ArrayList<>();
 
     // debugging/testing - limit number of emails sent
     private int LIMIT = 0;
@@ -156,7 +156,7 @@ public class DDMailer extends BaseCommandLineApp
         {
             String sLine;
             StringTokenizer token;
-            Object o[];
+            Object[] o;
             int nCnt;
             while ((sLine = buf.readLine()) != null)
             {
@@ -182,7 +182,7 @@ public class DDMailer extends BaseCommandLineApp
      */
     private void doEmail()
     {
-        Object o[];
+        Object[] o;
         String sEmail;
         String sProcess;
         boolean bProcess;

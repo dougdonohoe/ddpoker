@@ -75,7 +75,7 @@ public class ForgotPassword extends OnlinePokerPage
         CompoundPropertyModel<ForgotPassword> formData = new CompoundPropertyModel<>(this);
 
         // change password form
-        Form<ForgotPassword> pwform = new Form<ForgotPassword>("form", formData)
+        Form<ForgotPassword> pwform = new Form<>("form", formData)
         {
             private static final long serialVersionUID = 42L;
 

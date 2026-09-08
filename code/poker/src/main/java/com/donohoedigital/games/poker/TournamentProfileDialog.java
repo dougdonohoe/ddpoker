@@ -87,9 +87,9 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     private DDRadioButton buttonAuto_, buttonPerc_, buttonAmount_;
     private DDRadioButton buttonSatellite_;
     private boolean bDetailsTabReady_ = false;
-    private SpotPanel spots_[] = new SpotPanel[TournamentProfile.MAX_SPOTS];
-    private String saveA_[] = new String[TournamentProfile.MAX_SPOTS];
-    private String saveP_[] = new String[TournamentProfile.MAX_SPOTS];
+    private SpotPanel[] spots_ = new SpotPanel[TournamentProfile.MAX_SPOTS];
+    private String[] saveA_ = new String[TournamentProfile.MAX_SPOTS];
+    private String[] saveP_ = new String[TournamentProfile.MAX_SPOTS];
     private int nNumSpots_ = 0;
     private DDRadioButton buttonSelected_;
     private DDButton clear_;

@@ -848,7 +848,7 @@ public class XMLConfigFileLoader implements ErrorHandler
         {
             sAttrErrorDesc = "Paramlist #" + (i + 1) + " of " + sErrLocation;
             param = paramlist.get(i);
-            list = new ArrayList<Object>();
+            list = new ArrayList<>();
 
             sName = getStringAttributeValue(param, "name", true, sAttrErrorDesc);
 

@@ -82,7 +82,7 @@ public class TournamentProfileHtml
         if (htmlSummaryCache_ != null && htmlSummaryMode_ == bListMode) return htmlSummaryCache_;
 
         String sDate = PropertyConfig.getDateFormat(sLocale).format(new Date(profile.getCreateDate()));
-        Object params[] = new Object[16];
+        Object[] params = new Object[16];
 
         params[0] = DataElement.getDisplayValue(DATA_ELEMENT_GAMETYPE, profile.getDefaultGameTypeString());
         params[1] = Utils.encodeHTML(profile.getDescription());
@@ -217,7 +217,7 @@ public class TournamentProfileHtml
         String sDate = PropertyConfig.getDateFormat(sLocale).format(new Date(profile.getCreateDate()));
 
 
-        Object params[] = new Object[18];
+        Object[] params = new Object[18];
 
         params[0] = Utils.encodeHTML(profile.getName());
         params[1] = sDate;

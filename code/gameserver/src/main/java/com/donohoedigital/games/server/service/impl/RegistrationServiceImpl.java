@@ -127,7 +127,7 @@ public class RegistrationServiceImpl implements RegistrationService
     @Transactional(readOnly = true)
     public List<RegInfo> getBannedKeys(String keyStart)
     {
-        Map<String, RegInfo> regInfoMap = new HashMap<String, RegInfo>();
+        Map<String, RegInfo> regInfoMap = new HashMap<>();
 
         // get banned keys and create RegInfo for each
         List<BannedKey> banned = bannedDao.getAll();
@@ -149,7 +149,7 @@ public class RegistrationServiceImpl implements RegistrationService
         }
 
         // return sorted array
-        List<RegInfo> all = new ArrayList<RegInfo>(regInfoMap.values());
+        List<RegInfo> all = new ArrayList<>(regInfoMap.values());
         Collections.sort(all);
         return all;
     }
@@ -157,7 +157,7 @@ public class RegistrationServiceImpl implements RegistrationService
     @Transactional(readOnly = true)
     public List<RegInfo> getSuspectKeys(String keyStart, int nMin)
     {
-        Map<String, RegInfo> regInfoMap = new HashMap<String, RegInfo>();
+        Map<String, RegInfo> regInfoMap = new HashMap<>();
 
         // get all suspect keys
         List<String> suspectKeys = dao.getAllSuspectKeys(nMin);
@@ -183,7 +183,7 @@ public class RegistrationServiceImpl implements RegistrationService
         }
 
         // return sorted array
-        List<RegInfo> all = new ArrayList<RegInfo>(regInfoMap.values());
+        List<RegInfo> all = new ArrayList<>(regInfoMap.values());
         Collections.sort(all);
         return all;
     }

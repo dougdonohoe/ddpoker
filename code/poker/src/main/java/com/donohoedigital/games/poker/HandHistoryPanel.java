@@ -277,7 +277,7 @@ public class HandHistoryPanel extends DDPanel
     private void setHands()
     {
         List<Integer> hands = PokerDatabase.getHandIDs(where_, bindArray_, handFirst_, pageSize_);
-        hands_ = new ArrayList<Object>(hands.size());
+        hands_ = new ArrayList<>(hands.size());
         for (int i = hands.size() - 1; i >= 0; --i)
         {
             hands_.add(hands.get(i));

@@ -43,8 +43,8 @@ import java.util.*;
  */
 public class Table
 {
-    private ArrayList<TableColumn> cols_ = new ArrayList<TableColumn>();
-    private ArrayList<TableRow> rows_ = new ArrayList<TableRow>();
+    private ArrayList<TableColumn> cols_ = new ArrayList<>();
+    private ArrayList<TableRow> rows_ = new ArrayList<>();
 
     private int CELLPADDING, CELLSPACING;
 

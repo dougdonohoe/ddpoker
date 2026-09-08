@@ -453,7 +453,7 @@ public class EngineUtils
      */
     public static List<GamePiece> getMatchingPieces(GamePieceContainer container, int nType)
     {
-        List<GamePiece> list = new ArrayList<GamePiece>();
+        List<GamePiece> list = new ArrayList<>();
         if (container == null) return list;
         GamePiece piece;
         synchronized (container.getMap())

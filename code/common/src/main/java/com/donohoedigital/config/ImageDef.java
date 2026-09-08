@@ -91,7 +91,7 @@ public class ImageDef
         bComposite_ = bComposite;
         if (sComponents != null)
         {
-            List<String> a = new ArrayList<String>();
+            List<String> a = new ArrayList<>();
             StringTokenizer tok = new StringTokenizer(sComponents, " ,");
             while (tok.hasMoreTokens())
             {

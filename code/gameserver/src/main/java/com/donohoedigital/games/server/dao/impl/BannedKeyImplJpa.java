@@ -57,7 +57,7 @@ public class BannedKeyImplJpa extends JpaBaseDao<BannedKey, Long> implements Ban
 
     public List<BannedKey> getByKeys(String... keys)
     {
-        if (keys.length == 0) return new ArrayList<BannedKey>();
+        if (keys.length == 0) return new ArrayList<>();
 
         return getList("select b from BannedKey b " +
                        "where b.key in " + getInClause(1, keys.length) + " " +

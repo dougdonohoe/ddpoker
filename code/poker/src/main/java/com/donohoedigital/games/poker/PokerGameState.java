@@ -148,7 +148,7 @@ public class PokerGameState extends GameState implements PropertyChangeListener
     public void setIds()
     {
         resetIds();
-        Territory territories[] = Territory.getTerritoryArrayCached();
+        Territory[] territories = Territory.getTerritoryArrayCached();
         prepopulateIds(game_, territories, game_, game_);
     }
 }

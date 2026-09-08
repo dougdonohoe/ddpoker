@@ -741,7 +741,7 @@ public class OnlineMessage
     public List<OnlinePlayerInfo> getPlayerList()
     {
         DMArrayList<DMTypedHashMap> raw = (DMArrayList<DMTypedHashMap>) data_.getList(ON_PLAYER_LIST);
-        List<OnlinePlayerInfo> list = new ArrayList<OnlinePlayerInfo>(raw.size());
+        List<OnlinePlayerInfo> list = new ArrayList<>(raw.size());
         for (DMTypedHashMap map : raw)
         {
             list.add(new OnlinePlayerInfo(map));
