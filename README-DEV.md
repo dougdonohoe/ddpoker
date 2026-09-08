@@ -251,15 +251,17 @@ ordinary builds are unaffected.
 
 Recipes are grouped in `rewrite.yml` (repo root), one group per reviewable change:
 
-| Recipe | What it does |
-|--------|--------------|
-| `com.donohoedigital.TypeCleanup` | Diamond operator, redundant casts, C-style arrays, unused imports |
-| `com.donohoedigital.Lambdas` | Anonymous functional interfaces to lambdas and method references |
-| `com.donohoedigital.StringsAndCollections` | `isEmpty()`, `contains()`, `valueOf()`, `StringBuilder` |
-| `com.donohoedigital.FinalAndModifiers` | `final` private fields, redundant modifiers, `@Override` |
-| `com.donohoedigital.ParameterizedLogging` | `log.debug("x " + y)` becomes `log.debug("x {}", y)` |
-| `com.donohoedigital.DeadCode` | Unused private members — **risky, see below** |
-| `com.donohoedigital.RedundantInitializers` | Drop `= null` / `= false` / `= 0` from field declarations |
+| Recipe                                     | What it does                                                      |
+|--------------------------------------------|-------------------------------------------------------------------|
+| `com.donohoedigital.Imports`               | Remove unused imports, normalize the rest (**run twice**)         |
+| `com.donohoedigital.TypeCleanup`           | Diamond operator, C-style array declarations                      |
+| `com.donohoedigital.Lambdas`               | Anonymous functional interfaces to lambdas                        |
+| `com.donohoedigital.MethodReferences`      | Delegating lambdas to method references — **review each**         |
+| `com.donohoedigital.StringsAndCollections` | `isEmpty()`, `contains()`, `valueOf()`, `StringBuilder`, charsets |
+| `com.donohoedigital.FinalAndModifiers`     | `final` private fields and classes, modifier hygiene              |
+| `com.donohoedigital.ParameterizedLogging`  | `log.debug("x " + y)` to `log.debug("x {}", y)` — needs flags     |
+| `com.donohoedigital.RedundantCasts`        | Casts left over from pre-generics code — **review each**          |
+| `com.donohoedigital.RedundantInitializers` | Drop `= null` / `= false` / `= 0` from field declarations         |
 
 ```shell
 cd code
@@ -272,9 +274,26 @@ mvn rewrite:discover                                                        # li
 dry-run and read the patch first.**  Recipes are idempotent — re-running one over already-fixed
 code is a no-op, so an empty patch means that group is fully applied.
 
-`DeadCode` needs particular care.  Hibernate, Wicket (which binds markup to component ids) and
-the gameengine XML save-game code all reach members reflectively, and OpenRewrite cannot see
-those references.  Check each deletion against a grep of `.java`, `.html` and `.xml`.
+There is deliberately no dead-code recipe.  Removing unused private members cannot be done
+safely here: Hibernate, Wicket (which binds markup to component ids) and the gameengine XML
+save-game code all resolve members reflectively, so a wrong deletion compiles and fails only
+when that path runs.
+
+Each recipe's description in `rewrite.yml` carries its caveats — read it before running one.
+Three need particular attention:
+
+* `Imports` must be run **twice**.  A same-package star import expands on the first pass into
+  an explicit same-package import that is still redundant, and only the second pass drops it.
+* `ParameterizedLogging` cannot be run bare.  It needs a `methodPattern` (without one it
+  silently changes nothing and still reports `BUILD SUCCESS`), and it throws
+  `IndexOutOfBoundsException` on any call whose concatenation starts with a non-literal, so
+  those files must be excluded.  `rewrite.yml` has the full command.
+* `MethodReferences` and `RedundantCasts` are opt-in because each has produced wrong output
+  here — see their descriptions.  Review every change.
+
+After running any of them, `mvn rewrite:dryRun` again: an empty patch confirms the group is
+fully applied.  `FinalAndModifiers` is the one exception, and `rewrite.yml` lists the four
+fields it re-breaks.
 
 Three things are deliberately *not* automated, because they are matters of taste rather than
 correctness: converting locals to `var`, adding `final` to locals and parameters, and expanding
@@ -743,7 +762,7 @@ poker
 
 ## Appendix E: Running GitHub Actions Locally
 
-You can run GitHub actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
+You can run GitHub Actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
 
 To install `act`:
 
