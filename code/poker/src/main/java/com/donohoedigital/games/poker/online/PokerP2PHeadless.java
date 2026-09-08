@@ -60,11 +60,11 @@ public class PokerP2PHeadless implements OnlineMessageListener, DDMessageListene
     static Logger logger = LogManager.getLogger(PokerP2PHeadless.class);
 
     // members
-    private PokerGame game_;
+    private final PokerGame game_;
     private OnlineManager mgr_;
-    private P2PURL url_;
+    private final P2PURL url_;
     private Peer2PeerMessenger msgr_;
-    private OnlineMessage omsg_;
+    private final OnlineMessage omsg_;
     private OnlineMessage oreply_;
     private DDMessage mReturn_;
     private int nStatus_;
@@ -184,7 +184,7 @@ public class PokerP2PHeadless implements OnlineMessageListener, DDMessageListene
             oreply_ = reply;
             timer_.interrupt();   
             DDMessage ret = reply.getData();
-            ret.setStatus(msgr_.getStatus(ret));
+            ret.setStatus(Peer2PeerMessenger.getStatus(ret));
             messageReceived(ret);
         }
     }

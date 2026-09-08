@@ -243,7 +243,7 @@ public class Rank extends DashboardItem
     private String sRank_;
 
     // runnable for setting label text in swing thread
-    private Runnable setLabelRunner_ = () -> {
+    private final Runnable setLabelRunner_ = () -> {
         labelInfo_.setText(sTextToUpdate_);
         setTitle(getTitle());
     };

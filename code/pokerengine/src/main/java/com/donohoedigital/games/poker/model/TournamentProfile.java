@@ -414,7 +414,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     /**
      * PlayerList which stores data in TournamentProfile
      */
-    private static class InviteePlayerList extends AbstractPlayerList
+    private static final class InviteePlayerList extends AbstractPlayerList
     {
         TournamentProfile profile;
 

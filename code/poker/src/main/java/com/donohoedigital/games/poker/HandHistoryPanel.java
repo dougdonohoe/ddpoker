@@ -58,9 +58,9 @@ public class HandHistoryPanel extends DDPanel
 {
 
     private String where_;
-    private BindArray bindArray_;
-    private HoldemHand currentHand_;
-    private int pageSize_;
+    private final BindArray bindArray_;
+    private final HoldemHand currentHand_;
+    private final int pageSize_;
 
     private int handCount_;
     private int handFirst_;
@@ -70,20 +70,20 @@ public class HandHistoryPanel extends DDPanel
 
     private List<Object> hands_;
 
-    private GameContext context_;
-    private DDTabbedPane tabs_;
-    private DDHtmlArea detailsHtmlArea_;
-    private DDHtmlArea summaryHtmlArea_;
-    private DDCheckBox showAllCheckbox_;
-    private DDCheckBox showReasonCheckbox_;
-    private ListPanel handsList_;
-    private JScrollPane summaryScroll_;
-    private DDLabel titleLabel_;
-    private DDLabel pagingLabel_;
-    private DDButton pageDownButton_;
-    private DDButton pageUpButton_;
-    private DDButton exportButton_;
-    private ImageIcon icon_ = ImageConfig.getImageIcon("ddlogo20");
+    private final GameContext context_;
+    private final DDTabbedPane tabs_;
+    private final DDHtmlArea detailsHtmlArea_;
+    private final DDHtmlArea summaryHtmlArea_;
+    private final DDCheckBox showAllCheckbox_;
+    private final DDCheckBox showReasonCheckbox_;
+    private final ListPanel handsList_;
+    private final JScrollPane summaryScroll_;
+    private final DDLabel titleLabel_;
+    private final DDLabel pagingLabel_;
+    private final DDButton pageDownButton_;
+    private final DDButton pageUpButton_;
+    private final DDButton exportButton_;
+    private final ImageIcon icon_ = ImageConfig.getImageIcon("ddlogo20");
 
     public HandHistoryPanel(GameContext context, String sStyle, String where, BindArray bindArray, HoldemHand currentHand, int pageSize)
     {

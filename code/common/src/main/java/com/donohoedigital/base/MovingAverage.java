@@ -45,7 +45,7 @@ public class MovingAverage
     private int idx_;
     private int sum_;
 
-    private long[] entries_;
+    private final long[] entries_;
     private long peak_;
 
     /**

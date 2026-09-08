@@ -120,15 +120,31 @@ name: com.donohoedigital.FinalAndModifiers
 displayName: Final fields and modifier hygiene
 description: >
   Mark private fields final where they are assigned exactly once, drop redundant
-  modifiers, and add missing @Override.  Deliberately does NOT finalize locals or
+  modifiers, order modifiers canonically.  Deliberately does NOT finalize locals or
   parameters (see FinalizeLocalVariables) - that is line noise, not information.
-  REVIEW: verify Hibernate entity classes are untouched before applying.
+  MissingOverrideAnnotation is deliberately NOT used anywhere.  It would have added 2139
+  annotations across 516 files, 268 of which change by nothing else, and IntelliJ does not
+  flag missing @Override by default.  Rejected as unrequested churn.
+  Hibernate entities are safe: FinalizePrivateFields only finalizes a field assigned
+  exactly once, and entity fields are assigned in their setters.  No final was added to
+  OnlineGame, TournamentHistory, OnlineProfile, Registration, BannedKey or UpgradedKey,
+  and the Hibernate-backed tests (PokerDatabaseTest, OnlineGameTest, OnlineProfileTest,
+  TournamentHistoryTest and the service tests) pass against a real database.
+  AFTER RUNNING THIS, revert "final" on four fields.  FinalizePrivateFields counts
+  assignments but does not check definite assignment or where the assignment lives:
+    gameengine/.../GameListPanel.java      name_
+        constructor returns early in the bDemo_ branch, so the field is not definitely
+        assigned on every path -> "variable name_ might not have been initialized"
+    poker/.../ShowTournamentTable.java     amount_, amountText_, slider_
+        assigned in a regular method rather than a constructor
+        -> "cannot assign a value to final variable"
+  Both are compile errors, so a re-run can never slip past CI unnoticed - which is why
+  the recipe is kept rather than dropped.
 recipeList:
   - org.openrewrite.staticanalysis.FinalizePrivateFields
   - org.openrewrite.staticanalysis.FinalClass
   - org.openrewrite.staticanalysis.ModifierOrder
   - org.openrewrite.staticanalysis.StaticAccessViaInstance
-  - org.openrewrite.staticanalysis.MissingOverrideAnnotation
   - org.openrewrite.staticanalysis.NestedEnumsAreNotStatic
 
 ---

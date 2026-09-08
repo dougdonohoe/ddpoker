@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class DataElementConfigTest
 {
-    private static Logger logger = LogManager.getLogger(DataElementConfigTest.class);
+    private static final Logger logger = LogManager.getLogger(DataElementConfigTest.class);
 
     private DataElementConfig load()
     {

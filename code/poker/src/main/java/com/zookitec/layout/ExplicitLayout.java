@@ -54,7 +54,7 @@ public class ExplicitLayout implements LayoutManager2, Serializable {
      *
      * @serial
      */
-    private Hashtable component2constraints;
+    private final Hashtable component2constraints;
 
 
     /**
@@ -62,7 +62,7 @@ public class ExplicitLayout implements LayoutManager2, Serializable {
      *
      * @serial
      */
-    private Hashtable name2constraints;
+    private final Hashtable name2constraints;
 
 
 

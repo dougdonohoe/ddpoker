@@ -72,11 +72,11 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
 {
     static Logger logger = LogManager.getLogger(ProxySocketThread.class);
     
-    private DDHttpClient.HttpOptions options_;
+    private final DDHttpClient.HttpOptions options_;
     private URL proxy_;
-    private String sDestHost_ = "tbd.com";
-    private int nDestPort_ = 8877;
-    private String sDestHostPort_ = sDestHost_ + ":" + nDestPort_;
+    private final String sDestHost_ = "tbd.com";
+    private final int nDestPort_ = 8877;
+    private final String sDestHostPort_ = sDestHost_ + ":" + nDestPort_;
     
     /** 
      * Creates a new instance of ProxySocketThread 

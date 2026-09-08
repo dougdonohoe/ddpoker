@@ -64,11 +64,11 @@ public class EngineWindow extends BaseFrame
 {
     protected static Logger logger = LogManager.getLogger(EngineWindow.class);
 
-    private GameEngine engine_;
-    private GameContext context_;
+    private final GameEngine engine_;
+    private final GameContext context_;
     private EngineBasePanel base_;
-    private int DESIRED_MIN_WIDTH;
-    private int DESIRED_MIN_HEIGHT;
+    private final int DESIRED_MIN_WIDTH;
+    private final int DESIRED_MIN_HEIGHT;
     private boolean bFull_;
 
     /**

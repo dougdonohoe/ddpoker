@@ -62,7 +62,7 @@ public class PlayerTypeDialog extends OptionMenuDialog implements PropertyChange
     static Logger logger = LogManager.getLogger(PlayerTypeDialog.class);
 
     private PlayerType profile_;
-    private TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
     private TypedHashMap orig_;
     private DDTextField name_;
     private GlassButton desc_;

@@ -50,12 +50,12 @@ import java.util.TreeMap;
  */
 public class Perf 
 {
-    private static boolean JPROFILER = true;
+    private static final boolean JPROFILER = true;
 
     private static boolean ON = false;
-    private static boolean MEM = false;
+    private static final boolean MEM = false;
     private static boolean bRunning = true;
-    private static Map count_ = new TreeMap();
+    private static final Map count_ = new TreeMap();
 
     /**
      * turn on performance features (called from EngineInit)

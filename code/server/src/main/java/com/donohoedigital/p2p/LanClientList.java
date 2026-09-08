@@ -77,8 +77,8 @@ public class LanClientList
         }
     }
 
-    private Map<String, LanClientInfo> list_ = new HashMap<>();
-    private LanControllerInterface controller_;
+    private final Map<String, LanClientInfo> list_ = new HashMap<>();
+    private final LanControllerInterface controller_;
     
     
     /** 

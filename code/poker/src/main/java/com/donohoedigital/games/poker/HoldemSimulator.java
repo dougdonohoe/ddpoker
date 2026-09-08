@@ -864,8 +864,8 @@ public class HoldemSimulator
         }
     }
 
-    private static int DONE = -2;
-    private static int INIT = -1;
+    private static final int DONE = -2;
+    private static final int INIT = -1;
 
     private static class IndexKeeper
     {

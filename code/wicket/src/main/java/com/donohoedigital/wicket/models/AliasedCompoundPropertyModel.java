@@ -54,9 +54,9 @@ public class AliasedCompoundPropertyModel<T> extends CompoundPropertyModel<T>
     private static final long serialVersionUID = 42L;
 
     /**
-	 * Internal alias representation.
+     * Internal alias representation.
      */
-	private class Alias implements IClusterable
+    private final class Alias implements IClusterable
 	{
 		private static final long serialVersionUID = 1L;
 

@@ -259,7 +259,7 @@ public abstract class ManagedQueue<T>
     /**
      * Thread which pulls items off the queue
      */
-    private class QueueThread extends Thread
+    private final class QueueThread extends Thread
     {
         private QueueThread()
         {

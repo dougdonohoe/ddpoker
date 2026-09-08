@@ -54,7 +54,7 @@ public class HandGroupDialog extends OptionMenuDialog implements PropertyChangeL
 
     private HandGroup profile_;
 
-    private TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
 
     private DDPanel base_;
     private HandGroupGridPanel gridPanel_;

@@ -53,10 +53,10 @@ public class DDCardView extends DDView
 {
     static Logger logger = LogManager.getLogger(DDCardView.class);
 
-    private static CardThumbnail piece_ = new CardThumbnail();
+    private static final CardThumbnail piece_ = new CardThumbnail();
 
     private Card card_;
-    private int border_ = 1;
+    private final int border_ = 1;
     public static final int HEIGHT = 26;
     public static final int WIDTH = 20;
 

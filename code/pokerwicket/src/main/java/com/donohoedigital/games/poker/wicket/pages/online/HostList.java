@@ -195,7 +195,7 @@ public class HostList extends OnlinePokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<HostSummary>
+    private final class GameListTableView extends CountDataView<HostSummary>
     {
         private static final long serialVersionUID = 42L;
 

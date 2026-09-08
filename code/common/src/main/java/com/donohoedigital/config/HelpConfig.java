@@ -58,14 +58,14 @@ import java.util.Map;
  */
 public class HelpConfig extends XMLConfigFileLoader
 {
-    private static Logger hLogger = LogManager.getLogger(HelpConfig.class);
+    private static final Logger hLogger = LogManager.getLogger(HelpConfig.class);
     
     private String HELP_CONFIG = "help.xml";
 
     private static HelpConfig helpConfig = null;
     
-    private Map<String, HelpTopic> helps_ = new HashMap<>();
-    private List<HelpTopic> helparray_ = new ArrayList<>();
+    private final Map<String, HelpTopic> helps_ = new HashMap<>();
+    private final List<HelpTopic> helparray_ = new ArrayList<>();
     
     /** 
      * Creates a new instance of HelpConfig from the Appconfig file 

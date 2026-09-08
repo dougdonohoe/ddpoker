@@ -58,7 +58,7 @@ public class ScaleLayout implements LayoutManager2, Cloneable
     
     private static final ScaleConstraints defaultConstraints = new ScaleConstraints();
     
-    private HashMap info = new HashMap();
+    private final HashMap info = new HashMap();
     
     public ScaleLayout() {
     }

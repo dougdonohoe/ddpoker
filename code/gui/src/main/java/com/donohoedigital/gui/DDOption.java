@@ -239,7 +239,7 @@ public abstract class DDOption extends DDPanel implements MouseListener
     }
 
     // small perf improvement
-    private static StringBuilder sbHelp = new StringBuilder();
+    private static final StringBuilder sbHelp = new StringBuilder();
     /**
      * when get mouse entered, set help text
      */

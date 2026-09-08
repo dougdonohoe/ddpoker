@@ -55,7 +55,7 @@ public class DDHandGroupView extends ComponentView
     public static final int DEFAULT_HEIGHT = 200;
     public static final int DEFAULT_WIDTH = 200;
 
-    private HandGroup group_;
+    private final HandGroup group_;
     private int width_ = 0;
     private int height_ = 0;
 

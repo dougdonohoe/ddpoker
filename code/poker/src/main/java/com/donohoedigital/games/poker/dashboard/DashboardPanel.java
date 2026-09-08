@@ -57,9 +57,9 @@ public class DashboardPanel extends DDPanel
 {
     static Logger logger = LogManager.getLogger(DashboardPanel.class);
 
-    private DashboardManager mgr_;
-    private DDPanel dashitems_;
-    private DDScrollPane sp_;
+    private final DashboardManager mgr_;
+    private final DDPanel dashitems_;
+    private final DDScrollPane sp_;
 
     public DashboardPanel(DashboardManager mgr)
     {

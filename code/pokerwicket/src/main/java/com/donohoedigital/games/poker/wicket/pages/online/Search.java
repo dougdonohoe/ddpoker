@@ -142,10 +142,10 @@ public class Search extends OnlinePokerPage
     }
 
     ////
-    //// List
-    ////
+     //// List
+     ////
 
-    private class SearchData extends PageableServiceProvider<OnlineProfile>
+    private final class SearchData extends PageableServiceProvider<OnlineProfile>
     {
         private static final long serialVersionUID = 42L;
 
@@ -185,7 +185,7 @@ public class Search extends OnlinePokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<OnlineProfile>
+    private final class GameListTableView extends CountDataView<OnlineProfile>
     {
         private static final long serialVersionUID = 42L;
 

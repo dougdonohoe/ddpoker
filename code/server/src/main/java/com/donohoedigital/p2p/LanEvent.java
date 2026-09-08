@@ -45,9 +45,9 @@ package com.donohoedigital.p2p;
 public class LanEvent 
 {
     
-    private int action_;
-    private LanClientList list_;
-    private String sKey_;
+    private final int action_;
+    private final LanClientList list_;
+    private final String sKey_;
     
     /** 
      * Creates a new instance of LanEvent 

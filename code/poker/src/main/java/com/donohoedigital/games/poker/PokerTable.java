@@ -1971,7 +1971,7 @@ public class PokerTable implements ObjectID
     /**
      * Helper class to track listener and the event types it is interested in
      */
-    private static class ListenerInfo
+    private static final class ListenerInfo
     {
         public static final ListenerInfo NULL_LISTENER = new ListenerInfo(null, 0);
 

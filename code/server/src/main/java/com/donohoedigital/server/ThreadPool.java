@@ -49,11 +49,11 @@ public class ThreadPool
 {
     static Logger logger = LogManager.getLogger(ThreadPool.class);
     
-    private GameServer server_;
+    private final GameServer server_;
     private final List<SocketThread> idle_ = new LinkedList<>();
     private final List<SocketThread> workers_ = new ArrayList<>();
-    private Class<?> socketClass_;
-    private BaseServlet servlet_;
+    private final Class<?> socketClass_;
+    private final BaseServlet servlet_;
 
     public ThreadPool(GameServer server, int poolSize, BaseServlet servlet, String sSocketClass)
     {

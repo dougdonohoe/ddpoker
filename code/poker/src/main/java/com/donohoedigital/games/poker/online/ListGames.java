@@ -279,7 +279,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
     /**
      * Auto join - sleep to let ui show then click start
      */
-    private class AutoJoin implements Runnable
+    private final class AutoJoin implements Runnable
     {
         DDButton button;
 

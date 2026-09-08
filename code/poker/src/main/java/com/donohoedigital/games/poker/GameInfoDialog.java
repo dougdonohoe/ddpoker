@@ -75,7 +75,7 @@ public class GameInfoDialog extends DialogPhase
     private PokerGame game_;
     private TournamentProfile profile_;
     private DDTabbedPane tab_;
-    private ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
+    private final ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
     private boolean bLobbyMode_;
 
     /**

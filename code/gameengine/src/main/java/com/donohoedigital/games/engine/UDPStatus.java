@@ -196,20 +196,20 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
     }
 
     // column names
-    private static String COL_LINK = "udp.link";
-    private static String COL_REMOTE = "udp.remote";
-    private static String COL_MTU = "udp.mtu";
-    private static String COL_AVG = "udp.avg";
-    private static String COL_TIME = "udp.time";
-    private static String COL_SEND = "udp.send";
-    private static String COL_RESEND = "udp.resend";
-    private static String COL_RECEIVE = "udp.receive";
-    private static String COL_DUP = "udp.dup";
-    private static String COL_PKTSNT = "udp.pktsnt"; // not used for now
-    private static String COL_PKTERR = "udp.pkterr"; // not used for now
-    private static String COL_PKTRCV = "udp.pktrcv"; // not used for now
-    private static String COL_BYTESIN = "udp.bytesin";
-    private static String COL_BYTESOUT = "udp.bytesout";
+    private static final String COL_LINK = "udp.link";
+    private static final String COL_REMOTE = "udp.remote";
+    private static final String COL_MTU = "udp.mtu";
+    private static final String COL_AVG = "udp.avg";
+    private static final String COL_TIME = "udp.time";
+    private static final String COL_SEND = "udp.send";
+    private static final String COL_RESEND = "udp.resend";
+    private static final String COL_RECEIVE = "udp.receive";
+    private static final String COL_DUP = "udp.dup";
+    private static final String COL_PKTSNT = "udp.pktsnt"; // not used for now
+    private static final String COL_PKTERR = "udp.pkterr"; // not used for now
+    private static final String COL_PKTRCV = "udp.pktrcv"; // not used for now
+    private static final String COL_BYTESIN = "udp.bytesin";
+    private static final String COL_BYTESOUT = "udp.bytesout";
 
     // client table info
     private static final int[] COLUMN_WIDTHS = new int[] {

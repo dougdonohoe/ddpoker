@@ -48,7 +48,7 @@ import java.io.*;
  *
  * @author  donohoe
  */
-public class PlayerQueue extends ServerDataFile
+public final class PlayerQueue extends ServerDataFile
 {
     //static Logger logger = LogManager.getLogger(PlayerQueue.class);
     

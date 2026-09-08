@@ -51,13 +51,13 @@ public class OutgoingQueue extends Thread
     static Logger logger = LogManager.getLogger(OutgoingQueue.class);
 
     // members
-    private LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
+    private final LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
     private boolean bDone_ = false;
-    private AtomicLong bytesOnQueue_ = new AtomicLong(0);
+    private final AtomicLong bytesOnQueue_ = new AtomicLong(0);
     private int peak_ = 0;
 
     // control messages
-    private Object QUIT = new Object();
+    private final Object QUIT = new Object();
 
     /**
      * new dispatch queue

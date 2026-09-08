@@ -259,10 +259,10 @@ public abstract class GamesList extends OnlinePokerPage
     }
 
     ////
-    //// List
-    ////
+     //// List
+     ////
 
-    private class GameData extends PageableServiceProvider<OnlineGame> implements NameRangeSearch
+    private final class GameData extends PageableServiceProvider<OnlineGame> implements NameRangeSearch
     {
         private static final long serialVersionUID = 42L;
 
@@ -342,7 +342,7 @@ public abstract class GamesList extends OnlinePokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<OnlineGame>
+    private final class GameListTableView extends CountDataView<OnlineGame>
     {
         private static final long serialVersionUID = 42L;
 
@@ -410,10 +410,10 @@ public abstract class GamesList extends OnlinePokerPage
     }
 
     ////
-    //// Fragments
-    ////
+     //// Fragments
+     ////
 
-    private class RecentGamesDescription extends Fragment
+    private final class RecentGamesDescription extends Fragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -423,7 +423,7 @@ public abstract class GamesList extends OnlinePokerPage
         }
     }
 
-    private class CurrentGameLoggedInDescription extends Fragment
+    private final class CurrentGameLoggedInDescription extends Fragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -433,7 +433,7 @@ public abstract class GamesList extends OnlinePokerPage
         }
     }
 
-    private class CurrentGameNotLoggedInDescription extends Fragment
+    private final class CurrentGameNotLoggedInDescription extends Fragment
     {
         private static final long serialVersionUID = 42L;
 

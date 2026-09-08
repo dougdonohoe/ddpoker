@@ -53,7 +53,7 @@ import java.awt.event.MouseListener;
 /**
  * @author Doug Donohoe
  */
-public class GuiManager implements MouseListener
+public final class GuiManager implements MouseListener
 {
     //static Logger logger = LogManager.getLogger(GuiManager.class);
 
@@ -290,7 +290,7 @@ public class GuiManager implements MouseListener
     }
 
     // small perf improvement for below
-    private static StringBuilder sbHelpName = new StringBuilder();
+    private static final StringBuilder sbHelpName = new StringBuilder();
 
     /**
      * Get default help message

@@ -142,10 +142,10 @@ public class MyProfile extends OnlinePokerPage
     }
 
     ////
-    //// List
-    ////
+     //// List
+     ////
 
-    private class AliasTable extends Fragment
+    private final class AliasTable extends Fragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -253,7 +253,7 @@ public class MyProfile extends OnlinePokerPage
         }
     }
 
-    private class OnlineProfileSummaryModel extends LoadableDetachableModel<List<OnlineProfileSummary>>
+    private final class OnlineProfileSummaryModel extends LoadableDetachableModel<List<OnlineProfileSummary>>
     {
         PokerUser userinfo;
 

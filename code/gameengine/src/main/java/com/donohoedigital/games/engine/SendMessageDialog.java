@@ -64,7 +64,7 @@ import java.awt.event.ActionListener;
  */
 public abstract class SendMessageDialog extends DialogPhase implements DDMessageListener, ActionListener
 {
-    private static Logger sLogger = LogManager.getLogger(SendMessageDialog.class);
+    private static final Logger sLogger = LogManager.getLogger(SendMessageDialog.class);
 
     // params
     public static final String PARAM_SLEEP_MILLIS = "sleep";
@@ -605,7 +605,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
     /**
      * handle scrolling
      */
-    private static Point ptop = new Point(0, 0);
+    private static final Point ptop = new Point(0, 0);
 
     protected void _setStatusText(String sText)
     {

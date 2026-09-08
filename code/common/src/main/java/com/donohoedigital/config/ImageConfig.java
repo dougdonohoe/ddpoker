@@ -63,13 +63,13 @@ import java.net.URL;
  */
 public class ImageConfig extends XMLConfigFileLoader
 {
-    private static Logger iLogger = LogManager.getLogger(ImageConfig.class);
+    private static final Logger iLogger = LogManager.getLogger(ImageConfig.class);
     
     private static final String IMAGE_CONFIG = "images.xml";
 
     private static ImageConfig imageConfig = null;
     
-    private Map<String, ImageDef> images_ = new HashMap<>();
+    private final Map<String, ImageDef> images_ = new HashMap<>();
     
     /** 
      * Creates a new instance of ImageConfig from the Appconfig file 

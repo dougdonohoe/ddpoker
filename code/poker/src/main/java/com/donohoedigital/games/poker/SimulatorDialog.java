@@ -69,8 +69,8 @@ public class SimulatorDialog extends BasePhase implements ChangeListener
 {
     static Logger logger = LogManager.getLogger(SimulatorDialog.class);
 
-    private static ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
-    private static ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
+    private static final ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
+    private static final ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
 
     static int MENU_CLEAR_ALL = 0;
     static int MENU_CLEAR_OPP = 1;

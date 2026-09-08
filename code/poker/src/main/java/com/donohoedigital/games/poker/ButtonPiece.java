@@ -56,10 +56,10 @@ import java.awt.geom.GeneralPath;
  */
 public class ButtonPiece extends PokerGamePiece
 {
-    private static GeneralPath path_ = GuiUtils.drawSVGpath(
+    private static final GeneralPath path_ = GuiUtils.drawSVGpath(
             "M26.018,77.979v-5.375h5.375v-43.5h-5.375v-5.375h26.769c8.594,0,15.301,2.305,20.123,6.91c4.82,4.605,7.232,11.014,7.232,19.225c0,8.529-2.338,15.348-7.014,20.455s-10.918,7.66-18.73,7.66H26.018z M42.768,72.104h6.213c6.343,0,11.103-1.863,14.277-5.594c3.172-3.73,4.76-9.313,4.76-16.75c0-6.896-1.648-12.063-4.941-15.5c-3.295-3.438-8.236-5.156-14.822-5.156h-5.486V72.104z",
             false);
-    private static ButtonImageComponent ic_ = new ButtonImageComponent();
+    private static final ButtonImageComponent ic_ = new ButtonImageComponent();
 
     /**
      * Creates a new instance of ButtonPiece 

@@ -58,7 +58,7 @@ import java.util.*;
  */
 public class PropertyConfig extends Properties
 {
-    private static Logger logger = LogManager.getLogger(PropertyConfig.class);
+    private static final Logger logger = LogManager.getLogger(PropertyConfig.class);
 
     // config file names
     private static final String PROPS_CONFIG_COMMON = "common.properties";
@@ -70,7 +70,7 @@ public class PropertyConfig extends Properties
     private static PropertyConfig propConfig = null;
 
     // testing - don't throw missing exceptions
-    private static boolean testing = false;
+    private static final boolean testing = false;
 
     /**
      * Creates a new instance of PropertyConfig from the Appconfig file

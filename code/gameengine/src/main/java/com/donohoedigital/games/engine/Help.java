@@ -78,7 +78,7 @@ public class Help extends BasePhase implements ListSelectionListener,
     private TableModel model_;
     private DDImageButton bak_, fwd_;
     private int nHistIndex_ = 0;
-    private List<HelpTopic> history_ = new ArrayList<>();
+    private final List<HelpTopic> history_ = new ArrayList<>();
     private String STYLE;
     private boolean bRunning_ = false;
 

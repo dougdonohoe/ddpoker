@@ -62,16 +62,16 @@ import java.util.Map;
  */
 public class StylesConfig extends XMLConfigFileLoader
 {
-    private static Logger sLogger = LogManager.getLogger(StylesConfig.class);
+    private static final Logger sLogger = LogManager.getLogger(StylesConfig.class);
 
     private static final String STYLE_CONFIG = "styles.xml";
     private static final boolean DEBUG_FONT = false;
 
     private static StylesConfig stylesConfig = null;
 
-    private Map<String, Color> colors_ = new HashMap<>();
-    private Map<String, Font> fonts_ = new HashMap<>();
-    private Map<String, Font> fontdefs_ = new HashMap<>();
+    private final Map<String, Color> colors_ = new HashMap<>();
+    private final Map<String, Font> fonts_ = new HashMap<>();
+    private final Map<String, Font> fontdefs_ = new HashMap<>();
 
     /**
      * Creates a new instance of StylesConfig from the Appconfig file

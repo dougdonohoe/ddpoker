@@ -53,7 +53,7 @@ import static com.donohoedigital.games.poker.model.TournamentProfile.*;
  */
 public class TournamentProfileHtml
 {
-    private TournamentProfile profile;
+    private final TournamentProfile profile;
 
     // cache for quick display
     private String htmlCache_;

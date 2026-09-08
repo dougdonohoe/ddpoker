@@ -63,8 +63,8 @@ public class PokerCustomTerritoryDrawer implements CustomTerritoryDrawer
 
     static Logger logger = LogManager.getLogger(PokerCustomTerritoryDrawer.class);
 
-    private PokerGame game_;
-    private MersenneTwisterFast random_ = new MersenneTwisterFast();
+    private final PokerGame game_;
+    private final MersenneTwisterFast random_ = new MersenneTwisterFast();
 
     /**
      * Creates a new instance of PokerCustomTerritoryDrawer

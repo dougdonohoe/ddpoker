@@ -51,15 +51,15 @@ public class IncomingQueue
     static Logger logger = LogManager.getLogger(IncomingQueue.class);
 
     // message comparator
-    private static UDPMessageComparator comparator_ = new UDPMessageComparator();
+    private static final UDPMessageComparator comparator_ = new UDPMessageComparator();
 
     // last dispatch count
     static final int LAST_DISPATCH_CNT = -1;
 
     // members
-    private ArrayList<UDPData> queue_ = new ArrayList<>();
+    private final ArrayList<UDPData> queue_ = new ArrayList<>();
     private int nLastProcessedID_;
-    private UDPLink link_;
+    private final UDPLink link_;
 
     /**
      * Default constructor
@@ -157,7 +157,7 @@ public class IncomingQueue
     //// DISPATCH
     ////
 
-    private ArrayList<UDPData> process_ = new ArrayList<>(10);
+    private final ArrayList<UDPData> process_ = new ArrayList<>(10);
 
     /**
      * Dispatch messages.  Basically the messages in the queue are sorted

@@ -62,7 +62,7 @@ public class OnlineDash extends DashboardItem
     private static final String OBSERVING = PropertyConfig.getMessage("msg.observing.title");
 
     private DDPanel base_;
-    private PokerPlayer player_;
+    private final PokerPlayer player_;
     private DDCheckBox sitout_, mucklose_, muckwin_;
     private TournamentDirector td_;
 
@@ -203,7 +203,7 @@ public class OnlineDash extends DashboardItem
     }
 
     // runnable for setting label text in swing thread
-    private Runnable updateRunner_ = this::updateAll;
+    private final Runnable updateRunner_ = this::updateAll;
 
     ///
     /// display logic

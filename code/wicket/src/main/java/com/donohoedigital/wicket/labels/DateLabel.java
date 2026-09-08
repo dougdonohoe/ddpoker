@@ -42,7 +42,7 @@ import org.apache.wicket.util.convert.IConverter;
 
 import java.util.Date;
 
-public class DateLabel extends Label implements IGenericComponent<Date, DateLabel>
+public final class DateLabel extends Label implements IGenericComponent<Date, DateLabel>
 {
     private static final long serialVersionUID = 1L;
 

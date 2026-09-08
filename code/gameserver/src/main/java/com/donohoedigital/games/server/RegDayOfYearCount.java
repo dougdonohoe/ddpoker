@@ -41,9 +41,9 @@ package com.donohoedigital.games.server;
  */
 public class RegDayOfYearCount
 {
-    private int count;
-    private int day;
-    private int year;
+    private final int count;
+    private final int day;
+    private final int year;
 
     public RegDayOfYearCount(int count, int day, int year)
     {

@@ -47,7 +47,7 @@ public class AIOutcome
     public static final int RAISE = 2;
     public static final int RERAISE = 2;
 
-    private ArrayList tuples_ = new ArrayList();
+    private final ArrayList tuples_ = new ArrayList();
 
     private float checkFold;
     private float call;
@@ -55,11 +55,11 @@ public class AIOutcome
 
     private boolean computed_ = false;
 
-    private PokerPlayer player_;
+    private final PokerPlayer player_;
     private BetRange betRange_;
-    private int potStatus_;
-    private int round_;
-    private boolean isLimit_;
+    private final int potStatus_;
+    private final int round_;
+    private final boolean isLimit_;
     private String allInReason_;
 
     private class Tuple

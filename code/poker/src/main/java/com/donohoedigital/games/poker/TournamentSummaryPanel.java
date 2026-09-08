@@ -60,21 +60,21 @@ import java.util.List;
  */
 public class TournamentSummaryPanel extends DDPanel
 {
-    private String STYLE;
-    private String BEVEL_STYLE;
-    private GameContext context_;
+    private final String STYLE;
+    private final String BEVEL_STYLE;
+    private final GameContext context_;
     private DDHtmlArea html_, onlineHtml_;
     private DDLabel double_;
     private DDLabel payinfo_;
     private TournamentModel payout_;
     private TournamentModel levels_;
     private TournamentModel opponents_;
-    private DDTabbedPane tab_;
-    private String sHelpName_;
+    private final DDTabbedPane tab_;
+    private final String sHelpName_;
     private TournamentProfile profile_;
     private TournamentProfileHtml profileHtml_;
-    private ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
-    private boolean bListMode_;
+    private final ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
+    private final boolean bListMode_;
 
 
     public TournamentSummaryPanel(GameContext context, String sStyle, String sTabStyle, String sTableBevelStyle,
@@ -404,21 +404,21 @@ public class TournamentSummaryPanel extends DDPanel
             COL_PLACE, COL_PAYOUT
     };
     // client table info
-    private int[] PAYOUT_WIDTHS = new int[]{
+    private final int[] PAYOUT_WIDTHS = new int[]{
             55, 275
     };
-    private static String[] LEVELS_NAMES = new String[]{
+    private static final String[] LEVELS_NAMES = new String[]{
             COL_NUM, COL_ANTE, COL_SMALL, COL_BIG, COL_TIME, COL_GAMETYPE
     };
     // client table info
-    private int[] LEVELS_WIDTHS = new int[]{
+    private final int[] LEVELS_WIDTHS = new int[]{
             35, CW, CW, CW, 35, 70
     };
-    private static String[] OPP_NAMES = new String[]{
+    private static final String[] OPP_NAMES = new String[]{
             COL_OPPONENT_TYPE, COL_PERC
     };
     // client table info
-    private int[] OPP_WIDTHS = new int[]{
+    private final int[] OPP_WIDTHS = new int[]{
             250, 80
     };
 

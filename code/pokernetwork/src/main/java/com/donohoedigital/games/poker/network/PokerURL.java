@@ -49,8 +49,8 @@ import java.util.StringTokenizer;
  */
 public class PokerURL extends P2PURL 
 {
-    private String sID_;
-    private String sPass_;
+    private final String sID_;
+    private final String sPass_;
     
     public PokerURL(String spec) {
         super(spec);

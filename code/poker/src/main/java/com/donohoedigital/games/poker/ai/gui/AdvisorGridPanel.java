@@ -47,8 +47,8 @@ import java.awt.event.MouseEvent;
 
 public class AdvisorGridPanel extends DDPanel
 {
-    private PocketMatrixByte outcomes_ = new PocketMatrixByte();
-    private PocketMatrixString outcomeStrings_ = new PocketMatrixString();
+    private final PocketMatrixByte outcomes_ = new PocketMatrixByte();
+    private final PocketMatrixString outcomeStrings_ = new PocketMatrixString();
 
     private boolean bPreFlop_ = true;
     private boolean bMinorGrid_ = true;

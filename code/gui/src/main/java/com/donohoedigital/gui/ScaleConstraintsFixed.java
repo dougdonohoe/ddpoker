@@ -41,7 +41,7 @@ package com.donohoedigital.gui;
  */
 public class ScaleConstraintsFixed
 {
-    private int nVert_, nHoriz_;
+    private final int nVert_, nHoriz_;
 
     public ScaleConstraintsFixed(int nVerticalAlign, int nHorizontalAlign)
     {

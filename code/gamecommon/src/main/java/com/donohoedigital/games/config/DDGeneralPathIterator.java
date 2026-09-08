@@ -50,9 +50,9 @@ public class DDGeneralPathIterator implements PathIterator
 {
     //static Logger logger = LogManager.getLogger(DDGeneralPathIterator.class);
     
-    private GeneralPath path_;
+    private final GeneralPath path_;
     private static final int[] curvesize = {2, 2, 4, 6, 0};
-    private ArrayList points_ = new ArrayList();
+    private final ArrayList points_ = new ArrayList();
     float[] current_;
     private int index_ = 0;
     

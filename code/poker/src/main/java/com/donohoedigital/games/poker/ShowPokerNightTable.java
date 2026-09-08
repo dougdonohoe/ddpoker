@@ -491,7 +491,7 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
     }
 
     // runnable for in swing thread
-    private Runnable update_ = () -> {
+    private final Runnable update_ = () -> {
         updateLevel();
         checkButtons();
     };

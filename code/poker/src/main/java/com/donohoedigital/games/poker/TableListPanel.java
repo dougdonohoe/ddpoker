@@ -64,9 +64,9 @@ public class TableListPanel extends DDTabPanel implements ChangeListener, Action
 {
     private static final int NUMDISPLAY = 2;
 
-    private GameContext context_;
-    private PokerGame game_;
-    private String STYLE;
+    private final GameContext context_;
+    private final PokerGame game_;
+    private final String STYLE;
     private DDPanel tbls_;
     private TablePanel[] tables_;
     private DDSlider slider_;

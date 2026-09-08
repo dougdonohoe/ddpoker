@@ -38,10 +38,8 @@
 
 package com.donohoedigital.proto.tests;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -75,7 +73,7 @@ public class ItalicBug
     {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         panel.setLayout(new BorderLayout());
         
         JLabel label = new JLabel("Lucida Sans Regular - italic - 32");

@@ -63,14 +63,14 @@ import java.util.List;
  */
 public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static Logger logger = LogManager.getLogger(ChatServer.class);
+    private static final Logger logger = LogManager.getLogger(ChatServer.class);
 
     private OnlineProfileService onlineProfileService;
     private BannedKeyService bannedKeyService;
 
     // members
-    private UDPServer udp_;
-    private int nPort_;
+    private final UDPServer udp_;
+    private final int nPort_;
     private final List<LinkInfo> links_ = Collections.synchronizedList(new ArrayList<LinkInfo>());
 
     /**
@@ -451,7 +451,7 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
     /**
      * list of links
      */
-    private class LinkInfo implements Comparable<LinkInfo>
+    private final class LinkInfo implements Comparable<LinkInfo>
     {
         UDPLink link;
         String sRealKey;

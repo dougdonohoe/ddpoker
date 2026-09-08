@@ -75,14 +75,14 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     static Logger logger = LogManager.getLogger(TournamentProfileDialog.class);
 
     static com.donohoedigital.base.Format fPerc = new com.donohoedigital.base.Format("%1.3f");
-    private javax.swing.border.Border empty_ = null;
+    private final javax.swing.border.Border empty_ = null;
     private TournamentProfile profile_;
     private PokerGame game_; // used when editing during a tournament
-    private TypedHashMap dummy_ = new TypedHashMap();
-    private TypedHashMap labelignore_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap labelignore_ = new TypedHashMap();
     private TypedHashMap orig_;
-    private ArrayList rebuyOptions_ = new ArrayList();
-    private ArrayList addonOptions_ = new ArrayList();
+    private final ArrayList rebuyOptions_ = new ArrayList();
+    private final ArrayList addonOptions_ = new ArrayList();
     private DDPanel base_;
     private DDTextField name_;
     private DDNumberSpinner numPlayers_;
@@ -96,9 +96,9 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     private DDRadioButton buttonAuto_, buttonPerc_, buttonAmount_;
     private DDRadioButton buttonSatellite_;
     private boolean bDetailsTabReady_ = false;
-    private SpotPanel[] spots_ = new SpotPanel[TournamentProfile.MAX_SPOTS];
-    private String[] saveA_ = new String[TournamentProfile.MAX_SPOTS];
-    private String[] saveP_ = new String[TournamentProfile.MAX_SPOTS];
+    private final SpotPanel[] spots_ = new SpotPanel[TournamentProfile.MAX_SPOTS];
+    private final String[] saveA_ = new String[TournamentProfile.MAX_SPOTS];
+    private final String[] saveP_ = new String[TournamentProfile.MAX_SPOTS];
     private int nNumSpots_ = 0;
     private DDRadioButton buttonSelected_;
     private DDButton clear_;

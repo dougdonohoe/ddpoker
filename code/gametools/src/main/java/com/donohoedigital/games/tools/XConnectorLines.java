@@ -75,8 +75,8 @@ public class XConnectorLines extends ImageComponent {
     
     // used for performance so a new rect and line 
     // isn't needed everytime we repaint
-    private Rectangle bounds_ = new Rectangle();
-    private Line2D line_ = new Line2D.Float();
+    private final Rectangle bounds_ = new Rectangle();
+    private final Line2D line_ = new Line2D.Float();
     
     protected void paintComponent(Graphics g)
     {

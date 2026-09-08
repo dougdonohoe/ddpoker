@@ -92,7 +92,7 @@ public class OnlineManager implements ChatManager
     static int RCNT = 0;
 
     // members
-    private GameContext context_;
+    private final GameContext context_;
     private PokerGame game_;
     private PokerMain main_;
     PokerConnectionServer p2p_;
@@ -108,7 +108,7 @@ public class OnlineManager implements ChatManager
     private final List<OnlineMessage> tdQueue_ = new ArrayList<>();
     private OnlineManagerQueue oQueue_ = null;
     private PokerPrefsPlayerList banned_;
-    private Set<String> sentMessageAboutRejectedPlayer = new HashSet<>();
+    private final Set<String> sentMessageAboutRejectedPlayer = new HashSet<>();
 
     /**
      * Creates a new instance of OnlineManager
@@ -2658,7 +2658,7 @@ public class OnlineManager implements ChatManager
     /**
      * Methods throw this error with the message to return
      */
-    private static class OnlineError extends RuntimeException
+    private static final class OnlineError extends RuntimeException
     {
         private DDMessageTransporter reply;
 

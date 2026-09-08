@@ -65,16 +65,16 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
 {
     static Logger logger = LogManager.getLogger(ChatListPanel.class);
 
-    private static ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
+    private static final ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
     private static final String WHITESPACE = "[\\s\\xA0]+";
 
-    private GameContext context_;
+    private final GameContext context_;
     private Point start_ = null;
     private Point end_;
 
     // limit display
     private int MAX_MESSAGES = 500;
-    private ArrayList messages_;
+    private final ArrayList messages_;
 
     /**
      * Create new panel specifying styles, scrollbar policies

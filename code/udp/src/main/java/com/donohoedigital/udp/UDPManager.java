@@ -59,19 +59,19 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
     static int ACK_SEND_MILLIS = 333;
 
     // members
-    private UDPServer server_;
-    private UDPLinkHandler handler_;
+    private final UDPServer server_;
+    private final UDPLinkHandler handler_;
     private final List<UDPManagerMonitor> monitors_ = new ArrayList<>();
     private final LinkedBlockingQueue<Object> queue_ = new LinkedBlockingQueue<>();
     private final List<UDPLink> links_ = Collections.synchronizedList(new ArrayList<UDPLink>());
-    private List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<UDPLink>());
+    private final List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<UDPLink>());
     boolean bDone_ = false;
-    private Timer timer_;
+    private final Timer timer_;
 
     // control messages
-    private Object QUIT = new Object();
-    private Object SENDALL = new Object();
-    private Object SENDACK = new Object();
+    private final Object QUIT = new Object();
+    private final Object SENDALL = new Object();
+    private final Object SENDACK = new Object();
 
     /**
      * new udp manager

@@ -45,9 +45,9 @@ import java.util.Vector;
 
 public class DatabaseQueryTableModel extends DDPagingTableModel
 {
-    private Database database_;
-    private String query_;
-    private BindArray bindArray_;
+    private final Database database_;
+    private final String query_;
+    private final BindArray bindArray_;
 
     public boolean isCellEditable(int row, int column)
     {

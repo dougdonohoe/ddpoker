@@ -50,8 +50,8 @@ public class PlayerTypeSlidersPanel extends DDPanel
 {
     public static ChangeListener changeListener = null;
 
-    private ListPanel listPanel_;
-    private DDHtmlArea helpPanel_;
+    private final ListPanel listPanel_;
+    private final DDHtmlArea helpPanel_;
 
     public PlayerTypeSlidersPanel(String sStyle)
     {

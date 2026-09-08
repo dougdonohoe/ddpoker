@@ -128,7 +128,7 @@ public class GameDetail extends OnlinePokerPage
         add(new StringLabel("tournamentProfile", new TournamentProfileHtml(tournament).toHTML(null)).setEscapeModelStrings(false));
     }
 
-    private class FinishTable extends Fragment
+    private final class FinishTable extends Fragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -144,7 +144,7 @@ public class GameDetail extends OnlinePokerPage
         }
     }
 
-    private class FinishData extends PageableServiceProvider<TournamentHistory>
+    private final class FinishData extends PageableServiceProvider<TournamentHistory>
     {
         private static final long serialVersionUID = 42L;
 
@@ -184,7 +184,7 @@ public class GameDetail extends OnlinePokerPage
         }
     }
 
-    private class FinishTableView extends CountDataView<TournamentHistory>
+    private final class FinishTableView extends CountDataView<TournamentHistory>
     {
         private static final long serialVersionUID = 42L;
 

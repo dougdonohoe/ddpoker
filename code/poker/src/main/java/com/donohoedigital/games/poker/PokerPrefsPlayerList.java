@@ -47,15 +47,15 @@ import java.util.prefs.Preferences;
  * Time: 10:34:46 AM
  * To change this template use File | Settings | File Templates.
  */
-public class PokerPrefsPlayerList extends AbstractPlayerList
+public final class PokerPrefsPlayerList extends AbstractPlayerList
 {
     // these have to match gamedef.xml entry
     
     public static final String LIST_MUTE = "muted";
     public static final String LIST_BANNED = "banned";
 
-    private String sListName_;
-    private String sListNameKey_;
+    private final String sListName_;
+    private final String sListNameKey_;
     protected boolean bUseKey_ = false;
 
     private static Map<String, PokerPrefsPlayerList> share_ = null;
@@ -63,7 +63,7 @@ public class PokerPrefsPlayerList extends AbstractPlayerList
     /**
      * Get shared PlayerList
      */
-    public synchronized static PokerPrefsPlayerList getSharedList(String sListName)
+    public static synchronized PokerPrefsPlayerList getSharedList(String sListName)
     {
         if (share_ == null)
         {

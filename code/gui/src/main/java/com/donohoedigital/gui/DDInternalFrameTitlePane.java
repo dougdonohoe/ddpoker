@@ -55,7 +55,7 @@ public class DDInternalFrameTitlePane extends MetalInternalFrameTitlePane
 {    
     InternalDialog dialog_;
     
-    private static Color modaltitle_ = StylesConfig.getColor("modal.title");
+    private static final Color modaltitle_ = StylesConfig.getColor("modal.title");
     
     /** Creates a new instance of DDInternalFrameTitlePane */
     public DDInternalFrameTitlePane(InternalDialog f) 

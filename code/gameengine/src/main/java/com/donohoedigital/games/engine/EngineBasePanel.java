@@ -197,7 +197,7 @@ public class EngineBasePanel extends JPanel
     boolean bPainting_ = false;
 
     // growbox color
-    private Color growColor_ = new Color(200, 200, 200, 125);
+    private final Color growColor_ = new Color(200, 200, 200, 125);
 
     // JDD 2019
     static boolean PAINT_GROW_BOX = true;

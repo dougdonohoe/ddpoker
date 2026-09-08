@@ -60,7 +60,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public class Experiments
 {
-    private Logger logger = LogManager.getLogger(Experiments.class);
+    private final Logger logger = LogManager.getLogger(Experiments.class);
 
     @Test
     public void testNullEquals()

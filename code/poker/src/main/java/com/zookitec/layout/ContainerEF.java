@@ -34,7 +34,7 @@ import java.util.WeakHashMap;
  * An expression factory used to create expressions for
  * attributes of the container being laid out.
  */
-public class ContainerEF {
+public final class ContainerEF {
 
     private static final int TOP         =  0;
     private static final int BOTTOM      =  1;
@@ -48,7 +48,7 @@ public class ContainerEF {
     /**
      * array of maps from container to expression for each attribte
      */
-    private static WeakHashMap [] cache = new WeakHashMap[ATTRIBUTE_COUNT];
+    private static final WeakHashMap [] cache = new WeakHashMap[ATTRIBUTE_COUNT];
 
 
     private ContainerEF() {}

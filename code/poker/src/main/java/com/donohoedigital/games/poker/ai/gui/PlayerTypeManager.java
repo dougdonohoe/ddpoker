@@ -46,8 +46,8 @@ import java.awt.Dimension;
 
 public class PlayerTypeManager extends ProfileManagerPanel
 {
-    private GlassButton roster_;
-    private GameContext context_;
+    private final GlassButton roster_;
+    private final GameContext context_;
 
     public PlayerTypeManager(GameEngine engine, GameContext context, String sStyle)
     {

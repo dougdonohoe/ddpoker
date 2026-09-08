@@ -66,21 +66,21 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
     static Logger logger = LogManager.getLogger(HostStatus.class);
 
     // LEDs
-    private static ImageIcon REDLED = ImageConfig.getImageIcon("led-red");
-    private static ImageIcon GREENLED = ImageConfig.getImageIcon("led-green");
-    private static ImageIcon YELLOWLED = ImageConfig.getImageIcon("led-yellow");
+    private static final ImageIcon REDLED = ImageConfig.getImageIcon("led-red");
+    private static final ImageIcon GREENLED = ImageConfig.getImageIcon("led-green");
+    private static final ImageIcon YELLOWLED = ImageConfig.getImageIcon("led-yellow");
 
     // members
-    private PokerGame game_;
-    private OnlineManager mgr_;
-    private PokerPlayer host_;
-    private PokerPlayer local_;
+    private final PokerGame game_;
+    private final OnlineManager mgr_;
+    private final PokerPlayer host_;
+    private final PokerPlayer local_;
     private boolean bConnected_ = false;
-    private boolean bInGame_;
+    private final boolean bInGame_;
 
     // ui
-    private DDLabel status_;
-    private DDCheckBox details_;
+    private final DDLabel status_;
+    private final DDCheckBox details_;
     private PokerErrorDialog error_;
 
     /**

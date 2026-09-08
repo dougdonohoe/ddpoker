@@ -63,8 +63,8 @@ public class UDPManagerEvent
     }
 
     // members
-    private Type type_;
-    private UDPLink link_;
+    private final Type type_;
+    private final UDPLink link_;
 
     /**
      * Constructor - basic

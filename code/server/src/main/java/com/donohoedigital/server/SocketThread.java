@@ -54,7 +54,7 @@ import java.util.StringTokenizer;
 public class SocketThread extends Thread
 {
     static Logger logger = LogManager.getLogger(SocketThread.class);
-    private static boolean DEBUG = false;
+    private static final boolean DEBUG = false;
     
     protected static final int READ_TIMEOUT_MILLIS = PropertyConfig.getRequiredIntegerProperty("settings.server.readtimeout.millis");
     protected static final int READ_WAIT_MILLIS = PropertyConfig.getRequiredIntegerProperty("settings.server.readwait.millis");

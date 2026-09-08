@@ -2067,21 +2067,21 @@ public class ShowTournamentTable extends ShowPokerTable implements
     //// popup menu items
     ////
 
-    private static ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
-    private static ImageIcon moneyIcon_ = ImageConfig.getImageIcon("menuicon.money");
-    private static ImageIcon buttonIcon_ = ImageConfig.getImageIcon("menuicon.button");
-    private static ImageIcon dealIcon_ = ImageConfig.getImageIcon("menuicon.deal");
-    private static ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
-    private static ImageIcon cardIcon_ = ImageConfig.getImageIcon("menuicon.card");
-    private static ImageIcon playertypeIcon_ = ImageConfig.getImageIcon("menuicon.playertype");
-    private static ImageIcon advisorIcon_ = ImageConfig.getImageIcon("menuicon.advisor");
-    private static ImageIcon playerNameIcon_ = ImageConfig.getImageIcon("menuicon.playername");
-    private static ImageIcon removePlayerIcon_ = ImageConfig.getImageIcon("menuicon.removeplayer");
-    private static ImageIcon sitoutIcon_ = ImageConfig.getImageIcon("menuicon.sitout");
-    private static ImageIcon banIcon_ = ImageConfig.getImageIcon("menuicon.ban");
-    private static ImageIcon unbanIcon_ = ImageConfig.getImageIcon("menuicon.unban");
-    private static ImageIcon muteIcon_ = ImageConfig.getImageIcon("menuicon.mute");
-    private static ImageIcon unmuteIcon_ = ImageConfig.getImageIcon("menuicon.unmute");
+    private static final ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
+    private static final ImageIcon moneyIcon_ = ImageConfig.getImageIcon("menuicon.money");
+    private static final ImageIcon buttonIcon_ = ImageConfig.getImageIcon("menuicon.button");
+    private static final ImageIcon dealIcon_ = ImageConfig.getImageIcon("menuicon.deal");
+    private static final ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
+    private static final ImageIcon cardIcon_ = ImageConfig.getImageIcon("menuicon.card");
+    private static final ImageIcon playertypeIcon_ = ImageConfig.getImageIcon("menuicon.playertype");
+    private static final ImageIcon advisorIcon_ = ImageConfig.getImageIcon("menuicon.advisor");
+    private static final ImageIcon playerNameIcon_ = ImageConfig.getImageIcon("menuicon.playername");
+    private static final ImageIcon removePlayerIcon_ = ImageConfig.getImageIcon("menuicon.removeplayer");
+    private static final ImageIcon sitoutIcon_ = ImageConfig.getImageIcon("menuicon.sitout");
+    private static final ImageIcon banIcon_ = ImageConfig.getImageIcon("menuicon.ban");
+    private static final ImageIcon unbanIcon_ = ImageConfig.getImageIcon("menuicon.unban");
+    private static final ImageIcon muteIcon_ = ImageConfig.getImageIcon("menuicon.mute");
+    private static final ImageIcon unmuteIcon_ = ImageConfig.getImageIcon("menuicon.unmute");
 
     /**
      * Class used to track what the menu item does
@@ -2748,7 +2748,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     //// mouse translation
     ////
 
-    private MouseTranslator mouseTrans_ = new MouseTranslator();
+    private final MouseTranslator mouseTrans_ = new MouseTranslator();
 
     /**
      * mouse motion/click translation - need for mouse motion/click handling

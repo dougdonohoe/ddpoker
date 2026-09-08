@@ -67,16 +67,16 @@ import java.util.prefs.Preferences;
  */
 public abstract class GameEngine extends BaseApp
 {
-    private Logger logger = LogManager.getLogger(GameEngine.class);
+    private final Logger logger = LogManager.getLogger(GameEngine.class);
 
     // debugging settings
-    private static boolean TESTING_SKIP_SPLASH = false;
-    private boolean bExitEarlyTest = false;
+    private static final boolean TESTING_SKIP_SPLASH = false;
+    private final boolean bExitEarlyTest = false;
 
     // private stuff - does not change once created
     private static GameEngine engine_ = null;
     private GamedefConfig gamedef_;
-    private String sMainModule_;
+    private final String sMainModule_;
 
     // subclass access
     protected SplashScreen splashscreen_;
@@ -95,7 +95,7 @@ public abstract class GameEngine extends BaseApp
     private String sLastReal_ = null;
     private String sLastGen_ = null;
     private EnginePrefs prefNode_;
-    private String sPrefNode_;
+    private final String sPrefNode_;
     private String sKeyNode_;
     private boolean bSkipSplashChoice_ = false;
     private String guid_;
@@ -1008,7 +1008,7 @@ public abstract class GameEngine extends BaseApp
     ////
 
     // list of contexts
-    private Map<String, ContextTracker> contexts_ = new HashMap<>();
+    private final Map<String, ContextTracker> contexts_ = new HashMap<>();
 
     /**
      * note that a context was created

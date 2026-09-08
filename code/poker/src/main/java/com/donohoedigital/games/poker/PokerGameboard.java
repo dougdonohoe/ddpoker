@@ -68,13 +68,13 @@ public class PokerGameboard extends Gameboard
     static Logger logger = LogManager.getLogger(PokerGameboard.class);
 
     private static final GeneralPath FELT = GuiUtils.drawSVGpath("M180,0c90,1,760,1,850,0c90,1,180,184,180,443.5c0,260.5-90,442.5-180,442.5s-760,0-850,0S0,704,0,443.5C0,184,90,1,180,0z", false);
-    private static Rectangle FBOUNDS = FELT.getBounds();
+    private static final Rectangle FBOUNDS = FELT.getBounds();
 
-    private PokerGame game_;
+    private final PokerGame game_;
     protected int nSmallWidth_, nSmallHeight_;
     protected int nStartingWidth_, nStartingHeight_;
 
-    private PokerGameboardDelegate delegate_;
+    private final PokerGameboardDelegate delegate_;
 
     // default - green felt
     private Color top_ = new Color(38,175,23);
@@ -618,7 +618,7 @@ public class PokerGameboard extends Gameboard
     /**
      * for use above
      */
-    private static class Faux2 extends ImageComponent
+    private static final class Faux2 extends ImageComponent
     {
         FauxPokerGameboard parent;
 

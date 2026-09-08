@@ -51,8 +51,8 @@ public class DDFileChooser extends JFileChooser implements DDTextVisibleComponen
 {
     //static Logger logger = LogManager.getLogger(DDFileChooser.class);
 
-    private Preferences prefs_;
-    private String sPrefName_;
+    private final Preferences prefs_;
+    private final String sPrefName_;
 
     /**
      * Creates a new instance of DDFileChooser

@@ -68,9 +68,9 @@ public class EngineUtils
     protected static Gameboard gameboard_;
     protected static JComponent scroll_;
     
-    private static javax.swing.border.Border standardMsgBorder_ = BorderFactory.createEmptyBorder(6,10,5,10);
-    private static javax.swing.border.Border standardMenuTextBorder_ = BorderFactory.createEmptyBorder(15,20,15,20);
-    private static javax.swing.border.Border standardMenuLowerTextBorder_ = BorderFactory.createEmptyBorder(2,10,2,10);
+    private static final javax.swing.border.Border standardMsgBorder_ = BorderFactory.createEmptyBorder(6,10,5,10);
+    private static final javax.swing.border.Border standardMenuTextBorder_ = BorderFactory.createEmptyBorder(15,20,15,20);
+    private static final javax.swing.border.Border standardMenuLowerTextBorder_ = BorderFactory.createEmptyBorder(2,10,2,10);
     
     /**
      * Get standard border around message areas
@@ -636,7 +636,7 @@ public class EngineUtils
     /**
      * add cancelable phase
      */
-    public synchronized static void addCancelable(CancelablePhase phase)
+    public static synchronized void addCancelable(CancelablePhase phase)
     {
         if (cancelables_ == null) cancelables_ = new ArrayList();
 
@@ -646,7 +646,7 @@ public class EngineUtils
     /**
      * remove cancelable phase
      */
-    public synchronized static void removeCancelable(CancelablePhase phase)
+    public static synchronized void removeCancelable(CancelablePhase phase)
     {
         if (cancelables_ == null) return;
 
@@ -656,7 +656,7 @@ public class EngineUtils
     /**
      * cancel cancelable phases and clear list
      */
-    public synchronized static void cancelCancelables()
+    public static synchronized void cancelCancelables()
     {
         if (cancelables_ == null || cancelables_.isEmpty()) return;
 
@@ -667,7 +667,7 @@ public class EngineUtils
     /**
      * cancel each item in the list and clear the list
      */
-    private synchronized static void cancel()
+    private static synchronized void cancel()
     {
         CancelablePhase c;
         ArrayList dup = new ArrayList(cancelables_);

@@ -65,7 +65,7 @@ import java.util.TreeMap;
  *
  * @author Doug Donohoe
  */
-public class DDMultiResIcon implements Icon
+public final class DDMultiResIcon implements Icon
 {
     /**
      * Variant sizes looked for in images.xml.  Covers the common scales for the ~20px artwork

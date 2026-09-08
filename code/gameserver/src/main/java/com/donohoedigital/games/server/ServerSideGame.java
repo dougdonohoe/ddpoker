@@ -65,7 +65,7 @@ import java.util.Locale;
 /**
  * @author donohoe
  */
-public class ServerSideGame extends ServerDataFile implements GameInfo
+public final class ServerSideGame extends ServerDataFile implements GameInfo
 {
     static Logger logger = LogManager.getLogger(ServerSideGame.class);
 

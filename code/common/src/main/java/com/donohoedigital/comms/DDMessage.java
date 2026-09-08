@@ -143,9 +143,9 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
 
     // transient data only
     private int nStatus_ = DDMessageListener.STATUS_NONE;
-    
+
     // class to represent data chunks
-    private class MessageData
+    private final class MessageData
     {
         private byte[] bytedata_;
         private File filedata_;
