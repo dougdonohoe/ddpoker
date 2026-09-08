@@ -242,6 +242,53 @@ to the latest versions that work with Java 25.  The only exception is `HSQLDB`, 
 have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
 we don't want to deal with at this time.
 
+### Code Modernization (OpenRewrite)
+
+Because the code started life on Java 5, a lot of it predates language features we now take
+for granted.  [OpenRewrite](https://docs.openrewrite.org) is wired into `code/pom.xml` to
+automate the mechanical parts of catching up.  It is not bound to any lifecycle phase, so
+ordinary builds are unaffected.
+
+Recipes are grouped in `rewrite.yml` (repo root), one group per reviewable change:
+
+| Recipe | What it does |
+|--------|--------------|
+| `com.donohoedigital.TypeCleanup` | Diamond operator, redundant casts, C-style arrays, unused imports |
+| `com.donohoedigital.Lambdas` | Anonymous functional interfaces to lambdas and method references |
+| `com.donohoedigital.StringsAndCollections` | `isEmpty()`, `contains()`, `valueOf()`, `StringBuilder` |
+| `com.donohoedigital.FinalAndModifiers` | `final` private fields, redundant modifiers, `@Override` |
+| `com.donohoedigital.ParameterizedLogging` | `log.debug("x " + y)` becomes `log.debug("x {}", y)` |
+| `com.donohoedigital.DeadCode` | Unused private members — **risky, see below** |
+| `com.donohoedigital.RedundantInitializers` | Drop `= null` / `= false` / `= 0` from field declarations |
+
+```shell
+cd code
+mvn rewrite:dryRun -Drewrite.activeRecipes=com.donohoedigital.TypeCleanup   # preview only
+mvn rewrite:run    -Drewrite.activeRecipes=com.donohoedigital.TypeCleanup   # apply
+mvn rewrite:discover                                                        # list all recipes
+```
+
+`dryRun` writes a patch to `code/target/rewrite/rewrite.patch` and changes nothing.  **Always
+dry-run and read the patch first.**  Recipes are idempotent — re-running one over already-fixed
+code is a no-op, so an empty patch means that group is fully applied.
+
+`DeadCode` needs particular care.  Hibernate, Wicket (which binds markup to component ids) and
+the gameengine XML save-game code all reach members reflectively, and OpenRewrite cannot see
+those references.  Check each deletion against a grep of `.java`, `.html` and `.xml`.
+
+Three things are deliberately *not* automated, because they are matters of taste rather than
+correctness: converting locals to `var`, adding `final` to locals and parameters, and expanding
+star imports.  That last one is why `RemoveUnusedImports` is not in `TypeCleanup` — OpenRewrite
+rewrites `import javax.swing.*` into one line per class, which would touch ~370 files here.
+
+If you use IntelliJ, its own inspections can be run headlessly to see what it would flag.  This
+requires IntelliJ to be **closed**, since the inspector will not start alongside a running IDE:
+
+```shell
+"/Applications/IntelliJ IDEA.app/Contents/bin/inspect.sh" \
+    "$DDHOME" "$DDHOME/.idea/inspectionProfiles/Project_Default.xml" /tmp/inspect -v1 -format json
+```
+
 ### Modules
 
 Here is a brief overview of the modules in this repo, in the order maven builds them, which
