@@ -709,7 +709,7 @@ public class BaseFrame extends JFrame implements DDWindow
                 {
                     // This is essentially the body of EventDispatchThread
                     AWTEvent event = theQueue.getNextEvent();
-                    if (!bModal_) logger.warn("***** GUI dispatching when not modal: " + event);
+                    if (!bModal_) logger.warn("***** GUI dispatching when not modal: {}", event);
                     Object src = event.getSource();
                     // can't call theQueue.dispatchEvent, so I pasted its body here
                     if (event instanceof ActiveEvent)
@@ -726,7 +726,7 @@ public class BaseFrame extends JFrame implements DDWindow
                     }
                     else
                     {
-                        logger.warn("Unable to dispatch event: " + event);
+                        logger.warn("Unable to dispatch event: {}", event);
                     }
                 }
             }
@@ -736,7 +736,7 @@ public class BaseFrame extends JFrame implements DDWindow
             }
             catch (Throwable t)
             {
-                logger.debug("Error during modal: " + Utils.formatExceptionText(t));
+                logger.debug("Error during modal: {}", Utils.formatExceptionText(t));
             }
 
             //logger.debug("GUI Modal is ended");

@@ -76,7 +76,7 @@ public class DebugDash extends DashboardItem implements ActionListener
 
     public void actionPerformed(ActionEvent e)
     {
-        logger.debug("Thread dump:\n" + Utils.getAllStacktraces());
+        logger.debug("Thread dump:\n{}", Utils.getAllStacktraces());
         EngineUtils.displayInformationDialog(context_, "Threaddump was written to log file.", "threaddump");
     }
 }

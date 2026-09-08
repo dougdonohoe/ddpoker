@@ -227,7 +227,7 @@ public class AudioConfig extends XMLConfigFileLoader
         AudioDef audio = getAudioDef(sName, bReportMissing);
         if (audio == null)
         {
-            aLogger.warn("Unable to play " + sName + " (not defined)");
+            aLogger.warn("Unable to play {} (not defined)", sName);
             return null;
         }
         AudioPlayer player = new AudioPlayer(audio, fGain, sleepSecs, bLoop);
@@ -403,7 +403,7 @@ public class AudioConfig extends XMLConfigFileLoader
         {
             if (bReportMissing)
             {
-                aLogger.warn("No audio found for " + sName);
+                aLogger.warn("No audio found for {}", sName);
             }
             return null;
         }
@@ -477,7 +477,7 @@ public class AudioConfig extends XMLConfigFileLoader
         URL url = new MatchingResources("classpath*:config/" + location).getSingleResourceURL();
         if (url == null)
         {
-            aLogger.warn("Audio " + sName + " not found at " + location + ".  Skipping");
+            aLogger.warn("Audio {} not found at {}.  Skipping", sName, location);
             return;
         }
 

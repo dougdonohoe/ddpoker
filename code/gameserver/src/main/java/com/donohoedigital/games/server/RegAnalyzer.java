@@ -154,7 +154,7 @@ public class RegAnalyzer
             // Create app to parse command line options
             RegAnalyzerApp info = new RegAnalyzerApp("servertools", args);
 
-            logger.info("Analyzer initializing, params: " + Utils.toString(args, " "));
+            logger.info("Analyzer initializing, params: {}", Utils.toString(args, " "));
 
             // create application context
             ApplicationContext ctx = new ClassPathXmlApplicationContext("app-context-gameserver.xml");
@@ -198,7 +198,7 @@ public class RegAnalyzer
         // do the work
         long time = System.currentTimeMillis();
         doAnalyze();
-        logger.debug("Elapsed time: " + (System.currentTimeMillis() - time));
+        logger.debug("Elapsed time: {}", (System.currentTimeMillis() - time));
     }
 
     private void setOptions(TypedHashMap htOptions)
@@ -341,7 +341,7 @@ public class RegAnalyzer
 	private void doAnalyze()
 	{
         // load each file's registrations
-        logger.debug("RUNNING: scanning registration records in " + sGame_);
+        logger.debug("RUNNING: scanning registration records in {}", sGame_);
 
         // query values - banned keys are required; all other values are options
         doBannedKeys();

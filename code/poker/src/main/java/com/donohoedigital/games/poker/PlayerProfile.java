@@ -84,37 +84,37 @@ public class PlayerProfile extends BaseProfile
     public void debugPrint()
     {
         logger.debug("");
-        logger.debug("************ PROFILE for " + getName());
-        logger.debug("Wins: " + nWins_);
+        logger.debug("************ PROFILE for {}", getName());
+        logger.debug("Wins: {}", nWins_);
 
         // number of times each round is seen
         for (int i = 0; i < rounds_.length; i++)
         {
-            logger.debug("Round " + HoldemHand.getRoundName(i) + ": " + rounds_[i]);
+            logger.debug("Round {}: {}", HoldemHand.getRoundName(i), rounds_[i]);
             // flops seen - which position
             if (i == HoldemHand.ROUND_FLOP)
             {
                 for (int j = 0; j < flops_.length; j++)
                 {
-                    logger.debug("   Flops called from " + PokerPlayer.getPositionName(j) + ": " + flops_[j]);
+                    logger.debug("   Flops called from {}: {}", PokerPlayer.getPositionName(j), flops_[j]);
                 }
             }
         }
 
         // actions
-        logger.debug("Total Actions: " + nActionCnt_);
+        logger.debug("Total Actions: {}", nActionCnt_);
         for (int i = 0; i < actions_.length; i++)
         {
-            logger.debug("   Action " + HandAction.getActionName(i) + ": " + actions_[i]);
+            logger.debug("   Action {}: {}", HandAction.getActionName(i), actions_[i]);
         }
 
         // actions per round
         for (int i = 0; i < roundactions_.length; i++)
         {
-            logger.debug("Total Actions it round " + HoldemHand.getRoundName(i) + ": " + nRoundActionCnt_[i]);
+            logger.debug("Total Actions it round {}: {}", HoldemHand.getRoundName(i), nRoundActionCnt_[i]);
             for (int j = 0; j < roundactions_[0].length; j++)
             {
-                logger.debug("   Round " + HoldemHand.getRoundName(i) + ", Action " + HandAction.getActionName(j) + ": " + roundactions_[i][j]);
+                logger.debug("   Round {}, Action {}: {}", HoldemHand.getRoundName(i), HandAction.getActionName(j), roundactions_[i][j]);
             }
         }
     }

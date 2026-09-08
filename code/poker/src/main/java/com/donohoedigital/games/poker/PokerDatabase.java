@@ -680,9 +680,7 @@ public class PokerDatabase
                     String intent = action.getDebug();
                     if ((intent != null) && intent.length() > INTENT_LENGTH)
                     {
-                        logger.warn(
-                                "Value of action.getDebug() is longer than " + INTENT_LENGTH + " characters.  Truncating.\n" +
-                                intent);
+                        logger.warn("Value of action.getDebug() is longer than {} characters.  Truncating.\n{}", INTENT_LENGTH, intent);
                         intent = intent.substring(0, INTENT_LENGTH);
                     }
                     pstmt.setString(9, intent);

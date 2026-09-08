@@ -65,8 +65,7 @@ public class ServerSecurityProvider extends com.donohoedigital.base.SecurityProv
         }
         catch (UnknownHostException e)
         {
-            LogManager.getLogger(ServerSecurityProvider.class).warn("ServerSecurityProvider unable to determine ip address: " +
-                                                                e.getMessage());
+            LogManager.getLogger(ServerSecurityProvider.class).warn("ServerSecurityProvider unable to determine ip address: {}", e.getMessage());
             id = Utils.encode("0.0.0.0");
         }
         ID = id;

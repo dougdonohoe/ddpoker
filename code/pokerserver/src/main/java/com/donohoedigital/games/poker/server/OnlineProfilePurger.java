@@ -120,7 +120,7 @@ public class OnlineProfilePurger extends BaseCommandLineApp
 
         ApplicationError.assertTrue(processed == list.getTotalSize(), "Processed " + processed + " of " + list.getTotalSize() + " rows");
 
-        logger.debug("Deleting " + deleteList.size() + " total profiles");
+        logger.debug("Deleting {} total profiles", deleteList.size());
         service.deleteOnlineProfiles(deleteList);
     }
 
@@ -148,22 +148,22 @@ public class OnlineProfilePurger extends BaseCommandLineApp
             {
                 if (p.getModifyDate().getTime() < days_14.getTime())
                 {
-                    logger.debug("oooo Deleting " + p.getName() + " since this person has other profiles and this one not used in 14 days");
+                    logger.debug("oooo Deleting {} since this person has other profiles and this one not used in 14 days", p.getName());
                     delete = true;
                 }
                 else
                 {
-                    logger.debug(".... Keeping " + p.getName() + " because created in past 14 days (even though there are other profiles)");
+                    logger.debug(".... Keeping {} because created in past 14 days (even though there are other profiles)", p.getName());
                 }
             }
             else if (p.getModifyDate().getTime() < days_90.getTime())
             {
-                logger.debug("++++ Deleting " + p.getName() + " because not used in 90 days");
+                logger.debug("++++ Deleting {} because not used in 90 days", p.getName());
                 delete = true;
             }
             else
             {
-                logger.debug(".... Keeping " + p.getName() + " because created in past 90 days");
+                logger.debug(".... Keeping {} because created in past 90 days", p.getName());
             }
 
             if (delete) deleteList.add(p);

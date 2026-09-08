@@ -93,7 +93,7 @@ public class GameboardBorderManager extends GameManager
         }
         catch (ApplicationError ae)
         {
-            logger.fatal("GameboardBorderManager ending due to ApplicationError: " + ae.toStringNoStackTrace());
+            logger.fatal("GameboardBorderManager ending due to ApplicationError: {}", ae.toStringNoStackTrace());
             System.exit(1);
         }  
     }
@@ -137,7 +137,7 @@ public class GameboardBorderManager extends GameManager
         
         if (dScale_ != dNewScale && dNewScale != NO_SCALE)
         {
-            logger.info("Setting new scale: " + dNewScale);
+            logger.info("Setting new scale: {}", dNewScale);
             gameconfig_.setScale(dNewScale);
             dScale_ = dNewScale;
         }

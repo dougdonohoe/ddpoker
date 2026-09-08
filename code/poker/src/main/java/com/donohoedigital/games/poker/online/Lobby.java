@@ -735,7 +735,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
                 }
                 catch (Throwable t)
                 {
-                    logger.error("LobbyAlive caught an unexcepted exception: " + Utils.formatExceptionText(t));
+                    logger.error("LobbyAlive caught an unexcepted exception: {}", Utils.formatExceptionText(t));
                 }
             }
         }

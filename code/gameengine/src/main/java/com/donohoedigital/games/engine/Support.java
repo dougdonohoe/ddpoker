@@ -160,7 +160,7 @@ public class Support extends OptionMenu
             File f = ConfigManager.getUserHome();
             if (!Utils.openFolder(f))
             {
-                logger.error("Unable to open folder: " + f.getAbsolutePath());
+                logger.error("Unable to open folder: {}", f.getAbsolutePath());
                 EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.error.myfiles", f.getAbsolutePath()));
             }
         }

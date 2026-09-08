@@ -169,7 +169,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
         }
         catch (NullPointerException npe)
         {
-            logger.warn("Caught NPE trying to add rule: " + sb.toString());
+            logger.warn("Caught NPE trying to add rule: {}", sb.toString());
             logger.warn(Utils.formatExceptionText(npe));
         }
     }

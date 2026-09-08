@@ -74,7 +74,7 @@ public class SpringCreatedServiceTest
         Registration reg = ServerTestData.createRegistration("RegistrationServiceTest", "3333-3333-7777-6666");
         service.saveRegistration(reg);
 
-        logger.info("Saved: " + reg);
+        logger.info("Saved: {}", reg);
         assertNotNull(reg.getId());
 
         service.deleteRegistration(reg);

@@ -292,10 +292,10 @@ public class Token
     
     public void debugPrintActionHistory()
     {
-        logger.debug("Action history for: " + toString());
+        logger.debug("Action history for: {}", toString());
         for (int i = 0; i < actionHistory_.size(); i++)
         {
-            logger.debug("#" + i + ":" + getAction(i));
+            logger.debug("#{}:{}", i, getAction(i));
         }
     }
     

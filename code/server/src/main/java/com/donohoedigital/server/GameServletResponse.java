@@ -151,12 +151,12 @@ public class GameServletResponse implements HttpServletResponse
     
     public void setBufferSize(int param)
     {
-        logger.warn("setBufferSize called " + param);
+        logger.warn("setBufferSize called {}", param);
     }
     
     public void setContentLength(int param)
     {
-        logger.warn("setContentLength called " + param);
+        logger.warn("setContentLength called {}", param);
     }
     
     public void setContentType(String str)
@@ -176,46 +176,46 @@ public class GameServletResponse implements HttpServletResponse
     
     public void addDateHeader(String str, long param)
     {
-        logger.warn("addDateHeader called " + str + '=' + param);
+        logger.warn("addDateHeader called {}={}", str, param);
     }
     
     public void addHeader(String str, String str1)
     {
-        logger.warn("addHeader called " + str + '=' + str1);
+        logger.warn("addHeader called {}={}", str, str1);
     }
     
     public void addIntHeader(String str, int param)
     {
-        logger.warn("addIntHeader called " + str + '=' + param);
+        logger.warn("addIntHeader called {}={}", str, param);
     }
     
     public boolean containsHeader(String str)
     {
-        logger.warn("containsHeader called " + str);
+        logger.warn("containsHeader called {}", str);
         return false;
     }
     
     public String encodeRedirectURL(String str)
     {
-        logger.warn("encodeRedirectURL called " + str);
+        logger.warn("encodeRedirectURL called {}", str);
         return str;
     }
     
     public String encodeRedirectUrl(String str)
     {
-        logger.warn("encodeRedirectUrl called " + str);
+        logger.warn("encodeRedirectUrl called {}", str);
         return str;
     }
     
     public String encodeURL(String str)
     {
-        logger.warn("encodeURL called " + str);
+        logger.warn("encodeURL called {}", str);
         return str;
     }
     
     public String encodeUrl(String str)
     {
-        logger.warn("encodeUrl called " + str);
+        logger.warn("encodeUrl called {}", str);
         return str;
     }
     
@@ -266,32 +266,32 @@ public class GameServletResponse implements HttpServletResponse
     
     public void sendRedirect(String str) throws IOException
     {
-        logger.warn("sendRedirect called " + str);
+        logger.warn("sendRedirect called {}", str);
     }
     
     public void setDateHeader(String str, long param)
     {
-        logger.warn("setDateHeader called " + str);
+        logger.warn("setDateHeader called {}", str);
     }
     
     public void setHeader(String str, String str1)
     {
-        logger.warn("setHeader called " + str+ '=' +str1);
+        logger.warn("setHeader called {}={}", str, str1);
     }
     
     public void setIntHeader(String str, int param)
     {
-        logger.warn("setIntHeader called " + str+ '=' +param);
+        logger.warn("setIntHeader called {}={}", str, param);
     }
     
     public void setStatus(int param)
     {
-        logger.warn("setStatus called " + param);
+        logger.warn("setStatus called {}", param);
     }
     
     public void setStatus(int param, String str)
     {
-        logger.warn("setStatus called " + param+ '=' +str);
+        logger.warn("setStatus called {}={}", param, str);
     }
     
     public String getContentType() 
@@ -302,7 +302,7 @@ public class GameServletResponse implements HttpServletResponse
     
     public void setCharacterEncoding(String str) 
     {
-        logger.warn("setCharacterEncoding called "+str);
+        logger.warn("setCharacterEncoding called {}", str);
     }
 
     // Servlet API 3.1 additions

@@ -154,8 +154,41 @@ displayName: Parameterized logging
 description: >
   Rewrite log.debug("x " + y) as log.debug("x {}", y) so the concatenation no longer
   happens when the level is disabled.
+  ParameterizedLogging is not zero-config - it requires a methodPattern, and silently
+  does nothing without one (it logs a validation error but still reports BUILD SUCCESS).
+  This code base logs exclusively through log4j2 (org.apache.logging.log4j.Logger,
+  239 imports), so one entry per level.
+
+  THIS RECIPE CANNOT BE RUN BARE.  It throws IndexOutOfBoundsException from
+  JavaTemplateParser on any call whose concatenation starts with a non-literal, e.g.
+  logger.info(search + " GOODBYE") - the format string begins empty.  120 such calls in
+  43 files, and one crash aborts the whole run.  Present in 3.32.0, the newest published
+  version.  Exclude those files, computing the list rather than hardcoding it:
+
+    cd "$DDHOME"
+    EXCL=$(grep -rlE '\.(trace|debug|info|warn|error|fatal)\(\s*[^"; ][^;]{0,120}\+' \
+             --include=*.java code | paste -sd, -)
+    cd code && mvn rewrite:run \
+      -Drewrite.activeRecipes=com.donohoedigital.ParameterizedLogging \
+      -Drewrite.exclusions="$EXCL"
+
+  Note exclusion paths are relative to the repo root and must keep the "code/" prefix.
+  ALWAYS audit placeholder arity afterwards: a wrong {} count compiles, passes tests and
+  silently produces a malformed log line.  A trailing Throwable is not a placeholder
+  argument - log4j2 renders it as a stack trace - so {}=1 with 2 args is correct there.
 recipeList:
-  - org.openrewrite.java.logging.ParameterizedLogging
+  - org.openrewrite.java.logging.ParameterizedLogging:
+      methodPattern: org.apache.logging.log4j.Logger trace(..)
+  - org.openrewrite.java.logging.ParameterizedLogging:
+      methodPattern: org.apache.logging.log4j.Logger debug(..)
+  - org.openrewrite.java.logging.ParameterizedLogging:
+      methodPattern: org.apache.logging.log4j.Logger info(..)
+  - org.openrewrite.java.logging.ParameterizedLogging:
+      methodPattern: org.apache.logging.log4j.Logger warn(..)
+  - org.openrewrite.java.logging.ParameterizedLogging:
+      methodPattern: org.apache.logging.log4j.Logger error(..)
+  - org.openrewrite.java.logging.ParameterizedLogging:
+      methodPattern: org.apache.logging.log4j.Logger fatal(..)
 
 ---
 type: specs.openrewrite.org/v1beta/recipe

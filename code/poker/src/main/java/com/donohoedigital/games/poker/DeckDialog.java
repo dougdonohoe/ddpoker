@@ -162,8 +162,7 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
                 bResult = Boolean.TRUE;
                 
             } catch (Exception e) {
-                logger.error("Unable to copy " + selected_.getAbsolutePath() + " to " +
-                                    dir.getAbsolutePath());
+                logger.error("Unable to copy {} to {}", selected_.getAbsolutePath(), dir.getAbsolutePath());
                 logger.error(Utils.formatExceptionText(e));
                 EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.deck.copyfailed",selected_.getName(),
                                                     dir.getAbsolutePath()));

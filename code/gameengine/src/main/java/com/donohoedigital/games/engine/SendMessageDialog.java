@@ -379,7 +379,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
             nStatus_ != DDMessageListener.STATUS_OK &&
             nStatus_ != DDMessageListener.STATUS_APPL_ERROR)
         {
-            sLogger.warn("Ignoring error [" + nStatus_ + "]: " + errors_[nStatus_]);
+            sLogger.warn("Ignoring error [{}]: {}", nStatus_, errors_[nStatus_]);
             if (nStatus_ == DDMessageListener.STATUS_SERVER_ERROR ||
                 nStatus_ == DDMessageListener.STATUS_UNKNOWN_ERROR)
             {
@@ -387,7 +387,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
 
                 if (sMsg != null)
                 {
-                    sLogger.warn("Details: " + sMsg);
+                    sLogger.warn("Details: {}", sMsg);
                 }
             }
             updateStep(DDMessageListener.STEP_DONE);

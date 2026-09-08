@@ -105,7 +105,7 @@ public class JspEmail
                     File logDir = new File(new DefaultRuntimeDirectory().getServerHome(), "log");
                     File scratch = new File(logDir, "jsp-" + ConfigManager.getAppName());
                     ConfigUtils.verifyNewDirectory(scratch);
-                    logger.info("JSP Email scratch in " + scratch.getAbsolutePath());
+                    logger.info("JSP Email scratch in {}", scratch.getAbsolutePath());
                     ServletConfig config = new EmbeddedServletConfig("email", scratch.getAbsolutePath());
                     config.getServletContext().setAttribute(InstanceManager.class.getName(), new SimpleInstanceManager());
                     jsp_.init(config);

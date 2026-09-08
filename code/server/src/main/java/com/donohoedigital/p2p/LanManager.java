@@ -110,11 +110,11 @@ public class LanManager implements DDMessageListener
             if (st.hasMoreTokens())
             {
                 sLocalHost_ = st.nextToken();
-                logger.warn("Unable to determine local host name, guessing it is: " + sLocalHost_);
+                logger.warn("Unable to determine local host name, guessing it is: {}", sLocalHost_);
             }
             else
             {
-                logger.warn("Unable to determine local host name: " + uhe.getMessage());
+                logger.warn("Unable to determine local host name: {}", uhe.getMessage());
                 sLocalHost_ = "[unknown]";
             }
 
@@ -141,7 +141,7 @@ public class LanManager implements DDMessageListener
                     }
                 }
 
-                logger.warn("Local ip set to: " + sLocalIP_);
+                logger.warn("Local ip set to: {}", sLocalIP_);
             }
             catch (Throwable ignored)
             {
@@ -170,17 +170,17 @@ public class LanManager implements DDMessageListener
             if (ae.getException() != null && ae.getException().getMessage() != null &&
                 ae.getException().getMessage().contains("error setting options"))
             {
-                logger.debug("Unable to start Peer2PeerMulticast (error setting options), local ip: " + sLocalIP_);
+                logger.debug("Unable to start Peer2PeerMulticast (error setting options), local ip: {}", sLocalIP_);
             }
             else
             {
-                logger.error("Unable to start Peer2PeerMulticast: " + Utils.formatExceptionText(ae));
+                logger.error("Unable to start Peer2PeerMulticast: {}", Utils.formatExceptionText(ae));
             }
             return;
         }
         catch (Throwable t)
         {
-            logger.error("Unable to start Peer2PeerMulticast: " + Utils.formatExceptionText(t));
+            logger.error("Unable to start Peer2PeerMulticast: {}", Utils.formatExceptionText(t));
             return;
         }
 
@@ -224,7 +224,7 @@ public class LanManager implements DDMessageListener
      */
     public void sendMessage(int nCategory)
     {
-        if (DEBUG) logger.debug("Sending message: " + LanClientList.toString(nCategory));
+        if (DEBUG) logger.debug("Sending message: {}", LanClientList.toString(nCategory));
 
         LanClientInfo info = new LanClientInfo(nCategory);
         info.setHostName(sLocalHost_);
@@ -240,11 +240,11 @@ public class LanManager implements DDMessageListener
         }
         catch (ApplicationError e)
         {
-            logger.error("Send error: " + e.toString());
+            logger.error("Send error: {}", e.toString());
         }
         catch (Throwable t)
         {
-            logger.error("Send error: " + Utils.formatExceptionText(t));
+            logger.error("Send error: {}", Utils.formatExceptionText(t));
         }
     }
 
@@ -258,7 +258,7 @@ public class LanManager implements DDMessageListener
         // validate key
         if (!controller_.isValid(info.getData()))
         {
-            logger.error("Invalid key: " + info);
+            logger.error("Invalid key: {}", info);
             return;
         }
 
@@ -266,7 +266,7 @@ public class LanManager implements DDMessageListener
         String guid = info.getGuid();
         if (guid == null)
         {
-            logger.error("Missing GUID: " + info);
+            logger.error("Missing GUID: {}", info);
             return;
         }
 
@@ -376,7 +376,7 @@ public class LanManager implements DDMessageListener
             {
                 nAliveCnt_ = ALIVE_REFRESH_CNT;
             }
-            if (DEBUG) logger.debug("Alive cnt reset to: " + nAliveCnt_);
+            if (DEBUG) logger.debug("Alive cnt reset to: {}", nAliveCnt_);
         }
 
         public void setContinous(boolean b)

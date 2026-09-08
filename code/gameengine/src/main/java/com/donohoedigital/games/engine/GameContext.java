@@ -446,7 +446,7 @@ public class GameContext
     {
         if ((engine_.isBDemo() || engine_.isActivationNeeded()) && TODOphase_ != null)
         {
-            logger.warn("Skipping " + sPhaseName + " because TODO phase is not null: " + TODOphase_);
+            logger.warn("Skipping {} because TODO phase is not null: {}", sPhaseName, TODOphase_);
             return null;
         }
 
@@ -496,7 +496,7 @@ public class GameContext
         }
         catch (ApplicationError ae)
         {
-            logger.warn("GameContext - ApplicationError caught processing phase " + sPhaseName);
+            logger.warn("GameContext - ApplicationError caught processing phase {}", sPhaseName);
             switch (ae.getErrorCode())
             {
                 case ErrorCodes.ERROR_NULL:
@@ -515,7 +515,7 @@ public class GameContext
         }
         catch (Throwable e)
         {
-            logger.warn("GameContext - Exception caught processing phase " + sPhaseName);
+            logger.warn("GameContext - Exception caught processing phase {}", sPhaseName);
             logger.warn(Utils.formatExceptionText(e));
             _handleProcessPhaseException(e);
         }
@@ -728,7 +728,7 @@ public class GameContext
         }
         else
         {
-            logger.warn("Not able to step back " + nStepsBack);
+            logger.warn("Not able to step back {}", nStepsBack);
         }
     }
 

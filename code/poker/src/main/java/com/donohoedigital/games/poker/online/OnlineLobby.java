@@ -253,13 +253,12 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
     {
         if (omsg.getCategory() == OnlineMessage.CAT_CHAT)
         {
-            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT "+omsg.getPlayerName() +" said " + omsg.getChat());
+            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT {} said {}", omsg.getPlayerName(), omsg.getChat());
             chat_.chatReceived(omsg);
         }
         else if (omsg.getCategory() == OnlineMessage.CAT_CHAT_ADMIN)
         {
-            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT admin " + PokerConstants.toStringAdminType(omsg.getChatType()) +
-                                                         (omsg.getChat() != null ? " - "+omsg.getChat() : ""));
+            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT admin {}{}", PokerConstants.toStringAdminType(omsg.getChatType()), (omsg.getChat() != null ? " - " + omsg.getChat() : ""));
             switch (omsg.getChatType())
             {
                 case PokerConstants.CHAT_ADMIN_WELCOME:
@@ -288,7 +287,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         }
         else
         {
-            logger.warn("CHAT don't know how to handle this: "+ omsg.toStringCategory());
+            logger.warn("CHAT don't know how to handle this: {}", omsg.toStringCategory());
         }
     }
 

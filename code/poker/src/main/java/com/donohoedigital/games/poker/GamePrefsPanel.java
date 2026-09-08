@@ -711,7 +711,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
         }
         catch (BackingStoreException bse)
         {
-            logger.warn("Unable to clear prefs for node: " + EnginePrefs.NODE_DIALOG_PHASE);
+            logger.warn("Unable to clear prefs for node: {}", EnginePrefs.NODE_DIALOG_PHASE);
         }
         EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.resetdialog"));
     }

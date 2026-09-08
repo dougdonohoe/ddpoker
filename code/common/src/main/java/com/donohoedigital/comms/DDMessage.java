@@ -568,8 +568,8 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
      */
     public void debugPrint()
     {
-        if (nStatus_ != DDMessageListener.STATUS_NONE) logger.debug("MSG-Status: " + nStatus_);
-        logger.debug("MSG-Params: " + super.toString());
+        if (nStatus_ != DDMessageListener.STATUS_NONE) logger.debug("MSG-Status: {}", nStatus_);
+        logger.debug("MSG-Params: {}", super.toString());
         
         
         if (msgdata_ == null || msgdata_.isEmpty())
@@ -582,7 +582,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
             for (int i = 0; i < msgdata_.size(); i++)
             {
                 sData = getDataAtAsString(i);
-                logger.debug("MSG-Data[" + i +"]: " + sData.length() + " bytes of data, displayed below:");
+                logger.debug("MSG-Data[{}]: {} bytes of data, displayed below:", i, sData.length());
                 StringTokenizer tok = new StringTokenizer(sData,"\n");
                 while (tok.hasMoreTokens())
                 {

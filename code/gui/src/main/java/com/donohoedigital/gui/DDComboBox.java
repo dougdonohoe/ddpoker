@@ -223,7 +223,7 @@ public class DDComboBox extends JComboBox implements
 
         if (elem == null)
         {
-            logger.warn("DataElement not found for " + sDataElement);
+            logger.warn("DataElement not found for {}", sDataElement);
             return;
         }
 
@@ -235,7 +235,7 @@ public class DDComboBox extends JComboBox implements
 
         if (!elem.isList())
         {
-            logger.warn("DataElement " + elem.getName() + " is not a list");
+            logger.warn("DataElement {} is not a list", elem.getName());
             return;
         }
 
@@ -246,7 +246,7 @@ public class DDComboBox extends JComboBox implements
 
         if (values == null || values.isEmpty())
         {
-            logger.warn("DataElement " + elem.getName() + " has no list values");
+            logger.warn("DataElement {} has no list values", elem.getName());
             return;
         }
 

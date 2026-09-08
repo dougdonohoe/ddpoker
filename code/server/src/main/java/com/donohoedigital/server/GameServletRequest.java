@@ -98,7 +98,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public Object getAttribute(String str)
     {
-        logger.warn("getAttribute called " + str);
+        logger.warn("getAttribute called {}", str);
 		return null;
     }
     
@@ -150,7 +150,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public long getDateHeader(String str)
     {
-        logger.warn("getDateHeader called " + str);
+        logger.warn("getDateHeader called {}", str);
 		return 0;
     }
     
@@ -204,7 +204,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public int getIntHeader(String str)
     {
-        logger.warn("getIntHeader called " + str);
+        logger.warn("getIntHeader called {}", str);
 		return 0;
     }
     
@@ -227,7 +227,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public String getParameter(String str)
     {
-        logger.warn("geParameter called " + str);
+        logger.warn("geParameter called {}", str);
 		return null;
     }
     
@@ -245,7 +245,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public String[] getParameterValues(String str)
     {
-        logger.warn("getParameterValues called " + str);
+        logger.warn("getParameterValues called {}", str);
 		return null;
     }
     
@@ -281,7 +281,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public String getRealPath(String str)
     {
-        logger.warn("getRealPath called " + str);
+        logger.warn("getRealPath called {}", str);
 		return null;
     }
     
@@ -307,7 +307,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public jakarta.servlet.RequestDispatcher getRequestDispatcher(String str)
     {
-        logger.warn("getRequestDispatcher called " + str);
+        logger.warn("getRequestDispatcher called {}", str);
 		return null;
     }
     
@@ -359,7 +359,7 @@ public class GameServletRequest implements HttpServletRequest
     
     public jakarta.servlet.http.HttpSession getSession(boolean param)
     {
-        logger.warn("getSession called " + param);
+        logger.warn("getSession called {}", param);
 		return null;
     }
     
@@ -401,23 +401,23 @@ public class GameServletRequest implements HttpServletRequest
     
     public boolean isUserInRole(String str)
     {
-        logger.warn("isUserInRole called " + str);
+        logger.warn("isUserInRole called {}", str);
 		return false;
     }
     
     public void removeAttribute(String str)
     {
-		logger.warn("removeAttribute called " + str);
+		logger.warn("removeAttribute called {}", str);
     }
     
     public void setAttribute(String str, Object obj)
     {
-		logger.warn("setAttribute called " + str);
+		logger.warn("setAttribute called {}", str);
     }
     
     public void setCharacterEncoding(String str) throws java.io.UnsupportedEncodingException
     {
-		logger.warn("setCharacterEncoding called " + str);
+		logger.warn("setCharacterEncoding called {}", str);
     }
     
     public String getLocalAddr() 

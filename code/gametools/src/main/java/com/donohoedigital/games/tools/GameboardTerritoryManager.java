@@ -92,7 +92,7 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
         }
         catch (ApplicationError ae)
         {
-            logger.fatal("GameboardTerritoryManager ending due to ApplicationError: " + Utils.formatExceptionText(ae));
+            logger.fatal("GameboardTerritoryManager ending due to ApplicationError: {}", Utils.formatExceptionText(ae));
             System.exit(1);
         }  
     }

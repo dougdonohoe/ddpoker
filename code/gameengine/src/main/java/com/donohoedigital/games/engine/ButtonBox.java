@@ -137,7 +137,7 @@ public class ButtonBox extends DDPanel implements AncestorListener
         
         if (sEnter != null && sEnter.length() > 0 && bDefaultSet == false)
         {
-            logger.warn("Unable to set enter button " + sEnter + " (no matching button found)");
+            logger.warn("Unable to set enter button {} (no matching button found)", sEnter);
         }
         
         if (bVertical) {

@@ -174,7 +174,7 @@ public class TestPublicConnect extends SendMessageDialog implements OnlineMessag
         }
         else
         {
-            logger.warn("Received test message with different GUID: " + omsg);
+            logger.warn("Received test message with different GUID: {}", omsg);
         }
     }
 

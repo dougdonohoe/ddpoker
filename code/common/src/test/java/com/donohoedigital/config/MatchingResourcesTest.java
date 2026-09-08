@@ -62,7 +62,7 @@ public class MatchingResourcesTest
         URL[] match = mr.getAllMatchesURL();
         assertTrue(match.length == 1);
 
-        logger.info("URL: " + match[0]);
+        logger.info("URL: {}", match[0]);
         assertTrue(mr.getURL(null) == null);
 
         Resource[] none = new MatchingResources("classpath*:com/donohoedigital/config/NoSuchFile.class").getAllMatches();
@@ -83,7 +83,7 @@ public class MatchingResourcesTest
         }
         catch (Exception ae)
         {
-            logger.debug("Expected exception: " + ae.getMessage());
+            logger.debug("Expected exception: {}", ae.getMessage());
         }
 
         // test multiple matches
@@ -94,7 +94,7 @@ public class MatchingResourcesTest
         }
         catch (Exception ae)
         {
-            logger.debug("Expected exception: " + ae.getMessage());
+            logger.debug("Expected exception: {}", ae.getMessage());
         }
 
     }
@@ -105,7 +105,7 @@ public class MatchingResourcesTest
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/*.class");
         assertTrue(mr.getAllMatches().length > 0);
 
-        logger.info("URLs:\n" + mr);
+        logger.info("URLs:\n{}", mr);
     }
 
     @Retention(RetentionPolicy.RUNTIME)

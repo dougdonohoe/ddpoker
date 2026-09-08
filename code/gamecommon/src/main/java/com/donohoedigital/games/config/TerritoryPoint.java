@@ -126,7 +126,7 @@ public class TerritoryPoint extends MapPoint
     private TerritoryPoint getNavPoint(int nType)
     {
         if (myTerritory_ == null) {
-            logger.warn("myTerritory_ is null in TerritoryPoint.getNavXPoint() " + this);
+            logger.warn("myTerritory_ is null in TerritoryPoint.getNavXPoint() {}", this);
             return null;
         }
         int nSize = myTerritory_.size();

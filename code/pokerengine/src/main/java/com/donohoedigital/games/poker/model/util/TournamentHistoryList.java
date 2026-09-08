@@ -134,10 +134,7 @@ public class TournamentHistoryList extends DMArrayList<TournamentHistory>
             hist.setEnded(bEnded);
             if (bDebug)
             {
-                logger.debug("  ==> "+ hist.getPlayerName() + (hist.isComputer() ? " (ai)" : "") +
-                         " finished " + hist.getPlace() + " and won " + hist.getPrize() +
-                         " num ai: "+ nAI + "  rank: " + hist.getRank1() +
-                         " ended: "+ hist.isEnded());
+                logger.debug("  ==> {}{} finished {} and won {} num ai: {}  rank: {} ended: {}", hist.getPlayerName(), (hist.isComputer() ? " (ai)" : ""), hist.getPlace(), hist.getPrize(), nAI, hist.getRank1(), hist.isEnded());
             }
         }
     }

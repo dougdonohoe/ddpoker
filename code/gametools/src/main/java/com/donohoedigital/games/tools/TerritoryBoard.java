@@ -244,7 +244,7 @@ public class TerritoryBoard extends Gameboard implements KeyListener, DrawingUti
             // add to list of everything - which checks for duplicates
             if (allPoints_.contains(point))
             {
-                logger.warn("New territory point already exists as a defined point.  Ignoring it! - " + point.shortDesc());
+                logger.warn("New territory point already exists as a defined point.  Ignoring it! - {}", point.shortDesc());
                 return;
             }
             

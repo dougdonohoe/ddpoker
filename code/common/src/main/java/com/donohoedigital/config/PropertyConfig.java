@@ -144,7 +144,7 @@ public class PropertyConfig extends Properties
             File override = new File(userdir, "testing.properties");
             if (override.exists())
             {
-                logger.info("Loading testing overrides from " + override.getPath());
+                logger.info("Loading testing overrides from {}", override.getPath());
                 FileInputStream stream = ConfigUtils.getFileInputStream(override);
                 try
                 {
@@ -188,7 +188,7 @@ public class PropertyConfig extends Properties
         // log if doing overrides
         if (bOverride)
         {
-            logger.info("Loading local overrides from " + file.getPath());
+            logger.info("Loading local overrides from {}", file.getPath());
         }
 
         //logger.debug("Loading: " + props);
@@ -324,7 +324,7 @@ public class PropertyConfig extends Properties
         String sValue = getStringProperty(sKey);
         if (sValue == null)
         {
-            logger.error("Property value not found for: '" + sKey + '\'');
+            logger.error("Property value not found for: '{}'", sKey);
         }
         return sValue;
     }
@@ -364,7 +364,7 @@ public class PropertyConfig extends Properties
         {
             if (!sKey.contains("default"))
             {
-                logger.warn("Property value not found for: '" + sKey + '\'');
+                logger.warn("Property value not found for: '{}'", sKey);
             }
         }
 

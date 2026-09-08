@@ -295,14 +295,14 @@ public class PokerPlayer extends GamePlayer
         {
             if (ai.getPlayerType() != playerType_)
             {
-                if (DebugConfig.isTestingOn()) logger.debug("Updating player type on existing AI. (" + playerType_.getName() + ") for player " + getName());
+                if (DebugConfig.isTestingOn()) logger.debug("Updating player type on existing AI. ({}) for player {}", playerType_.getName(), getName());
                 ai.setPlayerType(playerType_);
             }
         }
         // instantiate a new AI
         else
         {
-            if (DebugConfig.isTestingOn()) logger.debug("Creating new AI. (" + playerType_.getName() + ") for player " + getName());
+            if (DebugConfig.isTestingOn()) logger.debug("Creating new AI. ({}) for player {}", playerType_.getName(), getName());
             setPokerAI(PokerAI.createPokerAI(playerType_));
         }
     }
@@ -333,12 +333,12 @@ public class PokerPlayer extends GamePlayer
             if (isLocallyControlled() && isHuman() && !isObserver())
             {
                 playerType_ = PlayerType.getAdvisor();
-                if (DebugConfig.isTestingOn()) logger.debug("Lazily creating advisor: " + playerType_.getName() + " for " + getName());
+                if (DebugConfig.isTestingOn()) logger.debug("Lazily creating advisor: {} for {}", playerType_.getName(), getName());
                 setPokerAI(PokerAI.createPokerAI(playerType_));
             }
             else
             {
-                if (DebugConfig.isTestingOn()) logger.debug("Lazily instantiating dummy ai for player " + getName());
+                if (DebugConfig.isTestingOn()) logger.debug("Lazily instantiating dummy ai for player {}", getName());
                 ai = new PokerAI();
                 ai.init();
                 setPokerAI(ai);
@@ -379,7 +379,7 @@ public class PokerPlayer extends GamePlayer
 
             if (ai == null && DebugConfig.isTestingOn())
             {
-                logger.debug("AI cleared for " + getName());
+                logger.debug("AI cleared for {}", getName());
             }
 
             super.setGameAI(ai);
@@ -1730,8 +1730,7 @@ public class PokerPlayer extends GamePlayer
         }
         catch (Throwable e)
         {
-            logger.error("AI exception caught. Return 'fold' to keep the game going:\n"+
-                         Utils.formatExceptionText(e));
+            logger.error("AI exception caught. Return 'fold' to keep the game going:\n{}", Utils.formatExceptionText(e));
             return new HandAction(this, getHoldemHand().getRound(), HandAction.ACTION_FOLD, "aierror");
         }
     }
@@ -2014,7 +2013,7 @@ public class PokerPlayer extends GamePlayer
                     String sNew = nfile.getAbsolutePath();
                     if (!sNew.equals(sProfileLocation_))
                     {
-                        logger.warn("Player profile missing: " + sProfileLocation_  +"; change to: " + sNew);
+                        logger.warn("Player profile missing: {}; change to: {}", sProfileLocation_, sNew);
                         sProfileLocation_ = sNew;
                         file = nfile;
                     }
@@ -2024,11 +2023,11 @@ public class PokerPlayer extends GamePlayer
             // if no file, it was deleted.  Use empty one.
             if (!file.exists())
             {
-                logger.warn("Player profile missing: " + sProfileLocation_);
+                logger.warn("Player profile missing: {}", sProfileLocation_);
             }
             else
             {
-                if (DebugConfig.isTestingOn()) logger.debug("Loading file: "+file.getAbsolutePath());
+                if (DebugConfig.isTestingOn()) logger.debug("Loading file: {}", file.getAbsolutePath());
                 profile_ = new PlayerProfile(file, true);
                 setName(profile_.getName()); // update name
             }

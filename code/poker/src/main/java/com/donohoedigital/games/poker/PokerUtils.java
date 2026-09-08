@@ -867,7 +867,7 @@ public class PokerUtils extends EngineUtils
         if (oResult != null && oResult instanceof File)
         {
             File file = (File) oResult;
-            logger.info("Exporting screenshot to " + file.getAbsolutePath());
+            logger.info("Exporting screenshot to {}", file.getAbsolutePath());
             GuiUtils.printImageToFile(image, file);
         }
     }

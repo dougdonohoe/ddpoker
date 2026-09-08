@@ -378,7 +378,7 @@ public class AckList
             for (int i = 0; i < acks.length; i++)
             {
                 ack(acks[i]);
-                logger.debug("Added " + acks[i] + ": "+ this);
+                logger.debug("Added {}: {}", acks[i], this);
             }
         }
         else
@@ -392,7 +392,7 @@ public class AckList
                 ack(nNum);
                 //logger.debug("Added " + nNum + ": "+ list);
             }
-            logger.debug("After " + size +": "+ this);
+            logger.debug("After {}: {}", size, this);
             StringBuilder missed = new StringBuilder();
             for (int i = 1; i < (size+1); i++)
             {
@@ -402,7 +402,7 @@ public class AckList
                     missed.append(i);
                 }
             }
-            logger.debug("Missed: " + missed);
+            logger.debug("Missed: {}", missed);
         }
     }
 }

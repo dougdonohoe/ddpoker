@@ -334,7 +334,7 @@ public class HoldemSimulator
 
         if (deckSize != deck.size())
         {
-            logger.warn("Deck size mismatch in simulator!  Before, size was " + deckSize + ", after size was " + deck.size());
+            logger.warn("Deck size mismatch in simulator!  Before, size was {}, after size was {}", deckSize, deck.size());
         }
 
         return new StatResult(hole, list, win, lose, tie);
@@ -635,7 +635,7 @@ public class HoldemSimulator
         // safety check
         if (deckSize != deck.size())
         {
-            logger.warn("Deck size mismatch in simulator!  Before, size was " + deckSize + ", after size was " + deck.size());
+            logger.warn("Deck size mismatch in simulator!  Before, size was {}, after size was {}", deckSize, deck.size());
         }
 
         // calc total at end

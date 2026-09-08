@@ -308,8 +308,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
 
                     if (sCmdlineOverride != null && p.getName().equalsIgnoreCase(sCmdlineOverride))
                     {
-                        logger.debug("Using profile "+sCmdlineOverride+" instead of default "+(
-                                     default_ == null ? "[null]" : default_.getName()));
+                        logger.debug("Using profile {} instead of default {}", sCmdlineOverride, (
+                            default_ == null ? "[null]" : default_.getName()));
                         choose = p;
                         break;
                     }

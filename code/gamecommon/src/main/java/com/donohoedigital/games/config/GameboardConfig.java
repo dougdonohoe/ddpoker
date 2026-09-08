@@ -287,7 +287,7 @@ public class GameboardConfig extends XMLConfigFileLoader
     {
         if (!bSave_)
         {
-            logger.warn("Save disabled for " + fConfigFile_.getAbsolutePath());
+            logger.warn("Save disabled for {}", fConfigFile_.getAbsolutePath());
             return;
         }
         
@@ -297,7 +297,7 @@ public class GameboardConfig extends XMLConfigFileLoader
         printXML(writer, 0);
         writer.close();
         
-        logger.info("Saved " + fConfigFile_.getAbsolutePath());
+        logger.info("Saved {}", fConfigFile_.getAbsolutePath());
     }
     
     /**

@@ -441,7 +441,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
                 if (oResult != null && oResult instanceof File)
                 {
                     File file = (File) oResult;
-                    logger.info("Exporting chat to " + file.getAbsolutePath());
+                    logger.info("Exporting chat to {}", file.getAbsolutePath());
                     ConfigUtils.writeFile((File) oResult, toHtml(), false);
                 }
         });

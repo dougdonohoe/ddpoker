@@ -104,7 +104,7 @@ public class DashboardManager
             try {
                 item.demarshal(null, pref);
             } catch (Throwable e) {
-                logger.error("Error demarshalling " + pref + ": " + Utils.formatExceptionText(e));
+                logger.error("Error demarshalling {}: {}", pref, Utils.formatExceptionText(e));
             }
         }
 
@@ -199,7 +199,7 @@ public class DashboardManager
             } catch (Throwable e) {
                 prefs_.clear();
                 
-                logger.error("Error demarshalling " + sPrefs + ": " + Utils.formatExceptionText(e));
+                logger.error("Error demarshalling {}: {}", sPrefs, Utils.formatExceptionText(e));
             }
 
         }

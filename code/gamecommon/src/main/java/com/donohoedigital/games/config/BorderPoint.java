@@ -202,8 +202,7 @@ public class BorderPoint extends MapPoint
             }
         }
         bCurrentBorder_ = null;
-        logger.warn("setCurrentBorder to border: " + border.shortDesc() + 
-                            " - is not a border in point " + longDesc(null));
+        logger.warn("setCurrentBorder to border: {} - is not a border in point {}", border.shortDesc(), longDesc(null));
     }
     
     /**
@@ -233,8 +232,7 @@ public class BorderPoint extends MapPoint
                 return myBorders_.getBorder(nIndex);
             }
         }
-        logger.warn("nextBorder() not found for " + bCurrentBorder_.shortDesc() +
-                                    " in point " + longDesc(null));
+        logger.warn("nextBorder() not found for {} in point {}", bCurrentBorder_.shortDesc(), longDesc(null));
         return null;
     }
     
@@ -274,7 +272,7 @@ public class BorderPoint extends MapPoint
     private BorderPoint getNavPoint(int nType, Border border)
     {
          if (border == null) {
-            logger.warn("myBorder is null in BorderPoint.getNavXPoint() " + toString());
+            logger.warn("myBorder is null in BorderPoint.getNavXPoint() {}", toString());
             return null;
         }
         int nSize = border.size();

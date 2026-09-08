@@ -308,7 +308,7 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
             default:
                 sLog = "unknown status ("+ nStatus+ ')';
         }
-        if (bLog && sLog != null) logger.error("Reconnected failed: " + sLog);
+        if (bLog && sLog != null) logger.error("Reconnected failed: {}", sLog);
 
         // show to user if details checkbox selected and not aborting
         if (!details_.isSelected() || bAbort_) return;

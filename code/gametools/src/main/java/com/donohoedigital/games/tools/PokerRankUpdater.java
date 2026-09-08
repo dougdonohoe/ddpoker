@@ -98,7 +98,7 @@ public class PokerRankUpdater extends BaseCommandLineApp
         // do the work
         long time = System.currentTimeMillis();
         doRank();
-        logger.debug("Elapsed time: " + (System.currentTimeMillis() - time));
+        logger.debug("Elapsed time: {}", (System.currentTimeMillis() - time));
     }
 
     ///
@@ -134,14 +134,13 @@ public class PokerRankUpdater extends BaseCommandLineApp
             list = gameService.getOnlineGames(total, offset, GAMES_CHUNK, modes, null, null, null, date);
         }
 
-        logger.debug("Processed " + count + " of " + total);
+        logger.debug("Processed {} of {}", count, total);
     }
 
     private void doRank(OnlineGame game)
     {
         int count = histService.getAllTournamentHistoriesForGameCount(game.getId());
-        logger.debug("id #" + game.getId() + ": " + game.getTournament().getName() + " hosted by " + game.getHostPlayer() +
-                     " with " + count + " total players");
+        logger.debug("id #{}: {} hosted by {} with {} total players", game.getId(), game.getTournament().getName(), game.getHostPlayer(), count);
 
         histService.upgradeAllTournamentHistoriesForGame(game, null);//logger);        
     }

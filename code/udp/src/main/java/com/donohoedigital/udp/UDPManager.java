@@ -176,7 +176,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
             monitor.monitorEvent(event);
         } catch (Throwable t)
         {
-            logger.error("Monitor error on event "+event+ ": "+ Utils.formatExceptionText(t));
+            logger.error("Monitor error on event {}: {}", event, Utils.formatExceptionText(t));
         }
     }
 
@@ -212,7 +212,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
             }
             catch (Throwable t)
             {
-                logger.error("UDPManager error: " + Utils.formatExceptionText(t));
+                logger.error("UDPManager error: {}", Utils.formatExceptionText(t));
             }
         }
         logger.info("UDPManager Done.");
@@ -453,14 +453,14 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
                         if (!id.isUnknown())
                         {
                             link.setID(id);
-                            if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("ID updated " + link);
+                            if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("ID updated {}", link);
                         }
                     }
                     // if the id is not unknown, it changed for some reason, so update (shouldn't really occur)
                     else if (!id.isUnknown())
                     {
                         // TODO: what to do if ID changes?  Will this actually occur?
-                        logger.warn("ID changed at addr " + Utils.getAddressPort(remote) + " from " + link.getID() + " to " + id);
+                        logger.warn("ID changed at addr {} from {} to {}", Utils.getAddressPort(remote), link.getID(), id);
                         link.setID(id);
                     }
                     return link;
@@ -480,7 +480,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
 
 
                 // notify of creation
-                if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("New Link " + link);
+                if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("New Link {}", link);
                 fireEvent(new UDPManagerEvent(UDPManagerEvent.Type.CREATED, link));
             }
 
@@ -512,7 +512,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
             }
             else
             {
-                logger.warn("Link remove requested, but not found: "+ cl.link);
+                logger.warn("Link remove requested, but not found: {}", cl.link);
             }
         }
     }
@@ -539,7 +539,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
      */
     private void notifyRemoved(UDPLink link)
     {
-        if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("Link removed: "+ link);
+        if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("Link removed: {}", link);
         fireEvent(new UDPManagerEvent(UDPManagerEvent.Type.DESTROYED, link));
     }
 
