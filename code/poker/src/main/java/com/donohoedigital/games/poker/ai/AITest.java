@@ -196,7 +196,7 @@ public class AITest
 
             File fDir = getTestCaseDir();
 
-            File files[] = fDir.listFiles(new FilenameFilter()
+            File[] files = fDir.listFiles(new FilenameFilter()
             {
                 public boolean accept(File dir, String name)
                 {

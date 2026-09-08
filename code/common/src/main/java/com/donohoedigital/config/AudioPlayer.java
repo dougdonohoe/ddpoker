@@ -338,7 +338,7 @@ public class AudioPlayer implements Runnable, LineListener
         else
         {
             SourceDataLine line = (SourceDataLine) dataline_;
-            byte tempBuffer[] = new byte[25000 * 4];
+            byte[] tempBuffer = new byte[25000 * 4];
             int cnt = 0;
 
             try 

@@ -44,13 +44,17 @@ description: >
   NOTE: org.openrewrite.java.RemoveUnusedImports is deliberately NOT here.  It expands
   star imports (import javax.swing.* becomes one line per class), which this code base
   uses on purpose - it would touch ~370 files for no benefit.
+  NOTE: org.openrewrite.staticanalysis.RemoveRedundantTypeCast is also NOT here - see
+  the RedundantCasts recipe below.
+  NOTE: org.openrewrite.staticanalysis.RemoveExtraSemicolons is also NOT here.  It
+  swallows the whitespace following the semicolon, so "};\n\n    /**" collapses to
+  "}/**" (seen in gui/DDButtonUI.java).  Only 7 sites in this code base - not worth
+  hand-patching the recipe's output on every run.
 recipeList:
   - org.openrewrite.staticanalysis.UseDiamondOperator
-  - org.openrewrite.staticanalysis.RemoveRedundantTypeCast
   - org.openrewrite.staticanalysis.UseJavaStyleArrayDeclarations
   - org.openrewrite.staticanalysis.UnnecessaryExplicitTypeArguments
   - org.openrewrite.staticanalysis.NoEmptyCollectionWithRawType
-  - org.openrewrite.staticanalysis.RemoveExtraSemicolons
 
 ---
 type: specs.openrewrite.org/v1beta/recipe
@@ -142,3 +146,18 @@ description: >
   TypeCleanup.
 recipeList:
   - org.openrewrite.staticanalysis.ExplicitInitialization
+
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.RedundantCasts
+displayName: Redundant type casts
+description: >
+  Drop casts left over from pre-generics code, e.g. (DDOption) options_.get(i) where
+  options_ is already List<DDOption>.
+  REVIEW EVERY CHANGE.  This recipe does not understand overload resolution: it removed
+  the cast from init(sName, (String) null) in gui/DDImageButton.java, where it was
+  disambiguating init(String,Icon) inherited from AbstractButton against the local
+  init(String,String).  That one failed to compile, but a cast whose removal silently
+  selects a different overload would not.  Kept opt-in for that reason.
+recipeList:
+  - org.openrewrite.staticanalysis.RemoveRedundantTypeCast

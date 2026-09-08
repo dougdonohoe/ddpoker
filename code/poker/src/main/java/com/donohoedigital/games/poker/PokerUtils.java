@@ -62,7 +62,7 @@ public class PokerUtils extends EngineUtils
 {
     private static final Logger logger = LogManager.getLogger(PokerUtils.class);
 
-    private static final BigInteger factorial_[] = new BigInteger[53];
+    private static final BigInteger[] factorial_ = new BigInteger[53];
 
     static Territory tPot_ = null;
     static Territory tFlop_ = null;

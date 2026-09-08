@@ -93,7 +93,7 @@ public class ServletDebug
 
     public static void printCookies(HttpServletRequest httpservletrequest)
     {
-        Cookie acookie[] = httpservletrequest.getCookies();
+        Cookie[] acookie = httpservletrequest.getCookies();
         if (acookie != null)
         {
             for(int i = 0; i < acookie.length; i++)

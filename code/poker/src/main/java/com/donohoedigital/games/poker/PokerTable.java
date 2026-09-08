@@ -66,7 +66,7 @@ public class PokerTable implements ObjectID
 
     // data
     private PokerGame game_;
-    PokerPlayer players_[] = new PokerPlayer[PokerConstants.SEATS];
+    PokerPlayer[] players_ = new PokerPlayer[PokerConstants.SEATS];
     private int nNum_;
     private String sName_;
     private int nButton_ = NO_SEAT;
@@ -79,11 +79,11 @@ public class PokerTable implements ObjectID
     private boolean bCurrent_ = false;
     private boolean bZipMode_ = false;
     private HoldemHand hhand_;
-    private List<PokerPlayer> waitList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> addedList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> addonList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> rebuyList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> observers_ = new ArrayList<PokerPlayer>();
+    private List<PokerPlayer> waitList_ = new ArrayList<>();
+    private List<PokerPlayer> addedList_ = new ArrayList<>();
+    private List<PokerPlayer> addonList_ = new ArrayList<>();
+    private List<PokerPlayer> rebuyList_ = new ArrayList<>();
+    private List<PokerPlayer> observers_ = new ArrayList<>();
     private int nTableState_ = STATE_NONE;
     private int nPrevState_ = STATE_NONE;
     private int nPendingState_ = STATE_NONE;
@@ -458,7 +458,7 @@ public class PokerTable implements ObjectID
     public PokerPlayer[] getPlayersSortedByLastMove()
     {
         int nOcc = getNumOccupiedSeats();
-        PokerPlayer players[] = new PokerPlayer[nOcc];
+        PokerPlayer[] players = new PokerPlayer[nOcc];
         PokerPlayer player;
         int nCnt = 0;
         for (int i = 0; i < PokerConstants.SEATS; i++)
@@ -1243,7 +1243,7 @@ public class PokerTable implements ObjectID
     {    
         int nMin = getNextMinChip();
         int nMinLast = getMinChip();
-        List<PokerPlayer> players = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> players = new ArrayList<>();
         PokerPlayer player;
         int nTotalOdd = 0;
         int nOdd;
@@ -1872,7 +1872,7 @@ public class PokerTable implements ObjectID
     ////
     //// PokerTableListener
     ////
-    private List<ListenerInfo> listeners_ = new ArrayList<ListenerInfo>();
+    private List<ListenerInfo> listeners_ = new ArrayList<>();
     
     /**
      * notify table that display preferences changed so listeners can react
@@ -2128,7 +2128,7 @@ public class PokerTable implements ObjectID
     {
         // create list of players loaded
         int nNum = entry.removeIntToken();
-        List<PokerPlayer> load = new ArrayList<PokerPlayer>(nNum);
+        List<PokerPlayer> load = new ArrayList<>(nNum);
         for (int i = 0; i < nNum; i++)
         {
             load.add((PokerPlayer)state.getObject(entry.removeIntegerToken()));

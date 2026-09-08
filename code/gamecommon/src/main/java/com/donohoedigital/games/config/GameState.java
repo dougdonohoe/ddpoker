@@ -68,7 +68,7 @@ public class GameState extends MsgState implements SaveFile
     private byte[] savedata_;
     private String sName_;
     private String sDesc_;
-    private List<GameStateEntry> entries_ = new ArrayList<GameStateEntry>();
+    private List<GameStateEntry> entries_ = new ArrayList<>();
     private TypedHashMap gamedata_;
     private SaveDetails details_;
     
@@ -861,8 +861,8 @@ public class GameState extends MsgState implements SaveFile
      */
     public static GameState[] getSaveFileList(File fDir, String sBegin, String sExt)
     {
-        File files[] = Utils.getFileList(fDir, SaveFile.DELIM + sExt, sBegin);
-        List<GameState> newst = new ArrayList<GameState>();
+        File[] files = Utils.getFileList(fDir, SaveFile.DELIM + sExt, sBegin);
+        List<GameState> newst = new ArrayList<>();
 
         for (File file : files)
         {

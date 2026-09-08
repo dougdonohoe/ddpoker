@@ -371,7 +371,7 @@ public class AckList
     {
         if (false)
         {
-            int acks[] = { 200, 201, 202, 205, 204, 203, 197, 195, 196, 198, 199, 180, 185, 190, 192,
+            int[] acks = { 200, 201, 202, 205, 204, 203, 197, 195, 196, 198, 199, 180, 185, 190, 192,
                            193, 195, 194, 183, 196, 197, 201, 184, 182, 189, 186, 188, 187, 181, 191, 182 };
 
             for (int i = 0; i < acks.length; i++)
@@ -382,7 +382,7 @@ public class AckList
         }
         else
         {
-            int hits[] = new int[size+1];
+            int[] hits = new int[size+1];
             MersenneTwisterFast random_ = new MersenneTwisterFast();
             for (int i = 0; i < size * iters; i++)
             {

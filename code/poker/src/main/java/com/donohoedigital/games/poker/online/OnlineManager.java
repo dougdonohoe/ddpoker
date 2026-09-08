@@ -82,14 +82,14 @@ public class OnlineManager implements ChatManager
 
     // chat
     private ChatHandler chat_ = null;
-    private final List<OnlineMessage> chatQueue_ = new ArrayList<OnlineMessage>();
+    private final List<OnlineMessage> chatQueue_ = new ArrayList<>();
 
     // tournament director
     private TournamentDirector td_;
-    private final List<OnlineMessage> tdQueue_ = new ArrayList<OnlineMessage>();
+    private final List<OnlineMessage> tdQueue_ = new ArrayList<>();
     private OnlineManagerQueue oQueue_ = null;
     private PokerPrefsPlayerList banned_;
-    private Set<String> sentMessageAboutRejectedPlayer = new HashSet<String>();
+    private Set<String> sentMessageAboutRejectedPlayer = new HashSet<>();
 
     /**
      * Creates a new instance of OnlineManager
@@ -1252,7 +1252,7 @@ public class OnlineManager implements ChatManager
     {
         if (tables == null || tables.isEmpty()) return null;
 
-        int removed[] = new int[tables.size()];
+        int[] removed = new int[tables.size()];
         for (int i = 0; i < removed.length; i++)
         {
             removed[i] = tables.get(i).getNumber();
@@ -2606,7 +2606,7 @@ public class OnlineManager implements ChatManager
     ////
 
     // listener list
-    protected List<OnlineMessageListener> listenerList = new ArrayList<OnlineMessageListener>();
+    protected List<OnlineMessageListener> listenerList = new ArrayList<>();
 
     /**
      * Adds a listener to the list

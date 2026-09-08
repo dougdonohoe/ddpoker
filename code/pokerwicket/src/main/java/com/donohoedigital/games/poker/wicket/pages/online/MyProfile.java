@@ -159,10 +159,10 @@ public class MyProfile extends OnlinePokerPage
             add(createLabel("name2", user.getDisplayName()));
 
             // form data
-            CompoundPropertyModel<ChangePasswordData> formData = new CompoundPropertyModel<ChangePasswordData>(new ChangePasswordData());
+            CompoundPropertyModel<ChangePasswordData> formData = new CompoundPropertyModel<>(new ChangePasswordData());
 
             // change password form
-            Form<ChangePasswordData> pwform = new Form<ChangePasswordData>("form", formData)
+            Form<ChangePasswordData> pwform = new Form<>("form", formData)
             {
                 private static final long serialVersionUID = 42L;
 
@@ -229,7 +229,7 @@ public class MyProfile extends OnlinePokerPage
 
                     // retire
                     // unban
-                    Form<String> form = new Form<String>("form", new StringModel(p.getName()))
+                    Form<String> form = new Form<>("form", new StringModel(p.getName()))
                     {
                         @Override
                         protected void onSubmit()
@@ -270,7 +270,7 @@ public class MyProfile extends OnlinePokerPage
         @Override
         protected List<OnlineProfileSummary> load()
         {
-            if (userinfo == null) return new ArrayList<OnlineProfileSummary>();
+            if (userinfo == null) return new ArrayList<>();
 
             return profileService.getOnlineProfileSummariesForEmail(userinfo.getEmail());
         }

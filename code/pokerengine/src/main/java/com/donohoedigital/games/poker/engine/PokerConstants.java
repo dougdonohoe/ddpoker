@@ -277,7 +277,7 @@ public class PokerConstants
 
     // chat/info server
     @SuppressWarnings({"PublicStaticArrayField"})
-    public static final byte CHAT_BYTES[] = {'6', 'e', 'h', 'g', '@', '!', 'T', 'A', 'Z', 'D', 'C', '%'};
+    public static final byte[] CHAT_BYTES = {'6', 'e', 'h', 'g', '@', '!', 'T', 'A', 'Z', 'D', 'C', '%'};
     public static final byte USERTYPE_CHAT = 1;
     public static final byte USERTYPE_HELLO = 2;
 

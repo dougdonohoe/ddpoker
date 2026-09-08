@@ -1461,8 +1461,8 @@ public class Gameboard extends ImageComponent implements Scrollable,
     /// Territory listeners
     ///
     
-    private List<TerritorySelectionListener> tlisteners_ = new ArrayList<TerritorySelectionListener>();
-    private List<GamePieceSelectionListener> elisteners_ = new ArrayList<GamePieceSelectionListener>();
+    private List<TerritorySelectionListener> tlisteners_ = new ArrayList<>();
+    private List<GamePieceSelectionListener> elisteners_ = new ArrayList<>();
     
     /**
      * Add a territory selection listener

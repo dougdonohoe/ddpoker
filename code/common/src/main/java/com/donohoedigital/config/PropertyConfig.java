@@ -209,7 +209,7 @@ public class PropertyConfig extends Properties
     @SuppressWarnings({"unchecked"})
     public Map<String, String> getMatching(String sStartsWith)
     {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         Enumeration<String> enumer = (Enumeration<String>) propertyNames();
         while (enumer.hasMoreElements())
         {
@@ -370,7 +370,7 @@ public class PropertyConfig extends Properties
     }
 
     // cache formats
-    private static final Map<String, MessageFormat> formats_ = new HashMap<String, MessageFormat>();
+    private static final Map<String, MessageFormat> formats_ = new HashMap<>();
 
     /**
      * Get a message and insert the params into it (params replaced
@@ -466,8 +466,8 @@ public class PropertyConfig extends Properties
     }
 
     // store locales
-    private static final Map<String, SimpleDateFormat> dates_ = new HashMap<String, SimpleDateFormat>();
-    private static final Map<String, Locale> locales_ = new HashMap<String, Locale>();
+    private static final Map<String, SimpleDateFormat> dates_ = new HashMap<>();
+    private static final Map<String, Locale> locales_ = new HashMap<>();
 
     /**
      * get date format (msg.format.datetime key)

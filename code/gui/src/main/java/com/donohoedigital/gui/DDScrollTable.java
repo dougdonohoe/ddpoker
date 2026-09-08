@@ -49,7 +49,7 @@ import java.awt.*;
 public class DDScrollTable extends DDScrollPane
 {
     DDTable table_;
-    int columnWidths_[];
+    int[] columnWidths_;
 
     /**
      * Creates a new instance of DDScrollTable - with a DDTable inside.  The

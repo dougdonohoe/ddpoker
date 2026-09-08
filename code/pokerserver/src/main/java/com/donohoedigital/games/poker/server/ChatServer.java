@@ -218,7 +218,7 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
         if (!aliases.isEmpty())
         {
             OnlinePlayerInfo oalias;
-            DMArrayList<DMTypedHashMap> oaliases = new DMArrayList<DMTypedHashMap>(aliases.size());
+            DMArrayList<DMTypedHashMap> oaliases = new DMArrayList<>(aliases.size());
             for (OnlineProfile alias : aliases)
             {
                 oalias = new OnlinePlayerInfo();
@@ -409,7 +409,7 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
     {
         synchronized (links_)
         {
-            DMArrayList<DMTypedHashMap> list = new DMArrayList<DMTypedHashMap>(links_.size());
+            DMArrayList<DMTypedHashMap> list = new DMArrayList<>(links_.size());
             for (LinkInfo info : links_)
             {
                 list.add(info.player.getData());

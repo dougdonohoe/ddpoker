@@ -626,7 +626,7 @@ public String getFileName() {
     {
         group.clearContents();
         group.setStrength(strength);
-        String items[] = hands.split(",");
+        String[] items = hands.split(",");
         for (String item : items)
         {
             int rank1 = Card.getRank(item.charAt(0));
@@ -723,7 +723,7 @@ public String getFileName() {
 
         if (s != null)
         {
-            String v[] = s.split("\\|");
+            String[] v = s.split("\\|");
             parse(this, v[0], Integer.parseInt(v[1]));
         }
     }

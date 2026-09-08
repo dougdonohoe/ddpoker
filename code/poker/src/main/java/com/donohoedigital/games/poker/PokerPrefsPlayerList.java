@@ -66,7 +66,7 @@ public class PokerPrefsPlayerList extends AbstractPlayerList
     {
         if (share_ == null)
         {
-            share_ = new HashMap<String, PokerPrefsPlayerList>();
+            share_ = new HashMap<>();
         }
 
         PokerPrefsPlayerList list = share_.get(sListName);

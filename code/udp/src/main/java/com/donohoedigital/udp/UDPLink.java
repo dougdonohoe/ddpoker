@@ -77,7 +77,7 @@ public class UDPLink
     private int POSSIBLE_TIMEOUT_NOTIFICATION_INTERVAL;
 
     // queue to send (synchronized blocks are used around sendQueue_)
-    private LinkedList<UDPData> sendQueue_ = new LinkedList<UDPData>();
+    private LinkedList<UDPData> sendQueue_ = new LinkedList<>();
     private UDPStats stats_ = new UDPStats();
 
     // session related stuff (set in resetSession() or newSession())
@@ -93,7 +93,7 @@ public class UDPLink
     private long lastMessageReceived_;
     private boolean bGoodbyeInProgress_ = false;
     private boolean bDone_ = false;
-    private ArrayList<UDPLinkMonitor> monitors_ = new ArrayList<UDPLinkMonitor>();
+    private ArrayList<UDPLinkMonitor> monitors_ = new ArrayList<>();
     private long start = System.currentTimeMillis();
 
     // data size related stuff
@@ -367,7 +367,7 @@ public class UDPLink
         int minPayload = MIN_MTU - headers;
         int FACTOR = 128;
         int FUDGE = (MAX_MTU - MIN_MTU) % FACTOR;
-        byte data[] = new byte[maxPayload];
+        byte[] data = new byte[maxPayload];
         Arrays.fill(data, (byte) 'd');
         int id = 0;
 

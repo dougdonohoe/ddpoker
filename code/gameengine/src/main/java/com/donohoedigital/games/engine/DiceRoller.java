@@ -59,7 +59,7 @@ public class DiceRoller {
      */
     public static Integer[] rollDice(int nSides, int nNum)
     {
-        Integer results[] = new Integer[nNum];
+        Integer[] results = new Integer[nNum];
         for (int i = 0; i < nNum; i++)
         {
             results[i] = rollDie(nSides);

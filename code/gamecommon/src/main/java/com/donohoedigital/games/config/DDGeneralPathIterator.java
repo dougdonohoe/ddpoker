@@ -52,9 +52,9 @@ public class DDGeneralPathIterator implements PathIterator
     //static Logger logger = LogManager.getLogger(DDGeneralPathIterator.class);
     
     private GeneralPath path_;
-    private static final int curvesize[] = {2, 2, 4, 6, 0};
+    private static final int[] curvesize = {2, 2, 4, 6, 0};
     private ArrayList points_ = new ArrayList();
-    float current_[];
+    float[] current_;
     private int index_ = 0;
     
     /**
@@ -69,8 +69,8 @@ public class DDGeneralPathIterator implements PathIterator
     {
         path_ = path;
         PathIterator iter = path.getPathIterator(null);
-        float coord[] = new float[6];
-        float newd[];
+        float[] coord = new float[6];
+        float[] newd;
         int ret;
         int num;
         int i = 0;

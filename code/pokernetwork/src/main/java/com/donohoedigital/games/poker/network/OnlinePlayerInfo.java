@@ -150,7 +150,7 @@ public class OnlinePlayerInfo implements Comparable<OnlinePlayerInfo>
         DMArrayList<?> raw = (DMArrayList<?>) data_.getList(ONLINE_ALIASES);
         if (raw == null) return null;
 
-        List<OnlinePlayerInfo> list = new ArrayList<OnlinePlayerInfo>(raw.size());
+        List<OnlinePlayerInfo> list = new ArrayList<>(raw.size());
         for (Object aRaw : raw)
         {
             info = new OnlinePlayerInfo((DMTypedHashMap) aRaw);

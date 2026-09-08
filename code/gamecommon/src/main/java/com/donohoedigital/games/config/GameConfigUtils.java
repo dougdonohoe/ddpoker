@@ -55,7 +55,7 @@ public class GameConfigUtils
     public static final String SAVE_DIR = "save";
 
     private static File saveDir = null;
-    private static final Map<String, ObjectLock> lockMap = new HashMap<String, ObjectLock>();
+    private static final Map<String, ObjectLock> lockMap = new HashMap<>();
 
     /**
      * Get the location for save files, creating the directory if not there.

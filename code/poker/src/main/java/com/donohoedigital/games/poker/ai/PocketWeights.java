@@ -53,9 +53,9 @@ public class PocketWeights
 
     private HoldemHand hhand_ = null;
 
-    private PocketMatrixFloat weights_[] = null;
+    private PocketMatrixFloat[] weights_ = null;
 
-    private float apparentStrength_[] = new float[10];
+    private float[] apparentStrength_ = new float[10];
     private int callCount_;
     private int raiseCount_;
     private int potSize_;

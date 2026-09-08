@@ -37,8 +37,8 @@ import com.donohoedigital.games.poker.engine.*;
 
 public class HandProbabilityMatrix
 {
-    float prob_[][] = new float[52][52];
-    float score_[][] = new float[52][52];
+    float[][] prob_ = new float[52][52];
+    float[][] score_ = new float[52][52];
 
     Deck deck = new Deck(false);
 

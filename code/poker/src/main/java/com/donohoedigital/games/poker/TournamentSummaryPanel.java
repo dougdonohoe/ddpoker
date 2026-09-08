@@ -433,7 +433,7 @@ public class TournamentSummaryPanel extends DDPanel
         boolean bPayout;
         boolean bOppMix;
 
-        TournamentModel(GameContext context, TournamentProfileHtml profileHtml, String names[], int[] widths)
+        TournamentModel(GameContext context, TournamentProfileHtml profileHtml, String[] names, int[] widths)
         {
             this.context = context;
             this.names = names;
@@ -450,7 +450,7 @@ public class TournamentSummaryPanel extends DDPanel
             html = h;
             if (bOppMix && profile != null)
             {
-                playerTypes = new ArrayList<BaseProfile>();
+                playerTypes = new ArrayList<>();
                 List<BaseProfile> types = PlayerType.getProfileListCached();
 
                 for (BaseProfile profile1 : types)

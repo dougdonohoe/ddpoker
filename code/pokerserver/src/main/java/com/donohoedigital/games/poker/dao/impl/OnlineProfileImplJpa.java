@@ -104,7 +104,7 @@ public class OnlineProfileImplJpa extends JpaBaseDao<OnlineProfile, Long> implem
         query.setParameter("email", email);
 
         // get results
-        List<OnlineProfileSummary> list = new ArrayList<OnlineProfileSummary>();
+        List<OnlineProfileSummary> list = new ArrayList<>();
         List<Object[]> results = query.getResultList();
         for (Object[] a : results)
         {
@@ -158,7 +158,7 @@ public class OnlineProfileImplJpa extends JpaBaseDao<OnlineProfile, Long> implem
 
         List<OnlineProfile> list = (List<OnlineProfile>) query.getResultList();
 
-        PagedList<OnlineProfile> pList = new PagedList<OnlineProfile>(list.size());
+        PagedList<OnlineProfile> pList = new PagedList<>(list.size());
         pList.addAll(list);
         pList.setTotalSize(count);
         return pList;
@@ -206,7 +206,7 @@ public class OnlineProfileImplJpa extends JpaBaseDao<OnlineProfile, Long> implem
         List<Object[]> results = query.getResultList();
 
         // create summary list, set size and translate results
-        PagedList<OnlineProfilePurgeSummary> list = new PagedList<OnlineProfilePurgeSummary>(results.size());
+        PagedList<OnlineProfilePurgeSummary> list = new PagedList<>(results.size());
         list.setTotalSize(count);
 
         for (Object[] a : results)

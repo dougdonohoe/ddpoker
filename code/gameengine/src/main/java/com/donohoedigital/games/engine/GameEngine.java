@@ -1001,7 +1001,7 @@ public abstract class GameEngine extends BaseApp
     ////
 
     // list of contexts
-    private Map<String, ContextTracker> contexts_ = new HashMap<String, ContextTracker>();
+    private Map<String, ContextTracker> contexts_ = new HashMap<>();
 
     /**
      * note that a context was created
@@ -1056,7 +1056,7 @@ public abstract class GameEngine extends BaseApp
     {
         int nNum;
         String sName;
-        List<GameContext> contexts = new ArrayList<GameContext>();
+        List<GameContext> contexts = new ArrayList<>();
 
         // constructor
         ContextTracker(String sName)

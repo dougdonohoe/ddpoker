@@ -72,7 +72,7 @@ public class DDHtmlEditorKit extends HTMLEditorKit
     
     public static class HTMLFactoryX extends HTMLFactory
     {
-        Class ctorArgs_[] = new Class[] { Element.class };
+        Class[] ctorArgs_ = new Class[] { Element.class };
 
         public View create(Element elem)
         {

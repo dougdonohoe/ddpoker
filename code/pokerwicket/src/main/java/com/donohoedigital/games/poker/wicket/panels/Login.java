@@ -62,7 +62,7 @@ public class Login extends VoidPanel implements JavascriptHideable
 
         this.visibleToUser = visibleToUser;
 
-        Form<Login> form = new StatelessForm<Login>("login", new CompoundPropertyModel<>(this))
+        Form<Login> form = new StatelessForm<>("login", new CompoundPropertyModel<>(this))
         {
             private static final long serialVersionUID = 42L;
 

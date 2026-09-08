@@ -53,7 +53,7 @@ public class ManagedQueueTest
     private static final Logger logger = LogManager.getLogger(ManagedQueueTest.class);
 
     private Thread mainThread;
-    private final List<SampleItem> messages = new ArrayList<SampleItem>();
+    private final List<SampleItem> messages = new ArrayList<>();
     private static final SampleItem SAMPLE = new SampleItem();
 
     @BeforeEach
@@ -79,7 +79,7 @@ public class ManagedQueueTest
         @Override
         protected BlockingQueue<SampleItem> createQueue(int c)
         {
-            return new ArrayBlockingQueue<SampleItem>(c);
+            return new ArrayBlockingQueue<>(c);
         }
 
         @Override

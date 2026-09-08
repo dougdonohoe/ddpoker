@@ -54,11 +54,11 @@ public class RegInfo implements Comparable<RegInfo>
     
     // info
     private String sKey_;
-    private List<Registration> msgs_ = new ArrayList<Registration>();
-    private List<Registration> reg_msgs_ = new ArrayList<Registration>();
-    private List<Registration> act_msgs_ = new ArrayList<Registration>();
-    private List<Registration> patch_msgs_ = new ArrayList<Registration>();
-    private List<Registration> dup_msgs_ = new ArrayList<Registration>();
+    private List<Registration> msgs_ = new ArrayList<>();
+    private List<Registration> reg_msgs_ = new ArrayList<>();
+    private List<Registration> act_msgs_ = new ArrayList<>();
+    private List<Registration> patch_msgs_ = new ArrayList<>();
+    private List<Registration> dup_msgs_ = new ArrayList<>();
     private long mostRecent_;
     private static SimpleDateFormat date_ = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm:ss", Locale.US);
 

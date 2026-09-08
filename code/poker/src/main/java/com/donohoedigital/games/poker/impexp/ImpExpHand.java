@@ -57,11 +57,11 @@ public class ImpExpHand
     public int bigBlind;
     public int buttonSeat;
     public int localHumanPlayerSeat = -1;
-    public PokerPlayer players[] = new PokerPlayer[PokerConstants.SEATS];
-    public int betChips[] = new int[PokerConstants.SEATS];
-    public int overbetChips[] = new int[PokerConstants.SEATS];
-    public int winChips[] = new int[PokerConstants.SEATS];
-    public int startChips[] = new int[PokerConstants.SEATS];
-    public int endChips[] = new int[PokerConstants.SEATS];
+    public PokerPlayer[] players = new PokerPlayer[PokerConstants.SEATS];
+    public int[] betChips = new int[PokerConstants.SEATS];
+    public int[] overbetChips = new int[PokerConstants.SEATS];
+    public int[] winChips = new int[PokerConstants.SEATS];
+    public int[] startChips = new int[PokerConstants.SEATS];
+    public int[] endChips = new int[PokerConstants.SEATS];
     public ArrayList hist = new ArrayList();
 }

@@ -48,7 +48,7 @@ public class CommandLine
     private static String sParamName_ = "[file]";
     private static String sParamUsage_ = "[file 1] ... [file N]";
     private static String sParamDesc_ = "a file";
-    private static Map<String, Option> htOpts_ = new HashMap<String, Option>(); // options to gather
+    private static Map<String, Option> htOpts_ = new HashMap<>(); // options to gather
 
     private static TypedHashMap htValues_ = new TypedHashMap(); // options gathered
     private static String[] saRemainingArgs_ = null; // command line values not part of args
@@ -234,7 +234,7 @@ public class CommandLine
         String sArg;
         boolean bDone = false;
         htValues_ = new TypedHashMap();
-        List<String> vArgs = new ArrayList<String>();
+        List<String> vArgs = new ArrayList<>();
 
         for (int i = 0; i < args.length; i++)
         {

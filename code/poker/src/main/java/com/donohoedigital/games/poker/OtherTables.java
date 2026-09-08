@@ -105,7 +105,7 @@ public class OtherTables
         // sort array if more than one table
         if (tables.size() > 1)
         {
-            tables = new ArrayList<PokerTable>(tables);
+            tables = new ArrayList<>(tables);
             Collections.sort(tables, SORTFILLEDSEATS);
         }
 
@@ -290,7 +290,7 @@ public class OtherTables
 
         // get sorted array of tables (do each time since as players added, things change)
         // this is not super expensive as not many players are moved at any given time
-        List<PokerTable> tables = new ArrayList<PokerTable>(game.getTables());
+        List<PokerTable> tables = new ArrayList<>(game.getTables());
         Collections.sort(tables, SORTFILLEDSEATS);
         
         // otherwise add to table with least spots open

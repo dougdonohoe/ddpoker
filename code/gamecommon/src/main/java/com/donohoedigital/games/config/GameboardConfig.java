@@ -512,7 +512,7 @@ public class GameboardConfig extends XMLConfigFileLoader
     {
         TerritoryPoint point;
         TerritoryPoints points;
-        Territory ta[] = this.territories_.getTerritoryArrayCached();
+        Territory[] ta = this.territories_.getTerritoryArrayCached();
 
         for (Territory adj : ta)
         {

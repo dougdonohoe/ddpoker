@@ -57,7 +57,7 @@ public class SendWanProfile extends SendMessageDialog
     public static final String PARAM_CATEGORY = "category";
     public static final String PARAM_PROFILE = "profile";
 
-    private static final Map<Integer, String> hmMessages_ = new HashMap<Integer, String>();
+    private static final Map<Integer, String> hmMessages_ = new HashMap<>();
 
     static
     {

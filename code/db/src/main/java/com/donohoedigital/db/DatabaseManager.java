@@ -62,7 +62,7 @@ public class DatabaseManager
     public static final String PARAM_PASSWORD = "password";
 
     private static boolean initialized_ = false;
-    private static Map<String, Database> hmDatabases_ = new HashMap<String, Database>();
+    private static Map<String, Database> hmDatabases_ = new HashMap<>();
 
     /**
      * Determine if the manager has been initialized.
@@ -184,7 +184,7 @@ public class DatabaseManager
                 long after = System.currentTimeMillis();
 
                 //noinspection ThrowableInstanceNeverThrown
-                StackTraceElement stack[] = new Throwable().getStackTrace();
+                StackTraceElement[] stack = new Throwable().getStackTrace();
                 StringBuilder buf = new StringBuilder();
 
                 String className;

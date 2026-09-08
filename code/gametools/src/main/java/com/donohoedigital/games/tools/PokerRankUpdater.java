@@ -109,7 +109,7 @@ public class PokerRankUpdater extends BaseCommandLineApp
      */
     private void doRank()
     {
-        Integer modes[] = new Integer[2];
+        Integer[] modes = new Integer[2];
         modes[0] = OnlineGame.MODE_END;
         modes[1] = OnlineGame.MODE_STOP;
         int offset = 0;

@@ -140,7 +140,7 @@ public class SidePotsDialog extends DialogPhase
         
         PokerPlayer pl;
         StringBuilder sb = new StringBuilder();
-        List<PokerPlayer> players = new ArrayList<PokerPlayer>(p.getPlayers());
+        List<PokerPlayer> players = new ArrayList<>(p.getPlayers());
         Collections.sort(players, PokerPlayer.SORTBYNAME);
         boolean bWinner;
         for (int i = 0; i < nNum; i++)

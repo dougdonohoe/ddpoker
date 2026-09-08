@@ -60,7 +60,7 @@ public class GameServletRequest implements HttpServletRequest
     static Logger logger = LogManager.getLogger(GameServletRequest.class);
 
     // needed to handle request
-    Map<String, Object> headers_ = new TreeMap<String, Object>(new CaseInsensitiveCompare());
+    Map<String, Object> headers_ = new TreeMap<>(new CaseInsensitiveCompare());
     int nContentLength_;
     String sUserAgent_;
     InputStream in_;

@@ -40,7 +40,7 @@ import java.awt.*;
 
 public class WeightGridPanel extends AdvisorGridPanel
 {
-    private Color colors_[] = new Color[101];
+    private Color[] colors_ = new Color[101];
 
     private PokerPlayer player_;
 

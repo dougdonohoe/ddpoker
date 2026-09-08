@@ -59,7 +59,7 @@ public abstract class OptionMenu extends BasePhase implements ChangeListener, Gu
     private MenuBackground menu_;
     protected DDPanel data_;
     private DDButton defaultButton_;
-    protected List<DDOption> options_ = new ArrayList<DDOption>();
+    protected List<DDOption> options_ = new ArrayList<>();
 
     /**
      * Get focus - typically overriden

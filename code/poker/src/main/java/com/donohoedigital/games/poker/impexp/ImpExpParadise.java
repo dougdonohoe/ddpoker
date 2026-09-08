@@ -510,7 +510,7 @@ public class ImpExpParadise implements ImpExp
         }
     }
 
-    private static final String rankName_[] = new String[]
+    private static final String[] rankName_ = new String[]
     {
         null,null,
         "two",
@@ -528,7 +528,7 @@ public class ImpExpParadise implements ImpExp
         "ace"
     };
 
-    private static final String rankPName_[] = new String[]
+    private static final String[] rankPName_ = new String[]
     {
         null,null,
         "twos",

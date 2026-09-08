@@ -913,7 +913,7 @@ public class ServerSideGame extends ServerDataFile implements GameInfo
      */
     private int getNextSaveNumber(File dir, String sExt)
     {
-        File files[] = Utils.getFileList(dir, DELIM + sExt, null);
+        File[] files = Utils.getFileList(dir, DELIM + sExt, null);
         int nNum = 1;
         if (files != null && files.length > 0)
         {

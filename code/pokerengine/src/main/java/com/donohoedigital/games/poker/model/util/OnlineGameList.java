@@ -49,7 +49,7 @@ public class OnlineGameList extends PagedList<OnlineGame> implements SimpleXMLEn
      */
     public DMArrayList<DMTypedHashMap> getAsDMList()
     {
-        DMArrayList<DMTypedHashMap> dmList = new DMArrayList<DMTypedHashMap>(size());
+        DMArrayList<DMTypedHashMap> dmList = new DMArrayList<>(size());
 
         for (OnlineGame game : this) {
             dmList.add(game.getData());

@@ -42,9 +42,9 @@ import java.awt.event.*;
 
 public class CardSelectorPanel extends DDPanel implements ActionListener
 {
-    CardPiece cardPieces[][] = new CardPiece[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
-    ButtonPanel cardButtons[][] = new ButtonPanel[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
-    ButtonPanel unknownButtons[] = new ButtonPanel[CardSuit.SPADES_RANK + 1];
+    CardPiece[][] cardPieces = new CardPiece[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
+    ButtonPanel[][] cardButtons = new ButtonPanel[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
+    ButtonPanel[] unknownButtons = new ButtonPanel[CardSuit.SPADES_RANK + 1];
 
     private static final int INIT = -9;
     private static final int NONE = -10;

@@ -119,7 +119,7 @@ public class OnlineProfilePurger extends BaseCommandLineApp
         service.deleteOnlineProfiles(deleteList);
     }
 
-    private List<OnlineProfile> deleteList = new ArrayList<OnlineProfile>();
+    private List<OnlineProfile> deleteList = new ArrayList<>();
     private OnlineProfilePurgeSummary last;
     private Date days_90;
     private Date days_14;

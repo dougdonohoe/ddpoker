@@ -191,7 +191,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
      */
     private abstract class OptionTab extends DDTabPanel
     {
-        private final List<DDOption> localOptions = new ArrayList<DDOption>();
+        private final List<DDOption> localOptions = new ArrayList<>();
 
         OptionTab()
         {

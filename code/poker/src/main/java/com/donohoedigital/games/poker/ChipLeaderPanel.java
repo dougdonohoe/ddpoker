@@ -77,15 +77,15 @@ public class ChipLeaderPanel extends DDTabPanel
         // which can otherwise throw "Comparison method violates its general contract!"
         // if the tournament director moves chips while the sort is running.
         List<PokerPlayer> all = game_.getPokerPlayersCopy();
-        List<RankInfo> leaders = new ArrayList<RankInfo>(all.size());
+        List<RankInfo> leaders = new ArrayList<>(all.size());
         for (PokerPlayer each : all)
         {
             leaders.add(new RankInfo(each, 0, game_.getSettledChipCount(each)));
         }
         Collections.sort(leaders, SORT_SETTLED);
 
-        List<RankInfo> finished = new ArrayList<RankInfo>();
-        List<RankInfo> current = new ArrayList<RankInfo>();
+        List<RankInfo> finished = new ArrayList<>();
+        List<RankInfo> current = new ArrayList<>();
         int nNum = leaders.size();
         boolean bDone = game_.getNumPlayers() - game_.getNumPlayersOut() == 0;
         int min = Integer.MAX_VALUE;
@@ -273,7 +273,7 @@ public class ChipLeaderPanel extends DDTabPanel
      * the captured count rather than the live one so the ordering cannot change
      * underneath the sort.
      */
-    private static final Comparator<RankInfo> SORT_SETTLED = new Comparator<RankInfo>()
+    private static final Comparator<RankInfo> SORT_SETTLED = new Comparator<>()
     {
         public int compare(RankInfo r1, RankInfo r2)
         {
@@ -337,7 +337,7 @@ public class ChipLeaderPanel extends DDTabPanel
         int[] widths;
         boolean bShowPlayerType;
 
-        public PlayerModel(PokerGame game, List<RankInfo> players, String names[], int[] widths)
+        public PlayerModel(PokerGame game, List<RankInfo> players, String[] names, int[] widths)
         {
             this.game = game;
             this.names = names;

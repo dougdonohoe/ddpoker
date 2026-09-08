@@ -59,8 +59,8 @@ public class HelpConfig extends XMLConfigFileLoader
 
     private static HelpConfig helpConfig = null;
     
-    private Map<String, HelpTopic> helps_ = new HashMap<String, HelpTopic>();
-    private List<HelpTopic> helparray_ = new ArrayList<HelpTopic>();
+    private Map<String, HelpTopic> helps_ = new HashMap<>();
+    private List<HelpTopic> helparray_ = new ArrayList<>();
     
     /** 
      * Creates a new instance of HelpConfig from the Appconfig file 

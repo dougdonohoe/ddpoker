@@ -127,10 +127,10 @@ public class RuleEngine implements AIConstants
     public static final int CURVE_CUBE = 3;
 
     private V2Player ai_;
-    private float score_[];
-    private boolean eligible_[];
-    private float weights_[];
-    private OutcomeAdjustment adjustments_[][];
+    private float[] score_;
+    private boolean[] eligible_;
+    private float[] weights_;
+    private OutcomeAdjustment[][] adjustments_;
 
     private int strongestOutcome_;
 

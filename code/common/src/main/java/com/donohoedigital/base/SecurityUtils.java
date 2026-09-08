@@ -328,7 +328,7 @@ public class SecurityUtils
     /**
      * get MD5 hash of string
      */
-    public static String getMD5Hash(String s, byte key[])
+    public static String getMD5Hash(String s, byte[] key)
     {
         return hash(s.getBytes(), key, "MD5");
     }

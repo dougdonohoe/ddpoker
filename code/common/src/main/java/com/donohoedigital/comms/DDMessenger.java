@@ -441,7 +441,7 @@ public class DDMessenger
             this.bytes=Utils.encode(s);
         }
         
-        public BytePostWriter(byte b[])
+        public BytePostWriter(byte[] b)
         {
             bytes = b;
         }

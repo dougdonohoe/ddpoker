@@ -195,7 +195,7 @@ public abstract class AbstractPlayerList extends ArrayList<AbstractPlayerList.Pl
     public void fromCSV(String sText, boolean bSave)
     {
         sText = sText.replace('\n', ',');
-        List<PlayerInfo> keep = new ArrayList<PlayerInfo>(size());
+        List<PlayerInfo> keep = new ArrayList<>(size());
         String sName;
         PlayerInfo search = new PlayerInfo(null, null);
         String[] names = CSVParser.parseLine(sText);

@@ -224,7 +224,7 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
      */
     private class UDPModel extends DefaultTableModel implements UDPManagerMonitor
     {
-        private ArrayList<UDPLink> list = new ArrayList<UDPLink>();
+        private ArrayList<UDPLink> list = new ArrayList<>();
 
         public UDPModel()
         {

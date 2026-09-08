@@ -193,7 +193,7 @@ public class AdvisorGridPanel extends DDPanel
         }
     }
 
-    private static final Color colors_[] = new Color[] {
+    private static final Color[] colors_ = new Color[] {
         Color.RED.darker().darker(),
         Color.RED.darker(),
         Color.YELLOW.darker().darker(),

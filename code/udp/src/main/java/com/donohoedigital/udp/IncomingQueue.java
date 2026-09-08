@@ -54,7 +54,7 @@ public class IncomingQueue
     static final int LAST_DISPATCH_CNT = -1;
 
     // members
-    private ArrayList<UDPData> queue_ = new ArrayList<UDPData>();
+    private ArrayList<UDPData> queue_ = new ArrayList<>();
     private int nLastProcessedID_;
     private UDPLink link_;
 
@@ -154,7 +154,7 @@ public class IncomingQueue
     //// DISPATCH
     ////
 
-    private ArrayList<UDPData> process_ = new ArrayList<UDPData>(10);
+    private ArrayList<UDPData> process_ = new ArrayList<>(10);
 
     /**
      * Dispatch messages.  Basically the messages in the queue are sorted

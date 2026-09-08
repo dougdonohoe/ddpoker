@@ -49,7 +49,7 @@ public abstract class DDTabPanel extends DDPanel implements AncestorListener
     private int nTabNum_;
     private Icon icon_;
     private Icon error_;
-    private List<DDOption> options_ = new ArrayList<DDOption>();
+    private List<DDOption> options_ = new ArrayList<>();
     private String sHelp_;
 
     public DDTabPanel()

@@ -56,8 +56,8 @@ public class Pot implements DataMarshal
     private boolean bBaseAllIn_ = false;
     private int nSideBet_ = NO_SIDE; // used for side pots
     private int nRound_;
-    private List<PokerPlayer> players_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> winners_ = new ArrayList<PokerPlayer>();
+    private List<PokerPlayer> players_ = new ArrayList<>();
+    private List<PokerPlayer> winners_ = new ArrayList<>();
 
     /**
      * empty constructor for loading

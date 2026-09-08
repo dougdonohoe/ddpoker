@@ -63,9 +63,9 @@ public class StylesConfig extends XMLConfigFileLoader
 
     private static StylesConfig stylesConfig = null;
 
-    private Map<String, Color> colors_ = new HashMap<String, Color>();
-    private Map<String, Font> fonts_ = new HashMap<String, Font>();
-    private Map<String, Font> fontdefs_ = new HashMap<String, Font>();
+    private Map<String, Color> colors_ = new HashMap<>();
+    private Map<String, Font> fonts_ = new HashMap<>();
+    private Map<String, Font> fontdefs_ = new HashMap<>();
 
     /**
      * Creates a new instance of StylesConfig from the Appconfig file
