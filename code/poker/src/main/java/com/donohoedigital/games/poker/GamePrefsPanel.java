@@ -515,23 +515,11 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
 
             // buttons
             DDButton bannedplayers = new GlassButton("bannedplayers", "Glass");
-            bannedplayers.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    context_.processPhaseNow("BannedPlayerList", null);
-                }
-            });
+            bannedplayers.addActionListener(e -> context_.processPhaseNow("BannedPlayerList", null));
             bannedplayers.setBorderGap(2, 5, 2, 6);
 
             DDButton mutedplayers = new GlassButton("mutedplayers", "Glass");
-            mutedplayers.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    context_.processPhaseNow("MutedPlayerList", null);
-                }
-            });
+            mutedplayers.addActionListener(e -> context_.processPhaseNow("MutedPlayerList", null));
             mutedplayers.setBorderGap(2, 5, 2, 6);
 
             DDPanel buttonbase = new DDPanel();
@@ -600,13 +588,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             // test button
             test_ = new GlassButton("testonline", "Glass");
             serverBorder.add(GuiUtils.CENTER(test_), BorderLayout.EAST);
-            test_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    testConnection();
-                }
-            });
+            test_.addActionListener(e -> testConnection());
 
             // update text fields based on pref
             doOnlineEnabled();

@@ -294,15 +294,7 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         panel.add(text, BorderLayout.CENTER);
         DDButton copy = new GlassButton("copyurl", "Glass");
         panel.add(GuiUtils.CENTER(copy), BorderLayout.EAST);
-        copy.addActionListener(new ActionListener()
-        {
-            DDTextField _text = text;
-
-            public void actionPerformed(ActionEvent e)
-            {
-                GuiUtils.copyToClipboard(text.getText());
-            }
-        });
+        copy.addActionListener(e -> GuiUtils.copyToClipboard(text.getText()));
 
         w.label = label;
         w.text = text;

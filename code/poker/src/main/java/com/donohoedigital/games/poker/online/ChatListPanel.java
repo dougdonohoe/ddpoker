@@ -433,10 +433,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
         DDMenuItem item = new DDMenuItem(GuiManager.DEFAULT, "PopupMenu");
         item.setText(PropertyConfig.getMessage("menuitem.chat.export"));
         item.setIcon(exportIcon_);
-        item.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
+        item.addActionListener(ae -> {
                 TypedHashMap params = new TypedHashMap();
                 params.setString(FileChooserDialog.PARAM_SUGGESTED_NAME, "chat");
                 Phase choose = context_.processPhaseNow("ExportChat", params);
@@ -447,7 +444,6 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
                     logger.info("Exporting chat to " + file.getAbsolutePath());
                     ConfigUtils.writeFile((File) oResult, toHtml(), false);
                 }
-            }
         });
         menu.add(item);
 

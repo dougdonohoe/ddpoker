@@ -196,12 +196,7 @@ public class DDTable extends JTable implements DDTextVisibleComponent, MouseList
             DDMenuItem item = new DDMenuItem(GuiManager.DEFAULT, "PopupMenu");
             item.setText(PropertyConfig.getMessage("menuitem.table.export"));
             item.setIcon(exportIcon_);
-            item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {
-                    exporter_.exportRequested(DDTable.this);
-                }
-            });
+            item.addActionListener(ae -> exporter_.exportRequested(DDTable.this));
             menu.add(item);
         }
 
