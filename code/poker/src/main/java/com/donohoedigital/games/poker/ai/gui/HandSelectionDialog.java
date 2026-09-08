@@ -64,7 +64,7 @@ public class HandSelectionDialog extends OptionMenuDialog
     static Logger logger = LogManager.getLogger(HandSelectionDialog.class);
 
     private HandSelectionScheme profile_;
-    private TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
     private DDTextField name_;
     private HandGroupGridPanel gridPanel_;
     private ListPanel groupsList_;

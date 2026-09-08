@@ -159,7 +159,7 @@ public class HoldemHand implements DataMarshal
      * Seed - degree of randomness from timing of hands and number of actions in hand
      * MersenneTwisterFast recommends passing in an int
      */
-    private synchronized static int NEXT_SEED()
+    private static synchronized int NEXT_SEED()
     {
         long mult = (long) lastSEED * (long) SEEDADJ;
         int seed = (int) (mult % Integer.MAX_VALUE);
@@ -173,7 +173,7 @@ public class HoldemHand implements DataMarshal
     /**
      * adj seed
      */
-    private synchronized static void ADJUST_SEED()
+    private static synchronized void ADJUST_SEED()
     {
         long now = System.currentTimeMillis();
         long adj = SEEDADJ + (now - lastADJ);

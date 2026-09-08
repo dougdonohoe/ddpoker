@@ -63,8 +63,8 @@ public class MenuBackground extends DDScrollPane
     public static final String PARAM_MENUBOX_HELP_NAME = "menubox-help-name";
 
     // members
-    private DDPanel menubox_;
-    private String sHelpName_;
+    private final DDPanel menubox_;
+    private final String sHelpName_;
 
     /**
      * Creates a new instance of BasicBackground

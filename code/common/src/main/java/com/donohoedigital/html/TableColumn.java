@@ -86,9 +86,9 @@ public class TableColumn
     }
 
     // members
-    private VALIGN vAlign_;
-    private HALIGN hAlign_;
-    private TableData header_;
+    private final VALIGN vAlign_;
+    private final HALIGN hAlign_;
+    private final TableData header_;
 
     /**
      * Constructor

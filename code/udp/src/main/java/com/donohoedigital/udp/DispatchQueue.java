@@ -50,11 +50,11 @@ public class DispatchQueue extends Thread
     static Logger logger = LogManager.getLogger(DispatchQueue.class);
 
     // members
-    private LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
+    private final LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
     private boolean bDone_ = false;
 
     // control messages
-    private Object QUIT = new Object();
+    private final Object QUIT = new Object();
 
     /**
      * new dispatch queue

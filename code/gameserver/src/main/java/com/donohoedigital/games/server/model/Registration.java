@@ -68,7 +68,7 @@ public class Registration implements BaseModel<Long>
 
     @Column(name = "reg_product_version", nullable = false)
     private String versionAsString;
-    transient private Version version;
+    private transient Version version;
 
     @Column(name = "reg_ip_address", nullable = false)
     private String ip;
@@ -313,7 +313,7 @@ public class Registration implements BaseModel<Long>
         this.state = state;
     }
 
-    transient private boolean ignoreSet = false;
+    private transient boolean ignoreSet = false;
 
     /**
      * version used by jpa

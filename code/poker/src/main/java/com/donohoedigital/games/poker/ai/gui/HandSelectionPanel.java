@@ -48,10 +48,10 @@ public class HandSelectionPanel extends DDPanel
 {
     static ChangeListener changeListener = null;
 
-    private DDComboBox handSelectionFull_;
-    private DDComboBox handSelectionShort_;
-    private DDComboBox handSelectionVeryShort_;
-    private DDComboBox handSelectionHup_;
+    private final DDComboBox handSelectionFull_;
+    private final DDComboBox handSelectionShort_;
+    private final DDComboBox handSelectionVeryShort_;
+    private final DDComboBox handSelectionHup_;
 
     PlayerType profile_;
 

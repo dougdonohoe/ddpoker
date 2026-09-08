@@ -50,7 +50,7 @@ import java.util.List;
  * <p/>
  * TODO: reincorporate noise/accuracy
  */
-public class PocketWeights
+public final class PocketWeights
 {
     static Logger logger = LogManager.getLogger(PocketWeights.class);
 
@@ -61,7 +61,7 @@ public class PocketWeights
 
     private PocketMatrixFloat[] weights_ = null;
 
-    private float[] apparentStrength_ = new float[10];
+    private final float[] apparentStrength_ = new float[10];
     private int callCount_;
     private int raiseCount_;
     private int potSize_;
@@ -495,8 +495,8 @@ public class PocketWeights
         public float adjustWeight(PokerPlayer player, int card1, int card2, float weight, float rhs);
     }
 
-    private PreFlopActor preflopActor = new PreFlopActor();
-    private Tuple tuple = new Tuple();
+    private final PreFlopActor preflopActor = new PreFlopActor();
+    private final Tuple tuple = new Tuple();
 
     private void processPreFlopAction(HandAction action)
     {

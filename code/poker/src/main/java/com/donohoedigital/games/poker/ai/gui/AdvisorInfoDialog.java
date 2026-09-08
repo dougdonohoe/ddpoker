@@ -84,7 +84,7 @@ public class AdvisorInfoDialog extends DialogPhase
 
     JComponent ladder_ = null;
 
-    private ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
+    private final ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
 
     /**
      * Init phase, storing engine and gamephase.  Called createUI()

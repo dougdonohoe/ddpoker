@@ -66,7 +66,7 @@ public class GameConfigUtils
      * the returned value is cached in the ConfigManager, so there is only
      * one per application (useful for locking)
      */
-    public synchronized static File getSaveDir()
+    public static synchronized File getSaveDir()
     {
         if (saveDir == null)
         {

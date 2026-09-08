@@ -217,7 +217,7 @@ public class RegistrationSearch extends AdminPokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<Registration>
+    private final class GameListTableView extends CountDataView<Registration>
     {
         private static final long serialVersionUID = 42L;
 

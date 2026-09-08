@@ -70,9 +70,9 @@ public class DeckProfilePanel extends DDPanel implements ChangeListener
     private static final String COMMON_NAME = "deckback";
     public static final String DECK_PROFILE = "deck";
 
-    private DDLabelBorder displayBorder_;
-    private ProfileList profileList_;
-    private DeckCardPanel card_;
+    private final DDLabelBorder displayBorder_;
+    private final ProfileList profileList_;
+    private final DeckCardPanel card_;
         
     /** 
      * Get component with options, also fill array with same options

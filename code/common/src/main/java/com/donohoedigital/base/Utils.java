@@ -946,7 +946,7 @@ public class Utils
     /**
      * Filter by extension
      */
-    private static class UtilFileFilter implements FilenameFilter
+    private static final class UtilFileFilter implements FilenameFilter
     {
         String sExt;
         String sBeginsWith = null;

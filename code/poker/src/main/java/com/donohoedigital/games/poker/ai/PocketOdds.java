@@ -44,13 +44,13 @@ import java.util.HashMap;
  *
  * Computations are based on one-card lookahead (two cards is expensive and not particularly valuable).
  */
-public class PocketOdds
+public final class PocketOdds
 {
     private static long fpBoard_ = 0;
 
-    private static HashMap cache_ = new HashMap();
+    private static final HashMap cache_ = new HashMap();
 
-    private PocketMatrixShort ehs_ = new PocketMatrixShort();
+    private final PocketMatrixShort ehs_ = new PocketMatrixShort();
 
     private float ehsAverage_ = 0.0f;
 

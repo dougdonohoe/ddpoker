@@ -50,18 +50,18 @@ public class HandLadder
     private static final int SAME_TYPE_LOWER_RANK = 5;
     private static final int LOWER_TYPE = 6;
 
-    private Hand pocket_;
-    private Hand community_;
+    private final Hand pocket_;
+    private final Hand community_;
 
     private int handScore_;
     private int handType_;
 
-    private HandList[] ladder_;
+    private final HandList[] ladder_;
 
-    private HandList[] strongerHandsByType_;
-    private HandList[] weakerHandsByType_;
+    private final HandList[] strongerHandsByType_;
+    private final HandList[] weakerHandsByType_;
 
-    private int[] countByType_;
+    private final int[] countByType_;
     private int totalCount_;
 
     HandInfoFast handInfo_ = new HandInfoFast();

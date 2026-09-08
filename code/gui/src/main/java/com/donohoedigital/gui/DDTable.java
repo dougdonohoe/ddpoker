@@ -170,7 +170,7 @@ public class DDTable extends JTable implements DDTextVisibleComponent, MouseList
     {
     }
 
-    private static ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
+    private static final ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
 
     public void mouseReleased(MouseEvent e)
     {

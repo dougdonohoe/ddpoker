@@ -401,7 +401,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         return getSelectedPlayer(table) != null;
     }
 
-    private static ImageIcon infoIcon_ = ImageConfig.getImageIcon("menuicon.info");
+    private static final ImageIcon infoIcon_ = ImageConfig.getImageIcon("menuicon.info");
 
     public void addMenuItems(DDTable table, DDPopupMenu menu)
     {

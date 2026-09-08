@@ -43,7 +43,7 @@ import java.util.ArrayList;
  */
 public class TableRow
 {
-    private ArrayList<TableData> data_ = new ArrayList<>();
+    private final ArrayList<TableData> data_ = new ArrayList<>();
 
     public TableRow()
     {

@@ -51,8 +51,8 @@ public class TableExporter implements DDTable.Exporter
 {
     static Logger logger = LogManager.getLogger(TableExporter.class);
 
-    private GameContext context_;
-    private String sName_;
+    private final GameContext context_;
+    private final String sName_;
     
     public TableExporter(GameContext context, String sName)
     {

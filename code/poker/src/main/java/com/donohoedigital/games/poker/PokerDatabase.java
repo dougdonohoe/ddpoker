@@ -34,6 +34,7 @@ package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseDataFile;
 import com.donohoedigital.config.DebugConfig;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.db.BindArray;
@@ -2121,7 +2122,7 @@ public class PokerDatabase
 
         PlayerProfile profile = PlayerProfileOptions.getDefaultProfile();
 
-        ieHand.profileNumber = profile.getFileNumber(profile.getFile());
+        ieHand.profileNumber = BaseDataFile.getFileNumber(profile.getFile());
         ieHand.handID = handID;
 
         Database database = getDatabase();

@@ -61,7 +61,7 @@ public class HandGroup extends BaseProfile {
 
     private static HandGroup ALL_HANDS = null;
 
-    public synchronized static HandGroup getAllHands()
+    public static synchronized HandGroup getAllHands()
     {
         if (ALL_HANDS == null)
         {

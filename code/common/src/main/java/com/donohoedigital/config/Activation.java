@@ -124,8 +124,8 @@ public class Activation
      * Return a hash of the given id
      */
     private static MessageDigest md_ = null;
-    private static byte[] foo = new byte[25];
-    private static StringBuilder sb_ = new StringBuilder(20);
+    private static final byte[] foo = new byte[25];
+    private static final StringBuilder sb_ = new StringBuilder(20);
 
     /**
      * init message digest

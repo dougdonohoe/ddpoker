@@ -54,7 +54,7 @@ public class Crosshair extends JComponent
     
     //static Logger logger = LogManager.getLogger(Crosshair.class);
     
-    private XYConstraints xyConstraints_; // constraints used to manage this point
+    private final XYConstraints xyConstraints_; // constraints used to manage this point
     
     static int defaultSize = 17;
     private boolean bDraw_ = true;

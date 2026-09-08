@@ -59,7 +59,7 @@ import java.net.URL;
  */
 public class Borders extends TreeSet<Border> {
     
-    private static Logger logger = LogManager.getLogger(Borders.class);
+    private static final Logger logger = LogManager.getLogger(Borders.class);
     
     private MapPoints allPoints_;
     private static final String BORDER_TAG = "BORDER";

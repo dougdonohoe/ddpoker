@@ -231,7 +231,7 @@ public class BanList extends AdminPokerPage
     /**
      * The leaderboard table
      */
-    private class BanListTableView extends CountDataView<BannedKey>
+    private final class BanListTableView extends CountDataView<BannedKey>
     {
         private static final long serialVersionUID = 42L;
 

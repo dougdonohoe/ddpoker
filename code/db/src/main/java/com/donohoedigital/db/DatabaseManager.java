@@ -51,7 +51,7 @@ import java.util.Map;
  */
 public class DatabaseManager
 {
-    private static Logger logger = LogManager.getLogger(DatabaseManager.class);
+    private static final Logger logger = LogManager.getLogger(DatabaseManager.class);
 
     private static final String PROPERTY_PREFIX = "settings.database.";
 
@@ -66,7 +66,7 @@ public class DatabaseManager
     public static final String PARAM_PASSWORD = "password";
 
     private static boolean initialized_ = false;
-    private static Map<String, Database> hmDatabases_ = new HashMap<>();
+    private static final Map<String, Database> hmDatabases_ = new HashMap<>();
 
     /**
      * Determine if the manager has been initialized.

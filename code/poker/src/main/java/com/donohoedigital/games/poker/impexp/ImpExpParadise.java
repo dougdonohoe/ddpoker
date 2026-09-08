@@ -47,9 +47,9 @@ public class ImpExpParadise implements ImpExp
 {
     private String paradisePlayerName_ = "DD Player";
 
-    private HandInfoFast info = new HandInfoFast();
+    private final HandInfoFast info = new HandInfoFast();
 
-    private NumberFormat chipAmountFormat = NumberFormat.getInstance(Locale.US);
+    private final NumberFormat chipAmountFormat = NumberFormat.getInstance(Locale.US);
 
     public void setPlayerName(String name)
     {

@@ -718,7 +718,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     /**
      * Poker TCP/IP server
      */
-    private class PokerTCPServer extends Peer2PeerServer implements PokerConnectionServer
+    private final class PokerTCPServer extends Peer2PeerServer implements PokerConnectionServer
     {
         private PokerTCPServer()
         {

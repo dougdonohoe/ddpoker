@@ -54,7 +54,7 @@ import java.util.List;
 public abstract class JpaBaseDao<T extends BaseModel<ID>, ID extends Serializable> implements BaseDao<T, ID>
 {
     // the model class we are managing
-    private Class<T> persistentModelClass;
+    private final Class<T> persistentModelClass;
 
     // entity manager provided via Spring
     protected EntityManager entityManager;

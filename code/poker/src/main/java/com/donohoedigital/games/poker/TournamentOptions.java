@@ -152,7 +152,7 @@ public class TournamentOptions extends BasePhase implements ChangeListener, Ance
     /**
      * Our list editor
      */
-    private class TournamentProfileList extends ProfileList
+    private final class TournamentProfileList extends ProfileList
     {
         private TournamentProfileList(GameEngine engine, List<BaseProfile> profiles,
                                       String sStyle,

@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 public class HelpConfigTest
 {
-    private static Logger logger = LogManager.getLogger(HelpConfigTest.class);
+    private static final Logger logger = LogManager.getLogger(HelpConfigTest.class);
     @Test
     public void testLoad()
     {

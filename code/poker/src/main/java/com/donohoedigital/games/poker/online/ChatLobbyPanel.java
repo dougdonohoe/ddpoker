@@ -52,7 +52,7 @@ import java.awt.Dimension;
  */
 public class ChatLobbyPanel extends ChatPanel
 {
-    private ChatLobbyManager mgr_;
+    private final ChatLobbyManager mgr_;
     private PlayerProfile profile_;
     protected String cAdmin_;
     protected String cAdminBG_;

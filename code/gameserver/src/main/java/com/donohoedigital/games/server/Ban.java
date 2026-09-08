@@ -75,7 +75,7 @@ public class Ban
     /**
      * Implements command line application interface.
      */
-    private static class BanApp extends BaseCommandLineApp
+    private static final class BanApp extends BaseCommandLineApp
     {
         private BanApp(String sConfigName, String[] args)
         {

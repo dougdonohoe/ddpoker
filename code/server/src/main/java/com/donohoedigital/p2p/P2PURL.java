@@ -45,10 +45,10 @@ import com.donohoedigital.base.ApplicationError;
  */
 public class P2PURL
 {
-    private String sProtocol_;
-    private String sHost_;
+    private final String sProtocol_;
+    private final String sHost_;
     private int nPort_;
-    private String sURI_;
+    private final String sURI_;
 
     public static final String PROTOCOL_DELIM = "://";
     public static final String PORT_DELIM = ":";

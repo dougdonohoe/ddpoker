@@ -308,7 +308,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
     /**
      * Camera button
      */
-    private class Camera extends DDImageButton implements ActionListener
+    private final class Camera extends DDImageButton implements ActionListener
     {
         private Camera()
         {
@@ -852,8 +852,8 @@ public abstract class ShowPokerTable extends ChainPhase implements
     }
 
     // for fast bounds
-    private Rectangle bounds_ = new Rectangle();
-    private Rectangle resizeBounds_ = new Rectangle();
+    private final Rectangle bounds_ = new Rectangle();
+    private final Rectangle resizeBounds_ = new Rectangle();
 
     /**
      * Notify delegate that board is repainting, so resize control

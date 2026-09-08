@@ -43,10 +43,10 @@ import java.util.ArrayList;
  */
 public class Table
 {
-    private ArrayList<TableColumn> cols_ = new ArrayList<>();
-    private ArrayList<TableRow> rows_ = new ArrayList<>();
+    private final ArrayList<TableColumn> cols_ = new ArrayList<>();
+    private final ArrayList<TableRow> rows_ = new ArrayList<>();
 
-    private int CELLPADDING, CELLSPACING;
+    private final int CELLPADDING, CELLSPACING;
 
     public Table(int CELLSPACING, int CELLPADDING)
     {

@@ -317,7 +317,7 @@ public class SecurityUtils
     /**
      * Get secure random object
      */
-    public synchronized static SecureRandom getSecureRandom()
+    public static synchronized SecureRandom getSecureRandom()
     {
         if (random == null)
         {

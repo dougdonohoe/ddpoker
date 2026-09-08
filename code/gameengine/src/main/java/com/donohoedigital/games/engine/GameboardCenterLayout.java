@@ -50,7 +50,7 @@ import java.util.HashMap;
  */
 public class GameboardCenterLayout implements LayoutManager2, Serializable
 {
-    private HashMap info = new HashMap();
+    private final HashMap info = new HashMap();
 
     public void addLayoutComponent( String s, Component component1 )
     {

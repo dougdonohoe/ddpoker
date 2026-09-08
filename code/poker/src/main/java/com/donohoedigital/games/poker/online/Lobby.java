@@ -657,7 +657,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
         }
     }
 
-    private static ImageIcon switchIcon_ = ImageConfig.getImageIcon("menuicon.switch");
+    private static final ImageIcon switchIcon_ = ImageConfig.getImageIcon("menuicon.switch");
 
     /**
      * mute menu item

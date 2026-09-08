@@ -34,7 +34,7 @@ import java.lang.ref.WeakReference;
 /**
  * An expression factory used to create expressions for attributes of a component.
  */
-public class ComponentEF {
+public final class ComponentEF {
 
     static final int TOP         =  0;
     static final int BOTTOM      =  1;
@@ -61,7 +61,7 @@ public class ComponentEF {
     /**
      * array of maps from component to expression for each attribte
      */
-    private static WeakHashMap [] cache = new WeakHashMap[ATTRIBUTE_COUNT];
+    private static final WeakHashMap [] cache = new WeakHashMap[ATTRIBUTE_COUNT];
 
     private ComponentEF() {}
 

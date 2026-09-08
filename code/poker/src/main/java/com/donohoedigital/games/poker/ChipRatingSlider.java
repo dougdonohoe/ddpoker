@@ -47,13 +47,13 @@ import java.awt.Dimension;
 
 public class ChipRatingSlider extends DDPanel implements ChangeListener
 {
-    private ChipRatingPanel chips_;
-    private DDLabel label_;
-    private DDSlider slider_;
-    private DDPanel leftInner_;
-    private DDPanel leftOuter_;
-    private DDPanel pad_;
-    private String sType_;
+    private final ChipRatingPanel chips_;
+    private final DDLabel label_;
+    private final DDSlider slider_;
+    private final DDPanel leftInner_;
+    private final DDPanel leftOuter_;
+    private final DDPanel pad_;
+    private final String sType_;
 
     public ChipRatingSlider(String sStyle, String sType, int minValue, int maxValue)
     {

@@ -54,8 +54,8 @@ public class OptionCombo extends DDOption implements ItemListener
 {
     //static Logger logger = LogManager.getLogger(OptionCombo.class);
     private DDLabel label_;
-    private DDComboBox combo_;
-    private String sDefault_;
+    private final DDComboBox combo_;
+    private final String sDefault_;
 
     /** 
      * Creates a new instance of OptionCombo 

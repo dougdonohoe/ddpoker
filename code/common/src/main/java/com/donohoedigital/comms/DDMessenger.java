@@ -388,12 +388,12 @@ public class DDMessenger
             catch (Exception ignore) {}
         }
     }
-    
+
     /**
      * Class to represent return data from getURL
      */
     @SuppressWarnings({"PublicInnerClass"})
-    public static class ReturnData
+    public static final class ReturnData
     {
         private DDByteArrayOutputStream headers;
         private DDByteArrayOutputStream out;

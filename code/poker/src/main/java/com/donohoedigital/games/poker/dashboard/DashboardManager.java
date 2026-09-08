@@ -55,10 +55,10 @@ public class DashboardManager
 {
     static Logger logger = LogManager.getLogger(DashboardManager.class);
 
-    private ArrayList items_;
+    private final ArrayList items_;
     private DMTypedHashMap prefs_;
     private String sPrefName_;
-    private PokerGame game_;
+    private final PokerGame game_;
 
     public DashboardManager(PokerGame game)
     {

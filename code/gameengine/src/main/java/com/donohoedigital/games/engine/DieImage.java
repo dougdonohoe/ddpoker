@@ -116,8 +116,8 @@ public class DieImage extends JPanel {
         }
     }
         
-    private double PIP = 3.3f/16f;
-    private double PIPSIZE = 3.2f/16f;
+    private final double PIP = 3.3f/16f;
+    private final double PIPSIZE = 3.2f/16f;
     private void drawUpperLeft(Graphics2D g, Dimension size)
     {
         double x = size.width * PIP;

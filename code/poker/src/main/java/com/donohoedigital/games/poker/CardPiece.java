@@ -332,7 +332,7 @@ public class CardPiece extends PokerGamePiece
     private static String sLastBack_ = null;
     private static ImageComponent icBack_ = null;
 
-    private synchronized static ImageComponent getDefault()
+    private static synchronized ImageComponent getDefault()
     {
         if (icDefault_ == null)
         {

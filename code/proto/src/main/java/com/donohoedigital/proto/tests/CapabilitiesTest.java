@@ -48,8 +48,8 @@ import java.awt.event.WindowEvent;
  * displayed nicely in components.
  */
 class GCWrapper {
-    private GraphicsConfiguration gc;
-    private int index;
+    private final GraphicsConfiguration gc;
+    private final int index;
     
     public GCWrapper(GraphicsConfiguration gc, int index) {
         this.gc = gc;
@@ -70,17 +70,17 @@ class GCWrapper {
  */
 public class CapabilitiesTest extends JFrame implements ItemListener {
     
-    private JComboBox gcSelection = new JComboBox();
-    private JCheckBox imageAccelerated = new JCheckBox("Accelerated", false);
-    private JCheckBox imageTrueVolatile = new JCheckBox("Volatile", false);
-    private JCheckBox flipping = new JCheckBox("Flipping", false);
-    private JLabel flippingMethod = new JLabel("");
-    private JCheckBox fullScreen = new JCheckBox("Full Screen Only", false);
-    private JCheckBox multiBuffer = new JCheckBox("Multi-Buffering", false);
-    private JCheckBox fbAccelerated = new JCheckBox("Accelerated", false);
-    private JCheckBox fbTrueVolatile = new JCheckBox("Volatile", false);
-    private JCheckBox bbAccelerated = new JCheckBox("Accelerated", false);
-    private JCheckBox bbTrueVolatile = new JCheckBox("Volatile", false);
+    private final JComboBox gcSelection = new JComboBox();
+    private final JCheckBox imageAccelerated = new JCheckBox("Accelerated", false);
+    private final JCheckBox imageTrueVolatile = new JCheckBox("Volatile", false);
+    private final JCheckBox flipping = new JCheckBox("Flipping", false);
+    private final JLabel flippingMethod = new JLabel("");
+    private final JCheckBox fullScreen = new JCheckBox("Full Screen Only", false);
+    private final JCheckBox multiBuffer = new JCheckBox("Multi-Buffering", false);
+    private final JCheckBox fbAccelerated = new JCheckBox("Accelerated", false);
+    private final JCheckBox fbTrueVolatile = new JCheckBox("Volatile", false);
+    private final JCheckBox bbAccelerated = new JCheckBox("Accelerated", false);
+    private final JCheckBox bbTrueVolatile = new JCheckBox("Volatile", false);
     
     public CapabilitiesTest(GraphicsDevice dev) {
         super(dev.getDefaultConfiguration());

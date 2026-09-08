@@ -49,7 +49,7 @@ import java.awt.Point;
 public class DDSplitPane extends JSplitPane implements DDComponent
 {
     // our ui
-    private DDSplitPaneUI ui_;
+    private final DDSplitPaneUI ui_;
     private Color thumbFocusOverlay_=  null;
 
     public DDSplitPane(String sName, String sStyle,

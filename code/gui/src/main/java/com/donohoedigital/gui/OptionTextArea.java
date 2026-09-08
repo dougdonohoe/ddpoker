@@ -57,10 +57,10 @@ public class OptionTextArea extends DDOption implements PropertyChangeListener
 {
     //static Logger logger = LogManager.getLogger(OptionTextArea.class);
     
-    private DDLabel label_;
-    private DDTextArea text_;
-    private String sDefault_;
-    private JScrollPane scroll_;
+    private final DDLabel label_;
+    private final DDTextArea text_;
+    private final String sDefault_;
+    private final JScrollPane scroll_;
 
     /** 
      * Creates a new instance of OptionTextArea 

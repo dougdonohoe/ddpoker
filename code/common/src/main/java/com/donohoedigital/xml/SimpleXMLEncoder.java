@@ -48,8 +48,8 @@ public class SimpleXMLEncoder
 
     SimpleDateFormat format = Utils.getRFC822();
 
-    private StringBuilder xml = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    private Stack<EncoderObject> currentObject = new Stack<>();
+    private final StringBuilder xml = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    private final Stack<EncoderObject> currentObject = new Stack<>();
 
     /**
      * Set current object null and start new tag with name "alias".

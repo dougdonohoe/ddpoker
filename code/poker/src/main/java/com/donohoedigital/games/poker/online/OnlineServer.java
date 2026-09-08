@@ -61,9 +61,9 @@ import java.util.List;
  */
 public class OnlineServer
 {
-    private static Logger logger = LogManager.getLogger(OnlineServer.class);
+    private static final Logger logger = LogManager.getLogger(OnlineServer.class);
 
-    private static OnlineServer manager_ = new OnlineServer();
+    private static final OnlineServer manager_ = new OnlineServer();
 
     /**
      * Get a manager instance.

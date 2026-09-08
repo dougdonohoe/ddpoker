@@ -143,7 +143,7 @@ public class GameStateFactory
      * get class
      */
     @SuppressWarnings({"unchecked"})
-    private synchronized static Class<? extends GameState> getClazz()
+    private static synchronized Class<? extends GameState> getClazz()
     {
         if (CLAZZ == null)
         {

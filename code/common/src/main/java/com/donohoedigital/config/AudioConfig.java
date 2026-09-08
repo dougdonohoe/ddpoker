@@ -60,13 +60,13 @@ import java.util.Map;
  */
 public class AudioConfig extends XMLConfigFileLoader
 {
-    private static Logger aLogger = LogManager.getLogger(AudioConfig.class);
+    private static final Logger aLogger = LogManager.getLogger(AudioConfig.class);
 
     private static final String AUDIO_CONFIG = "audio.xml";
 
     private static AudioConfig audioConfig = null;
 
-    private Map<String, AudioDef> audios_ = new HashMap<>();
+    private final Map<String, AudioDef> audios_ = new HashMap<>();
 
     private static boolean bMuteFX_ = false;
     private static float fFXGain_ = .8f;

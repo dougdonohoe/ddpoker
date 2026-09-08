@@ -192,11 +192,11 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
     {
         return new PlayerProfileList(engine, context, PROFILE_NAME);
     }
-    
+
     /**
      * Our list editor
      */
-    private static class PlayerProfileList extends ProfileList
+    private static final class PlayerProfileList extends ProfileList
     {
         private PlayerProfileList(GameEngine engine, GameContext context, String sMsgName)
         {
@@ -490,8 +490,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
                                          formatter.format(hist.getEndDate())
         );
     }
-    
-    private class DeleteButton extends GlassButton implements ActionListener
+
+    private final class DeleteButton extends GlassButton implements ActionListener
     {
         int nIndex_;
 
@@ -513,8 +513,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
             }
         }
     }
-    
-    private class DeleteAllButton extends GlassButton implements ActionListener
+
+    private final class DeleteAllButton extends GlassButton implements ActionListener
     {
         private DeleteAllButton()
         {

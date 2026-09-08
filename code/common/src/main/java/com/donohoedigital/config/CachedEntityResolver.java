@@ -49,13 +49,13 @@ import java.util.Map;
  * Time: 3:30:38 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CachedEntityResolver implements EntityResolver
+public final class CachedEntityResolver implements EntityResolver
 {
     private final Map<String, URL> matches = new HashMap<>();
 
     private static CachedEntityResolver resolver = null;
 
-    public synchronized static CachedEntityResolver instance()
+    public static synchronized CachedEntityResolver instance()
     {
         if (resolver == null)
         {

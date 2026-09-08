@@ -58,7 +58,7 @@ public class ColorChooserPanel extends DDPanel
     private static final int BLUE = 2;
     private static final int ALPHA = 3;
 
-    private String STYLE;
+    private final String STYLE;
     private DDLabel sample_;
     private Color color_;
     ColorPanel red_, green_, blue_, alpha_;

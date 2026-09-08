@@ -58,7 +58,7 @@ public class HandStrength
     static Logger logger = LogManager.getLogger(HandStrength.class);
     
     // debug output
-    private static boolean DEBUG = false;
+    private static final boolean DEBUG = false;
     
     // number of straights made by opponents
     private int nNumStraights_ = 0;
@@ -283,7 +283,7 @@ public class HandStrength
         }
     }
     
-    private static Format fPerc = new Format("%2.1f");
+    private static final Format fPerc = new Format("%2.1f");
     
     /** 
      * figure score for each hand and record wins (ties count as wins)

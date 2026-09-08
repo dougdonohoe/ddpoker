@@ -218,10 +218,10 @@ public class History extends OnlinePokerPage
     }
 
     ////
-    //// List
-    ////
+     //// List
+     ////
 
-    private class HistoryTable extends Fragment
+    private final class HistoryTable extends Fragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -245,7 +245,7 @@ public class History extends OnlinePokerPage
         }
     }
 
-    private class HistoryData extends PageableServiceProvider<TournamentHistory> implements NameRangeSearch
+    private final class HistoryData extends PageableServiceProvider<TournamentHistory> implements NameRangeSearch
     {
         private static final long serialVersionUID = 42L;
 
@@ -321,7 +321,7 @@ public class History extends OnlinePokerPage
         }
     }
 
-    private class HistoryTableView extends CountDataView<TournamentHistory>
+    private final class HistoryTableView extends CountDataView<TournamentHistory>
     {
         private static final long serialVersionUID = 42L;
         private static final int ITEMS_PER_PAGE = 20;
@@ -396,7 +396,7 @@ public class History extends OnlinePokerPage
         }
     }
 
-    private class StoppedBusted extends FinishFragment
+    private final class StoppedBusted extends FinishFragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -409,7 +409,7 @@ public class History extends OnlinePokerPage
         }
     }
 
-    private class StoppedChips extends FinishFragment
+    private final class StoppedChips extends FinishFragment
     {
         private static final long serialVersionUID = 42L;
 
@@ -422,7 +422,7 @@ public class History extends OnlinePokerPage
         }
     }
 
-    private class Finished extends FinishFragment
+    private final class Finished extends FinishFragment
     {
         private static final long serialVersionUID = 42L;
 

@@ -69,12 +69,12 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 {
     static Logger logger = LogManager.getLogger(ChatPanel.class);
 
-    private boolean bOnlineInGame_;
+    private final boolean bOnlineInGame_;
     private int nDisplayOpt_ = -1;
     private JComponent center_;
 
-    private GameContext context_;
-    private PokerGame game_;
+    private final GameContext context_;
+    private final PokerGame game_;
     private PokerPlayer local_;
     private ChatManager mgr_;
 
@@ -126,7 +126,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         createContents();
     }
 
-    private GameListener gamelistener_ = new GameListener();
+    private final GameListener gamelistener_ = new GameListener();
 
     /**
      * Game loaded, reset local player in chat (can change if we disconnect/reconnect)

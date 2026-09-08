@@ -34,7 +34,7 @@ import java.awt.Component;
  * that depend on attributes of a group of components.
  *
  */
-public class GroupEF {
+public final class GroupEF {
 
 
     private GroupEF() {}

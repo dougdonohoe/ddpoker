@@ -136,9 +136,9 @@ public class TerritoryComponent extends DDPanel
         }
     }
     
-    private static Font font_ = StylesConfig.getFont("territory.label");
+    private static final Font font_ = StylesConfig.getFont("territory.label");
     // BUG 133 - static (only draw one at a time)
-    private static Rectangle bounds_ = new Rectangle();    
+    private static final Rectangle bounds_ = new Rectangle();    
     
     /**
      * Draw territory the piece belongs to, scaled to size of 

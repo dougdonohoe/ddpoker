@@ -55,7 +55,7 @@ import com.donohoedigital.udp.UDPServer;
 public class SoundTest extends BaseCommandLineApp
 {
     // logging
-    private Logger logger;
+    private final Logger logger;
 
     /**
      * Run emailer

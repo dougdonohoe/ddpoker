@@ -61,11 +61,11 @@ public class Peer2PeerMulticast implements Runnable
 {
     static Logger logger = LogManager.getLogger(Peer2PeerMulticast.class);
     
-    private static int PACKET_SIZE = 49152; // 64K max, including overhead
+    private static final int PACKET_SIZE = 49152; // 64K max, including overhead
     
     private Thread t_;
-    private int nPort_;
-    private String sIP_;
+    private final int nPort_;
+    private final String sIP_;
     private InetAddress ia_;
     private MulticastSocket ms_;
     private boolean bDone_;

@@ -52,12 +52,12 @@ import org.apache.logging.log4j.Logger;
 public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
     // logging
-    private Logger logger;
+    private final Logger logger;
 
     // members
-    private boolean bSend;
-    private boolean bDebug;
-    private int port;
+    private final boolean bSend;
+    private final boolean bDebug;
+    private final int port;
 
     /**
      * Run emailer

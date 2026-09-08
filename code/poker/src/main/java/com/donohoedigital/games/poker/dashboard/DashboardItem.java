@@ -74,7 +74,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
     public static final int NOT_SET = -1;
 
     // members
-    private String sName_;
+    private final String sName_;
     private DashboardHeader header_;
     private JComponent body_;
     private boolean bInDashboard_ = true;
@@ -447,7 +447,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
     }
 
     // runnable for invoking table changed event in swing thread
-    private Runnable tableChangedRunner_ = () ->
+    private final Runnable tableChangedRunner_ = () ->
         tableChanged(game_.getCurrentTable());
 
     /**
@@ -475,7 +475,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
      * invoke in timer thread (to get out of any locks held by
      * callers like TournamentDirector).
      */
-    private PokerTableListener listener_ = event ->
+    private final PokerTableListener listener_ = event ->
             // run immediately
             timer.schedule(new TableEventTask(event), 0);
 
@@ -483,7 +483,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
      * Task for particular poker table event.  When invoked, runs immediately
      * in swing thread using invokeAndWait.
      */
-    private class TableEventTask extends TimerTask
+    private final class TableEventTask extends TimerTask
     {
         private PokerTableEvent event;
 

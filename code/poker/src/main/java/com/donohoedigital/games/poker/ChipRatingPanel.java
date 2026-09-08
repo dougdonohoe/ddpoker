@@ -49,7 +49,7 @@ public class ChipRatingPanel extends DDPanel
     private static final ImageIcon halfChip_ = ImageConfig.getImageIcon("rating16_half");
     private static final ImageIcon emptyChip_ = ImageConfig.getImageIcon("rating16_empty");
 
-    private JLabel[] chips_ = new JLabel[5];
+    private final JLabel[] chips_ = new JLabel[5];
 
     int value_ = 0;
 

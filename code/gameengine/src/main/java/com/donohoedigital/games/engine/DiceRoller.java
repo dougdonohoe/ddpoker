@@ -87,7 +87,7 @@ public class DiceRoller {
     /**
      * Roll one die of nSides, return int
      */
-    public synchronized static int rollDieInt(int nSides)
+    public static synchronized int rollDieInt(int nSides)
     {
         return random_.nextInt(nSides) + 1;
     }
@@ -97,7 +97,7 @@ public class DiceRoller {
      * newSeed should be called after the (related) group of calls
      * that start with this one are done.
      */
-    public synchronized static int rollDieInt(int nSides, long seed)
+    public static synchronized int rollDieInt(int nSides, long seed)
     {
         random_.setSeed(seed);
         return random_.nextInt(nSides) + 1;
@@ -106,7 +106,7 @@ public class DiceRoller {
     /**
      * create new seed based on timestamp
      */
-    public synchronized static void newSeed()
+    public static synchronized void newSeed()
     {
         random_.setSeed(Utils.getCurrentTimeStamp());
     }
@@ -114,7 +114,7 @@ public class DiceRoller {
     /**
      * set the seed
      */
-    public synchronized static void setSeed(long seed)
+    public static synchronized void setSeed(long seed)
     {
         random_.setSeed(seed);
     }

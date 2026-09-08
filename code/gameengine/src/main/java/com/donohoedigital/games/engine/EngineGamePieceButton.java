@@ -47,7 +47,7 @@ import com.donohoedigital.gui.ButtonPanel;
 public class EngineGamePieceButton extends ButtonPanel
 {
     // info
-    private EngineGamePiece piece_;
+    private final EngineGamePiece piece_;
     
     /**
      * Creates a new instance of EngineGamePieceButton 

@@ -183,7 +183,7 @@ public class Leaderboard extends OnlinePokerPage
      * leader data, fetched from TournamentHistoryService
      */
     @SuppressWarnings({"PublicInnerClass"})
-    public class LeaderData extends AliasedPageableServiceProvider<LeaderboardSummary> implements NameRangeSearch
+    public final class LeaderData extends AliasedPageableServiceProvider<LeaderboardSummary> implements NameRangeSearch
     {
         private static final long serialVersionUID = 42L;
 
@@ -276,7 +276,7 @@ public class Leaderboard extends OnlinePokerPage
     /**
      * The leaderboard table
      */
-    private class LeaderboardTableView extends CountDataView<LeaderboardSummary>
+    private final class LeaderboardTableView extends CountDataView<LeaderboardSummary>
     {
         private static final long serialVersionUID = 42L;
 

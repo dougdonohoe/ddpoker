@@ -51,7 +51,7 @@ public class DDHtmlEditorKit extends HTMLEditorKit
 {
     private StyleSheet sheet_ = null;
 
-    private static HashMap hmTagViewClasses_ = new HashMap();
+    private static final HashMap hmTagViewClasses_ = new HashMap();
 
     static
     {

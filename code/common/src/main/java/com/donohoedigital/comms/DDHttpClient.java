@@ -469,12 +469,12 @@ public class DDHttpClient
     {
         sc_.close();
     }
-    
+
     /**
      * Class to look up a host in a thread so
      * we can timeout if takes too long
      */
-    private static class LookupHost implements Runnable
+    private static final class LookupHost implements Runnable
     {
         String host;
         InetAddress addr = null;

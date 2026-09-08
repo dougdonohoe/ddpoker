@@ -58,7 +58,7 @@ public class ButtonDisplay extends ChainPhase implements Runnable
     
     private PokerGame game_;
     private PokerTable table_;
-    private static int BUTTON_DELAY = 100;
+    private static final int BUTTON_DELAY = 100;
     
     /** 
      * Creates a new instance of ButtonDisplay 

@@ -424,8 +424,8 @@ public class OtherTables
     /////
 
     // instances for sorting
-    private static SortChipsAtStart SORTCHIPSATSTART = new SortChipsAtStart();
-    private static SortFilledSeats SORTFILLEDSEATS = new SortFilledSeats();
+    private static final SortChipsAtStart SORTCHIPSATSTART = new SortChipsAtStart();
+    private static final SortFilledSeats SORTFILLEDSEATS = new SortFilledSeats();
     
     // sort players by chips they have at start of hand
     private static class SortChipsAtStart implements Comparator<PokerPlayer>

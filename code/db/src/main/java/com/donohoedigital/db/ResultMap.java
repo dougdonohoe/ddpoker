@@ -42,11 +42,11 @@ import java.sql.SQLException;
  */
 public class ResultMap extends DMTypedHashMap
 {
-    private DatabaseQuery query_ = null;
-    private ResultSet rs_ = null;
+    private final DatabaseQuery query_ = null;
+    private final ResultSet rs_ = null;
 
-    private int index_ = 0;
-    private int count_ = -1;
+    private final int index_ = 0;
+    private final int count_ = -1;
 
     /**
      * Retrieve the next row and store the results.

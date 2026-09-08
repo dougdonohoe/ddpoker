@@ -62,11 +62,11 @@ public class EngineDialog extends InternalDialog
 {
     protected static Logger logger = LogManager.getLogger(EngineDialog.class);
 
-    private GameContext context_;
+    private final GameContext context_;
     private DialogBackground base_;
     private Component focus_;
-    private int DESIRED_WIDTH;
-    private int DESIRED_HEIGHT;
+    private final int DESIRED_WIDTH;
+    private final int DESIRED_HEIGHT;
 
     /**
      * Constructor

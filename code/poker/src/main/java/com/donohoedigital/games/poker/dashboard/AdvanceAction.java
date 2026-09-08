@@ -61,7 +61,7 @@ public class AdvanceAction extends DashboardItem implements ActionListener
     private static AdvanceAction impl_; // TODO store in PokerGame or PokerContext
 
     private DDPanel cheatbase_;
-    private ArrayList buttons_ = new ArrayList();
+    private final ArrayList buttons_ = new ArrayList();
     private DDLabel label_;
     private Advance checkfold_;
     private Advance call_;

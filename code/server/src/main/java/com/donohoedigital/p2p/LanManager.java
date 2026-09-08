@@ -61,19 +61,19 @@ public class LanManager implements DDMessageListener
 
     private static final boolean DEBUG = false;
 
-    private static int ALIVE_SECONDS = 5;
-    private static int ALIVE_REFRESH_CNT = 10;
-    private static int ALIVE_INIT_CNT = 10;
+    private static final int ALIVE_SECONDS = 5;
+    private static final int ALIVE_REFRESH_CNT = 10;
+    private static final int ALIVE_INIT_CNT = 10;
 
     private Peer2PeerMulticast multi_;
     private Alive alive_;
     private String sLocalHost_;
     private String sLocalIP_;
-    private LanControllerInterface controller_;
-    private LanClientList clients_;
-    private String guid_;
-    private String key_;
-    private long startTime_ = System.currentTimeMillis();
+    private final LanControllerInterface controller_;
+    private final LanClientList clients_;
+    private final String guid_;
+    private final String key_;
+    private final long startTime_ = System.currentTimeMillis();
 
     /**
      * Creates a new instance of LanManager

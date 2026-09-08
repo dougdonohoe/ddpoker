@@ -66,20 +66,20 @@ public class OnlineManagerQueue implements Runnable
     static Logger logger = LogManager.getLogger(OnlineManagerQueue.class);
 
     // settings
-    private static int SLEEP_UNAVAIL = 25; // millis to sleep when no worker thread available
-    private static int LOG_UNAVAIL = 1000; // millis to wait before logging no worker warning
+    private static final int SLEEP_UNAVAIL = 25; // millis to sleep when no worker thread available
+    private static final int LOG_UNAVAIL = 1000; // millis to wait before logging no worker warning
 
     // info
-    private OnlineManager mgr_;
+    private final OnlineManager mgr_;
     private Thread threadQ_ = null;
     WorkerPool pool_;
 
     // instance info
     private ArrayList msgQ_ = new ArrayList();
     private boolean bDone_ = false;
-    private int nWait_ = 100;
+    private final int nWait_ = 100;
     private boolean bSleeping_ = false;
-    private Object SLEEPCHECK = new Object();
+    private final Object SLEEPCHECK = new Object();
     private int nElapsedNoWorkerTime_ = 0;
 
     /**

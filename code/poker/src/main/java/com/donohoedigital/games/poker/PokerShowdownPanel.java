@@ -64,16 +64,16 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
 {
     static Logger logger = LogManager.getLogger(PokerShowdownPanel.class);
 
-    private static Dimension resultsSize = new Dimension(90, 50);
+    private static final Dimension resultsSize = new Dimension(90, 50);
 
-    private GameContext context_;
-    private PokerTable table_;
+    private final GameContext context_;
+    private final PokerTable table_;
     private DDProgressBar progress_;
-    private String STYLE;
-    private SimulatorDialog sim_;
+    private final String STYLE;
+    private final SimulatorDialog sim_;
     private OptionInteger numOpponents_, numSims_;
     private DDRadioButton allcombo_, simcombo_;
-    private List<DDLabelBorder> opponents_ = new ArrayList<>();
+    private final List<DDLabelBorder> opponents_ = new ArrayList<>();
     private boolean bStopRequested_ = false;
     private boolean bIterWayBig_;
     private GlassButton run_, stop_;

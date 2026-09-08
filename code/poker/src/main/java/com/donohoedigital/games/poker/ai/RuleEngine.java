@@ -55,9 +55,9 @@ public class RuleEngine implements AIConstants
 
     static Logger logger = LogManager.getLogger(RuleEngine.class);
 
-    private static ArrayList outcomeNames_ = new ArrayList();
-    private static ArrayList factorNames_ = new ArrayList();
-    private static ArrayList curveNames_ = new ArrayList();
+    private static final ArrayList outcomeNames_ = new ArrayList();
+    private static final ArrayList factorNames_ = new ArrayList();
+    private static final ArrayList curveNames_ = new ArrayList();
 
     public static final int OUTCOME_NONE = -1;
     public static final int OUTCOME_FOLD = 0;
@@ -127,10 +127,10 @@ public class RuleEngine implements AIConstants
     public static final int CURVE_CUBE = 3;
 
     private V2Player ai_;
-    private float[] score_;
-    private boolean[] eligible_;
-    private float[] weights_;
-    private OutcomeAdjustment[][] adjustments_;
+    private final float[] score_;
+    private final boolean[] eligible_;
+    private final float[] weights_;
+    private final OutcomeAdjustment[][] adjustments_;
 
     private int strongestOutcome_;
 

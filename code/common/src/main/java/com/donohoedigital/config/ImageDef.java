@@ -64,15 +64,15 @@ public class ImageDef
 {
     static Logger logger = LogManager.getLogger(ImageDef.class);
 
-    private static boolean DEBUG = false;
+    private static final boolean DEBUG = false;
 
-    private String sName_;
-    private URL url_;
+    private final String sName_;
+    private final URL url_;
     private ImageIcon icon_;
     private AnimatedImageIcon anim_;
     private BufferedImage bimage_;
-    private boolean bCache_;
-    private boolean bComposite_;
+    private final boolean bCache_;
+    private final boolean bComposite_;
     private String[] saComponents_;
     private int x_ = 0;
     private int y_ = 0;

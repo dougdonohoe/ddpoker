@@ -47,7 +47,7 @@ import java.util.List;
 public class OpponentMixPanel extends DDTabPanel
 {
     private ListPanel typesList_;
-    private TournamentProfile profile_;
+    private final TournamentProfile profile_;
 
     public OpponentMixPanel(TournamentProfile profile)
     {

@@ -61,7 +61,7 @@ public class DDButtonUI extends MetalButtonUI
 {
     static Logger logger = LogManager.getLogger(DDButtonUI.class);
     
-    private final static DDButtonUI ddButtonUI = new DDButtonUI(); 
+    private static final DDButtonUI ddButtonUI = new DDButtonUI(); 
  
     public static ComponentUI createUI(JComponent c) {
         return ddButtonUI;

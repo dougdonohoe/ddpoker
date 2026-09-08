@@ -37,10 +37,10 @@ package com.donohoedigital.games.server.model;
  */
 public class PublicBan
 {
-    private long banTill;
-    private String sKey;
-    private String sComment;
-    private String sDate;
+    private final long banTill;
+    private final String sKey;
+    private final String sComment;
+    private final String sDate;
 
     public PublicBan(String sKey, String sDate, long banTill, String sComment)
     {

@@ -50,8 +50,8 @@ import java.awt.image.BufferedImage;
  */
 public class EmptyImageComponent extends ImageComponent 
 {
-    private int nWidth_;
-    private int nHeight_;
+    private final int nWidth_;
+    private final int nHeight_;
     
     /** 
      * Creates a new instance of EmptyImageComponent 

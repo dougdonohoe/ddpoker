@@ -109,7 +109,7 @@ public class RegAnalyzer
     /**
      * Implements command line application interface.
      */
-    private static class RegAnalyzerApp extends BaseCommandLineApp
+    private static final class RegAnalyzerApp extends BaseCommandLineApp
     {
         private RegAnalyzerApp(String sConfigName, String[] args)
         {

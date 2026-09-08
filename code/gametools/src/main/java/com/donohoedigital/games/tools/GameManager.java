@@ -58,12 +58,12 @@ import java.awt.event.*;
  */
 public abstract class GameManager extends BaseApp implements KeyListener, StatusDisplay
 {
-    private Logger logger = LogManager.getLogger(GameManager.class);
+    private final Logger logger = LogManager.getLogger(GameManager.class);
     
     // debugging settings
-    private boolean bDoSave = true;
-    private boolean bExitEarly = false;
-    private String sTitle;
+    private final boolean bDoSave = true;
+    private final boolean bExitEarly = false;
+    private final String sTitle;
     
     // config stuff
     protected GameboardConfig gameconfig_;

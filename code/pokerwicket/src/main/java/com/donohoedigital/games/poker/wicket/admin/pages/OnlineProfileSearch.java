@@ -201,7 +201,7 @@ public class OnlineProfileSearch extends AdminPokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<OnlineProfile>
+    private final class GameListTableView extends CountDataView<OnlineProfile>
     {
         private static final long serialVersionUID = 42L;
 

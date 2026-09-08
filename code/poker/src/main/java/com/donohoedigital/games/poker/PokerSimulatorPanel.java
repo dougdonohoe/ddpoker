@@ -54,7 +54,7 @@ public class PokerSimulatorPanel extends DDTabPanel implements DDProgressFeedbac
     private DDProgressBar progress_;
     private boolean bStopRequested_ = false;
     private GlassButton stop_, run_;
-    private SimulatorDialog sim_;
+    private final SimulatorDialog sim_;
 
     public PokerSimulatorPanel(SimulatorDialog sim)
     {

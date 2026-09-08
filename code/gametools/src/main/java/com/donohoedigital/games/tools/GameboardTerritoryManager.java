@@ -106,7 +106,7 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
         super(sConfigName, "Territory Manager", args);
     }
     
-    private int nDefaultSize = 800;
+    private final int nDefaultSize = 800;
     
     /**
      * Create UI
@@ -206,8 +206,8 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
 //    private String RESOURCE = PropertyConfig.getStringProperty("define.territoryPointType.resource", "notdefined", false);
 //    private String NATIVE = PropertyConfig.getStringProperty("define.territoryPointType.native", "notdefined", false);
 //    private Double SCALE_MARKER = .9d; // must match resource piece getScale() override
-    private Double SCALE_BUTTON = .4d; // must match buttonpiece getScale() override
-    private Double SCALE_ICON = .75d; // approximation
+    private final Double SCALE_BUTTON = .4d; // must match buttonpiece getScale() override
+    private final Double SCALE_ICON = .75d; // approximation
     
     public void drawTerritoryPart(Gameboard board, Graphics2D g, Territory t, GeneralPath path, Rectangle territoryBounds, int iPart) 
     {

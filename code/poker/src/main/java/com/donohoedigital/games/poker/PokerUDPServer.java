@@ -59,9 +59,9 @@ import java.net.InetSocketAddress;
  */
 public class PokerUDPServer extends UDPServer implements PokerConnectionServer, ChatLobbyManager
 {
-    private static Logger logger = LogManager.getLogger(PokerUDPServer.class);
+    private static final Logger logger = LogManager.getLogger(PokerUDPServer.class);
 
-    private PokerMain main_;
+    private final PokerMain main_;
     private UDPLink chatLink_;
     private InetSocketAddress chatServer_;
 

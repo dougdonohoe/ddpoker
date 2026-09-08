@@ -55,8 +55,8 @@ public class OptionSlider extends DDOption implements ChangeListener
 {
     //static Logger logger = LogManager.getLogger(OptionSlider.class);
     
-    private DDLabel label_;
-    private DDSlider slider_;
+    private final DDLabel label_;
+    private final DDSlider slider_;
     private Integer nDefault_;
 
     /** 

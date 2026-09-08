@@ -103,7 +103,7 @@ public class GameStateEntry extends TokenizedList
     private void initAfterRead(MsgState mstate)
     {
         GameState state = (GameState) mstate;
-        GameStateDelegate delegate = state.getDelegate();
+        GameStateDelegate delegate = GameState.getDelegate();
         if (delegate == null) return;
         id_ = removeIntegerToken();
         Integer classid = removeIntegerToken();

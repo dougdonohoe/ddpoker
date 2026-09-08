@@ -58,8 +58,8 @@ public class XPoints extends XConnectorLines implements KeyListener,
     
     static Logger logger = LogManager.getLogger(XPoints.class);
     protected MapPoints allPoints_;
-    private GameboardConfig gameconfig_;
-    private GameboardBorderManager manager_;
+    private final GameboardConfig gameconfig_;
+    private final GameboardBorderManager manager_;
         
     DrawingUtil util_;
     BorderPoint borderPointSelected_;   // border point selected (with focus)
@@ -91,7 +91,7 @@ public class XPoints extends XConnectorLines implements KeyListener,
     }
     
     // used for performance so new rect isn't needed everytime we repaint
-    private Rectangle bounds_ = new Rectangle();
+    private final Rectangle bounds_ = new Rectangle();
     
     ///
     /// Drawing methods
@@ -252,7 +252,7 @@ public class XPoints extends XConnectorLines implements KeyListener,
         }
         
         // if mouse button 2 pressed, add new border
-        if (e.getButton() == e.BUTTON3 || addToBorder == null)
+        if (e.getButton() == MouseEvent.BUTTON3 || addToBorder == null)
         {    
             Component cFocus = FocusManager.getCurrentManager().getFocusOwner();
             Border b = manager_.chooseBorder("Create New Border", point.getX(), point.getY(), false);
