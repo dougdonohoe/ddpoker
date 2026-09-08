@@ -38,9 +38,11 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.gui.GuiManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HandGroupManager extends ProfileManagerPanel
 {

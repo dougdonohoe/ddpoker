@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.poker.model.util;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.xml.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.xml.SimpleXMLEncodable;
+import com.donohoedigital.xml.SimpleXMLEncoder;
 
 /**
  * OnlineGame list

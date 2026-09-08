@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.wicket.components.*;
+import com.donohoedigital.wicket.components.VoidPanel;
 
 /**
  * Created by IntelliJ IDEA.

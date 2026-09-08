@@ -44,7 +44,7 @@ package com.donohoedigital.gui;
  */
 import java.awt.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
 
 
 public class XYLayout implements LayoutManager2, Serializable , Cloneable {

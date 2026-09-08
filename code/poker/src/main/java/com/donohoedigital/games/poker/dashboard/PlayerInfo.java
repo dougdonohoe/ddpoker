@@ -52,7 +52,8 @@ import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.GuiManager;
 import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;

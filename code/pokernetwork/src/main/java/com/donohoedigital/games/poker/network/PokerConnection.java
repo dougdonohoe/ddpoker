@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.poker.network;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.udp.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.udp.UDPID;
 
-import java.nio.channels.*;
+import java.nio.channels.SocketChannel;
 
 /**
  * Created by IntelliJ IDEA.

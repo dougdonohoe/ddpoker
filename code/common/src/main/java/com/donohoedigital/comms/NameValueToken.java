@@ -38,10 +38,12 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.EscapeStringTokenizer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Iterator;
 
 /**
  * Class used by TokenizedList

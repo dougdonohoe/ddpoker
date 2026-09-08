@@ -38,12 +38,16 @@
 
 package com.donohoedigital.games.poker.network;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.udp.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.udp.UDPID;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Wrapper class to provide easy access to online data

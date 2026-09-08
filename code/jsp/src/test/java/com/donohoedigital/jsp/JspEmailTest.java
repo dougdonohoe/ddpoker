@@ -36,7 +36,7 @@ import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.ConfigManager;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JspEmailTest {
     @Test

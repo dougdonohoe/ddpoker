@@ -32,16 +32,18 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.engine.TournamentProfileHtml;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
 import com.zookitec.layout.*;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 
 /**
  * Created by IntelliJ IDEA.

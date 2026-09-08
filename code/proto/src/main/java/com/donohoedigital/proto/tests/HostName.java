@@ -38,7 +38,7 @@
 
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.ConfigUtils;
 
 /**
  *

@@ -38,7 +38,10 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateEntry;
 
 /**
  *

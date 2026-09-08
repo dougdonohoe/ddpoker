@@ -38,9 +38,9 @@
 
 package com.donohoedigital.games.poker.network;
 
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.p2p.*;
-import java.util.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.p2p.P2PURL;
+import java.util.StringTokenizer;
 
 /**
  * Subclass to parse URI into Game ID and password

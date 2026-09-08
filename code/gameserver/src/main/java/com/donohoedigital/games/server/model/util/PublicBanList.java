@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.games.server.model.util;
 
-import com.donohoedigital.games.server.model.*;
+import com.donohoedigital.games.server.model.PublicBan;
 
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Created by IntelliJ IDEA.

@@ -38,9 +38,9 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.Territory;
 
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
 
 /**
  *

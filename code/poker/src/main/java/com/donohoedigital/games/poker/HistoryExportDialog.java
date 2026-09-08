@@ -49,8 +49,10 @@ import com.donohoedigital.games.poker.impexp.ImpExpHand;
 import com.donohoedigital.games.poker.impexp.ImpExpParadise;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import com.donohoedigital.base.Utils;
 
 /**
  * Created by IntelliJ IDEA.

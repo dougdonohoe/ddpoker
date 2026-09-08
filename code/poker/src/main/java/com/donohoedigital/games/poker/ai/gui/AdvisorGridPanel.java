@@ -32,12 +32,18 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.poker.ai.PocketMatrixByte;
+import com.donohoedigital.games.poker.ai.PocketMatrixString;
+import com.donohoedigital.games.poker.ai.RuleEngine;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.gui.DDPanel;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 
 public class AdvisorGridPanel extends DDPanel
 {

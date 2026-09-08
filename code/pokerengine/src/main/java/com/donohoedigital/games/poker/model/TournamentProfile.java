@@ -38,19 +38,28 @@
 
 package com.donohoedigital.games.poker.model;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.xml.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.DataElement;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.games.config.AbstractPlayerList;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.xml.SimpleXMLEncodable;
+import com.donohoedigital.xml.SimpleXMLEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.text.*;
-import java.util.*;
+import java.text.MessageFormat;
+import java.util.List;
 
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
 
 /**
  * @author donohoe

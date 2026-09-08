@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.games.poker.wicket.util;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Return null for begin/end dates if they match the default values

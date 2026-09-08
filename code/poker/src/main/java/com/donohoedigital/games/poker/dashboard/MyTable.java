@@ -39,8 +39,8 @@ import com.donohoedigital.games.poker.PokerTable;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

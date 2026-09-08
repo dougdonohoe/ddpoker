@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.server.model.*;
+import com.donohoedigital.comms.Version;
+import com.donohoedigital.games.server.model.BannedKey;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.model.UpgradedKey;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.

@@ -38,10 +38,9 @@
 
 package com.donohoedigital.games.config;
 
-import org.apache.logging.log4j.*;
-
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.util.ArrayList;
 
 /**
  *

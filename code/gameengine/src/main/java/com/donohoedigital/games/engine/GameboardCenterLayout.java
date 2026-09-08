@@ -38,11 +38,12 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.ScaleConstraintsFixed;
+import com.donohoedigital.gui.ScaleLayout;
 
 import java.awt.*;
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  *

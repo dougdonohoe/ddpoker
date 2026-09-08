@@ -38,9 +38,11 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameState;
 
 /**
  *

@@ -32,14 +32,19 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.ProfileManagerPanel;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.gui.GlassButton;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PlayerTypeManager extends ProfileManagerPanel
 {

@@ -32,12 +32,19 @@
  */
 package com.donohoedigital.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.server.ServletDebug;
 
 import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * * Class to test performance of a website.

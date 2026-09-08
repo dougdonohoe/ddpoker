@@ -38,11 +38,12 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.dashboard.*;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.OptionMenuDialog;
+import com.donohoedigital.games.poker.dashboard.CheatDash;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Component;
 
 /**
  *

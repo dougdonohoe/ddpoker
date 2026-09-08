@@ -32,8 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.plaf.basic.*;
-import java.awt.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Insets;
 
 /**
  * Created by IntelliJ IDEA.

@@ -38,10 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.StylesConfig;
 
-import javax.swing.plaf.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.plaf.UIResource;
+import javax.swing.plaf.metal.MetalInternalFrameTitlePane;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;

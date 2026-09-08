@@ -32,8 +32,11 @@
  */
 package com.donohoedigital.proto.tests;
 
-import java.net.*;
-import java.io.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.io.IOException;
 
 public class MulticastSender 
 {

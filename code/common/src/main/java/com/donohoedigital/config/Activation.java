@@ -38,10 +38,12 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Base64;
+import com.donohoedigital.base.Utils;
 
-import java.security.*;
-import java.util.regex.*;
+import java.security.MessageDigest;
+import java.util.regex.Pattern;
 
 /**
  * Key of form FFNN-NNNN-NNAA-AAAA

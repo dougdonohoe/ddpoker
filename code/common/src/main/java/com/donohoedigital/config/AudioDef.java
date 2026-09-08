@@ -38,7 +38,7 @@
 
 package com.donohoedigital.config;
 
-import java.net.*;
+import java.net.URL;
 
 /**
  *

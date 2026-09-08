@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.labels;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.

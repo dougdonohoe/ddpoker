@@ -39,7 +39,7 @@
 package com.donohoedigital.gui;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics;
 
 /**
  * Copied MetalComboBoxButton code, but subclass DDButton instead

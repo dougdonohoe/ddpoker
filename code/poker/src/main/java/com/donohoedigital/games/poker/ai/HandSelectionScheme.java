@@ -32,14 +32,16 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.poker.HandGroup;
+import com.donohoedigital.games.poker.engine.Hand;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HandSelectionScheme extends BaseProfile
 {

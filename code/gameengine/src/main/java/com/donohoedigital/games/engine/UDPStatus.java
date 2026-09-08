@@ -32,16 +32,19 @@
  */
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.MovingAverage;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.donohoedigital.udp.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
 import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.*;
 import java.util.Timer;
 

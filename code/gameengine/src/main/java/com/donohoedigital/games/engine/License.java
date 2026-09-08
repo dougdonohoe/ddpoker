@@ -38,12 +38,20 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.HelpConfig;
+import com.donohoedigital.config.HelpTopic;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 
 /**

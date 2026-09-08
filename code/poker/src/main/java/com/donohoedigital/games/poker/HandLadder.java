@@ -32,10 +32,13 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.ai.HandProbabilityMatrix;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.config.PropertyConfig;
 
 public class HandLadder
 {

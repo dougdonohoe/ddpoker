@@ -40,8 +40,9 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.gui.*;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Doug Donohoe

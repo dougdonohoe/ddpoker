@@ -26,8 +26,8 @@
  
 package com.zookitec.layout;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Component;
+import java.io.Serializable;
 
 /**
  * This class contains expressions that define the location and size of a component.

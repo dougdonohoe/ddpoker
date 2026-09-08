@@ -40,7 +40,7 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.gui.ImageComponent;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 import java.awt.*;
 
 /**

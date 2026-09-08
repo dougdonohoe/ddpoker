@@ -38,7 +38,8 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.comms.*;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.comms.RegistrationMessage;
 
 /**
  * @author donohoe

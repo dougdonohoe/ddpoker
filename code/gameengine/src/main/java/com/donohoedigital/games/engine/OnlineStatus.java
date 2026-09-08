@@ -38,15 +38,7 @@
 
 package com.donohoedigital.games.engine;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.comms.*;
-
-import javax.swing.*;
-import java.util.*;
+import com.donohoedigital.games.comms.ActionItem;
 
 /**
  *

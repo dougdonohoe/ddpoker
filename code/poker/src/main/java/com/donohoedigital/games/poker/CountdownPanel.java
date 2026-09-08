@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.Timer;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.

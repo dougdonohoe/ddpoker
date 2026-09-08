@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.base;
 
-import java.util.*;
-import java.security.*;
+import java.util.Random;
+import java.security.SecureRandom;
 
 /**
  * Generate a random password.

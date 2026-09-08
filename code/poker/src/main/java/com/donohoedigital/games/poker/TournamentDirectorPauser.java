@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.poker.online.TournamentDirector;
 
 /**
      * listener for un-pausing TD

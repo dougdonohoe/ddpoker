@@ -32,7 +32,9 @@
  */
 package com.donohoedigital.gui;
 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 /**
  * Initial effort at a common panel for laying out aligned components in a table.  Currently supports

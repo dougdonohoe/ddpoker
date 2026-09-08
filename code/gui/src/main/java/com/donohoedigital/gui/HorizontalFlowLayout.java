@@ -39,7 +39,8 @@
 package com.donohoedigital.gui;
 
 import java.awt.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  * A flow layout arranges components in a left-to-right flow, much

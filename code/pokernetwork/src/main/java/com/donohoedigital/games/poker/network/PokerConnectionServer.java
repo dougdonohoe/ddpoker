@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.games.poker.network;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageTransporter;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.

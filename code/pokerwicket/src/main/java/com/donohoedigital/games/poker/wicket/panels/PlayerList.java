@@ -32,14 +32,16 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.wicket.pages.online.*;
-import com.donohoedigital.wicket.components.*;
-import com.donohoedigital.wicket.labels.*;
-import org.apache.wicket.markup.html.link.*;
-import org.apache.wicket.markup.html.list.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.wicket.pages.online.History;
+import com.donohoedigital.wicket.components.VoidContainer;
+import com.donohoedigital.wicket.components.VoidPanel;
+import com.donohoedigital.wicket.labels.StringLabel;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

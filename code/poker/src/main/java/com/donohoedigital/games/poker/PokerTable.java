@@ -38,18 +38,32 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.ObjectID;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.ConfigConstants;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateEntry;
+import com.donohoedigital.games.config.SaveDetails;
+import com.donohoedigital.games.engine.DiceRoller;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.event.PokerTableListener;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.ai.V1Player;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 

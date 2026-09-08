@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.event.MouseEvent;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
 
 public abstract class ListItemPanel extends ButtonPanel implements Comparable<ListItemPanel>
 {

@@ -38,8 +38,8 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.engine.BasePhase;
 
 /**
  * @author Doug Donohoe

@@ -38,12 +38,18 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.config.Border;
+import com.donohoedigital.games.config.BorderPoint;
+import com.donohoedigital.games.config.Borders;
+import com.donohoedigital.gui.ImageComponent;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Line2D;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Draws lines between points in borders

@@ -32,17 +32,21 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.ddpoker.holdem.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.engine.*;
+import com.ddpoker.holdem.PlayerAction;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.games.engine.DiceRoller;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.config.EngineConstants;
 
-import java.util.*;
+import java.util.ArrayList;
 
 @DataCoder('1')
 public class V1Player extends PokerAI

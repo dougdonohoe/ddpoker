@@ -38,9 +38,10 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *

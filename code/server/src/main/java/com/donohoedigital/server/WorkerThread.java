@@ -33,8 +33,9 @@
 
 package com.donohoedigital.server;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.Utils;
 
 public abstract class WorkerThread extends Thread
 {

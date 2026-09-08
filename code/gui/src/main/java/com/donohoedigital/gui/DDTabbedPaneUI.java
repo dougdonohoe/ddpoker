@@ -38,9 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import javax.swing.plaf.metal.*;
-import javax.swing.text.*;
+import javax.swing.Icon;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
+import javax.swing.plaf.metal.MetalTabbedPaneUI;
+import javax.swing.text.View;
 import java.awt.*;
 
 /**

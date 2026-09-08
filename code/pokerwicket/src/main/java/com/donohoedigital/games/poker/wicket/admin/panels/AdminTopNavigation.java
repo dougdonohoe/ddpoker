@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.admin.panels;
 
-import com.donohoedigital.games.poker.wicket.panels.*;
+import com.donohoedigital.games.poker.wicket.panels.TopNavigation;
 
 /**
  * Created by IntelliJ IDEA.

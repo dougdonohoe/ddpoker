@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.common;
 
-import org.apache.wicket.markup.html.navigation.paging.*;
+import org.apache.wicket.markup.html.navigation.paging.IPageable;
 
 /**
  * Created by IntelliJ IDEA.

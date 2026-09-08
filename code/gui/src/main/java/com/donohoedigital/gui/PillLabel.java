@@ -32,8 +32,10 @@
  */
 package com.donohoedigital.gui;
 
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.geom.RoundRectangle2D;
 
 /**
  * Created by IntelliJ IDEA.

@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import java.net.*;
-import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.io.IOException;
 
 public class UnicastSender 
 {

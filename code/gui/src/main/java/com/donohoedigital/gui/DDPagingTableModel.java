@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
 
 
 /**

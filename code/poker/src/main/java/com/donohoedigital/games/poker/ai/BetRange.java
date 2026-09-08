@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.config.PropertyConfig;
 
 /**
  * Represents a range of bet size, either in terms of the pot, a player's stack, or the big blind amount.

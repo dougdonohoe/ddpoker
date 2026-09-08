@@ -38,7 +38,7 @@
 
 package com.donohoedigital.tools;
 
-import com.donohoedigital.server.*;
+import com.donohoedigital.server.GameServer;
 
 /**
  *

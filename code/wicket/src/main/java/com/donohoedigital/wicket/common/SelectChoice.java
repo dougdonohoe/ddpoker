@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.common;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Based class for representing a select list choice.  Represents a user-defined type T and its display value.

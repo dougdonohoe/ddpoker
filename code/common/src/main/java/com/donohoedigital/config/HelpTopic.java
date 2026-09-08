@@ -38,8 +38,8 @@
 
 package com.donohoedigital.config;
 
-import java.awt.*;
-import java.net.*;
+import java.awt.Rectangle;
+import java.net.URL;
 
 /**
  *

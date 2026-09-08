@@ -38,8 +38,8 @@
 
 package com.donohoedigital.gui;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
  * Class used to represent an empty image component - essentially

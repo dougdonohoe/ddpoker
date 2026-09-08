@@ -38,12 +38,14 @@
 
 package com.donohoedigital.games.poker.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.MersenneTwisterFast;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DataCoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.security.*;
-import java.util.*;
+import java.security.SecureRandom;
+import java.util.Collections;
 
 /**
  * @author Doug Donohoe

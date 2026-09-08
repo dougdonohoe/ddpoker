@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

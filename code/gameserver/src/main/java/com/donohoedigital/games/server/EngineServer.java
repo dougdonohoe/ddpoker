@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.mail.*;
-import com.donohoedigital.server.*;
-import org.springframework.beans.factory.annotation.*;
+import com.donohoedigital.mail.DDPostalService;
+import com.donohoedigital.server.GameServer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by IntelliJ IDEA.

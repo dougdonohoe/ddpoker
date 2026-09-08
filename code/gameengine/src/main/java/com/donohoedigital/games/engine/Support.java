@@ -32,15 +32,20 @@
  */
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.LoggingConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.io.File;
+import java.util.Properties;
 
 /**
  * Created by IntelliJ IDEA.

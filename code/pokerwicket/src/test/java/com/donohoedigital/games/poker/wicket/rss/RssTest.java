@@ -40,10 +40,13 @@ import com.rometools.rome.feed.rss.Source;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.WireFeedOutput;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author Doug Donohoe

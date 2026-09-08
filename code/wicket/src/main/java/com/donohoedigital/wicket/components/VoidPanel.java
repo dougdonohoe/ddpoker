@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.wicket.components;
 
-import org.apache.wicket.markup.html.panel.*;
-import org.apache.wicket.model.*;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
 /**
  * Created by IntelliJ IDEA.

@@ -38,7 +38,7 @@
 
 package com.donohoedigital.mail;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  *

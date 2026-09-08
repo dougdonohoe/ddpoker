@@ -39,8 +39,9 @@ import com.donohoedigital.config.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.SwingUtilities;
+import java.awt.Desktop;
+import java.awt.Graphics;
 import java.util.Locale;
 
 @SuppressWarnings("CommentedOutCode")

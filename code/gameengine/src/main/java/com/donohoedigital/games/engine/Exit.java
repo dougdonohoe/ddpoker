@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
 /**
  *

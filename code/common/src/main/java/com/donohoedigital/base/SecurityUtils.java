@@ -32,10 +32,17 @@
  */
 package com.donohoedigital.base;
 
-import javax.crypto.*;
-import java.io.*;
-import java.security.*;
-import java.security.spec.*;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
 
 /**
  * Provides security related utility methods.  Base64 is used for all encoding.

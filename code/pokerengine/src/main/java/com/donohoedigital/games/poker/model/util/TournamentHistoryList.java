@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.games.poker.model.util;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.poker.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * WAN history list

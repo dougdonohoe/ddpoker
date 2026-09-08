@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.wicket.rss;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
 /**
  * @author Doug Donohoe

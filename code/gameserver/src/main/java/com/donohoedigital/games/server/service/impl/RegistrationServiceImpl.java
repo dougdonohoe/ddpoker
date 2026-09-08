@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.games.server.service.impl;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.server.*;
-import com.donohoedigital.games.server.dao.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.model.util.*;
-import com.donohoedigital.games.server.service.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.transaction.annotation.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.server.RegDayOfYearCount;
+import com.donohoedigital.games.server.RegHourCount;
+import com.donohoedigital.games.server.dao.BannedKeyDao;
+import com.donohoedigital.games.server.dao.RegistrationDao;
+import com.donohoedigital.games.server.model.BannedKey;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.model.util.RegInfo;
+import com.donohoedigital.games.server.service.RegistrationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 

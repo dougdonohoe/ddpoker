@@ -32,15 +32,20 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.GamePrefsDialog;
+import com.donohoedigital.games.poker.GamePrefsPanel;
+import com.donohoedigital.gui.DDOption;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

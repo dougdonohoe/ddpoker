@@ -32,8 +32,9 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Component;
 
 /**
  * Created by IntelliJ IDEA.

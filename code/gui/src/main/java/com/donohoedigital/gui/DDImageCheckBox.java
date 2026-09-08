@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.config.ImageConfig;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
 
 /**
  * Created by IntelliJ IDEA.

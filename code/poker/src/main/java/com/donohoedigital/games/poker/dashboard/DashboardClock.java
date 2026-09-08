@@ -40,8 +40,11 @@ import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
 import com.zookitec.layout.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 /**
  * Created by IntelliJ IDEA.

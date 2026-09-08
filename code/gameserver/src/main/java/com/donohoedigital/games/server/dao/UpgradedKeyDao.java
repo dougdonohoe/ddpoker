@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.server.dao;
 
-import com.donohoedigital.db.dao.*;
-import com.donohoedigital.games.server.model.*;
+import com.donohoedigital.db.dao.BaseDao;
+import com.donohoedigital.games.server.model.UpgradedKey;
 
 /**
  * Created by IntelliJ IDEA.

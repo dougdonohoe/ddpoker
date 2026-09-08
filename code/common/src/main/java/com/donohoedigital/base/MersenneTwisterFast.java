@@ -1,6 +1,6 @@
 package com.donohoedigital.base;
 import java.io.*;
-import java.util.*;
+import java.util.Random;
 
 /** 
  * <h3>MersenneTwister and MersenneTwisterFast</h3>

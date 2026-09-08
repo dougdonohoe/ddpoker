@@ -38,16 +38,8 @@
 
 package com.donohoedigital.games.tools;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
-import java.awt.geom.*;
-
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import java.awt.event.MouseEvent;
+import com.donohoedigital.games.config.MapPoint;
 /**
  *
  * @author  Doug Donohoe

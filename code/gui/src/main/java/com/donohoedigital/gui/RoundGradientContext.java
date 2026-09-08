@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
+import java.awt.Color;
+import java.awt.PaintContext;
+import java.awt.geom.Point2D;
+import java.awt.image.ColorModel;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 
 class RoundGradientContext
     implements PaintContext {

@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.ai.HandSelectionScheme;
 import com.donohoedigital.games.poker.ProfileManagerPanel;
 import com.donohoedigital.gui.GuiManager;

@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.poker.wicket.util;
 
-import com.donohoedigital.wicket.labels.*;
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.model.*;
-import org.apache.wicket.util.convert.*;
+import com.donohoedigital.wicket.labels.PercentLabel;
+import com.donohoedigital.wicket.models.DoubleModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.convert.IConverter;
 
 /**
  * Created by IntelliJ IDEA.

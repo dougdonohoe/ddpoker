@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.db.BindArray;
+import com.donohoedigital.games.engine.DialogPhase;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 
 public class HandHistoryDialog extends DialogPhase
 {

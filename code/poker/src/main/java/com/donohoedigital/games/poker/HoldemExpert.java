@@ -38,9 +38,10 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.HandSorted;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  *

@@ -38,10 +38,10 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.config.BaseDataFile;
+import com.donohoedigital.games.config.GameConfigUtils;
 
-import java.io.*;
+import java.io.File;
 
 /**
  *

@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.*;
-import java.sql.*;
-import java.util.*;
+import java.lang.reflect.Constructor;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provide metadata driven database access.  Associated parameters are stored in <code>server.properties</code>.

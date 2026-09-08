@@ -38,15 +38,20 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.engine.DialogPhase;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.engine.TournamentProfileHtml;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 
 /**
  *

@@ -32,8 +32,9 @@
  */
 package com.donohoedigital.wicket.common;
 
-import com.donohoedigital.wicket.models.*;
-import org.apache.wicket.model.*;
+import com.donohoedigital.wicket.models.AliasedCompoundPropertyModel;
+import com.donohoedigital.wicket.models.EntityModel;
+import org.apache.wicket.model.IModel;
 
 /**
  * Created by IntelliJ IDEA.

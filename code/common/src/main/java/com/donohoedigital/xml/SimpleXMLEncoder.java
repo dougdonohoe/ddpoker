@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.xml;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import java.lang.reflect.*;
-import java.text.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**

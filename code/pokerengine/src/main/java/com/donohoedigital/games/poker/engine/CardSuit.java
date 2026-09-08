@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.engine;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
 /**
  * Global representation of card suits.

@@ -32,13 +32,14 @@
  */
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.proto.tests.*;
+import com.donohoedigital.base.Utils;
 
-import java.net.*;
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketException;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 
 public class UnicastSenderNIO 
 {

@@ -33,8 +33,9 @@
 package com.donohoedigital.config;
 
 import org.springframework.core.io.Resource;
-import org.springframework.core.type.*;
-import org.springframework.core.type.classreading.*;
+import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.core.type.ClassMetadata;
+import org.springframework.core.type.classreading.MetadataReader;
 
 /**
  * Created by IntelliJ IDEA.

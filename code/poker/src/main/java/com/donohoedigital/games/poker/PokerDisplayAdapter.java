@@ -38,11 +38,13 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.TerritoryDisplayApapter;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  *

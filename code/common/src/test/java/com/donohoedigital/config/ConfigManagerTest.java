@@ -34,8 +34,6 @@ package com.donohoedigital.config;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Created by IntelliJ IDEA.
  * User: donohoe

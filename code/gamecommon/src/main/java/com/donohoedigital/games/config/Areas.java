@@ -38,12 +38,16 @@
 
 package com.donohoedigital.games.config;
 
-import java.util.*;
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.XMLConfigFileLoader;
+import com.donohoedigital.config.XMLWriter;
 
-import org.jdom2.*;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  *

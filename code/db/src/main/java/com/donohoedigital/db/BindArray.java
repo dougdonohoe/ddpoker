@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.db;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Contains a list of bind values.

@@ -32,12 +32,13 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.config.AbstractPlayerList;
 
-import java.util.*;
-import java.util.prefs.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.prefs.Preferences;
 
 /**
  * Created by IntelliJ IDEA.

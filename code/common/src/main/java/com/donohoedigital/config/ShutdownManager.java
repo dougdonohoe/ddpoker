@@ -33,9 +33,12 @@
 package com.donohoedigital.config;
 
 import static com.donohoedigital.config.ShutdownManager.Type.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

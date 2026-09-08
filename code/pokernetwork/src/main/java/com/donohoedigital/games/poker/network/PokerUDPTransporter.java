@@ -32,12 +32,16 @@
  */
 package com.donohoedigital.games.poker.network;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.DDByteArrayOutputStream;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageTransporter;
+import com.donohoedigital.udp.ByteData;
+import com.donohoedigital.udp.UDPData;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.

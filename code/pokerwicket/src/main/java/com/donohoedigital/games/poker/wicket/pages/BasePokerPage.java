@@ -37,7 +37,6 @@ import com.donohoedigital.games.poker.wicket.panels.CopyrightFooter;
 import com.donohoedigital.games.poker.wicket.panels.CurrentProfile;
 import com.donohoedigital.games.poker.wicket.panels.TopNavigation;
 import com.donohoedigital.games.poker.wicket.util.LoginUtils;
-import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.pages.BasePage;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;

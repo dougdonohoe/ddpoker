@@ -32,11 +32,9 @@
  */
 package com.donohoedigital.config;
 
-import java.io.*;
-import java.net.*;
+import java.io.File;
+import java.net.URL;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.

@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.comms;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
 /**
  * Convienience class to represent registration information.

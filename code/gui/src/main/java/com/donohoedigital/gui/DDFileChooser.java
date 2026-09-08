@@ -38,10 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.beans.*;
-import java.io.*;
-import java.util.prefs.*;
+import javax.swing.JFileChooser;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.prefs.Preferences;
 
 /**
  * @author donohoe

@@ -37,11 +37,16 @@
  */
 package com.donohoedigital.games.poker;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.gui.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.gui.DDPanel;
 
-import javax.swing.text.*;
-import java.awt.*;
+import javax.swing.text.ComponentView;
+import javax.swing.text.Element;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Shape;
 
 public class DDHandGroupView extends ComponentView
 {

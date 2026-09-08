@@ -38,11 +38,12 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 
 /**
  *

@@ -38,11 +38,14 @@
 
 package com.donohoedigital.games.server.model.util;
 
-import com.donohoedigital.games.server.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.server.model.Registration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.text.*;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  *

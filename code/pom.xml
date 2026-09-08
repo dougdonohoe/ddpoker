@@ -154,6 +154,11 @@
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
         <version>6.46.1</version>
+        <configuration>
+          <activeStyles>
+            <style>com.donohoedigital.ImportStyle</style>
+          </activeStyles>
+        </configuration>
         <!-- Versions are those pinned by rewrite-recipe-bom 3.37.0.  A BOM cannot be
              imported here - Maven only honours scope=import in dependencyManagement -
              so they are listed explicitly and should be bumped as a set. -->

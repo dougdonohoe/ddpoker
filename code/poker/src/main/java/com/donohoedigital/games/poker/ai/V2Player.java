@@ -32,15 +32,21 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.ddpoker.holdem.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
+import com.ddpoker.holdem.PlayerAction;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.security.*;
+import java.security.SecureRandom;
 
 @DataCoder('2')
 public class V2Player extends V1Player implements AIConstants

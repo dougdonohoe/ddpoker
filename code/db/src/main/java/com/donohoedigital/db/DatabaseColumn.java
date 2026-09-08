@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.db;
 
-import java.sql.*;
+import java.sql.Types;
 
 /**
  * Represents a database column.

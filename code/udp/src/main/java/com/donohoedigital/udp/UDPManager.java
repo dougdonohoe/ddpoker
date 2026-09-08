@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.udp;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.html.*;
+import com.donohoedigital.base.MovingAverage;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.html.Table;
+import com.donohoedigital.html.TableColumn;
+import com.donohoedigital.html.TableRow;
 
-import java.net.*;
+import java.net.InetSocketAddress;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by IntelliJ IDEA.
