@@ -56,7 +56,7 @@ public class CryptoTest {
     public CryptoTest() {
     }
 
-    public static void main(String[] args) throws Exception {
+    static void main() throws Exception {
 
         KeyGenerator kgen = KeyGenerator.getInstance("Blowfish");
         SecretKey skey = kgen.generateKey();

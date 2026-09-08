@@ -49,7 +49,7 @@ import java.io.Reader;
  */
 public class Unhide
 {
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         if (args.length == 0) System.out.println("Unhide [file]");
         unhide(ConfigUtils.getReader(new File(args[0])));

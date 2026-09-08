@@ -192,23 +192,6 @@ recipeList:
 
 ---
 type: specs.openrewrite.org/v1beta/recipe
-name: com.donohoedigital.DeadCode
-displayName: Dead code removal
-description: >
-  RISKY - Hibernate, Wicket and the gameengine XML save-game code all reach members
-  reflectively, and OpenRewrite cannot see those references.  Always dryRun and review
-  each deletion against a grep of .java, .html and .xml before applying.
-recipeList:
-  - org.openrewrite.staticanalysis.RemoveUnusedPrivateFields
-  - org.openrewrite.staticanalysis.RemoveUnusedPrivateMethods
-  - org.openrewrite.staticanalysis.RemoveUnusedLocalVariables
-  - org.openrewrite.staticanalysis.UnnecessaryThrows
-  - org.openrewrite.staticanalysis.RemoveUnneededBlock
-  - org.openrewrite.staticanalysis.CatchClauseOnlyRethrows
-  - org.openrewrite.staticanalysis.UnnecessaryReturnAsLastStatement
-
----
-type: specs.openrewrite.org/v1beta/recipe
 name: com.donohoedigital.RedundantInitializers
 displayName: Redundant field initializers
 description: >

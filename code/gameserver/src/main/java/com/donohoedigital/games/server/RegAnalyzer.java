@@ -147,7 +147,7 @@ public class RegAnalyzer
     /**
      * Run analyzer
      */
-    public static void main(String[] args) 
+    static void main(String[] args) 
     {
         try
         {

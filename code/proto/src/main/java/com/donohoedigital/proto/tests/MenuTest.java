@@ -45,7 +45,7 @@ public class MenuTest extends JPanel implements ActionListener, MouseListener {
    JPopupMenu popup = new JPopupMenu();
    JLabel messageArea = new JLabel();
 
-   public static void main(String[] args) {
+   static void main() {
       new MenuTest();
    }
 

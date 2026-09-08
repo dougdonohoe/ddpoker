@@ -54,7 +54,7 @@ public class JavaTime {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         
         System.out.println("Java time: " + System.currentTimeMillis());
         System.out.println("Timestamp: " + Utils.getCurrentTimeStamp());

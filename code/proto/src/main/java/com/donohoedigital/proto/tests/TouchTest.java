@@ -50,7 +50,7 @@ public class TouchTest {
     public TouchTest() {
     }
 
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         long last = System.currentTimeMillis();
         System.out.println("Touching " + args[0]);

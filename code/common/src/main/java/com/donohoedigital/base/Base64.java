@@ -1341,7 +1341,7 @@ public final class Base64
         
     }   // end inner class OutputStream
     
-    public static void main(String[] s)
+    static void main(String[] s)
     {
         System.out.println(s[0] +" equals " + Base64.encodeBytes(s[0].getBytes(StandardCharsets.UTF_8)));
     }

@@ -55,7 +55,7 @@ public class DefaultButtonBug implements ActionListener
     /**
      * default button bug test
      */
-    public static void main(String[] args) {
+    static void main() {
         try {
             DefaultButtonBug cursorbug = new DefaultButtonBug();
         }

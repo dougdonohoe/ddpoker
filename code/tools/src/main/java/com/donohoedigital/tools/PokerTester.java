@@ -68,7 +68,7 @@ public class PokerTester extends PokerMain implements ChatHandler, OnlineMessage
     /**
      * Run emailer
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             PokerTester tester = new PokerTester("poker", args);
             tester.init();

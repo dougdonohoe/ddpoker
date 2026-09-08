@@ -41,7 +41,7 @@ import java.io.IOException;
 
 public class MulticastSender 
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{

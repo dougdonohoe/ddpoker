@@ -63,7 +63,7 @@ public class PokerRankUpdater extends BaseCommandLineApp
     /**
      * Run analyzer
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try {
             new PokerRankUpdater("poker", args);

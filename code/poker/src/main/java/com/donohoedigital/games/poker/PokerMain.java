@@ -112,7 +112,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
      * Run Poker
      */
     @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try
         {

@@ -43,7 +43,7 @@ import java.nio.channels.DatagramChannel;
 
 public class UnicastSenderNIO 
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{

@@ -75,7 +75,7 @@ public class EncryptString
      *
      * @param args
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         // Use the server security provider.
         SecurityUtils.setSecurityProvider(new ServerSecurityProvider());

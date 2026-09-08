@@ -831,7 +831,7 @@ public class HandPotential
     /**
      * Testing
      */
-    public static void main(String[] args)
+    static void main()
     {
         LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
         loggingConfig.init();

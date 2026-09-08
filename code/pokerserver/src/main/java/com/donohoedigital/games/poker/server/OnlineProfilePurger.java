@@ -62,7 +62,7 @@ public class OnlineProfilePurger extends BaseCommandLineApp
     /**
      * Run purger.
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try {
             new OnlineProfilePurger("poker", args);

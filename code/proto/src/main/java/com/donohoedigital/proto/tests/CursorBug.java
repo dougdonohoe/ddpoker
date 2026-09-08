@@ -54,7 +54,7 @@ public class CursorBug
     /**
      * cursor bug test
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         if (args.length == 0)
         {
             System.out.println("Usage: java com.donohoedigital.proto.tests.CursorBug <filename.gif|filename.png>");
