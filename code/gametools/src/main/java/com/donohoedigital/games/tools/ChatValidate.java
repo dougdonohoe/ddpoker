@@ -48,7 +48,7 @@ import java.util.StringTokenizer;
  */
 public class ChatValidate
 {
-    public static void main(String[] argv)
+    static void main(String[] argv)
     {
         if (argv.length == 0)
         {

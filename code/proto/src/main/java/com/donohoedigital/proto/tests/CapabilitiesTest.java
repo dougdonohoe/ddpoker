@@ -243,7 +243,7 @@ public class CapabilitiesTest extends JFrame implements ItemListener {
         }
     }
     
-    public static void main(String[] args) {
+    static void main() {
         GraphicsEnvironment ge =
             GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] devices = ge.getScreenDevices();

@@ -41,7 +41,7 @@ import java.io.IOException;
 // java MulticastSnooper ALL-SYSTEMS.MCAST.NET 4000
 public class MulticastReceiver
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{

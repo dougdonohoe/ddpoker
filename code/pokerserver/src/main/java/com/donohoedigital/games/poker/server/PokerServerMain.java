@@ -37,7 +37,7 @@ import com.donohoedigital.config.LoggingConfig;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class PokerServerMain {
-    public static void main(String[] argv)
+    static void main()
     {
         LoggingConfig loggingConfig = new LoggingConfig("poker", ApplicationType.SERVER);
         loggingConfig.init();

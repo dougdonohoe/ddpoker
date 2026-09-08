@@ -181,7 +181,7 @@ public class LoadGen
     /**
      * * It all happens here
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         //String urlFile;
         String outFile;

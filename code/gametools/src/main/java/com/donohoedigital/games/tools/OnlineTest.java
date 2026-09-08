@@ -164,7 +164,7 @@ public class OnlineTest implements DDMessageListener
                                             );
     }
     
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         if (args.length == 0) usage();
         

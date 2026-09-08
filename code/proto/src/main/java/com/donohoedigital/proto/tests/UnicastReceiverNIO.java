@@ -49,7 +49,7 @@ public class UnicastReceiverNIO
     static final int BUFFER_LENGTH = 256;
     static final int PORT = 7755;
 
-    public static void main( String[] argv )
+    static void main()
 	{
 		try 
 		{

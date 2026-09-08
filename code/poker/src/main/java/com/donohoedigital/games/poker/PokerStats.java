@@ -294,7 +294,7 @@ public class PokerStats {
     /**
      * Main
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
         loggingConfig.init();
         logger = LogManager.getLogger(PokerStats.class);

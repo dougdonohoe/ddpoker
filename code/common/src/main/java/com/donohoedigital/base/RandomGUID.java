@@ -225,7 +225,7 @@ public class RandomGUID extends Object
     /*
      * Demonstraton and self test of class
      */
-    public static void main(String[] args)
+    static void main()
     {
         for (int i = 0; i < 100; i++)
         {

@@ -55,7 +55,7 @@ public class HostName
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
+    static void main()
     {
         System.out.println("Hostname: "+ ConfigUtils.getLocalHost(false));
     }

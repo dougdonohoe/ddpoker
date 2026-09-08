@@ -39,7 +39,7 @@ import java.io.IOException;
 // java UnicastSnooper ALL-SYSTEMS.MCAST.NET 4000
 public class UnicastReceiver
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{

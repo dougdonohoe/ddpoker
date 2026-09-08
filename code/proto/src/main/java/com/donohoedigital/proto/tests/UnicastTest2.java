@@ -62,7 +62,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
     /**
      * Run emailer
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try
         {

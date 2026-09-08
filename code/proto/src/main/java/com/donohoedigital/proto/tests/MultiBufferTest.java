@@ -124,7 +124,7 @@ public class MultiBufferTest {
         }
     }
     
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             int numBuffers = 3;
             if (args != null && args.length > 0) {

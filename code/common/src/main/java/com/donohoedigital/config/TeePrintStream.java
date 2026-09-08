@@ -68,7 +68,7 @@ public class TeePrintStream {
         System.setOut(originalOut);
     }
 
-    public static void main(String[] args) {
+    static void main() {
         TeePrintStream teePrintStream = new TeePrintStream();
 
         // Example usage

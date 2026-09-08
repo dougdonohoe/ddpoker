@@ -56,7 +56,7 @@ public class UnicastTest implements Runnable
 
     static boolean bSend = true;
 
-    public static void main( String[] argv )
+    static void main( String[] argv )
 	{
         if (argv.length == 0)
         {

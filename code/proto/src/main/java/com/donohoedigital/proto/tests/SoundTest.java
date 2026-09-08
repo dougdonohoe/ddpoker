@@ -60,7 +60,7 @@ public class SoundTest extends BaseCommandLineApp
     /**
      * Run emailer
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             Prefs.setRootNodeName("poker2");
             new SoundTest("poker", args);

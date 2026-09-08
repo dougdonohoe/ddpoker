@@ -53,7 +53,7 @@ public class ItalicBug
     /**
      * cursor bug test
      */
-    public static void main(String[] args) {
+    static void main() {
         
         try {
             ItalicBug cursorbug = new ItalicBug();

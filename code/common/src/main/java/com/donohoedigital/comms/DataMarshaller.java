@@ -472,7 +472,7 @@ public class DataMarshaller
     ////
 
     @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
-    public static void main(String[] args)
+    static void main()
     {
         for (Class<?> clazz : coderToType_.keySet())
         {

@@ -1152,7 +1152,7 @@ public class MersenneTwisterFast implements Serializable, Cloneable
     /**
      * Tests the code.
      */
-    public static void main(String[] args)
+    static void main()
         { 
         int j;
 

@@ -76,7 +76,7 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
     /**
      * Run the Gameboard Manager
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             LoggingConfig loggingConfig = new LoggingConfig("gametools", ApplicationType.CLIENT);
             loggingConfig.init();

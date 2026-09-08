@@ -42,7 +42,7 @@ import java.io.IOException;
 
 public class UnicastSender 
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{
