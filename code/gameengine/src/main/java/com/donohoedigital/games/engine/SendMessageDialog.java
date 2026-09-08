@@ -419,8 +419,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
                         Utils.sleepMillis(nSleep_);
                         // need to invoke later so happens from swing thread
                         SwingUtilities.invokeLater(
-                            () ->
-                                removeDialog()
+                            this::removeDialog
                         );
                     }, "SendMessageDialog"
                 );

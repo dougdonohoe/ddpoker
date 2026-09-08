@@ -203,8 +203,7 @@ public class DealCommunity extends ChainPhase implements PlayerActionListener
 
             // do processing
             SwingUtilities.invokeLater(
-                () ->
-                    displayCards()
+                DealCommunity.this::displayCards
             );
         }
     }

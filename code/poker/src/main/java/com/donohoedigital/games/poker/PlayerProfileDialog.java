@@ -198,31 +198,26 @@ public class PlayerProfileDialog extends DialogPhase implements PropertyChangeLi
 
         if (profile_.isOnline())
         {
-            emailButton_.addActionListener(e ->
-                doButton(e));
+            emailButton_.addActionListener(this::doButton);
 
             if (passwordButton_ != null)
             {
-                passwordButton_.addActionListener(e ->
-                    doButton(e));
+                passwordButton_.addActionListener(this::doButton);
             }
 
             if (sendButton_ != null)
             {
-                sendButton_.addActionListener(e ->
-                    doButton(e));
+                sendButton_.addActionListener(this::doButton);
             }
 
             if (resetButton_ != null)
             {
-                resetButton_.addActionListener(e ->
-                    doButton(e));
+                resetButton_.addActionListener(this::doButton);
             }
 
             if (syncButton_ != null)
             {
-                syncButton_.addActionListener(e ->
-                    doButton(e));
+                syncButton_.addActionListener(this::doButton);
             }
         }
 

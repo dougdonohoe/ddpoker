@@ -251,8 +251,7 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
             Collections.sort(list, LINK_COMPARATOR);
 
             // table changed
-            GuiUtils.invoke(() ->
-                updateSwing());
+            GuiUtils.invoke(this::updateSwing);
         }
 
         private void updateSwing()

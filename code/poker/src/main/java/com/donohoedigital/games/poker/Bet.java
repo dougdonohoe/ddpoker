@@ -291,8 +291,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
 
             // do processing
             SwingUtilities.invokeLater(
-                () ->
-                    doAI()
+                Bet.this::doAI
             );
         }
     }
