@@ -36,10 +36,11 @@
 
 package com.donohoedigital.mail;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 import jakarta.activation.DataSource;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class DDAttachment implements DataSource
 {

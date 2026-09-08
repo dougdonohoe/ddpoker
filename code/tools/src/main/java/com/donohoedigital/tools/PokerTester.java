@@ -38,12 +38,20 @@
 
 package com.donohoedigital.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerMain;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.online.ChatHandler;
+import com.donohoedigital.games.poker.online.OnlineManager;
+import com.donohoedigital.games.poker.online.OnlineMessageListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *

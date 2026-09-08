@@ -32,9 +32,11 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.DDPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 
 /**
  * Rank position graphic for the Player Info dashboard item.  Draws one or two vertical

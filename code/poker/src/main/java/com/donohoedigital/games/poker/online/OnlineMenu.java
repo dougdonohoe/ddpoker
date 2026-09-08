@@ -33,14 +33,16 @@
 package com.donohoedigital.games.poker.online;
 
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.poker.PlayerProfile;
+import com.donohoedigital.games.poker.PlayerProfileOptions;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.base.Utils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import java.awt.BorderLayout;
 
 /**
  * Created by IntelliJ IDEA.

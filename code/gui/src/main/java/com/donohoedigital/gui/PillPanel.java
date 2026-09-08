@@ -33,7 +33,7 @@
 package com.donohoedigital.gui;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.RoundRectangle2D;
 
 /**
  * Created by IntelliJ IDEA.

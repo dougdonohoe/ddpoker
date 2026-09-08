@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.comms;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DMTypedHashMap;
 
 /**
  *

@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.BaseFrame;
+import com.donohoedigital.gui.DDPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Dimension;
 
 /**
  * Created by IntelliJ IDEA.

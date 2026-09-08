@@ -38,12 +38,19 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.net.*;
-import java.util.*;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
 
 /**
  * @author donohoe

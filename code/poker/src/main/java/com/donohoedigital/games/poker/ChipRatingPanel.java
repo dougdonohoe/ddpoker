@@ -36,8 +36,11 @@ import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.DDLabel;
 import com.donohoedigital.config.ImageConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 
 public class ChipRatingPanel extends DDPanel

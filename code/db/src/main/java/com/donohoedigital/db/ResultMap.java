@@ -32,9 +32,10 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DMTypedHashMap;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Contains query results whose values are set according to the current result row.

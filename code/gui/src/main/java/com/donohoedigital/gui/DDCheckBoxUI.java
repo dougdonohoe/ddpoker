@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.plaf.metal.*;
-import java.awt.*;
+import javax.swing.plaf.metal.MetalCheckBoxUI;
+import java.awt.Color;
 
 /**
  * Created by IntelliJ IDEA.

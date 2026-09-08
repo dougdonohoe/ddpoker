@@ -32,14 +32,19 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.games.engine.DialogPhase;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.ai.Roster;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.gui.DDHtmlArea;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.DDTextArea;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class PlayerTypeRosterDialog extends DialogPhase
 {

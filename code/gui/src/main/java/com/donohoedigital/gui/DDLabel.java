@@ -38,9 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 import java.awt.*;
 
 /**

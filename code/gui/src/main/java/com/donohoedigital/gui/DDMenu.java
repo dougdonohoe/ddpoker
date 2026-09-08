@@ -39,9 +39,13 @@
 package com.donohoedigital.gui;
 
 
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
+import javax.swing.Icon;
+import javax.swing.JMenu;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  * Should be identical to DDMenuItem since JMenu extends JMenuItem

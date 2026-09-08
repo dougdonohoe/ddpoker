@@ -38,9 +38,12 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *

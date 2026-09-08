@@ -38,14 +38,17 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.ProfileList;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
-import java.io.*;
-import java.util.*;
+import javax.swing.JComponent;
+import java.io.File;
+import java.util.List;
 
 public class TableDesignManager extends ProfileManagerPanel
 {

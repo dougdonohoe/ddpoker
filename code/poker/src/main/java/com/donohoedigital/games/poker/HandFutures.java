@@ -38,10 +38,17 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.LoggingConfig;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *

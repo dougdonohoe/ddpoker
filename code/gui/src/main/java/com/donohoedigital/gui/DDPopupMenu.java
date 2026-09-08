@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+import java.awt.Component;
 
 /**
  * Created by IntelliJ IDEA.

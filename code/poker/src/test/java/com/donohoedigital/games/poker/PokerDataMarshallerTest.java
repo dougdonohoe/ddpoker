@@ -32,10 +32,8 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DataMarshaller;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by IntelliJ IDEA.

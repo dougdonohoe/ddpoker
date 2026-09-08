@@ -39,9 +39,12 @@
 package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.config.Perf;
+import com.donohoedigital.config.Prefs;
 import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Doug Donohoe

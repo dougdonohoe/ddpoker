@@ -38,13 +38,21 @@
 
 package com.donohoedigital.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.mail.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.mail.DDPostalService;
+import com.donohoedigital.mail.DDPostalServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * @author Doug Donohoe

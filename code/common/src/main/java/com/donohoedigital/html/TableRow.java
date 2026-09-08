@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.html;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.

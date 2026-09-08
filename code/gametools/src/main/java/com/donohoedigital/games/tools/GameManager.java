@@ -38,14 +38,18 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.games.config.GameboardConfig;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.*;
 
 /**

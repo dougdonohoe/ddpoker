@@ -38,16 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
-
-import java.awt.*;
-import javax.swing.table.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
-import java.util.*;
-import java.awt.event.*;
+import java.awt.Color;
 
 /**
  *

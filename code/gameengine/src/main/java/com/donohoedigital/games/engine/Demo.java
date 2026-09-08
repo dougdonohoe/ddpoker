@@ -38,11 +38,14 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.gui.DDButton;
+import com.donohoedigital.gui.DDHtmlArea;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
 
-import java.awt.*;
-import java.util.prefs.*;
+import java.awt.BorderLayout;
 
 /**
  * @author Doug Donohoe

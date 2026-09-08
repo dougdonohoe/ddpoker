@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.games.poker.dao;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.db.dao.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.db.dao.BaseDao;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.OnlineProfilePurgeSummary;
+import com.donohoedigital.games.poker.model.OnlineProfileSummary;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

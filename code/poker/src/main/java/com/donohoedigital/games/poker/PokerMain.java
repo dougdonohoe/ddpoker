@@ -64,8 +64,9 @@ import com.donohoedigital.udp.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.SwingUtilities;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.SocketChannel;

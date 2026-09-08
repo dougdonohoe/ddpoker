@@ -37,7 +37,6 @@ import com.donohoedigital.games.poker.wicket.PokerWicketConstants;
 import com.donohoedigital.wicket.WicketUtils;
 import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.components.VoidPanel;
-import com.donohoedigital.wicket.models.StringModel;
 import org.apache.wicket.AttributeModifier;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;

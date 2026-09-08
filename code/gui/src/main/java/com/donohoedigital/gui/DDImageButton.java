@@ -38,11 +38,16 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.ImageConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  * @author Doug Donohoe

@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.config;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * ArrayList subclass used for Territory

@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.engine.Card;
 
 public class PreFlopBias
 {

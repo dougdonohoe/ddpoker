@@ -38,7 +38,8 @@
 
 package com.donohoedigital.games.config;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *

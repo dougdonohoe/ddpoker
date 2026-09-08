@@ -38,13 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.plaf.*;
-import javax.swing.border.*;
+import java.awt.Component;
+import java.awt.Graphics;
+import javax.swing.Icon;
+import javax.swing.JComponent;
 import java.io.Serializable;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
  * This class draws the horizontal bars for a ComboBox

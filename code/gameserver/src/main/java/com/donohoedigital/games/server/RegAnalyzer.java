@@ -38,19 +38,26 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.model.util.*;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.jsp.*;
-import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.model.util.RegInfo;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import com.donohoedigital.games.server.service.RegistrationService;
+import com.donohoedigital.jsp.JspFile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *

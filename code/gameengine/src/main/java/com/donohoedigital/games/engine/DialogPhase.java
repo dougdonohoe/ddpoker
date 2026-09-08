@@ -38,18 +38,26 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.prefs.*;
+import java.util.prefs.Preferences;
 
 /**
  * @author Doug Donohoe

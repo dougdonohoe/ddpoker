@@ -38,12 +38,13 @@
 
 package com.donohoedigital.proto.tests;
 
-import javax.swing.*;
-import java.awt.*;
-import javax.swing.ImageIcon;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  *

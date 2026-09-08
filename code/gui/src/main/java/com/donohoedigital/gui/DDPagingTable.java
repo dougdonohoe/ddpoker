@@ -34,8 +34,10 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

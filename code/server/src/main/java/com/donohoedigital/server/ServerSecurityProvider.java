@@ -32,11 +32,14 @@
  */
 package com.donohoedigital.server;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
 
-import java.net.*;
-import java.security.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.MessageDigest;
 
 /**
  * Contains information to drive security routines.

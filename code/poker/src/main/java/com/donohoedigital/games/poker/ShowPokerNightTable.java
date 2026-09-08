@@ -43,8 +43,12 @@ import com.donohoedigital.games.engine.ProfileList;
 import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

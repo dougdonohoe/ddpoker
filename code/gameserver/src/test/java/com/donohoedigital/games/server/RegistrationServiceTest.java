@@ -34,7 +34,8 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.games.server.model.Registration;
 import com.donohoedigital.games.server.service.RegistrationService;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;

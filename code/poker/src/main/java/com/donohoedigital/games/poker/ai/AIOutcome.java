@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class AIOutcome
 {

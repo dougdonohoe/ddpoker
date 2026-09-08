@@ -32,8 +32,6 @@
  */
 package com.donohoedigital.games.poker.wicket.pages.home;
 
-import com.donohoedigital.wicket.annotations.MountPath;
-
 /**
  * @author Doug Donohoe
  */

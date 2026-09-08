@@ -38,8 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Point;
 
 /**
  *

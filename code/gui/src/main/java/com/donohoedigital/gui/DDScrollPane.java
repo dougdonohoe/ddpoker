@@ -32,9 +32,11 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import java.awt.Component;
 
 /**
  * Created by IntelliJ IDEA.

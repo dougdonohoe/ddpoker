@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.base;
 
-import javax.crypto.spec.*;
-import java.security.spec.*;
-import java.security.*;
+import javax.crypto.spec.DESKeySpec;
+import java.security.spec.KeySpec;
+import java.security.InvalidKeyException;
 
 /**
  * Contains information to drive security routines.

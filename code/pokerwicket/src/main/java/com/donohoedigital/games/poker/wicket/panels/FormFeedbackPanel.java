@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.poker.wicket.panels;
 
-import org.apache.wicket.feedback.*;
-import org.apache.wicket.markup.html.panel.*;
+import org.apache.wicket.feedback.FeedbackMessage;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 /**
  * Created by IntelliJ IDEA.

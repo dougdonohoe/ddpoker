@@ -32,11 +32,16 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.font.*;
-import java.awt.geom.*;
-import java.util.*;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.util.StringTokenizer;
 
 public class TextUtil 
 {

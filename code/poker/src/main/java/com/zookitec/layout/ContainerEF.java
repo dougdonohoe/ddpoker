@@ -26,8 +26,9 @@
  
 package com.zookitec.layout;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Container;
+import java.awt.Insets;
+import java.util.WeakHashMap;
 
 /**
  * An expression factory used to create expressions for

@@ -32,12 +32,13 @@
  */
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.gui.DDTable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.TypedHashMap;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * Created by IntelliJ IDEA.

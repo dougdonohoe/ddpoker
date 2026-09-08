@@ -38,22 +38,29 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.RandomGUID;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.udp.UDPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
-import java.net.*;
+import javax.swing.JDesktopPane;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.io.File;
+import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.prefs.*;
+import java.util.prefs.Preferences;
 
 /**
  * @author Doug Donohoe

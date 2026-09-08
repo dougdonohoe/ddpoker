@@ -32,12 +32,18 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.HandAction;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Reusable computation of relative likelihood of pocket hands given hand history.

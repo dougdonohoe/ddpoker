@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.wicket.common;
 
-import org.apache.wicket.feedback.*;
+import org.apache.wicket.feedback.FeedbackMessage;
+import org.apache.wicket.feedback.IFeedbackMessageFilter;
 
 /**
  * Created by IntelliJ IDEA.

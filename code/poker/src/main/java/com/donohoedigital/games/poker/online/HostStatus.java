@@ -32,18 +32,29 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.MessageErrorDialog;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTableInput;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.gui.DDCheckBox;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.ImageIcon;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.

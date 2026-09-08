@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.games.poker.*;
+import com.donohoedigital.games.poker.PokerTable;
 
 /**
  * Created by IntelliJ IDEA.

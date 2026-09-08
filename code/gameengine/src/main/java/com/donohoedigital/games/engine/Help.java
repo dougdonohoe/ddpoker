@@ -38,17 +38,29 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.HelpConfig;
+import com.donohoedigital.config.HelpTopic;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 

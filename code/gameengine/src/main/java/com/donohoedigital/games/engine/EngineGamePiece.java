@@ -38,15 +38,18 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.StylesConfig;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.gui.ImageComponent;
+import com.donohoedigital.gui.TextUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
 /**
  *
  * @author  Doug Donohoe

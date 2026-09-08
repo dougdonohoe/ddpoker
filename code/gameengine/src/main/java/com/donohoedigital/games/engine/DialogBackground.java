@@ -38,11 +38,15 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.gui.DDCheckBox;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.ImageComponent;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 /**
  *

@@ -38,11 +38,14 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.gui.DDHtmlArea;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
 
 /**
  * Class to show a message.  It first calls getMessage() - this

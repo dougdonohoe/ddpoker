@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.gui.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.games.poker.engine.Card;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Created by IntelliJ IDEA.

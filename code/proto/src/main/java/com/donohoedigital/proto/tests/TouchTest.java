@@ -38,7 +38,7 @@
 
 package com.donohoedigital.proto.tests;
 
-import java.io.*;
+import java.io.File;
 
 /**
  *

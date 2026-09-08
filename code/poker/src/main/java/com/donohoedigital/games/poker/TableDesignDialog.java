@@ -38,17 +38,25 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.DialogPhase;
+import com.donohoedigital.games.engine.ProfileList;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *

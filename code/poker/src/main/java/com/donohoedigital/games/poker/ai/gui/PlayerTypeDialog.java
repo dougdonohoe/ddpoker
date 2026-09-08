@@ -32,20 +32,32 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.OptionMenuDialog;
+import com.donohoedigital.games.engine.Phase;
+import com.donohoedigital.games.engine.ProfileList;
+import com.donohoedigital.games.poker.DescriptionDialog;
+import com.donohoedigital.games.poker.ai.PlayStyle;
+import com.donohoedigital.games.poker.ai.PlayerType;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class PlayerTypeDialog extends OptionMenuDialog implements PropertyChangeListener, FocusListener
 {

@@ -39,22 +39,14 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.gui.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.comms.*;
-
-import java.util.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.awt.geom.*;
-import java.text.*;
-import java.beans.*;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.DialogPhase;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 
 /**
  *

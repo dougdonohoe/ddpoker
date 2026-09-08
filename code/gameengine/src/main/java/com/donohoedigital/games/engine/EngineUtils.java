@@ -51,7 +51,7 @@ import com.donohoedigital.gui.GuiUtils;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
-import java.awt.*;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.games.poker.service;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.model.*;
-import org.springframework.transaction.annotation.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.OnlineProfilePurgeSummary;
+import com.donohoedigital.games.poker.model.OnlineProfileSummary;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

@@ -32,10 +32,15 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.DDImageButton;
+import com.donohoedigital.gui.DDImageCheckBox;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.PillPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 /**
  * Created by IntelliJ IDEA.

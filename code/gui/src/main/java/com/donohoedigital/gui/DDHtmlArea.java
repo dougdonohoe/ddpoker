@@ -38,12 +38,18 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.text.*;
-import javax.swing.text.html.*;
+import javax.swing.JEditorPane;
+import javax.swing.SwingUtilities;
+import javax.swing.text.Caret;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
 /**

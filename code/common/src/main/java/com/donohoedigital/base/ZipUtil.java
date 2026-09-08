@@ -32,8 +32,11 @@
  */
 package com.donohoedigital.base;
 
-import java.util.zip.*;
-import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.Enumeration;
+import java.util.Vector;
 import java.io.*;
 
 public class ZipUtil extends ZipFile

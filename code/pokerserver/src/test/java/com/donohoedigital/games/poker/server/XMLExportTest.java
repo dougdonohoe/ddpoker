@@ -32,17 +32,21 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.xml.*;
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.xml.SimpleXMLEncoder;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Doug Donohoe

@@ -38,12 +38,14 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 /**
  *
  * @author  donohoe

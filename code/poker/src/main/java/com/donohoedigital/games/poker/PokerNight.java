@@ -48,7 +48,7 @@ import com.donohoedigital.games.poker.model.TournamentProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 /**
  *

@@ -28,8 +28,9 @@
 package com.zookitec.layout;
 
 import java.awt.*;
-import java.util.*;
-import java.io.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.io.Serializable;
 
 /**
  * A layout manager that provides explicit control over the layout of components.

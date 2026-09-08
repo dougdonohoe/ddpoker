@@ -42,8 +42,8 @@ import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

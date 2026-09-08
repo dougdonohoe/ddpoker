@@ -38,9 +38,9 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.TypedHashMap;
 
-import java.util.*;
+import java.util.StringTokenizer;
 
 /**
  *

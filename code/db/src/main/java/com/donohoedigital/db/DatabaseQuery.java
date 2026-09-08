@@ -32,11 +32,18 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.DataMarshaller;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 

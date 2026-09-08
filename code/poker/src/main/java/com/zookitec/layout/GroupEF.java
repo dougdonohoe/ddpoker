@@ -27,7 +27,7 @@
 package com.zookitec.layout;
 
 
-import java.awt.*;
+import java.awt.Component;
 
 /**
  * An expression factory used to create expressions

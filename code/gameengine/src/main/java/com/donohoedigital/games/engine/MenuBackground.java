@@ -38,15 +38,20 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.ImageDef;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 /**
  * @author Doug Donohoe

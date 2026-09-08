@@ -38,11 +38,12 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DataMarshal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  *

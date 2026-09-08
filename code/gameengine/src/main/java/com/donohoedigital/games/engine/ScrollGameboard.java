@@ -38,15 +38,19 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameboardConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.gui.Cursors;
+import com.donohoedigital.gui.InternalDialog;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import java.util.prefs.*;
+import java.util.Stack;
 
 /**
  *

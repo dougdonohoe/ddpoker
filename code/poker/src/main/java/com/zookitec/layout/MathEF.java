@@ -27,9 +27,8 @@
 package com.zookitec.layout;
 
 
-import java.awt.*;
-import java.util.*;
-import java.lang.ref.*;
+import java.util.WeakHashMap;
+import java.lang.ref.WeakReference;
 
 /**
  * An expression factory used to create expressions for common mathematical operations.

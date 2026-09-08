@@ -38,21 +38,30 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.comms.Version;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.ai.OpponentModel;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.games.poker.network.PokerConnection;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.server.WorkerThread;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Comparator;
 
 /**
  *

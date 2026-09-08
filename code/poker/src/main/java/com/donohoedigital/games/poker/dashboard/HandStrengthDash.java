@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.engine.GameContext;
 
 /**
  * Created by IntelliJ IDEA.

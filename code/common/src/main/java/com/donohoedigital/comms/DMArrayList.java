@@ -38,9 +38,10 @@
 
 package com.donohoedigital.comms;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * This array list is marshallable and can marshal the following

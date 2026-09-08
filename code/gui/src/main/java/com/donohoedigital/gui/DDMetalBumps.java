@@ -34,7 +34,7 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.config.ImageDef;
 
-import javax.swing.*;
+import javax.swing.Icon;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;

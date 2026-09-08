@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.wicket.models;
 
-import com.donohoedigital.wicket.labels.*;
-import org.apache.wicket.model.*;
+import com.donohoedigital.wicket.labels.PluralLabelProvider;
+import org.apache.wicket.model.Model;
 
 /**
  * @author Doug Donohoe

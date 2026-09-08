@@ -38,11 +38,15 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.base.ObjectLock;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.ConfigUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  *

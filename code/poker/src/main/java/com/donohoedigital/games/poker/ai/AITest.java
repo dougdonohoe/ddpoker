@@ -32,18 +32,31 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.config.GameConfigUtils;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateFactory;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.LoadSavedGame;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.gui.DDHtmlArea;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GlassButton;
+import com.donohoedigital.gui.GuiManager;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JDialog;
+import javax.swing.JScrollPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
 
 public class AITest
 {

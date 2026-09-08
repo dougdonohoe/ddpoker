@@ -32,19 +32,26 @@
  */
 package com.donohoedigital.games.poker.service.impl;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.dao.*;
-import com.donohoedigital.games.poker.model.*;
-import static com.donohoedigital.games.poker.model.OnlineProfile.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.poker.dao.OnlineGameDao;
+import com.donohoedigital.games.poker.dao.OnlineProfileDao;
+import com.donohoedigital.games.poker.dao.TournamentHistoryDao;
+import com.donohoedigital.games.poker.model.HostSummary;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import static com.donohoedigital.games.poker.model.OnlineProfile.Dummy;
 import static com.donohoedigital.games.poker.model.TournamentHistory.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.transaction.annotation.*;
+import com.donohoedigital.games.poker.model.util.OnlineGameList;
+import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.

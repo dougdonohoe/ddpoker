@@ -38,9 +38,9 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DDMessageTransporter;
 
-import java.nio.channels.*;
+import java.nio.channels.SocketChannel;
 
 /**
  * Interface for game/peer2peer interaction

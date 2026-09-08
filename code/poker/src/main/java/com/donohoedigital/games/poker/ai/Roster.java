@@ -33,10 +33,11 @@
 package com.donohoedigital.games.poker.ai;
 
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Roster
 {

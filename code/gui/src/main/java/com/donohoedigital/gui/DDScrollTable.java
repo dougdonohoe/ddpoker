@@ -38,8 +38,9 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import java.awt.Insets;
 
 
 /**

@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.db.model;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.

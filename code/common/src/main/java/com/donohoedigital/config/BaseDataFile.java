@@ -38,12 +38,14 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.comms.TokenizedList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
 /**
  *

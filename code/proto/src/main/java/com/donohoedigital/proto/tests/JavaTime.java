@@ -38,8 +38,8 @@
 
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
-import java.util.*;
+import com.donohoedigital.base.Utils;
+import java.util.Date;
 
 /**
  *

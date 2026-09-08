@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.ai.HandProbabilityMatrix;
+import com.donohoedigital.gui.DDPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 public class HandProbabilityMatrixPanel extends DDPanel
 {

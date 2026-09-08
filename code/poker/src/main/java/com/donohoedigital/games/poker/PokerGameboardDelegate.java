@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.poker;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 
 /**
  *

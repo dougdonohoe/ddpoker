@@ -39,8 +39,10 @@ import com.donohoedigital.gui.DDLabel;
 import com.donohoedigital.gui.GuiManager;
 import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
 
 /**
  * Created by IntelliJ IDEA.

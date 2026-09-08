@@ -39,7 +39,7 @@
 package com.donohoedigital.comms;
 
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.TypedHashMap;
 
 /**
  *

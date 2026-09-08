@@ -38,13 +38,12 @@
 
 package com.donohoedigital.games.tools;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.Territories;
+import com.donohoedigital.games.config.Territory;
 
-import javax.swing.table.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
+import javax.swing.table.AbstractTableModel;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  *

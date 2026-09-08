@@ -38,9 +38,15 @@
 
 package com.donohoedigital.games.poker.event;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.poker.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.games.poker.HandAction;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
 
 /**
  *

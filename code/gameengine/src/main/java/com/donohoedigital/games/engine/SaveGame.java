@@ -38,10 +38,10 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.GameButton;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Component;
 
 /**
  *

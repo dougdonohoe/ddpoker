@@ -38,7 +38,7 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
 /**
  * @author donohoe

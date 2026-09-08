@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.base;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
 
 /**
  * This class extends ByteArrayOutputStream to provide

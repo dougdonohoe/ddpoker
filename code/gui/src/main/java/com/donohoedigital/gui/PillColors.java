@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.gui;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Created by IntelliJ IDEA.

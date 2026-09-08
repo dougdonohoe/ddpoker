@@ -39,8 +39,8 @@
 package com.donohoedigital.games.engine;
 
 import com.donohoedigital.comms.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.comms.GameInfo;
+import com.donohoedigital.games.config.GamePlayer;
 
 /**
  *

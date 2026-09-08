@@ -38,16 +38,14 @@
 
 package com.donohoedigital.games.tools;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Cursor;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
-import java.awt.geom.*;
-
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.config.MapPoint;
+import com.donohoedigital.games.config.MapPoints;
+import com.donohoedigital.gui.Cursors;
 /**
  *
  * @author  Doug Donohoe

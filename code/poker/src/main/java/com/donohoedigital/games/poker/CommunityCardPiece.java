@@ -38,9 +38,12 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateEntry;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *

@@ -38,8 +38,8 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.poker.online.TournamentDirector;
 
 /**
  *

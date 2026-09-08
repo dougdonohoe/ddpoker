@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.plaf.metal.*;
-import javax.swing.plaf.basic.*;
+import javax.swing.plaf.metal.MetalSplitPaneUI;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
 
 /**
  * Created by IntelliJ IDEA.

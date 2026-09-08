@@ -38,7 +38,7 @@
 
 package com.donohoedigital.gui;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  *

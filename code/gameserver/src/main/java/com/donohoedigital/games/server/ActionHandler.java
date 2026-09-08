@@ -38,7 +38,8 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.games.comms.*;
+import com.donohoedigital.games.comms.ActionItem;
+import com.donohoedigital.games.comms.EngineMessage;
 
 /**
  *

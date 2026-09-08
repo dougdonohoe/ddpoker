@@ -32,13 +32,19 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.DataElement;
+import com.donohoedigital.games.poker.ai.HandSelectionScheme;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.gui.DDComboBox;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDLabelBorder;
+import com.donohoedigital.gui.DDPanel;
 
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HandSelectionPanel extends DDPanel
 {

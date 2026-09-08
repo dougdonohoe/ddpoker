@@ -27,9 +27,9 @@
 package com.zookitec.layout;
 
 
-import java.awt.*;
-import java.util.*;
-import java.lang.ref.*;
+import java.awt.Component;
+import java.util.WeakHashMap;
+import java.lang.ref.WeakReference;
 
 /**
  * An expression factory used to create expressions for attributes of a component.

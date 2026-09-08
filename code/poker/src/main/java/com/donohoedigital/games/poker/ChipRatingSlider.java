@@ -32,12 +32,18 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.DDSlider;
+import com.donohoedigital.gui.GuiManager;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class ChipRatingSlider extends DDPanel implements ChangeListener
 {

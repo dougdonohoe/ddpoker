@@ -38,14 +38,18 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.config.TerritoryPoint;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.TextUtil;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.image.BufferedImage;
 
 /**
  *

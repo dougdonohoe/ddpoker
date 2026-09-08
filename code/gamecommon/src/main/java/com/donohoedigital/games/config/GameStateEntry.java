@@ -39,11 +39,15 @@
 package com.donohoedigital.games.config;
 
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.EscapeStringTokenizer;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.ConfigUtils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  *

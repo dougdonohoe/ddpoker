@@ -38,10 +38,10 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.mail.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.mail.DDMailErrorInfo;
 
-import java.util.*;
+import java.util.StringTokenizer;
 
 /**
  *

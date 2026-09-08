@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.*;
-import org.apache.logging.log4j.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.util.OnlineGameList;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.games.poker.service.TournamentHistoryService;
+import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.date;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by IntelliJ IDEA.

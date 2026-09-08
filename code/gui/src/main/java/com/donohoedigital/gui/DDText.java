@@ -38,8 +38,8 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.border.*;
-import java.awt.*;
+import javax.swing.border.Border;
+import java.awt.Color;
 
 /**
  *

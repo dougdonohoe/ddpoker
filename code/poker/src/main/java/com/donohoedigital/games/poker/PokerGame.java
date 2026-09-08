@@ -38,22 +38,37 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DMArrayList;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.p2p.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.engine.DiceRoller;
+import com.donohoedigital.games.engine.Game;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.ai.Roster;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.PokerConnection;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.games.poker.online.OnlineManager;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.p2p.LanManager;
+import com.donohoedigital.p2p.P2PURL;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.security.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.security.SecureRandom;
 import java.util.*;
 
 /**

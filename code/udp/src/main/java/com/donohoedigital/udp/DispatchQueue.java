@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.Utils;
 
-import java.util.concurrent.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by IntelliJ IDEA.

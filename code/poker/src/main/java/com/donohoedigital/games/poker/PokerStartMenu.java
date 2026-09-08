@@ -52,8 +52,13 @@ import com.zookitec.layout.ExplicitConstraints;
 import com.zookitec.layout.ExplicitLayout;
 import com.zookitec.layout.MathEF;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.util.prefs.Preferences;
 
 /**

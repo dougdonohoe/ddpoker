@@ -40,13 +40,21 @@ package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.base.Base64;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.*;
-import java.nio.channels.*;
-import java.util.*;
+import java.nio.channels.ClosedByInterruptException;
+import java.nio.channels.SocketChannel;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Simple client to use in messaging architecture, handles DNS timeout

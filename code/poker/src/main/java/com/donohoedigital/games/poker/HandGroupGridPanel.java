@@ -32,15 +32,21 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.ai.HandSelectionScheme;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.gui.DDButton;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.Collections;
 import java.util.List;
 
 public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyListener, FocusListener

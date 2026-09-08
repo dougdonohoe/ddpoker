@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 
 public class SimpleBias
 {

@@ -36,14 +36,31 @@
 
 ---
 type: specs.openrewrite.org/v1beta/recipe
+name: com.donohoedigital.Imports
+displayName: Normalize imports
+description: >
+  Remove unused imports and normalize the rest to the project's IntelliJ code style.
+  .idea/codeStyles sets no Java import options, so IntelliJ's defaults apply: collapse to
+  a star import at 5 classes (3 for static).  Many files here carry "import javax.swing.*"
+  while using only two or three classes from it, which is below that threshold - IntelliJ's
+  own Optimize Imports would expand them too.
+  Run this on its own.  OpenRewrite normalizes imports whenever any recipe removes one, so
+  doing it once deliberately keeps every later recipe's diff free of import churn.
+  RUN IT TWICE.  A same-package star import (e.g. "import com.donohoedigital.proto.tests.*"
+  inside that same package) expands on the first pass into an explicit same-package import,
+  which is still redundant, and only the second pass drops it.  Two files in proto/ hit this.
+  Re-run until dryRun produces an empty patch.
+recipeList:
+  - org.openrewrite.java.RemoveUnusedImports
+
+---
+type: specs.openrewrite.org/v1beta/recipe
 name: com.donohoedigital.TypeCleanup
 displayName: Generics and type cleanup
 description: >
   Diamond operator, redundant casts and C-style array declarations.
   The lowest-risk group - none of these change behaviour.
-  NOTE: org.openrewrite.java.RemoveUnusedImports is deliberately NOT here.  It expands
-  star imports (import javax.swing.* becomes one line per class), which this code base
-  uses on purpose - it would touch ~370 files for no benefit.
+  NOTE: import handling lives in its own recipe - see Imports below.
   NOTE: org.openrewrite.staticanalysis.RemoveRedundantTypeCast is also NOT here - see
   the RedundantCasts recipe below.
   NOTE: org.openrewrite.staticanalysis.RemoveExtraSemicolons is also NOT here.  It
@@ -161,3 +178,25 @@ description: >
   selects a different overload would not.  Kept opt-in for that reason.
 recipeList:
   - org.openrewrite.staticanalysis.RemoveRedundantTypeCast
+
+---
+type: specs.openrewrite.org/v1beta/style
+name: com.donohoedigital.ImportStyle
+displayName: IntelliJ import layout
+description: >
+  Match IntelliJ's default import thresholds (5 classes, 3 static names) so OpenRewrite
+  groups imports the way the IDE does.  .idea/codeStyles sets no Java import options, so
+  those defaults are what this project uses.  Wired in via <activeStyles> in code/pom.xml,
+  so every recipe run picks it up.
+styleConfigs:
+  - org.openrewrite.java.style.ImportLayoutStyle:
+      classCountToUseStarImport: 5
+      nameCountToUseStarImport: 3
+      layout:
+        - import java.*
+        - <blank line>
+        - import javax.*
+        - <blank line>
+        - import all other imports
+        - <blank line>
+        - import static all other imports

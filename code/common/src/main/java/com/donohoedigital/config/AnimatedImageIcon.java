@@ -38,8 +38,8 @@
 
 package com.donohoedigital.config;
 
-import javax.swing.*;
-import java.net.*;
+import javax.swing.ImageIcon;
+import java.net.URL;
 
 /**
  *

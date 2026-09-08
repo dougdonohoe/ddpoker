@@ -41,10 +41,12 @@ package com.donohoedigital.gui;
 import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 /**
  *
