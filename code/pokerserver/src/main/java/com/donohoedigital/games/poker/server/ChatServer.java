@@ -117,6 +117,15 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
     }
 
     /**
+     * port the chat server listens on (settings.udp.chat.port) - this is what a client
+     * puts in Options -> Online -> Online Chat, not the UDP server's preferred port
+     */
+    int getPort()
+    {
+        return nPort_;
+    }
+
+    /**
      * is this a chat link?
      */
     public boolean isChat(UDPLink link)

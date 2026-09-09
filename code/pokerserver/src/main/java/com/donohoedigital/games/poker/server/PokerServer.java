@@ -63,7 +63,24 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
         super.init();
         udp_.manager().addMonitor(this);
         udp_.start();
+        logOnlineSettings();
         start();
+    }
+
+    /**
+     * Log the values to enter under Options -> Online -> Public Online Servers in the
+     * client.  Worth spelling out: the chat server listens on its own port (see
+     * settings.udp.chat.port), which is not the UDP server's preferred port, so neither
+     * "Preferred ..." line above is the right value to copy.
+     */
+    private void logOnlineSettings()
+    {
+        String server = isBound() ? getPreferredIP() + ':' + getPreferredPort() : "<not bound>";
+        String chat = udp_.isBound() ? udp_.getPreferredIP() + ':' + chat_.getPort() : "<not bound>";
+
+        logger.info("Client settings (Options -> Online -> Public Online Servers):\n\n" +
+                    "     Online Server: {}\n" +
+                    "     Online Chat:   {}\n", server, chat);
     }
 
     /**

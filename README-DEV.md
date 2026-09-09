@@ -760,6 +760,29 @@ verify:
   [Appendix I](#appendix-i-native-windows-and-powershell))
 * Build `act` docker image and running `act-ddpoker` (remember to stop MySQL)
 
+### Online Tests
+
+Turn on these debug settings:
+
+```properties
+settings.debug.skip.dup.key.check=     true
+settings.debug.override.key=           true
+```
+
+Extra keys:
+
+```text
+KEY-23-AEAC9471-EAB6-4FE8-8EB5-500707990851-84-0631
+KEY-23-6569DDEF-258B-470E-8081-9CF251941638-25-4647
+KEY-23-6B38FBB4-340C-4ABC-9F18-AA6C77B5A1C4-50-9311
+```
+
+Use these flags to start 2nd client at a different position with a different player profile:
+
+```shell
+poker -key KEY-23-AEAC9471-EAB6-4FE8-8EB5-500707990851-84-0631 -profile "Test Profile 2" -x 800 -y 40
+```
+
 ## Appendix G: DD Poker Website
 
 Back in the day, the Wicket-based webapp (aka the Online Portal) was also the 
@@ -779,7 +802,6 @@ current working directory.  To preview the site run:
 ```bash
 python3 -m http.server 8000
 ```
-
 
 ## Appendix H: Releasing a New Version
 
