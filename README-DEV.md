@@ -242,71 +242,13 @@ to the latest versions that work with Java 25.  The only exception is `HSQLDB`, 
 have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
 we don't want to deal with at this time.
 
-### Code Modernization (OpenRewrite)
-
-Because the code started life on Java 5, a lot of it predates language features we now take
-for granted.  [OpenRewrite](https://docs.openrewrite.org) is wired into `code/pom.xml` to
-automate the mechanical parts of catching up.  It is not bound to any lifecycle phase, so
-ordinary builds are unaffected.
-
-Recipes are grouped in `rewrite.yml` (repo root), one group per reviewable change:
-
-| Recipe                                     | What it does                                                      |
-|--------------------------------------------|-------------------------------------------------------------------|
-| `com.donohoedigital.Imports`               | Remove unused imports, normalize the rest (**run twice**)         |
-| `com.donohoedigital.TypeCleanup`           | Diamond operator, C-style array declarations                      |
-| `com.donohoedigital.Lambdas`               | Anonymous functional interfaces to lambdas                        |
-| `com.donohoedigital.MethodReferences`      | Delegating lambdas to method references — **review each**         |
-| `com.donohoedigital.StringsAndCollections` | `isEmpty()`, `contains()`, `valueOf()`, `StringBuilder`, charsets |
-| `com.donohoedigital.FinalAndModifiers`     | `final` private fields and classes, modifier hygiene              |
-| `com.donohoedigital.ParameterizedLogging`  | `log.debug("x " + y)` to `log.debug("x {}", y)` — needs flags     |
-| `com.donohoedigital.RedundantCasts`        | Casts left over from pre-generics code — **review each**          |
-| `com.donohoedigital.RedundantInitializers` | Drop `= null` / `= false` / `= 0` from field declarations         |
-
-```shell
-cd code
-mvn rewrite:dryRun -Drewrite.activeRecipes=com.donohoedigital.TypeCleanup   # preview only
-mvn rewrite:run    -Drewrite.activeRecipes=com.donohoedigital.TypeCleanup   # apply
-mvn rewrite:discover                                                        # list all recipes
-```
-
-`dryRun` writes a patch to `code/target/rewrite/rewrite.patch` and changes nothing.  **Always
-dry-run and read the patch first.**  Recipes are idempotent — re-running one over already-fixed
-code is a no-op, so an empty patch means that group is fully applied.
-
-There is deliberately no dead-code recipe.  Removing unused private members cannot be done
-safely here: Hibernate, Wicket (which binds markup to component ids) and the gameengine XML
-save-game code all resolve members reflectively, so a wrong deletion compiles and fails only
-when that path runs.
-
-Each recipe's description in `rewrite.yml` carries its caveats — read it before running one.
-Three need particular attention:
-
-* `Imports` must be run **twice**.  A same-package star import expands on the first pass into
-  an explicit same-package import that is still redundant, and only the second pass drops it.
-* `ParameterizedLogging` cannot be run bare.  It needs a `methodPattern` (without one it
-  silently changes nothing and still reports `BUILD SUCCESS`), and it throws
-  `IndexOutOfBoundsException` on any call whose concatenation starts with a non-literal, so
-  those files must be excluded.  `rewrite.yml` has the full command.
-* `MethodReferences` and `RedundantCasts` are opt-in because each has produced wrong output
-  here — see their descriptions.  Review every change.
-
-After running any of them, `mvn rewrite:dryRun` again: an empty patch confirms the group is
-fully applied.  `FinalAndModifiers` is the one exception, and `rewrite.yml` lists the four
-fields it re-breaks.
-
-Three things are deliberately *not* automated, because they are matters of taste rather than
-correctness: converting locals to `var`, adding `final` to locals and parameters, and expanding
-star imports.  That last one is why `RemoveUnusedImports` is not in `TypeCleanup` — OpenRewrite
-rewrites `import javax.swing.*` into one line per class, which would touch ~370 files here.
-
-If you use IntelliJ, its own inspections can be run headlessly to see what it would flag.  This
-requires IntelliJ to be **closed**, since the inspector will not start alongside a running IDE:
-
-```shell
-"/Applications/IntelliJ IDEA.app/Contents/bin/inspect.sh" \
-    "$DDHOME" "$DDHOME/.idea/inspectionProfiles/Project_Default.xml" /tmp/inspect -v1 -format json
-```
+The Java itself has had a mechanical catch-up pass as well: anonymous listener classes became
+lambdas and method references, raw `new ArrayList<Foo>()` became the diamond operator, C-style
+array declarations were straightened out, private fields that are only assigned once are now
+`final`, and string-concatenating log calls were converted to log4j2's `{}` placeholders.  That
+was a one-time sweep of behavior-preserving changes, not a rewrite - plenty of pre-Java-8
+idiom remains, so don't be surprised by an old-fashioned `for` loop or a chain of `instanceof`
+checks that a switch pattern would handle today.
 
 ### Modules
 

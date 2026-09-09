@@ -144,43 +144,6 @@
         <version>3.6.0</version>
       </plugin>
 
-      <!--
-        OpenRewrite - automated source modernization.  Not bound to any lifecycle phase, so
-        ordinary builds are unaffected.  Recipes are defined in rewrite.yml in the repo root
-        (the plugin's default location - Maven treats the repo root as the multi-module root
-        because .mvn/ lives there).  See "Code Modernization" in README-DEV.md for usage.
-      -->
-      <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>6.46.1</version>
-        <configuration>
-          <activeStyles>
-            <style>com.donohoedigital.ImportStyle</style>
-          </activeStyles>
-        </configuration>
-        <!-- Versions are those pinned by rewrite-recipe-bom 3.37.0.  A BOM cannot be
-             imported here - Maven only honours scope=import in dependencyManagement -
-             so they are listed explicitly and should be bumped as a set. -->
-        <dependencies>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-static-analysis</artifactId>
-            <version>2.41.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-logging-frameworks</artifactId>
-            <version>3.32.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-migrate-java</artifactId>
-            <version>3.42.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-
     </plugins>
 
     <resources>
