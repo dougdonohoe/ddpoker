@@ -38,11 +38,11 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.gui.DDLabel;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 /**
  *

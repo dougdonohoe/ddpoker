@@ -38,16 +38,23 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.DDByteArrayOutputStream;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageTransporter;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.net.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.util.zip.*;
+import java.io.ByteArrayInputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.util.zip.CRC32;
 
 /**
  *
@@ -345,7 +352,7 @@ public class Peer2PeerMessage implements DDMessageTransporter
             // if we read data, check out first read for invalid information
             if (count != 0)
             {
-                if (DEBUG) logger.debug("Read " + count);
+                if (DEBUG) logger.debug("Read {}", count);
                 //logger.debug("Read " + count + ": <" + Utils.decode(buffer_.array(), 0, buffer_.position())+">");
                              
                 // see if we are full
@@ -366,7 +373,7 @@ public class Peer2PeerMessage implements DDMessageTransporter
                 }
                 
                 nSleep += READ_WAIT_MILLIS;
-                if (DEBUG) logger.debug("Sleeping... position is " + buffer.position() + " capacity is " + buffer.capacity());
+                if (DEBUG) logger.debug("Sleeping... position is {} capacity is {}", buffer.position(), buffer.capacity());
                 Utils.sleepMillis(READ_WAIT_MILLIS);
             }
         }

@@ -26,14 +26,11 @@
 
 package com.zookitec.layout;
 
-
-import java.awt.*;
-
 /**
  * An expression factory used to create expressions for points on geometric shapes.
  *
  */
-public class GeomEF {
+public final class GeomEF {
 
 
     private GeomEF() {}

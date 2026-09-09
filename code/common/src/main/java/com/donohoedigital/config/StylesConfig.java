@@ -38,15 +38,21 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
-import java.awt.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Loads styles.xml files in the module directories defined by
@@ -56,16 +62,16 @@ import java.util.List;
  */
 public class StylesConfig extends XMLConfigFileLoader
 {
-    private static Logger sLogger = LogManager.getLogger(StylesConfig.class);
+    private static final Logger sLogger = LogManager.getLogger(StylesConfig.class);
 
     private static final String STYLE_CONFIG = "styles.xml";
     private static final boolean DEBUG_FONT = false;
 
     private static StylesConfig stylesConfig = null;
 
-    private Map<String, Color> colors_ = new HashMap<String, Color>();
-    private Map<String, Font> fonts_ = new HashMap<String, Font>();
-    private Map<String, Font> fontdefs_ = new HashMap<String, Font>();
+    private final Map<String, Color> colors_ = new HashMap<>();
+    private final Map<String, Font> fonts_ = new HashMap<>();
+    private final Map<String, Font> fontdefs_ = new HashMap<>();
 
     /**
      * Creates a new instance of StylesConfig from the Appconfig file

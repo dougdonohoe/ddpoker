@@ -38,19 +38,26 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ImageDef;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.*;
-import java.beans.*;
-import java.io.*;
-import java.nio.channels.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 
 /**
  *
@@ -155,8 +162,7 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
                 bResult = Boolean.TRUE;
                 
             } catch (Exception e) {
-                logger.error("Unable to copy " + selected_.getAbsolutePath() + " to " +
-                                    dir.getAbsolutePath());
+                logger.error("Unable to copy {} to {}", selected_.getAbsolutePath(), dir.getAbsolutePath());
                 logger.error(Utils.formatExceptionText(e));
                 EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.deck.copyfailed",selected_.getName(),
                                                     dir.getAbsolutePath()));

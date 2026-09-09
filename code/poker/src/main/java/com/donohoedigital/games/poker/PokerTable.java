@@ -38,18 +38,32 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.ObjectID;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.ConfigConstants;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateEntry;
+import com.donohoedigital.games.config.SaveDetails;
+import com.donohoedigital.games.engine.DiceRoller;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.event.PokerTableListener;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.ai.V1Player;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -66,7 +80,7 @@ public class PokerTable implements ObjectID
 
     // data
     private PokerGame game_;
-    PokerPlayer players_[] = new PokerPlayer[PokerConstants.SEATS];
+    PokerPlayer[] players_ = new PokerPlayer[PokerConstants.SEATS];
     private int nNum_;
     private String sName_;
     private int nButton_ = NO_SEAT;
@@ -79,11 +93,11 @@ public class PokerTable implements ObjectID
     private boolean bCurrent_ = false;
     private boolean bZipMode_ = false;
     private HoldemHand hhand_;
-    private List<PokerPlayer> waitList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> addedList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> addonList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> rebuyList_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> observers_ = new ArrayList<PokerPlayer>();
+    private List<PokerPlayer> waitList_ = new ArrayList<>();
+    private List<PokerPlayer> addedList_ = new ArrayList<>();
+    private List<PokerPlayer> addonList_ = new ArrayList<>();
+    private List<PokerPlayer> rebuyList_ = new ArrayList<>();
+    private List<PokerPlayer> observers_ = new ArrayList<>();
     private int nTableState_ = STATE_NONE;
     private int nPrevState_ = STATE_NONE;
     private int nPendingState_ = STATE_NONE;
@@ -458,7 +472,7 @@ public class PokerTable implements ObjectID
     public PokerPlayer[] getPlayersSortedByLastMove()
     {
         int nOcc = getNumOccupiedSeats();
-        PokerPlayer players[] = new PokerPlayer[nOcc];
+        PokerPlayer[] players = new PokerPlayer[nOcc];
         PokerPlayer player;
         int nCnt = 0;
         for (int i = 0; i < PokerConstants.SEATS; i++)
@@ -1243,7 +1257,7 @@ public class PokerTable implements ObjectID
     {    
         int nMin = getNextMinChip();
         int nMinLast = getMinChip();
-        List<PokerPlayer> players = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> players = new ArrayList<>();
         PokerPlayer player;
         int nTotalOdd = 0;
         int nOdd;
@@ -1872,7 +1886,7 @@ public class PokerTable implements ObjectID
     ////
     //// PokerTableListener
     ////
-    private List<ListenerInfo> listeners_ = new ArrayList<ListenerInfo>();
+    private List<ListenerInfo> listeners_ = new ArrayList<>();
     
     /**
      * notify table that display preferences changed so listeners can react
@@ -1957,7 +1971,7 @@ public class PokerTable implements ObjectID
     /**
      * Helper class to track listener and the event types it is interested in
      */
-    private static class ListenerInfo
+    private static final class ListenerInfo
     {
         public static final ListenerInfo NULL_LISTENER = new ListenerInfo(null, 0);
 
@@ -2128,7 +2142,7 @@ public class PokerTable implements ObjectID
     {
         // create list of players loaded
         int nNum = entry.removeIntToken();
-        List<PokerPlayer> load = new ArrayList<PokerPlayer>(nNum);
+        List<PokerPlayer> load = new ArrayList<>(nNum);
         for (int i = 0; i < nNum; i++)
         {
             load.add((PokerPlayer)state.getObject(entry.removeIntegerToken()));

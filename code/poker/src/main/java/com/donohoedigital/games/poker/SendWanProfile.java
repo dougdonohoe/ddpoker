@@ -38,15 +38,18 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.SendMessageDialog;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -57,7 +60,7 @@ public class SendWanProfile extends SendMessageDialog
     public static final String PARAM_CATEGORY = "category";
     public static final String PARAM_PROFILE = "profile";
 
-    private static final Map<Integer, String> hmMessages_ = new HashMap<Integer, String>();
+    private static final Map<Integer, String> hmMessages_ = new HashMap<>();
 
     static
     {

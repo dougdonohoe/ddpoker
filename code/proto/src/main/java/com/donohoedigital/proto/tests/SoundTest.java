@@ -38,10 +38,15 @@
 
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.udp.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.Prefs;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.udp.UDPServer;
 
 /**
  *
@@ -50,12 +55,12 @@ import com.donohoedigital.udp.*;
 public class SoundTest extends BaseCommandLineApp
 {
     // logging
-    private Logger logger;
+    private final Logger logger;
 
     /**
      * Run emailer
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             Prefs.setRootNodeName("poker2");
             new SoundTest("poker", args);

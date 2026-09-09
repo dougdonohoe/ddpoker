@@ -27,8 +27,7 @@
 
 package com.zookitec.layout;
 
-import java.awt.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * This class represents a constant expression and is the superclass of all variable expressions used by ExplicitLayout.

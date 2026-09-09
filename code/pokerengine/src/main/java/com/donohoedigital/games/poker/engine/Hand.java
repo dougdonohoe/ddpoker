@@ -38,9 +38,11 @@
 
 package com.donohoedigital.games.poker.engine;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
 
-import java.util.*;
+import java.util.Collections;
 
 /**
  *
@@ -592,7 +594,7 @@ public class Hand extends DMArrayList<Card>
 
     private int getMaxSuitCount()
     {
-        int suit[] = new int[CardSuit.NUM_SUITS];
+        int[] suit = new int[CardSuit.NUM_SUITS];
         for (int i = size()-1; i >= 0; --i)
         {
             ++suit[getCard(i).getSuit()];
@@ -618,7 +620,7 @@ public class Hand extends DMArrayList<Card>
                 return getCard(0).getRank() == getCard(1).getRank();
             default:
                 {
-                    int rank[] = new int[Card.ACE+1];
+                    int[] rank = new int[Card.ACE+1];
                     for (int i = size()-1; i >= 0; --i)
                     {
                         ++rank[getCard(i).getRank()];
@@ -649,7 +651,7 @@ public class Hand extends DMArrayList<Card>
                 }
             default:
                 {
-                    int rank[] = new int[Card.ACE+1];
+                    int[] rank = new int[Card.ACE+1];
                     for (int i = size() - 1; i >= 0; --i)
                     {
                         ++rank[getCard(i).getRank()];
@@ -684,7 +686,7 @@ public class Hand extends DMArrayList<Card>
                 }
             default:
                 {
-                    int rank[] = new int[Card.ACE+1];
+                    int[] rank = new int[Card.ACE+1];
                     for (int i = size() - 1; i >= 0; --i)
                     {
                         ++rank[getCard(i).getRank()];
@@ -797,7 +799,7 @@ public class Hand extends DMArrayList<Card>
 
     public String toHTML()
     {
-        if (size() == 0) return "";
+        if (isEmpty()) return "";
 
         StringBuilder buf = new StringBuilder();
 

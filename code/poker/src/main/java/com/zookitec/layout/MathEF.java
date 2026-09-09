@@ -27,14 +27,13 @@
 package com.zookitec.layout;
 
 
-import java.awt.*;
-import java.util.*;
-import java.lang.ref.*;
+import java.util.WeakHashMap;
+import java.lang.ref.WeakReference;
 
 /**
  * An expression factory used to create expressions for common mathematical operations.
  */
-public class MathEF {
+public final class MathEF {
 
     private static final int ADD = 0;
     private static final int SUB = 1;
@@ -44,7 +43,7 @@ public class MathEF {
     private static final int MAX = 5;
     private static final int SUM = 6;
 
-    private static WeakHashMap cache = new WeakHashMap();
+    private static final WeakHashMap cache = new WeakHashMap();
 
     /**
      * A constant Expression whose value is 0.0.

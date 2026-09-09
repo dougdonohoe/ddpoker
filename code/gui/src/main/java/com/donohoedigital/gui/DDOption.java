@@ -38,14 +38,22 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.prefs.*;
+import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.NodeChangeListener;
+import java.util.prefs.PreferenceChangeListener;
+import java.util.prefs.Preferences;
 
 /**
  *
@@ -231,7 +239,7 @@ public abstract class DDOption extends DDPanel implements MouseListener
     }
 
     // small perf improvement
-    private static StringBuilder sbHelp = new StringBuilder();
+    private static final StringBuilder sbHelp = new StringBuilder();
     /**
      * when get mouse entered, set help text
      */

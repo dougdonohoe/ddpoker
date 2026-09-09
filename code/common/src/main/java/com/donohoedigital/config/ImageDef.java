@@ -38,17 +38,23 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.imageio.*;
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.IndexColorModel;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -58,15 +64,15 @@ public class ImageDef
 {
     static Logger logger = LogManager.getLogger(ImageDef.class);
 
-    private static boolean DEBUG = false;
+    private static final boolean DEBUG = false;
 
-    private String sName_;
-    private URL url_;
+    private final String sName_;
+    private final URL url_;
     private ImageIcon icon_;
     private AnimatedImageIcon anim_;
     private BufferedImage bimage_;
-    private boolean bCache_;
-    private boolean bComposite_;
+    private final boolean bCache_;
+    private final boolean bComposite_;
     private String[] saComponents_;
     private int x_ = 0;
     private int y_ = 0;
@@ -91,7 +97,7 @@ public class ImageDef
         bComposite_ = bComposite;
         if (sComponents != null)
         {
-            List<String> a = new ArrayList<String>();
+            List<String> a = new ArrayList<>();
             StringTokenizer tok = new StringTokenizer(sComponents, " ,");
             while (tok.hasMoreTokens())
             {
@@ -284,7 +290,7 @@ public class ImageDef
         }
         catch (Throwable e)
         {
-            logger.error("Error creating buffered image from " + url);
+            logger.error("Error creating buffered image from {}", url);
             logger.error(Utils.formatExceptionText(e));
         }
         return null;

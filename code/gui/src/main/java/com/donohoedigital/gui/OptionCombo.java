@@ -38,12 +38,14 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 /**
  *
  * @author  donohoe
@@ -52,8 +54,8 @@ public class OptionCombo extends DDOption implements ItemListener
 {
     //static Logger logger = LogManager.getLogger(OptionCombo.class);
     private DDLabel label_;
-    private DDComboBox combo_;
-    private String sDefault_;
+    private final DDComboBox combo_;
+    private final String sDefault_;
 
     /** 
      * Creates a new instance of OptionCombo 

@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.games.poker.network;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DMTypedHashMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -150,7 +153,7 @@ public class OnlinePlayerInfo implements Comparable<OnlinePlayerInfo>
         DMArrayList<?> raw = (DMArrayList<?>) data_.getList(ONLINE_ALIASES);
         if (raw == null) return null;
 
-        List<OnlinePlayerInfo> list = new ArrayList<OnlinePlayerInfo>(raw.size());
+        List<OnlinePlayerInfo> list = new ArrayList<>(raw.size());
         for (Object aRaw : raw)
         {
             info = new OnlinePlayerInfo((DMTypedHashMap) aRaw);

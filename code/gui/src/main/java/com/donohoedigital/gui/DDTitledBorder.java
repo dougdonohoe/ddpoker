@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**

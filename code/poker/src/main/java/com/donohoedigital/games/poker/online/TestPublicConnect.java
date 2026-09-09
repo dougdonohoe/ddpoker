@@ -38,18 +38,22 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.engine.SendMessageDialog;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.udp.UDPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 
 /**
  * @author Doug Donohoe
@@ -170,7 +174,7 @@ public class TestPublicConnect extends SendMessageDialog implements OnlineMessag
         }
         else
         {
-            logger.warn("Received test message with different GUID: " + omsg);
+            logger.warn("Received test message with different GUID: {}", omsg);
         }
     }
 

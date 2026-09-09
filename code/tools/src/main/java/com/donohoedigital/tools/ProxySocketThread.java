@@ -51,6 +51,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class is for testing registrations through a proxy.  We configure
@@ -71,11 +72,11 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
 {
     static Logger logger = LogManager.getLogger(ProxySocketThread.class);
     
-    private DDHttpClient.HttpOptions options_;
+    private final DDHttpClient.HttpOptions options_;
     private URL proxy_;
-    private String sDestHost_ = "tbd.com";
-    private int nDestPort_ = 8877;
-    private String sDestHostPort_ = sDestHost_ + ":" + nDestPort_;
+    private final String sDestHost_ = "tbd.com";
+    private final int nDestPort_ = 8877;
+    private final String sDestHostPort_ = sDestHost_ + ":" + nDestPort_;
     
     /** 
      * Creates a new instance of ProxySocketThread 
@@ -111,9 +112,8 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
         DDMessenger.ReturnData data = msg.getURL(proxy_, this, null, null, this, options_);
         
         // debug output
-        logger.debug("DATA: " + data.getOut().size() + " bytes ->"+
-                    "\n========= OUTPUT =========\n" + Utils.decodeBasic(data.getOut().getBuffer(), 0, data.getOut().size()) +
-                      "=========  END   =========");
+        logger.debug("DATA: {} bytes ->" +
+            "\n========= OUTPUT =========\n{}=========  END   =========", data.getOut().size(), Utils.decodeBasic(data.getOut().getBuffer(), 0, data.getOut().size()));
         
         // return results to client
         OutputStream out = response_.getOutputStream3();
@@ -137,14 +137,13 @@ public class ProxySocketThread extends SocketThread implements PostWriter, DDMes
         }
         
         // we send the entire buffer
-        logger.debug("Sending DATA to " + proxy_ + " ->\n========= INPUT =========\n" + sData +
-                       "=========  END  =========");
-        writer.write(sData.getBytes());
+        logger.debug("Sending DATA to {} ->\n========= INPUT =========\n{}=========  END  =========", proxy_, sData);
+        writer.write(sData.getBytes(StandardCharsets.UTF_8));
     }
 
     /** DDMessageListener - output progress **/
     public void updateStep(int nStep) {
-        logger.debug("Step: " + ProxyServlet.getSteps()[nStep]);
+        logger.debug("Step: {}", ProxyServlet.getSteps()[nStep]);
     }
     
     /** DDMessageListener not used **/

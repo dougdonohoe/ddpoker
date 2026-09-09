@@ -38,19 +38,29 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.LoggingConfig;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.config.TerritoryPoint;
+import com.donohoedigital.games.engine.CustomTerritoryDrawer;
+import com.donohoedigital.games.engine.Gameboard;
+import com.donohoedigital.games.engine.TerritoryDisplayApapter;
+import com.donohoedigital.games.poker.CardPiece;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.ImageComponent;
+import com.donohoedigital.gui.XYConstraints;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.geom.GeneralPath;
 
 /**
  *
@@ -66,7 +76,7 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
     /**
      * Run the Gameboard Manager
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             LoggingConfig loggingConfig = new LoggingConfig("gametools", ApplicationType.CLIENT);
             loggingConfig.init();
@@ -82,7 +92,7 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
         }
         catch (ApplicationError ae)
         {
-            logger.fatal("GameboardTerritoryManager ending due to ApplicationError: " + Utils.formatExceptionText(ae));
+            logger.fatal("GameboardTerritoryManager ending due to ApplicationError: {}", Utils.formatExceptionText(ae));
             System.exit(1);
         }  
     }
@@ -96,7 +106,7 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
         super(sConfigName, "Territory Manager", args);
     }
     
-    private int nDefaultSize = 800;
+    private final int nDefaultSize = 800;
     
     /**
      * Create UI
@@ -196,8 +206,8 @@ public class GameboardTerritoryManager extends GameManager implements CustomTerr
 //    private String RESOURCE = PropertyConfig.getStringProperty("define.territoryPointType.resource", "notdefined", false);
 //    private String NATIVE = PropertyConfig.getStringProperty("define.territoryPointType.native", "notdefined", false);
 //    private Double SCALE_MARKER = .9d; // must match resource piece getScale() override
-    private Double SCALE_BUTTON = .4d; // must match buttonpiece getScale() override
-    private Double SCALE_ICON = .75d; // approximation
+    private final Double SCALE_BUTTON = .4d; // must match buttonpiece getScale() override
+    private final Double SCALE_ICON = .75d; // approximation
     
     public void drawTerritoryPart(Gameboard board, Graphics2D g, Territory t, GeneralPath path, Rectangle territoryBounds, int iPart) 
     {

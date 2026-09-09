@@ -38,10 +38,17 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.LoggingConfig;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -230,27 +237,22 @@ public class HandFutures
         if (DEBUG)
         {
             logger.debug("");
-            logger.debug("HAND: " + hole + "," + community);
-            logger.debug("Start: " + fName.form(HandInfo.getHandTypeDesc(ourtype)) + " " + ourscore);
-            logger.debug("TOTAL hands: " + nTotal_);
+            logger.debug("HAND: {},{}", hole, community);
+            logger.debug("Start: {} {}", fName.form(HandInfo.getHandTypeDesc(ourtype)), ourscore);
+            logger.debug("TOTAL hands: {}", nTotal_);
             int sum = 0;
             for (int i = HandInfo.HIGH_CARD; i <= HandInfo.ROYAL_FLUSH; i++)
             {
-                logger.debug("   " + fName.form(HandInfo.getHandTypeDesc(i)) + ": "+ 
-                                     HandStat.fCnt.form(nTotals_[i]) + " (" +
-                                     HandStat.fPerc.form(100.0d * ((float)nTotals_[i]) / nTotal_) + "%)" + " -- "+
-                                     HandStat.fCnt.form(nTotals2_[i]) + " (" +
-                                     HandStat.fPerc.form(getOddsImproveTo(i)) + "%)"
-                                     );
+                logger.debug("   {}: {} ({}%)" + " -- {} ({}%)", fName.form(HandInfo.getHandTypeDesc(i)), HandStat.fCnt.form(nTotals_[i]), HandStat.fPerc.form(100.0d * ((float) nTotals_[i]) / nTotal_), HandStat.fCnt.form(nTotals2_[i]), HandStat.fPerc.form(getOddsImproveTo(i)));
                 sum += nTotals_[i];
             }
-            logger.debug("SUM: " + sum);
-            logger.debug("Improve:       " + nImprovements_ + " (" + HandStat.fPerc.form(100.0f * ((float)nImprovements_) / nTotal_) + "%)");
-            logger.debug("Type Improve:  " + nTypeImprovements_ + " (" + HandStat.fPerc.form(100.0f * ((float)nTypeImprovements_) / nTotal_) + "%)");
-            logger.debug("Type Improve2: " + nTypeImprovements2_ + " (" + HandStat.fPerc.form(100.0f * ((float)nTypeImprovements2_) / nTotal_) + "%)");
-            logger.debug("Has Straight Draw: " + hasStraightDraw());
-            logger.debug("Has GutShot Draw:  " + hasGutShotStraightDraw());
-            logger.debug("Has Flush Draw:    " + hasFlushDraw() +"\n");
+            logger.debug("SUM: {}", sum);
+            logger.debug("Improve:       {} ({}%)", nImprovements_, HandStat.fPerc.form(100.0f * ((float) nImprovements_) / nTotal_));
+            logger.debug("Type Improve:  {} ({}%)", nTypeImprovements_, HandStat.fPerc.form(100.0f * ((float) nTypeImprovements_) / nTotal_));
+            logger.debug("Type Improve2: {} ({}%)", nTypeImprovements2_, HandStat.fPerc.form(100.0f * ((float) nTypeImprovements2_) / nTotal_));
+            logger.debug("Has Straight Draw: {}", hasStraightDraw());
+            logger.debug("Has GutShot Draw:  {}", hasGutShotStraightDraw());
+            logger.debug("Has Flush Draw:    {}\n", hasFlushDraw());
         }
     }
     
@@ -259,7 +261,7 @@ public class HandFutures
     /**
      * Testing
      */
-    public static void main(String[] args)
+    static void main()
     {
         LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
         loggingConfig.init();

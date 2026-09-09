@@ -38,15 +38,20 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.MatchingResources;
+import com.donohoedigital.config.XMLConfigFileLoader;
+import com.donohoedigital.config.XMLWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.io.*;
-import java.net.*;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.net.URL;
 
 /**
  *
@@ -282,7 +287,7 @@ public class GameboardConfig extends XMLConfigFileLoader
     {
         if (!bSave_)
         {
-            logger.warn("Save disabled for " + fConfigFile_.getAbsolutePath());
+            logger.warn("Save disabled for {}", fConfigFile_.getAbsolutePath());
             return;
         }
         
@@ -292,7 +297,7 @@ public class GameboardConfig extends XMLConfigFileLoader
         printXML(writer, 0);
         writer.close();
         
-        logger.info("Saved " + fConfigFile_.getAbsolutePath());
+        logger.info("Saved {}", fConfigFile_.getAbsolutePath());
     }
     
     /**
@@ -512,7 +517,7 @@ public class GameboardConfig extends XMLConfigFileLoader
     {
         TerritoryPoint point;
         TerritoryPoints points;
-        Territory ta[] = this.territories_.getTerritoryArrayCached();
+        Territory[] ta = this.territories_.getTerritoryArrayCached();
 
         for (Territory adj : ta)
         {

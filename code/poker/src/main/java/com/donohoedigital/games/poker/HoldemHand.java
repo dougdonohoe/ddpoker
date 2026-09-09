@@ -38,19 +38,28 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
 import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.config.DebugConfig;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.engine.DiceRoller;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.ai.HandSelectionScheme;
+import com.donohoedigital.games.poker.ai.PocketWeights;
+import com.donohoedigital.games.poker.ai.V1Player;
 import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Doug Donohoe
@@ -150,7 +159,7 @@ public class HoldemHand implements DataMarshal
      * Seed - degree of randomness from timing of hands and number of actions in hand
      * MersenneTwisterFast recommends passing in an int
      */
-    private synchronized static int NEXT_SEED()
+    private static synchronized int NEXT_SEED()
     {
         long mult = (long) lastSEED * (long) SEEDADJ;
         int seed = (int) (mult % Integer.MAX_VALUE);
@@ -164,7 +173,7 @@ public class HoldemHand implements DataMarshal
     /**
      * adj seed
      */
-    private synchronized static void ADJUST_SEED()
+    private static synchronized void ADJUST_SEED()
     {
         long now = System.currentTimeMillis();
         long adj = SEEDADJ + (now - lastADJ);

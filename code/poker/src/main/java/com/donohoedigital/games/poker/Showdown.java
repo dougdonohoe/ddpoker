@@ -38,14 +38,20 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GamePiece;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.List;
 
 /**
  *

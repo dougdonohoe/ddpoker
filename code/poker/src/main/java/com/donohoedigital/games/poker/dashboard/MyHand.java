@@ -32,17 +32,25 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GamePiece;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.gui.DDHtmlArea;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 import com.zookitec.layout.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.Dimension;
 import java.util.List;
 
 /**
@@ -140,12 +148,8 @@ public class MyHand extends DashboardItem
     {
         if (impl_ != null && impl_.isDisplayed() && !table.isZipMode())
         {
-            GuiUtils.invoke(new Runnable() {
-                public void run()
-                {
-                    impl_.updateAll();
-                }
-            });
+            GuiUtils.invoke(() ->
+                impl_.updateAll());
         }
     }
 

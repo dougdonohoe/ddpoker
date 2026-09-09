@@ -43,8 +43,8 @@ public class BasicPluralLabelProvider implements PluralLabelProvider
 {
     private static final long serialVersionUID = 42L;
 
-    private String plural;
-    private String singular;
+    private final String plural;
+    private final String singular;
 
     public BasicPluralLabelProvider(String singular, String plural)
     {

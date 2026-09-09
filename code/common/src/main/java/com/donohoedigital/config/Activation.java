@@ -38,10 +38,12 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Base64;
+import com.donohoedigital.base.Utils;
 
-import java.security.*;
-import java.util.regex.*;
+import java.security.MessageDigest;
+import java.util.regex.Pattern;
 
 /**
  * Key of form FFNN-NNNN-NNAA-AAAA
@@ -122,8 +124,8 @@ public class Activation
      * Return a hash of the given id
      */
     private static MessageDigest md_ = null;
-    private static byte foo[] = new byte[25];
-    private static StringBuilder sb_ = new StringBuilder(20);
+    private static final byte[] foo = new byte[25];
+    private static final StringBuilder sb_ = new StringBuilder(20);
 
     /**
      * init message digest

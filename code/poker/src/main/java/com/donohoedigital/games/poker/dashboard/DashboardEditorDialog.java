@@ -32,12 +32,14 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.engine.DialogPhase;
 import com.donohoedigital.gui.*;
 import com.zookitec.layout.*;
 
-import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.

@@ -46,7 +46,7 @@ import java.net.URL;
  */
 public class AppleAudioBugTest
 {
-    public static void main(String[] args)
+    static void main()
     {
         new AppleAudioBugTest().testAppleBug();
     }

@@ -1,6 +1,6 @@
 package com.donohoedigital.base;
 import java.io.*;
-import java.util.*;
+import java.util.Random;
 
 /** 
  * <h3>MersenneTwister and MersenneTwisterFast</h3>
@@ -163,9 +163,9 @@ public class MersenneTwisterFast implements Serializable, Cloneable
     private static final int TEMPERING_MASK_B = 0x9d2c5680;
     private static final int TEMPERING_MASK_C = 0xefc60000;
     
-    private int mt[]; // the array for the state vector
+    private int[] mt; // the array for the state vector
     private int mti; // mti==N+1 means mt[N] is not initialized
-    private int mag01[];
+    private int[] mag01;
     
     // a good initial seed (of int size, though stored in a long)
     //private static final long GOOD_SEED = 4357;
@@ -261,7 +261,7 @@ public class MersenneTwisterFast implements Serializable, Cloneable
      * only uses the first 32 bits for its seed).   
      */
 
-    synchronized public void setSeed(final long seed)
+    public synchronized void setSeed(final long seed)
         {
         // Due to a bug in java.util.Random clear up to 1.2, we're
         // doing our own Gaussian variable.
@@ -295,7 +295,7 @@ public class MersenneTwisterFast implements Serializable, Cloneable
      * integers are repeatedly used in a wrap-around fashion.
      */
 
-    synchronized public void setSeed(final int[] array)
+    public synchronized void setSeed(final int[] array)
         {
         if (array.length == 0)
             throw new IllegalArgumentException("Array length must be greater than zero");
@@ -1152,7 +1152,7 @@ public class MersenneTwisterFast implements Serializable, Cloneable
     /**
      * Tests the code.
      */
-    public static void main(String args[])
+    static void main()
         { 
         int j;
 

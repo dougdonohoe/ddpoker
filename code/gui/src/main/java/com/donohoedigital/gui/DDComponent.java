@@ -38,8 +38,8 @@
 
 package com.donohoedigital.gui;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.MouseListener;
 
 /**
  *

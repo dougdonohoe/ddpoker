@@ -38,18 +38,26 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameboardConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.Gameboard;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.gui.DDText;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.ImageComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 
 /**
  *
@@ -60,13 +68,13 @@ public class PokerGameboard extends Gameboard
     static Logger logger = LogManager.getLogger(PokerGameboard.class);
 
     private static final GeneralPath FELT = GuiUtils.drawSVGpath("M180,0c90,1,760,1,850,0c90,1,180,184,180,443.5c0,260.5-90,442.5-180,442.5s-760,0-850,0S0,704,0,443.5C0,184,90,1,180,0z", false);
-    private static Rectangle FBOUNDS = FELT.getBounds();
+    private static final Rectangle FBOUNDS = FELT.getBounds();
 
-    private PokerGame game_;
+    private final PokerGame game_;
     protected int nSmallWidth_, nSmallHeight_;
     protected int nStartingWidth_, nStartingHeight_;
 
-    private PokerGameboardDelegate delegate_;
+    private final PokerGameboardDelegate delegate_;
 
     // default - green felt
     private Color top_ = new Color(38,175,23);
@@ -610,7 +618,7 @@ public class PokerGameboard extends Gameboard
     /**
      * for use above
      */
-    private static class Faux2 extends ImageComponent
+    private static final class Faux2 extends ImageComponent
     {
         FauxPokerGameboard parent;
 

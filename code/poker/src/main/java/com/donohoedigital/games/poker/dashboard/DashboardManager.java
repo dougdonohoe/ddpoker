@@ -32,14 +32,17 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,10 +55,10 @@ public class DashboardManager
 {
     static Logger logger = LogManager.getLogger(DashboardManager.class);
 
-    private ArrayList items_;
+    private final ArrayList items_;
     private DMTypedHashMap prefs_;
     private String sPrefName_;
-    private PokerGame game_;
+    private final PokerGame game_;
 
     public DashboardManager(PokerGame game)
     {
@@ -101,7 +104,7 @@ public class DashboardManager
             try {
                 item.demarshal(null, pref);
             } catch (Throwable e) {
-                logger.error("Error demarshalling " + pref + ": " + Utils.formatExceptionText(e));
+                logger.error("Error demarshalling {}: {}", pref, Utils.formatExceptionText(e));
             }
         }
 
@@ -196,7 +199,7 @@ public class DashboardManager
             } catch (Throwable e) {
                 prefs_.clear();
                 
-                logger.error("Error demarshalling " + sPrefs + ": " + Utils.formatExceptionText(e));
+                logger.error("Error demarshalling {}: {}", sPrefs, Utils.formatExceptionText(e));
             }
 
         }

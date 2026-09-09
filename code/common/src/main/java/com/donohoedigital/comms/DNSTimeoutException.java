@@ -38,7 +38,7 @@
 
 package com.donohoedigital.comms;
 
-import java.net.*;
+import java.net.SocketTimeoutException;
 
 /**
  * @author donohoe

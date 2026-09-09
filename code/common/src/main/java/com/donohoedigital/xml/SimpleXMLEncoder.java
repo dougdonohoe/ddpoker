@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.xml;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import java.lang.reflect.*;
-import java.text.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -47,8 +48,8 @@ public class SimpleXMLEncoder
 
     SimpleDateFormat format = Utils.getRFC822();
 
-    private StringBuilder xml = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    private Stack<EncoderObject> currentObject = new Stack<EncoderObject>();
+    private final StringBuilder xml = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    private final Stack<EncoderObject> currentObject = new Stack<>();
 
     /**
      * Set current object null and start new tag with name "alias".
@@ -180,8 +181,8 @@ public class SimpleXMLEncoder
      */
     public SimpleXMLEncoder addAllTagsExcept(String... names)
     {
-        List<String> include = new ArrayList<String>();
-        List<String> except = new ArrayList<String>();
+        List<String> include = new ArrayList<>();
+        List<String> except = new ArrayList<>();
         except.add("class");
         except.addAll(Arrays.asList(names));
 

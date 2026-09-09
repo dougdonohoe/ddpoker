@@ -38,18 +38,23 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.config.AbstractPlayerList;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.DialogPhase;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.p2p.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.p2p.LanClientInfo;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
@@ -111,27 +116,21 @@ public class PlayerListDialog extends DialogPhase implements PropertyChangeListe
         // buttons
         add_ = new GlassButton("add", "Glass");
         text_.setDefaultOverride(add_);
-        add_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                list_.add(getName(true), null, false);
-                model_.fireTableDataChanged();
-                propertyChange(null); // force selection of new row
-                updateTextFromList();
-                text_.selectAll(); // allow quick adds
-            }
+        add_.addActionListener(e -> {
+            list_.add(getName(true), null, false);
+            model_.fireTableDataChanged();
+            propertyChange(null); // force selection of new row
+            updateTextFromList();
+            text_.selectAll(); // allow quick adds
         });
         add_.setBorderGap(2,5,2,6);
 
         delete_ = new GlassButton("delete", "Glass");
-        delete_.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                list_.remove(getName(true), false);
-                model_.fireTableDataChanged();
-                if (model_.getRowCount() > 0) table_.getSelectionModel().setSelectionInterval(0,0); // allow quick deletes
-                updateTextFromList();
-            }
+        delete_.addActionListener(e -> {
+            list_.remove(getName(true), false);
+            model_.fireTableDataChanged();
+            if (model_.getRowCount() > 0) table_.getSelectionModel().setSelectionInterval(0, 0); // allow quick deletes
+            updateTextFromList();
         });
         delete_.setBorderGap(2,5,2,6);
 

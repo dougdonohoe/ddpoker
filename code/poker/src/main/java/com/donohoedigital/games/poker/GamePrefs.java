@@ -38,9 +38,10 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.engine.OptionMenu;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 
 /**
  *

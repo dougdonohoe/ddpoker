@@ -32,16 +32,18 @@
  */
 package com.donohoedigital.games.poker.service.impl;
 
-import com.donohoedigital.games.poker.dao.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.transaction.annotation.*;
+import com.donohoedigital.games.poker.dao.TournamentHistoryDao;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import com.donohoedigital.games.poker.model.util.LeaderboardSummaryList;
+import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
+import com.donohoedigital.games.poker.service.TournamentHistoryService;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -86,7 +88,7 @@ public class TournamentHistoryServiceImpl implements TournamentHistoryService
         {
             if (hist.getNumPlayers() != num || !hist.getTournamentName().equals(name))
             {
-                if (logger != null) logger.info("  UPDATING history " + hist.getId() + ": "+ name + " ("+num+" players)");
+                if (logger != null) logger.info("  UPDATING history {}: {} ({} players)", hist.getId(), name, num);
                 hist.setNumPlayers(num);
                 hist.setTournamentName(name);
             }

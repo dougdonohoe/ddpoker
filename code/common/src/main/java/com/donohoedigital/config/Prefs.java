@@ -39,9 +39,10 @@
 package com.donohoedigital.config;
 
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import java.util.prefs.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  * @author Doug Donohoe

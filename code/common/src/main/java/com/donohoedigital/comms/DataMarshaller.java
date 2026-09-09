@@ -38,10 +38,14 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.MatchingResources;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Doug Donohoe
@@ -468,7 +472,7 @@ public class DataMarshaller
     ////
 
     @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
-    public static void main(String[] args)
+    static void main()
     {
         for (Class<?> clazz : coderToType_.keySet())
         {

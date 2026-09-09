@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.DDPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class StyleQuadrantsGridPanel extends DDPanel
 {

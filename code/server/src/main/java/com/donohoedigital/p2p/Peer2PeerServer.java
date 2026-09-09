@@ -38,9 +38,9 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.server.*;
+import com.donohoedigital.server.GameServer;
 
-import java.nio.channels.*;
+import java.nio.channels.SocketChannel;
 
 /**
  *

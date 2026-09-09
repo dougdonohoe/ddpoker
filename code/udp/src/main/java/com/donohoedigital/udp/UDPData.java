@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.udp;
 
-import java.nio.*;
-import java.util.*;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.

@@ -32,12 +32,13 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.config.AbstractPlayerList;
 
-import java.util.*;
-import java.util.prefs.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.prefs.Preferences;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,15 +47,15 @@ import java.util.prefs.*;
  * Time: 10:34:46 AM
  * To change this template use File | Settings | File Templates.
  */
-public class PokerPrefsPlayerList extends AbstractPlayerList
+public final class PokerPrefsPlayerList extends AbstractPlayerList
 {
     // these have to match gamedef.xml entry
     
     public static final String LIST_MUTE = "muted";
     public static final String LIST_BANNED = "banned";
 
-    private String sListName_;
-    private String sListNameKey_;
+    private final String sListName_;
+    private final String sListNameKey_;
     protected boolean bUseKey_ = false;
 
     private static Map<String, PokerPrefsPlayerList> share_ = null;
@@ -62,11 +63,11 @@ public class PokerPrefsPlayerList extends AbstractPlayerList
     /**
      * Get shared PlayerList
      */
-    public synchronized static PokerPrefsPlayerList getSharedList(String sListName)
+    public static synchronized PokerPrefsPlayerList getSharedList(String sListName)
     {
         if (share_ == null)
         {
-            share_ = new HashMap<String, PokerPrefsPlayerList>();
+            share_ = new HashMap<>();
         }
 
         PokerPrefsPlayerList list = share_.get(sListName);

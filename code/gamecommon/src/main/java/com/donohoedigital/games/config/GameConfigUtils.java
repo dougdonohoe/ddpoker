@@ -38,11 +38,15 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.base.ObjectLock;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.ConfigUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -55,14 +59,14 @@ public class GameConfigUtils
     public static final String SAVE_DIR = "save";
 
     private static File saveDir = null;
-    private static final Map<String, ObjectLock> lockMap = new HashMap<String, ObjectLock>();
+    private static final Map<String, ObjectLock> lockMap = new HashMap<>();
 
     /**
      * Get the location for save files, creating the directory if not there.
      * the returned value is cached in the ConfigManager, so there is only
      * one per application (useful for locking)
      */
-    public synchronized static File getSaveDir()
+    public static synchronized File getSaveDir()
     {
         if (saveDir == null)
         {

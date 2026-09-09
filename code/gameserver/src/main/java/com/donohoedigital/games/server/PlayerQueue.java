@@ -48,7 +48,7 @@ import java.io.*;
  *
  * @author  donohoe
  */
-public class PlayerQueue extends ServerDataFile
+public final class PlayerQueue extends ServerDataFile
 {
     //static Logger logger = LogManager.getLogger(PlayerQueue.class);
     
@@ -146,7 +146,7 @@ public class PlayerQueue extends ServerDataFile
         // keep getting head of list (earlier messages are first)
         // remove from head of list as long as timestamp is less
         // than or equal to the given timestamp
-        while (!bDone && msgList_.size() > 0)
+        while (!bDone && !msgList_.isEmpty())
         {
             msg = (EngineMessage) msgList_.get(0);
             if (msg.getCreateTimeStamp() <= timestamp)

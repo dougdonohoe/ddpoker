@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.games.poker.model.util;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.poker.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * WAN history list
@@ -133,10 +134,7 @@ public class TournamentHistoryList extends DMArrayList<TournamentHistory>
             hist.setEnded(bEnded);
             if (bDebug)
             {
-                logger.debug("  ==> "+ hist.getPlayerName() + (hist.isComputer() ? " (ai)" : "") +
-                         " finished " + hist.getPlace() + " and won " + hist.getPrize() +
-                         " num ai: "+ nAI + "  rank: " + hist.getRank1() +
-                         " ended: "+ hist.isEnded());
+                logger.debug("  ==> {}{} finished {} and won {} num ai: {}  rank: {} ended: {}", hist.getPlayerName(), (hist.isComputer() ? " (ai)" : ""), hist.getPlace(), hist.getPrize(), nAI, hist.getRank1(), hist.isEnded());
             }
         }
     }

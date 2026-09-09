@@ -38,12 +38,17 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
+import com.donohoedigital.base.ApplicationError;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
-import java.net.*;
-import java.util.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Loads help.xml files in the module directories defined by
@@ -53,14 +58,14 @@ import java.util.*;
  */
 public class HelpConfig extends XMLConfigFileLoader
 {
-    private static Logger hLogger = LogManager.getLogger(HelpConfig.class);
+    private static final Logger hLogger = LogManager.getLogger(HelpConfig.class);
     
     private String HELP_CONFIG = "help.xml";
 
     private static HelpConfig helpConfig = null;
     
-    private Map<String, HelpTopic> helps_ = new HashMap<String, HelpTopic>();
-    private List<HelpTopic> helparray_ = new ArrayList<HelpTopic>();
+    private final Map<String, HelpTopic> helps_ = new HashMap<>();
+    private final List<HelpTopic> helparray_ = new ArrayList<>();
     
     /** 
      * Creates a new instance of HelpConfig from the Appconfig file 
@@ -151,7 +156,7 @@ public class HelpConfig extends XMLConfigFileLoader
         URL url = new MatchingResources("classpath*:config/" + location).getSingleResourceURL();
         if (url == null)
         {
-            hLogger.warn("Help " + sName + " not found at " + location + ".  Skipping");
+            hLogger.warn("Help {} not found at {}.  Skipping", sName, location);
             return;
         }
         

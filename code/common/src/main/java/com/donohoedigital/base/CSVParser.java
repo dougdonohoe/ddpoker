@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.base;
 
-import java.util.*;
+import java.util.Vector;
 
 public class CSVParser
 {

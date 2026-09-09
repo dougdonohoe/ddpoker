@@ -32,18 +32,27 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.Phase;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
+import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.ai.RuleEngine;
+import com.donohoedigital.games.poker.ai.V2Player;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 public class DashboardAdvisor extends DashboardItem
 {
@@ -86,27 +95,18 @@ public class DashboardAdvisor extends DashboardItem
         DDPanel base = new DDPanel();
 
         DDButton actButton_ = new GlassButton("aidoit", "Glass");
-        actButton_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                Phase phase = context_.getCurrentPhase();
+        actButton_.addActionListener(e -> {
+            Phase phase = context_.getCurrentPhase();
 
-                if (phase instanceof Bet)
-                {
-                    ((Bet) phase).doAI();
-                }
+            if (phase instanceof Bet)
+            {
+                ((Bet) phase).doAI();
             }
         });
 
         DDButton whyButton_ = new GlassButton("tellmewhy", "Glass");
-        whyButton_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                context_.processPhaseNow("AdvisorInfoDialog", null);
-            }
-        });
+        whyButton_.addActionListener(e ->
+            context_.processPhaseNow("AdvisorInfoDialog", null));
 
         /*
         ExplicitLayout layout = new ExplicitLayout();
@@ -179,15 +179,11 @@ public class DashboardAdvisor extends DashboardItem
         }
 
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        setTitle(getTitle());
-                        htmlAdvice_.setText(advice_);
-                        buttons_.setVisible(!NOADVICE.equals(advice_));
-                    }
-                });
+            () -> {
+                setTitle(getTitle());
+                htmlAdvice_.setText(advice_);
+                buttons_.setVisible(!NOADVICE.equals(advice_));
+            });
     }
 
     @Override

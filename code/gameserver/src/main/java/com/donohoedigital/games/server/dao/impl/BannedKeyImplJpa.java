@@ -32,12 +32,13 @@
  */
 package com.donohoedigital.games.server.dao.impl;
 
-import com.donohoedigital.db.dao.impl.*;
-import com.donohoedigital.games.server.dao.*;
-import com.donohoedigital.games.server.model.*;
-import org.springframework.stereotype.*;
+import com.donohoedigital.db.dao.impl.JpaBaseDao;
+import com.donohoedigital.games.server.dao.BannedKeyDao;
+import com.donohoedigital.games.server.model.BannedKey;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,7 +58,7 @@ public class BannedKeyImplJpa extends JpaBaseDao<BannedKey, Long> implements Ban
 
     public List<BannedKey> getByKeys(String... keys)
     {
-        if (keys.length == 0) return new ArrayList<BannedKey>();
+        if (keys.length == 0) return new ArrayList<>();
 
         return getList("select b from BannedKey b " +
                        "where b.key in " + getInClause(1, keys.length) + " " +

@@ -38,7 +38,8 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DataMarshal;
 
 /**
  * Interface for game/peer2peer interaction

@@ -64,8 +64,9 @@ import com.donohoedigital.udp.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.SwingUtilities;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.SocketChannel;
@@ -111,7 +112,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
      * Run Poker
      */
     @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try
         {
@@ -207,7 +208,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
 
         // copy v2 changes
         File userSaveV3 = GameConfigUtils.getSaveDir();
-        File userSaveV2 = new File(userSaveV3.getAbsolutePath().replaceAll("poker3", "poker2"));
+        File userSaveV2 = new File(userSaveV3.getAbsolutePath().replace("poker3", "poker2"));
         if (userSaveV2.exists() && userSaveV2.isDirectory())
         {
             ConfigUtils.copyDir(userSaveV2, userSaveV3, new UpgradeFilter());
@@ -717,7 +718,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     /**
      * Poker TCP/IP server
      */
-    private class PokerTCPServer extends Peer2PeerServer implements PokerConnectionServer
+    private final class PokerTCPServer extends Peer2PeerServer implements PokerConnectionServer
     {
         private PokerTCPServer()
         {

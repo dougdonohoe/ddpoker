@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.plaf.metal.*;
-import javax.swing.plaf.*;
-import javax.swing.*;
+import javax.swing.plaf.metal.MetalSliderUI;
+import javax.swing.plaf.UIResource;
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.JSlider;
 import java.awt.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.

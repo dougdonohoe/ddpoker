@@ -34,18 +34,22 @@ package com.donohoedigital.games.poker.impexp;
 
 
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.text.*;
-import java.util.*;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ImpExpParadise implements ImpExp
 {
     private String paradisePlayerName_ = "DD Player";
 
-    private HandInfoFast info = new HandInfoFast();
+    private final HandInfoFast info = new HandInfoFast();
 
-    private NumberFormat chipAmountFormat = NumberFormat.getInstance(Locale.US);
+    private final NumberFormat chipAmountFormat = NumberFormat.getInstance(Locale.US);
 
     public void setPlayerName(String name)
     {
@@ -391,7 +395,7 @@ public class ImpExpParadise implements ImpExp
 
         buf.append(" | ");
 
-        if (ieHand.community.size() > 0)
+        if (!ieHand.community.isEmpty())
         {
             buf.append("Board: [");
             for (int i = 0; i < ieHand.community.size(); ++i)
@@ -510,7 +514,7 @@ public class ImpExpParadise implements ImpExp
         }
     }
 
-    private static final String rankName_[] = new String[]
+    private static final String[] rankName_ = new String[]
     {
         null,null,
         "two",
@@ -528,7 +532,7 @@ public class ImpExpParadise implements ImpExp
         "ace"
     };
 
-    private static final String rankPName_[] = new String[]
+    private static final String[] rankPName_ = new String[]
     {
         null,null,
         "twos",

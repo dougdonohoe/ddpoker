@@ -38,27 +38,46 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateFactory;
+import com.donohoedigital.games.config.SaveDetails;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.p2p.*;
-import com.donohoedigital.server.*;
-import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.PokerConnect;
+import com.donohoedigital.games.poker.network.PokerConnection;
+import com.donohoedigital.games.poker.network.PokerConnectionServer;
+import com.donohoedigital.p2p.Peer2PeerMessenger;
+import com.donohoedigital.p2p.Peer2PeerServer;
+import com.donohoedigital.server.GameServer;
+import com.donohoedigital.udp.UDPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.io.*;
-import java.nio.channels.*;
-import java.util.*;
+import javax.swing.SwingUtilities;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
 
 /**
  * @author donohoe
@@ -73,7 +92,7 @@ public class OnlineManager implements ChatManager
     static int RCNT = 0;
 
     // members
-    private GameContext context_;
+    private final GameContext context_;
     private PokerGame game_;
     private PokerMain main_;
     PokerConnectionServer p2p_;
@@ -82,14 +101,14 @@ public class OnlineManager implements ChatManager
 
     // chat
     private ChatHandler chat_ = null;
-    private final List<OnlineMessage> chatQueue_ = new ArrayList<OnlineMessage>();
+    private final List<OnlineMessage> chatQueue_ = new ArrayList<>();
 
     // tournament director
     private TournamentDirector td_;
-    private final List<OnlineMessage> tdQueue_ = new ArrayList<OnlineMessage>();
+    private final List<OnlineMessage> tdQueue_ = new ArrayList<>();
     private OnlineManagerQueue oQueue_ = null;
     private PokerPrefsPlayerList banned_;
-    private Set<String> sentMessageAboutRejectedPlayer = new HashSet<String>();
+    private final Set<String> sentMessageAboutRejectedPlayer = new HashSet<>();
 
     /**
      * Creates a new instance of OnlineManager
@@ -1057,20 +1076,16 @@ public class OnlineManager implements ChatManager
 
         // need to update from Swing thread
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        String sKey = bBan ? "msg.cancel.client.ban" :
-                                      game_.isInProgress() ? "msg.cancel.client.play" :
-                                      "msg.cancel.client.reg";
+            () -> {
+                String sKey = bBan ? "msg.cancel.client.ban" :
+                    game_.isInProgress() ? "msg.cancel.client.play" :
+                        "msg.cancel.client.reg";
 
-                        PokerPlayer host = getHost();
-                        EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage(sKey,
-                                                                                                 Utils.encodeHTML(host.getName())));
-                        context_.restart();
-                    }
-                }
+                PokerPlayer host = getHost();
+                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage(sKey,
+                    Utils.encodeHTML(host.getName())));
+                context_.restart();
+            }
         );
     }
 
@@ -1252,7 +1267,7 @@ public class OnlineManager implements ChatManager
     {
         if (tables == null || tables.isEmpty()) return null;
 
-        int removed[] = new int[tables.size()];
+        int[] removed = new int[tables.size()];
         for (int i = 0; i < removed.length; i++)
         {
             removed[i] = tables.get(i).getNumber();
@@ -2606,7 +2621,7 @@ public class OnlineManager implements ChatManager
     ////
 
     // listener list
-    protected List<OnlineMessageListener> listenerList = new ArrayList<OnlineMessageListener>();
+    protected List<OnlineMessageListener> listenerList = new ArrayList<>();
 
     /**
      * Adds a listener to the list
@@ -2643,7 +2658,7 @@ public class OnlineManager implements ChatManager
     /**
      * Methods throw this error with the message to return
      */
-    private static class OnlineError extends RuntimeException
+    private static final class OnlineError extends RuntimeException
     {
         private DDMessageTransporter reply;
 

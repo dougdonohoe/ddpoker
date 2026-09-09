@@ -86,7 +86,7 @@ public class WorkerPool
     {
         if (bInfo)
         {
-            logger.info("Growing worker pool by " + nWorkers + " to " + (nWorkers + workers_.size()) + " workers.");
+            logger.info("Growing worker pool by {} to {} workers.", nWorkers, (nWorkers + workers_.size()));
         }
         WorkerThread thread;
         for (int i = 0; i < nWorkers; i++)
@@ -140,7 +140,7 @@ public class WorkerPool
         WorkerThread worker = null;
 
         synchronized (idle_) {
-            if (idle_.size() > 0) {
+            if (!idle_.isEmpty()) {
                 worker = (WorkerThread) idle_.remove(0);
             }
         }

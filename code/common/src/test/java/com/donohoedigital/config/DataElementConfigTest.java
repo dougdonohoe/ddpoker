@@ -32,9 +32,11 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class DataElementConfigTest
 {
-    private static Logger logger = LogManager.getLogger(DataElementConfigTest.class);
+    private static final Logger logger = LogManager.getLogger(DataElementConfigTest.class);
 
     private DataElementConfig load()
     {
@@ -69,7 +71,7 @@ public class DataElementConfigTest
         List<?> values = dogs.getListValues();
         for (Object o : values)
         {
-            logger.info("Value: " + o);
+            logger.info("Value: {}", o);
         }
         assertTrue(values.contains("tahoe"));
         assertTrue(values.contains("dexter"));

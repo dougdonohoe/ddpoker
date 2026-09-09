@@ -38,20 +38,25 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerMain;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.p2p.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 /**
@@ -89,18 +94,14 @@ public class JoinGame extends ListGames
         pub.add(inside, BorderLayout.CENTER);
 
         GlassButton find = new GlassButton("okayfind", "Glass");
-        find.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        find.addActionListener(e -> {
+            if (engine_.isDemo())
             {
-                if (engine_.isDemo())
-                {
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo2"));
-                }
-                else
-                {
-                    context_.processPhase("FindGames");
-                }
+                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo2"));
+            }
+            else
+            {
+                context_.processPhase("FindGames");
             }
         });
         inside.add(find, BorderLayout.WEST);
@@ -446,13 +447,11 @@ public class JoinGame extends ListGames
 
             // run in swing thread
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                        String sKey = getSelectedRowKey();
-                        getClientList();
-                        fireTableDataChanged();
-                        selectRow(sKey);
-                    }
+                () -> {
+                    String sKey = getSelectedRowKey();
+                    getClientList();
+                    fireTableDataChanged();
+                    selectRow(sKey);
                 }
             );
         }

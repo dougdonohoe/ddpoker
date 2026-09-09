@@ -38,13 +38,20 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
+import com.donohoedigital.config.MatchingResources;
+import com.donohoedigital.config.XMLConfigFileLoader;
+import com.donohoedigital.config.XMLWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
-import java.io.*;
-import java.util.*;
-import java.net.*;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeSet;
+import java.net.URL;
 
 /**
  *
@@ -52,7 +59,7 @@ import java.net.*;
  */
 public class Borders extends TreeSet<Border> {
     
-    private static Logger logger = LogManager.getLogger(Borders.class);
+    private static final Logger logger = LogManager.getLogger(Borders.class);
     
     private MapPoints allPoints_;
     private static final String BORDER_TAG = "BORDER";
@@ -174,7 +181,7 @@ public class Borders extends TreeSet<Border> {
         {
             border = iter.next();
             // don't bother writing out if not 1 point in the border
-            if (border.getBorderPoints().size() > 0)
+            if (!border.getBorderPoints().isEmpty())
             {
                 //sName = border.getTerritory1().getName() + "." + border.getTerritory2().getName() + ".xml";
                 //sName = sName.replace(' ', '_');
@@ -206,7 +213,7 @@ public class Borders extends TreeSet<Border> {
             borderwriter.close();
         }
         
-        logger.info("Saved " + id + " border files");
+        logger.info("Saved {} border files", id);
         
         writer.printElementLine(NUMBORDERFILES, id, nIndent);
         writer.printNewLine();

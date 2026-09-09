@@ -43,8 +43,9 @@ import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.GamePlayer;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;

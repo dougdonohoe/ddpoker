@@ -38,26 +38,32 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.network.PokerURL;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.udp.UDPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * @author donohoe
@@ -163,22 +169,13 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         ippub.add(pbox, BorderLayout.NORTH);
         configurePublic_ = new DDCheckBox("publicgame", STYLE);
         configurePublic_.setSelected(false);
-        configurePublic_.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
+        configurePublic_.addChangeListener(e ->
+            doCheckBox());
+        configurePublic_.addActionListener(e -> {
+            if (configurePublic_.isSelected())
             {
-                doCheckBox();
-            }
-        });
-        configurePublic_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                if (configurePublic_.isSelected())
-                {
-                    String sMsg = PropertyConfig.getMessage("msg.publicip.notice", "" + game_.getPort());
-                    EngineUtils.displayInformationDialog(context_, sMsg, "PublicIP");
-                }
+                String sMsg = PropertyConfig.getMessage("msg.publicip.notice", "" + game_.getPort());
+                EngineUtils.displayInformationDialog(context_, sMsg, "PublicIP");
             }
         });
         pbox.add(configurePublic_, BorderLayout.WEST);
@@ -205,13 +202,8 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
 
         test_ = new GlassButton("testip", "Glass");
         pubbuttons.add(test_);
-        test_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                testConnection();
-            }
-        });
+        test_.addActionListener(e ->
+            testConnection());
 
         ////// BOTTOM
         DDPanel bottom = new DDPanel();
@@ -258,15 +250,11 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         listPublic_.setSelected(false);
 
         // shouldn't happen unless player copies a player profile file over
-        listPublic_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        listPublic_.addActionListener(e -> {
+            if (listPublic_.isSelected() && engine_.isDemo())
             {
-                if (listPublic_.isSelected() && engine_.isDemo())
-                {
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo"));
-                    listPublic_.setSelected(false);
-                }
+                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo"));
+                listPublic_.setSelected(false);
             }
         });
         gbox.add(listPublic_, BorderLayout.SOUTH);
@@ -306,15 +294,7 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         panel.add(text, BorderLayout.CENTER);
         DDButton copy = new GlassButton("copyurl", "Glass");
         panel.add(GuiUtils.CENTER(copy), BorderLayout.EAST);
-        copy.addActionListener(new ActionListener()
-        {
-            DDTextField _text = text;
-
-            public void actionPerformed(ActionEvent e)
-            {
-                GuiUtils.copyToClipboard(text.getText());
-            }
-        });
+        copy.addActionListener(e -> GuiUtils.copyToClipboard(text.getText()));
 
         w.label = label;
         w.text = text;
@@ -344,13 +324,8 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         {
             DDButton copy = new GlassButton("publicip", "Glass");
             panel.add(GuiUtils.CENTER(copy), BorderLayout.EAST);
-            copy.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    getPublicIP();
-                }
-            });
+            copy.addActionListener(e ->
+                getPublicIP());
             w.button = copy;
         }
 

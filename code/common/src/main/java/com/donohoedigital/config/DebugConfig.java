@@ -32,9 +32,11 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,9 +47,9 @@ import java.util.*;
  */
 public class DebugConfig
 {
-    private static Logger logger = LogManager.getLogger(DebugConfig.class);
+    private static final Logger logger = LogManager.getLogger(DebugConfig.class);
     private static Boolean TESTING_ENABLED = null;
-    private static final Map<String, Boolean> cache = new HashMap<String, Boolean>();
+    private static final Map<String, Boolean> cache = new HashMap<>();
 
     /**
      * Return true if given debug testing property is on.
@@ -91,7 +93,7 @@ public class DebugConfig
         boolean b = PropertyConfig.getBooleanProperty(sName, false, false);
         if (b)
         {
-            logger.debug("Debug setting " + sName + " is on.");
+            logger.debug("Debug setting {} is on.", sName);
         }
         return b;
     }

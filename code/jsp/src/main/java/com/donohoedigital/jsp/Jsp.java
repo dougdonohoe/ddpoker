@@ -38,7 +38,7 @@ import org.apache.jasper.runtime.JspFactoryImpl;
 public class Jsp {
 
     // Need to set a JspFactory in Tomcat 8
-    synchronized static void init() {
+    static synchronized void init() {
         if (JspFactory.getDefaultFactory() == null) {
             JspFactory.setDefaultFactory(new JspFactoryImpl());
         }

@@ -38,13 +38,18 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.p2p.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.p2p.P2PURL;
+import com.donohoedigital.p2p.Peer2PeerMessage;
+import com.donohoedigital.p2p.Peer2PeerMessenger;
 
 /**
  *
@@ -55,11 +60,11 @@ public class PokerP2PHeadless implements OnlineMessageListener, DDMessageListene
     static Logger logger = LogManager.getLogger(PokerP2PHeadless.class);
 
     // members
-    private PokerGame game_;
+    private final PokerGame game_;
     private OnlineManager mgr_;
-    private P2PURL url_;
+    private final P2PURL url_;
     private Peer2PeerMessenger msgr_;
-    private OnlineMessage omsg_;
+    private final OnlineMessage omsg_;
     private OnlineMessage oreply_;
     private DDMessage mReturn_;
     private int nStatus_;
@@ -179,7 +184,7 @@ public class PokerP2PHeadless implements OnlineMessageListener, DDMessageListene
             oreply_ = reply;
             timer_.interrupt();   
             DDMessage ret = reply.getData();
-            ret.setStatus(msgr_.getStatus(ret));
+            ret.setStatus(Peer2PeerMessenger.getStatus(ret));
             messageReceived(ret);
         }
     }

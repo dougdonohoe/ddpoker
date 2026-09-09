@@ -32,18 +32,22 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.db.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.gui.DDPagingTableModel;
+import com.donohoedigital.db.BindArray;
+import com.donohoedigital.db.Database;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 public class DatabaseQueryTableModel extends DDPagingTableModel
 {
-    private Database database_;
-    private String query_;
-    private BindArray bindArray_;
+    private final Database database_;
+    private final String query_;
+    private final BindArray bindArray_;
 
     public boolean isCellEditable(int row, int column)
     {

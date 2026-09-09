@@ -39,11 +39,14 @@
 package com.donohoedigital.games.tools;
 
 import com.donohoedigital.games.config.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.FocusManager;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 
 
 /**
@@ -55,8 +58,8 @@ public class XPoints extends XConnectorLines implements KeyListener,
     
     static Logger logger = LogManager.getLogger(XPoints.class);
     protected MapPoints allPoints_;
-    private GameboardConfig gameconfig_;
-    private GameboardBorderManager manager_;
+    private final GameboardConfig gameconfig_;
+    private final GameboardBorderManager manager_;
         
     DrawingUtil util_;
     BorderPoint borderPointSelected_;   // border point selected (with focus)
@@ -88,7 +91,7 @@ public class XPoints extends XConnectorLines implements KeyListener,
     }
     
     // used for performance so new rect isn't needed everytime we repaint
-    private Rectangle bounds_ = new Rectangle();
+    private final Rectangle bounds_ = new Rectangle();
     
     ///
     /// Drawing methods
@@ -233,7 +236,7 @@ public class XPoints extends XConnectorLines implements KeyListener,
         // add to list of everything - which checks for duplicates
         if (allPoints_.contains(point))
         {
-            logger.warn("New border point already exists as a defined point.  Ignoring it! - " + point.longDesc(null));
+            logger.warn("New border point already exists as a defined point.  Ignoring it! - {}", point.longDesc(null));
             return;
         }
 
@@ -249,7 +252,7 @@ public class XPoints extends XConnectorLines implements KeyListener,
         }
         
         // if mouse button 2 pressed, add new border
-        if (e.getButton() == e.BUTTON3 || addToBorder == null)
+        if (e.getButton() == MouseEvent.BUTTON3 || addToBorder == null)
         {    
             Component cFocus = FocusManager.getCurrentManager().getFocusOwner();
             Border b = manager_.chooseBorder("Create New Border", point.getX(), point.getY(), false);

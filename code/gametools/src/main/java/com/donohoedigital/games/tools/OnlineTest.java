@@ -38,12 +38,20 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.p2p.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.comms.Version;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.comms.EngineMessenger;
+import com.donohoedigital.games.comms.RegistrationMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.p2p.Peer2PeerClient;
+import com.donohoedigital.p2p.Peer2PeerMessage;
 
 /**
  * Tool which was used to develop online messaging architecture.  I think this was
@@ -156,7 +164,7 @@ public class OnlineTest implements DDMessageListener
                                             );
     }
     
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         if (args.length == 0) usage();
         

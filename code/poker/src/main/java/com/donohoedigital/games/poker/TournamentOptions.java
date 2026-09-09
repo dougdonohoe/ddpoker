@@ -38,21 +38,31 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.MersenneTwisterFast;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.GameState;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.PokerConnectionServer;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -142,7 +152,7 @@ public class TournamentOptions extends BasePhase implements ChangeListener, Ance
     /**
      * Our list editor
      */
-    private class TournamentProfileList extends ProfileList
+    private final class TournamentProfileList extends ProfileList
     {
         private TournamentProfileList(GameEngine engine, List<BaseProfile> profiles,
                                       String sStyle,

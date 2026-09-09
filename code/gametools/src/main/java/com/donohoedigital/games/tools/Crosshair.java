@@ -38,15 +38,11 @@
 
 package com.donohoedigital.games.tools;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
-
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import javax.swing.JComponent;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import com.donohoedigital.gui.XYConstraints;
 
 /**
  * Draw a cross hair cursor
@@ -58,7 +54,7 @@ public class Crosshair extends JComponent
     
     //static Logger logger = LogManager.getLogger(Crosshair.class);
     
-    private XYConstraints xyConstraints_; // constraints used to manage this point
+    private final XYConstraints xyConstraints_; // constraints used to manage this point
     
     static int defaultSize = 17;
     private boolean bDraw_ = true;

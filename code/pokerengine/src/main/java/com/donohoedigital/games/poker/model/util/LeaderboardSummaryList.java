@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.games.poker.model.util;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.poker.model.LeaderboardSummary;
 
 /**
  * Leaderboard history summary list

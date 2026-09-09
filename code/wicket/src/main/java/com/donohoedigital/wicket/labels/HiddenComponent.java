@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.labels;
 
-import com.donohoedigital.wicket.components.*;
+import com.donohoedigital.wicket.components.VoidContainer;
 
 /**
  * Created by IntelliJ IDEA.

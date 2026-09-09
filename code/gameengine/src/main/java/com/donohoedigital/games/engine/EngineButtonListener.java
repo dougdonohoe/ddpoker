@@ -38,9 +38,10 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.GameButton;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *

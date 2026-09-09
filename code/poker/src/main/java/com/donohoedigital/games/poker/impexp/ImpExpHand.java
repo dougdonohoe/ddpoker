@@ -32,10 +32,12 @@
  */
 package com.donohoedigital.games.poker.impexp;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ImpExpHand
 {
@@ -57,11 +59,11 @@ public class ImpExpHand
     public int bigBlind;
     public int buttonSeat;
     public int localHumanPlayerSeat = -1;
-    public PokerPlayer players[] = new PokerPlayer[PokerConstants.SEATS];
-    public int betChips[] = new int[PokerConstants.SEATS];
-    public int overbetChips[] = new int[PokerConstants.SEATS];
-    public int winChips[] = new int[PokerConstants.SEATS];
-    public int startChips[] = new int[PokerConstants.SEATS];
-    public int endChips[] = new int[PokerConstants.SEATS];
+    public PokerPlayer[] players = new PokerPlayer[PokerConstants.SEATS];
+    public int[] betChips = new int[PokerConstants.SEATS];
+    public int[] overbetChips = new int[PokerConstants.SEATS];
+    public int[] winChips = new int[PokerConstants.SEATS];
+    public int[] startChips = new int[PokerConstants.SEATS];
+    public int[] endChips = new int[PokerConstants.SEATS];
     public ArrayList hist = new ArrayList();
 }

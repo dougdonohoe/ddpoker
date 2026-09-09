@@ -38,16 +38,22 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
+import com.donohoedigital.base.ApplicationError;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
+import javax.swing.ImageIcon;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.net.*;
+import java.util.Map;
+import java.net.URL;
 
 /**
  * Loads image.xml files in the module directories defined by
@@ -57,13 +63,13 @@ import java.net.*;
  */
 public class ImageConfig extends XMLConfigFileLoader
 {
-    private static Logger iLogger = LogManager.getLogger(ImageConfig.class);
+    private static final Logger iLogger = LogManager.getLogger(ImageConfig.class);
     
     private static final String IMAGE_CONFIG = "images.xml";
 
     private static ImageConfig imageConfig = null;
     
-    private Map<String, ImageDef> images_ = new HashMap<String, ImageDef>();
+    private final Map<String, ImageDef> images_ = new HashMap<>();
     
     /** 
      * Creates a new instance of ImageConfig from the Appconfig file 
@@ -94,7 +100,7 @@ public class ImageConfig extends XMLConfigFileLoader
         ImageDef image = getImageDef(sName);
         if (image == null) 
         {
-            iLogger.warn("No image found for " + sName);
+            iLogger.warn("No image found for {}", sName);
             return null;
         }
         return image.getImageIcon();
@@ -123,7 +129,7 @@ public class ImageConfig extends XMLConfigFileLoader
         ImageDef image = getImageDef(sName);
         if (image == null) 
         {
-            iLogger.warn("No image found for " + sName);
+            iLogger.warn("No image found for {}", sName);
             return null;
         }
         return image.getAnimatedImageIcon();
@@ -137,7 +143,7 @@ public class ImageConfig extends XMLConfigFileLoader
         ImageDef image = getImageDef(sName);
         if (image == null) 
         {
-            iLogger.warn("No image found for cursor " + sName);
+            iLogger.warn("No image found for cursor {}", sName);
             return null;
         }
 
@@ -198,7 +204,7 @@ public class ImageConfig extends XMLConfigFileLoader
         {
             if (bReportMissing && !sName.contains("default"))
             {
-                iLogger.warn("No image found for " + sName);
+                iLogger.warn("No image found for {}", sName);
             }
             return null;
         }
@@ -266,7 +272,7 @@ public class ImageConfig extends XMLConfigFileLoader
             url = new MatchingResources("classpath*:config/" + location).getSingleResourceURL();
             if (url == null)
             {
-                iLogger.warn("Image " + sName + " not found at " + location + ".  Skipping");
+                iLogger.warn("Image {} not found at {}.  Skipping", sName, location);
                 return;
             }
         }

@@ -38,12 +38,16 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.config.XMLConfigFileLoader;
+import com.donohoedigital.config.XMLWriter;
 
-import java.util.*;
-import org.jdom2.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import org.jdom2.Element;
 
 /**
  *
@@ -189,7 +193,7 @@ public class Area
     //// GAME MODE FUNCTIONALITY
     ////
     
-    Territory ts_[] = null;
+    Territory[] ts_ = null;
     private int nNumRegions_;
     private int nNumIslands_;
     private int nTotalAdjacentLandRegions_;
@@ -213,7 +217,7 @@ public class Area
      */
     private Territory[] createTerritoryArray()
     {
-        Territory all[] = Territory.getTerritoryArrayCached();
+        Territory[] all = Territory.getTerritoryArrayCached();
         int nNum = 0;
         // first get count
         for (int i = 0; i < all.length; i++)
@@ -357,7 +361,7 @@ public class Area
      */
     public short[] getCountByPlayer(int nNumPlayers)
     {
-        short count[] = new short[nNumPlayers];
+        short[] count = new short[nNumPlayers];
         Territory[] ts = getTerritories();
         GamePlayer player;
         
@@ -386,7 +390,7 @@ public class Area
     public boolean allBelongTo(GamePlayer pl)
     {
         int nCnt = 0;
-        Territory ts[] = getTerritories();
+        Territory[] ts = getTerritories();
         for (int i = 0; i < ts.length; i++)
         {
             if (ts[i].getGamePlayer() != pl)

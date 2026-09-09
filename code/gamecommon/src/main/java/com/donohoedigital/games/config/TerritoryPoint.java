@@ -39,7 +39,8 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.ApplicationError;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -125,7 +126,7 @@ public class TerritoryPoint extends MapPoint
     private TerritoryPoint getNavPoint(int nType)
     {
         if (myTerritory_ == null) {
-            logger.warn("myTerritory_ is null in TerritoryPoint.getNavXPoint() " + this);
+            logger.warn("myTerritory_ is null in TerritoryPoint.getNavXPoint() {}", this);
             return null;
         }
         int nSize = myTerritory_.size();

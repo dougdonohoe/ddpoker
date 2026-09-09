@@ -38,7 +38,7 @@
 
 package com.donohoedigital.base;
 
-import java.util.*;
+import java.util.Enumeration;
 
 /**
  * A class similar to StringTokenizer, with a few differences making it more

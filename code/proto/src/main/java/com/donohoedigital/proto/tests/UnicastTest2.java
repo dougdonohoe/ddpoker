@@ -39,9 +39,12 @@
 package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.config.Perf;
+import com.donohoedigital.config.Prefs;
 import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Doug Donohoe
@@ -49,17 +52,17 @@ import org.apache.logging.log4j.*;
 public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
     // logging
-    private Logger logger;
+    private final Logger logger;
 
     // members
-    private boolean bSend;
-    private boolean bDebug;
-    private int port;
+    private final boolean bSend;
+    private final boolean bDebug;
+    private final int port;
 
     /**
      * Run emailer
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try
         {
@@ -161,11 +164,11 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
 
         if (bDebug)
         {
-            logger.debug("MTU: " + link.getMTU());
-            logger.debug("MAX PAYLOAD: " + link.getMaxPayloadSize() + " (header: " + UDPLink.IP_UDP_HEADERS + ")");
-            logger.debug("MAX MESSAGE: " + link.getMaxMessageSize() + " (header: " + UDPMessage.HEADER_SIZE + ")");
-            logger.debug("MAX DATA: " + link.getMaxDataSize() + " (header: " + UDPData.HEADER_SIZE + ")");
-            logger.debug("MAX TOTAL: " + (link.getMaxDataSize() * UDPData.MAX_PARTS));
+            logger.debug("MTU: {}", link.getMTU());
+            logger.debug("MAX PAYLOAD: {} (header: {})", link.getMaxPayloadSize(), UDPLink.IP_UDP_HEADERS);
+            logger.debug("MAX MESSAGE: {} (header: {})", link.getMaxMessageSize(), UDPMessage.HEADER_SIZE);
+            logger.debug("MAX DATA: {} (header: {})", link.getMaxDataSize(), UDPData.HEADER_SIZE);
+            logger.debug("MAX TOTAL: {}", (link.getMaxDataSize() * UDPData.MAX_PARTS));
         }
 
         link.connect();
@@ -189,8 +192,8 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
 
             if (bDebug)
             {
-                logger.debug("Max long: " + Long.MAX_VALUE + " Max int: " + Integer.MAX_VALUE);
-                logger.debug("DATA_SIZE: " + (link.getMaxDataSize()) + " max size: " + (link.getMaxDataSize()) * UDPData.MAX_PARTS);
+                logger.debug("Max long: {} Max int: {}", Long.MAX_VALUE, Integer.MAX_VALUE);
+                logger.debug("DATA_SIZE: {} max size: {}", (link.getMaxDataSize()), (link.getMaxDataSize()) * UDPData.MAX_PARTS);
             }
 
             StringBuilder sb = new StringBuilder();
@@ -203,7 +206,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
                 for (int i = 0; i < nNum; i++)
                 {
                     sb.setLength(0);
-                    sb.append("This is message for the test server to process and handle and stuff " + (i + 1));
+                    sb.append("This is message for the test server to process and handle and stuff ").append(i + 1);
                     if (ADD_EXTRA)
                     {
                         sb.append(" ");
@@ -216,7 +219,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
                         sb.append("~");
                     }
                     //logger.debug("Message: "+ sb);
-                    if (i % 100 == 0) logger.debug("UnicastTest queueing message: " + (i + 1));
+                    if (i % 100 == 0) logger.debug("UnicastTest queueing message: {}", (i + 1));
                     link.queue(Utils.encode(sb.toString()));
                     if (i % nStep == 0 && nSleep > 0) Utils.sleepMillis(nSleep);
                 }
@@ -250,14 +253,14 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
      */
     private void logStats(UDPLink link)
     {
-        logger.debug("Stats: " + link.getStats());
+        logger.debug("Stats: {}", link.getStats());
         MovingAverage in = udp_.manager().getBytesInMovingAverage();
         MovingAverage out = udp_.manager().getBytesOutMovingAverage();
 
-        logger.debug("Bytes In: " + Utils.formatSizeBytes(in.getAverageLong()) + "/sec" +
-                     " (" + Utils.formatSizeBytes(in.getHigh()) + " high - " + Utils.formatSizeBytes(in.getPeak()) + " peak)" +
-                     ",  Bytes Out: " + Utils.formatSizeBytes(out.getAverageLong()) + "/sec" +
-                     " (" + Utils.formatSizeBytes(out.getHigh()) + " high - " + Utils.formatSizeBytes(out.getPeak()) + " peak)");
+        logger.debug("Bytes In: {}/sec" +
+            " ({} high - {} peak)" +
+            ",  Bytes Out: {}/sec" +
+            " ({} high - {} peak)", Utils.formatSizeBytes(in.getAverageLong()), Utils.formatSizeBytes(in.getHigh()), Utils.formatSizeBytes(in.getPeak()), Utils.formatSizeBytes(out.getAverageLong()), Utils.formatSizeBytes(out.getHigh()), Utils.formatSizeBytes(out.getPeak()));
     }
 
     /**
@@ -299,12 +302,12 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
         switch (event.getType())
         {
             case CREATED:
-                if (bDebug) logger.debug("Created: " + Utils.getAddressPort(link.getRemoteIP()));
+                if (bDebug) logger.debug("Created: {}", Utils.getAddressPort(link.getRemoteIP()));
                 link.addMonitor(this);
                 break;
 
             case DESTROYED:
-                if (bDebug) logger.debug("Destroyed: " + Utils.getAddressPort(link.getRemoteIP()));
+                if (bDebug) logger.debug("Destroyed: {}", Utils.getAddressPort(link.getRemoteIP()));
                 link.removeMonitor(this);
                 if (bSend)
                 {
@@ -340,31 +343,28 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
                 break;
 
             case ESTABLISHED:
-                if (bDebug) logger.debug("EVENT Established: " + Utils.getAddressPort(link.getRemoteIP()));
+                if (bDebug) logger.debug("EVENT Established: {}", Utils.getAddressPort(link.getRemoteIP()));
                 break;
 
             case CLOSING:
-                if (bDebug) logger.debug("EVENT Closing: " + Utils.getAddressPort(link.getRemoteIP()));
+                if (bDebug) logger.debug("EVENT Closing: {}", Utils.getAddressPort(link.getRemoteIP()));
                 break;
 
             case CLOSED:
-                if (bDebug) logger.debug("EVENT Closed: " + Utils.getAddressPort(link.getRemoteIP()));
+                if (bDebug) logger.debug("EVENT Closed: {}", Utils.getAddressPort(link.getRemoteIP()));
                 logStats(link);
                 break;
 
             case POSSIBLE_TIMEOUT:
-                if (bDebug) logger.debug("EVENT Possible timeout on " + Utils.getAddressPort(link.getRemoteIP()) +
-                                         " (no message in last " + elapsed + " millis)");
+                if (bDebug) logger.debug("EVENT Possible timeout on {} (no message in last {} millis)", Utils.getAddressPort(link.getRemoteIP()), elapsed);
                 break;
 
             case TIMEOUT:
-                if (bDebug) logger.debug("EVENT Timeout on " + Utils.getAddressPort(link.getRemoteIP()) +
-                                         " (no message in last " + elapsed + " millis)");
+                if (bDebug) logger.debug("EVENT Timeout on {} (no message in last {} millis)", Utils.getAddressPort(link.getRemoteIP()), elapsed);
                 break;
 
             case RESEND_FAILURE:
-                if (bDebug) logger.debug("EVENT Resend Failure on " + Utils.getAddressPort(link.getRemoteIP()) +
-                                         " (unable to send message " + data + ")");
+                if (bDebug) logger.debug("EVENT Resend Failure on {} (unable to send message {})", Utils.getAddressPort(link.getRemoteIP()), data);
                 break;
 
             case RECEIVED:
@@ -379,7 +379,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
 
                     }
 
-                    logger.debug("EVENT msg from " + Utils.getAddressPort(link.getRemoteIP()) + ": " + data.toString() + sMsg);
+                    logger.debug("EVENT msg from {}: {}{}", Utils.getAddressPort(link.getRemoteIP()), data.toString(), sMsg);
                 }
                 break;
         }

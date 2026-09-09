@@ -32,12 +32,12 @@
  */
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.StringTokenizer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,7 +48,7 @@ import java.util.*;
  */
 public class ChatValidate
 {
-    public static void main(String argv[])
+    static void main(String[] argv)
     {
         if (argv.length == 0)
         {

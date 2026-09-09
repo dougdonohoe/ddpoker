@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 
 /**
  * Encapsulates tight storage of int values for every possible pocket.

@@ -32,11 +32,14 @@
  */
 package com.donohoedigital.config;
 
-import org.springframework.core.io.*;
-import org.springframework.core.type.classreading.*;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.type.classreading.MetadataReader;
+import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,7 +51,7 @@ import java.util.*;
 class CustomCachingMetadataReaderFactory extends SimpleMetadataReaderFactory
 {
 
-    private final Map<Resource, MetadataReader> classReaderCache = new HashMap<Resource, MetadataReader>();
+    private final Map<Resource, MetadataReader> classReaderCache = new HashMap<>();
 
 
     /**

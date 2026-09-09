@@ -38,12 +38,12 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.jdom2.*;
-import java.util.*;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 
 /**
@@ -202,8 +202,7 @@ public class BorderPoint extends MapPoint
             }
         }
         bCurrentBorder_ = null;
-        logger.warn("setCurrentBorder to border: " + border.shortDesc() + 
-                            " - is not a border in point " + longDesc(null));
+        logger.warn("setCurrentBorder to border: {} - is not a border in point {}", border.shortDesc(), longDesc(null));
     }
     
     /**
@@ -212,7 +211,7 @@ public class BorderPoint extends MapPoint
     public Border getCurrentBorder()
     {
         // if no border set, but we have borders, return 1st border
-        if (bCurrentBorder_ == null && myBorders_.size() > 0)
+        if (bCurrentBorder_ == null && !myBorders_.isEmpty())
         {
             bCurrentBorder_ = myBorders_.getBorder(0);
         }
@@ -233,8 +232,7 @@ public class BorderPoint extends MapPoint
                 return myBorders_.getBorder(nIndex);
             }
         }
-        logger.warn("nextBorder() not found for " + bCurrentBorder_.shortDesc() +
-                                    " in point " + longDesc(null));
+        logger.warn("nextBorder() not found for {} in point {}", bCurrentBorder_.shortDesc(), longDesc(null));
         return null;
     }
     
@@ -274,7 +272,7 @@ public class BorderPoint extends MapPoint
     private BorderPoint getNavPoint(int nType, Border border)
     {
          if (border == null) {
-            logger.warn("myBorder is null in BorderPoint.getNavXPoint() " + toString());
+            logger.warn("myBorder is null in BorderPoint.getNavXPoint() {}", toString());
             return null;
         }
         int nSize = border.size();

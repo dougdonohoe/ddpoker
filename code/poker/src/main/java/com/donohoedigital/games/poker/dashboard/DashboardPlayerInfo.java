@@ -32,21 +32,30 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.ai.gui.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.config.PropertyConfig;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.Gameboard;
+import com.donohoedigital.games.engine.TerritorySelectionListener;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.ai.OpponentModel;
+import com.donohoedigital.games.poker.ai.gui.StyleQuadrantsGridPanel;
+import com.donohoedigital.games.poker.ai.gui.WeightGridPanel;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.gui.DDHtmlArea;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.base.Utils;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.MouseEvent;
 
 public class DashboardPlayerInfo extends DashboardItem implements TerritorySelectionListener
 {

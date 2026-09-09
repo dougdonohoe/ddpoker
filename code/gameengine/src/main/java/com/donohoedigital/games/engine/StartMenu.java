@@ -40,8 +40,7 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.gui.*;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
 
 /**
  * @author Doug Donohoe
@@ -72,13 +71,8 @@ public class StartMenu extends MenuPhase
             // expired message - just exit button
             DDButton exit = new GlassButton("exit", "GlassBig");
             parent.add(GuiUtils.CENTER(exit), BorderLayout.SOUTH);
-            exit.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    System.exit(0);
-                }
-            });
+            exit.addActionListener(e ->
+                System.exit(0));
         }
     }
 

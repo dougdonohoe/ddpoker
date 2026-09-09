@@ -38,9 +38,11 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.Territory;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  *

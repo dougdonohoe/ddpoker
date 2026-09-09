@@ -58,8 +58,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -191,7 +189,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
      */
     private abstract class OptionTab extends DDTabPanel
     {
-        private final List<DDOption> localOptions = new ArrayList<DDOption>();
+        private final List<DDOption> localOptions = new ArrayList<>();
 
         OptionTab()
         {
@@ -297,24 +295,16 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             fxvolume.setEditable(true);
             fx = OptionMenu.add(new OptionBoolean(NODE, EngineConstants.PREF_FX, OSTYLE, map_, true, fxvolume), audiobase);
 
-            fx.addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
-                    AudioConfig.setMuteFX(!box.isSelected());
-                    playFX();
-                }
+            fx.addChangeListener(e -> {
+                DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
+                AudioConfig.setMuteFX(!box.isSelected());
+                playFX();
             });
 
-            fxvolume.getSpinner().addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
-                    AudioConfig.setFXGain(spinner.getValue());
-                    playFX();
-                }
+            fxvolume.getSpinner().addChangeListener(e -> {
+                DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
+                AudioConfig.setFXGain(spinner.getValue());
+                playFX();
             });
 
             // background music
@@ -323,23 +313,15 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             muvolume.setEditable(true);
             music = OptionMenu.add(new OptionBoolean(NODE, EngineConstants.PREF_BGMUSIC, OSTYLE, map_, true, muvolume), audiobase);
 
-            music.addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
-                    DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
-                    AudioConfig.setMuteBGMusic(!box.isSelected());
-                }
+            music.addChangeListener(e -> {
+                DDCheckBox box = ((OptionBoolean) e.getSource()).getCheckBox();
+                AudioConfig.setMuteBGMusic(!box.isSelected());
             });
 
-            muvolume.getSpinner().addChangeListener(new ChangeListener()
-            {
-                public void stateChanged(ChangeEvent e)
-                {
+            muvolume.getSpinner().addChangeListener(e -> {
 
-                    DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
-                    AudioConfig.setBGMusicGain(spinner.getValue());
-                }
+                DDNumberSpinner spinner = (DDNumberSpinner) e.getSource();
+                AudioConfig.setBGMusicGain(spinner.getValue());
             });
 
             // size fx, music to same
@@ -533,23 +515,11 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
 
             // buttons
             DDButton bannedplayers = new GlassButton("bannedplayers", "Glass");
-            bannedplayers.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    context_.processPhaseNow("BannedPlayerList", null);
-                }
-            });
+            bannedplayers.addActionListener(e -> context_.processPhaseNow("BannedPlayerList", null));
             bannedplayers.setBorderGap(2, 5, 2, 6);
 
             DDButton mutedplayers = new GlassButton("mutedplayers", "Glass");
-            mutedplayers.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    context_.processPhaseNow("MutedPlayerList", null);
-                }
-            });
+            mutedplayers.addActionListener(e -> context_.processPhaseNow("MutedPlayerList", null));
             mutedplayers.setBorderGap(2, 5, 2, 6);
 
             DDPanel buttonbase = new DDPanel();
@@ -618,13 +588,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             // test button
             test_ = new GlassButton("testonline", "Glass");
             serverBorder.add(GuiUtils.CENTER(test_), BorderLayout.EAST);
-            test_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    testConnection();
-                }
-            });
+            test_.addActionListener(e -> testConnection());
 
             // update text fields based on pref
             doOnlineEnabled();
@@ -747,7 +711,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
         }
         catch (BackingStoreException bse)
         {
-            logger.warn("Unable to clear prefs for node: " + EnginePrefs.NODE_DIALOG_PHASE);
+            logger.warn("Unable to clear prefs for node: {}", EnginePrefs.NODE_DIALOG_PHASE);
         }
         EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.resetdialog"));
     }

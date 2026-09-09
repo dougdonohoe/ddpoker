@@ -32,25 +32,37 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.PokerURL;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.datatransfer.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.event.ListSelectionListener;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * Created by IntelliJ IDEA.
@@ -132,25 +144,21 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
         connectText_.addPropertyChangeListener("value", this);
         connectLabel_ = w.label;
         pubPaste_ = w.button;
-        pubPaste_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        pubPaste_.addActionListener(e -> {
+            Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable value = clip.getContents(null);
+            if (value.isDataFlavorSupported(DataFlavor.stringFlavor))
             {
-                Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-                Transferable value = clip.getContents(null);
-                if (value.isDataFlavorSupported(DataFlavor.stringFlavor))
+                try
                 {
-                    try
+                    String s = (String) value.getTransferData(DataFlavor.stringFlavor);
+                    if (s != null)
                     {
-                        String s = (String) value.getTransferData(DataFlavor.stringFlavor);
-                        if (s != null)
-                        {
-                            connectText_.setText(s);
-                        }
+                        connectText_.setText(s);
                     }
-                    catch (Throwable ignored)
-                    {
-                    }
+                }
+                catch (Throwable ignored)
+                {
                 }
             }
         });
@@ -271,7 +279,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
     /**
      * Auto join - sleep to let ui show then click start
      */
-    private class AutoJoin implements Runnable
+    private final class AutoJoin implements Runnable
     {
         DDButton button;
 
@@ -283,13 +291,9 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
         public void run()
         {
             Utils.sleepMillis(500);
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
-                    button.setEnabled(true);
-                    button.doClick();
-                }
+            SwingUtilities.invokeLater(() -> {
+                button.setEnabled(true);
+                button.doClick();
             });
         }
     }
@@ -324,15 +328,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
 
         DDButton paste = new GlassButton("pasteurl", "Glass");
         buttons.add(paste, BorderLayout.CENTER);
-        paste.addActionListener(new ActionListener()
-        {
-            DDTextField _text = text;
-
-            public void actionPerformed(ActionEvent e)
-            {
-                GuiUtils.copyToClipboard(text.getText());
-            }
-        });
+        paste.addActionListener(e -> GuiUtils.copyToClipboard(text.getText()));
 
         if (bUseLastButton)
         {
@@ -341,16 +337,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
             buttons.add(uselast, BorderLayout.EAST);
             if (sLast != null && sLast.length() > 0)
             {
-                uselast.addActionListener(new ActionListener()
-                {
-                    DDTextField _text = text;
-                    String _sLast = sLast;
-
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        text.setText(sLast);
-                    }
-                });
+                uselast.addActionListener(e -> text.setText(sLast));
             }
             else
             {
@@ -440,7 +427,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
             context_.setGame(game);
 
             // log it
-            logger.info("Joining game " + sConnect + "...");
+            logger.info("Joining game {}...", sConnect);
 
             // have online manager do join, which returns true
             // if successful (in which case it places the game into
@@ -536,7 +523,7 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
         }
         catch (Throwable e)
         {
-            logger.info("Unable to get password for profile: " + profile_.getName());
+            logger.info("Unable to get password for profile: {}", profile_.getName());
             resetProfile();
             return false;
         }

@@ -28,8 +28,9 @@
 package com.zookitec.layout;
 
 import java.awt.*;
-import java.util.*;
-import java.io.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.io.Serializable;
 
 /**
  * A layout manager that provides explicit control over the layout of components.
@@ -53,7 +54,7 @@ public class ExplicitLayout implements LayoutManager2, Serializable {
      *
      * @serial
      */
-    private Hashtable component2constraints;
+    private final Hashtable component2constraints;
 
 
     /**
@@ -61,7 +62,7 @@ public class ExplicitLayout implements LayoutManager2, Serializable {
      *
      * @serial
      */
-    private Hashtable name2constraints;
+    private final Hashtable name2constraints;
 
 
 

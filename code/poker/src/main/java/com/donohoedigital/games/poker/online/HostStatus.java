@@ -32,18 +32,27 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.MessageErrorDialog;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTableInput;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.gui.DDCheckBox;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.ImageIcon;
+import java.awt.BorderLayout;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,21 +66,21 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
     static Logger logger = LogManager.getLogger(HostStatus.class);
 
     // LEDs
-    private static ImageIcon REDLED = ImageConfig.getImageIcon("led-red");
-    private static ImageIcon GREENLED = ImageConfig.getImageIcon("led-green");
-    private static ImageIcon YELLOWLED = ImageConfig.getImageIcon("led-yellow");
+    private static final ImageIcon REDLED = ImageConfig.getImageIcon("led-red");
+    private static final ImageIcon GREENLED = ImageConfig.getImageIcon("led-green");
+    private static final ImageIcon YELLOWLED = ImageConfig.getImageIcon("led-yellow");
 
     // members
-    private PokerGame game_;
-    private OnlineManager mgr_;
-    private PokerPlayer host_;
-    private PokerPlayer local_;
+    private final PokerGame game_;
+    private final OnlineManager mgr_;
+    private final PokerPlayer host_;
+    private final PokerPlayer local_;
     private boolean bConnected_ = false;
-    private boolean bInGame_;
+    private final boolean bInGame_;
 
     // ui
-    private DDLabel status_;
-    private DDCheckBox details_;
+    private final DDLabel status_;
+    private final DDCheckBox details_;
     private PokerErrorDialog error_;
 
     /**
@@ -96,16 +105,12 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
         base.add(status_, BorderLayout.CENTER);
 
         details_ = new DDCheckBox("showdetails2", STYLE);
-        details_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        details_.addActionListener(e -> {
+            if (!details_.isSelected())
             {
-                if (!details_.isSelected())
+                if (error_ != null)
                 {
-                    if (error_ != null)
-                    {
-                        error_.removeDialog();
-                    }
+                    error_.removeDialog();
                 }
             }
         });
@@ -132,13 +137,10 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
     {
         if (PokerUtils.getPokerGameboard() != null)
         {
-            GuiUtils.invoke(new Runnable() {
-                public void run()
-                {
-                    game_.setInputMode(PokerTableInput.MODE_QUITSAVE);
-                    PokerUtils.clearCards(true);
-                    PokerUtils.clearResults(game_.getGameContext(), true);
-                }
+            GuiUtils.invoke(() -> {
+                game_.setInputMode(PokerTableInput.MODE_QUITSAVE);
+                PokerUtils.clearCards(true);
+                PokerUtils.clearResults(game_.getGameContext(), true);
             });
         }
     }
@@ -148,12 +150,8 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
      */
     private void updateStatusInSwing()
     {
-        GuiUtils.invoke(new Runnable() {
-            public void run()
-            {
-                updateStatus(false);
-            }
-        });
+        GuiUtils.invoke(() ->
+            updateStatus(false));
     }
 
     /**
@@ -222,15 +220,12 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
         {
             if (nAttempts_ == 0)
             {
-                GuiUtils.invokeAndWait(new Runnable() {
-                    public void run()
-                    {
-                        DDMessage init = new DDMessage();
-                        init.setStatus(DDMessageListener.STATUS_APPL_ERROR);
-                        init.setApplicationErrorMessage(PropertyConfig.getMessage(
-                                bInGame_ ? "msg.msgerror.disconnect.p2p.game" : "msg.msgerror.disconnect.p2p.lobby"));
-                        handleError(init, false);
-                    }
+                GuiUtils.invokeAndWait(() -> {
+                    DDMessage init = new DDMessage();
+                    init.setStatus(DDMessageListener.STATUS_APPL_ERROR);
+                    init.setApplicationErrorMessage(PropertyConfig.getMessage(
+                        bInGame_ ? "msg.msgerror.disconnect.p2p.game" : "msg.msgerror.disconnect.p2p.lobby"));
+                    handleError(init, false);
                 });
             }
             Utils.sleepMillis(nAttempts_ == 0 ? 1000 : 5000);
@@ -241,28 +236,25 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
             // if aborting, continue
             if (bAbort_) continue;
 
-            GuiUtils.invokeAndWait(new Runnable() {
-                public void run()
-                {
-                    if (game_.getOnlineMode() == PokerGame.MODE_CANCELLED) bAbort_ = true;
+            GuiUtils.invokeAndWait(() -> {
+                if (game_.getOnlineMode() == PokerGame.MODE_CANCELLED) bAbort_ = true;
 
-                    if (bAbort_) return;
-                    status_.setIcon(YELLOWLED);
-                    logger.debug("Attempting to reconnect...");
-                    Object o = mgr_.joinGame(local_.isObserver(), true, false);
-                    nAttempts_++;
-                    if (o == Boolean.TRUE)
-                    {
-                        DDMessage reconnect = new DDMessage();
-                        reconnect.setStatus(DDMessageListener.STATUS_OK);
-                        handleError(reconnect, false);
-                        bReconnected_ = true;
-                    }
-                    else
-                    {
-                        status_.setIcon(REDLED);
-                        if (o instanceof DDMessage) handleError((DDMessage) o, true);
-                    }
+                if (bAbort_) return;
+                status_.setIcon(YELLOWLED);
+                logger.debug("Attempting to reconnect...");
+                Object o = mgr_.joinGame(local_.isObserver(), true, false);
+                nAttempts_++;
+                if (o == Boolean.TRUE)
+                {
+                    DDMessage reconnect = new DDMessage();
+                    reconnect.setStatus(DDMessageListener.STATUS_OK);
+                    handleError(reconnect, false);
+                    bReconnected_ = true;
+                }
+                else
+                {
+                    status_.setIcon(REDLED);
+                    if (o instanceof DDMessage) handleError((DDMessage) o, true);
                 }
             });
         }
@@ -316,7 +308,7 @@ public class HostStatus extends DDPanel implements HostConnectionListener, Runna
             default:
                 sLog = "unknown status ("+ nStatus+ ')';
         }
-        if (bLog && sLog != null) logger.error("Reconnected failed: " + sLog);
+        if (bLog && sLog != null) logger.error("Reconnected failed: {}", sLog);
 
         // show to user if details checkbox selected and not aborting
         if (!details_.isSelected() || bAbort_) return;

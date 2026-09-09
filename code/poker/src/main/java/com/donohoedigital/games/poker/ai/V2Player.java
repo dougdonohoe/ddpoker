@@ -32,15 +32,21 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.ddpoker.holdem.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
+import com.ddpoker.holdem.PlayerAction;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.security.*;
+import java.security.SecureRandom;
 
 @DataCoder('2')
 public class V2Player extends V1Player implements AIConstants
@@ -55,20 +61,20 @@ public class V2Player extends V1Player implements AIConstants
     private float biasedNegativePotential_;
     private float behs_;
 
-    private float positivePotential_[][] = null;
-    private float negativePotential_[][] = null;
+    private float[][] positivePotential_ = null;
+    private float[][] negativePotential_ = null;
     private PocketMatrixFloat fieldMatrix_ = null;
 
     private float rawHandStrength_;
     private float biasedHandStrength_;
 
     private int myHandScore_;
-    private int otherHandScore_[][] = null;
+    private int[][] otherHandScore_ = null;
 
     private long fpPocket_ = 0;
     private long fpCommunity_ = 0;
 
-    private boolean potRaised_[] = new boolean[10];
+    private boolean[] potRaised_ = new boolean[10];
 
     private int maPotRaised_ = 0;
 
@@ -330,7 +336,7 @@ public class V2Player extends V1Player implements AIConstants
 
         Hand community = new Hand(getCommunity()); // copy because we will be altering
 
-        if (community.size() == 0)
+        if (community.isEmpty())
         {
             return;
         }
@@ -742,15 +748,15 @@ public class V2Player extends V1Player implements AIConstants
         Card card2;
 
         float weight;
-        float bhs[] = new float[10];
-        float total[] = new float[10];
+        float[] bhs = new float[10];
+        float[] total = new float[10];
 
         int skip = player.getSeat();
 
         HoldemHand hhand = player.getHoldemHand();
 
         //boolean couldLimp[] = new boolean[hhand.getNumPlayers()];
-        boolean paid[] = new boolean[hhand.getNumPlayers()];
+        boolean[] paid = new boolean[hhand.getNumPlayers()];
         //boolean limped[] = new boolean[hhand.getNumPlayers()];
 
         for (int p = hhand.getNumPlayers() - 1; p >= 0; --p)
@@ -989,9 +995,9 @@ public class V2Player extends V1Player implements AIConstants
 
         HoldemHand hhand = player.getHoldemHand();
 
-        boolean couldLimp[] = new boolean[hhand.getNumPlayers()];
-        boolean paid[] = new boolean[hhand.getNumPlayers()];
-        boolean limped[] = new boolean[hhand.getNumPlayers()];
+        boolean[] couldLimp = new boolean[hhand.getNumPlayers()];
+        boolean[] paid = new boolean[hhand.getNumPlayers()];
+        boolean[] limped = new boolean[hhand.getNumPlayers()];
 
         for (int p = hhand.getNumPlayers() - 1; p >= 0; --p)
         {

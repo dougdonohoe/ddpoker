@@ -38,11 +38,13 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sound.sampled.*;
-import java.io.*;
+import java.io.IOException;
 
 /**
  *
@@ -338,7 +340,7 @@ public class AudioPlayer implements Runnable, LineListener
         else
         {
             SourceDataLine line = (SourceDataLine) dataline_;
-            byte tempBuffer[] = new byte[25000 * 4];
+            byte[] tempBuffer = new byte[25000 * 4];
             int cnt = 0;
 
             try 

@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.games.server.service.impl;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.server.*;
-import com.donohoedigital.games.server.dao.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.model.util.*;
-import com.donohoedigital.games.server.service.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
-import org.springframework.transaction.annotation.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.server.RegDayOfYearCount;
+import com.donohoedigital.games.server.RegHourCount;
+import com.donohoedigital.games.server.dao.BannedKeyDao;
+import com.donohoedigital.games.server.dao.RegistrationDao;
+import com.donohoedigital.games.server.model.BannedKey;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.model.util.RegInfo;
+import com.donohoedigital.games.server.service.RegistrationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -127,7 +130,7 @@ public class RegistrationServiceImpl implements RegistrationService
     @Transactional(readOnly = true)
     public List<RegInfo> getBannedKeys(String keyStart)
     {
-        Map<String, RegInfo> regInfoMap = new HashMap<String, RegInfo>();
+        Map<String, RegInfo> regInfoMap = new HashMap<>();
 
         // get banned keys and create RegInfo for each
         List<BannedKey> banned = bannedDao.getAll();
@@ -149,7 +152,7 @@ public class RegistrationServiceImpl implements RegistrationService
         }
 
         // return sorted array
-        List<RegInfo> all = new ArrayList<RegInfo>(regInfoMap.values());
+        List<RegInfo> all = new ArrayList<>(regInfoMap.values());
         Collections.sort(all);
         return all;
     }
@@ -157,7 +160,7 @@ public class RegistrationServiceImpl implements RegistrationService
     @Transactional(readOnly = true)
     public List<RegInfo> getSuspectKeys(String keyStart, int nMin)
     {
-        Map<String, RegInfo> regInfoMap = new HashMap<String, RegInfo>();
+        Map<String, RegInfo> regInfoMap = new HashMap<>();
 
         // get all suspect keys
         List<String> suspectKeys = dao.getAllSuspectKeys(nMin);
@@ -183,7 +186,7 @@ public class RegistrationServiceImpl implements RegistrationService
         }
 
         // return sorted array
-        List<RegInfo> all = new ArrayList<RegInfo>(regInfoMap.values());
+        List<RegInfo> all = new ArrayList<>(regInfoMap.values());
         Collections.sort(all);
         return all;
     }

@@ -56,7 +56,10 @@ import com.donohoedigital.gui.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -81,7 +84,7 @@ public class AdvisorInfoDialog extends DialogPhase
 
     JComponent ladder_ = null;
 
-    private ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
+    private final ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
 
     /**
      * Init phase, storing engine and gamephase.  Called createUI()
@@ -470,35 +473,21 @@ public class AdvisorInfoDialog extends DialogPhase
                     }
                 }
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        grid_.repaint();
-                    }
-                });
+                GuiUtils.invoke(() ->
+                    grid_.repaint());
             }
             else
             {
                 grid_.clear();
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        grid_.repaint();
-                    }
-                });
+                GuiUtils.invoke(() ->
+                    grid_.repaint());
 
                 progressBar_.setPercentDone(0);
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        progressPanel_ = GuiUtils.CENTER(progressBar_);
-                        grid_.add(progressPanel_, BorderLayout.CENTER);
-                    }
+                GuiUtils.invoke(() -> {
+                    progressPanel_ = GuiUtils.CENTER(progressBar_);
+                    grid_.add(progressPanel_, BorderLayout.CENTER);
                 });
 
                 Hand community = ai.getCommunity();
@@ -517,7 +506,7 @@ public class AdvisorInfoDialog extends DialogPhase
                 pocket.addCard(Card.BLANK);
                 pocket.addCard(Card.BLANK);
 
-                int suitEquivalenceValues[] = new int[13*13];
+                int[] suitEquivalenceValues = new int[13*13];
 
                 int suitCount = community.getNumSuits();
 
@@ -592,13 +581,8 @@ public class AdvisorInfoDialog extends DialogPhase
 
                         ++count;
 
-                        GuiUtils.invoke(new Runnable()
-                        {
-                            public void run()
-                            {
-                                grid_.repaint(500);
-                            }
-                        });
+                        GuiUtils.invoke(() ->
+                            grid_.repaint(500));
 
                         progressBar_.setPercentDone((count*100)/total);
                     }
@@ -611,13 +595,9 @@ public class AdvisorInfoDialog extends DialogPhase
                 //ai.noPotential = false;
                 //RuleEngine.matrix = false;
 
-                GuiUtils.invoke(new Runnable()
-                {
-                    public void run()
-                    {
-                        grid_.remove(progressPanel_);
-                        grid_.repaint();
-                    }
+                GuiUtils.invoke(() -> {
+                    grid_.remove(progressPanel_);
+                    grid_.repaint();
                 });
             }
 

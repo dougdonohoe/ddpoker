@@ -38,8 +38,9 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import java.awt.Insets;
 
 
 /**
@@ -49,7 +50,7 @@ import java.awt.*;
 public class DDScrollTable extends DDScrollPane
 {
     DDTable table_;
-    int columnWidths_[];
+    int[] columnWidths_;
 
     /**
      * Creates a new instance of DDScrollTable - with a DDTable inside.  The

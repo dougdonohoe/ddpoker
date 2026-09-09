@@ -42,13 +42,13 @@ import java.util.HashMap;
 /**
  * Reusable computation of hand scores with a given board.
  */
-public class PocketScores
+public final class PocketScores
 {
     private static long fpFlop_ = 0;
 
-    private static HashMap cache_ = new HashMap();
+    private static final HashMap cache_ = new HashMap();
 
-    private PocketMatrixInt score_ = new PocketMatrixInt();
+    private final PocketMatrixInt score_ = new PocketMatrixInt();
 
     /**
      * PocketScores is a wrapper on PocketMatrixInt, and stores a raw hand score for each possible
@@ -76,7 +76,7 @@ public class PocketScores
         }
 
         // compute fingerprint for flop - change triggers cache flush
-        long fpFlop = (community.size() == 0) ? 0 :
+        long fpFlop = (community.isEmpty()) ? 0 :
                       1L << community.getCard(0).getIndex() |
                       1L << community.getCard(1).getIndex() |
                       1L << community.getCard(2).getIndex();

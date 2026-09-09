@@ -106,7 +106,7 @@ public class RegistrationImplJpa extends JpaBaseDao<Registration, Long> implemen
         );
         query.setParameter("key", keyStart);
         List<Object[]> results = query.getResultList();
-        List<RegDayOfYearCount> list = new ArrayList<RegDayOfYearCount>(results.size());
+        List<RegDayOfYearCount> list = new ArrayList<>(results.size());
         for (Object[] objs : results)
         {
             list.add(new RegDayOfYearCount(
@@ -139,7 +139,7 @@ public class RegistrationImplJpa extends JpaBaseDao<Registration, Long> implemen
         );
         query.setParameter("key", keyStart);
         List<Object[]> results = query.getResultList();
-        List<RegHourCount> list = new ArrayList<RegHourCount>(results.size());
+        List<RegHourCount> list = new ArrayList<>(results.size());
         for (Object[] objs : results)
         {
             list.add(new RegHourCount(
@@ -193,7 +193,7 @@ public class RegistrationImplJpa extends JpaBaseDao<Registration, Long> implemen
 
         List<Registration> list = (List<Registration>) query.getResultList();
 
-        PagedList<Registration> pList = new PagedList<Registration>(list.size());
+        PagedList<Registration> pList = new PagedList<>(list.size());
         pList.addAll(list);
         pList.setTotalSize(count);
         return pList;

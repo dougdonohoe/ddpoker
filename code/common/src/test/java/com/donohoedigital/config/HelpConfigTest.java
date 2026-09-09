@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.Utils;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class HelpConfigTest
 {
-    private static Logger logger = LogManager.getLogger(HelpConfigTest.class);
+    private static final Logger logger = LogManager.getLogger(HelpConfigTest.class);
     @Test
     public void testLoad()
     {
@@ -61,7 +62,7 @@ public class HelpConfigTest
             HelpTopic ht = HelpConfig.getHelpTopic("test"+i);
             String contents = ht.getContents();
             assertNotNull(contents);
-            logger.info("Topic " + i + ": " + contents.trim());
+            logger.info("Topic {}: {}", i, contents.trim());
         }
     }
 }

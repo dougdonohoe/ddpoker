@@ -45,13 +45,13 @@ import java.awt.image.BufferStrategy;
 
 public class MultiBufferTest {
     
-    private boolean bFullScreen = false;
+    private final boolean bFullScreen = false;
     
-    private static Color[] COLORS = new Color[] {
+    private static final Color[] COLORS = new Color[] {
         Color.red, Color.blue, Color.green, Color.white, Color.black,
         Color.yellow, Color.gray, Color.cyan, Color.pink, Color.lightGray,
         Color.magenta, Color.orange, Color.darkGray };
-    private static DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[] {
+    private static final DisplayMode[] BEST_DISPLAY_MODES = new DisplayMode[] {
         new DisplayMode(640, 480, 32, 0),
         new DisplayMode(640, 480, 16, 0),
         new DisplayMode(640, 480, 8, 0)
@@ -124,7 +124,7 @@ public class MultiBufferTest {
         }
     }
     
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             int numBuffers = 3;
             if (args != null && args.length > 0) {

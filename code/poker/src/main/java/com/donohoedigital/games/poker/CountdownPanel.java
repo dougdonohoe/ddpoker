@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.Timer;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,15 +53,15 @@ import java.awt.event.*;
  */
 public class CountdownPanel extends DDPanel implements ActionListener
 {
-    private PokerGame game_;
+    private final PokerGame game_;
     private Timer count_;
     private int timeout_;
     private int thinkbank_;
     private double total_;
     private long timepoint_;
     private long elapsed_;
-    private GameClock clock_;
-    private boolean bSupported_; // BUG 498
+    private final GameClock clock_;
+    private final boolean bSupported_; // BUG 498
 
     public CountdownPanel(PokerGame game)
     {
@@ -145,8 +149,8 @@ public class CountdownPanel extends DDPanel implements ActionListener
         repaint();
     }
 
-    private String secPlural = PropertyConfig.getMessage("msg.seconds.plural", "");
-    private String secSingular = PropertyConfig.getMessage("msg.seconds.singular", "");
+    private final String secPlural = PropertyConfig.getMessage("msg.seconds.plural", "");
+    private final String secSingular = PropertyConfig.getMessage("msg.seconds.singular", "");
 
     /**
      * tooltip text

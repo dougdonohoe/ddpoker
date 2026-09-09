@@ -38,18 +38,19 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.ScaleConstraintsFixed;
+import com.donohoedigital.gui.ScaleLayout;
 
 import java.awt.*;
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  *
  */
 public class GameboardCenterLayout implements LayoutManager2, Serializable
 {
-    private HashMap info = new HashMap();
+    private final HashMap info = new HashMap();
 
     public void addLayoutComponent( String s, Component component1 )
     {

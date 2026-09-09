@@ -32,10 +32,10 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.poker.online.HostStatus;
+import com.donohoedigital.games.engine.GameContext;
 
-import javax.swing.*;
+import javax.swing.JComponent;
 
 /**
  * Created by IntelliJ IDEA.

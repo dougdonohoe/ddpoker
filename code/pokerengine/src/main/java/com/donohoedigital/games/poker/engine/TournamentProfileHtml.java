@@ -32,13 +32,15 @@
  */
 package com.donohoedigital.games.poker.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.DataElement;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameConfigUtils;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Date;
+import java.util.List;
 
 import static com.donohoedigital.games.poker.model.TournamentProfile.*;
 
@@ -51,7 +53,7 @@ import static com.donohoedigital.games.poker.model.TournamentProfile.*;
  */
 public class TournamentProfileHtml
 {
-    private TournamentProfile profile;
+    private final TournamentProfile profile;
 
     // cache for quick display
     private String htmlCache_;
@@ -82,7 +84,7 @@ public class TournamentProfileHtml
         if (htmlSummaryCache_ != null && htmlSummaryMode_ == bListMode) return htmlSummaryCache_;
 
         String sDate = PropertyConfig.getDateFormat(sLocale).format(new Date(profile.getCreateDate()));
-        Object params[] = new Object[16];
+        Object[] params = new Object[16];
 
         params[0] = DataElement.getDisplayValue(DATA_ELEMENT_GAMETYPE, profile.getDefaultGameTypeString());
         params[1] = Utils.encodeHTML(profile.getDescription());
@@ -217,7 +219,7 @@ public class TournamentProfileHtml
         String sDate = PropertyConfig.getDateFormat(sLocale).format(new Date(profile.getCreateDate()));
 
 
-        Object params[] = new Object[18];
+        Object[] params = new Object[18];
 
         params[0] = Utils.encodeHTML(profile.getName());
         params[1] = sDate;

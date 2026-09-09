@@ -309,26 +309,16 @@ public class ShowTournamentTable extends ShowPokerTable implements
         {
             buttonRebuy_ = new PokerGlassButton(getGameButton("rebuy"));
             buttonbase_.add(buttonRebuy_);
-            buttonRebuy_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    NewLevelActions.rebuy(game_, REBUY_BUTTON, game_.getHumanPlayer().getTable().getLevel());
-                }
-            });
+            buttonRebuy_.addActionListener(e ->
+                NewLevelActions.rebuy(game_, REBUY_BUTTON, game_.getHumanPlayer().getTable().getLevel()));
         }
 
         if (TESTING(PokerConstants.TESTING_TEST_CASE))
         {
             buttonTestCase_ = new GlassButton("testcase", "GlassBig");
             buttonbase_.add(buttonTestCase_);
-            buttonTestCase_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    createTestCase();
-                }
-            });
+            buttonTestCase_.addActionListener(e ->
+                createTestCase());
         }
 
         DDPanel controlbase = buttonbase_;
@@ -665,13 +655,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
         // do remaining start a bit later to allow for
         // UI to draw
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                poststart();
-            }
-        });
+        SwingUtilities.invokeLater(this::poststart);
     }
 
     /**
@@ -691,14 +675,8 @@ public class ShowTournamentTable extends ShowPokerTable implements
         if (TESTING(PokerConstants.TESTING_AUTOPILOT_INIT) && !TESTING(PokerConstants.TESTING_AUTOPILOT))
         {
             SwingUtilities.invokeLater(
-                    new Runnable()
-                    {
-                        public void run()
-                        {
-                            EngineUtils.displayInformationDialog(context_, "Autopilot is enabled, but currently paused (F5 or F9).");
-
-                        }
-                    }
+                () ->
+                    EngineUtils.displayInformationDialog(context_, "Autopilot is enabled, but currently paused (F5 or F9).")
             );
         }
     }
@@ -879,7 +857,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
             {
                 case SWING_REPAINT_SEAT:
                     if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
-                        logger.debug("SwingIt calling repaintTerritory for " + p.getName());
+                        logger.debug("SwingIt calling repaintTerritory for {}", p.getName());
                     board_.repaintTerritory(PokerUtils.getTerritoryForTableSeat(p.getTable(), p.getSeat()));
                     break;
 
@@ -927,7 +905,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         PokerTable table = event.getTable();
         HoldemHand hhand = table.getHoldemHand();
 
-        if (TournamentDirector.DEBUG_EVENT_DISPLAY) logger.debug("Event received: " + event.toString());
+        if (TournamentDirector.DEBUG_EVENT_DISPLAY) logger.debug("Event received: {}", event.toString());
         switch (event.getType())
         {
             // new players added, repaint all
@@ -1246,21 +1224,17 @@ public class ShowTournamentTable extends ShowPokerTable implements
             if (bAllowContinueLower)
             {
                 SwingUtilities.invokeLater(
-                        new Runnable()
+                    () -> {
+                        // in case not yet enabled, wait a bit
+                        // this seems like a hack, but in some cases
+                        // the request focus doesn't occur, and this
+                        // seems to fix it.  Doh.
+                        if (!buttonContinueMiddle_.isEnabled())
                         {
-                            public void run()
-                            {
-                                // in case not yet enabled, wait a bit
-                                // this seems like a hack, but in some cases
-                                // the request focus doesn't occur, and this
-                                // seems to fix it.  Doh.
-                                if (!buttonContinueMiddle_.isEnabled())
-                                {
-                                    Utils.sleepMillis(100);
-                                }
-                                buttonContinueLower_.requestFocus();
-                            }
+                            Utils.sleepMillis(100);
                         }
+                        buttonContinueLower_.requestFocus();
+                    }
                 );
             }
 
@@ -1269,19 +1243,15 @@ public class ShowTournamentTable extends ShowPokerTable implements
             if (bAllowContinue)
             {
                 SwingUtilities.invokeLater(
-                        new Runnable()
+                    () -> {
+                        // see note above
+                        if (!buttonContinueMiddle_.isEnabled())
                         {
-                            public void run()
-                            {
-                                // see note above
-                                if (!buttonContinueMiddle_.isEnabled())
-                                {
-                                    Utils.sleepMillis(100);
-                                }
-
-                                buttonContinueMiddle_.requestFocus();
-                            }
+                            Utils.sleepMillis(100);
                         }
+
+                        buttonContinueMiddle_.requestFocus();
+                    }
                 );
             }
 
@@ -1308,13 +1278,8 @@ public class ShowTournamentTable extends ShowPokerTable implements
                 // run later so focus transfers smoothly
                 // otherwise focus will flash to scrollbar
                 // when we set disabled
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    public void run()
-                    {
-                        amountPanel_.setEnabled(false);
-                    }
-                });
+                SwingUtilities.invokeLater(() ->
+                    amountPanel_.setEnabled(false));
             }
         }
     }
@@ -1424,15 +1389,11 @@ public class ShowTournamentTable extends ShowPokerTable implements
         {
             // run later (like set false) so ordering is correct in case of
             // rapid, multiple calls to this
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
+            SwingUtilities.invokeLater(() -> {
+                amountPanel_.setEnabled(true);
+                if (amountPanel_.isVisible())
                 {
-                    amountPanel_.setEnabled(true);
-                    if (amountPanel_.isVisible())
-                    {
-                        if (!isFocusInChat()) amount_.requestFocus();
-                    }
+                    if (!isFocusInChat()) amount_.requestFocus();
                 }
             });
         }
@@ -1441,13 +1402,8 @@ public class ShowTournamentTable extends ShowPokerTable implements
             // run later so focus transfers smoothly
             // otherwise focus will flash to scrollbar
             // when we set disabled
-            SwingUtilities.invokeLater(new Runnable()
-            {
-                public void run()
-                {
-                    amountPanel_.setEnabled(false);
-                }
-            });
+            SwingUtilities.invokeLater(() ->
+                amountPanel_.setEnabled(false));
         }
     }
 
@@ -2097,13 +2053,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
         // after popup goes away, send focus back to
         // board (need to invoke later because at this
         // time popup is still visible)
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                // don't request if 2nd popup displayed
-                if (menu_ != null) board_.requestFocus();
-            }
+        SwingUtilities.invokeLater(() -> {
+            // don't request if 2nd popup displayed
+            if (menu_ != null) board_.requestFocus();
         });
     }
 
@@ -2115,21 +2067,21 @@ public class ShowTournamentTable extends ShowPokerTable implements
     //// popup menu items
     ////
 
-    private static ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
-    private static ImageIcon moneyIcon_ = ImageConfig.getImageIcon("menuicon.money");
-    private static ImageIcon buttonIcon_ = ImageConfig.getImageIcon("menuicon.button");
-    private static ImageIcon dealIcon_ = ImageConfig.getImageIcon("menuicon.deal");
-    private static ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
-    private static ImageIcon cardIcon_ = ImageConfig.getImageIcon("menuicon.card");
-    private static ImageIcon playertypeIcon_ = ImageConfig.getImageIcon("menuicon.playertype");
-    private static ImageIcon advisorIcon_ = ImageConfig.getImageIcon("menuicon.advisor");
-    private static ImageIcon playerNameIcon_ = ImageConfig.getImageIcon("menuicon.playername");
-    private static ImageIcon removePlayerIcon_ = ImageConfig.getImageIcon("menuicon.removeplayer");
-    private static ImageIcon sitoutIcon_ = ImageConfig.getImageIcon("menuicon.sitout");
-    private static ImageIcon banIcon_ = ImageConfig.getImageIcon("menuicon.ban");
-    private static ImageIcon unbanIcon_ = ImageConfig.getImageIcon("menuicon.unban");
-    private static ImageIcon muteIcon_ = ImageConfig.getImageIcon("menuicon.mute");
-    private static ImageIcon unmuteIcon_ = ImageConfig.getImageIcon("menuicon.unmute");
+    private static final ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
+    private static final ImageIcon moneyIcon_ = ImageConfig.getImageIcon("menuicon.money");
+    private static final ImageIcon buttonIcon_ = ImageConfig.getImageIcon("menuicon.button");
+    private static final ImageIcon dealIcon_ = ImageConfig.getImageIcon("menuicon.deal");
+    private static final ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
+    private static final ImageIcon cardIcon_ = ImageConfig.getImageIcon("menuicon.card");
+    private static final ImageIcon playertypeIcon_ = ImageConfig.getImageIcon("menuicon.playertype");
+    private static final ImageIcon advisorIcon_ = ImageConfig.getImageIcon("menuicon.advisor");
+    private static final ImageIcon playerNameIcon_ = ImageConfig.getImageIcon("menuicon.playername");
+    private static final ImageIcon removePlayerIcon_ = ImageConfig.getImageIcon("menuicon.removeplayer");
+    private static final ImageIcon sitoutIcon_ = ImageConfig.getImageIcon("menuicon.sitout");
+    private static final ImageIcon banIcon_ = ImageConfig.getImageIcon("menuicon.ban");
+    private static final ImageIcon unbanIcon_ = ImageConfig.getImageIcon("menuicon.unban");
+    private static final ImageIcon muteIcon_ = ImageConfig.getImageIcon("menuicon.mute");
+    private static final ImageIcon unmuteIcon_ = ImageConfig.getImageIcon("menuicon.unmute");
 
     /**
      * Class used to track what the menu item does
@@ -2430,104 +2382,100 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
         CardSelectorPanel cardSelector = new CardSelectorPanel(cardPiece.getCard(), false);
 
-        cardSelector.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        cardSelector.addActionListener(e -> {
+            CardSelectorPanel cs = (CardSelectorPanel) e.getSource();
+            Card selectedCard = cs.getSelectedCard();
+
+            if (selectedCard != null && !selectedCard.equals(cardPiece.getCard()) &&
+                !selectedCard.equals(Card.BLANK))
             {
-                CardSelectorPanel cs = (CardSelectorPanel) e.getSource();
-                Card selectedCard = cs.getSelectedCard();
+                HoldemHand hhand = table_.getHoldemHand();
+                Hand community = hhand.getCommunity();
+                Deck deck = hhand.getDeck();
 
-                if (selectedCard != null && !selectedCard.equals(cardPiece.getCard()) &&
-                    !selectedCard.equals(Card.BLANK))
+                Hand hand = null;
+                Territory t = null;
+
+                // figure out if the selected card is already in play
+
+                int cardIndex = community.indexOf(selectedCard);
+
+                if (cardIndex >= 0)
                 {
-                    HoldemHand hhand = table_.getHoldemHand();
-                    Hand community = hhand.getCommunity();
-                    Deck deck = hhand.getDeck();
+                    hand = community;
+                    t = PokerUtils.getFlop();
+                }
+                else
+                {
+                    Hand muck = hhand.getMuck();
 
-                    Hand hand = null;
-                    Territory t = null;
-
-                    // figure out if the selected card is already in play
-
-                    int cardIndex = community.indexOf(selectedCard);
+                    cardIndex = muck.indexOf(selectedCard);
 
                     if (cardIndex >= 0)
                     {
-                        hand = community;
-                        t = PokerUtils.getFlop();
+                        hand = muck;
                     }
                     else
                     {
-                        Hand muck = hhand.getMuck();
-
-                        cardIndex = muck.indexOf(selectedCard);
-
-                        if (cardIndex >= 0)
+                        for (int seat = 0;seat < 10;++seat)
                         {
-                            hand = muck;
-                        }
-                        else
-                        {
-                            for (int seat = 0; seat < 10; ++seat)
+                            PokerPlayer pp = table_.getPlayer(seat);
+
+                            if (pp != null)
                             {
-                                PokerPlayer pp = table_.getPlayer(seat);
-
-                                if (pp != null)
+                                if (pp.getHand() != null)
                                 {
-                                    if (pp.getHand() != null)
-                                    {
-                                        cardIndex = pp.getHand().indexOf(selectedCard);
+                                    cardIndex = pp.getHand().indexOf(selectedCard);
 
-                                        if (cardIndex >= 0)
-                                        {
-                                            hand = pp.getHand();
-                                            t = PokerUtils.getTerritoryForTableSeat(table_, pp.getSeat());
-                                            break;
-                                        }
+                                    if (cardIndex >= 0)
+                                    {
+                                        hand = pp.getHand();
+                                        t = PokerUtils.getTerritoryForTableSeat(table_, pp.getSeat());
+                                        break;
                                     }
                                 }
                             }
                         }
                     }
-
-                    // if the selected card is in play, replace it with a new card from the deck
-                    if ((hand != null) && (cardIndex >= 0))
-                    {
-                        hand.setCard(cardIndex, deck.nextCard());
-                        board_.repaintTerritory(t);
-                    }
-                    // card not in play, in the deck, so remove it from the deck (yeah, sam, think of this case?)
-                    else
-                    {
-                        deck.removeCard(selectedCard);
-                    }
-
-                    cardIndex = cardPiece.getCardIndex();
-
-                    hand = (player == null) ? community : player.getHand();
-
-                    // put the card we're replacing back in the deck
-                    deck.addRandom(hand.getCard(cardIndex));
-
-                    // set the new cards
-                    hand.setCard(cardIndex, selectedCard);
-
-                    if (hhand != null && hhand.isAllInShowdown())
-                    {
-                        // if we are changing a card after all have been displayed (when pause after
-                        // deal is on, need to do showdown based on actual comm cards)
-                        int n = EngineUtils.getMatchingPiecesCount(PokerUtils.getFlop(), PokerConstants.PIECE_CARD);
-                        Showdown.displayAllin(hhand, n == 5);
-                    }
                 }
 
-                menu_.setVisible(false);
-                board_.repaintTerritory(cardPiece.getTerritory());
+                // if the selected card is in play, replace it with a new card from the deck
+                if ((hand != null) && (cardIndex >= 0))
+                {
+                    hand.setCard(cardIndex, deck.nextCard());
+                    board_.repaintTerritory(t);
+                }
+                // card not in play, in the deck, so remove it from the deck (yeah, sam, think of this case?)
+                else
+                {
+                    deck.removeCard(selectedCard);
+                }
 
-                table_.firePokerTableEvent(new PokerTableEvent(
-                        PokerTableEvent.TYPE_CARD_CHANGED, table_, player,
-                        (player != null) ? player.getSeat() : PokerTableEvent.NOT_DEFINED));
+                cardIndex = cardPiece.getCardIndex();
+
+                hand = (player == null) ? community : player.getHand();
+
+                // put the card we're replacing back in the deck
+                deck.addRandom(hand.getCard(cardIndex));
+
+                // set the new cards
+                hand.setCard(cardIndex, selectedCard);
+
+                if (hhand != null && hhand.isAllInShowdown())
+                {
+                    // if we are changing a card after all have been displayed (when pause after
+                    // deal is on, need to do showdown based on actual comm cards)
+                    int n = EngineUtils.getMatchingPiecesCount(PokerUtils.getFlop(), PokerConstants.PIECE_CARD);
+                    Showdown.displayAllin(hhand, n == 5);
+                }
             }
+
+            menu_.setVisible(false);
+            board_.repaintTerritory(cardPiece.getTerritory());
+
+            table_.firePokerTableEvent(new PokerTableEvent(
+                PokerTableEvent.TYPE_CARD_CHANGED, table_, player,
+                (player != null) ? player.getSeat() : PokerTableEvent.NOT_DEFINED));
         });
 
         menu.add(GuiUtils.CENTER(cardSelector));
@@ -2800,7 +2748,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     //// mouse translation
     ////
 
-    private MouseTranslator mouseTrans_ = new MouseTranslator();
+    private final MouseTranslator mouseTrans_ = new MouseTranslator();
 
     /**
      * mouse motion/click translation - need for mouse motion/click handling

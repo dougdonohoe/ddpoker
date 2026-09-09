@@ -32,12 +32,14 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.plaf.metal.MetalScrollBarUI;
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
 
 /**
  * Created by IntelliJ IDEA.

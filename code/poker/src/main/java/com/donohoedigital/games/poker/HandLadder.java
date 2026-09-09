@@ -32,10 +32,13 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.ai.HandProbabilityMatrix;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.HandSorted;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.config.PropertyConfig;
 
 public class HandLadder
 {
@@ -47,18 +50,18 @@ public class HandLadder
     private static final int SAME_TYPE_LOWER_RANK = 5;
     private static final int LOWER_TYPE = 6;
 
-    private Hand pocket_;
-    private Hand community_;
+    private final Hand pocket_;
+    private final Hand community_;
 
     private int handScore_;
     private int handType_;
 
-    private HandList ladder_[];
+    private final HandList[] ladder_;
 
-    private HandList strongerHandsByType_[];
-    private HandList weakerHandsByType_[];
+    private final HandList[] strongerHandsByType_;
+    private final HandList[] weakerHandsByType_;
 
-    private int countByType_[];
+    private final int[] countByType_;
     private int totalCount_;
 
     HandInfoFast handInfo_ = new HandInfoFast();
@@ -228,7 +231,7 @@ public class HandLadder
         if (getHandRank() > 1)
         {
             buf.append("<tr>");
-            buf.append("<td><font color=\"white\"><b>Stronger Hands - " + PokerConstants.formatPercent(strongerPercent) + "%</b></font></td>");
+            buf.append("<td><font color=\"white\"><b>Stronger Hands - ").append(PokerConstants.formatPercent(strongerPercent)).append("%</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Count</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Probability</b></font></td>");
             buf.append("</tr>");
@@ -289,7 +292,7 @@ public class HandLadder
         if (getHandRank() < totalCount_)
         {
             buf.append("<tr>");
-            buf.append("<td><font color=\"white\"><b>Equal or Weaker Hands - " + PokerConstants.formatPercent(lessEqualPercent) + "%</b></font></td>");
+            buf.append("<td><font color=\"white\"><b>Equal or Weaker Hands - ").append(PokerConstants.formatPercent(lessEqualPercent)).append("%</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Count</b></font></td>");
             buf.append("<td align=\"right\"><font color=\"white\"><b>Probability</b></font></td>");
             buf.append("</tr>");

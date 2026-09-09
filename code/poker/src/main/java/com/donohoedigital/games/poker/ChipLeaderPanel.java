@@ -32,17 +32,24 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.TableExporter;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -77,15 +84,15 @@ public class ChipLeaderPanel extends DDTabPanel
         // which can otherwise throw "Comparison method violates its general contract!"
         // if the tournament director moves chips while the sort is running.
         List<PokerPlayer> all = game_.getPokerPlayersCopy();
-        List<RankInfo> leaders = new ArrayList<RankInfo>(all.size());
+        List<RankInfo> leaders = new ArrayList<>(all.size());
         for (PokerPlayer each : all)
         {
             leaders.add(new RankInfo(each, 0, game_.getSettledChipCount(each)));
         }
         Collections.sort(leaders, SORT_SETTLED);
 
-        List<RankInfo> finished = new ArrayList<RankInfo>();
-        List<RankInfo> current = new ArrayList<RankInfo>();
+        List<RankInfo> finished = new ArrayList<>();
+        List<RankInfo> current = new ArrayList<>();
         int nNum = leaders.size();
         boolean bDone = game_.getNumPlayers() - game_.getNumPlayersOut() == 0;
         int min = Integer.MAX_VALUE;
@@ -137,7 +144,7 @@ public class ChipLeaderPanel extends DDTabPanel
         setBorderLayoutGap(10,0);
 
         // current players
-        if (current.size() > 0)
+        if (!current.isEmpty())
         {
             DDPanel top = new DDPanel();
             top.setBorderLayoutGap(5, 10);
@@ -273,7 +280,7 @@ public class ChipLeaderPanel extends DDTabPanel
      * the captured count rather than the live one so the ordering cannot change
      * underneath the sort.
      */
-    private static final Comparator<RankInfo> SORT_SETTLED = new Comparator<RankInfo>()
+    private static final Comparator<RankInfo> SORT_SETTLED = new Comparator<>()
     {
         public int compare(RankInfo r1, RankInfo r2)
         {
@@ -337,7 +344,7 @@ public class ChipLeaderPanel extends DDTabPanel
         int[] widths;
         boolean bShowPlayerType;
 
-        public PlayerModel(PokerGame game, List<RankInfo> players, String names[], int[] widths)
+        public PlayerModel(PokerGame game, List<RankInfo> players, String[] names, int[] widths)
         {
             this.game = game;
             this.names = names;

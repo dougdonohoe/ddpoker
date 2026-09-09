@@ -32,10 +32,11 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.Utils;
 
-import java.util.concurrent.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,11 +50,11 @@ public class DispatchQueue extends Thread
     static Logger logger = LogManager.getLogger(DispatchQueue.class);
 
     // members
-    private LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
+    private final LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
     private boolean bDone_ = false;
 
     // control messages
-    private Object QUIT = new Object();
+    private final Object QUIT = new Object();
 
     /**
      * new dispatch queue
@@ -86,7 +87,7 @@ public class DispatchQueue extends Thread
             }
             catch (Throwable t)
             {
-                logger.error("DispatchQueue error: " + Utils.formatExceptionText(t));
+                logger.error("DispatchQueue error: {}", Utils.formatExceptionText(t));
             }
         }
         logger.info("DispatchQueue Done.");

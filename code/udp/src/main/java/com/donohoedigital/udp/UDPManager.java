@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.udp;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.html.*;
+import com.donohoedigital.base.MovingAverage;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.html.Table;
+import com.donohoedigital.html.TableColumn;
+import com.donohoedigital.html.TableRow;
 
-import java.net.*;
+import java.net.InetSocketAddress;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -55,19 +59,19 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
     static int ACK_SEND_MILLIS = 333;
 
     // members
-    private UDPServer server_;
-    private UDPLinkHandler handler_;
-    private final List<UDPManagerMonitor> monitors_ = new ArrayList<UDPManagerMonitor>();
-    private final LinkedBlockingQueue<Object> queue_ = new LinkedBlockingQueue<Object>();
+    private final UDPServer server_;
+    private final UDPLinkHandler handler_;
+    private final List<UDPManagerMonitor> monitors_ = new ArrayList<>();
+    private final LinkedBlockingQueue<Object> queue_ = new LinkedBlockingQueue<>();
     private final List<UDPLink> links_ = Collections.synchronizedList(new ArrayList<UDPLink>());
-    private List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<UDPLink>());
+    private final List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<UDPLink>());
     boolean bDone_ = false;
-    private Timer timer_;
+    private final Timer timer_;
 
     // control messages
-    private Object QUIT = new Object();
-    private Object SENDALL = new Object();
-    private Object SENDACK = new Object();
+    private final Object QUIT = new Object();
+    private final Object SENDALL = new Object();
+    private final Object SENDACK = new Object();
 
     /**
      * new udp manager
@@ -172,7 +176,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
             monitor.monitorEvent(event);
         } catch (Throwable t)
         {
-            logger.error("Monitor error on event "+event+ ": "+ Utils.formatExceptionText(t));
+            logger.error("Monitor error on event {}: {}", event, Utils.formatExceptionText(t));
         }
     }
 
@@ -208,7 +212,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
             }
             catch (Throwable t)
             {
-                logger.error("UDPManager error: " + Utils.formatExceptionText(t));
+                logger.error("UDPManager error: {}", Utils.formatExceptionText(t));
             }
         }
         logger.info("UDPManager Done.");
@@ -449,14 +453,14 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
                         if (!id.isUnknown())
                         {
                             link.setID(id);
-                            if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("ID updated " + link);
+                            if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("ID updated {}", link);
                         }
                     }
                     // if the id is not unknown, it changed for some reason, so update (shouldn't really occur)
                     else if (!id.isUnknown())
                     {
                         // TODO: what to do if ID changes?  Will this actually occur?
-                        logger.warn("ID changed at addr " + Utils.getAddressPort(remote) + " from " + link.getID() + " to " + id);
+                        logger.warn("ID changed at addr {} from {} to {}", Utils.getAddressPort(remote), link.getID(), id);
                         link.setID(id);
                     }
                     return link;
@@ -476,7 +480,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
 
 
                 // notify of creation
-                if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("New Link " + link);
+                if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("New Link {}", link);
                 fireEvent(new UDPManagerEvent(UDPManagerEvent.Type.CREATED, link));
             }
 
@@ -508,7 +512,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
             }
             else
             {
-                logger.warn("Link remove requested, but not found: "+ cl.link);
+                logger.warn("Link remove requested, but not found: {}", cl.link);
             }
         }
     }
@@ -521,7 +525,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
         // cleanup links
         synchronized(links_)
         {
-            while (links_.size() > 0)
+            while (!links_.isEmpty())
             {
                 UDPLink link = links_.remove(0);
                 link.finish(false);
@@ -535,7 +539,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
      */
     private void notifyRemoved(UDPLink link)
     {
-        if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("Link removed: "+ link);
+        if (UDPServer.DEBUG_CREATE_DESTROY) logger.debug("Link removed: {}", link);
         fireEvent(new UDPManagerEvent(UDPManagerEvent.Type.DESTROYED, link));
     }
 
@@ -612,7 +616,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
 
         synchronized(links_)
         {
-            links = new ArrayList<UDPLink>(links_.size());
+            links = new ArrayList<>(links_.size());
             links.addAll(links_);
         }
 

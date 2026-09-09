@@ -38,38 +38,45 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.RandomGUID;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.*;
-import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.udp.UDPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
-import java.net.*;
+import javax.swing.JDesktopPane;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.io.File;
+import java.net.URL;
 import java.util.*;
 import java.util.List;
-import java.util.prefs.*;
+import java.util.prefs.Preferences;
 
 /**
  * @author Doug Donohoe
  */
 public abstract class GameEngine extends BaseApp
 {
-    private Logger logger = LogManager.getLogger(GameEngine.class);
+    private final Logger logger = LogManager.getLogger(GameEngine.class);
 
     // debugging settings
-    private static boolean TESTING_SKIP_SPLASH = false;
-    private boolean bExitEarlyTest = false;
+    private static final boolean TESTING_SKIP_SPLASH = false;
+    private final boolean bExitEarlyTest = false;
 
     // private stuff - does not change once created
     private static GameEngine engine_ = null;
     private GamedefConfig gamedef_;
-    private String sMainModule_;
+    private final String sMainModule_;
 
     // subclass access
     protected SplashScreen splashscreen_;
@@ -88,7 +95,7 @@ public abstract class GameEngine extends BaseApp
     private String sLastReal_ = null;
     private String sLastGen_ = null;
     private EnginePrefs prefNode_;
-    private String sPrefNode_;
+    private final String sPrefNode_;
     private String sKeyNode_;
     private boolean bSkipSplashChoice_ = false;
     private String guid_;
@@ -163,7 +170,7 @@ public abstract class GameEngine extends BaseApp
             sOverrideKey_ = getCommandLineOptions().getString("key", null);
             if (sOverrideKey_ != null)
             {
-                logger.debug("Activation key set to " + sOverrideKey_);
+                logger.debug("Activation key set to {}", sOverrideKey_);
             }
         }
 
@@ -184,10 +191,8 @@ public abstract class GameEngine extends BaseApp
                 isBannedLicenseKey(sKey))
             {
                 // TODO: remove debug once bug figured out
-                logger.debug("Activation needed, sKey=" + sKey +
-                             " validate: " + !Activation.validate(getKeyStart(), sKey, getLocale()) +
-                             " (keystart = " + getKeyStart() + " locale= " + getLocale() + ")" +
-                             " isBanned?: " + isBannedLicenseKey(sKey));
+                logger.debug("Activation needed, sKey={} validate: {} (keystart = {} locale= {})" +
+                    " isBanned?: {}", sKey, !Activation.validate(getKeyStart(), sKey, getLocale()), getKeyStart(), getLocale(), isBannedLicenseKey(sKey));
 
                 activationNeeded = true;
             }
@@ -485,7 +490,7 @@ public abstract class GameEngine extends BaseApp
         if (key == null && isAutoGenLicenseKey())
         {
             key = Activation.createKeyFromGuid(getKeyStart(), getGUID(), getLocale());
-            logger.debug("KEY: " + key);
+            logger.debug("KEY: {}", key);
             node.put(Activation.REGKEY, key);
         }
         return key;
@@ -1001,7 +1006,7 @@ public abstract class GameEngine extends BaseApp
     ////
 
     // list of contexts
-    private Map<String, ContextTracker> contexts_ = new HashMap<String, ContextTracker>();
+    private final Map<String, ContextTracker> contexts_ = new HashMap<>();
 
     /**
      * note that a context was created
@@ -1056,7 +1061,7 @@ public abstract class GameEngine extends BaseApp
     {
         int nNum;
         String sName;
-        List<GameContext> contexts = new ArrayList<GameContext>();
+        List<GameContext> contexts = new ArrayList<>();
 
         // constructor
         ContextTracker(String sName)
@@ -1081,7 +1086,7 @@ public abstract class GameEngine extends BaseApp
         boolean remove(GameContext context)
         {
             ApplicationError.assertTrue(contexts.remove(context), "Window not found in list", context.getWindow().getName());
-            return contexts.size() == 0;
+            return contexts.isEmpty();
         }
 
         // GameContext 1st window

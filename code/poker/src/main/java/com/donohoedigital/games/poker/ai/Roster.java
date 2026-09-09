@@ -33,10 +33,11 @@
 package com.donohoedigital.games.poker.ai;
 
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Roster
 {
@@ -75,7 +76,7 @@ public class Roster
                 (",+", ",").replaceAll
                 ("^,|,$", "").split(",");
 
-        List<String> list = new ArrayList<String>(names.length);
+        List<String> list = new ArrayList<>(names.length);
 
         if (names[0].length() == 0) return list;
 

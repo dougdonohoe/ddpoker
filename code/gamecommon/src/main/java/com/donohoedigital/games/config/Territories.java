@@ -38,13 +38,16 @@
 
 package com.donohoedigital.games.config;
 
-import java.util.*;
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.config.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.XMLConfigFileLoader;
+import com.donohoedigital.config.XMLWriter;
 
-import org.jdom2.*;
-import java.awt.geom.*;
+import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  *
@@ -123,7 +126,7 @@ public class Territories extends TreeMap {
      */
     public Territory[] getTerritoryArray()
     {
-        Territory array[] = new Territory[size()];
+        Territory[] array = new Territory[size()];
         Set territories = this.keySet();
         Iterator iter = territories.iterator();
         String sTerritoryName;
@@ -136,7 +139,7 @@ public class Territories extends TreeMap {
         return array;
     }
     
-    Territory cached_[];
+    Territory[] cached_;
     /**
      * Get cached copy of territories array
      */
@@ -156,7 +159,7 @@ public class Territories extends TreeMap {
     public void initForGame()
     {   
         // Create path in each territory
-        Territory ts[] = getTerritoryArrayCached();
+        Territory[] ts = getTerritoryArrayCached();
         for (int i = 0; i < ts.length; i++)
         {
             ts[i].initForGame();
@@ -170,7 +173,7 @@ public class Territories extends TreeMap {
     public void createPaths()
     {   
         // Create path in each territory
-        Territory ts[] = getTerritoryArrayCached();
+        Territory[] ts = getTerritoryArrayCached();
         for (int i = 0; i < ts.length; i++)
         {
             ts[i].createPath();
@@ -184,7 +187,7 @@ public class Territories extends TreeMap {
     public void determineAdjacentTerritories(boolean bClearBorders)
     {
         // figure adjacent territories
-        Territory ts[] = getTerritoryArrayCached();
+        Territory[] ts = getTerritoryArrayCached();
         for (int i = 0; i < ts.length; i++)
         {
             ts[i].determineAdjacentTerritories(bClearBorders);

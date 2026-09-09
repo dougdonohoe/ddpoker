@@ -32,8 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Point;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,7 +49,7 @@ import java.awt.*;
 public class DDSplitPane extends JSplitPane implements DDComponent
 {
     // our ui
-    private DDSplitPaneUI ui_;
+    private final DDSplitPaneUI ui_;
     private Color thumbFocusOverlay_=  null;
 
     public DDSplitPane(String sName, String sStyle,

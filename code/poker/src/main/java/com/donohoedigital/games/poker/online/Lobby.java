@@ -38,24 +38,35 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.GamePlayer;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.p2p.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.p2p.LanClientInfo;
+import com.donohoedigital.p2p.LanManager;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
@@ -523,13 +534,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
      */
     public void propertyChange(PropertyChangeEvent evt)
     {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                updateProfileData();
-            }
-        });
+        SwingUtilities.invokeLater(this::updateProfileData);
     }
 
     /**
@@ -652,7 +657,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
         }
     }
 
-    private static ImageIcon switchIcon_ = ImageConfig.getImageIcon("menuicon.switch");
+    private static final ImageIcon switchIcon_ = ImageConfig.getImageIcon("menuicon.switch");
 
     /**
      * mute menu item
@@ -730,7 +735,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
                 }
                 catch (Throwable t)
                 {
-                    logger.error("LobbyAlive caught an unexcepted exception: " + Utils.formatExceptionText(t));
+                    logger.error("LobbyAlive caught an unexcepted exception: {}", Utils.formatExceptionText(t));
                 }
             }
         }
@@ -856,11 +861,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
                 }
 
                 // table changed
-                GuiUtils.invoke(new Runnable() {
-                    public void run() {
-                        fireTableDataChanged();
-                    }
-                });
+                GuiUtils.invoke(this::fireTableDataChanged);
             }
         }
     }
@@ -950,11 +951,7 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
                 {
                     AudioConfig.playFX("observerjoin");
                 }
-                GuiUtils.invoke(new Runnable() {
-                    public void run() {
-                        fireTableDataChanged();
-                    }
-                });
+                GuiUtils.invoke(this::fireTableDataChanged);
             }
         }
     }

@@ -51,7 +51,7 @@ import com.donohoedigital.gui.GuiUtils;
 
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
-import java.awt.*;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -68,9 +68,9 @@ public class EngineUtils
     protected static Gameboard gameboard_;
     protected static JComponent scroll_;
     
-    private static javax.swing.border.Border standardMsgBorder_ = BorderFactory.createEmptyBorder(6,10,5,10);
-    private static javax.swing.border.Border standardMenuTextBorder_ = BorderFactory.createEmptyBorder(15,20,15,20);
-    private static javax.swing.border.Border standardMenuLowerTextBorder_ = BorderFactory.createEmptyBorder(2,10,2,10);
+    private static final javax.swing.border.Border standardMsgBorder_ = BorderFactory.createEmptyBorder(6,10,5,10);
+    private static final javax.swing.border.Border standardMenuTextBorder_ = BorderFactory.createEmptyBorder(15,20,15,20);
+    private static final javax.swing.border.Border standardMenuLowerTextBorder_ = BorderFactory.createEmptyBorder(2,10,2,10);
     
     /**
      * Get standard border around message areas
@@ -453,7 +453,7 @@ public class EngineUtils
      */
     public static List<GamePiece> getMatchingPieces(GamePieceContainer container, int nType)
     {
-        List<GamePiece> list = new ArrayList<GamePiece>();
+        List<GamePiece> list = new ArrayList<>();
         if (container == null) return list;
         GamePiece piece;
         synchronized (container.getMap())
@@ -559,18 +559,14 @@ public class EngineUtils
         
         // sleep in sep thread before turning led off
         Thread tWait = new Thread(
-            new Runnable() {
-                public void run() {
-                        Utils.sleepMillis(100);
-                        // need to invoke later so happens from swing thread
-                        SwingUtilities.invokeLater(
-                            new Runnable() {
-                                public void run() {
-                                    if (ledconnect_ != null) ledconnect_.setIcon(ledyellowoff_);
-                                }
-                            }
-                        );
-                }
+            () -> {
+                Utils.sleepMillis(100);
+                // need to invoke later so happens from swing thread
+                SwingUtilities.invokeLater(
+                    () -> {
+                        if (ledconnect_ != null) ledconnect_.setIcon(ledyellowoff_);
+                    }
+                );
             }
         );
         tWait.start();
@@ -640,7 +636,7 @@ public class EngineUtils
     /**
      * add cancelable phase
      */
-    public synchronized static void addCancelable(CancelablePhase phase)
+    public static synchronized void addCancelable(CancelablePhase phase)
     {
         if (cancelables_ == null) cancelables_ = new ArrayList();
 
@@ -650,7 +646,7 @@ public class EngineUtils
     /**
      * remove cancelable phase
      */
-    public synchronized static void removeCancelable(CancelablePhase phase)
+    public static synchronized void removeCancelable(CancelablePhase phase)
     {
         if (cancelables_ == null) return;
 
@@ -660,22 +656,18 @@ public class EngineUtils
     /**
      * cancel cancelable phases and clear list
      */
-    public synchronized static void cancelCancelables()
+    public static synchronized void cancelCancelables()
     {
-        if (cancelables_ == null || cancelables_.size() == 0) return;
+        if (cancelables_ == null || cancelables_.isEmpty()) return;
 
         // run in swing loop since possible closing dialogs
-        GuiUtils.invoke(new Runnable() {
-            public void run() {
-                EngineUtils.cancel();
-            }
-        });
+        GuiUtils.invoke(EngineUtils::cancel);
     }
 
     /**
      * cancel each item in the list and clear the list
      */
-    private synchronized static void cancel()
+    private static synchronized void cancel()
     {
         CancelablePhase c;
         ArrayList dup = new ArrayList(cancelables_);

@@ -27,14 +27,14 @@
 package com.zookitec.layout;
 
 
-import java.awt.*;
+import java.awt.Component;
 
 /**
  * An expression factory used to create expressions
  * that depend on attributes of a group of components.
  *
  */
-public class GroupEF {
+public final class GroupEF {
 
 
     private GroupEF() {}

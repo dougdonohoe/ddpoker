@@ -38,13 +38,19 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.NameValueToken;
+import com.donohoedigital.comms.ObjectID;
+import com.donohoedigital.config.ConfigUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -68,7 +74,7 @@ public class GameState extends MsgState implements SaveFile
     private byte[] savedata_;
     private String sName_;
     private String sDesc_;
-    private List<GameStateEntry> entries_ = new ArrayList<GameStateEntry>();
+    private List<GameStateEntry> entries_ = new ArrayList<>();
     private TypedHashMap gamedata_;
     private SaveDetails details_;
     
@@ -256,13 +262,13 @@ public class GameState extends MsgState implements SaveFile
      */
     public void resetAfterRead(boolean bCheckEmpty)
     {
-        if (bCheckEmpty && entries_.size() > 0)
+        if (bCheckEmpty && !entries_.isEmpty())
         {
-            logger.warn("GameState resetAfterRead: " + sName_ + ": has " + entries_.size() + " entries left.");
+            logger.warn("GameState resetAfterRead: {}: has {} entries left.", sName_, entries_.size());
             for (int i = 0; i < entries_.size(); i++)
             {
                 GameStateEntry entry = entries_.get(i);
-                logger.debug("Entry["+i+"]: " + entry.marshal(null));
+                logger.debug("Entry[{}]: {}", i, entry.marshal(null));
             }
         }
         reset();
@@ -350,25 +356,25 @@ public class GameState extends MsgState implements SaveFile
         {
             if (bak.exists() && !bak.delete())
             {
-                logger.warn("Unable to delete " + bak.getName());
+                logger.warn("Unable to delete {}", bak.getName());
             }
             
             if (!file_.renameTo(bak))
             {
-                logger.warn("Unable to rename " + file_.getName() + " to " + bak.getName());             
+                logger.warn("Unable to rename {} to {}", file_.getName(), bak.getName());             
             }
         }
         
         // move temp file to existing file
         if (!tmp.renameTo(file_))
         {
-            logger.warn("Unable to rename " + tmp.getName() + " to " + file_.getName());
+            logger.warn("Unable to rename {} to {}", tmp.getName(), file_.getName());
         }
         
         // cleanup backup file
         if (bak.exists() && !bak.delete())
         {
-            logger.warn("Unable to delete " + bak.getName());
+            logger.warn("Unable to delete {}", bak.getName());
         }
         
     }
@@ -545,7 +551,7 @@ public class GameState extends MsgState implements SaveFile
      */
     public GameStateEntry removeEntry()
     {
-        ApplicationError.assertTrue(entries_.size() > 0, "No more entries");
+        ApplicationError.assertTrue(!entries_.isEmpty(), "No more entries");
         return entries_.remove(0);
     }
     
@@ -554,7 +560,7 @@ public class GameState extends MsgState implements SaveFile
      */
     public GameStateEntry peekEntry()
     {
-        if (entries_.size() == 0) return null;
+        if (entries_.isEmpty()) return null;
         return entries_.get(0);
     }
     
@@ -861,8 +867,8 @@ public class GameState extends MsgState implements SaveFile
      */
     public static GameState[] getSaveFileList(File fDir, String sBegin, String sExt)
     {
-        File files[] = Utils.getFileList(fDir, SaveFile.DELIM + sExt, sBegin);
-        List<GameState> newst = new ArrayList<GameState>();
+        File[] files = Utils.getFileList(fDir, SaveFile.DELIM + sExt, sBegin);
+        List<GameState> newst = new ArrayList<>();
 
         for (File file : files)
         {
@@ -872,8 +878,7 @@ public class GameState extends MsgState implements SaveFile
             }
             catch (Throwable e)
             {
-                logger.error("Error loading " + file.getAbsolutePath() + ": " +
-                             Utils.formatExceptionText(e));
+                logger.error("Error loading {}: {}", file.getAbsolutePath(), Utils.formatExceptionText(e));
             }
         }
 

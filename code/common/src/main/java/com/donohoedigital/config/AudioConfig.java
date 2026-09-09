@@ -38,13 +38,19 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import org.jdom2.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
-import javax.sound.midi.*;
-import java.net.*;
-import java.util.*;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Loads audio.xml files in the module directories defined by
@@ -54,13 +60,13 @@ import java.util.*;
  */
 public class AudioConfig extends XMLConfigFileLoader
 {
-    private static Logger aLogger = LogManager.getLogger(AudioConfig.class);
+    private static final Logger aLogger = LogManager.getLogger(AudioConfig.class);
 
     private static final String AUDIO_CONFIG = "audio.xml";
 
     private static AudioConfig audioConfig = null;
 
-    private Map<String, AudioDef> audios_ = new HashMap<String, AudioDef>();
+    private final Map<String, AudioDef> audios_ = new HashMap<>();
 
     private static boolean bMuteFX_ = false;
     private static float fFXGain_ = .8f;
@@ -221,7 +227,7 @@ public class AudioConfig extends XMLConfigFileLoader
         AudioDef audio = getAudioDef(sName, bReportMissing);
         if (audio == null)
         {
-            aLogger.warn("Unable to play " + sName + " (not defined)");
+            aLogger.warn("Unable to play {} (not defined)", sName);
             return null;
         }
         AudioPlayer player = new AudioPlayer(audio, fGain, sleepSecs, bLoop);
@@ -397,7 +403,7 @@ public class AudioConfig extends XMLConfigFileLoader
         {
             if (bReportMissing)
             {
-                aLogger.warn("No audio found for " + sName);
+                aLogger.warn("No audio found for {}", sName);
             }
             return null;
         }
@@ -471,7 +477,7 @@ public class AudioConfig extends XMLConfigFileLoader
         URL url = new MatchingResources("classpath*:config/" + location).getSingleResourceURL();
         if (url == null)
         {
-            aLogger.warn("Audio " + sName + " not found at " + location + ".  Skipping");
+            aLogger.warn("Audio {} not found at {}.  Skipping", sName, location);
             return;
         }
 

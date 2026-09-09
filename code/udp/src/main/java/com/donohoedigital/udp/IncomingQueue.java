@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,15 +51,15 @@ public class IncomingQueue
     static Logger logger = LogManager.getLogger(IncomingQueue.class);
 
     // message comparator
-    private static UDPMessageComparator comparator_ = new UDPMessageComparator();
+    private static final UDPMessageComparator comparator_ = new UDPMessageComparator();
 
     // last dispatch count
     static final int LAST_DISPATCH_CNT = -1;
 
     // members
-    private ArrayList<UDPData> queue_ = new ArrayList<UDPData>();
+    private final ArrayList<UDPData> queue_ = new ArrayList<>();
     private int nLastProcessedID_;
-    private UDPLink link_;
+    private final UDPLink link_;
 
     /**
      * Default constructor
@@ -99,7 +102,7 @@ public class IncomingQueue
     {
         synchronized(queue_)
         {
-            if (queue_.size() == 0) return false;
+            if (queue_.isEmpty()) return false;
             return (queue_.get(0).getID() - 1 != nLastProcessedID_);
         }
     }
@@ -154,7 +157,7 @@ public class IncomingQueue
     //// DISPATCH
     ////
 
-    private ArrayList<UDPData> process_ = new ArrayList<UDPData>(10);
+    private final ArrayList<UDPData> process_ = new ArrayList<>(10);
 
     /**
      * Dispatch messages.  Basically the messages in the queue are sorted
@@ -182,7 +185,7 @@ public class IncomingQueue
             {
                 synchronized (queue_)
                 {
-                    if (queue_.size() == 0) return false;
+                    if (queue_.isEmpty()) return false;
 
                     // first item on queue must be next message in sequence
                     data = queue_.get(0);
@@ -213,7 +216,7 @@ public class IncomingQueue
                 // process data found (outside of sync loop)
                 nLastProcessedID_ += process_.size();
                 data = process_.remove(0);
-                if (process_.size() > 0)
+                if (!process_.isEmpty())
                 {
                     data.combine(process_);
                     process_.clear();
@@ -222,7 +225,7 @@ public class IncomingQueue
                 // debug
                 if (UDPServer.DEBUG_INCOMING)
                 {
-                    logger.debug("  *** dispatching " + data.toStringShort());
+                    logger.debug("  *** dispatching {}", data.toStringShort());
                 }
 
                 // pass completed message on to handlers

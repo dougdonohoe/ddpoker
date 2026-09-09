@@ -39,7 +39,8 @@ import com.donohoedigital.games.poker.model.util.TournamentHistoryList;
 import com.donohoedigital.games.poker.service.OnlineGameService;
 import com.donohoedigital.games.poker.service.OnlineProfileService;
 import com.donohoedigital.games.poker.service.TournamentHistoryService;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -126,7 +127,7 @@ public class TournamentHistoryServiceTest
         // spit them out - no easy way to verify, so eyeballing :-(
         for (TournamentHistory hist : allForGame)
         {
-            logger.info("RETURN: " + hist);
+            logger.info("RETURN: {}", hist);
             assertEquals(game.getTournament().getName(), hist.getTournamentName());
             assertEquals(list.size(), hist.getNumPlayers());
         }

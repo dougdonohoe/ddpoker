@@ -368,7 +368,7 @@ public class Format
    * a test stub for the format class
    */
    
-   public static void main(String[] a)
+   static void main()
    {  double x = 1.23456789012;
       double y = 123;
       double z = 1.2345e30;

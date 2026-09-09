@@ -32,19 +32,22 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.ProfileManagerPanel;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.gui.GlassButton;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class PlayerTypeManager extends ProfileManagerPanel
 {
-    private GlassButton roster_;
-    private GameContext context_;
+    private final GlassButton roster_;
+    private final GameContext context_;
 
     public PlayerTypeManager(GameEngine engine, GameContext context, String sStyle)
     {
@@ -55,13 +58,8 @@ public class PlayerTypeManager extends ProfileManagerPanel
         roster_ = new GlassButton("roster", "Glass");
         roster_.setPreferredSize(new Dimension(80, 24));
         roster_.setBorderGap(0, 0, 0, 0);
-        roster_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setRoster();
-            }
-        });
+        roster_.addActionListener(e ->
+            setRoster());
 
         summaryBorder_.add(GuiUtils.EAST(roster_), BorderLayout.SOUTH);
     }

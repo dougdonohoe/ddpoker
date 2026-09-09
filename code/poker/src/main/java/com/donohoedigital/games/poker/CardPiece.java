@@ -38,18 +38,30 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.config.ImageDef;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.GameStateEntry;
+import com.donohoedigital.games.config.Territory;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.gui.EmptyImageComponent;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.ImageComponent;
+import com.donohoedigital.gui.TextUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  *
@@ -320,7 +332,7 @@ public class CardPiece extends PokerGamePiece
     private static String sLastBack_ = null;
     private static ImageComponent icBack_ = null;
 
-    private synchronized static ImageComponent getDefault()
+    private static synchronized ImageComponent getDefault()
     {
         if (icDefault_ == null)
         {

@@ -38,22 +38,37 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DMArrayList;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.p2p.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.engine.DiceRoller;
+import com.donohoedigital.games.engine.Game;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.ai.Roster;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.PokerConnection;
+import com.donohoedigital.games.poker.network.PokerURL;
+import com.donohoedigital.games.poker.online.OnlineManager;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.p2p.LanManager;
+import com.donohoedigital.p2p.P2PURL;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.security.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.security.SecureRandom;
 import java.util.*;
 
 /**
@@ -76,7 +91,7 @@ public class PokerGame extends Game implements PlayerActionListener
     public static final String HOME_BEGIN = "home";
 
     // denominations for chips
-    private static final int nChipDenom_[] = new int[]{1, 5, 25, 100, 500, 1000, 5000, 10000, 50000, 100000};
+    private static final int[] nChipDenom_ = new int[]{1, 5, 25, 100, 500, 1000, 5000, 10000, 50000, 100000};
 
     /**
      * Name used in PropertyChangeEvents when current table changed
@@ -104,7 +119,7 @@ public class PokerGame extends Game implements PlayerActionListener
     public static final String PROP_PLAYER_FINISHED = "_busted_";
 
     // game info
-    private DMArrayList<PokerTable> tables_ = new DMArrayList<PokerTable>();
+    private DMArrayList<PokerTable> tables_ = new DMArrayList<>();
     private TournamentProfile profile_;
     private int nLevel_ = 0;
     private boolean bClockMode_ = false;
@@ -293,7 +308,7 @@ public class PokerGame extends Game implements PlayerActionListener
      */
     public List<PokerPlayer> getPokerPlayersCopy()
     {
-        List<PokerPlayer> copy = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> copy = new ArrayList<>();
         for (GamePlayer p : players_)
         {
             copy.add((PokerPlayer) p);
@@ -319,7 +334,7 @@ public class PokerGame extends Game implements PlayerActionListener
     {
         if (profile_ != null)
         {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             int nNum = getNumPlayers();
             for (int i = 0; i < nNum; i++)
             {
@@ -1134,7 +1149,7 @@ public class PokerGame extends Game implements PlayerActionListener
     private void setupComputerPlayers(int nNumPlayers)
     {
         PokerPlayer player;
-        List<String> names = new ArrayList<String>(PokerMain.getPokerMain().getNames());
+        List<String> names = new ArrayList<>(PokerMain.getPokerMain().getNames());
         int nNumHumans = getNumPlayers();
 
         // if we don't have enough names, add more (enough
@@ -1151,7 +1166,7 @@ public class PokerGame extends Game implements PlayerActionListener
             }
         }
 
-        Set<String> hsUsed = new HashSet<String>();
+        Set<String> hsUsed = new HashSet<>();
 
         for (int i = 0; i < nNumHumans; i++)
         {
@@ -1162,7 +1177,7 @@ public class PokerGame extends Game implements PlayerActionListener
         PlayerType playerType;
         String sName;
         String sKey = getPublicUseKey();
-        Map<String, List<String>> hmRoster = new HashMap<String, List<String>>();
+        Map<String, List<String>> hmRoster = new HashMap<>();
         List<String> roster;
         for (int i = getNumPlayers(); i < nNumPlayers; i++)
         {
@@ -1341,8 +1356,7 @@ public class PokerGame extends Game implements PlayerActionListener
                         if (peek.isHuman() && table.getNumOccupiedSeats() > 0 && !table.isAllComputer())
                         {
                             idx = DiceRoller.rollDieInt(players.size()) - 1;
-                            logger.debug("TESTING: skip placing " + peek.getName() + " on table " + table.getName() +
-                                         " new index to check: " + idx);
+                            logger.debug("TESTING: skip placing {} on table {} new index to check: {}", peek.getName(), table.getName(), idx);
                         }
                         else bDone = true;
                     }
@@ -1434,7 +1448,7 @@ public class PokerGame extends Game implements PlayerActionListener
             p = getPokerPlayerAt(i);
             if (p.isWaiting())
             {
-                if (wait == null) wait = new ArrayList<PokerPlayer>();
+                if (wait == null) wait = new ArrayList<>();
                 wait.add(p);
             }
         }
@@ -1534,7 +1548,7 @@ public class PokerGame extends Game implements PlayerActionListener
 
         if (nChips != (nBought + nExtraChips_))
         {
-            logger.error("Chip count off.  Bought=" + nBought + "   chips=" + nChips + "   nExtra=" + nExtraChips_);
+            logger.error("Chip count off.  Bought={}   chips={}   nExtra={}", nBought, nChips, nExtraChips_);
         }
     }
 
@@ -2168,7 +2182,7 @@ public class PokerGame extends Game implements PlayerActionListener
                 removeTable(table);
                 if (TournamentDirector.DEBUG_CLEANUP_TABLE)
                 {
-                    logger.debug("Removed on load: " + table.getName());
+                    logger.debug("Removed on load: {}", table.getName());
                 }
             }
         }
@@ -2209,7 +2223,7 @@ public class PokerGame extends Game implements PlayerActionListener
                 String sSavedIP = getLocalIP();
                 if (!sSavedIP.equals(sIP) && !sIP.equals("127.0.0.1"))
                 {
-                    logger.info("Updating local ip from: " + sSavedIP + " to: " + sIP);
+                    logger.info("Updating local ip from: {} to: {}", sSavedIP, sIP);
                     setLocalIP(sIP);
                     // TODO: notify user and check about public ip
                 }
@@ -2272,7 +2286,7 @@ public class PokerGame extends Game implements PlayerActionListener
                     // info message
                     if (player.isHuman())
                     {
-                        logger.info("Key in save file updated to current key for: " + player.getName());
+                        logger.info("Key in save file updated to current key for: {}", player.getName());
                     }
                 }
             }

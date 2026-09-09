@@ -32,10 +32,13 @@
  */
 package com.donohoedigital.base;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +56,7 @@ public class ManagedQueueTest
     private static final Logger logger = LogManager.getLogger(ManagedQueueTest.class);
 
     private Thread mainThread;
-    private final List<SampleItem> messages = new ArrayList<SampleItem>();
+    private final List<SampleItem> messages = new ArrayList<>();
     private static final SampleItem SAMPLE = new SampleItem();
 
     @BeforeEach
@@ -79,7 +82,7 @@ public class ManagedQueueTest
         @Override
         protected BlockingQueue<SampleItem> createQueue(int c)
         {
-            return new ArrayBlockingQueue<SampleItem>(c);
+            return new ArrayBlockingQueue<>(c);
         }
 
         @Override

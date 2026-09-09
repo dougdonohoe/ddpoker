@@ -38,9 +38,10 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -55,14 +56,14 @@ public class MsgState
     private static final int NEXT_ID_NOTSET = -1;
     
     // ids
-    private Map<Object, Integer> ids_ = new HashMap<Object, Integer>();
-    private Map<Integer, Object> reverseids_ = new HashMap<Integer, Object>();
+    private final Map<Object, Integer> ids_ = new HashMap<>();
+    private final Map<Integer, Object> reverseids_ = new HashMap<>();
     private int nextid_ = NEXT_ID_NOTSET;
     
     // class info
     private TokenizedList classNames_;
-    private Map<String, Integer> classids_ = new HashMap<String, Integer>();
-    private Map<Integer, String> reverseclassids_ = new HashMap<Integer, String>();
+    private final Map<String, Integer> classids_ = new HashMap<>();
+    private final Map<Integer, String> reverseclassids_ = new HashMap<>();
     private int nextclassid_ = 0;
     
     /**

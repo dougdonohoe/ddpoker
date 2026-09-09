@@ -38,14 +38,20 @@
 
 package com.donohoedigital.p2p;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.comms.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.DDByteArrayOutputStream;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
 
 import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 /**
  *
@@ -55,11 +61,11 @@ public class Peer2PeerMulticast implements Runnable
 {
     static Logger logger = LogManager.getLogger(Peer2PeerMulticast.class);
     
-    private static int PACKET_SIZE = 49152; // 64K max, including overhead
+    private static final int PACKET_SIZE = 49152; // 64K max, including overhead
     
     private Thread t_;
-    private int nPort_;
-    private String sIP_;
+    private final int nPort_;
+    private final String sIP_;
     private InetAddress ia_;
     private MulticastSocket ms_;
     private boolean bDone_;
@@ -73,7 +79,7 @@ public class Peer2PeerMulticast implements Runnable
         sIP_ = PropertyConfig.getRequiredStringProperty("settings.multicast.address");
 
 
-        logger.info("Multicast using " + sIP_ + ":"+nPort_);
+        logger.info("Multicast using {}:{}", sIP_, nPort_);
         try {   
             // multicast address we listen to
             ia_ = InetAddress.getByName(sIP_);
@@ -199,21 +205,18 @@ public class Peer2PeerMulticast implements Runnable
                 if (!bDone_)
                 {
                     String data = new String(dp.getData(), 0, dp.getLength());
-                    logger.error("receive() socket error: [" + Utils.getPrintableString(data, 1000) + "]; "
-                             + Utils.formatExceptionText(se));
+                    logger.error("receive() socket error: [{}]; {}", Utils.getPrintableString(data, 1000), Utils.formatExceptionText(se));
                 }
             }
             catch (IOException ioe)
             {
                 String data = new String(dp.getData(), 0, dp.getLength());
-                logger.error("receive() ioerror: [" + Utils.getPrintableString(data, 1000) + "]; "
-                             + Utils.formatExceptionText(ioe));
+                logger.error("receive() ioerror: [{}]; {}", Utils.getPrintableString(data, 1000), Utils.formatExceptionText(ioe));
             }        
             catch (Throwable t)
             {
                 String data = new String(dp.getData(), 0, dp.getLength());
-                logger.error("receive() error: [" + Utils.getPrintableString(data, 1000) + "]; "
-                             + Utils.formatExceptionText(t));
+                logger.error("receive() error: [{}]; {}", Utils.getPrintableString(data, 1000), Utils.formatExceptionText(t));
             }
         }
         

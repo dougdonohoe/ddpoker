@@ -38,18 +38,23 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -68,7 +73,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
     private GameContext context_;
     private String STYLE;
     private List<BaseProfile> profiles_;
-    private List<ProfilePanel> profilePanels_ = new ArrayList<ProfilePanel>();
+    private List<ProfilePanel> profilePanels_ = new ArrayList<>();
     private DDPanel profilesParent_;
     private DDScrollPane scroll_;
     private BaseProfile selected_ = null;
@@ -395,14 +400,12 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         checkButtons();
         
         // if no profiles, show msg
-        if (bFileMode_ && profilePanels_.size() == 0) {
+        if (bFileMode_ && profilePanels_.isEmpty()) {
             SwingUtilities.invokeLater(
-            new Runnable() {
-                public void run() {
-                    String sMsg = PropertyConfig.getMessage("msg.needprofile"+sMsgName_);
-                    EngineUtils.displayInformationDialog(context_, sMsg, "msg.needprofile.title"+sMsgName_, null);
-                }
-            });
+                () -> {
+                    String sMsg = PropertyConfig.getMessage("msg.needprofile" + sMsgName_);
+                    EngineUtils.displayInformationDialog(context_, sMsg, "msg.needprofile.title" + sMsgName_, null);
+                });
         }
     }
     
@@ -463,19 +466,17 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         
         // request focus
         SwingUtilities.invokeLater(
-        new Runnable() {
-            public void run() {
+            () -> {
                 // request focus
                 requestFocus();
-                
+
                 // scroll to visible (after display so it adjusts for new)
                 if (selectedPanel_ != null) {
                     Point loc = selectedPanel_.getLocation();
                     loc = SwingUtilities.convertPoint(selectedPanel_.getParent(), loc, scroll_.getViewport());
-                    scroll_.getViewport().scrollRectToVisible(new Rectangle(loc,selectedPanel_.getSize()));
+                    scroll_.getViewport().scrollRectToVisible(new Rectangle(loc, selectedPanel_.getSize()));
                 }
-            }
-        });
+            });
         
         // notify
         fireStateChanged();
@@ -549,7 +550,7 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         ProfilePanel pp;
         
         // manage parent (remove all and re-add so sort order is good)
-        List<ProfilePanel> newPP = new ArrayList<ProfilePanel>();
+        List<ProfilePanel> newPP = new ArrayList<>();
         profilesParent_.removeAll();
         for (BaseProfile aProfiles_ : profiles_)
         {

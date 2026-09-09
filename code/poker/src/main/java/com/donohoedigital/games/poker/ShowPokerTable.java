@@ -38,16 +38,24 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.Territory;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.dashboard.*;
+import com.donohoedigital.games.poker.dashboard.DashboardManager;
+import com.donohoedigital.games.poker.dashboard.DashboardPanel;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -300,7 +308,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
     /**
      * Camera button
      */
-    private class Camera extends DDImageButton implements ActionListener
+    private final class Camera extends DDImageButton implements ActionListener
     {
         private Camera()
         {
@@ -549,13 +557,8 @@ public abstract class ShowPokerTable extends ChainPhase implements
 
         // start bg music
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        EngineUtils.startBackgroundMusic(gamephase_);
-                    }
-                }
+            () ->
+                EngineUtils.startBackgroundMusic(gamephase_)
         );
     }
 
@@ -849,8 +852,8 @@ public abstract class ShowPokerTable extends ChainPhase implements
     }
 
     // for fast bounds
-    private Rectangle bounds_ = new Rectangle();
-    private Rectangle resizeBounds_ = new Rectangle();
+    private final Rectangle bounds_ = new Rectangle();
+    private final Rectangle resizeBounds_ = new Rectangle();
 
     /**
      * Notify delegate that board is repainting, so resize control

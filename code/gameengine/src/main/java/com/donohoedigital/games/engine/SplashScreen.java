@@ -38,14 +38,17 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.ImageDef;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.*;
-import java.net.*;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 
 /**
  * Splash screen.  Displayed from Game Engine as soon as possible, then later updated
@@ -222,13 +225,8 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
         }
 
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        engine_.showMainWindow();
-                    }
-                }
+            () ->
+                engine_.showMainWindow()
         );
     }
 

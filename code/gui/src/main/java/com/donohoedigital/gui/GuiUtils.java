@@ -447,7 +447,7 @@ public class GuiUtils
      */
     public static void setDDOptionLabelWidths(Container container)
     {
-        List<DDOption> options = new ArrayList<DDOption>();
+        List<DDOption> options = new ArrayList<>();
         getDDOptions(container, options);
 
         int nNum = options.size();
@@ -482,7 +482,7 @@ public class GuiUtils
         GeneralPath path = new GeneralPath();
         StringTokenizer st = new StringTokenizer(sPath, "McCsSzZhHvVlL,-", true);
         String token;
-        float nums[] = new float[6];
+        float[] nums = new float[6];
         int idx = 0;
         int needed = 0;
         boolean bRelative = false;

@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.db;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Class that stores total size of all results.  Intended for use with paged searches where the items in the

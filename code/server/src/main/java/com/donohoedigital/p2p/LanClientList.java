@@ -38,7 +38,8 @@
 
 package com.donohoedigital.p2p;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -76,8 +77,8 @@ public class LanClientList
         }
     }
 
-    private Map<String, LanClientInfo> list_ = new HashMap<String, LanClientInfo>();
-    private LanControllerInterface controller_;
+    private final Map<String, LanClientInfo> list_ = new HashMap<>();
+    private final LanControllerInterface controller_;
     
     
     /** 
@@ -109,7 +110,7 @@ public class LanClientList
                 break;
                 
             default:
-                logger.warn("Received message with incorrect category: " + msg);
+                logger.warn("Received message with incorrect category: {}", msg);
                 return;
         }
     }
@@ -237,7 +238,7 @@ public class LanClientList
      */
     public synchronized List<LanClientInfo> getAsList(String sSortKey, boolean bAscending)
     {
-        List<LanClientInfo> list = new ArrayList<LanClientInfo>(list_.values());
+        List<LanClientInfo> list = new ArrayList<>(list_.values());
         Collections.sort(list, new LanSorter(sSortKey, bAscending));
         return list;
     }
@@ -274,7 +275,7 @@ public class LanClientList
     ////
     
     // listener list
-    protected List<LanListener> listenerList = new ArrayList<LanListener>();
+    protected List<LanListener> listenerList = new ArrayList<>();
     
    /**
      * Adds a listener to the list

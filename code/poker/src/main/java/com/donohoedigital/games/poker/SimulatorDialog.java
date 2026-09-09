@@ -32,16 +32,29 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.BasePhase;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -56,8 +69,8 @@ public class SimulatorDialog extends BasePhase implements ChangeListener
 {
     static Logger logger = LogManager.getLogger(SimulatorDialog.class);
 
-    private static ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
-    private static ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
+    private static final ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
+    private static final ImageIcon checkedIcon_ = ImageConfig.getImageIcon("menuicon.checked");
 
     static int MENU_CLEAR_ALL = 0;
     static int MENU_CLEAR_OPP = 1;

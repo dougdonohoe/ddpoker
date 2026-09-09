@@ -18,8 +18,11 @@
  */
 package com.donohoedigital.base;
 
-import java.security.*;
-import java.util.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 /*
  * In the multitude of java GUID generators, I found none that
@@ -176,7 +179,7 @@ public class RandomGUID extends Object
             sbValueBeforeMD5.append(Long.toString(rand));
 
             valueBeforeMD5 = sbValueBeforeMD5.toString();
-            md5.update(valueBeforeMD5.getBytes());
+            md5.update(valueBeforeMD5.getBytes(StandardCharsets.UTF_8));
 
             byte[] array = md5.digest();
             StringBuilder sb = new StringBuilder();
@@ -222,7 +225,7 @@ public class RandomGUID extends Object
     /*
      * Demonstraton and self test of class
      */
-    public static void main(String args[])
+    static void main()
     {
         for (int i = 0; i < 100; i++)
         {

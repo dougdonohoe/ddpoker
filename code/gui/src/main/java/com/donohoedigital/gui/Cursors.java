@@ -38,10 +38,10 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ImageConfig;
 
-import java.awt.*;
+import java.awt.Cursor;
 
 
 /**

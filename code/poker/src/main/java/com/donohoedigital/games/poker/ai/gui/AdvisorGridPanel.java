@@ -32,17 +32,23 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.games.poker.ai.PocketMatrixByte;
+import com.donohoedigital.games.poker.ai.PocketMatrixString;
+import com.donohoedigital.games.poker.ai.RuleEngine;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.gui.DDPanel;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 
 public class AdvisorGridPanel extends DDPanel
 {
-    private PocketMatrixByte outcomes_ = new PocketMatrixByte();
-    private PocketMatrixString outcomeStrings_ = new PocketMatrixString();
+    private final PocketMatrixByte outcomes_ = new PocketMatrixByte();
+    private final PocketMatrixString outcomeStrings_ = new PocketMatrixString();
 
     private boolean bPreFlop_ = true;
     private boolean bMinorGrid_ = true;
@@ -193,7 +199,7 @@ public class AdvisorGridPanel extends DDPanel
         }
     }
 
-    private static final Color colors_[] = new Color[] {
+    private static final Color[] colors_ = new Color[] {
         Color.RED.darker().darker(),
         Color.RED.darker(),
         Color.YELLOW.darker().darker(),

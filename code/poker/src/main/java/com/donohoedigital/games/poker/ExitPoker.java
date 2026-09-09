@@ -38,11 +38,15 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.BasePhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.online.OnlineManager;
+import com.donohoedigital.games.poker.online.OnlineServer;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Doug Donohoe

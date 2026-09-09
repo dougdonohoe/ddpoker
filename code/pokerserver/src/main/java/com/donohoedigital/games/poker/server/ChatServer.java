@@ -32,20 +32,27 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.service.*;
-import com.donohoedigital.games.server.service.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.OnlinePlayerInfo;
+import com.donohoedigital.games.poker.network.PokerUDPTransporter;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import com.donohoedigital.games.server.service.BannedKeyService;
 import com.donohoedigital.udp.*;
-import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -56,14 +63,14 @@ import java.util.*;
  */
 public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static Logger logger = LogManager.getLogger(ChatServer.class);
+    private static final Logger logger = LogManager.getLogger(ChatServer.class);
 
     private OnlineProfileService onlineProfileService;
     private BannedKeyService bannedKeyService;
 
     // members
-    private UDPServer udp_;
-    private int nPort_;
+    private final UDPServer udp_;
+    private final int nPort_;
     private final List<LinkInfo> links_ = Collections.synchronizedList(new ArrayList<LinkInfo>());
 
     /**
@@ -107,6 +114,15 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
     public void setBannedKeyService(BannedKeyService bannedKeyService)
     {
         this.bannedKeyService = bannedKeyService;
+    }
+
+    /**
+     * port the chat server listens on (settings.udp.chat.port) - this is what a client
+     * puts in Options -> Online -> Online Chat, not the UDP server's preferred port
+     */
+    int getPort()
+    {
+        return nPort_;
     }
 
     /**
@@ -218,7 +234,7 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
         if (!aliases.isEmpty())
         {
             OnlinePlayerInfo oalias;
-            DMArrayList<DMTypedHashMap> oaliases = new DMArrayList<DMTypedHashMap>(aliases.size());
+            DMArrayList<DMTypedHashMap> oaliases = new DMArrayList<>(aliases.size());
             for (OnlineProfile alias : aliases)
             {
                 oalias = new OnlinePlayerInfo();
@@ -409,7 +425,7 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
     {
         synchronized (links_)
         {
-            DMArrayList<DMTypedHashMap> list = new DMArrayList<DMTypedHashMap>(links_.size());
+            DMArrayList<DMTypedHashMap> list = new DMArrayList<>(links_.size());
             for (LinkInfo info : links_)
             {
                 list.add(info.player.getData());
@@ -444,7 +460,7 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
     /**
      * list of links
      */
-    private class LinkInfo implements Comparable<LinkInfo>
+    private final class LinkInfo implements Comparable<LinkInfo>
     {
         UDPLink link;
         String sRealKey;

@@ -38,14 +38,21 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.DataElement;
+import com.donohoedigital.config.DataElementConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.SwingUtilities;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 /*    
 *
@@ -216,7 +223,7 @@ public class DDComboBox extends JComboBox implements
 
         if (elem == null)
         {
-            logger.warn("DataElement not found for " + sDataElement);
+            logger.warn("DataElement not found for {}", sDataElement);
             return;
         }
 
@@ -228,7 +235,7 @@ public class DDComboBox extends JComboBox implements
 
         if (!elem.isList())
         {
-            logger.warn("DataElement " + elem.getName() + " is not a list");
+            logger.warn("DataElement {} is not a list", elem.getName());
             return;
         }
 
@@ -237,9 +244,9 @@ public class DDComboBox extends JComboBox implements
 
         List<?> values = elem.getListValues();
 
-        if (values == null || values.size() == 0)
+        if (values == null || values.isEmpty())
         {
-            logger.warn("DataElement " + elem.getName() + " has no list values");
+            logger.warn("DataElement {} has no list values", elem.getName());
             return;
         }
 

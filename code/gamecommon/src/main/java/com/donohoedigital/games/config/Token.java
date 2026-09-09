@@ -38,11 +38,12 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DataMarshal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -122,7 +123,7 @@ public class Token
      */
     public TokenAction getLastAction()
     {
-        if (actionHistory_.size() == 0) return null;
+        if (actionHistory_.isEmpty()) return null;
         
         return (TokenAction) actionHistory_.get(actionHistory_.size() - 1);
     }
@@ -150,7 +151,7 @@ public class Token
      */
     public TokenAction removeLastAction()
     {
-        if (actionHistory_.size() == 0) return null;
+        if (actionHistory_.isEmpty()) return null;
         
         TokenAction action = getLastAction();
         if (action != null)
@@ -291,10 +292,10 @@ public class Token
     
     public void debugPrintActionHistory()
     {
-        logger.debug("Action history for: " + toString());
+        logger.debug("Action history for: {}", toString());
         for (int i = 0; i < actionHistory_.size(); i++)
         {
-            logger.debug("#" + i + ":" + getAction(i));
+            logger.debug("#{}:{}", i, getAction(i));
         }
     }
     

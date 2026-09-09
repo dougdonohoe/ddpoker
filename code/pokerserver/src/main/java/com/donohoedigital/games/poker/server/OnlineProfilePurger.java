@@ -32,17 +32,22 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import org.apache.logging.log4j.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.OnlineProfilePurgeSummary;
+import com.donohoedigital.games.poker.service.OnlineProfileService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Command line tool to clean up old WAN games.
@@ -57,7 +62,7 @@ public class OnlineProfilePurger extends BaseCommandLineApp
     /**
      * Run purger.
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try {
             new OnlineProfilePurger("poker", args);
@@ -115,11 +120,11 @@ public class OnlineProfilePurger extends BaseCommandLineApp
 
         ApplicationError.assertTrue(processed == list.getTotalSize(), "Processed " + processed + " of " + list.getTotalSize() + " rows");
 
-        logger.debug("Deleting " + deleteList.size() + " total profiles");
+        logger.debug("Deleting {} total profiles", deleteList.size());
         service.deleteOnlineProfiles(deleteList);
     }
 
-    private List<OnlineProfile> deleteList = new ArrayList<OnlineProfile>();
+    private List<OnlineProfile> deleteList = new ArrayList<>();
     private OnlineProfilePurgeSummary last;
     private Date days_90;
     private Date days_14;
@@ -143,22 +148,22 @@ public class OnlineProfilePurger extends BaseCommandLineApp
             {
                 if (p.getModifyDate().getTime() < days_14.getTime())
                 {
-                    logger.debug("oooo Deleting " + p.getName() + " since this person has other profiles and this one not used in 14 days");
+                    logger.debug("oooo Deleting {} since this person has other profiles and this one not used in 14 days", p.getName());
                     delete = true;
                 }
                 else
                 {
-                    logger.debug(".... Keeping " + p.getName() + " because created in past 14 days (even though there are other profiles)");
+                    logger.debug(".... Keeping {} because created in past 14 days (even though there are other profiles)", p.getName());
                 }
             }
             else if (p.getModifyDate().getTime() < days_90.getTime())
             {
-                logger.debug("++++ Deleting " + p.getName() + " because not used in 90 days");
+                logger.debug("++++ Deleting {} because not used in 90 days", p.getName());
                 delete = true;
             }
             else
             {
-                logger.debug(".... Keeping " + p.getName() + " because created in past 90 days");
+                logger.debug(".... Keeping {} because created in past 90 days", p.getName());
             }
 
             if (delete) deleteList.add(p);

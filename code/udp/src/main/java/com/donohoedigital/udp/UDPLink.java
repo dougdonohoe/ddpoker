@@ -32,11 +32,17 @@
  */
 package com.donohoedigital.udp;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.MovingAverage;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.net.*;
-import java.util.*;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -61,29 +67,29 @@ public class UDPLink
     private static final int GOODBYE_TIMEOUT = 1000;
 
     // misc
-    private static long TBD_REMOTE_ID = -1;
+    private static final long TBD_REMOTE_ID = -1;
 
     // members
-    private UDPManager manager_;
-    private DispatchQueue dispatchQueue_;
+    private final UDPManager manager_;
+    private final DispatchQueue dispatchQueue_;
     private UDPID id_;
     private InetSocketAddress local_;
     private InetSocketAddress remote_;
     private String sName_;
 
     // time params from handler
-    private int TIMEOUT_MILLIS;
-    private int POSSIBLE_TIMEOUT_NOTIFICATION_START;
-    private int POSSIBLE_TIMEOUT_NOTIFICATION_INTERVAL;
+    private final int TIMEOUT_MILLIS;
+    private final int POSSIBLE_TIMEOUT_NOTIFICATION_START;
+    private final int POSSIBLE_TIMEOUT_NOTIFICATION_INTERVAL;
 
     // queue to send (synchronized blocks are used around sendQueue_)
-    private LinkedList<UDPData> sendQueue_ = new LinkedList<UDPData>();
-    private UDPStats stats_ = new UDPStats();
+    private final LinkedList<UDPData> sendQueue_ = new LinkedList<>();
+    private final UDPStats stats_ = new UDPStats();
 
     // session related stuff (set in resetSession() or newSession())
     private int nMessageID_;
     private IncomingQueue incomingQueue_;
-    private OutgoingQueue outgoingQueue_;
+    private final OutgoingQueue outgoingQueue_;
     private AckList acks_;
     private AckList mtuAcks_;
     private long localSessionID_;
@@ -93,8 +99,8 @@ public class UDPLink
     private long lastMessageReceived_;
     private boolean bGoodbyeInProgress_ = false;
     private boolean bDone_ = false;
-    private ArrayList<UDPLinkMonitor> monitors_ = new ArrayList<UDPLinkMonitor>();
-    private long start = System.currentTimeMillis();
+    private final ArrayList<UDPLinkMonitor> monitors_ = new ArrayList<>();
+    private final long start = System.currentTimeMillis();
 
     // data size related stuff
     public static final int MIN_MTU = 576;
@@ -350,7 +356,7 @@ public class UDPLink
     }
 
     // mtu test num (used to identify new test on receiving end)
-    private byte testNum = 0;
+    private final byte testNum = 0;
     private int nLastMTUTest_;
     private boolean bMTUTestDone_;
 
@@ -367,7 +373,7 @@ public class UDPLink
         int minPayload = MIN_MTU - headers;
         int FACTOR = 128;
         int FUDGE = (MAX_MTU - MIN_MTU) % FACTOR;
-        byte data[] = new byte[maxPayload];
+        byte[] data = new byte[maxPayload];
         Arrays.fill(data, (byte) 'd');
         int id = 0;
 
@@ -1252,7 +1258,7 @@ public class UDPLink
      * Class to track average time for ack to come back after being received.
      * Tracks last 100
      */
-    public static class UDPStats
+    public static final class UDPStats
     {
         // send/error/resend
         private int packetReceived;
@@ -1480,9 +1486,7 @@ public class UDPLink
         public String toString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.append("AVG: "+ getAverage() + ", OUT: " + dataOut +", RE: " + dataresend +
-                      ", IN: "+ dataIn + ", DUP: "+ dataDups +
-                      ", BIN: " + Utils.formatSizeBytes(bytesIn) + ", BOUT: "+ Utils.formatSizeBytes(bytesOut));
+            sb.append("AVG: ").append(getAverage()).append(", OUT: ").append(dataOut).append(", RE: ").append(dataresend).append(", IN: ").append(dataIn).append(", DUP: ").append(dataDups).append(", BIN: ").append(Utils.formatSizeBytes(bytesIn)).append(", BOUT: ").append(Utils.formatSizeBytes(bytesOut));
 
             return sb.toString();
         }

@@ -38,17 +38,28 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.Perf;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.gui.BaseFrame;
+import com.donohoedigital.gui.CenterLayout;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.ImageComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * @author Doug Donohoe
@@ -154,13 +165,7 @@ public class EngineBasePanel extends JPanel
         // Upon change, change focus to this panel (old focus may have been
         // on widget in removed component)
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        requestFocus();
-                    }
-                }
+            this::requestFocus
         );
     }
 
@@ -192,7 +197,7 @@ public class EngineBasePanel extends JPanel
     boolean bPainting_ = false;
 
     // growbox color
-    private Color growColor_ = new Color(200, 200, 200, 125);
+    private final Color growColor_ = new Color(200, 200, 200, 125);
 
     // JDD 2019
     static boolean PAINT_GROW_BOX = true;

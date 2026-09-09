@@ -38,9 +38,10 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.HandSorted;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -109,15 +110,15 @@ public class HoldemExpert {
     }
     
     // groups
-    private static ArrayList[] GROUPS = new ArrayList[8];
-    private static ArrayList aGROUP1 = new ArrayList();
-    private static ArrayList aGROUP2 = new ArrayList();
-    private static ArrayList aGROUP3 = new ArrayList();
-    private static ArrayList aGROUP4 = new ArrayList();
-    private static ArrayList aGROUP5 = new ArrayList();
-    private static ArrayList aGROUP6 = new ArrayList();
-    private static ArrayList aGROUP7 = new ArrayList();
-    private static ArrayList aGROUP8 = new ArrayList();
+    private static final ArrayList[] GROUPS = new ArrayList[8];
+    private static final ArrayList aGROUP1 = new ArrayList();
+    private static final ArrayList aGROUP2 = new ArrayList();
+    private static final ArrayList aGROUP3 = new ArrayList();
+    private static final ArrayList aGROUP4 = new ArrayList();
+    private static final ArrayList aGROUP5 = new ArrayList();
+    private static final ArrayList aGROUP6 = new ArrayList();
+    private static final ArrayList aGROUP7 = new ArrayList();
+    private static final ArrayList aGROUP8 = new ArrayList();
     
     // specific hands
     public static final HandSorted AA = new HandSorted(Card.CLUBS_A, Card.SPADES_A);

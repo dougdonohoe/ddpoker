@@ -38,14 +38,20 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.p2p.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.engine.SendMessageDialog;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.p2p.P2PURL;
+import com.donohoedigital.p2p.Peer2PeerMessage;
+import com.donohoedigital.p2p.Peer2PeerMessenger;
 
 /**
  *

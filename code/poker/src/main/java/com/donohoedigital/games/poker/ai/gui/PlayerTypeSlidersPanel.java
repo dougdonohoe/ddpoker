@@ -32,21 +32,26 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.games.poker.ai.AIStrategyNode;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PlayerTypeSlidersPanel extends DDPanel
 {
     public static ChangeListener changeListener = null;
 
-    private ListPanel listPanel_;
-    private DDHtmlArea helpPanel_;
+    private final ListPanel listPanel_;
+    private final DDHtmlArea helpPanel_;
 
     public PlayerTypeSlidersPanel(String sStyle)
     {
@@ -86,13 +91,8 @@ public class PlayerTypeSlidersPanel extends DDPanel
 
             pill_ = new MyPillPanel("DashboardHeader", itemx.getLabel());
             pill_.setExpanded(itemx.isExpanded());
-            pill_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    pillClicked();
-                }
-            });
+            pill_.addActionListener(e ->
+                pillClicked());
 
             value_ = new DDLabel(GuiManager.DEFAULT, sStyle);
             value_.setPreferredWidth(30);
@@ -119,26 +119,24 @@ public class PlayerTypeSlidersPanel extends DDPanel
             {
                 slider_.setValue(itemx.getValue());
                 slider_.setVisible(!itemx.isExpanded());
-                slider_.addChangeListener(new ChangeListener()
-                {
-                    public void stateChanged(ChangeEvent e)
-                    {
-                        AIStrategyNode item = (AIStrategyNode)getItem();
+                slider_.addChangeListener(e -> {
+                        // renamed from 'item' - a lambda shares the enclosing scope, where the
+                        // SliderItemPanel constructor already has 'item' and 'itemx'
+                        AIStrategyNode node = (AIStrategyNode)getItem();
 
                         value_.setText(Integer.toString(slider_.getValue()));
 
                         //if (!bUpdating_ && !((DDSlider)e.getSource()).getValueIsAdjusting())
                         if (!bUpdating_)
                         {
-                            item.setValue(slider_.getValue());
-                            item.propagateValueChange();
+                            node.setValue(slider_.getValue());
+                            node.propagateValueChange();
                             if (PlayerTypeSlidersPanel.changeListener != null)
                             {
                                 PlayerTypeSlidersPanel.changeListener.stateChanged(e);    
                             }
                         }
 
-                    }
                 });
 
                 borderPanel_.add(slider_, BorderLayout.EAST);

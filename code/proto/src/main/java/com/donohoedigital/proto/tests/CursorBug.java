@@ -38,12 +38,12 @@
 
 package com.donohoedigital.proto.tests;
 
-import javax.swing.*;
-import java.awt.*;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.io.*;
+import java.io.File;
 
 /**
  *
@@ -54,7 +54,7 @@ public class CursorBug
     /**
      * cursor bug test
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         if (args.length == 0)
         {
             System.out.println("Usage: java com.donohoedigital.proto.tests.CursorBug <filename.gif|filename.png>");

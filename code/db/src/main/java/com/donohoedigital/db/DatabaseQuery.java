@@ -32,11 +32,18 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.DataMarshaller;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
 
@@ -156,7 +163,7 @@ public class DatabaseQuery
         if (joinTables_ == null)
         {
             // Assume common case of one table.
-            joinTables_ = new ArrayList<String>(1);
+            joinTables_ = new ArrayList<>(1);
         }
 
         joinTables_.add(tableName);
@@ -248,7 +255,7 @@ public class DatabaseQuery
 
         if (bindValues_ == null)
         {
-            bindValues_ = new ArrayList<Object>();
+            bindValues_ = new ArrayList<>();
         }
 
         bindValues_.add(bindValue);
@@ -595,7 +602,7 @@ public class DatabaseQuery
         }
         catch (SQLException e)
         {
-            logger.warn("Exception on close: " + Utils.formatExceptionText(e));
+            logger.warn("Exception on close: {}", Utils.formatExceptionText(e));
         }
         finally
         {
@@ -610,7 +617,7 @@ public class DatabaseQuery
             }
             catch (SQLException e)
             {
-                logger.warn("Exception on close: " + Utils.formatExceptionText(e));
+                logger.warn("Exception on close: {}", Utils.formatExceptionText(e));
             }
         }
 

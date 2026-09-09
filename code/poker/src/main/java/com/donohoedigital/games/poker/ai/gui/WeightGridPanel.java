@@ -32,15 +32,19 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.ai.PocketMatrixFloat;
+import com.donohoedigital.games.poker.ai.PocketWeights;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class WeightGridPanel extends AdvisorGridPanel
 {
-    private Color colors_[] = new Color[101];
+    private final Color[] colors_ = new Color[101];
 
     private PokerPlayer player_;
 

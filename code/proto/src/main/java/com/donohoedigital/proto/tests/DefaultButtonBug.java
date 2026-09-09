@@ -38,10 +38,12 @@
 
 package com.donohoedigital.proto.tests;
 
-import javax.swing.*;
-import java.awt.*;
-import javax.swing.event.*;
-import java.awt.event.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -53,7 +55,7 @@ public class DefaultButtonBug implements ActionListener
     /**
      * default button bug test
      */
-    public static void main(String[] args) {
+    static void main() {
         try {
             DefaultButtonBug cursorbug = new DefaultButtonBug();
         }

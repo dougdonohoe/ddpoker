@@ -58,7 +58,7 @@ public class HandStrength
     static Logger logger = LogManager.getLogger(HandStrength.class);
     
     // debug output
-    private static boolean DEBUG = false;
+    private static final boolean DEBUG = false;
     
     // number of straights made by opponents
     private int nNumStraights_ = 0;
@@ -121,11 +121,7 @@ public class HandStrength
 
         if (DEBUG && TESTING(EngineConstants.TESTING_AI_DEBUG))
         {
-            logger.debug("STRENGTH for " + hole +"," + community+ ": " +
-                nAhead + " wins   " +
-                nTied +  " ties   " +
-                nBehind +" lose   " +
-                HandStat.fPerc.form(nStrength));
+            logger.debug("STRENGTH for {},{}: {} wins   {} ties   {} lose   {}", hole, community, nAhead, nTied, nBehind, HandStat.fPerc.form(nStrength));
         }
         return nStrength;
     }
@@ -139,7 +135,7 @@ public class HandStrength
         float nStrength = getStrength(hole, community);
         if (DEBUG && TESTING(EngineConstants.TESTING_AI_DEBUG))
         {
-            logger.debug(" raised to " + nOpponents + ": " + HandStat.fPerc.form(Math.pow(nStrength, nOpponents)));
+            logger.debug(" raised to {}: {}", nOpponents, HandStat.fPerc.form(Math.pow(nStrength, nOpponents)));
         }
         return getStrength(nStrength, nOpponents);
     }
@@ -283,7 +279,7 @@ public class HandStrength
         }
     }
     
-    private static Format fPerc = new Format("%2.1f");
+    private static final Format fPerc = new Format("%2.1f");
     
     /** 
      * figure score for each hand and record wins (ties count as wins)

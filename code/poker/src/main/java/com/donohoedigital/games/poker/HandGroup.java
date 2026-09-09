@@ -32,13 +32,14 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.poker.engine.Card;
 
 import java.io.*;
-import java.util.*;
+import java.util.List;
 
 public class HandGroup extends BaseProfile {
 
@@ -60,7 +61,7 @@ public class HandGroup extends BaseProfile {
 
     private static HandGroup ALL_HANDS = null;
 
-    public synchronized static HandGroup getAllHands()
+    public static synchronized HandGroup getAllHands()
     {
         if (ALL_HANDS == null)
         {
@@ -590,9 +591,9 @@ public String getFileName() {
     {
         String sBreak = "<BR><BR>";
         String sDesc = Utils.encodeHTML(getDescription());
-        return (sDesc != null ? sDesc.replaceAll("\n", "<BR>\n") + sBreak : "") +
+        return (sDesc != null ? sDesc.replace("\n", "<BR>\n") + sBreak : "") +
                 "<DIV>" +
-                "<DDHANDGROUP CARDS=\"" + getSummary().replaceAll(" ", "") + "\">" +
+                "<DDHANDGROUP CARDS=\"" + getSummary().replace(" ", "") + "\">" +
                 "</DIV>";
     }
 
@@ -626,7 +627,7 @@ public String getFileName() {
     {
         group.clearContents();
         group.setStrength(strength);
-        String items[] = hands.split(",");
+        String[] items = hands.split(",");
         for (String item : items)
         {
             int rank1 = Card.getRank(item.charAt(0));
@@ -723,7 +724,7 @@ public String getFileName() {
 
         if (s != null)
         {
-            String v[] = s.split("\\|");
+            String[] v = s.split("\\|");
             parse(this, v[0], Integer.parseInt(v[1]));
         }
     }
@@ -739,7 +740,7 @@ public String getFileName() {
 
         if (getClassCount() > 0)
         {
-            map_.setString("hands", getSummary().replaceAll(" ", "") + "|" + Integer.toString(getStrength()));
+            map_.setString("hands", getSummary().replace(" ", "") + "|" + Integer.toString(getStrength()));
         }
         else
         {

@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.PropertyConfig;
 
-import java.io.*;
-import java.lang.reflect.*;
+import java.io.File;
+import java.lang.reflect.Constructor;
 
 /**
  * Created by IntelliJ IDEA.
@@ -142,7 +143,7 @@ public class GameStateFactory
      * get class
      */
     @SuppressWarnings({"unchecked"})
-    private synchronized static Class<? extends GameState> getClazz()
+    private static synchronized Class<? extends GameState> getClazz()
     {
         if (CLAZZ == null)
         {

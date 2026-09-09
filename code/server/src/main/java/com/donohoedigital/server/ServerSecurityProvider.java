@@ -32,11 +32,14 @@
  */
 package com.donohoedigital.server;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
 
-import java.net.*;
-import java.security.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.MessageDigest;
 
 /**
  * Contains information to drive security routines.
@@ -62,8 +65,7 @@ public class ServerSecurityProvider extends com.donohoedigital.base.SecurityProv
         }
         catch (UnknownHostException e)
         {
-            LogManager.getLogger(ServerSecurityProvider.class).warn("ServerSecurityProvider unable to determine ip address: " +
-                                                                e.getMessage());
+            LogManager.getLogger(ServerSecurityProvider.class).warn("ServerSecurityProvider unable to determine ip address: {}", e.getMessage());
             id = Utils.encode("0.0.0.0");
         }
         ID = id;
@@ -87,7 +89,7 @@ public class ServerSecurityProvider extends com.donohoedigital.base.SecurityProv
         md.update(ID);
         md.update(Utils.encode(SecurityUtils.class.getName())); // For backward compatibility.
 
-        byte raw[] = md.digest();
+        byte[] raw = md.digest();
         int rawLength = raw.length;
         int lenDiff = (getEncryptionKeyLength() - rawLength);
 

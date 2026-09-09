@@ -38,8 +38,12 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.games.config.GameAI;
+import com.donohoedigital.games.config.GamePlayer;
+import com.donohoedigital.games.config.Territory;
 
 /**
  *
@@ -49,7 +53,7 @@ import com.donohoedigital.games.config.*;
 public abstract class EngineGameAI extends GameAI
 {
     protected GamePlayer gamePlayer_;
-    protected Territory my_[];
+    protected Territory[] my_;
     protected int myNum_ = 0;
 
     /** 
@@ -93,7 +97,7 @@ public abstract class EngineGameAI extends GameAI
      */
     protected void determineMyTerritories()
     {
-        Territory ts[] = Territory.getTerritoryArrayCached();
+        Territory[] ts = Territory.getTerritoryArrayCached();
         myNum_ = 0;
         for (int i = 0; i < ts.length; i++)
         {

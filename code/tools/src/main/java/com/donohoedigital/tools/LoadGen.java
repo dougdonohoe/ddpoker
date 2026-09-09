@@ -32,12 +32,20 @@
  */
 package com.donohoedigital.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.server.ServletDebug;
 
 import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * * Class to test performance of a website.
@@ -173,11 +181,11 @@ public class LoadGen
     /**
      * * It all happens here
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         //String urlFile;
         String outFile;
-        List<URLSpec[]> vURLSpecs = new ArrayList<URLSpec[]>();
+        List<URLSpec[]> vURLSpecs = new ArrayList<>();
 
         setupCommandLineOptions();
         CommandLine.parseArgs(args);
@@ -230,7 +238,7 @@ public class LoadGen
         long time1 = System.currentTimeMillis();
 
         // Get ready to start threads
-        URLSpec urlspecs[];
+        URLSpec[] urlspecs;
         String sSessionName;
         int nSessions = vURLSpecs.size();
         UrlRunner[] runners = new UrlRunner[nThreads * nSessions];
@@ -365,7 +373,7 @@ public class LoadGen
      * <p/>
      * TODO: allow specification of sleep time (not implemented yet)
      */
-    private static URLSpec[] readFile(String saArgs[], int index)
+    private static URLSpec[] readFile(String[] saArgs, int index)
     {
         String sFile = saArgs[index];
         File file = new File(sFile);
@@ -375,7 +383,7 @@ public class LoadGen
             System.exit(-1);
         }
 
-        List<String> vURLs = new ArrayList<String>();
+        List<String> vURLs = new ArrayList<>();
 
         try
         {
@@ -407,7 +415,7 @@ public class LoadGen
         }
 
         int nSize = vURLs.size();
-        URLSpec specs[] = new URLSpec[nSize];
+        URLSpec[] specs = new URLSpec[nSize];
         for (int i = 0; i < nSize; i++)
         {
             specs[i] = new URLSpec(vURLs.get(i), 0);
@@ -433,7 +441,7 @@ public class LoadGen
     private static class UrlRunner extends Thread
     {
         String sThreadName;
-        URLSpec urlspecs[];
+        URLSpec[] urlspecs;
         int loop;
         int loopstart;
         int nCount = 0;
@@ -478,7 +486,7 @@ public class LoadGen
             return errors;
         }
 
-        public UrlRunner(String sName, int n, URLSpec urls[], int l)
+        public UrlRunner(String sName, int n, URLSpec[] urls, int l)
         {
             name = sName;
             sThreadName = fString.form(sName + " T" + (n + 1));
@@ -657,8 +665,8 @@ public class LoadGen
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("content-type", sPostContentType);
                     OutputStream o = conn.getOutputStream();
-                    o.write(sPost.getBytes());
-                    o.write("\n".getBytes()); // for War!
+                    o.write(sPost.getBytes(StandardCharsets.UTF_8));
+                    o.write("\n".getBytes(StandardCharsets.UTF_8)); // for War!
                     o.close();
                 }
 

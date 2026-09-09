@@ -39,11 +39,10 @@
 package com.donohoedigital.proto.tests;
 
 import javax.swing.*;
-import java.awt.*;
-import javax.swing.ImageIcon;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  *
@@ -54,7 +53,7 @@ public class ItalicBug
     /**
      * cursor bug test
      */
-    public static void main(String[] args) {
+    static void main() {
         
         try {
             ItalicBug cursorbug = new ItalicBug();
@@ -74,7 +73,7 @@ public class ItalicBug
     {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         panel.setLayout(new BorderLayout());
         
         JLabel label = new JLabel("Lucida Sans Regular - italic - 32");

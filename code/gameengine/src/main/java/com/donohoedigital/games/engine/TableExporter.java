@@ -32,12 +32,13 @@
  */
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.gui.DDTable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.TypedHashMap;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,8 +51,8 @@ public class TableExporter implements DDTable.Exporter
 {
     static Logger logger = LogManager.getLogger(TableExporter.class);
 
-    private GameContext context_;
-    private String sName_;
+    private final GameContext context_;
+    private final String sName_;
     
     public TableExporter(GameContext context, String sName)
     {
@@ -68,7 +69,7 @@ public class TableExporter implements DDTable.Exporter
         if (oResult != null && oResult instanceof File)
         {
             File file = (File) oResult;
-            logger.info("Exporting table to " + file.getAbsolutePath());
+            logger.info("Exporting table to {}", file.getAbsolutePath());
             ConfigUtils.writeFile((File)oResult, table.toCSV(true), false);
         }
 

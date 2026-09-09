@@ -46,10 +46,16 @@ import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.comms.EngineMessage;
 import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -58,7 +64,7 @@ import java.awt.event.ActionListener;
  */
 public abstract class SendMessageDialog extends DialogPhase implements DDMessageListener, ActionListener
 {
-    private static Logger sLogger = LogManager.getLogger(SendMessageDialog.class);
+    private static final Logger sLogger = LogManager.getLogger(SendMessageDialog.class);
 
     // params
     public static final String PARAM_SLEEP_MILLIS = "sleep";
@@ -373,7 +379,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
             nStatus_ != DDMessageListener.STATUS_OK &&
             nStatus_ != DDMessageListener.STATUS_APPL_ERROR)
         {
-            sLogger.warn("Ignoring error [" + nStatus_ + "]: " + errors_[nStatus_]);
+            sLogger.warn("Ignoring error [{}]: {}", nStatus_, errors_[nStatus_]);
             if (nStatus_ == DDMessageListener.STATUS_SERVER_ERROR ||
                 nStatus_ == DDMessageListener.STATUS_UNKNOWN_ERROR)
             {
@@ -381,7 +387,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
 
                 if (sMsg != null)
                 {
-                    sLogger.warn("Details: " + sMsg);
+                    sLogger.warn("Details: {}", sMsg);
                 }
             }
             updateStep(DDMessageListener.STEP_DONE);
@@ -409,23 +415,13 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
                 // otherwise, message has been received
                 // sleep in sep thread before generating remove dialog event
                 Thread tWait = new Thread(
-                        new Runnable()
-                        {
-                            public void run()
-                            {
-                                Utils.sleepMillis(nSleep_);
-                                // need to invoke later so happens from swing thread
-                                SwingUtilities.invokeLater(
-                                        new Runnable()
-                                        {
-                                            public void run()
-                                            {
-                                                removeDialog();
-                                            }
-                                        }
-                                );
-                            }
-                        }, "SendMessageDialog"
+                    () -> {
+                        Utils.sleepMillis(nSleep_);
+                        // need to invoke later so happens from swing thread
+                        SwingUtilities.invokeLater(
+                            this::removeDialog
+                        );
+                    }, "SendMessageDialog"
                 );
                 tWait.start();
             }
@@ -609,20 +605,15 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
     /**
      * handle scrolling
      */
-    private static Point ptop = new Point(0, 0);
+    private static final Point ptop = new Point(0, 0);
 
     protected void _setStatusText(String sText)
     {
         status_.setText(sText);
 
         SwingUtilities.invokeLater(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        statusScroll_.getViewport().setViewPosition(ptop);
-                    }
-                }
+            () ->
+                statusScroll_.getViewport().setViewPosition(ptop)
         );
     }
 

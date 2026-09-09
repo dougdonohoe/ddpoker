@@ -40,13 +40,22 @@ package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.base.Base64;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.*;
-import java.nio.channels.*;
-import java.util.*;
+import java.nio.channels.ClosedByInterruptException;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * Simple client to use in messaging architecture, handles DNS timeout
@@ -282,7 +291,7 @@ public class DDHttpClient
             if (options_.sUsername != null && options_.sPassword != null)
             {
                 String sEncode = options_.sUsername + ':' + options_.sPassword;
-                sEncode = Base64.encodeBytes(sEncode.getBytes());
+                sEncode = Base64.encodeBytes(sEncode.getBytes(StandardCharsets.UTF_8));
                 sb.append("Authorization: Basic ").append(sEncode).append(CRLF);
             }
 
@@ -460,12 +469,12 @@ public class DDHttpClient
     {
         sc_.close();
     }
-    
+
     /**
      * Class to look up a host in a thread so
      * we can timeout if takes too long
      */
-    private static class LookupHost implements Runnable
+    private static final class LookupHost implements Runnable
     {
         String host;
         InetAddress addr = null;

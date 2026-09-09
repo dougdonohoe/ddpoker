@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.games.poker.service.helper;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.MatchingResources;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -51,8 +55,8 @@ public class DisallowedManager
 {
 
     private static final String DISALLOWED_PATTERN_PREFIX = ":";
-    private static final List<String> disallowedContains = new ArrayList<String>();
-    private static final List<Pattern> disallowedPatterns = new ArrayList<Pattern>();
+    private static final List<String> disallowedContains = new ArrayList<>();
+    private static final List<Pattern> disallowedPatterns = new ArrayList<>();
 
     public DisallowedManager()
     {

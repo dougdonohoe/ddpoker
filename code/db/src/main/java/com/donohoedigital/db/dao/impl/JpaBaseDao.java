@@ -54,7 +54,7 @@ import java.util.List;
 public abstract class JpaBaseDao<T extends BaseModel<ID>, ID extends Serializable> implements BaseDao<T, ID>
 {
     // the model class we are managing
-    private Class<T> persistentModelClass;
+    private final Class<T> persistentModelClass;
 
     // entity manager provided via Spring
     protected EntityManager entityManager;
@@ -306,7 +306,7 @@ public abstract class JpaBaseDao<T extends BaseModel<ID>, ID extends Serializabl
         }
 
         // return all results
-        PagedList<T> list = new PagedList<T>(results);
+        PagedList<T> list = new PagedList<>(results);
         list.setTotalSize(count);
 
         return list;

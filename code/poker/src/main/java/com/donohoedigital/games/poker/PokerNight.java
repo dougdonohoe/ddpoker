@@ -48,7 +48,7 @@ import com.donohoedigital.games.poker.model.TournamentProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -205,16 +205,12 @@ public class PokerNight extends BasePhase implements GameClockListener
 
                     // show message
                     SwingUtilities.invokeLater(
-                            new Runnable()
-                            {
-                                public void run()
-                                {
-                                    AudioConfig.playFX("attention");
-                                    TypedHashMap params = new TypedHashMap();
-                                    params.setString(DisplayMessage.PARAM_MESSAGE, sMsg);
-                                    context_.processPhaseNow("PokerNightMessage", params);
-                                }
-                            });
+                        () -> {
+                            AudioConfig.playFX("attention");
+                            TypedHashMap params = new TypedHashMap();
+                            params.setString(DisplayMessage.PARAM_MESSAGE, sMsg);
+                            context_.processPhaseNow("PokerNightMessage", params);
+                        });
                 }
                 else
                 {

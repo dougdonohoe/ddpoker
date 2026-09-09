@@ -38,16 +38,21 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 /**
  * @author Doug Donohoe
@@ -128,13 +133,8 @@ public class GameOver extends DialogPhase
                                                bOnline_ ? PokerUtils.DEMO_LIMIT_ONLINE : PokerUtils.DEMO_LIMIT);
 
             GlassButton order = new GlassButton("order", "Glass");
-            order.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    context_.processPhase("Order");
-                }
-            });
+            order.addActionListener(e ->
+                context_.processPhase("Order"));
             back_.getButtonBox().addButton(order);
             removeMatchingButton("yesWatch");
         }

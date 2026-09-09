@@ -32,21 +32,22 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.ai.PlayerType;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OpponentMixPanel extends DDTabPanel
 {
     private ListPanel typesList_;
-    private TournamentProfile profile_;
+    private final TournamentProfile profile_;
 
     public OpponentMixPanel(TournamentProfile profile)
     {
@@ -58,7 +59,7 @@ public class OpponentMixPanel extends DDTabPanel
         String sStyle = "OptionsDialog";
 
         List<BaseProfile> listItems = PlayerType.getProfileList();
-        List<TypeListItem> typeItems = new ArrayList<TypeListItem>();
+        List<TypeListItem> typeItems = new ArrayList<>();
 
         Collections.sort(listItems);
 
@@ -127,13 +128,8 @@ public class OpponentMixPanel extends DDTabPanel
             fPercent_.setBigStep(10);
             addMouseListeners(fPercent_); // add manually since not in hierarchy when panel created
             fPercent_.addChangeListener(
-                new ChangeListener()
-                {
-                    public void stateChanged(ChangeEvent e)
-                    {
-                        percentValueChanged();
-                    }
-                }
+                e ->
+                    percentValueChanged()
             );
 
             addMouseWheelListener(fPercent_.getTextField());

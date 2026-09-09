@@ -38,12 +38,19 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.net.*;
-import java.text.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -51,7 +58,7 @@ import java.util.*;
  */
 public class PropertyConfig extends Properties
 {
-    private static Logger logger = LogManager.getLogger(PropertyConfig.class);
+    private static final Logger logger = LogManager.getLogger(PropertyConfig.class);
 
     // config file names
     private static final String PROPS_CONFIG_COMMON = "common.properties";
@@ -63,7 +70,7 @@ public class PropertyConfig extends Properties
     private static PropertyConfig propConfig = null;
 
     // testing - don't throw missing exceptions
-    private static boolean testing = false;
+    private static final boolean testing = false;
 
     /**
      * Creates a new instance of PropertyConfig from the Appconfig file
@@ -137,7 +144,7 @@ public class PropertyConfig extends Properties
             File override = new File(userdir, "testing.properties");
             if (override.exists())
             {
-                logger.info("Loading testing overrides from " + override.getPath());
+                logger.info("Loading testing overrides from {}", override.getPath());
                 FileInputStream stream = ConfigUtils.getFileInputStream(override);
                 try
                 {
@@ -181,7 +188,7 @@ public class PropertyConfig extends Properties
         // log if doing overrides
         if (bOverride)
         {
-            logger.info("Loading local overrides from " + file.getPath());
+            logger.info("Loading local overrides from {}", file.getPath());
         }
 
         //logger.debug("Loading: " + props);
@@ -209,7 +216,7 @@ public class PropertyConfig extends Properties
     @SuppressWarnings({"unchecked"})
     public Map<String, String> getMatching(String sStartsWith)
     {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         Enumeration<String> enumer = (Enumeration<String>) propertyNames();
         while (enumer.hasMoreElements())
         {
@@ -317,7 +324,7 @@ public class PropertyConfig extends Properties
         String sValue = getStringProperty(sKey);
         if (sValue == null)
         {
-            logger.error("Property value not found for: '" + sKey + '\'');
+            logger.error("Property value not found for: '{}'", sKey);
         }
         return sValue;
     }
@@ -357,7 +364,7 @@ public class PropertyConfig extends Properties
         {
             if (!sKey.contains("default"))
             {
-                logger.warn("Property value not found for: '" + sKey + '\'');
+                logger.warn("Property value not found for: '{}'", sKey);
             }
         }
 
@@ -370,7 +377,7 @@ public class PropertyConfig extends Properties
     }
 
     // cache formats
-    private static final Map<String, MessageFormat> formats_ = new HashMap<String, MessageFormat>();
+    private static final Map<String, MessageFormat> formats_ = new HashMap<>();
 
     /**
      * Get a message and insert the params into it (params replaced
@@ -466,8 +473,8 @@ public class PropertyConfig extends Properties
     }
 
     // store locales
-    private static final Map<String, SimpleDateFormat> dates_ = new HashMap<String, SimpleDateFormat>();
-    private static final Map<String, Locale> locales_ = new HashMap<String, Locale>();
+    private static final Map<String, SimpleDateFormat> dates_ = new HashMap<>();
+    private static final Map<String, Locale> locales_ = new HashMap<>();
 
     /**
      * get date format (msg.format.datetime key)

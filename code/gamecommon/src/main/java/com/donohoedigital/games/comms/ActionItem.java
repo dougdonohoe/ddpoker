@@ -39,11 +39,16 @@
 package com.donohoedigital.games.comms;
 
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.DataCoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  *
@@ -246,16 +251,14 @@ public class ActionItem extends DMTypedHashMap
         if (l == null)
         {
             // BUG 199 - don't throw exception.  Log error and return false.
-            logger.warn("Setting player acted, but player not part of this action: " + 
-                                    id + "(action " + getActionID() +")");
+            logger.warn("Setting player acted, but player not part of this action: {}(action {})", id, getActionID());
             return false;
         }
         
         if (!l.equals(INIT_LONG))
         {
             // BUG 199 - don't throw exception.  Log error and return false.
-            logger.warn("Setting player acted, but player already acted " +
-                                    id + "(action " + getActionID() +")");
+            logger.warn("Setting player acted, but player already acted {}(action {})", id, getActionID());
             return false;
         }
         setLong(sId, Utils.getCurrentTimeStamp());

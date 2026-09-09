@@ -43,8 +43,8 @@ public class OpponentModel
 {
     int handsPlayed;
 
-    FloatTracker tightness[] = new FloatTracker[6];
-    FloatTracker aggression[] = new FloatTracker[6];
+    FloatTracker[] tightness = new FloatTracker[6];
+    FloatTracker[] aggression = new FloatTracker[6];
 
     BooleanTracker handsPaid;
     BooleanTracker handsLimped;

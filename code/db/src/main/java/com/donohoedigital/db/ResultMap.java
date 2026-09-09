@@ -32,20 +32,21 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DMTypedHashMap;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Contains query results whose values are set according to the current result row.
  */
 public class ResultMap extends DMTypedHashMap
 {
-    private DatabaseQuery query_ = null;
-    private ResultSet rs_ = null;
+    private final DatabaseQuery query_ = null;
+    private final ResultSet rs_ = null;
 
-    private int index_ = 0;
-    private int count_ = -1;
+    private final int index_ = 0;
+    private final int count_ = -1;
 
     /**
      * Retrieve the next row and store the results.

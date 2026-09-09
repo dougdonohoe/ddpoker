@@ -32,13 +32,14 @@
  */
 package com.donohoedigital.games.server.service;
 
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.server.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.model.util.*;
-import org.springframework.transaction.annotation.*;
+import com.donohoedigital.db.PagedList;
+import com.donohoedigital.games.server.RegDayOfYearCount;
+import com.donohoedigital.games.server.RegHourCount;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.model.util.RegInfo;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

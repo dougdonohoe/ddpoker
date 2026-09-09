@@ -38,9 +38,10 @@
 
 package com.donohoedigital.games.comms;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DataCoder;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * @author donohoe

@@ -110,7 +110,7 @@ public class Aliases extends VoidPanel
      * the aliases for a newly retired player (e.g., - where did "xyz" go?)
      */
 
-    private class AliasModel extends LoadableDetachableModel<List<OnlineProfile>>
+    private final class AliasModel extends LoadableDetachableModel<List<OnlineProfile>>
     {
         PokerUser user;
         private static final long serialVersionUID = 42L;
@@ -128,7 +128,7 @@ public class Aliases extends VoidPanel
         @Override
         protected List<OnlineProfile> load()
         {
-            if (user == null) return new ArrayList<OnlineProfile>();
+            if (user == null) return new ArrayList<>();
 
             return profileService.getAllOnlineProfilesForEmail(user.getEmail(), user.getName());
         }

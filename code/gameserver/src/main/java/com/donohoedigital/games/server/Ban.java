@@ -38,17 +38,23 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.service.*;
-import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.games.server.model.BannedKey;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.text.*;
-import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Doug Donohoe
@@ -69,7 +75,7 @@ public class Ban
     /**
      * Implements command line application interface.
      */
-    private static class BanApp extends BaseCommandLineApp
+    private static final class BanApp extends BaseCommandLineApp
     {
         private BanApp(String sConfigName, String[] args)
         {
@@ -98,7 +104,7 @@ public class Ban
     /**
      * Run analyzer
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try
         {

@@ -37,8 +37,8 @@ package com.donohoedigital.xml;
  */
 public class EncoderObject
 {
-    private Object object;
-    private String alias;
+    private final Object object;
+    private final String alias;
 
     public EncoderObject(Object object, String alias)
     {

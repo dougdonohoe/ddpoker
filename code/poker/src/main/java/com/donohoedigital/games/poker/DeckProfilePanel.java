@@ -38,18 +38,25 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.config.ImageDef;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.ProfileList;
+import com.donohoedigital.games.poker.engine.Card;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,9 +70,9 @@ public class DeckProfilePanel extends DDPanel implements ChangeListener
     private static final String COMMON_NAME = "deckback";
     public static final String DECK_PROFILE = "deck";
 
-    private DDLabelBorder displayBorder_;
-    private ProfileList profileList_;
-    private DeckCardPanel card_;
+    private final DDLabelBorder displayBorder_;
+    private final ProfileList profileList_;
+    private final DeckCardPanel card_;
         
     /** 
      * Get component with options, also fill array with same options

@@ -32,14 +32,17 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.dashboard.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.DialogPhase;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.dashboard.HostDash;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.Dimension;
 
 /**
  * Created by IntelliJ IDEA.
@@ -71,12 +74,8 @@ public class HostPauseDialog extends DialogPhase
     {
         if (impl_ != null && impl_.bAutoClose_)
         {
-            GuiUtils.invoke(new Runnable() {
-                public void run()
-                {
-                    impl_.removeDialog();
-                }
-            });
+            GuiUtils.invoke(() ->
+                impl_.removeDialog());
         }
     }
 

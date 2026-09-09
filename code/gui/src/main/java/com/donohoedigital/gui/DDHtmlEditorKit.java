@@ -37,17 +37,21 @@
  */
 package com.donohoedigital.gui;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.ConfigUtils;
 
-import javax.swing.text.*;
-import javax.swing.text.html.*;
-import java.util.*;
+import javax.swing.text.Element;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.View;
+import javax.swing.text.ViewFactory;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
+import java.util.HashMap;
 
 public class DDHtmlEditorKit extends HTMLEditorKit 
 {
     private StyleSheet sheet_ = null;
 
-    private static HashMap hmTagViewClasses_ = new HashMap();
+    private static final HashMap hmTagViewClasses_ = new HashMap();
 
     static
     {
@@ -72,7 +76,7 @@ public class DDHtmlEditorKit extends HTMLEditorKit
     
     public static class HTMLFactoryX extends HTMLFactory
     {
-        Class ctorArgs_[] = new Class[] { Element.class };
+        Class[] ctorArgs_ = new Class[] { Element.class };
 
         public View create(Element elem)
         {

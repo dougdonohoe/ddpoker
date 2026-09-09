@@ -32,12 +32,14 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.logging.log4j.*;
-import org.springframework.core.io.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.Resource;
 
-import java.lang.annotation.*;
-import java.net.*;
-import java.util.*;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.net.URL;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,7 +62,7 @@ public class MatchingResourcesTest
         URL[] match = mr.getAllMatchesURL();
         assertTrue(match.length == 1);
 
-        logger.info("URL: " + match[0]);
+        logger.info("URL: {}", match[0]);
         assertTrue(mr.getURL(null) == null);
 
         Resource[] none = new MatchingResources("classpath*:com/donohoedigital/config/NoSuchFile.class").getAllMatches();
@@ -81,7 +83,7 @@ public class MatchingResourcesTest
         }
         catch (Exception ae)
         {
-            logger.debug("Expected exception: " + ae.getMessage());
+            logger.debug("Expected exception: {}", ae.getMessage());
         }
 
         // test multiple matches
@@ -92,7 +94,7 @@ public class MatchingResourcesTest
         }
         catch (Exception ae)
         {
-            logger.debug("Expected exception: " + ae.getMessage());
+            logger.debug("Expected exception: {}", ae.getMessage());
         }
 
     }
@@ -103,7 +105,7 @@ public class MatchingResourcesTest
         MatchingResources mr = new MatchingResources("classpath*:com/donohoedigital/config/*.class");
         assertTrue(mr.getAllMatches().length > 0);
 
-        logger.info("URLs:\n" + mr);
+        logger.info("URLs:\n{}", mr);
     }
 
     @Retention(RetentionPolicy.RUNTIME)

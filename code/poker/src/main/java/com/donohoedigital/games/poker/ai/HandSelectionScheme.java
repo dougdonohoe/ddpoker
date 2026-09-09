@@ -32,14 +32,16 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.poker.HandGroup;
+import com.donohoedigital.games.poker.engine.Hand;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HandSelectionScheme extends BaseProfile
 {
@@ -64,7 +66,7 @@ public class HandSelectionScheme extends BaseProfile
     {
         super(sName);
         map_ = new DMTypedHashMap();
-        handgroups_ = new ArrayList<HandGroup>();
+        handgroups_ = new ArrayList<>();
     }
 
     /**
@@ -141,7 +143,7 @@ public class HandSelectionScheme extends BaseProfile
     {
         if (handgroups_ == null)
         {
-            handgroups_ = new ArrayList<HandGroup>();
+            handgroups_ = new ArrayList<>();
         }
         else
         {
@@ -154,7 +156,7 @@ public class HandSelectionScheme extends BaseProfile
         while ((s = map_.getString("hands" + i)) != null)
         {
             i++;
-            String v[] = s.split("\\|");
+            String[] v = s.split("\\|");
             handgroups_.add(HandGroup.parse(v[0], Integer.parseInt(v[1])));
         }
     }
@@ -175,7 +177,7 @@ public class HandSelectionScheme extends BaseProfile
             HandGroup group = handgroups_.get(i);
 
             if (group.getClassCount() > 0) {
-                map_.setString("hands" + i, group.getSummary().replaceAll(" ", "") + "|" + Integer.toString(group.getStrength()));
+                map_.setString("hands" + i, group.getSummary().replace(" ", "") + "|" + Integer.toString(group.getStrength()));
             }
         }
 
@@ -249,7 +251,7 @@ public class HandSelectionScheme extends BaseProfile
         String sDesc = getDescription();
         if (sDesc != null)
         {
-            buf.append(Utils.encodeHTML(sDesc).replaceAll("\n", "<BR>\n"));
+            buf.append(Utils.encodeHTML(sDesc).replace("\n", "<BR>\n"));
             buf.append("<BR>");
         }
 

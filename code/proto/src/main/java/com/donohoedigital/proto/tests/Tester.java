@@ -46,7 +46,7 @@ public class Tester
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    static void main() {
 
 //        536870912 SEEDADJ: 592130587
 //        11:24.158 [TournamentDirector-0] DEBUG SEED: 1073741824 SEEDADJ: 597617150

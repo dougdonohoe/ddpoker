@@ -45,7 +45,7 @@ import com.donohoedigital.games.poker.engine.PokerConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;
 
@@ -95,12 +95,8 @@ public class ColorUp extends ChainPhase
             PokerUtils.getPokerGameboard().repaintAll();
 
             // do rest after repaint occurs
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run()
-                {
-                    nextPhase();
-                }
-            });
+            SwingUtilities.invokeLater(() ->
+                nextPhase());
         }
         else
         {

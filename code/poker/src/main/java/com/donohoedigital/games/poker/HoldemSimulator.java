@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.gui.DDProgressFeedback;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.math.*;
-import java.util.*;
+import java.math.BigInteger;
+import java.util.List;
 
 public class HoldemSimulator
 {
@@ -331,7 +334,7 @@ public class HoldemSimulator
 
         if (deckSize != deck.size())
         {
-            logger.warn("Deck size mismatch in simulator!  Before, size was " + deckSize + ", after size was " + deck.size());
+            logger.warn("Deck size mismatch in simulator!  Before, size was {}, after size was {}", deckSize, deck.size());
         }
 
         return new StatResult(hole, list, win, lose, tie);
@@ -505,7 +508,7 @@ public class HoldemSimulator
         PokerTable table = hhand.getTable();
         PokerPlayer player;
 
-        Hand hands[] = new Hand[10];
+        Hand[] hands = new Hand[10];
 
         for (int seat = 0; seat < 10; ++seat)
         {
@@ -632,7 +635,7 @@ public class HoldemSimulator
         // safety check
         if (deckSize != deck.size())
         {
-            logger.warn("Deck size mismatch in simulator!  Before, size was " + deckSize + ", after size was " + deck.size());
+            logger.warn("Deck size mismatch in simulator!  Before, size was {}, after size was {}", deckSize, deck.size());
         }
 
         // calc total at end
@@ -753,7 +756,7 @@ public class HoldemSimulator
         IndexKeeper ik = new IndexKeeper();
         HandInfoFaster fast = new HandInfoFaster();
         Deck deck = new Deck(false);
-        StatResult results[] = new StatResult[hands.length];
+        StatResult[] results = new StatResult[hands.length];
 
         // remove dealt cards from deck
         for (int i = 0; i < results.length; i++)
@@ -764,7 +767,7 @@ public class HoldemSimulator
         deck.removeCards(community);
 
         // create array of all hands plus community at end
-        Hand allhands[] = new Hand[hands.length + 1];
+        Hand[] allhands = new Hand[hands.length + 1];
         System.arraycopy(hands, 0, allhands, 0, hands.length);
         allhands[hands.length] = community;
 
@@ -794,7 +797,7 @@ public class HoldemSimulator
     /**
      * recursive algorithm to iterate through all combinations
      */
-    private static void iterate(HandInfoFaster fast, StatResult results[],
+    private static void iterate(HandInfoFaster fast, StatResult[] results,
                                 Deck deck, Hand[] allhands,
                                 DDProgressFeedback progress,
                                 IndexKeeper ik, int nDeckStartIdx)
@@ -861,8 +864,8 @@ public class HoldemSimulator
         }
     }
 
-    private static int DONE = -2;
-    private static int INIT = -1;
+    private static final int DONE = -2;
+    private static final int INIT = -1;
 
     private static class IndexKeeper
     {
@@ -873,7 +876,7 @@ public class HoldemSimulator
         int updateResultsInterval = 50000;
         int updateBarInterval = 10000;
 
-        void nextIndex(Hand allhands[])
+        void nextIndex(Hand[] allhands)
         {
             if (nHandIdx == INIT)
             {
@@ -887,7 +890,7 @@ public class HoldemSimulator
             }
         }
 
-        private void nextHand(Hand allhands[])
+        private void nextHand(Hand[] allhands)
         {
             while (true)
             {
@@ -908,7 +911,7 @@ public class HoldemSimulator
         /**
          * return true if index incremented and still in current hand
          */
-        private boolean nextCard(Hand allhands[])
+        private boolean nextCard(Hand[] allhands)
         {
             Card c;
             boolean bDone = false;

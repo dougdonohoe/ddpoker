@@ -38,9 +38,9 @@
 
 package com.donohoedigital.games.config;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.TypedHashMap;
 
-import java.util.*;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -53,7 +53,7 @@ public class GameButton extends TypedHashMap
     public static final String PARAM_GENERIC = "generic";
     public static final String DELIM = ":";
     
-    private String sName_; 
+    private final String sName_; 
     private String sGotoPhase_;
     private String sParam_;
 

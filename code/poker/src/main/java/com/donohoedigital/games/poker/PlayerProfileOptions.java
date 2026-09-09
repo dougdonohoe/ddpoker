@@ -38,23 +38,31 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.games.poker.ai.PlayerType;
+import com.donohoedigital.games.poker.model.TournamentHistory;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Collections;
 import java.util.List;
-import java.text.*;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -184,11 +192,11 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
     {
         return new PlayerProfileList(engine, context, PROFILE_NAME);
     }
-    
+
     /**
      * Our list editor
      */
-    private static class PlayerProfileList extends ProfileList
+    private static final class PlayerProfileList extends ProfileList
     {
         private PlayerProfileList(GameEngine engine, GameContext context, String sMsgName)
         {
@@ -300,8 +308,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
 
                     if (sCmdlineOverride != null && p.getName().equalsIgnoreCase(sCmdlineOverride))
                     {
-                        logger.debug("Using profile "+sCmdlineOverride+" instead of default "+(
-                                     default_ == null ? "[null]" : default_.getName()));
+                        logger.debug("Using profile {} instead of default {}", sCmdlineOverride, (
+                            default_ == null ? "[null]" : default_.getName()));
                         choose = p;
                         break;
                     }
@@ -482,8 +490,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
                                          formatter.format(hist.getEndDate())
         );
     }
-    
-    private class DeleteButton extends GlassButton implements ActionListener
+
+    private final class DeleteButton extends GlassButton implements ActionListener
     {
         int nIndex_;
 
@@ -505,8 +513,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
             }
         }
     }
-    
-    private class DeleteAllButton extends GlassButton implements ActionListener
+
+    private final class DeleteAllButton extends GlassButton implements ActionListener
     {
         private DeleteAllButton()
         {

@@ -32,8 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.plaf.basic.*;
-import java.awt.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Insets;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,11 +48,11 @@ import java.awt.*;
  */
 public class DDSplitPaneDivider extends BasicSplitPaneDivider
 {
-    private DDSplitPane split_;
+    private final DDSplitPane split_;
 
-    private DDMetalBumps ddbumps_;
+    private final DDMetalBumps ddbumps_;
     private Color thumbColor;
-    private int inset = 2;
+    private final int inset = 2;
 
     public DDSplitPaneDivider(BasicSplitPaneUI ui, DDSplitPane split)
     {

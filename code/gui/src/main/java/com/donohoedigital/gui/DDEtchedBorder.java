@@ -38,10 +38,10 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.StylesConfig;
 
-import javax.swing.border.*;
-import java.awt.*;
+import javax.swing.border.EtchedBorder;
+import java.awt.Color;
 
 /**
  *

@@ -32,22 +32,28 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.ai.HandSelectionScheme;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.gui.DDButton;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.Collections;
 import java.util.List;
 
 public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyListener, FocusListener
 {
     //static Logger logger = LogManager.getLogger(HandGroupGridPanel.class);
 
-    private HandButton handButtons[][] = new HandButton[Card.ACE + 1][Card.ACE + 1];
+    private HandButton[][] handButtons = new HandButton[Card.ACE + 1][Card.ACE + 1];
     private DDLabel summaryLabel_;
 
     private HandGroup group_ = null;
@@ -391,8 +397,8 @@ public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyLi
             setBorderGap(0, 0, 0, 0);
             setIsToggle(true);
             setFocusPainted(false);
-            setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
-            setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.EMPTY_SET);
+            setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, Collections.emptySet());
+            setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, Collections.emptySet());
             addKeyListener(HandGroupGridPanel.this);
             addFocusListener(HandGroupGridPanel.this);
 

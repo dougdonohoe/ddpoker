@@ -32,21 +32,30 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.event.PokerTableListener;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.TimerTask;
 
 /**
  * Created by IntelliJ IDEA.
@@ -65,7 +74,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
     public static final int NOT_SET = -1;
 
     // members
-    private String sName_;
+    private final String sName_;
     private DashboardHeader header_;
     private JComponent body_;
     private boolean bInDashboard_ = true;
@@ -206,21 +215,11 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
             header_ = new DashboardHeader("DashboardHeader", false);
             header_.setText(getTitle());
             header_.addAncestorListener(this);
-            header_.check_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    setOpen(header_.check_.isSelected());
-                }
-            });
+            header_.check_.addActionListener(e ->
+                setOpen(header_.check_.isSelected()));
 
-            header_.delete_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    setInDashboard(header_.delete_.isSelected());
-                }
-            });
+            header_.delete_.addActionListener(e ->
+                setInDashboard(header_.delete_.isSelected()));
         }
 
         if (body_ == null)
@@ -448,13 +447,8 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
     }
 
     // runnable for invoking table changed event in swing thread
-    private Runnable tableChangedRunner_ = new Runnable()
-    {
-        public void run()
-        {
-            tableChanged(game_.getCurrentTable());
-        }
-    };
+    private final Runnable tableChangedRunner_ = () ->
+        tableChanged(game_.getCurrentTable());
 
     /**
      * Game property changed - we track current table
@@ -481,20 +475,15 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
      * invoke in timer thread (to get out of any locks held by
      * callers like TournamentDirector).
      */
-    private PokerTableListener listener_ = new PokerTableListener()
-    {
-        public void tableEventOccurred(final PokerTableEvent event)
-        {
+    private final PokerTableListener listener_ = event ->
             // run immediately
             timer.schedule(new TableEventTask(event), 0);
-        }
-    };
 
     /**
      * Task for particular poker table event.  When invoked, runs immediately
      * in swing thread using invokeAndWait.
      */
-    private class TableEventTask extends TimerTask
+    private final class TableEventTask extends TimerTask
     {
         private PokerTableEvent event;
 

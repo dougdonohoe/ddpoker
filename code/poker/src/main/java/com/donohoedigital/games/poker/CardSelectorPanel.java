@@ -32,19 +32,28 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.gui.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.gui.ButtonPanel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiManager;
+import com.donohoedigital.gui.ImageComponent;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.CardSuit;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CardSelectorPanel extends DDPanel implements ActionListener
 {
-    CardPiece cardPieces[][] = new CardPiece[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
-    ButtonPanel cardButtons[][] = new ButtonPanel[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
-    ButtonPanel unknownButtons[] = new ButtonPanel[CardSuit.SPADES_RANK + 1];
+    CardPiece[][] cardPieces = new CardPiece[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
+    ButtonPanel[][] cardButtons = new ButtonPanel[CardSuit.SPADES_RANK + 1][Card.ACE + 1];
+    ButtonPanel[] unknownButtons = new ButtonPanel[CardSuit.SPADES_RANK + 1];
 
     private static final int INIT = -9;
     private static final int NONE = -10;

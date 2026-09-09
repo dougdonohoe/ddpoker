@@ -45,26 +45,20 @@ public class SchemaValidate extends DefaultHandler {
     /** Warning. */
     public void warning(SAXParseException ex) {
 
-        result.append("[Warning] "+
-                           getLocationString(ex)+": "+
-                           ex.getMessage() +  " \n");
+        result.append("[Warning] ").append(getLocationString(ex)).append(": ").append(ex.getMessage()).append(" \n");
     }
 
     /** Error. */
     public void error(SAXParseException ex) {
 
-        result.append("[Error] "+
-                           getLocationString(ex)+": "+
-                           ex.getMessage() + " " + "\n");
+        result.append("[Error] ").append(getLocationString(ex)).append(": ").append(ex.getMessage()).append(" " + "\n");
 //                           "\n at " + Utils.formatExceptionText(new Throwable()) + "\n");
     }
 
     /** Fatal error. */
     public void fatalError(SAXParseException ex) throws SAXException {
 
-        result.append("[Fatal Error] "+
-                           getLocationString(ex)+": "+
-                           ex.getMessage() + " \n");
+        result.append("[Fatal Error] ").append(getLocationString(ex)).append(": ").append(ex.getMessage()).append(" \n");
     }
 
     /** Returns a string of the location. */
@@ -104,7 +98,7 @@ public class SchemaValidate extends DefaultHandler {
     }
 
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Usage: java com.donohoedigital.tools.SchemaValidate <XML file>");
             return;

@@ -48,7 +48,8 @@ import java.util.Enumeration;
 import java.util.Properties;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Created by IntelliJ IDEA.
@@ -59,7 +60,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class Experiments
 {
-    private Logger logger = LogManager.getLogger(Experiments.class);
+    private final Logger logger = LogManager.getLogger(Experiments.class);
 
     @Test
     public void testNullEquals()
@@ -158,7 +159,7 @@ public class Experiments
     public void testEncodeSlash()
     {
         String enc = "><//'>";
-        enc = enc.replaceAll("/", "&#47;");
+        enc = enc.replace("/", "&#47;");
         logger.debug("ENCODE: " + enc);
     }
 

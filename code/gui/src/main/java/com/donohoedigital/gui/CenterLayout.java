@@ -37,9 +37,9 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
+import javax.swing.JScrollPane;
 import java.awt.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  *

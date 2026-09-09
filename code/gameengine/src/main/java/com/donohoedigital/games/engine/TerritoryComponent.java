@@ -38,14 +38,18 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.config.TerritoryPoint;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
+import com.donohoedigital.gui.TextUtil;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.image.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -132,9 +136,9 @@ public class TerritoryComponent extends DDPanel
         }
     }
     
-    private static Font font_ = StylesConfig.getFont("territory.label");
+    private static final Font font_ = StylesConfig.getFont("territory.label");
     // BUG 133 - static (only draw one at a time)
-    private static Rectangle bounds_ = new Rectangle();    
+    private static final Rectangle bounds_ = new Rectangle();    
     
     /**
      * Draw territory the piece belongs to, scaled to size of 

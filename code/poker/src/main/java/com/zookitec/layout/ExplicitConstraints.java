@@ -26,8 +26,8 @@
  
 package com.zookitec.layout;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Component;
+import java.io.Serializable;
 
 /**
  * This class contains expressions that define the location and size of a component.
@@ -604,7 +604,7 @@ public class ExplicitConstraints implements Serializable, Cloneable {
     }
 
     private String infiniteMsg(String attribute, ExplicitLayout layout) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Component [] components;
         int index;
         components = layout.getContainer().getComponents();

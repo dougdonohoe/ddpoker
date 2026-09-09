@@ -38,10 +38,12 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.NamedObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Doug Donohoe
@@ -175,7 +177,7 @@ public class DataElement
 
         if (sDisplayValue == null)
         {
-            logger.warn("WARNING: No display value for " + sName_ + "." + oValue);
+            logger.warn("WARNING: No display value for {}.{}", sName_, oValue);
 
             return oValue.toString();
         }

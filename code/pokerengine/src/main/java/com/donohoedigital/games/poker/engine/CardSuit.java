@@ -32,12 +32,12 @@
  */
 package com.donohoedigital.games.poker.engine;
 
-import com.donohoedigital.config.*;
+import com.donohoedigital.config.PropertyConfig;
 
 /**
  * Global representation of card suits.
  */
-public class CardSuit implements Comparable<CardSuit>
+public final class CardSuit implements Comparable<CardSuit>
 {
     public static final int NUM_SUITS = 4;
 
@@ -54,8 +54,8 @@ public class CardSuit implements Comparable<CardSuit>
     public static final CardSuit HEARTS = new CardSuit(HEARTS_RANK, "heart");
     public static final CardSuit SPADES = new CardSuit(SPADES_RANK, "spade");
 
-    private int rank_;
-    private String name_;
+    private final int rank_;
+    private final String name_;
     private String abbr_;
 
     /**

@@ -32,13 +32,17 @@
  */
 package com.donohoedigital.db;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.*;
-import java.sql.*;
-import java.util.*;
+import java.lang.reflect.Constructor;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provide metadata driven database access.  Associated parameters are stored in <code>server.properties</code>.
@@ -47,7 +51,7 @@ import java.util.*;
  */
 public class DatabaseManager
 {
-    private static Logger logger = LogManager.getLogger(DatabaseManager.class);
+    private static final Logger logger = LogManager.getLogger(DatabaseManager.class);
 
     private static final String PROPERTY_PREFIX = "settings.database.";
 
@@ -62,7 +66,7 @@ public class DatabaseManager
     public static final String PARAM_PASSWORD = "password";
 
     private static boolean initialized_ = false;
-    private static Map<String, Database> hmDatabases_ = new HashMap<String, Database>();
+    private static final Map<String, Database> hmDatabases_ = new HashMap<>();
 
     /**
      * Determine if the manager has been initialized.
@@ -136,7 +140,7 @@ public class DatabaseManager
         database.init();
         hmDatabases_.put(name, database);
 
-        logger.info("Loaded database: " + database);
+        logger.info("Loaded database: {}", database);
     }
 
     /**
@@ -184,7 +188,7 @@ public class DatabaseManager
                 long after = System.currentTimeMillis();
 
                 //noinspection ThrowableInstanceNeverThrown
-                StackTraceElement stack[] = new Throwable().getStackTrace();
+                StackTraceElement[] stack = new Throwable().getStackTrace();
                 StringBuilder buf = new StringBuilder();
 
                 String className;

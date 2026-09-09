@@ -38,11 +38,13 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.PropertyConfig;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *

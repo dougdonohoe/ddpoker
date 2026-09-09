@@ -38,17 +38,12 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.server.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.config.ConfigUtils;
 
-import java.io.*;
-import java.util.*;
-import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 
 /**
  *

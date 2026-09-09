@@ -32,22 +32,33 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.engine.BasePhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.OnlinePlayerInfo;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -242,13 +253,12 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
     {
         if (omsg.getCategory() == OnlineMessage.CAT_CHAT)
         {
-            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT "+omsg.getPlayerName() +" said " + omsg.getChat());
+            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT {} said {}", omsg.getPlayerName(), omsg.getChat());
             chat_.chatReceived(omsg);
         }
         else if (omsg.getCategory() == OnlineMessage.CAT_CHAT_ADMIN)
         {
-            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT admin " + PokerConstants.toStringAdminType(omsg.getChatType()) +
-                                                         (omsg.getChat() != null ? " - "+omsg.getChat() : ""));
+            if (TESTING(EngineConstants.TESTING_UDP_APP)) logger.debug("CHAT admin {}{}", PokerConstants.toStringAdminType(omsg.getChatType()), (omsg.getChat() != null ? " - " + omsg.getChat() : ""));
             switch (omsg.getChatType())
             {
                 case PokerConstants.CHAT_ADMIN_WELCOME:
@@ -266,12 +276,8 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
                 case PokerConstants.CHAT_ADMIN_ERROR:
                     // alter chat window
                     SwingUtilities.invokeLater(
-                        new Runnable() {
-                            public void run()
-                            {
-                                chat_.removeBottomControls(context_);
-                            }
-                        }
+                        () ->
+                            chat_.removeBottomControls(context_)
                     );
                     break;
             }
@@ -281,7 +287,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         }
         else
         {
-            logger.warn("CHAT don't know how to handle this: "+ omsg.toStringCategory());
+            logger.warn("CHAT don't know how to handle this: {}", omsg.toStringCategory());
         }
     }
 
@@ -298,7 +304,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
      */
     private class PlayerModel extends DefaultTableModel
     {
-        private List<OnlinePlayerInfo> list = new ArrayList<OnlinePlayerInfo>();
+        private List<OnlinePlayerInfo> list = new ArrayList<>();
 
         @Override
         public String getColumnName(int c) {
@@ -371,11 +377,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
             Collections.sort(list);
 
             // table changed
-            GuiUtils.invoke(new Runnable() {
-                public void run() {
-                    fireTableDataChanged();
-                }
-            });
+            GuiUtils.invoke(this::fireTableDataChanged);
         }
     }
 
@@ -398,7 +400,7 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         return getSelectedPlayer(table) != null;
     }
 
-    private static ImageIcon infoIcon_ = ImageConfig.getImageIcon("menuicon.info");
+    private static final ImageIcon infoIcon_ = ImageConfig.getImageIcon("menuicon.info");
 
     public void addMenuItems(DDTable table, DDPopupMenu menu)
     {

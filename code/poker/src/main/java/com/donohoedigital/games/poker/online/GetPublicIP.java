@@ -40,8 +40,8 @@ package com.donohoedigital.games.poker.online;
 
 import com.donohoedigital.comms.DDMessageListener;
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.engine.SendMessageDialog;
 
 /**
  *

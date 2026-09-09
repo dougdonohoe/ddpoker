@@ -32,10 +32,16 @@
  */
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.server.ServerSecurityProvider;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 /**
@@ -67,7 +73,7 @@ public class EncryptKey
      *
      * @param args
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         // Use the server security provider.
         SecurityUtils.setSecurityProvider(new ServerSecurityProvider());

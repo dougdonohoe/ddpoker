@@ -32,21 +32,30 @@
  */
 package com.donohoedigital.games.poker.ai.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.OptionMenuDialog;
+import com.donohoedigital.games.engine.Phase;
+import com.donohoedigital.games.engine.ProfileList;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.ai.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.ai.HandSelectionScheme;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public class HandSelectionDialog extends OptionMenuDialog
@@ -55,7 +64,7 @@ public class HandSelectionDialog extends OptionMenuDialog
     static Logger logger = LogManager.getLogger(HandSelectionDialog.class);
 
     private HandSelectionScheme profile_;
-    private TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
     private DDTextField name_;
     private HandGroupGridPanel gridPanel_;
     private ListPanel groupsList_;
@@ -108,13 +117,8 @@ public class HandSelectionDialog extends OptionMenuDialog
         DDButton desc = new GlassButton("description", "Glass");
         desc.setPreferredSize(new Dimension(80, 24));
         desc.setBorderGap(0, 0, 0, 0);
-        desc.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setDescription();
-            }
-        });
+        desc.addActionListener(e ->
+            setDescription());
 
         topButtons.setLayout(new GridLayout(1, 2, 4, 0));
         topButtons.add(desc);

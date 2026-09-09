@@ -38,17 +38,24 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.Activation;
+import com.donohoedigital.config.AudioConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.net.*;
+import javax.swing.BorderFactory;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author Doug Donohoe
@@ -143,13 +150,8 @@ public class Activate extends BasePhase implements PropertyChangeListener
 
         // finish registerButton setup
         reg_.setDefaultOverride(registerButton_);
-        registerButton_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                activate();
-            }
-        });
+        registerButton_.addActionListener(e ->
+            activate());
         DDPanel actButtonBase = new DDPanel();
         actButtonBase.add(registerButton_, BorderLayout.NORTH);
         actButtonBase.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
@@ -172,22 +174,13 @@ public class Activate extends BasePhase implements PropertyChangeListener
         DDPanel demoButtonBase = new DDPanel();
         demoButtonBase.setLayout(new GridLayout(2, 1, 0, 5));
         DDButton demoButton = new GlassButton("demo", "Glass");
-        demoButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                engine_.setDemoMode();
-            }
-        });
+        demoButton.addActionListener(e ->
+            engine_.setDemoMode());
         DDButton orderButton = new GlassButton("order", "Glass");
-        orderButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                engine_.setActivationNeeded(false); // temporary so can show order dialog
-                context_.processPhaseNow("Order", null);
-                engine_.setActivationNeeded(true);
-            }
+        orderButton.addActionListener(e -> {
+            engine_.setActivationNeeded(false); // temporary so can show order dialog
+            context_.processPhaseNow("Order", null);
+            engine_.setActivationNeeded(true);
         });
         demoButtonBase.add(demoButton);
         demoButtonBase.add(orderButton);
@@ -259,12 +252,12 @@ public class Activate extends BasePhase implements PropertyChangeListener
                     String local = localaddr.getHostAddress();
                     if (local == null || local.equals("127.0.0.1") || local.equals("0.0.0.0"))
                     {
-                        logger.warn("Skipping verification: no local address: " + local);
+                        logger.warn("Skipping verification: no local address: {}", local);
                         bVerify = false;
                     }
                     else
                     {
-                        logger.info("Verifying from local addr: " + localaddr.getHostAddress());
+                        logger.info("Verifying from local addr: {}", localaddr.getHostAddress());
                     }
                 }
                 catch (UnknownHostException uhe)

@@ -38,8 +38,8 @@
 
 package com.donohoedigital.gui;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
  * Class used to represent an empty image component - essentially
@@ -50,8 +50,8 @@ import java.awt.image.*;
  */
 public class EmptyImageComponent extends ImageComponent 
 {
-    private int nWidth_;
-    private int nHeight_;
+    private final int nWidth_;
+    private final int nHeight_;
     
     /** 
      * Creates a new instance of EmptyImageComponent 

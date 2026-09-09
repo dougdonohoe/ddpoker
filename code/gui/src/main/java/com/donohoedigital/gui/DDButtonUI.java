@@ -38,15 +38,20 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.plaf.*;
-import javax.swing.plaf.basic.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicButtonListener;
+import javax.swing.plaf.basic.BasicGraphicsUtils;
+import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
-import java.awt.image.*;
-import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -56,7 +61,7 @@ public class DDButtonUI extends MetalButtonUI
 {
     static Logger logger = LogManager.getLogger(DDButtonUI.class);
     
-    private final static DDButtonUI ddButtonUI = new DDButtonUI(); 
+    private static final DDButtonUI ddButtonUI = new DDButtonUI(); 
  
     public static ComponentUI createUI(JComponent c) {
         return ddButtonUI;

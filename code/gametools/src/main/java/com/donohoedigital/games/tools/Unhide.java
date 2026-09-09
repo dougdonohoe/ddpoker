@@ -32,11 +32,13 @@
  */
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.base.*;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.games.config.Hide;
+import com.donohoedigital.base.Utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.Reader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,7 +49,7 @@ import java.io.*;
  */
 public class Unhide
 {
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         if (args.length == 0) System.out.println("Unhide [file]");
         unhide(ConfigUtils.getReader(new File(args[0])));

@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.udp;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
 
-import java.nio.*;
+import java.nio.ByteBuffer;
 
 
 /**

@@ -32,15 +32,21 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.OptionMenuDialog;
+import com.donohoedigital.games.engine.Phase;
+import com.donohoedigital.games.engine.ProfileList;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class HandGroupDialog extends OptionMenuDialog implements PropertyChangeListener
 {
@@ -48,7 +54,7 @@ public class HandGroupDialog extends OptionMenuDialog implements PropertyChangeL
 
     private HandGroup profile_;
 
-    private TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
 
     private DDPanel base_;
     private HandGroupGridPanel gridPanel_;
@@ -91,13 +97,8 @@ public class HandGroupDialog extends OptionMenuDialog implements PropertyChangeL
         desc_ = new GlassButton("description", "Glass");
         desc_.setPreferredSize(new Dimension(80, 24));
         desc_.setBorderGap(0, 0, 0, 0);
-        desc_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setDescription();
-            }
-        });
+        desc_.addActionListener(e ->
+            setDescription());
         topformat.add(desc_, BorderLayout.EAST);
 
         base_.add(top, BorderLayout.NORTH);

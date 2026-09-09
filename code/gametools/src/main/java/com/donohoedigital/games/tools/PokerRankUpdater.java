@@ -32,15 +32,18 @@
  */
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.model.util.*;
-import com.donohoedigital.games.poker.service.*;
-import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.*;
-import org.apache.logging.log4j.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.util.OnlineGameList;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import com.donohoedigital.games.poker.service.TournamentHistoryService;
+import static com.donohoedigital.games.poker.service.OnlineGameService.OrderByType.date;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Created by IntelliJ IDEA.
@@ -60,7 +63,7 @@ public class PokerRankUpdater extends BaseCommandLineApp
     /**
      * Run analyzer
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try {
             new PokerRankUpdater("poker", args);
@@ -95,7 +98,7 @@ public class PokerRankUpdater extends BaseCommandLineApp
         // do the work
         long time = System.currentTimeMillis();
         doRank();
-        logger.debug("Elapsed time: " + (System.currentTimeMillis() - time));
+        logger.debug("Elapsed time: {}", (System.currentTimeMillis() - time));
     }
 
     ///
@@ -109,7 +112,7 @@ public class PokerRankUpdater extends BaseCommandLineApp
      */
     private void doRank()
     {
-        Integer modes[] = new Integer[2];
+        Integer[] modes = new Integer[2];
         modes[0] = OnlineGame.MODE_END;
         modes[1] = OnlineGame.MODE_STOP;
         int offset = 0;
@@ -131,14 +134,13 @@ public class PokerRankUpdater extends BaseCommandLineApp
             list = gameService.getOnlineGames(total, offset, GAMES_CHUNK, modes, null, null, null, date);
         }
 
-        logger.debug("Processed " + count + " of " + total);
+        logger.debug("Processed {} of {}", count, total);
     }
 
     private void doRank(OnlineGame game)
     {
         int count = histService.getAllTournamentHistoriesForGameCount(game.getId());
-        logger.debug("id #" + game.getId() + ": " + game.getTournament().getName() + " hosted by " + game.getHostPlayer() +
-                     " with " + count + " total players");
+        logger.debug("id #{}: {} hosted by {} with {} total players", game.getId(), game.getTournament().getName(), game.getHostPlayer(), count);
 
         histService.upgradeAllTournamentHistoriesForGame(game, null);//logger);        
     }

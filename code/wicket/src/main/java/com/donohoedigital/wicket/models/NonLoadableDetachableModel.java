@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.models;
 
-import org.apache.wicket.model.*;
+import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
  * Created by IntelliJ IDEA.

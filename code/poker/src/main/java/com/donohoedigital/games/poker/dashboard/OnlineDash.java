@@ -32,17 +32,22 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerUtils;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.gui.DDCheckBox;
+import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.JComponent;
+import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,7 +62,7 @@ public class OnlineDash extends DashboardItem
     private static final String OBSERVING = PropertyConfig.getMessage("msg.observing.title");
 
     private DDPanel base_;
-    private PokerPlayer player_;
+    private final PokerPlayer player_;
     private DDCheckBox sitout_, mucklose_, muckwin_;
     private TournamentDirector td_;
 
@@ -107,42 +112,30 @@ public class OnlineDash extends DashboardItem
         else
         {
             sitout_ = new DDCheckBox("sitout", STYLE);
-            sitout_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
+            sitout_.addActionListener(e -> {
+                if (PokerUtils.isDemoOver(context_, player_, true) && !sitout_.isSelected())
                 {
-                    if (PokerUtils.isDemoOver(context_, player_, true) && !sitout_.isSelected())
-                    {
-                        EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.onlinedone.demo"));
-                        sitout_.setSelected(true);
-                        return;
-                    }
-
-                    player_.setSittingOut(sitout_.isSelected());
-                    getTD().playerUpdate(player_, player_.getOnlineSettings());
+                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.onlinedone.demo"));
+                    sitout_.setSelected(true);
+                    return;
                 }
+
+                player_.setSittingOut(sitout_.isSelected());
+                getTD().playerUpdate(player_, player_.getOnlineSettings());
             });
             base_.add(sitout_);
 
             mucklose_ = new DDCheckBox("mucklose", STYLE);
-            mucklose_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    player_.setAskShowLosing(!mucklose_.isSelected());
-                    getTD().playerUpdate(player_, player_.getOnlineSettings());
-                }
+            mucklose_.addActionListener(e -> {
+                player_.setAskShowLosing(!mucklose_.isSelected());
+                getTD().playerUpdate(player_, player_.getOnlineSettings());
             });
             base_.add(mucklose_);
 
             muckwin_ = new DDCheckBox("muckwin", STYLE);
-            muckwin_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    player_.setAskShowWinning(!muckwin_.isSelected());
-                    getTD().playerUpdate(player_, player_.getOnlineSettings());
-                }
+            muckwin_.addActionListener(e -> {
+                player_.setAskShowWinning(!muckwin_.isSelected());
+                getTD().playerUpdate(player_, player_.getOnlineSettings());
             });
             base_.add(muckwin_);
         }
@@ -210,13 +203,7 @@ public class OnlineDash extends DashboardItem
     }
 
     // runnable for setting label text in swing thread
-    private Runnable updateRunner_ = new Runnable()
-                        {
-                            public void run()
-                            {
-                                updateAll();
-                            }
-                        };
+    private final Runnable updateRunner_ = this::updateAll;
 
     ///
     /// display logic

@@ -42,7 +42,7 @@ public class DatabaseExample {
     public DatabaseExample() {
     }
 
-    public static void main(String[] args) {
+    static void main() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try {

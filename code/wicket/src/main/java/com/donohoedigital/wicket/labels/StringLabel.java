@@ -32,8 +32,8 @@
  */
 package com.donohoedigital.wicket.labels;
 
-import org.apache.wicket.markup.html.basic.*;
-import org.apache.wicket.model.*;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
 
 /**
  * Created by IntelliJ IDEA.

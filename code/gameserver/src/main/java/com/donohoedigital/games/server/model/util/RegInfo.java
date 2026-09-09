@@ -38,11 +38,14 @@
 
 package com.donohoedigital.games.server.model.util;
 
-import com.donohoedigital.games.server.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.server.model.Registration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.text.*;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -53,14 +56,14 @@ public class RegInfo implements Comparable<RegInfo>
     static Logger logger = LogManager.getLogger(RegInfo.class);
     
     // info
-    private String sKey_;
-    private List<Registration> msgs_ = new ArrayList<Registration>();
-    private List<Registration> reg_msgs_ = new ArrayList<Registration>();
-    private List<Registration> act_msgs_ = new ArrayList<Registration>();
-    private List<Registration> patch_msgs_ = new ArrayList<Registration>();
-    private List<Registration> dup_msgs_ = new ArrayList<Registration>();
+    private final String sKey_;
+    private final List<Registration> msgs_ = new ArrayList<>();
+    private final List<Registration> reg_msgs_ = new ArrayList<>();
+    private final List<Registration> act_msgs_ = new ArrayList<>();
+    private final List<Registration> patch_msgs_ = new ArrayList<>();
+    private final List<Registration> dup_msgs_ = new ArrayList<>();
     private long mostRecent_;
-    private static SimpleDateFormat date_ = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm:ss", Locale.US);
+    private static final SimpleDateFormat date_ = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm:ss", Locale.US);
 
     private boolean banned = false;
     private String bannedComment = null;

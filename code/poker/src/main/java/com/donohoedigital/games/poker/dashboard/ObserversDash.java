@@ -32,18 +32,19 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.online.OnlineManager;
+import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import javax.swing.JComponent;
+import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Created by IntelliJ IDEA.
@@ -85,13 +86,7 @@ public class ObserversDash extends DashboardItem
     }
 
     // runnable for setting label text in swing thread
-    private Runnable updateRunner_ = new Runnable()
-                        {
-                            public void run()
-                            {
-                                updateAll();
-                            }
-                        };
+    private final Runnable updateRunner_ = this::updateAll;
 
     /**
      * update observer list

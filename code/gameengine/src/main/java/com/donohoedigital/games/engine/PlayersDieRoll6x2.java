@@ -39,8 +39,8 @@
 package com.donohoedigital.games.engine;
 
 import com.donohoedigital.comms.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.comms.GameInfo;
+import com.donohoedigital.games.config.GamePlayer;
 
 /**
  *
@@ -52,7 +52,7 @@ public class PlayersDieRoll6x2 implements DataMarshal
     //static Logger logger = LogManager.getLogger(PlayersDieRoll6x2.class);
     
     int nIndex_;
-    DMArrayList dieRolls_[];
+    DMArrayList[] dieRolls_;
     GameInfo game_;
     
     /** 
@@ -98,7 +98,7 @@ public class PlayersDieRoll6x2 implements DataMarshal
         return dieRolls_;
     }
 
-    private int getIndexOfMax(DMArrayList dieRolls[], int nMax, int nMinRolls)
+    private int getIndexOfMax(DMArrayList[] dieRolls, int nMax, int nMinRolls)
     {   
         int nCnt = 0;
         for (int i = 0; i < dieRolls.length; i++)
@@ -113,7 +113,7 @@ public class PlayersDieRoll6x2 implements DataMarshal
         return 0;   
     }
     
-    private int getNumAtMax(DMArrayList dieRolls[], int nMax, int nMinRolls)
+    private int getNumAtMax(DMArrayList[] dieRolls, int nMax, int nMinRolls)
     {
         // special case for 1st time, need to roll all die
         if (nMax == -1) return dieRolls.length;
@@ -131,14 +131,14 @@ public class PlayersDieRoll6x2 implements DataMarshal
         return nCnt;   
     }
     
-    private int rollDieAtMax(DMArrayList dieRolls[], int nMax, int nMinRolls)
+    private int rollDieAtMax(DMArrayList[] dieRolls, int nMax, int nMinRolls)
     {
         DieRoll6x2 roll;
         int nNewMax = -1;
         for (int i = 0; i < dieRolls.length; i++)
         {
             if (isPlayerEliminated(i)) continue;
-            if ((dieRolls[i].size() == 0) || (
+            if ((dieRolls[i].isEmpty()) || (
                         (dieRolls[i].size() >= nMinRolls) &&
                         ((DieRoll6x2)dieRolls[i].get(dieRolls[i].size() -1)).getSum() == nMax))
             {

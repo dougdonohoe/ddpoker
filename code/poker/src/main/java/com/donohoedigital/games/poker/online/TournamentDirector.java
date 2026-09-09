@@ -38,21 +38,33 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.SaveDetails;
+import com.donohoedigital.games.engine.BasePhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.GameManager;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.event.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.engine.PokerSaveDetails;
+import com.donohoedigital.games.poker.event.PokerTableEvent;
+import com.donohoedigital.games.poker.event.PokerTableListener;
+import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.util.*;
+import javax.swing.SwingUtilities;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class which handles tournament.
@@ -336,15 +348,11 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
                 // show error dialog to user and restart
                 SwingUtilities.invokeLater(
-                        new Runnable()
-                        {
-                            public void run()
-                            {
-                                EngineUtils.displayInformationDialog(context_, Utils.fixHtmlTextFor15(
-                                        PropertyConfig.getMessage("msg.tderror")));
-                                context_.restart();
-                            }
-                        }
+                    () -> {
+                        EngineUtils.displayInformationDialog(context_, Utils.fixHtmlTextFor15(
+                            PropertyConfig.getMessage("msg.tderror")));
+                        context_.restart();
+                    }
                 );
             }
 
@@ -587,7 +595,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         public void tableEventOccurred(PokerTableEvent event)
         {
-            if (events == null) events = new DMArrayList<PokerTableEvent>();
+            if (events == null) events = new DMArrayList<>();
             if (DEBUG_EVENT) logger.debug("TDReturn event: " + event);
             events.add(event);
         }
@@ -1463,15 +1471,15 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
     private class TDClean implements PokerTableListener
     {
         List<PokerTable> tables;
-        List<PokerTable> tablesRemoved = new ArrayList<PokerTable>(1);
-        List<PokerPlayer> playersTouched = new ArrayList<PokerPlayer>(10);
-        List<PokerTable> tablesTouched = new ArrayList<PokerTable>(3);
-        List<PokerPlayer> playersBusted = new ArrayList<PokerPlayer>(3);
-        List<PokerPlayer> playersWaiting = new ArrayList<PokerPlayer>(1);
+        List<PokerTable> tablesRemoved = new ArrayList<>(1);
+        List<PokerPlayer> playersTouched = new ArrayList<>(10);
+        List<PokerTable> tablesTouched = new ArrayList<>(3);
+        List<PokerPlayer> playersBusted = new ArrayList<>(3);
+        List<PokerPlayer> playersWaiting = new ArrayList<>(1);
 
         public TDClean(PokerTable active)
         {
-            tables = new ArrayList<PokerTable>(game_.getTables());
+            tables = new ArrayList<>(game_.getTables());
             listen(true);
 
             // need to make sure players on current table are included
@@ -1619,7 +1627,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             if (bOnline_)
             {
                 // Online - see if we can break this table.
-                tables = new ArrayList<PokerTable>();
+                tables = new ArrayList<>();
                 tables.add(table);
 
                 // if current table (on host), add all computer
@@ -1646,7 +1654,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             OtherTables.consolidateTables(game_, tables);
 
             // safety check - can't have added players in addition to being removed
-            ApplicationError.assertTrue(!(table.getAddedList().size() > 0 && table.isRemoved()),
+            ApplicationError.assertTrue(!(!table.getAddedList().isEmpty() && table.isRemoved()),
                                         "Table removed but has players added", table);
 
             // if table was removed, we need to move observers
@@ -1868,7 +1876,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
      */
     public void cleanTables(PokerTable table, boolean bRemovePlayers)
     {
-        List<PokerPlayer> removed = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> removed = new ArrayList<>();
 
         // clean tables (storing removed players in array)
         cleanTable(table, removed, bRemovePlayers);
@@ -1900,7 +1908,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
      */
     private void cleanTable(PokerTable table, List<PokerPlayer> removed, boolean bRemovePlayers)
     {
-        List<PokerPlayer> removedThisTable = new ArrayList<PokerPlayer>();
+        List<PokerPlayer> removedThisTable = new ArrayList<>();
         boolean bAllComputerPrior = table.isAllComputer() && table.getNumObservers() == 0;
 
         // remove any left-over ai (if table used to have humans and the human was moved
@@ -2417,7 +2425,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                 if (p.isHuman() && p.isAskShowWinning() && hhand.isUncontested())
                 {
                     table.addWait(p);
-                    if (win_ids == null) win_ids = new DMArrayList<Integer>();
+                    if (win_ids == null) win_ids = new DMArrayList<>();
                     win_ids.add(p.getID());
                     if (p == local) bLocalInList = true;
                 }

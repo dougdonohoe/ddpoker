@@ -38,9 +38,10 @@
 
 package com.donohoedigital.comms;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * This array list is marshallable and can marshal the following
@@ -142,8 +143,7 @@ public class DMArrayList<E> extends ArrayList<E> implements DataMarshal
             }
             else
             {
-                logger.debug("Warning: skipping unsupported array entry #" + i + 
-                                " class is "+(oValue != null ? oValue.getClass().getName():"null"));
+                logger.debug("Warning: skipping unsupported array entry #{} class is {}", i, (oValue != null ? oValue.getClass().getName() : "null"));
             }
         }
         return list.marshal(state);

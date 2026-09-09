@@ -41,13 +41,13 @@ import java.util.HashMap;
 /**
  * Reusable computation of relative ranking of hands (Raw Hand Strength) with a given board.
  */
-public class PocketRanks
+public final class PocketRanks
 {
     private static long fpFlop_ = 0;
 
-    private static HashMap cache_ = new HashMap();
+    private static final HashMap cache_ = new HashMap();
 
-    private PocketMatrixShort rhs_ = new PocketMatrixShort();
+    private final PocketMatrixShort rhs_ = new PocketMatrixShort();
 
     /**
      * PocketRanks is a wrapper on PocketMatrixShort, and stores a ranking for each possible

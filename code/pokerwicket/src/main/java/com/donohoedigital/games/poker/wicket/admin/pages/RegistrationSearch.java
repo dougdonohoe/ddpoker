@@ -97,7 +97,7 @@ public class RegistrationSearch extends AdminPokerPage
         CompoundPropertyModel<SearchData> formData = new CompoundPropertyModel<>(data);
 
         // form
-        Form<SearchData> form = new Form<SearchData>("form", formData)
+        Form<SearchData> form = new Form<>("form", formData)
         {
             private static final long serialVersionUID = 42L;
 
@@ -217,7 +217,7 @@ public class RegistrationSearch extends AdminPokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<Registration>
+    private final class GameListTableView extends CountDataView<Registration>
     {
         private static final long serialVersionUID = 42L;
 

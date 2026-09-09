@@ -32,14 +32,17 @@
  */
 package com.donohoedigital.proto.tests;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.Utils;
 
-import java.net.*;
-import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 
 public class UnicastSender 
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{
@@ -51,7 +54,7 @@ public class UnicastSender
 
 			// create a datagram with a suitable message
 			String str = "Hello from: "+InetAddress.getLocalHost();
-			byte[] data = str.getBytes();
+			byte[] data = str.getBytes(StandardCharsets.UTF_8);
 			DatagramPacket dp = new DatagramPacket(data, data.length, ia, recvPort);
 
 			// create a socket bound to any local port
@@ -61,7 +64,7 @@ public class UnicastSender
             for (int i = 0; i < 1000; i++)
             {
                 sData = "Message " + i + "  stuff stuff asd sdfa asdf asdf as asasdf asdfsaf sadflj asfasasjflj";
-                dp.setData(sData.getBytes());
+                dp.setData(sData.getBytes(StandardCharsets.UTF_8));
                 ms.send(dp);
                 if (i % 25 == 0) Utils.sleepMillis(1);
             }

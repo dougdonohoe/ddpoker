@@ -38,20 +38,25 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.server.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DDMessageTransporter;
+import com.donohoedigital.config.DebugConfig;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.network.PokerConnection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.server.WorkerPool;
+import com.donohoedigital.server.WorkerThread;
 
-import java.io.*;
-import java.net.*;
-import java.nio.channels.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.nio.channels.ClosedChannelException;
+import java.util.ArrayList;
 
 /**
  * @author  donohoe
@@ -61,20 +66,20 @@ public class OnlineManagerQueue implements Runnable
     static Logger logger = LogManager.getLogger(OnlineManagerQueue.class);
 
     // settings
-    private static int SLEEP_UNAVAIL = 25; // millis to sleep when no worker thread available
-    private static int LOG_UNAVAIL = 1000; // millis to wait before logging no worker warning
+    private static final int SLEEP_UNAVAIL = 25; // millis to sleep when no worker thread available
+    private static final int LOG_UNAVAIL = 1000; // millis to wait before logging no worker warning
 
     // info
-    private OnlineManager mgr_;
+    private final OnlineManager mgr_;
     private Thread threadQ_ = null;
     WorkerPool pool_;
 
     // instance info
     private ArrayList msgQ_ = new ArrayList();
     private boolean bDone_ = false;
-    private int nWait_ = 100;
+    private final int nWait_ = 100;
     private boolean bSleeping_ = false;
-    private Object SLEEPCHECK = new Object();
+    private final Object SLEEPCHECK = new Object();
     private int nElapsedNoWorkerTime_ = 0;
 
     /**
@@ -139,7 +144,7 @@ public class OnlineManagerQueue implements Runnable
         
         //logger.info("Shutting down OnlineMessageQueue...");
         ArrayList list = getMessageQueue();
-        if (list != null && list.size() > 0)
+        if (list != null && !list.isEmpty())
         {
             logger.warn("Left " + list.size() + " messages to send");
         }
@@ -253,7 +258,7 @@ public class OnlineManagerQueue implements Runnable
      */
     private synchronized ArrayList getMessageQueue()
     {
-        if (msgQ_.size() == 0) return null; // avoid new object if empty
+        if (msgQ_.isEmpty()) return null; // avoid new object if empty
         
         ArrayList list = msgQ_;
         msgQ_ = new ArrayList();
@@ -283,7 +288,7 @@ public class OnlineManagerQueue implements Runnable
 
         Qentry msg;
         int index = 0;
-        while (list.size() > 0)
+        while (!list.isEmpty())
         {
             msg = null;
 

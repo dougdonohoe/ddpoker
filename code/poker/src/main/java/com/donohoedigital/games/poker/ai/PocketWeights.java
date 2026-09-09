@@ -32,19 +32,25 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.poker.HandAction;
+import com.donohoedigital.games.poker.HoldemHand;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.PokerTable;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Reusable computation of relative likelihood of pocket hands given hand history.
  * <p/>
  * TODO: reincorporate noise/accuracy
  */
-public class PocketWeights
+public final class PocketWeights
 {
     static Logger logger = LogManager.getLogger(PocketWeights.class);
 
@@ -53,9 +59,9 @@ public class PocketWeights
 
     private HoldemHand hhand_ = null;
 
-    private PocketMatrixFloat weights_[] = null;
+    private PocketMatrixFloat[] weights_ = null;
 
-    private float apparentStrength_[] = new float[10];
+    private final float[] apparentStrength_ = new float[10];
     private int callCount_;
     private int raiseCount_;
     private int potSize_;
@@ -153,7 +159,7 @@ public class PocketWeights
 
         if (community == null) return 0.0f;
 
-        boolean preflop = (community.size() == 0);
+        boolean preflop = (community.isEmpty());
 
         PocketRanks ranks = null;
 
@@ -222,7 +228,7 @@ public class PocketWeights
     {
         Hand community = hhand_.getCommunity();
 
-        if (community.size() == 0)
+        if (community.isEmpty())
         {
             throw new ApplicationError("PocketWeights.getBiasedEffectiveHandStrength() called before the flop.");
         }
@@ -305,7 +311,7 @@ public class PocketWeights
     {
         Hand community = hhand_.getCommunity();
 
-        boolean bPreFlop = community.size() == 0;
+        boolean bPreFlop = community.isEmpty();
 
         PocketRanks ranks = null;
 
@@ -489,8 +495,8 @@ public class PocketWeights
         public float adjustWeight(PokerPlayer player, int card1, int card2, float weight, float rhs);
     }
 
-    private PreFlopActor preflopActor = new PreFlopActor();
-    private Tuple tuple = new Tuple();
+    private final PreFlopActor preflopActor = new PreFlopActor();
+    private final Tuple tuple = new Tuple();
 
     private void processPreFlopAction(HandAction action)
     {
@@ -667,56 +673,35 @@ public class PocketWeights
                 return;
             case HandAction.ACTION_FOLD:
             case HandAction.ACTION_CHECK:
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs < .75f) ? (weight+1f)/2f : weight/2f;
-                        //return ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f;
-                        //return (rhs < .8f) ? ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f : 0f;
-                        return (float) (0.75d + Math.sin(1.25d * Math.PI * (rhs - npot) + Math.PI / 2.0d) / 4.0d) * weight;
-                        //return (1.0f-rhs)*weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs < .75f) ? (weight+1f)/2f : weight/2f;
+                    //return ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f;
+                    //return (rhs < .8f) ? ((float)(Math.pow((.8f-rhs)/.8f,2d))+weight)/2f : 0f;
+                    (float) (0.75d + Math.sin(1.25d * Math.PI * (rhs - npot) + Math.PI / 2.0d) / 4.0d) * weight;
                 break;
             case HandAction.ACTION_CALL:
                 //bias = ((float)amount) / ((float)potSize);
                 // asymptotically approaches zero with higher pot odds
                 bias = 1.0f / ((((float) potSize_) / ((float) amount)) + 1.0f);
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs > .75f) ? (weight+1f)/2f : weight/2f;
-                        //return (rhs > .6f) ? ((float)(Math.pow((rhs-.6f)/.4f,2d))+weight)/2f : 0f;
-                        return (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) * weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs > .75f) ? (weight+1f)/2f : weight/2f;
+                    //return (rhs > .6f) ? ((float)(Math.pow((rhs-.6f)/.4f,2d))+weight)/2f : 0f;
+                    (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) * weight;
                 break;
             case HandAction.ACTION_BET:
                 bias = ((float) amount) / ((float) potSize_);
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs > .85f) ? (weight+1f)/2f : weight/2f;
-                        //return Math.min(weight+rhs*rhs, 1f);
-                        //return (rhs > .85f) ? ((float)(Math.pow((rhs-.85f)/.15f,2d))+weight)/2f : 0f;
-                        return (float) (Math.pow(0.9d * (rhs + npot), 2.0d) + 0.1d) * weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs > .85f) ? (weight+1f)/2f : weight/2f;
+                    //return Math.min(weight+rhs*rhs, 1f);
+                    //return (rhs > .85f) ? ((float)(Math.pow((rhs-.85f)/.15f,2d))+weight)/2f : 0f;
+                    (float) (Math.pow(0.9d * (rhs + npot), 2.0d) + 0.1d) * weight;
                 break;
             case HandAction.ACTION_RAISE:
-                func = new PostFlopWeightFunction()
-                {
-                    public float adjustWeight(float weight, float rhs, float ppot, float npot)
-                    {
-                        //return (rhs > .9f) ? ((float)(Math.pow((rhs-.9f)/.1f,2d))+weight)/2f : 0f;
-                        //return (rhs > .95f) ? (weight+1f)/2f : weight/2f;
-                        return (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) *
-                               (float) (Math.pow(0.9d * (rhs + npot + ppot), 20.0d) + 0.1d) * weight;
-                    }
-                };
+                func = (weight, rhs, ppot, npot) ->
+                    //return (rhs > .9f) ? ((float)(Math.pow((rhs-.9f)/.1f,2d))+weight)/2f : 0f;
+                    //return (rhs > .95f) ? (weight+1f)/2f : weight/2f;
+                    (float) (0.35d + Math.sin(1.5d * Math.PI * ((rhs + ppot - npot) + 1.0d)) / 4.0d) *
+                        (float) (Math.pow(0.9d * (rhs + npot + ppot), 20.0d) + 0.1d) * weight;
                 break;
             default:
                 throw new ApplicationError("Unhandled action type " + actionType);

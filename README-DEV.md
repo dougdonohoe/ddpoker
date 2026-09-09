@@ -242,6 +242,14 @@ to the latest versions that work with Java 25.  The only exception is `HSQLDB`, 
 have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
 we don't want to deal with at this time.
 
+The Java itself has had a mechanical catch-up pass as well: anonymous listener classes became
+lambdas and method references, raw `new ArrayList<Foo>()` became the diamond operator, C-style
+array declarations were straightened out, private fields that are only assigned once are now
+`final`, and string-concatenating log calls were converted to log4j2's `{}` placeholders.  That
+was a one-time sweep of behavior-preserving changes, not a rewrite - plenty of pre-Java-8
+idiom remains, so don't be surprised by an old-fashioned `for` loop or a chain of `instanceof`
+checks that a switch pattern would handle today.
+
 ### Modules
 
 Here is a brief overview of the modules in this repo, in the order maven builds them, which
@@ -696,7 +704,7 @@ poker
 
 ## Appendix E: Running GitHub Actions Locally
 
-You can run GitHub actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
+You can run GitHub Actions locally using the [`act`](https://nektosact.com/) tool (which requires Docker).
 
 To install `act`:
 
@@ -752,6 +760,29 @@ verify:
   [Appendix I](#appendix-i-native-windows-and-powershell))
 * Build `act` docker image and running `act-ddpoker` (remember to stop MySQL)
 
+### Online Tests
+
+Turn on these debug settings:
+
+```properties
+settings.debug.skip.dup.key.check=     true
+settings.debug.override.key=           true
+```
+
+Extra keys:
+
+```text
+KEY-23-AEAC9471-EAB6-4FE8-8EB5-500707990851-84-0631
+KEY-23-6569DDEF-258B-470E-8081-9CF251941638-25-4647
+KEY-23-6B38FBB4-340C-4ABC-9F18-AA6C77B5A1C4-50-9311
+```
+
+Use these flags to start 2nd client at a different position with a different player profile:
+
+```shell
+poker -key KEY-23-AEAC9471-EAB6-4FE8-8EB5-500707990851-84-0631 -profile "Test Profile 2" -x 800 -y 40
+```
+
 ## Appendix G: DD Poker Website
 
 Back in the day, the Wicket-based webapp (aka the Online Portal) was also the 
@@ -771,7 +802,6 @@ current working directory.  To preview the site run:
 ```bash
 python3 -m http.server 8000
 ```
-
 
 ## Appendix H: Releasing a New Version
 

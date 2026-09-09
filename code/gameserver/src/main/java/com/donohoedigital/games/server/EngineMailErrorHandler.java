@@ -53,7 +53,7 @@ public class EngineMailErrorHandler implements DDMailErrorHandler
 {
     //static Logger logger = LogManager.getLogger(EngineMailErrorHandler.class);
     
-    private EngineServlet servlet_;
+    private final EngineServlet servlet_;
     /** 
      * Creates a new instance of EngineMailErrorHandler 
      */

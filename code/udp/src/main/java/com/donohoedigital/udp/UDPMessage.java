@@ -38,15 +38,21 @@
 
 package com.donohoedigital.udp;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.net.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.util.*;
-import java.util.zip.*;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
+import java.util.ArrayList;
+import java.util.zip.CRC32;
 
 /**
  *
@@ -68,7 +74,7 @@ public class UDPMessage
     private InetSocketAddress srcAddrActual_;
     private InetSocketAddress srcAddrApparent_;
     private InetSocketAddress dstAddr_; // TODO: will this be needed?  In future, could use for UDP tunneling
-    private ArrayList<UDPData> data_ = new ArrayList<UDPData>(5);
+    private ArrayList<UDPData> data_ = new ArrayList<>(5);
 
     // uknown address
     public static final InetSocketAddress ADDRESS_UNKNOWN = new InetSocketAddress("0.0.0.0", 0);
@@ -393,7 +399,7 @@ public class UDPMessage
         }
         catch (UnknownHostException uhe) // only thrown if addr incorrect size, but log something just in case
         {
-            logger.warn("Error getting address: " + Utils.formatExceptionText(uhe));
+            logger.warn("Error getting address: {}", Utils.formatExceptionText(uhe));
             return new InetSocketAddress("0.0.0.0", nPort);
         }
     }
@@ -444,7 +450,7 @@ public class UDPMessage
         for (UDPData data : data_)
         {
             if (data.getType() == UDPData.Type.MTU_TEST) continue;
-            logger.debug("  OUT "+data.toStringShort() + " " + link.toStringNameIP());
+            logger.debug("  OUT {} {}", data.toStringShort(), link.toStringNameIP());
         }
     }
 

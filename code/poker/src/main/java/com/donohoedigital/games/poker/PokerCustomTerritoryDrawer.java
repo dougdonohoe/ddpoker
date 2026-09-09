@@ -38,15 +38,21 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.MersenneTwisterFast;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.CustomTerritoryDrawer;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.Gameboard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -57,8 +63,8 @@ public class PokerCustomTerritoryDrawer implements CustomTerritoryDrawer
 
     static Logger logger = LogManager.getLogger(PokerCustomTerritoryDrawer.class);
 
-    private PokerGame game_;
-    private MersenneTwisterFast random_ = new MersenneTwisterFast();
+    private final PokerGame game_;
+    private final MersenneTwisterFast random_ = new MersenneTwisterFast();
 
     /**
      * Creates a new instance of PokerCustomTerritoryDrawer

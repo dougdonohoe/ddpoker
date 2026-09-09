@@ -38,21 +38,27 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.network.OnlineMessage;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * @author Doug Donohoe
@@ -192,84 +198,39 @@ public class PlayerProfileDialog extends DialogPhase implements PropertyChangeLi
 
         if (profile_.isOnline())
         {
-            emailButton_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doButton(e);
-                }
-            });
+            emailButton_.addActionListener(this::doButton);
 
             if (passwordButton_ != null)
             {
-                passwordButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                passwordButton_.addActionListener(this::doButton);
             }
 
             if (sendButton_ != null)
             {
-                sendButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                sendButton_.addActionListener(this::doButton);
             }
 
             if (resetButton_ != null)
             {
-                resetButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                resetButton_.addActionListener(this::doButton);
             }
 
             if (syncButton_ != null)
             {
-                syncButton_.addActionListener(new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        doButton(e);
-                    }
-                });
+                syncButton_.addActionListener(this::doButton);
             }
         }
 
         if (noRadio_ != null)
         {
-            noRadio_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doRadio();
-                }
-            });
+            noRadio_.addActionListener(e ->
+                doRadio());
 
-            newRadio_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doRadio();
-                }
-            });
+            newRadio_.addActionListener(e ->
+                doRadio());
 
-            existRadio_.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    doRadio();
-                }
-            });
+            existRadio_.addActionListener(e ->
+                doRadio());
         }
 
         checkButtons();

@@ -32,9 +32,12 @@
  */
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,7 +52,7 @@ public abstract class DDTabPanel extends DDPanel implements AncestorListener
     private int nTabNum_;
     private Icon icon_;
     private Icon error_;
-    private List<DDOption> options_ = new ArrayList<DDOption>();
+    private final List<DDOption> options_ = new ArrayList<>();
     private String sHelp_;
 
     public DDTabPanel()

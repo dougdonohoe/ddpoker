@@ -38,15 +38,19 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
 import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.LoggingConfig;
-import com.donohoedigital.games.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.config.Border;
+import com.donohoedigital.games.config.BorderPoint;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.JComponent;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -72,7 +76,7 @@ public class GameboardBorderManager extends GameManager
     /**
      * Run the Gameboard Manager
      */
-    public static void main(String[] args) {
+    static void main(String[] args) {
         try {
             LoggingConfig loggingConfig = new LoggingConfig("gametools", ApplicationType.CLIENT);
             loggingConfig.init();
@@ -89,7 +93,7 @@ public class GameboardBorderManager extends GameManager
         }
         catch (ApplicationError ae)
         {
-            logger.fatal("GameboardBorderManager ending due to ApplicationError: " + ae.toStringNoStackTrace());
+            logger.fatal("GameboardBorderManager ending due to ApplicationError: {}", ae.toStringNoStackTrace());
             System.exit(1);
         }  
     }
@@ -133,7 +137,7 @@ public class GameboardBorderManager extends GameManager
         
         if (dScale_ != dNewScale && dNewScale != NO_SCALE)
         {
-            logger.info("Setting new scale: " + dNewScale);
+            logger.info("Setting new scale: {}", dNewScale);
             gameconfig_.setScale(dNewScale);
             dScale_ = dNewScale;
         }

@@ -38,11 +38,16 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.EscapeStringTokenizer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -61,7 +66,7 @@ public class TokenizedList implements DataMarshal
     public static final int TOKEN_READ_ALL = Integer.MAX_VALUE;
     
     // data
-    protected List<DataMarshal> tokens_ = new ArrayList<DataMarshal>();
+    protected List<DataMarshal> tokens_ = new ArrayList<>();
     protected EscapeStringTokenizer tokenizer_;
     
     /**
@@ -98,7 +103,7 @@ public class TokenizedList implements DataMarshal
      */
     private Object nextToken(Class<?> cExpected)
     {
-        ApplicationError.assertTrue(tokens_.size() > 0, "No tokens left");
+        ApplicationError.assertTrue(!tokens_.isEmpty(), "No tokens left");
         Object o = tokens_.remove(0);
         if (o == null) return null;
         ApplicationError.assertTrue(cExpected.isAssignableFrom(o.getClass()), "Next token wrong type", o.getClass().getName());
@@ -110,7 +115,7 @@ public class TokenizedList implements DataMarshal
      */
     public Object peekToken()
     {
-        ApplicationError.assertTrue(tokens_.size() > 0, "No tokens left");
+        ApplicationError.assertTrue(!tokens_.isEmpty(), "No tokens left");
         return tokens_.get(0);
     }
     
@@ -119,7 +124,7 @@ public class TokenizedList implements DataMarshal
      */
     public boolean hasMoreTokens()
     {
-        return(tokens_.size() > 0);
+        return(!tokens_.isEmpty());
     }
     
     /**

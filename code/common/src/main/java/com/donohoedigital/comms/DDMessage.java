@@ -39,11 +39,16 @@
 package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.nio.channels.*;
-import java.util.*;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -138,9 +143,9 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
 
     // transient data only
     private int nStatus_ = DDMessageListener.STATUS_NONE;
-    
+
     // class to represent data chunks
-    private class MessageData
+    private final class MessageData
     {
         private byte[] bytedata_;
         private File filedata_;
@@ -411,7 +416,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     {
         if (msgdata_ == null)
         {
-            msgdata_ = new ArrayList<MessageData>();
+            msgdata_ = new ArrayList<>();
         }
         return msgdata_;
     }
@@ -445,7 +450,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     /**
      * add string data chunk
      */
-    public void addData(File fDatas[])
+    public void addData(File[] fDatas)
     {
         if (fDatas == null || fDatas.length == 0) return;
         List<MessageData> msgdata = getDataList();
@@ -563,8 +568,8 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
      */
     public void debugPrint()
     {
-        if (nStatus_ != DDMessageListener.STATUS_NONE) logger.debug("MSG-Status: " + nStatus_);
-        logger.debug("MSG-Params: " + super.toString());
+        if (nStatus_ != DDMessageListener.STATUS_NONE) logger.debug("MSG-Status: {}", nStatus_);
+        logger.debug("MSG-Params: {}", super.toString());
         
         
         if (msgdata_ == null || msgdata_.isEmpty())
@@ -577,7 +582,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
             for (int i = 0; i < msgdata_.size(); i++)
             {
                 sData = getDataAtAsString(i);
-                logger.debug("MSG-Data[" + i +"]: " + sData.length() + " bytes of data, displayed below:");
+                logger.debug("MSG-Data[{}]: {} bytes of data, displayed below:", i, sData.length());
                 StringTokenizer tok = new StringTokenizer(sData,"\n");
                 while (tok.hasMoreTokens())
                 {
@@ -674,7 +679,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         if (msgdata_ != null && !msgdata_.isEmpty())
         {
             int nNumData = msgdata_.size();
-            DMArrayList<Integer> sizes = new DMArrayList<Integer>(nNumData);
+            DMArrayList<Integer> sizes = new DMArrayList<>(nNumData);
             MessageData data;
             
             for (int i = 0; i < nNumData; i++)

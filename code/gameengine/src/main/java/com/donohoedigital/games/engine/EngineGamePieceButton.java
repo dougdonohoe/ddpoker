@@ -38,19 +38,7 @@
 
 package com.donohoedigital.games.engine;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
-import java.awt.geom.*;
-import java.awt.font.*;
-import java.beans.*;
-
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.gui.ButtonPanel;
 
 /**
  *
@@ -59,7 +47,7 @@ import com.donohoedigital.gui.*;
 public class EngineGamePieceButton extends ButtonPanel
 {
     // info
-    private EngineGamePiece piece_;
+    private final EngineGamePiece piece_;
     
     /**
      * Creates a new instance of EngineGamePieceButton 

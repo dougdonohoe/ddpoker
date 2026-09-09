@@ -32,13 +32,16 @@
  */
 package com.donohoedigital.proto.tests;
 
-import java.net.*;
-import java.io.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.io.IOException;
 
 // java MulticastSnooper ALL-SYSTEMS.MCAST.NET 4000
 public class MulticastReceiver
 {
-	public static void main( String[] argv ) 
+	static void main() 
 	{
 		try 
 		{

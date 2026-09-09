@@ -34,8 +34,10 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.SwingUtilities;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -132,15 +134,11 @@ public class DDPagingTable extends DDPanel implements ActionListener
         refreshButton_.setEnabled(false);
 
         // invoke later to allow label to repaint and buttons to disable
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                 // Update the model and panel with the new offset.
-                DDPagingTableModel model = (DDPagingTableModel) table_.getDDTable().getModel();
-                model.refresh(offset_, rowCount_);
-                refreshPagingPanel();
-            }
+        SwingUtilities.invokeLater(() -> {
+            // Update the model and panel with the new offset.
+            DDPagingTableModel model = (DDPagingTableModel) table_.getDDTable().getModel();
+            model.refresh(offset_, rowCount_);
+            refreshPagingPanel();
         });
     }
 

@@ -32,13 +32,15 @@
  */
 package com.donohoedigital.games.poker.ai;
 
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
 
 public class HandProbabilityMatrix
 {
-    float prob_[][] = new float[52][52];
-    float score_[][] = new float[52][52];
+    float[][] prob_ = new float[52][52];
+    float[][] score_ = new float[52][52];
 
     Deck deck = new Deck(false);
 

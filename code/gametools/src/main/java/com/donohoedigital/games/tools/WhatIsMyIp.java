@@ -38,10 +38,16 @@
 
 package com.donohoedigital.games.tools;
 
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.comms.DDMessage;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.comms.Version;
+import com.donohoedigital.config.ApplicationType;
+import com.donohoedigital.config.ConfigManager;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.comms.EngineMessenger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author donohoe
@@ -95,7 +101,7 @@ public class WhatIsMyIp implements DDMessageListener
                                  EngineMessage.CAT_PUBLIC_IP);
     }
 
-    public static void main(String args[])
+    static void main()
     {
 
         new ConfigManager("poker", ApplicationType.COMMAND_LINE, false);

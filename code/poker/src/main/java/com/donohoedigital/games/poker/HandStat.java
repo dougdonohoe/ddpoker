@@ -39,8 +39,8 @@
 package com.donohoedigital.games.poker;
 
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.games.poker.engine.HandSorted;
 
 /**
  *

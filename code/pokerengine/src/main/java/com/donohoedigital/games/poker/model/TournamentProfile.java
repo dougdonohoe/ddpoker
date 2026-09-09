@@ -38,19 +38,28 @@
 
 package com.donohoedigital.games.poker.model;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.xml.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.config.DataElement;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.games.config.AbstractPlayerList;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.xml.SimpleXMLEncodable;
+import com.donohoedigital.xml.SimpleXMLEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.text.*;
-import java.util.*;
+import java.text.MessageFormat;
+import java.util.List;
 
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import static com.donohoedigital.config.DebugConfig.isTestingOn;
 
 /**
  * @author donohoe
@@ -335,7 +344,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         DMArrayList<String> list = (DMArrayList<String>) map_.getList(PARAM_PLAYERS);
         if (list == null)
         {
-            list = new DMArrayList<String>();
+            list = new DMArrayList<>();
             map_.setList(PARAM_PLAYERS, list);
         }
         else
@@ -358,7 +367,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public List<String> getPlayers()
     {
         DMArrayList<String> players = (DMArrayList<String>) map_.getList(PARAM_PLAYERS);
-        if (players == null) players = new DMArrayList<String>();
+        if (players == null) players = new DMArrayList<>();
         return players;
     }
 
@@ -405,7 +414,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     /**
      * PlayerList which stores data in TournamentProfile
      */
-    private static class InviteePlayerList extends AbstractPlayerList
+    private static final class InviteePlayerList extends AbstractPlayerList
     {
         TournamentProfile profile;
 
@@ -1090,7 +1099,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         int nPool = getPrizePool();
         int nNumSpots = getNumSpots();
         int nNonFinal = nNumSpots - nFinalSpots;
-        int amount[] = new int[nNumSpots];
+        int[] amount = new int[nNumSpots];
 
         int nMin = getTrueBuyin();
         // add a rebuy to min in actual tournament calculation
@@ -1187,7 +1196,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         }
         int nLeft = nNumSpots - nIndex;
         int sum;
-        int fibo[] = new int[Math.max(2, nNumSpots)];
+        int[] fibo = new int[Math.max(2, nNumSpots)];
 
         // STEP 1: do fibonnaci sequence
         fibo[0] = 2;

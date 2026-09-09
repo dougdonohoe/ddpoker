@@ -32,15 +32,19 @@
  */
 package com.donohoedigital.games.poker.dashboard;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.zookitec.layout.*;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
-import java.awt.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 
 /**
  * Created by IntelliJ IDEA.
@@ -53,9 +57,9 @@ public class DashboardPanel extends DDPanel
 {
     static Logger logger = LogManager.getLogger(DashboardPanel.class);
 
-    private DashboardManager mgr_;
-    private DDPanel dashitems_;
-    private DDScrollPane sp_;
+    private final DashboardManager mgr_;
+    private final DDPanel dashitems_;
+    private final DDScrollPane sp_;
 
     public DashboardPanel(DashboardManager mgr)
     {
@@ -186,16 +190,12 @@ public class DashboardPanel extends DDPanel
                              edit,
                              ContainerEF.right(dashBG).subtract(ComponentEF.preferredWidth(edit)),
                              ContainerEF.top(dashBG).add(5)));
-        edit.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                TypedHashMap params = new TypedHashMap();
-                params.setObject(DashboardEditorDialog.PARAM_DASHMGR, mgr_);
-                mgr_.getGame().getGameContext().processPhaseNow("DashboardEditorDialog", params);
-                sync();
-                mgr_.stateChanged();
-            }
+        edit.addActionListener(e -> {
+            TypedHashMap params = new TypedHashMap();
+            params.setObject(DashboardEditorDialog.PARAM_DASHMGR, mgr_);
+            mgr_.getGame().getGameContext().processPhaseNow("DashboardEditorDialog", params);
+            sync();
+            mgr_.stateChanged();
         });
 
         return dashBG;

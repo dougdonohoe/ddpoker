@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.wicket.labels;
 
-import com.donohoedigital.wicket.models.*;
+import com.donohoedigital.wicket.models.PluralModel;
 
 /**
  * @author Doug Donohoe

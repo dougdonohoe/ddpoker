@@ -38,7 +38,7 @@
 
 package com.donohoedigital.tools;
 
-import com.donohoedigital.server.*;
+import com.donohoedigital.server.GameServer;
 
 /**
  *
@@ -49,7 +49,7 @@ public class ProxyServer extends GameServer
     /**
      * Start up
      */
-	public static void main(String[] argv)
+	static void main()
     {
 		ProxyServer p = new ProxyServer();
         p.init();

@@ -38,25 +38,42 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.GameState;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 
 /**
  *
  * @author  Doug Donohoe
  */
-public class GameListPanel extends DDPanel implements ListSelectionListener,
+public final class GameListPanel extends DDPanel implements ListSelectionListener,
                                             PropertyChangeListener,
                                             ActionListener
 {
@@ -71,9 +88,9 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
     protected GameEngine engine_;
     protected GameContext context_;
     protected GamePhase gamephase_;
-    private String STYLE;
-    private int[] COLUMN_WIDTHS;
-    private String[] COLUMN_NAMES;
+    private final String STYLE;
+    private final int[] COLUMN_WIDTHS;
+    private final String[] COLUMN_NAMES;
     private DDTextField name_;
     private com.donohoedigital.gui.DDButton delete_;
     private DDTable saveTable_;
@@ -85,7 +102,7 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
     private boolean bOnlineSave_ = false;
     public boolean bOnlineLoad_ = false;
     private String sBegin_;
-    private boolean bDemo_;
+    private final boolean bDemo_;
     
     // save game info
     private static final int[] COLUMN_WIDTHS_LOAD = new int[] {
@@ -358,7 +375,7 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
             else
             {
                 if (dialog_ != null) dialog_.removeDialog();
-                logger.info("Loading saved game: " + selected_.getFile().getAbsolutePath());
+                logger.info("Loading saved game: {}", selected_.getFile().getAbsolutePath());
                 LoadSavedGame.loadGame(context_, selected_);
             }
         }
@@ -453,7 +470,7 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
      */
     private SaveTableModel getSavedFileModel()
     {
-        GameState saved[] = GameState.getSaveFileList(sBegin_, SAVE_EXT);
+        GameState[] saved = GameState.getSaveFileList(sBegin_, SAVE_EXT);
         return new SaveTableModel(saved);
     }
     
@@ -541,7 +558,7 @@ public class GameListPanel extends DDPanel implements ListSelectionListener,
         }
     }
 
-    private static CompareFile LISTSORTER = new CompareFile();
+    private static final CompareFile LISTSORTER = new CompareFile();
     
     /**
      * Sort in descending order (most recent at top)

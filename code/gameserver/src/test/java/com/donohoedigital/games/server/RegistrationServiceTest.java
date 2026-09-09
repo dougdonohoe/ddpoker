@@ -34,7 +34,8 @@ package com.donohoedigital.games.server;
 
 import com.donohoedigital.games.server.model.Registration;
 import com.donohoedigital.games.server.service.RegistrationService;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -70,7 +71,7 @@ public class RegistrationServiceTest
         Registration reg = ServerTestData.createRegistration("RegistrationServiceTest", "9999-8888-7777-6666");
         service.saveRegistration(reg);
 
-        logger.info("Saved: " + reg);
+        logger.info("Saved: {}", reg);
         assertNotNull(reg.getId());
 
         Registration reg2 = ServerTestData.createRegistration("RegistrationServiceTest", "9999-8888-7777-6666");

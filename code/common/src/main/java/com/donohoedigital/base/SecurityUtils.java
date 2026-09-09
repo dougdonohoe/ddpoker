@@ -32,10 +32,18 @@
  */
 package com.donohoedigital.base;
 
-import javax.crypto.*;
-import java.io.*;
-import java.security.*;
-import java.security.spec.*;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
 
 /**
  * Provides security related utility methods.  Base64 is used for all encoding.
@@ -309,7 +317,7 @@ public class SecurityUtils
     /**
      * Get secure random object
      */
-    public synchronized static SecureRandom getSecureRandom()
+    public static synchronized SecureRandom getSecureRandom()
     {
         if (random == null)
         {
@@ -328,8 +336,8 @@ public class SecurityUtils
     /**
      * get MD5 hash of string
      */
-    public static String getMD5Hash(String s, byte key[])
+    public static String getMD5Hash(String s, byte[] key)
     {
-        return hash(s.getBytes(), key, "MD5");
+        return hash(s.getBytes(StandardCharsets.UTF_8), key, "MD5");
     }
 }

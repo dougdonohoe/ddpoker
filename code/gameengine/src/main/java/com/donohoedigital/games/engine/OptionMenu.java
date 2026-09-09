@@ -38,13 +38,18 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,7 +64,7 @@ public abstract class OptionMenu extends BasePhase implements ChangeListener, Gu
     private MenuBackground menu_;
     protected DDPanel data_;
     private DDButton defaultButton_;
-    protected List<DDOption> options_ = new ArrayList<DDOption>();
+    protected List<DDOption> options_ = new ArrayList<>();
 
     /**
      * Get focus - typically overriden

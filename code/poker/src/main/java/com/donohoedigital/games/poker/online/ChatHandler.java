@@ -38,7 +38,7 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.games.poker.network.*;
+import com.donohoedigital.games.poker.network.OnlineMessage;
 
 /**
  *

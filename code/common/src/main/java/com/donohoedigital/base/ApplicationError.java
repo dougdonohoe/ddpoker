@@ -32,7 +32,8 @@
  */
 package com.donohoedigital.base;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is used to represent an application error condition.  It

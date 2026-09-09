@@ -32,11 +32,12 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.base.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.base.Utils;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by IntelliJ IDEA.
@@ -50,13 +51,13 @@ public class OutgoingQueue extends Thread
     static Logger logger = LogManager.getLogger(OutgoingQueue.class);
 
     // members
-    private LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
+    private final LinkedBlockingQueue queue_ = new LinkedBlockingQueue();
     private boolean bDone_ = false;
-    private AtomicLong bytesOnQueue_ = new AtomicLong(0);
+    private final AtomicLong bytesOnQueue_ = new AtomicLong(0);
     private int peak_ = 0;
 
     // control messages
-    private Object QUIT = new Object();
+    private final Object QUIT = new Object();
 
     /**
      * new dispatch queue
@@ -113,7 +114,7 @@ public class OutgoingQueue extends Thread
             }
             catch (Throwable t)
             {
-                logger.error("OutgoingQueue error: " + Utils.formatExceptionText(t));                
+                logger.error("OutgoingQueue error: {}", Utils.formatExceptionText(t));                
             }
         }
         logger.info("OutgoingQueue Done.");

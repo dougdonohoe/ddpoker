@@ -38,13 +38,22 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
 
-import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  *
@@ -161,7 +170,7 @@ public class DDTable extends JTable implements DDTextVisibleComponent, MouseList
     {
     }
 
-    private static ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
+    private static final ImageIcon exportIcon_ = ImageConfig.getImageIcon("menuicon.export");
 
     public void mouseReleased(MouseEvent e)
     {
@@ -187,12 +196,7 @@ public class DDTable extends JTable implements DDTextVisibleComponent, MouseList
             DDMenuItem item = new DDMenuItem(GuiManager.DEFAULT, "PopupMenu");
             item.setText(PropertyConfig.getMessage("menuitem.table.export"));
             item.setIcon(exportIcon_);
-            item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {
-                    exporter_.exportRequested(DDTable.this);
-                }
-            });
+            item.addActionListener(ae -> exporter_.exportRequested(DDTable.this));
             menu.add(item);
         }
 

@@ -36,8 +36,11 @@ import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.DDLabel;
 import com.donohoedigital.config.ImageConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 
 public class ChipRatingPanel extends DDPanel
@@ -46,7 +49,7 @@ public class ChipRatingPanel extends DDPanel
     private static final ImageIcon halfChip_ = ImageConfig.getImageIcon("rating16_half");
     private static final ImageIcon emptyChip_ = ImageConfig.getImageIcon("rating16_empty");
 
-    private JLabel chips_[] = new JLabel[5];
+    private final JLabel[] chips_ = new JLabel[5];
 
     int value_ = 0;
 

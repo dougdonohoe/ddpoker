@@ -32,9 +32,11 @@
  */
 package com.donohoedigital.base;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by IntelliJ IDEA.
@@ -229,9 +231,8 @@ public abstract class ManagedQueue<T>
         {
             if (!queue.offer(item, waitLimitWarningMillis, TimeUnit.MILLISECONDS))
             {
-                logger.warn("Exceeded " + waitLimitWarningMillis +
-                            " milliseconds waiting to add item: " + item);
-                logger.debug("All stacktraces at this time: \n" + Utils.getAllStacktraces());
+                logger.warn("Exceeded {} milliseconds waiting to add item: {}", waitLimitWarningMillis, item);
+                logger.debug("All stacktraces at this time: \n{}", Utils.getAllStacktraces());
                 if (waitLimitErrorMillis <= 0 || !queue.offer(item, waitLimitErrorMillis, TimeUnit.MILLISECONDS))
                 {
                     throw new ApplicationError("Exceeded " + waitLimitErrorMillis +
@@ -257,7 +258,7 @@ public abstract class ManagedQueue<T>
     /**
      * Thread which pulls items off the queue
      */
-    private class QueueThread extends Thread
+    private final class QueueThread extends Thread
     {
         private QueueThread()
         {

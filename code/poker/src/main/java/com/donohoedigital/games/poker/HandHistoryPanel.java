@@ -32,28 +32,35 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.db.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.db.BindArray;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HandHistoryPanel extends DDPanel
 {
 
     private String where_;
-    private BindArray bindArray_;
-    private HoldemHand currentHand_;
-    private int pageSize_;
+    private final BindArray bindArray_;
+    private final HoldemHand currentHand_;
+    private final int pageSize_;
 
     private int handCount_;
     private int handFirst_;
@@ -63,20 +70,20 @@ public class HandHistoryPanel extends DDPanel
 
     private List<Object> hands_;
 
-    private GameContext context_;
-    private DDTabbedPane tabs_;
-    private DDHtmlArea detailsHtmlArea_;
-    private DDHtmlArea summaryHtmlArea_;
-    private DDCheckBox showAllCheckbox_;
-    private DDCheckBox showReasonCheckbox_;
-    private ListPanel handsList_;
-    private JScrollPane summaryScroll_;
-    private DDLabel titleLabel_;
-    private DDLabel pagingLabel_;
-    private DDButton pageDownButton_;
-    private DDButton pageUpButton_;
-    private DDButton exportButton_;
-    private ImageIcon icon_ = ImageConfig.getImageIcon("ddlogo20");
+    private final GameContext context_;
+    private final DDTabbedPane tabs_;
+    private final DDHtmlArea detailsHtmlArea_;
+    private final DDHtmlArea summaryHtmlArea_;
+    private final DDCheckBox showAllCheckbox_;
+    private final DDCheckBox showReasonCheckbox_;
+    private final ListPanel handsList_;
+    private final JScrollPane summaryScroll_;
+    private final DDLabel titleLabel_;
+    private final DDLabel pagingLabel_;
+    private final DDButton pageDownButton_;
+    private final DDButton pageUpButton_;
+    private final DDButton exportButton_;
+    private final ImageIcon icon_ = ImageConfig.getImageIcon("ddlogo20");
 
     public HandHistoryPanel(GameContext context, String sStyle, String where, BindArray bindArray, HoldemHand currentHand, int pageSize)
     {
@@ -117,13 +124,8 @@ public class HandHistoryPanel extends DDPanel
         summaryHtmlArea_.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         handsList_ = new ListPanel(HandListItemPanel.class, sStyle);
-        handsList_.addListSelectionListener(new ListSelectionListener()
-        {
-            public void valueChanged(ListSelectionEvent e)
-            {
-                setHandIndex(handsList_.getSelectedIndex());
-            }
-        });
+        handsList_.addListSelectionListener(e ->
+            setHandIndex(handsList_.getSelectedIndex()));
         handsList_.setOpaque(false);
         handsList_.setBorder(BorderFactory.createEmptyBorder(4, 0, 4, 0));
         Insets insets = handsList_.getInsets();
@@ -149,36 +151,23 @@ public class HandHistoryPanel extends DDPanel
         pagingLabel_.setBorder(BorderFactory.createEmptyBorder(1, 0, 1, 0));
         pageDownButton_ = new GlassButton("pagedown", "Glass");
         pageDownButton_.addActionListener(
-                new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        handFirst_ -= pageSize_;
-                        setHands();
-                    }
-                }
+            e -> {
+                handFirst_ -= pageSize_;
+                setHands();
+            }
         );
         pageUpButton_ = new GlassButton("pageup", "Glass");
         pageUpButton_.addActionListener(
-                new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        handFirst_ += pageSize_;
-                        setHands();
-                    }
-                }
+            e -> {
+                handFirst_ += pageSize_;
+                setHands();
+            }
         );
 
         exportButton_ = new GlassButton("export", "Glass");
         exportButton_.addActionListener(
-                new ActionListener()
-                {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        export();
-                    }
-                }
+            e ->
+                export()
         );
 
         pagingButtonPanel.setLayout(new GridLayout(1, 3, 8, 0));
@@ -232,21 +221,12 @@ public class HandHistoryPanel extends DDPanel
 
         showAllCheckbox_.setSelected(PokerUtils.isCheatOn(context_, PokerConstants.OPTION_CHEAT_AIFACEUP));
 
-        showAllCheckbox_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                showReasonCheckbox_.setEnabled(showAllCheckbox_.isSelected());
-                setHistoryText();
-            }
+        showAllCheckbox_.addActionListener(e -> {
+            showReasonCheckbox_.setEnabled(showAllCheckbox_.isSelected());
+            setHistoryText();
         });
-        showReasonCheckbox_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                setHistoryText();
-            }
-        });
+        showReasonCheckbox_.addActionListener(e ->
+            setHistoryText());
 
         tabs_ = new DDTabbedPane(sStyle, null, DDTabbedPane.TOP);
 
@@ -277,7 +257,7 @@ public class HandHistoryPanel extends DDPanel
     private void setHands()
     {
         List<Integer> hands = PokerDatabase.getHandIDs(where_, bindArray_, handFirst_, pageSize_);
-        hands_ = new ArrayList<Object>(hands.size());
+        hands_ = new ArrayList<>(hands.size());
         for (int i = hands.size() - 1; i >= 0; --i)
         {
             hands_.add(hands.get(i));
@@ -290,7 +270,7 @@ public class HandHistoryPanel extends DDPanel
 
         handsList_.setItems(hands_);
 
-        if (hands_.size() == 0)
+        if (hands_.isEmpty())
         {
             titleLabel_.setText(PropertyConfig.getMessage("msg.nohistory"));
             pagingLabel_.setText("");
@@ -413,7 +393,7 @@ public class HandHistoryPanel extends DDPanel
             {
                 handHTML = hand.toHTML();
 
-                if (community.size() > 0)
+                if (!community.isEmpty())
                 {
                     info.getScore(hand, community);
                     handShown = "&nbsp;-&nbsp;" + info.toString(", ", false);

@@ -32,7 +32,7 @@
  */
 package com.donohoedigital.html;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -43,10 +43,10 @@ import java.util.*;
  */
 public class Table
 {
-    private ArrayList<TableColumn> cols_ = new ArrayList<TableColumn>();
-    private ArrayList<TableRow> rows_ = new ArrayList<TableRow>();
+    private final ArrayList<TableColumn> cols_ = new ArrayList<>();
+    private final ArrayList<TableRow> rows_ = new ArrayList<>();
 
-    private int CELLPADDING, CELLSPACING;
+    private final int CELLPADDING, CELLSPACING;
 
     public Table(int CELLSPACING, int CELLPADDING)
     {

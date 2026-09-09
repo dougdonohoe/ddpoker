@@ -45,7 +45,7 @@ import org.eclipse.jetty.server.Server;
  */
 public class PokerJetty {
 
-    public static void main(String[] args) {
+    static void main() {
 
         // initialize logging first
         LoggingConfig loggingConfig = new LoggingConfig("poker", ApplicationType.WEBAPP);

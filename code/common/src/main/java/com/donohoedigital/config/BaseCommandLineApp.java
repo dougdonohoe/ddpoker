@@ -38,7 +38,8 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.TypedHashMap;
 
 public abstract class BaseCommandLineApp
 {

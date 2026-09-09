@@ -38,14 +38,19 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.model.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.SecurityUtils;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.comms.TokenizedList;
+import com.donohoedigital.games.config.BaseProfile;
+import com.donohoedigital.games.config.SaveFile;
+import com.donohoedigital.games.poker.model.OnlineProfile;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.List;
 
 /**
  * @author donohoe
@@ -79,37 +84,37 @@ public class PlayerProfile extends BaseProfile
     public void debugPrint()
     {
         logger.debug("");
-        logger.debug("************ PROFILE for " + getName());
-        logger.debug("Wins: " + nWins_);
+        logger.debug("************ PROFILE for {}", getName());
+        logger.debug("Wins: {}", nWins_);
 
         // number of times each round is seen
         for (int i = 0; i < rounds_.length; i++)
         {
-            logger.debug("Round " + HoldemHand.getRoundName(i) + ": " + rounds_[i]);
+            logger.debug("Round {}: {}", HoldemHand.getRoundName(i), rounds_[i]);
             // flops seen - which position
             if (i == HoldemHand.ROUND_FLOP)
             {
                 for (int j = 0; j < flops_.length; j++)
                 {
-                    logger.debug("   Flops called from " + PokerPlayer.getPositionName(j) + ": " + flops_[j]);
+                    logger.debug("   Flops called from {}: {}", PokerPlayer.getPositionName(j), flops_[j]);
                 }
             }
         }
 
         // actions
-        logger.debug("Total Actions: " + nActionCnt_);
+        logger.debug("Total Actions: {}", nActionCnt_);
         for (int i = 0; i < actions_.length; i++)
         {
-            logger.debug("   Action " + HandAction.getActionName(i) + ": " + actions_[i]);
+            logger.debug("   Action {}: {}", HandAction.getActionName(i), actions_[i]);
         }
 
         // actions per round
         for (int i = 0; i < roundactions_.length; i++)
         {
-            logger.debug("Total Actions it round " + HoldemHand.getRoundName(i) + ": " + nRoundActionCnt_[i]);
+            logger.debug("Total Actions it round {}: {}", HoldemHand.getRoundName(i), nRoundActionCnt_[i]);
             for (int j = 0; j < roundactions_[0].length; j++)
             {
-                logger.debug("   Round " + HoldemHand.getRoundName(i) + ", Action " + HandAction.getActionName(j) + ": " + roundactions_[i][j]);
+                logger.debug("   Round {}, Action {}: {}", HoldemHand.getRoundName(i), HandAction.getActionName(j), roundactions_[i][j]);
             }
         }
     }
@@ -343,7 +348,7 @@ public class PlayerProfile extends BaseProfile
 
         List<TournamentHistory> history = getHistory();
         TournamentHistory hist;
-        if (history.size() == 0)
+        if (history.isEmpty())
         {
             return 0;
         }
@@ -369,7 +374,7 @@ public class PlayerProfile extends BaseProfile
 
         List<TournamentHistory> history = getHistory();
         TournamentHistory hist;
-        if (history.size() == 0)
+        if (history.isEmpty())
         {
             return 0;
         }

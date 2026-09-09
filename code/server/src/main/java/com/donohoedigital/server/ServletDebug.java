@@ -47,8 +47,8 @@ public class ServletDebug
     public static boolean bVerbose_ = true; // extra output
     public static boolean bDebug_ = true; // print URL
     // TODO: get from config file
-    private static String sFile_ = null;
-    private static boolean bAppend_ = true;
+    private static final String sFile_ = null;
+    private static final boolean bAppend_ = true;
     private static final String THIS_REQUEST_HANDLED="_trh_";
 
     public static void setVerbose(boolean b)
@@ -93,7 +93,7 @@ public class ServletDebug
 
     public static void printCookies(HttpServletRequest httpservletrequest)
     {
-        Cookie acookie[] = httpservletrequest.getCookies();
+        Cookie[] acookie = httpservletrequest.getCookies();
         if (acookie != null)
         {
             for(int i = 0; i < acookie.length; i++)

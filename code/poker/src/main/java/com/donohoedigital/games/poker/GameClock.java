@@ -32,7 +32,10 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
 
 import javax.swing.Timer;
 import java.awt.event.ActionListener;

@@ -38,14 +38,18 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.DialogPhase;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -140,7 +144,7 @@ public class SidePotsDialog extends DialogPhase
         
         PokerPlayer pl;
         StringBuilder sb = new StringBuilder();
-        List<PokerPlayer> players = new ArrayList<PokerPlayer>(p.getPlayers());
+        List<PokerPlayer> players = new ArrayList<>(p.getPlayers());
         Collections.sort(players, PokerPlayer.SORTBYNAME);
         boolean bWinner;
         for (int i = 0; i < nNum; i++)

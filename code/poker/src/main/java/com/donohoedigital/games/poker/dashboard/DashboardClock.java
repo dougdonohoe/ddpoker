@@ -40,8 +40,11 @@ import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
 import com.zookitec.layout.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 /**
  * Created by IntelliJ IDEA.
@@ -223,11 +226,5 @@ public class DashboardClock extends DashboardItem implements GameClockListener
     }
 
     // runnable for invoking clock ticked event in swing thread
-    private Runnable updateTimeRunner_ = new Runnable()
-                        {
-                            public void run()
-                            {
-                                updateTime();
-                            }
-                        };
+    private final Runnable updateTimeRunner_ = this::updateTime;
 }

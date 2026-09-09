@@ -38,15 +38,19 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameboardConfig;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.gui.Cursors;
+import com.donohoedigital.gui.InternalDialog;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import java.util.prefs.*;
+import java.util.Stack;
 
 /**
  *
@@ -492,13 +496,11 @@ public class ScrollGameboard extends JViewport implements
         board_.setScrolling(true);
         if (SCROLL_THREAD == null)
         {
-            SCROLL_THREAD = new Thread(new Runnable() {
-                    public void run() {
-                            while (bSCROLL) {
-                                scrollBoardAndWait();
-                            }
-                    }
-                }, "ScrollThread");
+            SCROLL_THREAD = new Thread(() -> {
+                while (bSCROLL) {
+                    scrollBoardAndWait();
+                }
+            }, "ScrollThread");
             SCROLL_THREAD.start();
         }
     }
@@ -541,10 +543,8 @@ public class ScrollGameboard extends JViewport implements
         {
             Utils.sleepMillis(CLICKTOSCROLL ? SCROLL_DELAY_MILLIS : SCROLL_DELAY_MILLIS_AUTO);
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {     
-                            if (bSCROLL && (bMOUSEDOWN || !CLICKTOSCROLL)) scrollBoard();
-                    }
+                () -> {
+                    if (bSCROLL && (bMOUSEDOWN || !CLICKTOSCROLL)) scrollBoard();
                 }
             );
         }
@@ -1002,7 +1002,7 @@ public class ScrollGameboard extends JViewport implements
     
     // handler for modal panels
     ModalHandler handler_ = new ModalHandler();
-    private Stack<JPanel> topPanels_ = new Stack<JPanel>();
+    private Stack<JPanel> topPanels_ = new Stack<>();
     private JPanel topPanel_ = null; // last modal panel
     
     /**
@@ -1028,7 +1028,7 @@ public class ScrollGameboard extends JViewport implements
         panel.removeMouseWheelListener(handler_);
         handler_.init();
         topPanels_.pop();
-        if (topPanels_.size() > 0)
+        if (!topPanels_.isEmpty())
         {
             topPanel_ = topPanels_.peek();
         }
@@ -1042,7 +1042,7 @@ public class ScrollGameboard extends JViewport implements
      */
     public boolean isModalMode()
     {
-        return topPanels_.size() > 0;
+        return !topPanels_.isEmpty();
     }
     
     /**

@@ -46,7 +46,7 @@ public class PlayerAction
     private int call_ = 0;
     private int bet_ = 0;
 
-    private int rand_;
+    private final int rand_;
     private int action_;
 
     private String sDebug_;

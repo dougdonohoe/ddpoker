@@ -38,10 +38,10 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
 
-import java.awt.*;
+import java.awt.Frame;
 
 /**
  *

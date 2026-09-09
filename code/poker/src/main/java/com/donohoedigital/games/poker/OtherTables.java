@@ -38,13 +38,19 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Utils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.games.poker.online.OnlineServer;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.config.PropertyConfig;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -105,7 +111,7 @@ public class OtherTables
         // sort array if more than one table
         if (tables.size() > 1)
         {
-            tables = new ArrayList<PokerTable>(tables);
+            tables = new ArrayList<>(tables);
             Collections.sort(tables, SORTFILLEDSEATS);
         }
 
@@ -290,7 +296,7 @@ public class OtherTables
 
         // get sorted array of tables (do each time since as players added, things change)
         // this is not super expensive as not many players are moved at any given time
-        List<PokerTable> tables = new ArrayList<PokerTable>(game.getTables());
+        List<PokerTable> tables = new ArrayList<>(game.getTables());
         Collections.sort(tables, SORTFILLEDSEATS);
         
         // otherwise add to table with least spots open
@@ -418,8 +424,8 @@ public class OtherTables
     /////
 
     // instances for sorting
-    private static SortChipsAtStart SORTCHIPSATSTART = new SortChipsAtStart();
-    private static SortFilledSeats SORTFILLEDSEATS = new SortFilledSeats();
+    private static final SortChipsAtStart SORTCHIPSATSTART = new SortChipsAtStart();
+    private static final SortFilledSeats SORTFILLEDSEATS = new SortFilledSeats();
     
     // sort players by chips they have at start of hand
     private static class SortChipsAtStart implements Comparator<PokerPlayer>

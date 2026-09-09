@@ -38,19 +38,26 @@
 
 package com.donohoedigital.games.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.server.model.*;
-import com.donohoedigital.games.server.model.util.*;
-import com.donohoedigital.games.server.service.*;
-import com.donohoedigital.jsp.*;
-import org.apache.logging.log4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.games.server.model.Registration;
+import com.donohoedigital.games.server.model.util.RegInfo;
+import com.donohoedigital.games.server.service.BannedKeyService;
+import com.donohoedigital.games.server.service.RegistrationService;
+import com.donohoedigital.jsp.JspFile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -86,14 +93,14 @@ public class RegAnalyzer
     private int numMac;
     private int numWindows;
     private int numLinux;
-    private List<Counter> monthCnt_ = new ArrayList<Counter>();
-    private List<Counter> weekCnt_ = new ArrayList<Counter>();
-    private List<Counter> dayCnt_ = new ArrayList<Counter>();
+    private List<Counter> monthCnt_ = new ArrayList<>();
+    private List<Counter> weekCnt_ = new ArrayList<>();
+    private List<Counter> dayCnt_ = new ArrayList<>();
     private int[] hourCnt_ = new int[24];
 
     // keys members
-    private List<RegInfo> suspectKeys_ = new ArrayList<RegInfo>();
-    private List<RegInfo> bannedKeys_ = new ArrayList<RegInfo>();
+    private List<RegInfo> suspectKeys_ = new ArrayList<>();
+    private List<RegInfo> bannedKeys_ = new ArrayList<>();
 
     // services
     private BannedKeyService bannedService;
@@ -102,7 +109,7 @@ public class RegAnalyzer
     /**
      * Implements command line application interface.
      */
-    private static class RegAnalyzerApp extends BaseCommandLineApp
+    private static final class RegAnalyzerApp extends BaseCommandLineApp
     {
         private RegAnalyzerApp(String sConfigName, String[] args)
         {
@@ -140,14 +147,14 @@ public class RegAnalyzer
     /**
      * Run analyzer
      */
-    public static void main(String[] args) 
+    static void main(String[] args) 
     {
         try
         {
             // Create app to parse command line options
             RegAnalyzerApp info = new RegAnalyzerApp("servertools", args);
 
-            logger.info("Analyzer initializing, params: " + Utils.toString(args, " "));
+            logger.info("Analyzer initializing, params: {}", Utils.toString(args, " "));
 
             // create application context
             ApplicationContext ctx = new ClassPathXmlApplicationContext("app-context-gameserver.xml");
@@ -191,7 +198,7 @@ public class RegAnalyzer
         // do the work
         long time = System.currentTimeMillis();
         doAnalyze();
-        logger.debug("Elapsed time: " + (System.currentTimeMillis() - time));
+        logger.debug("Elapsed time: {}", (System.currentTimeMillis() - time));
     }
 
     private void setOptions(TypedHashMap htOptions)
@@ -334,7 +341,7 @@ public class RegAnalyzer
 	private void doAnalyze()
 	{
         // load each file's registrations
-        logger.debug("RUNNING: scanning registration records in " + sGame_);
+        logger.debug("RUNNING: scanning registration records in {}", sGame_);
 
         // query values - banned keys are required; all other values are options
         doBannedKeys();

@@ -49,11 +49,11 @@ public class ThreadPool
 {
     static Logger logger = LogManager.getLogger(ThreadPool.class);
     
-    private GameServer server_;
-    private final List<SocketThread> idle_ = new LinkedList<SocketThread>();
-    private final List<SocketThread> workers_ = new ArrayList<SocketThread>();
-    private Class<?> socketClass_;
-    private BaseServlet servlet_;
+    private final GameServer server_;
+    private final List<SocketThread> idle_ = new LinkedList<>();
+    private final List<SocketThread> workers_ = new ArrayList<>();
+    private final Class<?> socketClass_;
+    private final BaseServlet servlet_;
 
     public ThreadPool(GameServer server, int poolSize, BaseServlet servlet, String sSocketClass)
     {
@@ -88,7 +88,7 @@ public class ThreadPool
     {
         if (bInfo)
         {
-            logger.info("Growing thread pool by " + nWorkers + " to " + (nWorkers + workers_.size()) + " workers.");
+            logger.info("Growing thread pool by {} to {} workers.", nWorkers, (nWorkers + workers_.size()));
         }
         SocketThread thread;
         for (int i = 0; i < nWorkers; i++)
@@ -149,7 +149,7 @@ public class ThreadPool
         SocketThread worker = null;
 
         synchronized (idle_) {
-            if (idle_.size() > 0) {
+            if (!idle_.isEmpty()) {
                 worker = idle_.remove(0);
             }
         }

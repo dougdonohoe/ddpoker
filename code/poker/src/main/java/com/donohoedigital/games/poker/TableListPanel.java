@@ -32,17 +32,25 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.OptionMenu;
+import com.donohoedigital.games.engine.TableExporter;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,11 +64,11 @@ public class TableListPanel extends DDTabPanel implements ChangeListener, Action
 {
     private static final int NUMDISPLAY = 2;
 
-    private GameContext context_;
-    private PokerGame game_;
-    private String STYLE;
+    private final GameContext context_;
+    private final PokerGame game_;
+    private final String STYLE;
     private DDPanel tbls_;
-    private TablePanel tables_[];
+    private TablePanel[] tables_;
     private DDSlider slider_;
     private DDCheckBox showtype_;
 
@@ -221,7 +229,7 @@ public class TableListPanel extends DDTabPanel implements ChangeListener, Action
             clabel.setText("<HTML><B><font color=yellow>"+table.getName()+"</font></B>");
 
             int nNumObs = table.getNumObservers();
-            List<ChipLeaderPanel.RankInfo> players = new ArrayList<ChipLeaderPanel.RankInfo>(PokerConstants.SEATS + nNumObs);
+            List<ChipLeaderPanel.RankInfo> players = new ArrayList<>(PokerConstants.SEATS + nNumObs);
             PokerPlayer p;
             for (int i = 0; i < PokerConstants.SEATS; i++)
             {

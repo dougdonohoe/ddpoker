@@ -38,16 +38,17 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.poker.online.TournamentDirector;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.gui.GuiUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -162,11 +163,8 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
 
             // do processing
             SwingUtilities.invokeLater(
-                new Runnable() {
-                    public void run() {
-                            playerActionPerformed(0,0);
-                    }
-                }
+                () ->
+                    playerActionPerformed(0, 0)
             );
         }
     }
@@ -219,7 +217,7 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
             if (player == null) continue;
 
             // repaint players with non-empty hands
-            if (player.getHand().size() > 0)
+            if (!player.getHand().isEmpty())
             {
                 repaint(player);
             }
@@ -251,11 +249,8 @@ public class ColorUpFinish extends ChainPhase implements PlayerActionListener, R
     {
         final Territory t = PokerUtils.getTerritoryForTableSeat(table_, player.getSeat());
         GuiUtils.invokeAndWait(
-            new Runnable() {
-                public void run() {
-                    PokerUtils.getGameboard().repaintTerritory(t, true);
-                }
-            }
+            () ->
+                PokerUtils.getGameboard().repaintTerritory(t, true)
         );
     }
     

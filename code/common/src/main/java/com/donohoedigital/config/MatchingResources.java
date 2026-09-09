@@ -32,16 +32,20 @@
  */
 package com.donohoedigital.config;
 
-import org.apache.logging.log4j.*;
-import org.springframework.core.io.*;
-import org.springframework.core.io.support.*;
-import org.springframework.core.type.*;
-import org.springframework.core.type.classreading.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.core.type.ClassMetadata;
+import org.springframework.core.type.classreading.MetadataReader;
+import org.springframework.core.type.classreading.MetadataReaderFactory;
 
-import java.io.*;
-import java.lang.annotation.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class to get matching resources - uses Spring's {@link PathMatchingResourcePatternResolver}.

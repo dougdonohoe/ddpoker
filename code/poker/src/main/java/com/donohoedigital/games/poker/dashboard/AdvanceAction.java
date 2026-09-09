@@ -42,8 +42,8 @@ import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JComponent;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class AdvanceAction extends DashboardItem implements ActionListener
     private static AdvanceAction impl_; // TODO store in PokerGame or PokerContext
 
     private DDPanel cheatbase_;
-    private ArrayList buttons_ = new ArrayList();
+    private final ArrayList buttons_ = new ArrayList();
     private DDLabel label_;
     private Advance checkfold_;
     private Advance call_;
@@ -376,7 +376,7 @@ public class AdvanceAction extends DashboardItem implements ActionListener
      */
     public static HandAction getAdvanceAction()
     {
-        if (impl_ != null && impl_.buttons_.size() != 0)
+        if (impl_ != null && !impl_.buttons_.isEmpty())
         {
             HandAction action = impl_._getAdvanceAction();
             impl_.clearButtons();

@@ -38,24 +38,8 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.gui.*;
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.comms.*;
-
-import java.io.*;
-import java.awt.*;
-import java.awt.image.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import javax.swing.border.*;
-import javax.swing.text.*;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.games.comms.EngineMessage;
 
 /**
  *

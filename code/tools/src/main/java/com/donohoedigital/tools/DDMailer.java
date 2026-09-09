@@ -38,13 +38,21 @@
 
 package com.donohoedigital.tools;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.mail.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.mail.DDPostalService;
+import com.donohoedigital.mail.DDPostalServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * @author Doug Donohoe
@@ -59,7 +67,7 @@ public class DDMailer extends BaseCommandLineApp
     private String sKey_;
     private File file_;
     private String sFrom_;
-    private List<Object[]> params_ = new ArrayList<Object[]>();
+    private List<Object[]> params_ = new ArrayList<>();
 
     // debugging/testing - limit number of emails sent
     private int LIMIT = 0;
@@ -70,7 +78,7 @@ public class DDMailer extends BaseCommandLineApp
     /**
      * Run emailer
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try
         {
@@ -125,11 +133,11 @@ public class DDMailer extends BaseCommandLineApp
         // get key
         sKey_ = htOptions_.getString("key");
         sFrom_ = htOptions_.getString("from");
-        logger.info("Message key: " + sKey_);
-        logger.info("From: " + sFrom_);
+        logger.info("Message key: {}", sKey_);
+        logger.info("From: {}", sFrom_);
 
         // debug?
-        if (DEBUG && TESTTO != null) logger.debug("DEBUG:  all mail goes to " + TESTTO);
+        if (DEBUG && TESTTO != null) logger.debug("DEBUG:  all mail goes to {}", TESTTO);
 
         // load params file
         String sFile = htOptions_.getString("file");
@@ -156,7 +164,7 @@ public class DDMailer extends BaseCommandLineApp
         {
             String sLine;
             StringTokenizer token;
-            Object o[];
+            Object[] o;
             int nCnt;
             while ((sLine = buf.readLine()) != null)
             {
@@ -182,7 +190,7 @@ public class DDMailer extends BaseCommandLineApp
      */
     private void doEmail()
     {
-        Object o[];
+        Object[] o;
         String sEmail;
         String sProcess;
         boolean bProcess;
@@ -196,13 +204,13 @@ public class DDMailer extends BaseCommandLineApp
 
             if (bProcess)
             {
-                logger.debug("SENDING to " + sEmail);
+                logger.debug("SENDING to {}", sEmail);
                 sendEmail(sEmail, PropertyConfig.getMessage("email." + sKey_ + ".sub", o),
                           PropertyConfig.getMessage("email." + sKey_, o));
             }
             else
             {
-                logger.debug("SKIPPING " + sEmail);
+                logger.debug("SKIPPING {}", sEmail);
             }
 
             if (DEBUG && (i + 1) == LIMIT) break;

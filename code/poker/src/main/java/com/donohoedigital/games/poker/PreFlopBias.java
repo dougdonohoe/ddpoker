@@ -32,12 +32,12 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.poker.ai.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.engine.Card;
 
 public class PreFlopBias
 {
-    private static String openavgfull =
+    private static final String openavgfull =
             "E E E M M M L L L D D D D "+
             "E E M L L L D D           "+
             "M L E M l D d             "+
@@ -52,7 +52,7 @@ public class PreFlopBias
             "D                     l   "+
             "D                       l ";
     
-    private static String opentightfull =
+    private static final String opentightfull =
             "E E M M M L L l D D D D D "+
             "E E M L L D D d           "+
             "M L E M l D d             "+
@@ -67,7 +67,7 @@ public class PreFlopBias
             "d                     D   "+
             "d                       D ";
             
-    private static String openloosefull =
+    private static final String openloosefull =
             "E E E E M M M M L L L D D "+
             "E E M L L L D D D d       "+
             "M L E M l D D d           "+
@@ -82,7 +82,7 @@ public class PreFlopBias
             "D                     L   "+
             "D                       L ";
     
-    private static String openavgshort =
+    private static final String openavgshort =
             "E E E E E M M M M L L L L "+
             "E E E E M L L D D d d     "+
             "E L E E M L D D d         "+

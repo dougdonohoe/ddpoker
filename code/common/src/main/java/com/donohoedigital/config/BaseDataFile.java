@@ -38,12 +38,14 @@
 
 package com.donohoedigital.config;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.Format;
+import com.donohoedigital.comms.TokenizedList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -135,7 +137,7 @@ public abstract class BaseDataFile
         long lastMod2 = file_.lastModified();
         if (lastMod_ != 0 && lastMod2 != lastMod_)
         {
-            logger.warn("Saving file " + file_.getAbsolutePath() + ", but last modified changed from " + lastMod_ + " to " + lastMod2);
+            logger.warn("Saving file {}, but last modified changed from {} to {}", file_.getAbsolutePath(), lastMod_, lastMod2);
         }
         
         // this actually changes last mod date!

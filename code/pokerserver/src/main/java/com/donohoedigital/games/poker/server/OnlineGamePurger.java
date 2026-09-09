@@ -32,16 +32,21 @@
  */
 package com.donohoedigital.games.poker.server;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.poker.model.*;
-import com.donohoedigital.games.poker.service.*;
-import org.apache.logging.log4j.*;
-import org.springframework.context.*;
-import org.springframework.context.support.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.CommandLine;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.BaseCommandLineApp;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.service.OnlineGameService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.text.*;
-import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Command line tool to clean up old WAN games.
@@ -60,7 +65,7 @@ public class OnlineGamePurger extends BaseCommandLineApp
     /**
      * Run purger.
      */
-    public static void main(String[] args)
+    static void main(String[] args)
     {
         try {
             new OnlineGamePurger("poker", args);

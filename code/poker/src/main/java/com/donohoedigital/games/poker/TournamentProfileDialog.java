@@ -38,25 +38,34 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.DMTypedHashMap;
+import com.donohoedigital.config.ImageConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.ai.gui.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.games.poker.ai.gui.OpponentMixPanel;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
-import static com.donohoedigital.config.DebugConfig.*;
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * @author Doug Donohoe
@@ -66,14 +75,14 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     static Logger logger = LogManager.getLogger(TournamentProfileDialog.class);
 
     static com.donohoedigital.base.Format fPerc = new com.donohoedigital.base.Format("%1.3f");
-    private javax.swing.border.Border empty_ = null;
+    private final javax.swing.border.Border empty_ = null;
     private TournamentProfile profile_;
     private PokerGame game_; // used when editing during a tournament
-    private TypedHashMap dummy_ = new TypedHashMap();
-    private TypedHashMap labelignore_ = new TypedHashMap();
+    private final TypedHashMap dummy_ = new TypedHashMap();
+    private final TypedHashMap labelignore_ = new TypedHashMap();
     private TypedHashMap orig_;
-    private ArrayList rebuyOptions_ = new ArrayList();
-    private ArrayList addonOptions_ = new ArrayList();
+    private final ArrayList rebuyOptions_ = new ArrayList();
+    private final ArrayList addonOptions_ = new ArrayList();
     private DDPanel base_;
     private DDTextField name_;
     private DDNumberSpinner numPlayers_;
@@ -87,9 +96,9 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     private DDRadioButton buttonAuto_, buttonPerc_, buttonAmount_;
     private DDRadioButton buttonSatellite_;
     private boolean bDetailsTabReady_ = false;
-    private SpotPanel spots_[] = new SpotPanel[TournamentProfile.MAX_SPOTS];
-    private String saveA_[] = new String[TournamentProfile.MAX_SPOTS];
-    private String saveP_[] = new String[TournamentProfile.MAX_SPOTS];
+    private final SpotPanel[] spots_ = new SpotPanel[TournamentProfile.MAX_SPOTS];
+    private final String[] saveA_ = new String[TournamentProfile.MAX_SPOTS];
+    private final String[] saveP_ = new String[TournamentProfile.MAX_SPOTS];
     private int nNumSpots_ = 0;
     private DDRadioButton buttonSelected_;
     private DDButton clear_;
@@ -297,14 +306,10 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             GlassButton invitees = new GlassButton("invitees", "Glass");
             invitees.setBorderGap(2, 4, 2, 4);
             invitees.setPreferredSize(new Dimension(75, 15));
-            invitees.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent e)
-                {
-                    TypedHashMap params = new TypedHashMap();
-                    params.setObject(PlayerListDialog.PARAM_PLAYER_LIST, profile_.getInvitees());
-                    context_.processPhaseNow("InvitedPlayerList", params);
-                }
+            invitees.addActionListener(e -> {
+                TypedHashMap params = new TypedHashMap();
+                params.setObject(PlayerListDialog.PARAM_PLAYER_LIST, profile_.getInvitees());
+                context_.processPhaseNow("InvitedPlayerList", params);
             });
 
             OptionBoolean obs = new OptionBoolean(null, TournamentProfile.PARAM_INVITE_OBS, STYLE, dummy_, true);
@@ -1093,13 +1098,8 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         // clear button
         clear_ = new GlassButton("clear", "Glass");
         left.add(GuiUtils.NORTH(GuiUtils.CENTER(clear_)), BorderLayout.CENTER);
-        clear_.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                clearSpots();
-            }
-        });
+        clear_.addActionListener(e ->
+            clearSpots());
 
         // amount fields
         DDPanel center = new DDPanel();

@@ -32,17 +32,27 @@
  */
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.comms.*;
-import com.donohoedigital.games.comms.*;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.model.*;
+import com.donohoedigital.base.TypedHashMap;
+import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.comms.DMArrayList;
+import com.donohoedigital.games.comms.EngineMessage;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
+import com.donohoedigital.games.engine.GameMessenger;
+import com.donohoedigital.games.engine.SendMessageDialog;
+import com.donohoedigital.games.poker.PlayerProfile;
+import com.donohoedigital.games.poker.PokerGame;
+import com.donohoedigital.games.poker.PokerMain;
+import com.donohoedigital.games.poker.PokerPlayer;
+import com.donohoedigital.games.poker.model.OnlineGame;
+import com.donohoedigital.games.poker.model.TournamentHistory;
 import static com.donohoedigital.games.poker.model.TournamentHistory.*;
-import com.donohoedigital.games.poker.network.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Provides access to server online game services.
@@ -51,9 +61,9 @@ import java.util.*;
  */
 public class OnlineServer
 {
-    private static Logger logger = LogManager.getLogger(OnlineServer.class);
+    private static final Logger logger = LogManager.getLogger(OnlineServer.class);
 
-    private static OnlineServer manager_ = new OnlineServer();
+    private static final OnlineServer manager_ = new OnlineServer();
 
     /**
      * Get a manager instance.
@@ -100,7 +110,7 @@ public class OnlineServer
         // since failing to remove the game should not affect the user interaction
         OnlineMessage reqOnlineMsg = new OnlineMessage(OnlineMessage.CAT_WAN_GAME_REMOVE);
         OnlineGame onlineGame = createOnlineGame(game.getGameContext());
-        logger.debug("Sending game: " + onlineGame);
+        logger.debug("Sending game: {}", onlineGame);
         reqOnlineMsg.setWanGame(onlineGame.getData());
         EngineMessage reqEngineMsg = new EngineMessage();
         reqOnlineMsg.getData().copyTo(reqEngineMsg);
@@ -186,7 +196,7 @@ public class OnlineServer
 
             if (histories == null)
             {
-                histories = new DMArrayList<TournamentHistory>();
+                histories = new DMArrayList<>();
             }
 
             history = createTournamentHistory(game, player, nRank);
@@ -197,9 +207,9 @@ public class OnlineServer
         int category = bDone ? OnlineMessage.CAT_WAN_GAME_END : OnlineMessage.CAT_WAN_GAME_STOP;
         OnlineGame onlineGame = getServerGame(game.getGameContext(), category);
         OnlineMessage reqOnlineMsg = new OnlineMessage(category);
-        logger.debug("Sending game: " + onlineGame);
+        logger.debug("Sending game: {}", onlineGame);
         reqOnlineMsg.setWanGame(onlineGame.getData());
-        logger.debug("Sending histories: " + histories);
+        logger.debug("Sending histories: {}", histories);
         if (histories != null) reqOnlineMsg.setWanHistories(histories);
         EngineMessage reqEngineMsg = new EngineMessage();
         reqOnlineMsg.getData().copyTo(reqEngineMsg);
@@ -280,7 +290,7 @@ public class OnlineServer
 
         if (resMsg.getStatus() == DDMessageListener.STATUS_APPL_ERROR)
         {
-            logger.error("WAN Game server error: " + resMsg.getApplicationErrorMessage());
+            logger.error("WAN Game server error: {}", resMsg.getApplicationErrorMessage());
         }
     }
 }

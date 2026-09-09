@@ -90,10 +90,10 @@ public class OnlineProfileSearch extends AdminPokerPage
         add(new BoxPagingNavigator("navigator", dataView, new BasicPluralLabelProvider("player", "players")));
 
         // form data
-        CompoundPropertyModel<SearchData> formData = new CompoundPropertyModel<SearchData>(data);
+        CompoundPropertyModel<SearchData> formData = new CompoundPropertyModel<>(data);
 
         // form
-        Form<SearchData> form = new Form<SearchData>("form", formData)
+        Form<SearchData> form = new Form<>("form", formData)
         {
             private static final long serialVersionUID = 42L;
 
@@ -106,7 +106,7 @@ public class OnlineProfileSearch extends AdminPokerPage
         };
         add(form);
 
-        TextField<String> nameText = new TextField<String>("name");
+        TextField<String> nameText = new TextField<>("name");
         nameText.add(new DefaultFocus());
 
         form.add(nameText);
@@ -201,7 +201,7 @@ public class OnlineProfileSearch extends AdminPokerPage
     /**
      * The leaderboard table
      */
-    private class GameListTableView extends CountDataView<OnlineProfile>
+    private final class GameListTableView extends CountDataView<OnlineProfile>
     {
         private static final long serialVersionUID = 42L;
 

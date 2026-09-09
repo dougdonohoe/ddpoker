@@ -32,12 +32,18 @@
  */
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.plaf.*;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import javax.swing.JComponent;
+import javax.swing.plaf.ComponentUI;
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Created by IntelliJ IDEA.
@@ -60,7 +66,7 @@ public class GlassButtonUI extends DDButtonUI
     private static final Color SHADOW = new Color(0,0,0,100);
     private static final Color HILITE = new Color(255,255,255,75);
 
-    private final static GlassButtonUI gButtonUI = new GlassButtonUI();
+    private static final GlassButtonUI gButtonUI = new GlassButtonUI();
 
     public static ComponentUI createUI(JComponent c) {
         return gButtonUI;
@@ -85,7 +91,7 @@ public class GlassButtonUI extends DDButtonUI
         paintReflections(g, gb);
     }
 
-    private Rectangle bounds_ = new Rectangle();
+    private final Rectangle bounds_ = new Rectangle();
     private java.awt.geom.Area cliparea_;
     private Shape button_;
     private Area buttonarea_;

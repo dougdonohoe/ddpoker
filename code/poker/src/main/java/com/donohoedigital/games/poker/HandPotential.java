@@ -35,14 +35,18 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
+import com.donohoedigital.base.ApplicationError;
+import static com.donohoedigital.config.DebugConfig.TESTING;
 import com.donohoedigital.config.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Deck;
+import com.donohoedigital.games.poker.engine.Hand;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
 
 @SuppressWarnings({"DuplicatedCode", "CommentedOutCode", "StringConcatenationArgumentToLogCall"})
 public class HandPotential
@@ -827,7 +831,7 @@ public class HandPotential
     /**
      * Testing
      */
-    public static void main(String[] args)
+    static void main()
     {
         LoggingConfig loggingConfig = new LoggingConfig("plain", ApplicationType.COMMAND_LINE);
         loggingConfig.init();

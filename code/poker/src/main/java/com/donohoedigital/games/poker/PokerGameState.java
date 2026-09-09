@@ -38,11 +38,13 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.games.poker.engine.*;
+import com.donohoedigital.games.config.GameState;
+import com.donohoedigital.games.config.Territory;
+import com.donohoedigital.games.poker.engine.PokerConstants;
 
-import java.beans.*;
-import java.io.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
 
 /**
  * Our own version of GameState - used to override starting ID (primary)
@@ -148,7 +150,7 @@ public class PokerGameState extends GameState implements PropertyChangeListener
     public void setIds()
     {
         resetIds();
-        Territory territories[] = Territory.getTerritoryArrayCached();
+        Territory[] territories = Territory.getTerritoryArrayCached();
         prepopulateIds(game_, territories, game_, game_);
     }
 }

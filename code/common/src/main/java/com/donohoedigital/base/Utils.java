@@ -32,16 +32,28 @@
  */
 package com.donohoedigital.base;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Desktop;
 import java.io.*;
-import java.net.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.nio.charset.*;
-import java.text.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.channels.DatagramChannel;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CodingErrorAction;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class Utils
@@ -301,11 +313,11 @@ public class Utils
         Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
 
         // sort map
-        Map<Thread, StackTraceElement[]> smap = new TreeMap<Thread, StackTraceElement[]>(TC);
+        Map<Thread, StackTraceElement[]> smap = new TreeMap<>(TC);
         smap.putAll(map);
         Iterator<Thread> iter = smap.keySet().iterator();
         Thread t;
-        Object stackitems[];
+        Object[] stackitems;
         while (iter.hasNext())
         {
             t = iter.next();
@@ -853,7 +865,7 @@ public class Utils
     public static File[] getFileList(File fDir, String sExt, String sBeginsWith)
     {
         UtilFileFilter filter = new UtilFileFilter(sExt, sBeginsWith);
-        File list[] = fDir.listFiles(filter);
+        File[] list = fDir.listFiles(filter);
         Arrays.sort(list);
         return list;
     }
@@ -934,7 +946,7 @@ public class Utils
     /**
      * Filter by extension
      */
-    private static class UtilFileFilter implements FilenameFilter
+    private static final class UtilFileFilter implements FilenameFilter
     {
         String sExt;
         String sBeginsWith = null;

@@ -38,8 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.ButtonModel;
+import javax.swing.Icon;
+import javax.swing.JCheckBox;
+import javax.swing.SwingUtilities;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 
 /**

@@ -38,15 +38,24 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.gui.CenterLayout;
+import com.donohoedigital.gui.DDButton;
+import com.donohoedigital.gui.DDPanel;
+import com.donohoedigital.gui.GlassButton;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.BorderFactory;
+import javax.swing.JRootPane;
+import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -128,7 +137,7 @@ public class ButtonBox extends DDPanel implements AncestorListener
         
         if (sEnter != null && sEnter.length() > 0 && bDefaultSet == false)
         {
-            logger.warn("Unable to set enter button " + sEnter + " (no matching button found)");
+            logger.warn("Unable to set enter button {} (no matching button found)", sEnter);
         }
         
         if (bVertical) {

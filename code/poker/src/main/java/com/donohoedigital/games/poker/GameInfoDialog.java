@@ -53,8 +53,14 @@ import com.donohoedigital.gui.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.sql.Types;
 
 /**
@@ -69,7 +75,7 @@ public class GameInfoDialog extends DialogPhase
     private PokerGame game_;
     private TournamentProfile profile_;
     private DDTabbedPane tab_;
-    private ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
+    private final ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
     private boolean bLobbyMode_;
 
     /**

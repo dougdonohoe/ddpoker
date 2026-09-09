@@ -32,9 +32,9 @@
  */
 package com.donohoedigital.wicket.models;
 
-import org.apache.wicket.model.*;
+import org.apache.wicket.model.Model;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.

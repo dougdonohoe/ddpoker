@@ -38,9 +38,9 @@
 
 package com.donohoedigital.gui;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.*;
-import java.awt.*;
+import javax.swing.JList;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import java.awt.Component;
 
 /**
  *

@@ -38,9 +38,13 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.comms.*;
+import com.donohoedigital.comms.DataCoder;
+import com.donohoedigital.comms.DataMarshal;
+import com.donohoedigital.comms.MsgState;
+import com.donohoedigital.comms.TokenizedList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author donohoe
@@ -56,8 +60,8 @@ public class Pot implements DataMarshal
     private boolean bBaseAllIn_ = false;
     private int nSideBet_ = NO_SIDE; // used for side pots
     private int nRound_;
-    private List<PokerPlayer> players_ = new ArrayList<PokerPlayer>();
-    private List<PokerPlayer> winners_ = new ArrayList<PokerPlayer>();
+    private List<PokerPlayer> players_ = new ArrayList<>();
+    private List<PokerPlayer> winners_ = new ArrayList<>();
 
     /**
      * empty constructor for loading

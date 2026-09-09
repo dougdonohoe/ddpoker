@@ -38,22 +38,28 @@
 
 package com.donohoedigital.games.poker.online;
 
-import com.donohoedigital.base.*;
-import static com.donohoedigital.config.DebugConfig.*;
-import com.donohoedigital.config.*;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.base.Utils;
+import static com.donohoedigital.config.DebugConfig.TESTING;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.config.StylesConfig;
+import com.donohoedigital.games.engine.GameContext;
+import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.*;
-import com.donohoedigital.games.poker.network.*;
-import com.donohoedigital.games.poker.engine.*;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.poker.network.OnlineMessage;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 
 /**
  *
@@ -63,12 +69,12 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 {
     static Logger logger = LogManager.getLogger(ChatPanel.class);
 
-    private boolean bOnlineInGame_;
+    private final boolean bOnlineInGame_;
     private int nDisplayOpt_ = -1;
     private JComponent center_;
 
-    private GameContext context_;
-    private PokerGame game_;
+    private final GameContext context_;
+    private final PokerGame game_;
     private PokerPlayer local_;
     private ChatManager mgr_;
 
@@ -120,7 +126,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         createContents();
     }
 
-    private GameListener gamelistener_ = new GameListener();
+    private final GameListener gamelistener_ = new GameListener();
 
     /**
      * Game loaded, reset local player in chat (can change if we disconnect/reconnect)
@@ -193,19 +199,16 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
         // clear button
         GlassButton clear = new GlassButton("chat.clear", "Glass");
-        clear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
+        clear.addActionListener(e -> {
+            if (center_ == tab_)
             {
-                if (center_ == tab_)
-                {
-                    ChatTab tab = (ChatTab) tab_.getSelectedComponent();
-                    tab.chatList.removeAllItems();
-                }
-                else
-                {
-                    chatList_[0].removeAllItems();
-                    if (chatList_[1] != null) chatList_[1].removeAllItems();
-                }
+                ChatTab tab = (ChatTab) tab_.getSelectedComponent();
+                tab.chatList.removeAllItems();
+            }
+            else
+            {
+                chatList_[0].removeAllItems();
+                if (chatList_[1] != null) chatList_[1].removeAllItems();
             }
         });
 
@@ -230,14 +233,11 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
             // send button
             GlassButton send = new GlassButton("chat.send", "Glass");
-            send.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
+            send.addActionListener(e -> {
+                // make sure we have something to send
+                if (msg_.isValidData())
                 {
-                    // make sure we have something to send
-                    if (msg_.isValidData())
-                    {
-                        sendChat();
-                    }
+                    sendChat();
                 }
             });
             msg_.setDefaultOverride(send);
@@ -250,14 +250,11 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 {
                     // send button
                     GlassButton sendall = new GlassButton("chat.sendall", "Glass");
-                    sendall.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e)
+                    sendall.addActionListener(e -> {
+                        // make sure we have something to send
+                        if (msg_.isValidData())
                         {
-                            // make sure we have something to send
-                            if (msg_.isValidData())
-                            {
-                                sendChatAll();
-                            }
+                            sendChatAll();
                         }
                     });
                     buttonbase.add(sendall);
@@ -266,14 +263,11 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 {
                     // send button
                     GlassButton sendhost = new GlassButton("chat.sendhost", "Glass");
-                    sendhost.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e)
+                    sendhost.addActionListener(e -> {
+                        // make sure we have something to send
+                        if (msg_.isValidData())
                         {
-                            // make sure we have something to send
-                            if (msg_.isValidData())
-                            {
-                                sendChatPrivate(PokerPlayer.HOST_ID);
-                            }
+                            sendChatPrivate(PokerPlayer.HOST_ID);
                         }
                     });
                     buttonbase.add(sendhost);
@@ -292,37 +286,27 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 startTest_ = new GlassButton(GuiManager.DEFAULT, "Glass");
                 startTest_.setText("Start");
                 buttonbase.add(startTest_);
-                startTest_.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        startTest_.setEnabled(false);
-                        stopTest_.setEnabled(true);
-                        startTest();
-                    }
+                startTest_.addActionListener(e -> {
+                    startTest_.setEnabled(false);
+                    stopTest_.setEnabled(true);
+                    startTest();
                 });
 
                 stopTest_ = new GlassButton(GuiManager.DEFAULT, "Glass");
                 stopTest_.setText("Stop");
                 stopTest_.setEnabled(false);
                 buttonbase.add(stopTest_);
-                stopTest_.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        startTest_.setEnabled(true);
-                        stopTest_.setEnabled(false);
-                        stopTest();
-                    }
+                stopTest_.addActionListener(e -> {
+                    startTest_.setEnabled(true);
+                    stopTest_.setEnabled(false);
+                    stopTest();
                 });
 
                 GlassButton dump = new GlassButton(GuiManager.DEFAULT, "Glass");
                 dump.setText("Dump");
                 buttonbase.add(dump);
-                dump.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e)
-                    {
-                        logger.debug("Thread dump:\n" + Utils.getAllStacktraces());
-                    }
-                });
+                dump.addActionListener(e ->
+                    logger.debug("Thread dump:\n{}", Utils.getAllStacktraces()));
             }
         }
         else
@@ -348,15 +332,12 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         if (!profile.isActivated()) return;
 
         GlassButton lobby = new GlassButton("chat.lobby", "Glass");
-        lobby.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {
-                    if (OnlineLobby.showLobby(GameEngine.getGameEngine(), context_, PlayerProfileOptions.getDefaultProfile()))
-                    {
-                        context_.processPhase("OnlineLobby");
-                    }
-                }
-            });
+        lobby.addActionListener(e -> {
+            if (OnlineLobby.showLobby(GameEngine.getGameEngine(), context_, PlayerProfileOptions.getDefaultProfile()))
+            {
+                context_.processPhase("OnlineLobby");
+            }
+        });
         buttonbase.add(lobby);
     }
 
@@ -449,12 +430,8 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
         // close button
         GlassButton close = new GlassButton("close", "Glass");
-        close.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                context.close();
-            }
-        });
+        close.addActionListener(e ->
+            context.close());
 
         add(GuiUtils.CENTER(close), BorderLayout.SOUTH);
         revalidate();
@@ -640,7 +617,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             PokerPlayer player = game_.getPokerPlayerFromID(nFrom);
             if (player == null)
             {
-                logger.warn("No player for chat, id=" + nFrom + " msg=" + sMsg);
+                logger.warn("No player for chat, id={} msg={}", nFrom, sMsg);
                 return;
             }
 
@@ -716,7 +693,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             // replace /[card][card]...[card] with DDCard
             StringBuilder sb = new StringBuilder(sMsg.length());
             char c;
-            char lookahead[] = new char[2];
+            char[] lookahead = new char[2];
             int search = 0;
             for (int i = 0; i < sMsg.length(); i++)
             {
@@ -782,7 +759,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
             this.bTable = sMsg.toLowerCase().contains("table");
         }
 
-        private void getLookAhead(char lookahead[], String s, int index)
+        private void getLookAhead(char[] lookahead, String s, int index)
         {
             Arrays.fill(lookahead, ':');
             int look = 0;
@@ -814,14 +791,14 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
     {
 
         test_ = new TestThread();
-        logger.debug("<<<<<<<<<<<<<<<<<<<< Started Test " + test_.nTestNum);
+        logger.debug("<<<<<<<<<<<<<<<<<<<< Started Test {}", test_.nTestNum);
         test_.start();
     }
 
     private void stopTest()
     {
         test_.finish();
-        logger.debug(">>>>>>>>>>>>>>>>>>>> Stopped Test " + test_.nTestNum);
+        logger.debug(">>>>>>>>>>>>>>>>>>>> Stopped Test {}", test_.nTestNum);
         test_ = null;
     }
 

@@ -38,9 +38,11 @@
 
 package com.donohoedigital.gui;
 
-import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.*;
 
 /**
@@ -109,7 +111,7 @@ public class DDPanel extends JPanel implements DDComponent
     @Override
     public void repaint(long tm, int x, int y, int width, int height)
     {
-        if (debug) logger.debug("REPAINT: " + this);
+        if (debug) logger.debug("REPAINT: {}", this);
         Component foo = GuiUtils.getSolidRepaintComponent(this);
         if (foo != null && foo != this)
         {
@@ -138,10 +140,10 @@ public class DDPanel extends JPanel implements DDComponent
             Component foo = GuiUtils.getSolidRepaintComponent(this);
             if (foo != null && foo != this)
             {
-                logger.debug("painting " + this + "\nbut solid repaint is: " + foo);
+                logger.debug("painting {}\nbut solid repaint is: {}", this, foo);
             }
             g.getClipBounds(bounds_);
-            logger.debug("REPAINT COMPONENT "+(CNT++)+" ("+ImageComponent.getDebugColorName()+") portion " + bounds_.x +","+bounds_.y+" " +bounds_.width+"x"+bounds_.height);
+            logger.debug("REPAINT COMPONENT {} ({}) portion {},{} {}x{}", (CNT++), ImageComponent.getDebugColorName(), bounds_.x, bounds_.y, bounds_.width, bounds_.height);
             g.setColor(ImageComponent.getDebugColor());
             g.drawRect(bounds_.x, bounds_.y, bounds_.width - 1, bounds_.height - 1);
         }

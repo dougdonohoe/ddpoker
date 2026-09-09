@@ -42,10 +42,11 @@ import com.donohoedigital.gui.DDWindow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
@@ -93,12 +94,12 @@ public class GameContext
     private GamePhase lastLoopPhase_ = null;
 
     // Stack of GamePhase's that have history=true
-    private Stack<GamePhase> pastPhases_ = new Stack<GamePhase>();
+    private Stack<GamePhase> pastPhases_ = new Stack<>();
 
     // Cached phases are Phase instances that are saved
     // for reuse because they typically retain state (e.g., loop phases and
     // menu phases which has user input
-    private Map<String, Phase> cachedPhases_ = new HashMap<String, Phase>();
+    private Map<String, Phase> cachedPhases_ = new HashMap<>();
 
 
     /**
@@ -375,7 +376,7 @@ public class GameContext
     /**
      * Runnable for processing phase later in swing loop
      */
-    private class ProcessPhaseRunnable implements Runnable
+    private final class ProcessPhaseRunnable implements Runnable
     {
         String _sPhaseName;
         TypedHashMap _params;
@@ -445,7 +446,7 @@ public class GameContext
     {
         if ((engine_.isBDemo() || engine_.isActivationNeeded()) && TODOphase_ != null)
         {
-            logger.warn("Skipping " + sPhaseName + " because TODO phase is not null: " + TODOphase_);
+            logger.warn("Skipping {} because TODO phase is not null: {}", sPhaseName, TODOphase_);
             return null;
         }
 
@@ -495,7 +496,7 @@ public class GameContext
         }
         catch (ApplicationError ae)
         {
-            logger.warn("GameContext - ApplicationError caught processing phase " + sPhaseName);
+            logger.warn("GameContext - ApplicationError caught processing phase {}", sPhaseName);
             switch (ae.getErrorCode())
             {
                 case ErrorCodes.ERROR_NULL:
@@ -514,7 +515,7 @@ public class GameContext
         }
         catch (Throwable e)
         {
-            logger.warn("GameContext - Exception caught processing phase " + sPhaseName);
+            logger.warn("GameContext - Exception caught processing phase {}", sPhaseName);
             logger.warn(Utils.formatExceptionText(e));
             _handleProcessPhaseException(e);
         }
@@ -727,7 +728,7 @@ public class GameContext
         }
         else
         {
-            logger.warn("Not able to step back " + nStepsBack);
+            logger.warn("Not able to step back {}", nStepsBack);
         }
     }
 

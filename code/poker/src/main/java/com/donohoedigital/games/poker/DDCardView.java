@@ -37,21 +37,26 @@
  */
 package com.donohoedigital.games.poker;
 
-import org.apache.logging.log4j.*;
-import com.donohoedigital.gui.*;
-import com.donohoedigital.games.poker.engine.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.donohoedigital.gui.DDView;
+import com.donohoedigital.games.poker.engine.Card;
 
-import javax.swing.text.*;
-import java.awt.*;
+import javax.swing.text.Element;
+import javax.swing.text.View;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 
 public class DDCardView extends DDView
 {
     static Logger logger = LogManager.getLogger(DDCardView.class);
 
-    private static CardThumbnail piece_ = new CardThumbnail();
+    private static final CardThumbnail piece_ = new CardThumbnail();
 
     private Card card_;
-    private int border_ = 1;
+    private final int border_ = 1;
     public static final int HEIGHT = 26;
     public static final int WIDTH = 20;
 

@@ -32,16 +32,26 @@
  */
 package com.donohoedigital.udp;
 
-import com.donohoedigital.base.*;
-import com.donohoedigital.config.*;
-import org.apache.logging.log4j.*;
+import com.donohoedigital.base.ApplicationError;
+import com.donohoedigital.base.ErrorCodes;
+import com.donohoedigital.base.RandomGUID;
+import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ConfigUtils;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.Prefs;
+import com.donohoedigital.config.PropertyConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.ClosedSelectorException;
+import java.nio.channels.DatagramChannel;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.util.*;
-import java.util.prefs.*;
+import java.util.prefs.Preferences;
 
 /**
  * Created by IntelliJ IDEA.
@@ -177,7 +187,7 @@ public class UDPServer extends Thread
         nFailoverAttempts_ = PropertyConfig.getIntegerProperty("settings.udp.failover.attempts", 3);
 
         // display info
-        logger.info("Config port(s): " + sPort_);
+        logger.info("Config port(s): {}", sPort_);
 
         // create a new Selector for use below
         selector_ = Selector.open();
@@ -221,7 +231,7 @@ public class UDPServer extends Thread
                     {
                         activeIPs.add(i);
                         configIPs.remove(i.getHostAddress());
-                        logger.info("Using specific address: " + i.getHostAddress());
+                        logger.info("Using specific address: {}", i.getHostAddress());
                     }
                 }
             }
@@ -243,7 +253,7 @@ public class UDPServer extends Thread
                 nPort = Integer.parseInt(port);
 
                 // set the port the server channel will listen to
-                logger.info("Processing port " + nPort + "...");
+                logger.info("Processing port {}...", nPort);
 
                 for (InetAddress i : activeIPs)
                 {
@@ -253,9 +263,7 @@ public class UDPServer extends Thread
                     socket.setReceiveBufferSize(32 * 1024);
                     socket.setSendBufferSize(32 * 1024);
 
-                    logger.info("Binding: " + i.getHostAddress() + ":" + nPort +
-                                " (send=" + socket.getSendBufferSize() +
-                                ", rcv=" + socket.getReceiveBufferSize() + ")");
+                    logger.info("Binding: {}:{} (send={}, rcv={})", i.getHostAddress(), nPort, socket.getSendBufferSize(), socket.getReceiveBufferSize());
 
                     InetSocketAddress ip;
                     try
@@ -264,7 +272,7 @@ public class UDPServer extends Thread
                     }
                     catch (SocketException be)
                     {
-                        logger.error("Unable to bind: " + Utils.getExceptionMessage(be));
+                        logger.error("Unable to bind: {}", Utils.getExceptionMessage(be));
                         continue;
                     }
 
@@ -289,7 +297,7 @@ public class UDPServer extends Thread
             }
             catch (NumberFormatException nfe)
             {
-                logger.error("Unable to parse: " + port);
+                logger.error("Unable to parse: {}", port);
             }
         }
 
@@ -303,7 +311,7 @@ public class UDPServer extends Thread
         // store first port as preferred
         if (!channels_.isEmpty())
         {
-            logger.info("Preferred UDP (chat) address set to " + Utils.getLocalAddressPort(getDefaultChannel()));
+            logger.info("Preferred UDP address set to {}", Utils.getLocalAddressPort(getDefaultChannel()));
         }
 
         // create dispatch queue
@@ -329,11 +337,11 @@ public class UDPServer extends Thread
             RandomGUID guid = new RandomGUID(ConfigUtils.getLocalHost(true), true);
             pGUID = guid.toString();
             pref.put(sKey, pGUID);
-            logger.info("Created new UDP GUID: " + pGUID + " (port " + nPort + ")");
+            logger.info("Created new UDP GUID: {} (port {})", pGUID, nPort);
         }
         else
         {
-            logger.info("Using existing UDP GUID: " + pGUID + " (port " + nPort + ")");
+            logger.info("Using existing UDP GUID: {} (port {})", pGUID, nPort);
         }
         return new UDPID(pGUID);
     }
@@ -356,7 +364,7 @@ public class UDPServer extends Thread
             catch (SocketException e2)
             {
                 if (!bBindFailover_) throw e2;
-                logger.info("Failed binding to " + ia.getHostAddress() + ":" + nPort + ", trying port " + (nPort - 1));
+                logger.info("Failed binding to {}:{}, trying port {}", ia.getHostAddress(), nPort, (nPort - 1));
                 nPort--;
                 e = e2;
             }
@@ -496,7 +504,7 @@ public class UDPServer extends Thread
                 // in particular on Linux
                 if (!bDone_ && !Utils.getExceptionMessage(t).contains("Interrupted system call"))
                 {
-                    logger.error("selector.select() error: " + Utils.formatExceptionText(t));
+                    logger.error("selector.select() error: {}", Utils.formatExceptionText(t));
                 }
                 continue;
             }
@@ -511,7 +519,7 @@ public class UDPServer extends Thread
             }
             catch (Throwable t)
             {
-                logger.error("UDPServer error: " + Utils.formatExceptionText(t));
+                logger.error("UDPServer error: {}", Utils.formatExceptionText(t));
             }
         }
     }
@@ -579,7 +587,7 @@ public class UDPServer extends Thread
             {
                 if (channel.socket() != null)
                 {
-                    logger.info("UDPServer closing " + Utils.getLocalAddressPort(channel));
+                    logger.info("UDPServer closing {}", Utils.getLocalAddressPort(channel));
                     channel.socket().close();
                 }
             }
@@ -609,7 +617,7 @@ public class UDPServer extends Thread
         {
             if (!bDone_)
             {
-                logger.error("processSelection error: " + Utils.formatExceptionText(cse));
+                logger.error("processSelection error: {}", Utils.formatExceptionText(cse));
             }
             return;
         }
@@ -628,7 +636,7 @@ public class UDPServer extends Thread
             }
             catch (IOException ioe)
             {
-                logger.error("processSelection error: " + Utils.formatExceptionText(ioe));
+                logger.error("processSelection error: {}", Utils.formatExceptionText(ioe));
             }
             finally
             {
