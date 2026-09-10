@@ -46,6 +46,10 @@ import java.io.IOException;
  */
 public interface PokerConnectionServer
 {
+    // is this a UDP transport?  Asked rather than tested with instanceof so a
+    // caller can tell the transports apart without depending on their classes.
+    boolean isUDP();
+
     // init the server
     void init();
 

@@ -44,7 +44,6 @@ import java.awt.Desktop;
 import java.awt.Graphics;
 import java.util.Locale;
 
-@SuppressWarnings("CommentedOutCode")
 public abstract class BaseApp
 {
     private final Logger logger = LogManager.getLogger(BaseApp.class);
@@ -75,7 +74,7 @@ public abstract class BaseApp
         bHeadless_ = bHeadless;
 
         //
-        // If mac, we need to instantiate by name the mac application class
+        // If Mac, we need to instantiate by name the Mac application class
         // we do this so we can compile this on all platforms
         //
         if (Utils.ISMAC && !bHeadless)
@@ -94,23 +93,23 @@ public abstract class BaseApp
         if (Desktop.isDesktopSupported()) {
             Desktop desktop = Desktop.getDesktop();
 
-            desktop.setAboutHandler(e -> {
+            desktop.setAboutHandler(_ -> {
                 if (!app_.isReady()) return;
                 app_.showAbout();
             });
 
             desktop.setOpenFileHandler(e -> {
                 if (!e.getFiles().isEmpty()) {
-                    CommandLine.setMacFileArg(e.getFiles().get(0).getAbsolutePath());
+                    CommandLine.setMacFileArg(e.getFiles().getFirst().getAbsolutePath());
                 }
             });
 
-            desktop.setPreferencesHandler(e -> {
+            desktop.setPreferencesHandler(_ -> {
                 if (!app_.isReady()) return;
                 app_.showPrefs();
             });
 
-            desktop.setQuitHandler((e, response) -> {
+            desktop.setQuitHandler((_, response) -> {
                 if (app_.isReady()) {
                     app_.quit();
                     response.cancelQuit();  // Indicates that app handles quit
@@ -140,7 +139,6 @@ public abstract class BaseApp
      */
     private void setupStandardCommandLineOptions()
     {
-
         CommandLine.setUsage(getClass().getName() + " [options]");
 
         CommandLine.addStringOption("module", null);
@@ -336,26 +334,4 @@ public abstract class BaseApp
     {
         return getBaseApp().frame_.getGraphics();
     }
-
-//    ////
-//    //// Debugging help
-//    ////
-//    private void printAllModes()
-//    {
-//        DisplayMode mode = frame_.getDisplayMode();
-//        printMode("Current", mode);
-//        DisplayMode modes[] = frame_.getDisplayModes();
-//        for (int i = 0; i < modes.length; i++)
-//        {
-//            if (modes[i].getRefreshRate() != mode.getRefreshRate()) continue;
-//            if (modes[i].getBitDepth() != mode.getBitDepth()) continue;
-//            printMode("#"+i,modes[i]);
-//        }
-//    }
-//
-//    private void printMode(String sName, DisplayMode mode)
-//    {
-//        logger.debug("Mode " + sName + ": " + mode.getWidth() + "x" + mode.getHeight() +
-//                    " " + mode.getRefreshRate() + "mhz " + mode.getBitDepth() + "bits");
-//    }
 }

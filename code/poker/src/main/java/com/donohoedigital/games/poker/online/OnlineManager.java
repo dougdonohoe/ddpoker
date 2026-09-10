@@ -114,17 +114,30 @@ public class OnlineManager implements ChatManager
      */
     public OnlineManager(PokerGame game)
     {
+        this(game, PokerMain.getPokerMain(), null, game.getLocalPlayer());
+    }
+
+    /**
+     * Test seam - takes the engine, the transport and the local player rather than
+     * resolving them through the GameEngine singleton and the license key.  A null p2p
+     * means "ask main_", which is what the production constructor above does.
+     * <p/>
+     * Follows the PokerDatabase.init(profile, saveDir) precedent: a parameterised form of
+     * what the real constructor looks up for itself.
+     */
+    OnlineManager(PokerGame game, PokerMain main, PokerConnectionServer p2p, PokerPlayer local)
+    {
         //logger.debug("Starting online manager");
         game_ = game;
         context_ = game_.getGameContext();
-        main_ = PokerMain.getPokerMain();
-        p2p_ = main_.getPokerConnectionServer(game.isUDP());
+        main_ = main;
+        p2p_ = (p2p != null) ? p2p : main_.getPokerConnectionServer(game.isUDP());
 
         // note that we don't store the local player since that can get
         // reloaded with game updates.  However, the "host" status will
         // not change from inception (TODO: if we allow host migration,
         // this will obviously change)
-        bHost_ = getLocalPlayer().isHost();
+        bHost_ = local.isHost();
         if (bHost_) banned_ = PokerPrefsPlayerList.getSharedList(PokerPrefsPlayerList.LIST_BANNED);
 
         // online queue for sending messages (TCP only)
@@ -160,7 +173,7 @@ public class OnlineManager implements ChatManager
      */
     public boolean isUDP()
     {
-        return p2p_ instanceof UDPServer;
+        return p2p_ != null && p2p_.isUDP();
     }
 
     // listener for host connection
@@ -2539,7 +2552,7 @@ public class OnlineManager implements ChatManager
         omsg.setInReplyTo(in.getMessageID());
 
         // sleep briefly in udp mode so connection shows up on UDPStatus
-        if (p2p instanceof UDPServer)
+        if (p2p.isUDP())
         {
             Utils.sleepMillis(100);
         }

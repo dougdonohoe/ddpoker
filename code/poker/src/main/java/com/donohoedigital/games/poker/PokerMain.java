@@ -68,6 +68,7 @@ import javax.swing.SwingUtilities;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.nio.channels.SocketChannel;
 import java.sql.SQLException;
@@ -670,8 +671,26 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
      */
     public PokerConnectionServer getPokerConnectionServer(PokerConnection connection)
     {
-        if (connection == null) return p2p_;
-        return connection.isUDP() ? udp_ : tcp_;
+        if (connection == null) return gameServer();
+        return connection.isUDP() ? udpServer() : tcpServer();
+    }
+
+    // the three servers, read through methods so a test can supply them without binding
+    // a socket.  The routing above is the part worth testing and stays here.
+
+    PokerConnectionServer udpServer()
+    {
+        return udp_;
+    }
+
+    PokerConnectionServer tcpServer()
+    {
+        return tcp_;
+    }
+
+    PokerConnectionServer gameServer()
+    {
+        return p2p_;
     }
 
     /**
@@ -757,6 +776,11 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         public DDMessageTransporter newMessage(DDMessage msg)
         {
             return new Peer2PeerMessage(Peer2PeerMessage.P2P_MSG, msg);
+        }
+
+        public boolean isUDP()
+        {
+            return false;
         }
     }
 
@@ -993,11 +1017,16 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                     {
                         if (chatHandler_ != null) chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
                     }
-                    // a hello is something we send to the chat server, never something we
-                    // receive - a stray one has no business reaching game code
+                    // a hello is something we send to a chat server, never something we
+                    // receive.  Say so rather than leaving the sender to time out - this
+                    // happens when someone's chat server address points at a game client.
                     else if (data.getUserType() == PokerConstants.USERTYPE_HELLO)
                     {
-                        logger.warn("Ignoring unexpected hello from {}: {}", link.toStringNameIP(), data.toStringShort());
+                        logger.warn("Hello received from {} - this client is not a chat lobby: {}",
+                                    link.toStringNameIP(), data.toStringShort());
+                        link.queue(notChatLobbyReply(link.getLocalIP()).getData(), PokerConstants.USERTYPE_CHAT);
+                        link.send(); // send right away
+                        link.close();
                     }
                     else
                     {
@@ -1025,6 +1054,27 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 }
                 break;
         }
+    }
+
+    /**
+     * Reply telling a sender that this client is not a chat lobby server.
+     * <p/>
+     * Same shape as ChatServer.sendError(): an admin chat tagged CHAT_ADMIN_ERROR, which
+     * the receiving client already knows how to handle - OnlineLobby.chatReceived()
+     * displays the text and removes the chat input controls.  No new message type needed.
+     * <p/>
+     * The address named is the local one the datagram arrived on - which is the value the
+     * sender has wrong in their options, so it is the one worth showing them.  It tells
+     * them nothing they did not already have, since they just sent a packet to it.  Use
+     * the link's own local address rather than getPreferredIP(), which reports the first
+     * bound channel and would name the wrong port on anything that binds more than one.
+     */
+    static PokerUDPTransporter notChatLobbyReply(InetSocketAddress local)
+    {
+        OnlineMessage omsg = new OnlineMessage(OnlineMessage.CAT_CHAT_ADMIN);
+        omsg.setChat(PropertyConfig.getMessage("msg.chat.notlobby", Utils.getAddressPort(local)));
+        omsg.setChatType(PokerConstants.CHAT_ADMIN_ERROR);
+        return new PokerUDPTransporter(omsg.getData());
     }
 
     /**

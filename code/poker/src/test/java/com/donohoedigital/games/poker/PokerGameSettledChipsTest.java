@@ -32,10 +32,6 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.ApplicationType;
-import com.donohoedigital.config.ConfigManager;
-import com.donohoedigital.games.poker.model.TournamentProfile;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,53 +45,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * while a hand is in progress used to sink whoever had chips in the pot - which is
  * everyone at the current table for most of its hand.
  */
-public class PokerGameSettledChipsTest
+public class PokerGameSettledChipsTest extends AbstractPokerTest
 {
-    private PokerGame game_;
-
-    @BeforeEach
-    public void setUp()
-    {
-        new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
-        game_ = new PokerGame(null);
-        game_.setProfile(new TournamentProfile("test")); // dealing a hand reads it
-    }
-
-    private PokerTable table(int nNum)
-    {
-        PokerTable t = new PokerTable(game_, nNum);
-        t.setMinChip(1); // HoldemHand.addToPot() divides by this
-        return t;
-    }
-
-    /**
-     * Seat a player holding the given chips, with that count snapshotted as their
-     * chip count at the start of the hand.
-     */
-    private PokerPlayer seat(PokerTable table, int nSeat, int nId, String sName, int nChips)
-    {
-        PokerPlayer p = new PokerPlayer(nId, sName, true);
-        p.setChipCount(nChips);
-        p.newSimulatedHand(); // snapshots nChipsAtStart_
-        table.setPlayer(p, nSeat); // seats at the table AND sets the player's table/seat
-        game_.addPlayer(p);
-        return p;
-    }
-
-    /**
-     * Put a hand in progress at the table, far enough along that chips can be committed.
-     * setPlayerOrder() is the first thing HoldemHand.deal() does, and the pot bookkeeping
-     * needs it before any bet is recorded.
-     */
-    private HoldemHand startHand(PokerTable table)
-    {
-        table.setButton(1); // seat 0 posts the big blind, so it commits a useful amount
-        HoldemHand hhand = new HoldemHand(table);
-        table.setHoldemHand(hhand);
-        hhand.deal();
-        return hhand;
-    }
-
     @Test
     public void reportsStartOfHandChipsWhileHandInProgress()
     {

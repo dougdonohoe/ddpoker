@@ -32,11 +32,8 @@
  */
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.ApplicationType;
-import com.donohoedigital.config.ConfigManager;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.model.TournamentProfile;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,66 +49,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * returns 0 rather than throwing when the player is not seated here, since it is asked
  * about whoever is under the mouse.
  */
-public class PokerTableRankTest
+public class PokerTableRankTest extends AbstractPokerTest
 {
-    private PokerGame game_;
-
-    @BeforeEach
-    public void setUp()
-    {
-        new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
-        game_ = new PokerGame(null);
-        game_.setProfile(new TournamentProfile("test")); // dealing a hand reads it
-    }
-
-    private PokerTable table(int nNum)
-    {
-        PokerTable t = new PokerTable(game_, nNum);
-        t.setMinChip(1); // HoldemHand.addToPot() divides by this
-        return t;
-    }
-
-    /**
-     * Seat a player, snapshotting their chips as the count at the start of the hand.
-     */
-    private PokerPlayer seat(PokerTable table, int nSeat, int nId, int nChips)
-    {
-        PokerPlayer p = new PokerPlayer(nId, "P" + nId, true);
-        p.setChipCount(nChips);
-        p.newSimulatedHand();
-        table.setPlayer(p, nSeat); // seats at the table AND sets the player's table/seat
-        game_.addPlayer(p);
-        return p;
-    }
-
-    /**
-     * A player in the tournament but not seated anywhere - which is what a busted
-     * player is, once OtherTables.cleanTable() has removed them.
-     */
-    private PokerPlayer unseated(int nId, int nChips)
-    {
-        PokerPlayer p = new PokerPlayer(nId, "P" + nId, true);
-        p.setChipCount(nChips);
-        game_.addPlayer(p);
-        return p;
-    }
-
-    /**
-     * Put a hand in progress at the table, far enough along that chips can be committed.
-     * setPlayerOrder() is the first thing HoldemHand.deal() does, and the pot bookkeeping
-     * needs it before any bet is recorded.
-     */
-    private HoldemHand startHand(PokerTable table)
-    {
-        // the button, and with it the blinds, has to land somewhere - which seat ends
-        // up posting depends on how many are seated, so each caller says for itself
-        table.setButton(1);
-        HoldemHand hhand = new HoldemHand(table);
-        table.setHoldemHand(hhand);
-        hhand.deal();
-        return hhand;
-    }
-
     @Test
     public void countsPlayersAtThisTableWithStrictlyMoreChips()
     {
@@ -203,7 +142,7 @@ public class PokerTableRankTest
     {
         PokerTable table = table(1);
         seat(table, 0, 1, 1000);
-        PokerPlayer busted = unseated(2, 0);
+        PokerPlayer busted = add(2, 0);
 
         assertEquals(0, table.getRank(busted));
     }
