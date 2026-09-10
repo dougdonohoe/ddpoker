@@ -661,6 +661,20 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
     /**
+     * Get the connection server matching the transport a message arrived on.  Unlike
+     * {@link #getPokerConnectionServer(boolean)}, this never creates or shuts down a
+     * server - it just names the one the message came in on.  A message can arrive on a
+     * transport other than the one the game is using (the chat lobby is always UDP, while
+     * a hosted game is usually TCP), so replies must be built with the transport they are
+     * going back out on.  Returns null if that server no longer exists.
+     */
+    public PokerConnectionServer getPokerConnectionServer(PokerConnection connection)
+    {
+        if (connection == null) return p2p_;
+        return connection.isUDP() ? udp_ : tcp_;
+    }
+
+    /**
      * get chat server
      */
     public PokerUDPServer getChatServer()
@@ -788,21 +802,23 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         // if no online manager, return error
         if (mgr == null)
         {
-            // possibly disappeared in the interim
-            if (p2p_ == null) return null;
+            // reply on the transport the message arrived on, which is not necessarily
+            // the one the game is using - possibly disappeared in the interim
+            PokerConnectionServer p2p = getPokerConnectionServer(connection);
+            if (p2p == null) return null;
 
-            OnlineMessage omsg = new OnlineMessage(msg.getMessage());
+            OnlineMessage omsg = new OnlineMessage(msg.getMessage(), connection);
 
             // reply like Online Manager, but with bogus guid
             // so server test responds with appropriate message
             if (omsg.getCategory() == OnlineMessage.CAT_TEST) {
-                return OnlineManager.getTestReply(p2p_, "guid-no-online-game", omsg);
+                return OnlineManager.getTestReply(p2p, "guid-no-online-game", omsg);
             }
 
             // respond to any other type of message with same response,
             // as if someone was trying to join
             //logger.warn("Message received with no OnlineManager: " + msg);
-            return OnlineManager.getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nogame"), false);
+            return OnlineManager.getAppErrorReply(p2p, omsg, PropertyConfig.getMessage("msg.nojoin.nogame"), false);
         }
         else
         {
@@ -827,9 +843,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
 
-    ////
-    //// Peer2PeerControllerInterface (TCP)
-    ////
+    //
+    // Peer2PeerControllerInterface (TCP)
+    //
 
     /**
      * Handle p2p message received - hand off to OnlineManager
@@ -879,7 +895,6 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     public void monitorEvent(UDPLinkEvent event)
     {
         PokerUDPTransporter msg;
-        PokerUDPTransporter reply;
 
         UDPLink link = event.getLink();
         long elapsed = event.getElapsed();
@@ -978,10 +993,16 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                     {
                         if (chatHandler_ != null) chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
                     }
+                    // a hello is something we send to the chat server, never something we
+                    // receive - a stray one has no business reaching game code
+                    else if (data.getUserType() == PokerConstants.USERTYPE_HELLO)
+                    {
+                        logger.warn("Ignoring unexpected hello from {}: {}", link.toStringNameIP(), data.toStringShort());
+                    }
                     else
                     {
-                        reply = (PokerUDPTransporter) messageReceived(new PokerConnection(link.getID()), msg);
-                        if (reply != null)
+                        DDMessageTransporter received = messageReceived(new PokerConnection(link.getID()), msg);
+                        if (received instanceof PokerUDPTransporter reply)
                         {
                             link.queue(reply.getData());
                             link.send(); // send right away
@@ -989,6 +1010,11 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                             {
                                 link.close();
                             }
+                        }
+                        else if (received != null)
+                        {
+                            logger.warn("Reply to UDP message from {} was built with the wrong transport ({}), dropping it",
+                                        link.toStringNameIP(), received.getClass().getName());
                         }
                     }
                 }
@@ -1061,10 +1087,8 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         }
     }
 
-    ////
-    //// LanControllerInterface methods
-    ////
-
+    //
+    // LanControllerInterface methods
     //
     // Interface methods implemented by super class:
     //
