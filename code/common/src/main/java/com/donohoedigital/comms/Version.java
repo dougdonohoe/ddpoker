@@ -41,11 +41,15 @@ package com.donohoedigital.comms;
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
 
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author donohoe
  */
 @DataCoder('V')
-public class Version implements DataMarshal
+public class Version implements DataMarshal, Comparable<Version>
 {
     private int nMajor_;
     private int nMinor_;
@@ -66,64 +70,6 @@ public class Version implements DataMarshal
      */
     public Version()
     {
-    }
-
-    /**
-     * Create a new instance of Version using the string format
-     */
-    public Version(String s)
-    {
-        char c;
-        int beginIndex = 0;
-        int endIndex = -1;
-        int length = s.length();
-
-        while (Character.isDigit(c = s.charAt(++endIndex)))
-        {
-        }
-        nMajor_ = Integer.parseInt(s.substring(beginIndex, endIndex));
-
-        beginIndex = endIndex + 1;
-        while ((++endIndex < length) && (Character.isDigit(c = s.charAt(endIndex))))
-        {
-        }
-        nMinor_ = Integer.parseInt(s.substring(beginIndex, endIndex));
-
-        if (endIndex == length) return;
-        bAlpha_ = (c == 'a');
-        bBeta_ = (c == 'b');
-        if (bAlpha_ || bBeta_)
-        {
-            beginIndex = endIndex + 1;
-            while ((++endIndex < length) && (Character.isDigit(c = s.charAt(endIndex))))
-            {
-            }
-            nAlphaBetaVersion_ = Integer.parseInt(s.substring(beginIndex, endIndex));
-        }
-
-        if (endIndex == length) return;
-        if (c == 'p' || c == '.') // old style is 3.1p2, new is 3.1.2
-        {
-            beginIndex = endIndex + 1;
-            while ((++endIndex < length) && (Character.isDigit(c = s.charAt(endIndex))))
-            {
-            }
-            nPatch_ = Integer.parseInt(s.substring(beginIndex, endIndex));
-        }
-
-        if (endIndex == length) return;
-        bDemo_ = (c == 'd');
-        if (bDemo_)
-        {
-            if (++endIndex < length) c = s.charAt(endIndex);
-        }
-
-        if (endIndex == length) return;
-        if (c == '_')
-        {
-            beginIndex = endIndex + 1;
-            sLocale_ = s.substring(beginIndex);
-        }
     }
 
     /**
@@ -217,75 +163,88 @@ public class Version implements DataMarshal
 
     /**
      * Return true if this version is an earlier version
-     * than given version
+     * than given version, ignoring the patch number
      */
-    @SuppressWarnings({"RedundantIfStatement"})
     public boolean isMajorMinorBefore(Version version)
     {
-        if (nMajor_ > version.nMajor_) return false;
-        if (nMajor_ < version.nMajor_) return true;
-        if (nMinor_ > version.nMinor_) return false;
-        if (nMinor_ < version.nMinor_) return true;
-        if (bAlpha_ && version.bBeta_) return true;
-        if (bBeta_ && version.bAlpha_) return false;
-        if (!isProduction() && version.isProduction()) return true;
-        if (isProduction() && !version.isProduction()) return false;
-        if (bAlpha_ && version.bAlpha_ && nAlphaBetaVersion_ > version.nAlphaBetaVersion_) return false;
-        if (bAlpha_ && version.bAlpha_ && nAlphaBetaVersion_ < version.nAlphaBetaVersion_) return true;
-        if (bBeta_ && version.bBeta_ && nAlphaBetaVersion_ > version.nAlphaBetaVersion_) return false;
-        if (bBeta_ && version.bBeta_ && nAlphaBetaVersion_ < version.nAlphaBetaVersion_) return true;
-
-        return false;
+        return compareTo(version, false) < 0;
     }
 
     /**
      * Return true if this version is an earlier version
      * than given version
      */
-    @SuppressWarnings({"RedundantIfStatement"})
     public boolean isBefore(Version version)
     {
-        if (nMajor_ > version.nMajor_) return false;
-        if (nMajor_ < version.nMajor_) return true;
-        if (nMinor_ > version.nMinor_) return false;
-        if (nMinor_ < version.nMinor_) return true;
-        if (bAlpha_ && version.bBeta_) return true;
-        if (bBeta_ && version.bAlpha_) return false;
-        if (!isProduction() && version.isProduction()) return true;
-        if (isProduction() && !version.isProduction()) return false;
-        if (bAlpha_ && version.bAlpha_ && nAlphaBetaVersion_ > version.nAlphaBetaVersion_) return false;
-        if (bAlpha_ && version.bAlpha_ && nAlphaBetaVersion_ < version.nAlphaBetaVersion_) return true;
-        if (bBeta_ && version.bBeta_ && nAlphaBetaVersion_ > version.nAlphaBetaVersion_) return false;
-        if (bBeta_ && version.bBeta_ && nAlphaBetaVersion_ < version.nAlphaBetaVersion_) return true;
-        if (nPatch_ > version.nPatch_) return false;
-        if (nPatch_ < version.nPatch_) return true;
-
-        return false;
+        return compareTo(version) < 0;
     }
 
     /**
      * Return true if this version is a later version
      * than given version
      */
-    @SuppressWarnings({"RedundantIfStatement"})
     public boolean isAfter(Version version)
     {
-        if (nMajor_ < version.nMajor_) return false;
-        if (nMajor_ > version.nMajor_) return true;
-        if (nMinor_ < version.nMinor_) return false;
-        if (nMinor_ > version.nMinor_) return true;
-        if (bBeta_ && version.bAlpha_) return true;
-        if (bAlpha_ && version.bBeta_) return false;
-        if (!isProduction() && version.isProduction()) return false;
-        if (isProduction() && !version.isProduction()) return true;
-        if (bAlpha_ && version.bAlpha_ && nAlphaBetaVersion_ < version.nAlphaBetaVersion_) return false;
-        if (bAlpha_ && version.bAlpha_ && nAlphaBetaVersion_ > version.nAlphaBetaVersion_) return true;
-        if (bBeta_ && version.bBeta_ && nAlphaBetaVersion_ < version.nAlphaBetaVersion_) return false;
-        if (bBeta_ && version.bBeta_ && nAlphaBetaVersion_ > version.nAlphaBetaVersion_) return true;
-        if (nPatch_ < version.nPatch_) return false;
-        if (nPatch_ > version.nPatch_) return true;
+        return compareTo(version) > 0;
+    }
 
-        return false;
+    /**
+     * True if this version is a later release than the given one.  False when they are the same
+     * version, so a check for a newer build does not report the one already running, and false
+     * for a null other, which is what a failed lookup hands back.
+     */
+    public boolean isNewerThan(Version other)
+    {
+        return other != null && compareTo(other) > 0;
+    }
+
+    /**
+     * Newest last: major, then minor, then the release type, then the alpha/beta number, then
+     * the patch.  An alpha or beta of a version comes before the version itself - 2.0a3, then
+     * 2.0b1, then 2.0 - and the patch is ranked last because it applies within a release, which
+     * is the order this project has actually shipped in (2.0b6.4 is Beta 6, Patch 4; see the
+     * history in PokerConstants).  Neither the locale nor the demo flag plays a part; they say
+     * who a build is for, not when it is from.
+     */
+    @Override
+    public int compareTo(Version o)
+    {
+        return compareTo(o, true);
+    }
+
+    /**
+     * See {@link #compareTo(Version)}.  When bIncludePatch is false the patch number is left out,
+     * so two builds of the same release compare equal - what {@link #isMajorMinorBefore} wants.
+     */
+    private int compareTo(Version o, boolean bIncludePatch)
+    {
+        if (nMajor_ != o.nMajor_) return Integer.compare(nMajor_, o.nMajor_);
+        if (nMinor_ != o.nMinor_) return Integer.compare(nMinor_, o.nMinor_);
+        if (typeRank() != o.typeRank()) return Integer.compare(typeRank(), o.typeRank());
+        if (nAlphaBetaVersion_ != o.nAlphaBetaVersion_)
+            return Integer.compare(nAlphaBetaVersion_, o.nAlphaBetaVersion_);
+        return bIncludePatch ? Integer.compare(nPatch_, o.nPatch_) : 0;
+    }
+
+    /** Alpha before beta before production - see {@link #compareTo(Version)}. */
+    private int typeRank()
+    {
+        if (bAlpha_) return 0;
+        if (bBeta_) return 1;
+        return 2;
+    }
+
+    /** Consistent with {@link #compareTo(Version)}, so the locale and demo flag are left out of this too. */
+    @Override
+    public boolean equals(Object o)
+    {
+        return o instanceof Version v && compareTo(v) == 0;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(nMajor_, nMinor_, typeRank(), nAlphaBetaVersion_, nPatch_);
     }
 
     public void demarshal(MsgState state, String sData)
@@ -333,5 +292,47 @@ public class Version implements DataMarshal
                (nPatch_ > 0 ? "." + nPatch_ : "") +
                (bDemo_ ? "d" : "") +
                (sLocale_ != null ? "_" + sLocale_ : "");
+    }
+
+    /**
+     * Mirrors {@link #toString}: major.minor, an optional a/b number, an optional patch, an
+     * optional demo flag, an optional locale.  The old "3.1p2" way of writing a patch is still
+     * understood, as are release tags written with a leading "v".
+     */
+    private static final Pattern PARSE =
+            Pattern.compile("^v?(\\d+)\\.(\\d+)(?:([ab])(\\d+))?(?:[.p](\\d+))?(d)?(?:_(.+))?$");
+
+    /**
+     * The inverse of {@link #toString}: "3.1", "3.1.8", "2.0b6.4", "1.2d", "3.1.8_en".
+     *
+     * @return the parsed version, or null if the string is not one.  Never throws - callers
+     * parse text they did not produce, such as a release tag read off a web page.
+     */
+    public static Version parse(String s)
+    {
+        if (s == null) return null;
+
+        Matcher m = PARSE.matcher(s.trim());
+        if (!m.matches()) return null;
+
+        try
+        {
+            String sType = m.group(3);
+            int nType = sType == null ? TYPE_PRODUCTION : ("a".equals(sType) ? TYPE_ALPHA : TYPE_BETA);
+            int nAlphaBeta = sType == null ? 0 : Integer.parseInt(m.group(4));
+            int nPatch = m.group(5) == null ? 0 : Integer.parseInt(m.group(5));
+
+            // not the running build, so nothing to verify an activation key against
+            Version v = new Version(nType, Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)),
+                                    nAlphaBeta, nPatch, false);
+            if (m.group(6) != null) v.setDemo(true);
+            v.setLocale(m.group(7));
+            return v;
+        }
+        catch (NumberFormatException e)
+        {
+            // a part too big for an int - not a version we know how to compare
+            return null;
+        }
     }
 }
