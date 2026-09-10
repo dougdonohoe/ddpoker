@@ -97,9 +97,7 @@ public class PokerStartMenu extends StartMenu
             return;
         }
 
-        ////
-        //// big suit buttons
-
+        // big suit buttons
         DDPanel bigbuttons = new DDPanel();
         base.add(bigbuttons, BorderLayout.WEST);
         ExplicitLayout elayout = new ExplicitLayout();
@@ -110,10 +108,7 @@ public class PokerStartMenu extends StartMenu
         addBigButton(bigbuttons, "online", 102, 0);
         elayout.setPreferredLayoutSize(MathEF.constant(430), MathEF.constant(450));
 
-        ////
-        //// right side controls
-        ////
-
+        // right side controls
         DDPanel rightbase = new DDPanel();
         rightbase.setBorderLayoutGap(10, 0);
         base.add(rightbase, BorderLayout.CENTER);
@@ -141,10 +136,9 @@ public class PokerStartMenu extends StartMenu
         addControlButton(ctrlbuttonbase, "support");
         addControlButton(ctrlbuttonbase, "help");
 
-
-        ////
-        //// player profile
-        ////
+        //
+        // player profile
+        //
 
         // set flag indicating we should do a profile check
         bProfileCheck_ = true;
@@ -303,6 +297,14 @@ public class PokerStartMenu extends StartMenu
         }
 
         messageCheck = false;
+
+        // Ask GitHub whether a newer DD Poker has been released.  Independent of the DD message
+        // check above: GitHub is not a DD server, so neither the online-servers option nor a
+        // player profile is required.  Runs off the EDT and stays quiet unless there is news.
+        if (isStartMenu() && !engine_.isDemo() && PokerUtils.isOptionOn(PokerConstants.OPTION_AUTO_CHECK_UPDATE))
+        {
+            UpdateCheck.checkAtStartup(context_, () -> context_.getCurrentUIPhase() == this);
+        }
     }
 
     /**

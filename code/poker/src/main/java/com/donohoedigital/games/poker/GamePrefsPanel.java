@@ -240,6 +240,12 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             DDPanel buttonbase = new DDPanel();
             buttonbase.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
             buttonbase.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 2));
+
+            DDButton checkupdate = new GlassButton("checkupdate", "Glass");
+            checkupdate.addActionListener(_ -> UpdateCheck.checkNow(context_));
+            checkupdate.setBorderGap(2, 5, 2, 6);
+            buttonbase.add(checkupdate);
+
             buttonbase.add(resetdialog);
             generalbase.add(buttonbase, BorderLayout.SOUTH);
 
@@ -250,38 +256,19 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             OptionMenu.add(new OptionBoolean(NODE, PokerConstants.OPTION_CHECKFOLD, OSTYLE, map_, true), generalbasetop);
             OptionMenu.add(new OptionBoolean(NODE, PokerConstants.OPTION_RIGHT_CLICK_ONLY, OSTYLE, map_, true), generalbasetop);
             OptionMenu.add(new OptionBoolean(NODE, PokerConstants.OPTION_DISABLE_SHORTCUTS, OSTYLE, map_, true), generalbasetop);
+            OptionMenu.add(new OptionBoolean(NODE, PokerConstants.OPTION_AUTO_CHECK_UPDATE, OSTYLE, map_, true), generalbasetop);
 
-            if (!engine_.isDemo()) // no auto update in the demo
-            {
-                OptionMenu.add(new OptionBoolean(NODE, PokerConstants.OPTION_AUTO_CHECK_UPDATE, OSTYLE, map_, true), generalbasetop);
-            }
-
-            // screen mode
-            // Turned off screen-mode in DD Poker 3 since no one uses it, and it doesn't work on Vista
-//            if (!Utils.ISLINUX && !Utils.ISMAC) // no window options on linux or mac
-//            {
-//                DDLabelBorder modebase = null;
-//                modebase = new DDLabelBorder("mode", OSTYLE);
-//                modebase.setLayout(new GridLayout(0, 1, 0, GRIDADJUST1));
-//                ButtonGroup modegroup = new ButtonGroup();
-//                OptionMenu.add(new OptionRadio(NODE, EngineConstants.PREF_WINDOW_MODE, OSTYLE, map_, "mode.always", modegroup, EngineConstants.MODE_ASK), modebase);
-//                OptionMenu.add(new OptionRadio(NODE, EngineConstants.PREF_WINDOW_MODE, OSTYLE, map_, "mode.window", modegroup, EngineConstants.MODE_WINDOW), modebase);
-//                OptionMenu.add(new OptionRadio(NODE, EngineConstants.PREF_WINDOW_MODE, OSTYLE, map_, "mode.full", modegroup, EngineConstants.MODE_FULL), modebase);
-//
-//                leftside.add(modebase, BorderLayout.CENTER);
-//            }
-
-            ////
-            //// RIGHT side - audio/chat
-            ////
+            //
+            // RIGHT side - audio/chat
+            //
 
             DDPanel rightbase = new DDPanel();
             rightbase.setLayout(new VerticalFlowLayout(VerticalFlowLayout.TOP, 0, 0, HorizontalFlowLayout.LEFT));
             base.add(rightbase);
 
-            ///
-            /// AUDIO
-            ///
+            //
+            // AUDIO
+            //
 
             // sound
             DDLabelBorder audiobase = new DDLabelBorder("audio", OSTYLE);
@@ -333,9 +320,9 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
 
             rightbase.add(audiobase);
 
-            ///
-            /// CHAT
-            ///
+            //
+            // CHAT
+            //
 
             // messages
             DDLabelBorder chatbase = new DDLabelBorder("chatoptions", OSTYLE);
@@ -350,9 +337,9 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             spacer.add(chatbase, BorderLayout.NORTH);
             rightbase.add(spacer);
 
-            ///
-            /// SCREENSHOT
-            ///
+            //
+            // SCREENSHOT
+            //
 
             OptionInteger oi;
             DDLabelBorder screenbase = new DDLabelBorder("screenshot", OSTYLE);
@@ -515,11 +502,11 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
 
             // buttons
             DDButton bannedplayers = new GlassButton("bannedplayers", "Glass");
-            bannedplayers.addActionListener(e -> context_.processPhaseNow("BannedPlayerList", null));
+            bannedplayers.addActionListener(_ -> context_.processPhaseNow("BannedPlayerList", null));
             bannedplayers.setBorderGap(2, 5, 2, 6);
 
             DDButton mutedplayers = new GlassButton("mutedplayers", "Glass");
-            mutedplayers.addActionListener(e -> context_.processPhaseNow("MutedPlayerList", null));
+            mutedplayers.addActionListener(_ -> context_.processPhaseNow("MutedPlayerList", null));
             mutedplayers.setBorderGap(2, 5, 2, 6);
 
             DDPanel buttonbase = new DDPanel();
@@ -562,7 +549,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             // online enabled checkbox
             onlineEnabled_ = new OptionBoolean(NODE, EngineConstants.OPTION_ONLINE_ENABLED, OSTYLE, map_, true);
             serverBorder.add(GuiUtils.NORTH(onlineEnabled_), BorderLayout.WEST);
-            onlineEnabled_.addChangeListener(e -> doOnlineEnabled());
+            onlineEnabled_.addChangeListener(_ -> doOnlineEnabled());
 
             // servers list (online, chat)
             DDPanel serversTable = new DDPanel();
@@ -588,7 +575,7 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             // test button
             test_ = new GlassButton("testonline", "Glass");
             serverBorder.add(GuiUtils.CENTER(test_), BorderLayout.EAST);
-            test_.addActionListener(e -> testConnection());
+            test_.addActionListener(_ -> testConnection());
 
             // update text fields based on pref
             doOnlineEnabled();
