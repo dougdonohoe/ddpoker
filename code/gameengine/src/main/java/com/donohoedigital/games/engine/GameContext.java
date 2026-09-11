@@ -953,17 +953,33 @@ public class GameContext
             return BasePhase.addNamedGameStateEntry(state, mgr.getPhaseName());
         }
 
-        // BUG 99/166 - allow save during War's DisplayPurchaseSummary
+        // A save from a phase the GameManager doesn't drive - the lobby, the home game,
+        // online configuration.  Those phases name themselves via setSpecialSavePhase()
+        // so the load knows where to restart.  (Originally BUG 99/166 - saving during
+        // War's DisplayPurchaseSummary.)
         if (sSpecialSave_ != null)
         {
             return BasePhase.addNamedGameStateEntry(state, sSpecialSave_);
         }
 
-        throw new ApplicationError("Should never happen");
+        throw new ApplicationError("Nowhere to restart this save from: no GameManager is set and no " +
+                                   "phase called setSpecialSavePhase().  game=" + state.getGameName() +
+                                   " file=" + state.getFile() + " currentPhase=" + phaseName(currentPhase_) +
+                                   " currentMainUIPhase=" + phaseName(currentMainUIPhase_));
     }
 
     /**
-     * used in cases where save done from other than a loop phase
+     * Name of a phase for debug messages
+     */
+    private static String phaseName(Phase phase)
+    {
+        if (phase == null) return "null";
+        GamePhase gamephase = phase.getGamePhase();
+        return gamephase == null ? phase.getClass().getName() : gamephase.getName();
+    }
+
+    /**
+     * used in cases where the save is done from a phase the GameManager doesn't drive
      */
     private String sSpecialSave_;
 
