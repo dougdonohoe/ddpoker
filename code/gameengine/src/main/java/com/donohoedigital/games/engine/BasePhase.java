@@ -107,7 +107,7 @@ public abstract class BasePhase implements Phase
      * Called when a phase is removed as the main component (
      * when using engine.setMainUIComponent()) or when
      * a DialogPhase's dialog is closed.  Other phases that 
-     * don't use a UI (e.g., ChainPhase or LoopPhases) are finished
+     * don't use a UI (e.g., ChainPhase) are finished
      * when their start() method is done, so any cleanup can be
      * done then.
      */

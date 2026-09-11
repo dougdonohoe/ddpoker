@@ -54,7 +54,6 @@ import java.util.prefs.*;
  *
  * @author  Doug Donohoe
  */
-@SuppressWarnings({"RawUseOfParameterizedType"})
 public class Game extends TypedHashMap implements GameInfo, GamePlayerList, GameObserverList
 {
     static Logger logger = LogManager.getLogger(Game.class);
@@ -73,33 +72,21 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     protected final List<GamePlayer> players_ = new CopyOnWriteArrayList<>();
     private final List<GamePlayer> observers_ = new CopyOnWriteArrayList<>();
 
-    // current player (set from loop phases/other)
-    private GamePlayer currentPlayer_ = null;
-    private int currentPlayerIndex_ = -1;
-    
     // last time this game was saved, used this GameState
     private GameState lastSave_ = null;
     
     // transient values
-    private GameContext context_ = null;
+    private final GameContext context_;
     private String sBeginPhase_ = null;
     private TypedHashMap params_ = null;
-    private PlayersDieRoll6x2 roll_;
-    private boolean bGoodLoad_ = true;
     private boolean bFinished_ = false;
 
     // properties for storage
     private static final String PROP_PASSWORD = "pass";
-    private static final String PROP_ONLINE_IDS = "oids";
     private static final String PROP_ONLINE_GAMEID = "online";
-    private static final String PROP_ONLINE_COMPLETED_PHASES = "ophase";
     private static final String PROP_OPTIONS = "options";
     private static final String PROP_TURN_NUM = "turn";
     private static final String PROP_GAME_OVER_STORAGE = "gameover";
-    private static final String PROP_RESEND = "resend";
-    private static final String PROP_TIMESTAMP = "timestamp";
-    private static final String PROP_URL = "url";
-    private static final String PROP_SEQ_ID = "seq";
     private static final String PROP_OBSERVER_SEQ = "obs-seq";
     private static final String PROP_PLAYER_SEQ = "ply-seq";
 
@@ -136,27 +123,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     public static final String PROP_OBSERVERS_LIST = "_observerslist_";
 
     /**
-     * Name used in PropertyChangeEvents when player
-     * order changed.  The "old" value is null and the "new"
-     * value is the player array.
-     */
-    public static final String PROP_PLAYER_ORDER = "_playerorder_";
-    
-    /**
-     * Name used in PropertyChangeEvents when dice roll set/changed.
-     * The "old" value is the previous dice roll and the "new" value
-     * is the new dice roll.
-     */
-    public static final String PROP_PLAYER_ORDER_DICE_ROLL = "_diceroll_";
-    
-    /**
-     * Name used in PropertyChangeEvents when current player changed.  The
-     * previous player is passed as the "old" property and the new
-     * current player as the "new".
-     */
-    public static final String PROP_CURRENT_PLAYER = "_current_";
-    
-    /**
      * Name used in PropertyChangeEvents when game loaded.  The GameState
      * used during the load is passed as the "old" property value and
      * the Game itself as the "new".
@@ -171,7 +137,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
 
     /**
      * Creates a new instance of Game
-     * @param context
      */
     public Game(GameContext context)
     {
@@ -188,14 +153,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         return context_;
     }
 
-    /**
-     * return whether load was successful
-     */
-    public boolean isGoodLoad()
-    {
-        return bGoodLoad_;
-    }
-    
     /**
      * cleanup
      */
@@ -284,37 +241,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     {
         return getInteger(PROP_TURN_NUM, 1);
     }
-    
-    /**
-     * Set seq id for online messages
-     */
-    public void setSeqID(long num)
-    {
-        setLong(PROP_SEQ_ID, num);
-    }
-
-    /**
-     * Get seq id for online messages.  If no id set, returns 0.
-     */
-    private long getSeqID()
-    {
-        Long id = getLong(PROP_SEQ_ID);
-        if (id == null) return 0;
-        else return id;
-    }
-
-    /**
-     * Get next seq id for online messages.  The very first time this
-     * is called on a new game, 1 is returned (because getSeqID() returns
-     * 0 if none is there and we increment)
-     */
-    public synchronized long getNextSeqID()
-    {
-        long id = getSeqID();
-        id++;
-        setSeqID(id);
-        return id;
-    }
 
     /**
      * Get player/observer id seq
@@ -346,22 +272,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     }
 
     /**
-     * Get URL used to talk to server
-     */
-    public String getServerURL() 
-    {
-        return getString(PROP_URL);
-    }
-    
-    /**
-     * Set URL used to talk to server
-     */
-    public void setServerURL(String sURL) 
-    {
-        setString(PROP_URL, sURL);
-    }
-
-    /**
      * Set password for online game
      */
     public void setOnlinePassword(String sPass)
@@ -383,106 +293,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     public DMTypedHashMap getGameOptions()
     {
         return (DMTypedHashMap) getObject(PROP_OPTIONS);
-    }
-    
-    /**
-     * Return list of EngineMessages to resend when online game encounters error
-     */
-    public DMArrayList getResendList()
-    {
-        DMArrayList list = (DMArrayList) getList(PROP_RESEND);
-        if (list == null)
-        {
-            list = new DMArrayList();
-            setList(PROP_RESEND, list);
-        }
-        return list;
-    }
-    
-    /**
-     * Return list for storing timestamps during online polling
-     */
-    public DMArrayList getTimestampList()
-    {
-        DMArrayList list = (DMArrayList) getList(PROP_TIMESTAMP);
-        if (list == null)
-        {
-            list = new DMArrayList();
-            setList(PROP_TIMESTAMP, list);
-        }
-        return list;
-    }
-    
-    /**
-     * Add phase to list of completed phases
-     */
-    public void addCompletedPhase(String sPhase)
-    {
-        DMArrayList<String> list = (DMArrayList<String>) getList(PROP_ONLINE_COMPLETED_PHASES);
-        if (list == null)
-        {
-            list = new DMArrayList<String>();
-            setList(PROP_ONLINE_COMPLETED_PHASES, list);
-        }
-        ApplicationError.assertTrue(!list.contains(sPhase), "Phase already in completed list", sPhase);
-        list.add(sPhase);
-    }
-    
-    /**
-     * Return whether this phase has been completed already
-     */
-    public boolean isCompletedPhase(String sPhase)
-    {
-        boolean bRet;
-        DMArrayList list = (DMArrayList) getList(PROP_ONLINE_COMPLETED_PHASES);
-        if (list == null)
-        {
-            bRet = false;
-        }
-        else
-        {
-            bRet = list.contains(sPhase);
-        }
-        return bRet;
-    }
-    
-    /**
-     * Clear list of online completed phases
-     */
-    public void clearCompletedPhases()
-    {
-        removeList(PROP_ONLINE_COMPLETED_PHASES);
-    }
-    
-    /**
-     * Set list of players controlled by this computer
-     */
-    public void setOnlinePlayerIDs(DMArrayList<Integer> ids)
-    {
-        setList(PROP_ONLINE_IDS, ids);
-    }
-    
-    /**
-     * Get password for 
-     */
-    public DMArrayList<Integer> getOnlinePlayerIDs()
-    {
-        return (DMArrayList<Integer>) getList(PROP_ONLINE_IDS);
-    }
-    
-    /**
-     * Return true if this player is an online player controlled by this instance
-     */
-    public boolean isOnlinePlayer(GamePlayer player)
-    {
-        DMArrayList<Integer> list = getOnlinePlayerIDs();
-        if (list == null) return false;
-        int pid = player.getID();
-        for (Integer id : list)
-        {
-            if (id == pid) return true;
-        }
-        return false;
     }
     
     /**
@@ -512,7 +322,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     
     /**
      * Clear all players
-     * @param nNewCount
      */
     public void clearPlayerList(int nNewCount)
     {
@@ -632,7 +441,6 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
 
     /**
      * Clear all players
-     * @param nNewCount
      */
     public void clearObserverList(int nNewCount)
     {
@@ -708,159 +516,13 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
     }
     
     /**
-     * Return whether player with given id is eliminiated
+     * Return whether player with given id is eliminated
      */
     public boolean isEliminated(int id)
     {
         return getPlayerFromID(id).isEliminated();
     }
-    
-    /**
-     * Does this game have computer player(s)?
-     */
-    public boolean hasComputerPlayers()
-    {
-        int nNumPlayers = getNumPlayers();
-        for (int i = 0; i < nNumPlayers; i++)
-        {
-            if (getPlayerAt(i).isComputer()) return true;
-        }
-        return false;
-    }
-    
-    /**
-     * Does player A go before player B?
-     */
-    public boolean isPlayerBefore(GamePlayer A, GamePlayer B)
-    {
-        int nA = A.getID();
-        int nB = B.getID();
-        
-        int nNumPlayers = getNumPlayers();
-        for (int i = 0; i < nNumPlayers; i++)
-        {
-            if (getPlayerAt(i).getID() == nA) return true;
-            if (getPlayerAt(i).getID() == nB) return false;
-        }
-        return false;
-    }
-        
-    /**
-     * Store the dice roll determining player order - also
-     * change order of players so winner is at index 0 (first)
-     */
-    public void setPlayerOrderDiceRoll(PlayersDieRoll6x2 roll)
-    {
-        PlayersDieRoll6x2 oldRoll = roll_;
-        roll_ = roll;
-        firePropertyChange(PROP_PLAYER_ORDER_DICE_ROLL, oldRoll, roll);
-        
-        GamePlayer winner = getPlayerFromID(roll.getWinningPlayerID());
-        makePlayerFirst(winner);
-    }
-    
-    /**
-     * Return die roll used to determine player order
-     */
-    public PlayersDieRoll6x2 getPlayerOrderDiceRoll()
-    {
-        return roll_;
-    }
-    
-    /**
-     * Change order of array so given player is at index 0
-     */
-    public void makePlayerFirst(GamePlayer player)
-    {
-        while (getPlayerAt(0) != player)
-        {
-            players_.add(players_.remove(0));
-        }
-        firePlayerOrderChange();
-    }
-    
-    /**
-     * Fire player order change - used in cases where need
-     * to simulate what happens when order changes,
-     * like changing player type
-     */
-    public void firePlayerOrderChange()
-    {
-        // added for BUG 259 - to update WarInfoPanel when
-        // a player is changed from human to computer
-        firePropertyChange(PROP_PLAYER_ORDER, null, players_);
-    }
 
-    /**
-     * Return copy of player list (thus it can be changed)
-     */
-    public List<GamePlayer> getPlayersCopy()
-    {
-        return new ArrayList<GamePlayer>(players_);
-    }
-    
-    /**
-     * Index when no player currently selected
-     */
-    public static final int NO_CURRENT_PLAYER = -1;
-    
-    /**
-     * Set current player to player at given index
-     */
-    public void setCurrentPlayer(int i)
-    {
-        currentPlayerIndex_ = i;
-        GamePlayer oldPlayer = currentPlayer_;
-        if (i == NO_CURRENT_PLAYER) currentPlayer_ = null;
-        else currentPlayer_ = getPlayerAt(i);
-        
-        if (oldPlayer != null) oldPlayer.setCurrentGamePlayer(false);
-        if (currentPlayer_ != null) currentPlayer_.setCurrentGamePlayer(true);
-        
-        firePropertyChange(PROP_CURRENT_PLAYER, oldPlayer, currentPlayer_);
-    }
-    
-    /**
-     * Set current player by ID
-     */
-    public void setCurrentPlayerByID(int id)
-    {
-        GamePlayer player = getPlayerFromID(id);
-        setCurrentPlayer(player);
-    }
-    
-    /**
-     * Set current player to given player
-     */
-    public void setCurrentPlayer(GamePlayer player)
-    {
-        for (int i = 0; i < players_.size(); i++)
-        {
-            if (getPlayerAt(i) == player)
-            {
-                setCurrentPlayer(i);
-                return;
-            }
-        }
-        
-        setCurrentPlayer(NO_CURRENT_PLAYER);
-    }
-    /**
-     * return current player index
-     */
-    public int getCurrentPlayerIndex()
-    {
-        return currentPlayerIndex_;
-    }
-    
-    /**
-     * Get the current player
-     */
-    public GamePlayer getCurrentPlayer()
-    {
-        return currentPlayer_;
-    }
-    
     /**
      * String representation of game for debug
      */
@@ -879,9 +541,9 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         return sb.toString();
     }
     
-    ////
-    //// Save Game logic
-    ////
+    //
+    // Save Game logic
+    //
     
     /**
      * Record the state of this game for use in online play
@@ -925,45 +587,13 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         // created description from players names
         StringBuilder sb = new StringBuilder();
         int nNum = getNumPlayers();
-        
-        if (isOnlineGame())
+
+        for (int i = 0; i < nNum; i++)
         {
-            int nCnt = 0;
-            for (int i = 0; i < nNum; i++)
-            {
-                if (isOnlinePlayer(getPlayerAt(i)))
-                {
-                    if (nCnt > 0) sb.append(", ");
-                    sb.append(getPlayerAt(i).getName());
-                    nCnt++;
-                }
-            }
-                            
-            if (nCnt < nNum)
-            {
-                if (nCnt > 0) sb.append(" vs. ");
-                nCnt = 0;
-                
-                for (int i = 0; i < nNum; i++)
-                {
-                    if (!isOnlinePlayer(getPlayerAt(i)))
-                    {
-                        if (nCnt > 0) sb.append(", ");
-                        sb.append(getPlayerAt(i).getName());
-                        nCnt++;
-                    }
-                }
-            }
+            if (i > 0) sb.append(", ");
+            sb.append(getPlayerAt(i).getName());
         }
-        else
-        {
-            for (int i = 0; i < nNum; i++)
-            {
-                if (i > 0) sb.append(", ");
-                sb.append(getPlayerAt(i).getName());
-            }
-        }
-        
+
         return sb.toString();
     }
     
@@ -1000,7 +630,7 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         // make sure not saving a game that is finished
         if (bFinished_)
         {
-            logger.warn("Skipping save of finished game " + state.getGameName() + " to " + state.getFile());
+            logger.warn("Skipping save of finished game {} to {}", state.getGameName(), state.getFile());
             return;
         }
         
@@ -1024,7 +654,7 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         }
         
         // 5th, store territories and their contents
-        Territory territories[] = Territory.getTerritoryArrayCached();
+        Territory[] territories = Territory.getTerritoryArrayCached();
         state.saveTerritories(territories);
         
         // 6th, store custom data
@@ -1047,7 +677,7 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         // make sure not writing a game that is finished
         if (bFinished_)
         {
-            logger.warn("Skipping write of finished game " + state.getGameName() + " to " + state.getFile());
+            logger.warn("Skipping write of finished game {} to {}", state.getGameName(), state.getFile());
             return;
         }
         state.write();
@@ -1112,7 +742,7 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         // make sure not loading a game that is finished
         if (bFinished_)
         {
-            logger.warn("Skipping load of finished game " + state.getGameName() + " to " + state.getFile());
+            logger.warn("Skipping load of finished game {} to {}", state.getGameName(), state.getFile());
             return;
         }
         
@@ -1120,7 +750,7 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         GameStateEntry nextPhase = null;
                 
         // PHASE 0 - prepopulate ids
-        Territory territories[] = Territory.getTerritoryArrayCached();
+        Territory[] territories = Territory.getTerritoryArrayCached();
         state.prepopulateIds(this, territories, this, this);
         
         // PHASE 1 - create all objects
@@ -1334,42 +964,5 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
 	    return;
 	}
 	changeSupport.removePropertyChangeListener(propertyName, listener);
-    }
-
-    /**
-     * Returns an array of all the <code>PropertyChangeListener</code>s
-     * added to this Component with addPropertyChangeListener().
-     *
-     * @return all of the <code>PropertyChangeListener</code>s added or
-     *         an empty array if no listeners have been added
-     *
-     * @see      #addPropertyChangeListener
-     * @see      #removePropertyChangeListener
-     * @see      #getPropertyChangeListeners(String)
-     * @see      PropertyChangeSupport#getPropertyChangeListeners
-     * @since    1.4
-     */
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
-	if (changeSupport == null) {
-	    return new PropertyChangeListener[0];
-	}
-	return changeSupport.getPropertyChangeListeners();
-    }    
-
-    /**
-     * Returns an array of all the listeners which have been associated 
-     * with the named property.
-     *
-     * @return all of the <code>PropertyChangeListeners</code> associated with
-     *         the named property or an empty array if no listeners have 
-     *         been added
-     * @see #getPropertyChangeListeners
-     * @since 1.4
-     */
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-	if (changeSupport == null) {
-	    return new PropertyChangeListener[0];
-	}
-	return changeSupport.getPropertyChangeListeners(propertyName);
     }
 }

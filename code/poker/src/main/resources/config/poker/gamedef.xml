@@ -68,7 +68,6 @@
 
   <phase name="ChainPhase" class="com.donohoedigital.games.engine.ChainPhase$Empty" transient="true"/>
   <phase name="PreviousPhase" class="com.donohoedigital.games.engine.PreviousPhase" transient="true"/>
-  <phase name="PreviousLoopPhase" class="com.donohoedigital.games.engine.PreviousLoopPhase" transient="true"/>
 
   <phase name="DisplayInfoMessage" class="com.donohoedigital.games.engine.DisplayMessage" transient="true">
     <param name="style" strvalue="DisplayMessage"/>
