@@ -73,10 +73,6 @@ public class DashboardManager
         {
             sPrefName_ += "clock";
         }
-        else if (game.isSimulatorMode())
-        {
-            sPrefName_ += "simulator";
-        }
         else
         {
             sPrefName_ += "practice";

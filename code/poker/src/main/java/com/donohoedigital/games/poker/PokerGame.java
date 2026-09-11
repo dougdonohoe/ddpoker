@@ -123,7 +123,6 @@ public class PokerGame extends Game implements PlayerActionListener
     private TournamentProfile profile_;
     private int nLevel_ = 0;
     private boolean bClockMode_ = false;
-    private boolean bSimulatorMode_ = false;
     private long id_;
     private int nMinChipIdx_ = 0;
     private int nLastMinChipIdx_ = 0;
@@ -243,22 +242,6 @@ public class PokerGame extends Game implements PlayerActionListener
     public boolean isClockMode()
     {
         return bClockMode_;
-    }
-
-    /**
-     * Set simulator mode
-     */
-    public void setSimulatorMode(boolean b)
-    {
-        bSimulatorMode_ = b;
-    }
-
-    /**
-     * Is simulator mode?
-     */
-    public boolean isSimulatorMode()
-    {
-        return bSimulatorMode_;
     }
 
     /**
