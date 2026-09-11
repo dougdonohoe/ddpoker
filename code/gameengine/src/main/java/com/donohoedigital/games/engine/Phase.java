@@ -40,8 +40,6 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.config.GamePhase;
-import com.donohoedigital.games.config.GameState;
-import com.donohoedigital.games.config.GameStateEntry;
 
 /**
  *
@@ -49,28 +47,23 @@ import com.donohoedigital.games.config.GameStateEntry;
  */
 public interface Phase {
     
-    public void init(GameEngine engine, GameContext context, GamePhase gamephase);
+    void init(GameEngine engine, GameContext context, GamePhase gamephase);
     
-    public void reinit(GamePhase gamephase);
+    void reinit(GamePhase gamephase);
     
-    public void setFromPhase(Phase phase);
+    void setFromPhase(Phase phase);
         
-    public void start();
+    void start();
     
-    public void finish();
+    void finish();
     
-    public GameEngine getGameEngine();
+    GameEngine getGameEngine();
     
-    public GamePhase getGamePhase();
+    GamePhase getGamePhase();
     
-    public boolean processButton(GameButton button);
+    boolean processButton(GameButton button);
     
-    public Object getResult();
-    
-    public Object getOnlineResult();
-    
-    public GameStateEntry addGameStateEntry(GameState state);
-    
-    public boolean isUsedInDemo();
-    
+    Object getResult();
+
+    boolean isUsedInDemo();
 }
