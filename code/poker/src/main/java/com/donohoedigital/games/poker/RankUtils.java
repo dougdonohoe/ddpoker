@@ -34,7 +34,7 @@ package com.donohoedigital.games.poker;
 
 /**
  * Rank of a player among a group of players, by chips.
- *
+ * <p>
  * PokerGame and PokerTable both need this - the same count over a different set of
  * players - so the count lives here and each supplies the players to walk.
  */
@@ -44,17 +44,17 @@ public class RankUtils
      * Return rank of a player among the given players, based on chips.  Players
      * holding equal chips share a rank, so this is one more than the number holding
      * strictly more - the same result the previous sort-based version produced.
-     *
+     * <p>
      * Returns 0 when the player is not among them.  Whether that is an error is the
      * caller's to decide: it is for a tournament-wide rank, where every player is in
      * the list by definition, and is not for a table-scoped one, which is asked about
      * whoever is under the mouse and who may be seated anywhere.
-     *
+     * <p>
      * Compares settled chip counts, not live ones - see PokerGame.getSettledChipCount().
      * A rank is read at arbitrary moments: the Rank dashboard item recomputes when
      * another table finishes a hand, which lands in the middle of ours, and PlayerInfo
      * recomputes on every mouse-over.  Live counts sink whoever has chips in a pot.
-     *
+     * <p>
      * Walks an Iterable rather than indexing, because a rank is counted while the list
      * underneath may be changing - PokerGame's shrinks when a player switches to observer
      * (see PokerGame.removePlayer(), called from OnlineManager on the EDT).  Both callers

@@ -48,7 +48,7 @@ public interface GameManager
      * Return object used by GameManager to synchronize
      * around game saves (use by GameListPanel)
      */
-    public Object getSaveLockObject();
+    Object getSaveLockObject();
     
     /**
      * Get phase name in gamedef.xml used to start the manager.
@@ -56,11 +56,11 @@ public interface GameManager
      * run when loading a game and therefore the phase name is
      * stored in the save file.
      */
-    public String getPhaseName();
+    String getPhaseName();
     
     /**
      * Called by GameEngine when shutdown initiated by user via quit.
-     * Cleanup as necessary then call GameEngine's restartNormal() method.
+     * Cleanup as necessary, then call GameEngine's restartNormal() method.
      */
-    public void cleanup();
+    void cleanup();
 }

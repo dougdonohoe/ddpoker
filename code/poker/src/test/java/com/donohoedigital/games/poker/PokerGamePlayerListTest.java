@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * <p/>
  * The list is changed off the game thread for real: OnlineManager.switchPlayer() moves
  * somebody between player and observer from the EDT, and a join arrives on a message
- * thread.  Meanwhile every ranking path walks it.  While it was a plain ArrayList that was
+ * thread.  Meanwhile, every ranking path walks it.  While it was a plain ArrayList that was
  * a ConcurrentModificationException waiting for the right moment.
  */
 public class PokerGamePlayerListTest extends AbstractPokerTest
@@ -165,7 +165,7 @@ public class PokerGamePlayerListTest extends AbstractPokerTest
     public void addPlayersMatchesAddingOneAtATime()
     {
         AtomicInteger events = new AtomicInteger();
-        PropertyChangeListener counter = evt -> events.incrementAndGet();
+        PropertyChangeListener counter = _ -> events.incrementAndGet();
         game_.addPropertyChangeListener(PokerGame.PROP_PLAYERS, counter);
 
         PokerPlayer first = add(1, 100); // one at a time, for something to follow
