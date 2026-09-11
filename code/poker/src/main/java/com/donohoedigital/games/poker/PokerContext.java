@@ -128,11 +128,6 @@ public class PokerContext extends GameContext
             GuiUtils.addKeyAction((JComponent) getContentPane(), JComponent.WHEN_IN_FOCUSED_WINDOW,
                                   "printscreen", new PrintAction(),
                                   KeyEvent.VK_P, Utils.ISMAC ? KeyEvent.META_DOWN_MASK : KeyEvent.CTRL_DOWN_MASK);
-
-//            GuiUtils.addKeyAction((JComponent) getContentPane(), JComponent.WHEN_IN_FOCUSED_WINDOW,
-//                                  "testing", new TestingAction(),
-//                                  KeyEvent.VK_EQUALS, KeyEvent.CTRL_DOWN_MASK | KeyEvent.ALT_DOWN_MASK |
-//                                                      KeyEvent.SHIFT_DOWN_MASK);
         }
     }
 
@@ -182,17 +177,6 @@ public class PokerContext extends GameContext
             PokerUtils.doScreenShot(PokerContext.this);
         }
     }
-
-    /**
-     * Testing action
-     */
-//    private class TestingAction extends AbstractAction
-//    {
-//        public void actionPerformed(ActionEvent e)
-//        {
-//            new TestingWindow();
-//        }
-//    }
 
     /**
      * an error occurred - log holdem hand info if it is available
