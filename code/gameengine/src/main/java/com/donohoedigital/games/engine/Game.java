@@ -47,6 +47,7 @@ import org.apache.logging.log4j.*;
 import javax.swing.event.*;
 import java.beans.*;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.prefs.*;
 
 /**
@@ -58,9 +59,19 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
 {
     static Logger logger = LogManager.getLogger(Game.class);
 
-    // list of players
-    protected List<GamePlayer> players_ = new ArrayList<GamePlayer>();
-    private List<GamePlayer> observers_ = new ArrayList<GamePlayer>();
+    // List of players.  Copy-on-write because these are mutated from threads which do
+    // not own the game: a message thread as players join, and the EDT when the host
+    // switches someone between player and observer (OnlineManager.switchPlayer()), while
+    // the game thread is reading them.  A plain ArrayList made every for-each over either
+    // list a ConcurrentModificationException waiting to happen, and every ranking path
+    // walks one of them.  The iterator of a CopyOnWriteArrayList is a snapshot, taken
+    // without allocating or locking, which is exactly what those readers want.
+    //
+    // The cost is that each add or remove copies the backing array.  That is nothing on
+    // the join, quit and switch paths; where a whole field is added at once, add it at
+    // once - see PokerGame.addPlayers().
+    protected final List<GamePlayer> players_ = new CopyOnWriteArrayList<>();
+    private final List<GamePlayer> observers_ = new CopyOnWriteArrayList<>();
 
     // current player (set from loop phases/other)
     private GamePlayer currentPlayer_ = null;
