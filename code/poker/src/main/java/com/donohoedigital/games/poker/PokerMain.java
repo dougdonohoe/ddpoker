@@ -84,29 +84,23 @@ import static com.donohoedigital.config.DebugConfig.TESTING;
 public class PokerMain extends GameEngine implements Peer2PeerControllerInterface, LanControllerInterface,
                                                      UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static final Logger logger;
+    // assigned in the constructor, after BaseApp has configured logging
+    private static Logger logger;
 
     private static final String APP_NAME = "poker";
     private String sFileParam_ = null;
     private final boolean bLoadNames;
 
     static {
-        // forget why I set this
-        System.setProperty("sun.java2d.noddraw", "true");
-
         // Mac: Menu Name
-        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "DD Poker"); // TODO + version?
-        System.setProperty("apple.awt.application.name", "DD Poker"); // TODO + version?
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "DD Poker");
+        System.setProperty("apple.awt.application.name", "DD Poker");
 
-        // avoid java.lang.NullPointerException
-        //	at javax.swing.plaf.metal.MetalSliderUI.installUI(MetalSliderUI.java:110)
+        // Selects our look and feel - nothing calls UIManager.setLookAndFeel(), so this
+        // property is what installs Metal.  Load-bearing beyond appearance: DDSliderUI
+        // extends MetalSliderUI and the title pane code reads MetalLookAndFeel theme
+        // colors, so without Metal installed MetalSliderUI.installUI() throws NPE.
         System.setProperty("swing.defaultlaf", "javax.swing.plaf.metal.MetalLookAndFeel");
-
-        // initialize logging before anything else (need version string for log file directory)
-        Utils.setVersionString(PokerConstants.VERSION.getMajorAsString());
-        LoggingConfig loggingConfig = new LoggingConfig(APP_NAME, ApplicationType.CLIENT);
-        loggingConfig.init();
-        logger = LogManager.getLogger(PokerMain.class);
     }
 
     /**
@@ -165,6 +159,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
             throws ApplicationError
     {
         super(sConfigName, sMainModule, PokerConstants.VERSION.getMajorAsString(), args, bHeadless);
+        logger = LogManager.getLogger(PokerMain.class); // super() configured logging
         this.bLoadNames = bLoadNames;
     }
 
