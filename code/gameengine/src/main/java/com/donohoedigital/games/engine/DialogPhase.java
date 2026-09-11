@@ -45,8 +45,6 @@ import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -62,8 +60,6 @@ import java.util.prefs.Preferences;
  */
 public abstract class DialogPhase extends BasePhase implements InternalDialog.DialogOpened, InternalDialog.DialogClosed
 {
-    static Logger logger = LogManager.getLogger(DialogPhase.class);
-
     /**
      * "dialog-modal" prop value
      */
@@ -153,25 +149,6 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
     }
 
     /**
-     * Can be used by subclass to mimic behavoir of don't show
-     * functionality - basically, don't show the UI and activate
-     * the button associated with the enter key (the default button).
-     * Needs to be called before calling init method.
-     */
-    protected void setDontShow(boolean bDontShow)
-    {
-        bDontShow_ = bDontShow;
-    }
-
-    /**
-     * Return value of dont show
-     */
-    protected boolean isDontShow()
-    {
-        return bDontShow_;
-    }
-
-    /**
      * Display the dialog without a visible UI.
      */
     protected boolean isFaceless()
@@ -202,7 +179,7 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
     /**
      * Used to handle window closing events, etc.
      */
-    protected DialogListener myListener_;
+    private DialogListener myListener_;
 
 
     /**
@@ -214,13 +191,11 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
         String sEnterButton = gamephase_.getString(ButtonBox.PARAM_DEFAULT_BUTTON, null);
         if (sEnterButton != null)
         {
-            List buttons = gamephase_.getList("buttons");
+            List<?> buttons = gamephase_.getList("buttons");
             String sButtonDef;
-            for (int i = 0; i < buttons.size(); i++)
-            {
-                sButtonDef = (String) buttons.get(i);
-                if (GameButton.isMatch(sButtonDef, sEnterButton))
-                {
+            for (Object o : buttons) {
+                sButtonDef = (String) o;
+                if (GameButton.isMatch(sButtonDef, sEnterButton)) {
                     button = new GameButton(sButtonDef);
                 }
             }
@@ -258,14 +233,7 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
         }
 
         // "show", faceless or otherwise
-        if (isFaceless())
-        {
-            _showDialog(true);
-        }
-        else
-        {
-            _showDialog(false);
-        }
+        _showDialog(isFaceless());
 
         // since already shown, if redisplayed, go back to where it was
         // useful for cached phases
@@ -290,16 +258,6 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
         int nLocation = getDialogPosition(dialog_);
         Component c = getFocusComponent();
         dialog_.showDialog(myListener_, nLocation, c, !bFaceless);
-    }
-
-    /**
-     * Hide a dialog if already visible
-     */
-    protected void hideDialog()
-    {
-        dialog_.setVisible(false);
-        BaseFrame frame = context_.getFrame();
-        ((JComponent) frame.getContentPane()).paintImmediately(0, 0, frame.getWidth(), frame.getHeight());
     }
 
     /**
@@ -390,17 +348,17 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
         if (bNoShowOption_)
         {
             back_.getNoShowCheckBox().addActionListener(
-                e -> {
+                    _ -> {
                     Preferences prefs = Prefs.getUserPrefs(EnginePrefs.NODE_DIALOG_PHASE);
                     prefs.putBoolean(sNoShowKey_, back_.getNoShowCheckBox().isSelected());
                 });
         }
 
-        ///
-        /// Handle Window close / delete events - typically cancel
-        ///
+        //
+        // Handle Window close / delete events - typically cancel
+        //
         String sCloseButton = gamephase_.getString("dialog-window-close-activates-button", null);
-        if (sCloseButton != null && sCloseButton.length() > 0)
+        if (sCloseButton != null && !sCloseButton.isEmpty())
         {
             cancelButton_ = getMatchingButton(sCloseButton);
             if (cancelButton_ == null)
@@ -412,21 +370,17 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
             myListener_.setButton(cancelButton_);
 
             GuiUtils.InvokeButton hk = new GuiUtils.InvokeButton(cancelButton_);
-            // add key action so "delete/backspace" triggers close button
-// JDD - leave out for now cuz it prevents backspace in text fields
-//           GuiUtils.addKeyAction(back_, JComponent.WHEN_IN_FOCUSED_WINDOW,
-//                            "handlebackspace", hk, 
-//                            KeyEvent.VK_BACK_SPACE, 0);
+            // add key action so "delete" triggers close button
             GuiUtils.addKeyAction(back_, JComponent.WHEN_IN_FOCUSED_WINDOW,
                                   "handledelete", hk,
                                   KeyEvent.VK_DELETE, 0);
         }
 
-        ///
-        /// Handle ENTER key presses - typically okay
-        ///
+        //
+        // Handle ENTER key presses - typically okay
+        //
         String sEnterButton = gamephase_.getString(ButtonBox.PARAM_DEFAULT_BUTTON, null);
-        if (sEnterButton != null && sEnterButton.length() > 0)
+        if (sEnterButton != null && !sEnterButton.isEmpty())
         {
             okayButton_ = getMatchingButton(sEnterButton);
             if (okayButton_ == null)
@@ -497,7 +451,7 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
     /**
      * Used to activate default button
      */
-    private class DialogListener extends InternalFrameAdapter
+    private static class DialogListener extends InternalFrameAdapter
     {
         DialogPhase phase_;
         DDButton button_;
@@ -527,7 +481,7 @@ public abstract class DialogPhase extends BasePhase implements InternalDialog.Di
     /**
      * Used to start/finish the phase
      */
-    private class PhaseDialogListener extends DialogListener
+    private static class PhaseDialogListener extends DialogListener
     {
         public PhaseDialogListener(DialogPhase phase)
         {
