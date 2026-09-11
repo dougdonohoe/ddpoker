@@ -119,7 +119,7 @@ public class PokerGame extends Game implements PlayerActionListener
     public static final String PROP_PLAYER_FINISHED = "_busted_";
 
     // game info
-    private DMArrayList<PokerTable> tables_ = new DMArrayList<>();
+    private final DMArrayList<PokerTable> tables_ = new DMArrayList<>();
     private TournamentProfile profile_;
     private int nLevel_ = 0;
     private boolean bClockMode_ = false;
@@ -141,7 +141,7 @@ public class PokerGame extends Game implements PlayerActionListener
     private int nNumOut_ = 0;
 
     // clock object used to store seconds remaining, used in tournament/poker night manager
-    private GameClock clock_ = new GameClock();
+    private final GameClock clock_ = new GameClock();
 
     // input mode
     public static final int MODE_NONE = -1;
@@ -151,9 +151,9 @@ public class PokerGame extends Game implements PlayerActionListener
     public static final int MODE_CLIENT = 3;
     public static final int MODE_CANCELLED = 4;
 
-    ////
-    //// members below are transient (not saved)
-    ////
+    //
+    // members below are transient (not saved)
+    //
 
     // total chips
     private int totalChipsInPlay_;
@@ -167,7 +167,7 @@ public class PokerGame extends Game implements PlayerActionListener
     private boolean bStartFromLobby_;
 
     /**
-     *
+     * empty constructor for loading from file
      */
     public PokerGame()
     {
@@ -175,9 +175,7 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * empty constructor for loading
-     *
-     * @param context
+     * standard constructor
      */
     public PokerGame(GameContext context)
     {
@@ -292,6 +290,25 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
+     * Add a whole field of players at once.  The player list is copy-on-write, so adding
+     * one at a time copies its backing array once per player - nothing when somebody
+     * joins, but O(n^2) building the 5,625 player tournament setupComputerPlayers()
+     * creates in one go.
+     * <p/>
+     * Everything after the add is per player exactly as addPlayer() does it, so the only
+     * difference a listener can see is that the events arrive together at the end.
+     */
+    public void addPlayers(List<PokerPlayer> players)
+    {
+        players_.addAll(players);
+        for (PokerPlayer player : players)
+        {
+            updatePlayerList(player);
+            firePropertyChange(PROP_PLAYERS, null, player);
+        }
+    }
+
+    /**
      * Update profile for online game too (override completely so
      * prop change event happens after profile updated)
      */
@@ -304,7 +321,10 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * Return copy of player list (thus it can be changed)
+     * Return copy of player list (thus it can be changed).
+     * <p/>
+     * Safe to walk while another thread is adding or removing: the list is
+     * copy-on-write, so this iterator is a snapshot.  See Game.players_.
      */
     public List<PokerPlayer> getPokerPlayersCopy()
     {
@@ -387,8 +407,6 @@ public class PokerGame extends Game implements PlayerActionListener
     /**
      * Remove observer - override to make sure players
      * is removed from their table's observer list too
-     *
-     * @param player
      */
     @Override
     public void removeObserver(GamePlayer player)
@@ -502,34 +520,26 @@ public class PokerGame extends Game implements PlayerActionListener
         return getPokerPlayerFromID(GamePlayer.HOST_ID);
     }
 
-    // this game's players, as the players a rank is counted over.  Held as a field so
-    // that counting a rank allocates nothing.
-    private final RankUtils.Players rankPlayers_ = new RankUtils.Players()
-    {
-        public int size()
-        {
-            return getNumPlayers();
-        }
-
-        public PokerPlayer getPlayerAt(int n)
-        {
-            return getPokerPlayerAt(n);
-        }
-    };
+    // This game's players, as the players a rank is counted over.  The live list itself:
+    // it is copy-on-write, so RankUtils walking it takes a snapshot without allocating
+    // or locking, and a rank counted while somebody switches to observer still sees a
+    // consistent field.  Everything in it is a PokerPlayer - addPlayer() casts to one.
+    @SuppressWarnings("unchecked")
+    private final Iterable<PokerPlayer> rankPlayers_ = (Iterable<PokerPlayer>) (Iterable<?>) players_;
 
     /**
      * Return rank of player based on chips, across the whole tournament.  Players
      * holding equal chips share a rank, so this is one more than the number of players
      * holding strictly more - the same result the previous sort-based version produced.
-     *
+     * <p>
      * Counted in a single pass by RankUtils rather than by sorting a copy of the player
      * list.  This runs every time the rank is displayed, which is at the end of every
      * hand, and in a large tournament the old version allocated and sorted a 5,625
      * element list each time.  PokerTable.getRank() counts the same way over one table.
-     *
+     * <p>
      * Every player in the tournament is in this list, so not finding one is an error -
      * unlike the table-scoped version, where it just means "seated elsewhere".
-     *
+     * <p>
      * See RankUtils for why settled chip counts are compared rather than live ones,
      * and for what re-reading the list size on every pass does and does not buy.
      */
@@ -547,14 +557,14 @@ public class PokerGame extends Game implements PlayerActionListener
     /**
      * Get a player's chip count as of the last point at which chips were settled -
      * that is, with nothing committed to a pot yet to be awarded.
-     *
+     * <p>
      * getChipCount() is the live stack, which is decremented the instant a blind,
      * ante or bet is committed and is not credited back until the pot is awarded.
      * Comparing live counts across tables while a hand is in progress therefore
      * understates whoever is in the middle of a hand - which is everyone at the
      * current table for most of its hand.  Same idea as BUG 420 (see
      * PokerTable.isRebuyAllowed()).
-     *
+     * <p>
      * Not synchronized on purpose - see PokerTable.isHandInProgress().
      */
     public int getSettledChipCount(PokerPlayer player)
@@ -600,42 +610,80 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * Get sorted list of players
+     * Get sorted list of players, biggest stack first.
+     * <p/>
+     * Each player's chips and place are read once, up front, and the sort compares that
+     * capture.  SortChips used to read them live on every comparison, which makes the
+     * comparator inconsistent with itself if the tournament director moves chips while
+     * the sort is running - Collections.sort notices and throws
+     * "Comparison method violates its general contract!".  TournamentSummaryPanel sorts
+     * on the EDT with the director still running, so this is reachable.  Same fix, and
+     * the same shape, as ChipLeaderPanel.createUI().
      */
     public List<PokerPlayer> getPlayersByRank()
     {
-        List<PokerPlayer> sort = getPokerPlayersCopy();
-        Collections.sort(sort, SORTCHIPS);
-        return sort;
+        List<PokerPlayer> players = getPokerPlayersCopy();
+
+        List<Ranked> ranked = new ArrayList<>(players.size());
+        for (PokerPlayer player : players)
+        {
+            ranked.add(new Ranked(player));
+        }
+        ranked.sort(SORTCHIPS);
+
+        List<PokerPlayer> sorted = new ArrayList<>(ranked.size());
+        for (Ranked each : ranked)
+        {
+            sorted.add(each.player);
+        }
+        return sorted;
+    }
+
+    /**
+     * A player's chips and place as of one instant, so that the sort compares values
+     * which cannot change underneath it.  Both are live mutable state on PokerPlayer.
+     */
+    private static class Ranked
+    {
+        private final PokerPlayer player;
+        private final int nChips;
+        private final int nPlace;
+
+        private Ranked(PokerPlayer player)
+        {
+            this.player = player;
+            nChips = player.getChipCount();
+            nPlace = player.getPlace();
+        }
     }
 
     // instances for sorting
-    private static SortChips SORTCHIPS = new SortChips();
+    private static final SortChips SORTCHIPS = new SortChips();
 
-    // sort players by chips they have at start of hand
-    private static class SortChips implements Comparator<PokerPlayer>
+    // sort players by the chips they hold, most first
+    private static class SortChips implements Comparator<Ranked>
     {
         /**
          * Compares its two arguments for order.  Returns a negative integer,
          * zero, or a positive integer as the first argument is less than, equal
          * to, or greater than the second.
          */
-        public int compare(PokerPlayer p1, PokerPlayer p2)
+        public int compare(Ranked r1, Ranked r2)
         {
             // reverse comparison so highest chips at top
-            int diff = p2.getChipCount() - p1.getChipCount();
+            int diff = r2.nChips - r1.nChips;
             if (diff != 0) return diff;
 
             // if no diff, and chip count is zero, sort by place
             // normal comparison so best finish at top
-            if (p1.getChipCount() == 0)
+            if (r1.nChips == 0)
             {
-                diff = p1.getPlace() - p2.getPlace();
+                diff = r1.nPlace - r2.nPlace;
                 if (diff != 0) return diff;
             }
 
             // if still no diff, rank by id, which puts human towards the top
-            return p1.getID() - p2.getID();
+            return r1.player.getID() - r2.player.getID();
         }
     }
 
@@ -1173,12 +1221,17 @@ public class PokerGame extends Game implements PlayerActionListener
             hsUsed.add(getPokerPlayerAt(i).getName());
         }
 
-        // fill remaining players with computer players
+        // Fill remaining players with computer players.  Built up here and added in one
+        // shot at the end rather than one at a time - see addPlayers() for why.  Nothing
+        // in the loop reads the player list: the bound is the for-init, evaluated once,
+        // getNextPlayerID() is a sequence rather than a scan, and the names already used
+        // are tracked in hsUsed.
         PlayerType playerType;
         String sName;
         String sKey = getPublicUseKey();
         Map<String, List<String>> hmRoster = new HashMap<>();
         List<String> roster;
+        List<PokerPlayer> computers = new ArrayList<>();
         for (int i = getNumPlayers(); i < nNumPlayers; i++)
         {
             playerType = getNextPlayerType(/*i - nNumHumans, nNumPlayers - nNumHumans*/);
@@ -1191,8 +1244,9 @@ public class PokerGame extends Game implements PlayerActionListener
             sName = getName(names, roster, hsUsed);
             player = new PokerPlayer(sKey, getNextPlayerID(), sName, false);
             player.setPlayerType(playerType);
-            addPlayer(player);
+            computers.add(player);
         }
+        addPlayers(computers);
     }
 
     private PlayerType getNextPlayerType()
@@ -1455,14 +1509,14 @@ public class PokerGame extends Game implements PlayerActionListener
 
         if (wait != null && wait.size() > 1)
         {
-            Collections.sort(wait, SORTBYWAIT);
+            wait.sort(SORTBYWAIT);
         }
 
         return wait;
     }
 
     // instances for sorting
-    private static SortByWait SORTBYWAIT = new SortByWait();
+    private static final SortByWait SORTBYWAIT = new SortByWait();
 
     // sort players by when they were added to wait list
     private static class SortByWait implements Comparator<PokerPlayer>

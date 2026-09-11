@@ -41,27 +41,6 @@ package com.donohoedigital.games.poker;
 public class RankUtils
 {
     /**
-     * The players a rank is counted over.
-     *
-     * Deliberately an indexed list rather than a java.util.List: neither caller has
-     * one to hand, and copying into one on every call is exactly what counting in a
-     * single pass exists to avoid.
-     */
-    public interface Players
-    {
-        /**
-         * Number of slots to walk.
-         */
-        int size();
-
-        /**
-         * Player in slot n, or null if the slot is empty - a table's seats are a
-         * fixed-size array with gaps in it.
-         */
-        PokerPlayer getPlayerAt(int n);
-    }
-
-    /**
      * Return rank of a player among the given players, based on chips.  Players
      * holding equal chips share a rank, so this is one more than the number holding
      * strictly more - the same result the previous sort-based version produced.
@@ -75,21 +54,24 @@ public class RankUtils
      * A rank is read at arbitrary moments: the Rank dashboard item recomputes when
      * another table finishes a hand, which lands in the middle of ours, and PlayerInfo
      * recomputes on every mouse-over.  Live counts sink whoever has chips in a pot.
+     *
+     * Walks an Iterable rather than indexing, because a rank is counted while the list
+     * underneath may be changing - PokerGame's shrinks when a player switches to observer
+     * (see PokerGame.removePlayer(), called from OnlineManager on the EDT).  Both callers
+     * hand over something whose iterator is a snapshot and costs nothing to take: a
+     * copy-on-write list, or a fixed view of a seat array.  Indexing them instead would
+     * mean reading a size and then a slot, which is two reads of something which can
+     * change in between.
      */
-    public static int getRank(PokerGame game, Players players, PokerPlayer player)
+    public static int getRank(PokerGame game, Iterable<PokerPlayer> players, PokerPlayer player)
     {
         int nChips = game.getSettledChipCount(player);
         int nRank = 1;
         boolean bFound = false;
 
-        // size() is re-read on every pass on purpose.  PokerGame's list can shrink
-        // from another thread (see PokerGame.removePlayer(), called from OnlineManager
-        // when a player switches to observer), and a bound captured up front would
-        // index off the end.  It does not close the window between reading size() and
-        // reading the slot - that race is older than this method and unchanged by it.
-        for (int i = 0; i < players.size(); i++)
+        for (PokerPlayer p : players)
         {
-            PokerPlayer p = players.getPlayerAt(i);
+            // a table's seats are a fixed-size array with gaps in it
             if (p == null) continue;
             if (p == player)
             {

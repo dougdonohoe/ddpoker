@@ -42,7 +42,6 @@ import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
 import com.donohoedigital.base.Utils;
 import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
 import com.donohoedigital.comms.DMTypedHashMap;
 import com.donohoedigital.comms.MsgState;
 import com.donohoedigital.comms.ObjectID;
@@ -93,11 +92,11 @@ public class PokerTable implements ObjectID
     private boolean bCurrent_ = false;
     private boolean bZipMode_ = false;
     private HoldemHand hhand_;
-    private List<PokerPlayer> waitList_ = new ArrayList<>();
-    private List<PokerPlayer> addedList_ = new ArrayList<>();
-    private List<PokerPlayer> addonList_ = new ArrayList<>();
-    private List<PokerPlayer> rebuyList_ = new ArrayList<>();
-    private List<PokerPlayer> observers_ = new ArrayList<>();
+    private final List<PokerPlayer> waitList_ = new ArrayList<>();
+    private final List<PokerPlayer> addedList_ = new ArrayList<>();
+    private final List<PokerPlayer> addonList_ = new ArrayList<>();
+    private final List<PokerPlayer> rebuyList_ = new ArrayList<>();
+    private final List<PokerPlayer> observers_ = new ArrayList<>();
     private int nTableState_ = STATE_NONE;
     private int nPrevState_ = STATE_NONE;
     private int nPendingState_ = STATE_NONE;
@@ -429,21 +428,15 @@ public class PokerTable implements ObjectID
         return players_[nSeat];
     }
 
-    // this table's seats, as the players a rank is counted over.  The whole array is
-    // walked, not getSeats(): addPlayer() seats at a random index in 0..SEATS-1
-    // whatever the table's size, so a shorter bound would miss players in high seats.
-    private final RankUtils.Players rankPlayers_ = new RankUtils.Players()
-    {
-        public int size()
-        {
-            return PokerConstants.SEATS;
-        }
-
-        public PokerPlayer getPlayerAt(int n)
-        {
-            return players_[n];
-        }
-    };
+    // This table's seats, as the players a rank is counted over.  A fixed view of the
+    // seat array - Arrays.asList() does not copy, and the array is never replaced, so
+    // this stays current as players sit down and allocates nothing per rank.  Empty
+    // seats come through as nulls, which RankUtils skips.
+    //
+    // The whole array is walked, not getSeats(): addPlayer() seats at a random index in
+    // 0..SEATS-1 whatever the table's size, so a shorter bound would miss players in
+    // high seats.
+    private final List<PokerPlayer> rankPlayers_ = Arrays.asList(players_);
 
     /**
      * Return rank of a player among those seated at this table, based on chips.
@@ -487,7 +480,7 @@ public class PokerTable implements ObjectID
     }
 
     // instances for sorting
-    private static SortByMoved SORTBYMOVED = new SortByMoved();
+    private static final SortByMoved SORTBYMOVED = new SortByMoved();
 
     // sort players by when they last moved - smaller # hands played
     // at last moved means moved less recently
@@ -1360,7 +1353,7 @@ public class PokerTable implements ObjectID
     }
     
     // instances for sorting
-    private SortChipRace SORTCHIPRACE = new SortChipRace();
+    private final SortChipRace SORTCHIPRACE = new SortChipRace();
 
     // sort players by top card in hand - players who would
     // go broke from chip race end up at top
@@ -1886,7 +1879,7 @@ public class PokerTable implements ObjectID
     ////
     //// PokerTableListener
     ////
-    private List<ListenerInfo> listeners_ = new ArrayList<>();
+    private final List<ListenerInfo> listeners_ = new ArrayList<>();
     
     /**
      * notify table that display preferences changed so listeners can react
@@ -1975,7 +1968,7 @@ public class PokerTable implements ObjectID
     {
         public static final ListenerInfo NULL_LISTENER = new ListenerInfo(null, 0);
 
-        private PokerTableListener listener;
+        private final PokerTableListener listener;
         private int nTypes;
 
         private ListenerInfo(PokerTableListener listener, int nTypes)

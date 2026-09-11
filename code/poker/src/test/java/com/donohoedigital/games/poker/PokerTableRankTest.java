@@ -274,4 +274,42 @@ public class PokerTableRankTest extends AbstractPokerTest
             assertEquals(game_.getRank(p), table.getRank(p), "table and tournament rank differ for " + p.getName());
         }
     }
+
+    /**
+     * Seats do not hold still: a tournament breaks tables and moves players between them
+     * all the way down to the final table, and a busted player just vacates a seat.
+     * <p/>
+     * The rank has to follow that.  It is counted over a view of the seat array rather
+     * than a copy of it, which only stays correct while the array itself is the same
+     * object - every seating and un-seating writes a slot in place.  Anyone replacing it
+     * with a fresh array would break this silently, hence the test.
+     */
+    @Test
+    public void rankFollowsPlayersMovingBetweenTables()
+    {
+        PokerTable table = table(1);
+        PokerTable other = table(2);
+
+        PokerPlayer big = seat(table, 0, 1, 5000);
+        PokerPlayer middle = seat(table, 1, 2, 3000);
+        PokerPlayer small = seat(table, 2, 3, 1000);
+
+        assertEquals(3, table.getRank(small));
+
+        // the two above them bust out, and their seats are vacated
+        table.removePlayer(0);
+        table.removePlayer(1);
+        assertEquals(1, table.getRank(small), "last one seated is the chip leader of this table");
+        assertEquals(0, table.getRank(big), "and a player no longer seated here has no rank here");
+
+        // the table fills back up from a broken one, seated in the gaps just vacated
+        PokerPlayer arrival = seat(table, 1, 4, 9000);
+        assertEquals(2, table.getRank(small), "the new arrival counts against the ones already here");
+        assertEquals(1, table.getRank(arrival));
+
+        // and someone moved away is ranked at the table they moved to
+        other.setPlayer(middle, 0);
+        assertEquals(1, other.getRank(middle));
+        assertEquals(0, table.getRank(middle), "no longer ranked where they came from");
+    }
 }
