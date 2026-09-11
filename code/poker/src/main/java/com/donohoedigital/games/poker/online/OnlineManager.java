@@ -122,7 +122,7 @@ public class OnlineManager implements ChatManager
      * resolving them through the GameEngine singleton and the license key.  A null p2p
      * means "ask main_", which is what the production constructor above does.
      * <p/>
-     * Follows the PokerDatabase.init(profile, saveDir) precedent: a parameterised form of
+     * Follows the PokerDatabase.init(profile, saveDir) precedent: a parameterized form of
      * what the real constructor looks up for itself.
      */
     OnlineManager(PokerGame game, PokerMain main, PokerConnectionServer p2p, PokerPlayer local)
@@ -283,8 +283,8 @@ public class OnlineManager implements ChatManager
      * 2) A direct response is desired, like for the CAT_TEST, in which
      * case that is returned directly
      * <p/>
-     * 3) No resonse is required.  In some cases, the message is just processed
-     * and in other cases a seperate message is sent asynhcronously back
+     * 3) No response is required.  In some cases, the message is just processed
+     * and in other cases a separate message is sent asynchronously back
      * to the sender
      */
     private DDMessageTransporter processMessage(OnlineMessage omsg)
@@ -552,6 +552,7 @@ public class OnlineManager implements ChatManager
                 // from a player at a table who is eliminated.  This is the admittedly
                 // rare case of someone getting eliminated, quitting, and re-joining
                 // say to chat
+                //noinspection StatementWithEmptyBody
                 if (game_.isGameOver() && player.getTable() != null)
                 {
                     // player was at final table when tournament ended and therefore not turned into an
@@ -741,7 +742,7 @@ public class OnlineManager implements ChatManager
             ((UDPServer) p2p_).manager().getLink(conn.getUDPID()).setName(player.getName());
         }
 
-        // rejoing during play (after registration closed)
+        // rejoining during play (after registration closed)
         if (nMode == PokerGame.MODE_PLAY)
         {
             // Need to specify table for observer since normal start logic (HostStart) usually
@@ -1054,7 +1055,7 @@ public class OnlineManager implements ChatManager
                 }
 
                 // check to see if all players are now disconnected -
-                // do for both playes and waiting observers
+                // do for both players and waiting observers
                 if (player.isWaiting() || !bObs)
                 {
                     checkAllConnected();
@@ -1204,7 +1205,7 @@ public class OnlineManager implements ChatManager
 
     /**
      * Send poker table data to given player.  If dirtyTables and/or dirtyPlayers are non-null,
-     * then those specific tables and players are marked dirty and sent.  Otherwise the given
+     * then those specific tables and players are marked dirty and sent.  Otherwise, the given
      * table (and its players/observers) are marked dirty and sent.
      */
     public void sendTableUpdate(PokerTable table, PokerPlayer playerTo, DMArrayList<PokerTableEvent> events,
@@ -1564,7 +1565,7 @@ public class OnlineManager implements ChatManager
 
         //logger.debug("Check alive: " + player.getName() + " last: " + last);
 
-        // if its been the designated time since a message was received
+        // if it's been the designated time since a message was received
         // from this player, then close their socket.  Note:  we don't
         // do this if no message received from player ... which avoids
         // timeouts when transitioning to poker table from lobby or
@@ -1768,9 +1769,9 @@ public class OnlineManager implements ChatManager
     }
 
     // this flag is set after the TD is ready
-    // so that the display is sync'd with whatever
+    // so that the display is synced with whatever
     // game data is in the next update.  This is
-    // done becuase the sync done in ShowTournamentTable
+    // done because the sync done in ShowTournamentTable
     // may happen on stale data due to the time it
     // takes between joining and actually displaying
     // the data.
@@ -1864,7 +1865,7 @@ public class OnlineManager implements ChatManager
         // could be null when transitioning from lobby to host on client
         if (td_ != null) td_.processPlayerUpdate(player, omsg.getPlayerSettings());
 
-        // if host, propogate to other players
+        // if host, propagate to other players
         if (isHost())
         {
             sendMessageTable(omsg, player.getTable(), player);
@@ -1987,7 +1988,7 @@ public class OnlineManager implements ChatManager
     }
 
     /**
-     * conviencence method for addon/rebuy
+     * convenience method for addon/rebuy
      */
     private void sendCashChips(PokerPlayer player, int nLevel, int nCash, int nChips, boolean bPending, int nType)
     {
@@ -2120,6 +2121,7 @@ public class OnlineManager implements ChatManager
     /**
      * send director chat to given player
      */
+    @SuppressWarnings("SameParameterValue")
     private void sendDirectorChat(PokerPlayer to, String sMessage)
     {
         OnlineMessage chat = prepareMessage(OnlineMessage.CAT_CHAT);
@@ -2185,10 +2187,10 @@ public class OnlineManager implements ChatManager
     {
         boolean bDisplayLocally = true;
 
-        // if we are host, propogate to others
+        // if we are host, propagate to others
         if (isHost())
         {
-            // don't propogate messages only to host
+            // don't propagate messages only to host
             if (omsg.getChatType() != PokerConstants.CHAT_PRIVATE)
             {
                 PokerPlayer sender = getPlayer(omsg, true);
@@ -2197,7 +2199,7 @@ public class OnlineManager implements ChatManager
         }
         // clients, look to see if we should pause the clock -
         // a special case to keep clock in sync with host if
-        // host pauses game.  Chat is convienent place to do
+        // host pauses game.  Chat is convenient place to do
         // this since a chat message is always sent when host
         // pauses/unpauses clock.
         else
@@ -2362,7 +2364,7 @@ public class OnlineManager implements ChatManager
     }
 
     /**
-     * Handle processPhase request recieved
+     * Handle processPhase request received
      */
     private void processPhase(OnlineMessage omsg)
     {
@@ -2478,10 +2480,8 @@ public class OnlineManager implements ChatManager
             {
                 return;
             }
-            else
-            {
-                //logger.warn("Can't send message to: " + pTo.getName() + " (no socket): " + omsg.toStringNoData());
-            }
+            // else logger.warn("Can't send message to: " + pTo.getName() + " (no socket): " + omsg.toStringNoData())
+
             return;
         }
 
