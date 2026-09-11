@@ -104,7 +104,6 @@
           <executable>${java.home}/bin/java</executable>
           <arguments>
             <argument>-Dfile.encoding=UTF-8</argument>
-            <argument>-Dsun.java2d.noddraw=true</argument>
             <argument>-Dlog4j.rootLogger=DEBUG, Console</argument>
             <argument>-Xms32m</argument>
             <argument>-Xmx512m</argument>
