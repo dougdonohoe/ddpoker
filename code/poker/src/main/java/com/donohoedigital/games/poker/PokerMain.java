@@ -68,6 +68,7 @@ import javax.swing.SwingUtilities;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.nio.channels.SocketChannel;
 import java.sql.SQLException;
@@ -83,29 +84,23 @@ import static com.donohoedigital.config.DebugConfig.TESTING;
 public class PokerMain extends GameEngine implements Peer2PeerControllerInterface, LanControllerInterface,
                                                      UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
-    private static final Logger logger;
+    // assigned in the constructor, after BaseApp has configured logging
+    private static Logger logger;
 
     private static final String APP_NAME = "poker";
     private String sFileParam_ = null;
     private final boolean bLoadNames;
 
     static {
-        // forget why I set this
-        System.setProperty("sun.java2d.noddraw", "true");
-
         // Mac: Menu Name
-        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "DD Poker"); // TODO + version?
-        System.setProperty("apple.awt.application.name", "DD Poker"); // TODO + version?
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "DD Poker");
+        System.setProperty("apple.awt.application.name", "DD Poker");
 
-        // avoid java.lang.NullPointerException
-        //	at javax.swing.plaf.metal.MetalSliderUI.installUI(MetalSliderUI.java:110)
+        // Selects our look and feel - nothing calls UIManager.setLookAndFeel(), so this
+        // property is what installs Metal.  Load-bearing beyond appearance: DDSliderUI
+        // extends MetalSliderUI and the title pane code reads MetalLookAndFeel theme
+        // colors, so without Metal installed MetalSliderUI.installUI() throws NPE.
         System.setProperty("swing.defaultlaf", "javax.swing.plaf.metal.MetalLookAndFeel");
-
-        // initialize logging before anything else (need version string for log file directory)
-        Utils.setVersionString(PokerConstants.VERSION.getMajorAsString());
-        LoggingConfig loggingConfig = new LoggingConfig(APP_NAME, ApplicationType.CLIENT);
-        loggingConfig.init();
-        logger = LogManager.getLogger(PokerMain.class);
     }
 
     /**
@@ -164,6 +159,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
             throws ApplicationError
     {
         super(sConfigName, sMainModule, PokerConstants.VERSION.getMajorAsString(), args, bHeadless);
+        logger = LogManager.getLogger(PokerMain.class); // super() configured logging
         this.bLoadNames = bLoadNames;
     }
 
@@ -661,6 +657,38 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
     /**
+     * Get the connection server matching the transport a message arrived on.  Unlike
+     * {@link #getPokerConnectionServer(boolean)}, this never creates or shuts down a
+     * server - it just names the one the message came in on.  A message can arrive on a
+     * transport other than the one the game is using (the chat lobby is always UDP, while
+     * a hosted game is usually TCP), so replies must be built with the transport they are
+     * going back out on.  Returns null if that server no longer exists.
+     */
+    public PokerConnectionServer getPokerConnectionServer(PokerConnection connection)
+    {
+        if (connection == null) return gameServer();
+        return connection.isUDP() ? udpServer() : tcpServer();
+    }
+
+    // the three servers, read through methods so a test can supply them without binding
+    // a socket.  The routing above is the part worth testing and stays here.
+
+    PokerConnectionServer udpServer()
+    {
+        return udp_;
+    }
+
+    PokerConnectionServer tcpServer()
+    {
+        return tcp_;
+    }
+
+    PokerConnectionServer gameServer()
+    {
+        return p2p_;
+    }
+
+    /**
      * get chat server
      */
     public PokerUDPServer getChatServer()
@@ -744,6 +772,11 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         {
             return new Peer2PeerMessage(Peer2PeerMessage.P2P_MSG, msg);
         }
+
+        public boolean isUDP()
+        {
+            return false;
+        }
     }
 
     /**
@@ -788,21 +821,23 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         // if no online manager, return error
         if (mgr == null)
         {
-            // possibly disappeared in the interim
-            if (p2p_ == null) return null;
+            // reply on the transport the message arrived on, which is not necessarily
+            // the one the game is using - possibly disappeared in the interim
+            PokerConnectionServer p2p = getPokerConnectionServer(connection);
+            if (p2p == null) return null;
 
-            OnlineMessage omsg = new OnlineMessage(msg.getMessage());
+            OnlineMessage omsg = new OnlineMessage(msg.getMessage(), connection);
 
             // reply like Online Manager, but with bogus guid
             // so server test responds with appropriate message
             if (omsg.getCategory() == OnlineMessage.CAT_TEST) {
-                return OnlineManager.getTestReply(p2p_, "guid-no-online-game", omsg);
+                return OnlineManager.getTestReply(p2p, "guid-no-online-game", omsg);
             }
 
             // respond to any other type of message with same response,
             // as if someone was trying to join
             //logger.warn("Message received with no OnlineManager: " + msg);
-            return OnlineManager.getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nogame"), false);
+            return OnlineManager.getAppErrorReply(p2p, omsg, PropertyConfig.getMessage("msg.nojoin.nogame"), false);
         }
         else
         {
@@ -827,9 +862,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
 
-    ////
-    //// Peer2PeerControllerInterface (TCP)
-    ////
+    //
+    // Peer2PeerControllerInterface (TCP)
+    //
 
     /**
      * Handle p2p message received - hand off to OnlineManager
@@ -879,7 +914,6 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     public void monitorEvent(UDPLinkEvent event)
     {
         PokerUDPTransporter msg;
-        PokerUDPTransporter reply;
 
         UDPLink link = event.getLink();
         long elapsed = event.getElapsed();
@@ -976,12 +1010,34 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
 
                     if (data.getUserType() == PokerConstants.USERTYPE_CHAT)
                     {
-                        if (chatHandler_ != null) chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
+                        // only the chat server we connected to may put text in the lobby.
+                        // Without this, anything that can reach us can inject chat - which
+                        // is how one game client ended up acting as another client's chat
+                        // server, and why that looked like a chat bug for so long.
+                        if (link != udp_.getChatLink())
+                        {
+                            logger.warn("Ignoring chat from {} - not the chat server link", link.toStringNameIP());
+                        }
+                        else if (chatHandler_ != null)
+                        {
+                            chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
+                        }
+                    }
+                    // a hello is something we send to a chat server, never something we
+                    // receive.  Say so rather than leaving the sender to time out - this
+                    // happens when someone's chat server address points at a game client.
+                    else if (data.getUserType() == PokerConstants.USERTYPE_HELLO)
+                    {
+                        logger.warn("Hello received from {} - this client is not a chat lobby: {}",
+                                    link.toStringNameIP(), data.toStringShort());
+                        link.queue(notChatLobbyReply(link.getLocalIP()).getData(), PokerConstants.USERTYPE_CHAT);
+                        link.send(); // send right away
+                        link.close();
                     }
                     else
                     {
-                        reply = (PokerUDPTransporter) messageReceived(new PokerConnection(link.getID()), msg);
-                        if (reply != null)
+                        DDMessageTransporter received = messageReceived(new PokerConnection(link.getID()), msg);
+                        if (received instanceof PokerUDPTransporter reply)
                         {
                             link.queue(reply.getData());
                             link.send(); // send right away
@@ -989,6 +1045,11 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                             {
                                 link.close();
                             }
+                        }
+                        else if (received != null)
+                        {
+                            logger.warn("Reply to UDP message from {} was built with the wrong transport ({}), dropping it",
+                                        link.toStringNameIP(), received.getClass().getName());
                         }
                     }
                 }
@@ -999,6 +1060,27 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 }
                 break;
         }
+    }
+
+    /**
+     * Reply telling a sender that this client is not a chat lobby server.
+     * <p/>
+     * Same shape as ChatServer.sendError(): an admin chat tagged CHAT_ADMIN_ERROR, which
+     * the receiving client already knows how to handle - OnlineLobby.chatReceived()
+     * displays the text and removes the chat input controls.  No new message type needed.
+     * <p/>
+     * The address named is the local one the datagram arrived on - which is the value the
+     * sender has wrong in their options, so it is the one worth showing them.  It tells
+     * them nothing they did not already have, since they just sent a packet to it.  Use
+     * the link's own local address rather than getPreferredIP(), which reports the first
+     * bound channel and would name the wrong port on anything that binds more than one.
+     */
+    static PokerUDPTransporter notChatLobbyReply(InetSocketAddress local)
+    {
+        OnlineMessage omsg = new OnlineMessage(OnlineMessage.CAT_CHAT_ADMIN);
+        omsg.setChat(PropertyConfig.getMessage("msg.chat.notlobby", Utils.getAddressPort(local)));
+        omsg.setChatType(PokerConstants.CHAT_ADMIN_ERROR);
+        return new PokerUDPTransporter(omsg.getData());
     }
 
     /**
@@ -1061,10 +1143,8 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         }
     }
 
-    ////
-    //// LanControllerInterface methods
-    ////
-
+    //
+    // LanControllerInterface methods
     //
     // Interface methods implemented by super class:
     //

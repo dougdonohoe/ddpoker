@@ -33,13 +33,9 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.ApplicationError;
-import com.donohoedigital.config.ApplicationType;
-import com.donohoedigital.config.ConfigManager;
-import com.donohoedigital.games.poker.model.TournamentProfile;
 
 import java.util.List;
 import java.util.Random;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,60 +47,8 @@ import static org.junit.jupiter.api.Assertions.fail;
  * previous sort-based implementation gave.  Rank is one more than the number of players
  * holding strictly more chips, so players holding equal chips share a rank.
  */
-public class PokerGameRankTest
+public class PokerGameRankTest extends AbstractPokerTest
 {
-    private PokerGame game_;
-
-    @BeforeEach
-    public void setUp()
-    {
-        new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
-        game_ = new PokerGame(null);
-        game_.setProfile(new TournamentProfile("test")); // dealing a hand reads it
-    }
-
-    private PokerPlayer add(int nId, int nChips)
-    {
-        PokerPlayer p = new PokerPlayer(nId, "P" + nId, true);
-        p.setChipCount(nChips);
-        game_.addPlayer(p);
-        return p;
-    }
-
-    private PokerTable table(int nNum)
-    {
-        PokerTable t = new PokerTable(game_, nNum);
-        t.setMinChip(1); // HoldemHand.addToPot() divides by this
-        return t;
-    }
-
-    /**
-     * Put a hand in progress at the table, far enough along that chips can be committed.
-     * setPlayerOrder() is the first thing HoldemHand.deal() does, and the pot bookkeeping
-     * needs it before any bet is recorded.
-     */
-    private HoldemHand startHand(PokerTable table)
-    {
-        table.setButton(1); // seat 0 posts the big blind, so it commits a useful amount
-        HoldemHand hhand = new HoldemHand(table);
-        table.setHoldemHand(hhand);
-        hhand.deal();
-        return hhand;
-    }
-
-    /**
-     * Seat a player, snapshotting their chips as the count at the start of the hand.
-     */
-    private PokerPlayer seat(PokerTable table, int nSeat, int nId, int nChips)
-    {
-        PokerPlayer p = new PokerPlayer(nId, "P" + nId, true);
-        p.setChipCount(nChips);
-        p.newSimulatedHand();
-        table.setPlayer(p, nSeat); // seats at the table AND sets the player's table/seat
-        game_.addPlayer(p);
-        return p;
-    }
-
     /**
      * The rank the sort-based implementation produced, kept here so the single-pass
      * version can be held to it.

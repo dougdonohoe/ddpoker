@@ -44,10 +44,10 @@ import java.awt.Desktop;
 import java.awt.Graphics;
 import java.util.Locale;
 
-@SuppressWarnings("CommentedOutCode")
 public abstract class BaseApp
 {
-    private final Logger logger = LogManager.getLogger(BaseApp.class);
+    // assigned in the constructor, not here - see the note there
+    private final Logger logger;
 
     static Thread mainThread_ = null;
     protected static BaseApp app_ = null;
@@ -59,7 +59,7 @@ public abstract class BaseApp
     protected String sAppName;
 
     private boolean bReady_ = false;
-    private String sVersionString;
+    private final String sVersionString;
     private final String[] args;
 
     public BaseApp(String sAppName, String sVersionString, String[] args)
@@ -70,12 +70,28 @@ public abstract class BaseApp
     @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod", "ThisEscapedInObjectConstruction"})
     public BaseApp(String sAppName, String sVersionString, String[] args, boolean bHeadless)
     {
+        bHeadless_ = bHeadless;
+        this.sAppName = sAppName;
+        this.sVersionString = (sVersionString == null) ? "" : sVersionString;
+        this.args = args;
+
+        // Initialize logging before anything else.  LoggingConfig shuts log4j down and
+        // replaces its configuration, so any logger obtained before this point is left
+        // disabled - which is why this does not live in a static initializer, and why our
+        // own logger is assigned here rather than in its declaration.  Subclass loggers
+        // are safe: instance initializers run after this constructor body.
+        //
+        // The version string picks the log directory, so it has to be set first.
+        Utils.setVersionString(this.sVersionString); // keep in sync with FileCleanup
+        new LoggingConfig(sAppName, bHeadless ? ApplicationType.HEADLESS_CLIENT
+                                              : ApplicationType.CLIENT).init();
+        logger = LogManager.getLogger(BaseApp.class);
+
         mainThread_ = Thread.currentThread();
         app_ = this;
-        bHeadless_ = bHeadless;
 
         //
-        // If mac, we need to instantiate by name the mac application class
+        // If Mac, we need to instantiate by name the Mac application class
         // we do this so we can compile this on all platforms
         //
         if (Utils.ISMAC && !bHeadless)
@@ -83,10 +99,6 @@ public abstract class BaseApp
             setupMac();
             Utils.sleepMillis(500); // BUG 266 - allow for this to register so we can get app events
         }
-
-        this.sAppName = sAppName;
-        this.sVersionString = sVersionString;
-        this.args = args;
     }
 
     private void setupMac() {
@@ -94,23 +106,23 @@ public abstract class BaseApp
         if (Desktop.isDesktopSupported()) {
             Desktop desktop = Desktop.getDesktop();
 
-            desktop.setAboutHandler(e -> {
+            desktop.setAboutHandler(_ -> {
                 if (!app_.isReady()) return;
                 app_.showAbout();
             });
 
             desktop.setOpenFileHandler(e -> {
                 if (!e.getFiles().isEmpty()) {
-                    CommandLine.setMacFileArg(e.getFiles().get(0).getAbsolutePath());
+                    CommandLine.setMacFileArg(e.getFiles().getFirst().getAbsolutePath());
                 }
             });
 
-            desktop.setPreferencesHandler(e -> {
+            desktop.setPreferencesHandler(_ -> {
                 if (!app_.isReady()) return;
                 app_.showPrefs();
             });
 
-            desktop.setQuitHandler((e, response) -> {
+            desktop.setQuitHandler((_, response) -> {
                 if (app_.isReady()) {
                     app_.quit();
                     response.cancelQuit();  // Indicates that app handles quit
@@ -140,7 +152,6 @@ public abstract class BaseApp
      */
     private void setupStandardCommandLineOptions()
     {
-
         CommandLine.setUsage(getClass().getName() + " [options]");
 
         CommandLine.addStringOption("module", null);
@@ -167,9 +178,8 @@ public abstract class BaseApp
         // set locale
         Locale.setDefault(PropertyConfig.getLocale(sLocale_));
 
-        // set version string items
-        if (sVersionString == null) sVersionString = "";
-        Utils.setVersionString(sVersionString); // keep in sync with FileCleanup
+        // set version string items (Utils.setVersionString() was done in the constructor,
+        // since logging needs it to pick the log directory)
         Prefs.setRootNodeName(sAppName + sVersionString); // keep in sync with FileCleanup
 
         // preinit
@@ -336,26 +346,4 @@ public abstract class BaseApp
     {
         return getBaseApp().frame_.getGraphics();
     }
-
-//    ////
-//    //// Debugging help
-//    ////
-//    private void printAllModes()
-//    {
-//        DisplayMode mode = frame_.getDisplayMode();
-//        printMode("Current", mode);
-//        DisplayMode modes[] = frame_.getDisplayModes();
-//        for (int i = 0; i < modes.length; i++)
-//        {
-//            if (modes[i].getRefreshRate() != mode.getRefreshRate()) continue;
-//            if (modes[i].getBitDepth() != mode.getBitDepth()) continue;
-//            printMode("#"+i,modes[i]);
-//        }
-//    }
-//
-//    private void printMode(String sName, DisplayMode mode)
-//    {
-//        logger.debug("Mode " + sName + ": " + mode.getWidth() + "x" + mode.getHeight() +
-//                    " " + mode.getRefreshRate() + "mhz " + mode.getBitDepth() + "bits");
-//    }
 }

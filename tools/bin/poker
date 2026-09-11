@@ -49,7 +49,7 @@ fi
 
 runjava poker \
   $JAVAOPTS \
-  -Dsun.java2d.noddraw=true -Dverbose:gc \
+  -Dverbose:gc \
   -Dlog4j.rootLogger="DEBUG, Console" \
   -Xms32m -Xmx512m com.donohoedigital.games.poker.PokerMain "$@"
 echo

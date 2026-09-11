@@ -77,7 +77,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
 
 /**
  * @author donohoe
@@ -115,17 +114,30 @@ public class OnlineManager implements ChatManager
      */
     public OnlineManager(PokerGame game)
     {
+        this(game, PokerMain.getPokerMain(), null, game.getLocalPlayer());
+    }
+
+    /**
+     * Test seam - takes the engine, the transport and the local player rather than
+     * resolving them through the GameEngine singleton and the license key.  A null p2p
+     * means "ask main_", which is what the production constructor above does.
+     * <p/>
+     * Follows the PokerDatabase.init(profile, saveDir) precedent: a parameterised form of
+     * what the real constructor looks up for itself.
+     */
+    OnlineManager(PokerGame game, PokerMain main, PokerConnectionServer p2p, PokerPlayer local)
+    {
         //logger.debug("Starting online manager");
         game_ = game;
         context_ = game_.getGameContext();
-        main_ = PokerMain.getPokerMain();
-        p2p_ = main_.getPokerConnectionServer(game.isUDP());
+        main_ = main;
+        p2p_ = (p2p != null) ? p2p : main_.getPokerConnectionServer(game.isUDP());
 
         // note that we don't store the local player since that can get
         // reloaded with game updates.  However, the "host" status will
         // not change from inception (TODO: if we allow host migration,
         // this will obviously change)
-        bHost_ = getLocalPlayer().isHost();
+        bHost_ = local.isHost();
         if (bHost_) banned_ = PokerPrefsPlayerList.getSharedList(PokerPrefsPlayerList.LIST_BANNED);
 
         // online queue for sending messages (TCP only)
@@ -161,7 +173,7 @@ public class OnlineManager implements ChatManager
      */
     public boolean isUDP()
     {
-        return p2p_ instanceof UDPServer;
+        return p2p_ != null && p2p_.isUDP();
     }
 
     // listener for host connection
@@ -194,12 +206,7 @@ public class OnlineManager implements ChatManager
             // log socket closing
             if (game_.getOnlineMode() != PokerGame.MODE_CANCELLED)
             {
-                logger.info("Connection closed for " +
-                            player.getName() + " [id #" + player.getID() + "] " +
-                            (player.isHost() ? " (host)" : "") +
-                            (player.isObserver() ? " (observer)" : "") +
-                            ": " +
-                            connection);
+                logger.info("Connection closed for {} [id #{}] {}{}: {}", player.getName(), player.getID(), player.isHost() ? " (host)" : "", player.isObserver() ? " (observer)" : "", connection);
             }
 
             // set socket null
@@ -246,7 +253,7 @@ public class OnlineManager implements ChatManager
         OnlineMessage omsg = new OnlineMessage(msg.getMessage(), channel); // received
         final DDMessageTransporter reply;
 
-        if (TESTING(EngineConstants.TESTING_P2P)) logger.debug("** RECEIVED **: " + msg);
+        if (TESTING(EngineConstants.TESTING_P2P)) logger.debug("** RECEIVED **: {}", msg);
 
         try
         {
@@ -254,12 +261,12 @@ public class OnlineManager implements ChatManager
         }
         catch (OnlineError error)
         {
-            if (TESTING(EngineConstants.TESTING_P2P)) logger.debug("** ERROR REPLY **: " + error.getReply());
+            if (TESTING(EngineConstants.TESTING_P2P)) logger.debug("** ERROR REPLY **: {}", error.getReply());
             return error.getReply();
         }
 
         // debug
-        if (TESTING(EngineConstants.TESTING_P2P)) logger.debug("** REPLY **: " + reply);
+        if (TESTING(EngineConstants.TESTING_P2P)) logger.debug("** REPLY **: {}", reply);
 
         // no exception, so notify listeners
         fireAction(omsg);
@@ -299,10 +306,9 @@ public class OnlineManager implements ChatManager
         {
             //noinspection AssignmentToStaticFieldFromInstanceMethod
             RCNT++;
-            if (DEBUG || omsg.getCategory() != OnlineMessage.CAT_CHAT)
+            if (omsg.getCategory() != OnlineMessage.CAT_CHAT)
             {
-                logger.debug(RCNT + " received from " + (from == null ? "[unknown]" : from.getName()) +
-                             ": " + omsg.toStringCategorySize());
+                logger.debug("{} received from {}: {}", RCNT, from == null ? "[unknown]" : from.getName(), omsg.toStringCategorySize());
             }
         }
 
@@ -310,7 +316,7 @@ public class OnlineManager implements ChatManager
         switch (omsg.getCategory())
         {
             case OnlineMessage.CAT_TEST:
-                reply = getTestReply(p2p_, main_.getGUID(), omsg);
+                reply = getTestReply(replyServer(omsg), main_.getGUID(), omsg);
                 break;
 
             case OnlineMessage.CAT_ALIVE:
@@ -382,15 +388,15 @@ public class OnlineManager implements ChatManager
                 break;
 
             case DDMessage.CAT_APPL_ERROR:
-                logger.warn("OnlineManager app error: " + omsg.getApplicationErrorMessage());
+                logger.warn("OnlineManager app error: {}", omsg.getApplicationErrorMessage());
                 break;
 
             case DDMessage.CAT_ERROR:
-                logger.warn("OnlineManager error: " + omsg.toStringNoData());
+                logger.warn("OnlineManager error: {}", omsg.toStringNoData());
                 break;
 
             default:
-                throw new OnlineError(getAppErrorReply(p2p_, omsg,
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg,
                                                        PropertyConfig.getMessage("msg.p2p.unhandled",
                                                                                  omsg.getCategory()), false));
         }
@@ -416,8 +422,8 @@ public class OnlineManager implements ChatManager
         if (!gpass.equals(mpass) || !gid.equals(mid))
         {
             String data = "Validation failed gid=" + gid + " gpass=" + gpass + " msg-gid=" + mid + " msg-gpass=" + mpass;
-            logger.info(data + " omsg: " + omsg.toStringNoData());
-            DDMessageTransporter reply = getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.p2p.validate"), false);
+            logger.info("{} omsg: {}", data, omsg.toStringNoData());
+            DDMessageTransporter reply = getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.p2p.validate"), false);
             reply.getMessage().setString("x-validation-data", data);
             throw new OnlineError(reply);
         }
@@ -437,7 +443,7 @@ public class OnlineManager implements ChatManager
         Version msgVersion = omsg.getData().getVersion();
         if (msgVersion.isBefore(PokerConstants.VERSION_LAST_COMPAT))
         {
-            throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.version",
+            throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.version",
                                                                                          msgVersion.toString(),
                                                                                          PokerConstants.VERSION_LAST_COMPAT.toString()),
                                                    false));
@@ -447,16 +453,15 @@ public class OnlineManager implements ChatManager
         switch (nMode)
         {
             case PokerGame.MODE_INIT:
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.init"),
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.init"),
                                                        false));
 
             case PokerGame.MODE_REG:
             case PokerGame.MODE_PLAY:
                 break; // handle below
 
-
             default:
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nomore"),
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.nomore"),
                                                        false));
         }
 
@@ -471,7 +476,7 @@ public class OnlineManager implements ChatManager
             // host can't join again
             if (player.isHost())
             {
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.dup", player.getName()),
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.dup", player.getName()),
                                                        false));
             }
 
@@ -488,7 +493,7 @@ public class OnlineManager implements ChatManager
                 // set (from HostStatus)
                 // 2.5 - added reg, same connect logic
                 if (nMode == PokerGame.MODE_PLAY || omsg.isReconnect() ||
-                    (nMode == PokerGame.MODE_REG && bSameConnect))
+                        /* PokerGame.MODE_REG */ bSameConnect)
                 {
                     // if connection is different, close it
                     //
@@ -496,7 +501,7 @@ public class OnlineManager implements ChatManager
                     // TCP: use of equals check doesn't change functionality since sockets aren't re-used
                     if (!bSameConnect)
                     {
-                        logger.info("Player rejoining: " + player.getName() + ", closing existing, likely bad, connection");
+                        logger.info("Player rejoining: {}, closing existing, likely bad, connection", player.getName());
                         PokerConnection c = player.getConnection();
 
                         // synchronize with sends so we don't kill
@@ -511,12 +516,12 @@ public class OnlineManager implements ChatManager
                     else
                     {
                         player.addDisconnect(); // disconnection perceived on players end
-                        logger.info("Player rejoining: " + player.getName() + ", on existing connection");
+                        logger.info("Player rejoining: {}, on existing connection", player.getName());
                     }
                 }
                 else
                 {
-                    throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.dup", player.getName()),
+                    throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.dup", player.getName()),
                                                            false));
                 }
             }
@@ -533,7 +538,7 @@ public class OnlineManager implements ChatManager
             // See SAFETY check below.
             if (player.isObserver())
             {
-                logger.warn("processJoin() found existing player who is observer: " + player.getName());
+                logger.warn("processJoin() found existing player who is observer: {}", player.getName());
                 bObs = true; // and in case it does happen, need to set this flag
             }
             else if (player.isEliminated())
@@ -572,7 +577,7 @@ public class OnlineManager implements ChatManager
                 game_.addObserver(player);
             }
 
-            logger.info("Player rejoined: " + player.getName() + (bObs ? " [obs]" : ""));
+            logger.info("Player rejoined: {}{}", player.getName(), bObs ? " [obs]" : "");
             rejoin = true;
         }
         // new player coming in
@@ -589,7 +594,7 @@ public class OnlineManager implements ChatManager
             // if player is demo, check if profile allows demo players
             if (omsg.isPlayerDemo() && !profile.isAllowDemo())
             {
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.demo"),
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.demo"),
                                                        false));
             }
 
@@ -597,7 +602,7 @@ public class OnlineManager implements ChatManager
             if ((banned_.containsPlayer(sPlayerName) || banned_.containsKey(omsg.getKey())) && !bAllowObsSpecial)
             {
                 sendRejectMessage(sPlayerName, "msg.chat.bannedrejected");
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.banned"),
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.banned"),
                                                        false));
             }
 
@@ -605,7 +610,7 @@ public class OnlineManager implements ChatManager
             if (!bObs && profile.isInviteOnly() && !profile.getInvitees().containsPlayer(sPlayerName) && !bAllowObsSpecial)
             {
                 sendRejectMessage(sPlayerName, "msg.chat.uninvitedrejected");
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage(
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage(
                         profile.isInviteObserversPublic() ?
                         "msg.nojoin.inviteonly.obs" : "msg.nojoin.inviteonly"),
                                                        false));
@@ -616,7 +621,7 @@ public class OnlineManager implements ChatManager
                 !profile.getInvitees().containsPlayer(sPlayerName) && !bAllowObsSpecial)
             {
                 sendRejectMessage(sPlayerName, "msg.chat.uninvitedrejected");
-                throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.inviteonly"),
+                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.inviteonly"),
                                                        false));
             }
 
@@ -630,7 +635,7 @@ public class OnlineManager implements ChatManager
                     exist = game_.getPokerPlayerAt(i);
                     if (exist.isOnlineActivated() && exist.getName().equals(sPlayerName))
                     {
-                        throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.duponline",
+                        throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.duponline",
                                                                                                      Utils.encodeHTML(exist.getName())),
                                                                false));
                     }
@@ -641,7 +646,7 @@ public class OnlineManager implements ChatManager
                     exist = game_.getPokerObserverAt(i);
                     if (exist.isOnlineActivated() && exist.getName().equals(sPlayerName))
                     {
-                        throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.duponline",
+                        throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.duponline",
                                                                                                      Utils.encodeHTML(exist.getName())),
                                                                false));
                     }
@@ -653,7 +658,7 @@ public class OnlineManager implements ChatManager
                 if (profile.isOnlineActivatedPlayersOnly())
                 {
                     sendRejectMessage(sPlayerName, "msg.chat.impostorrejected");
-                    throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.onlineactivatedonly"),
+                    throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.onlineactivatedonly"),
                                                            false));
                 }
             }
@@ -661,21 +666,21 @@ public class OnlineManager implements ChatManager
             // player
             if (!bObs)
             {
-                ////
-                //// NOTE: CHANGES HERE MUST BE REFLECTED IN switchPlayer() below
-                ////
+                //
+                // NOTE: CHANGES HERE MUST BE REFLECTED IN switchPlayer() below
+                //
 
                 // if no existing player in PLAY mode, then don't allow new join (already playing)
                 if (nMode == PokerGame.MODE_PLAY)
                 {
-                    throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.started"),
+                    throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.started"),
                                                            false));
                 }
 
                 // check max players
                 if (!isSpaceForPlayer())
                 {
-                    throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nomore",
+                    throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.nomore",
                                                                                                  profile.getMaxOnlinePlayers()),
                                                            false));
                 }
@@ -696,14 +701,14 @@ public class OnlineManager implements ChatManager
             // observer
             else
             {
-                ////
-                //// NOTE: CHANGES HERE MUST BE REFLECTED IN switchPlayer() below
-                ////
+                //
+                // NOTE: CHANGES HERE MUST BE REFLECTED IN switchPlayer() below
+                //
 
                 // check max observers - subtract busted players from the count
                 if (!isSpaceForObserver() && !bAllowObsSpecial)
                 {
-                    throw new OnlineError(getAppErrorReply(p2p_, omsg, PropertyConfig.getMessage("msg.nojoin.nomore.obs",
+                    throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.nomore.obs",
                                                                                                  profile.getMaxObservers()),
                                                            false));
                 }
@@ -1097,9 +1102,9 @@ public class OnlineManager implements ChatManager
         EngineUtils.cancelCancelables();
     }
 
-    ////
-    //// game update
-    ////
+    //
+    // game update
+    //
 
     /**
      * send player/observer list to all
@@ -1297,9 +1302,9 @@ public class OnlineManager implements ChatManager
         }
     }
 
-    ////
-    //// client-side join
-    ////
+    //
+    // client-side join
+    //
 
     /**
      * Send message to host to join game - assumes the 'parent' PokerGame has
@@ -1319,8 +1324,8 @@ public class OnlineManager implements ChatManager
         msg.setPlayerProfilePath(local.getProfilePath());
         msg.setObserve(bObserve);
 
-        boolean bOK = false;
-        OnlineMessage reply = null;
+        boolean bOK;
+        OnlineMessage reply;
         DDMessage error = null;
 
         Peer2PeerMessenger msgr = null;
@@ -1451,7 +1456,7 @@ public class OnlineManager implements ChatManager
         }
         else
         {
-            game_.getLastGameState().getFile().delete();
+            boolean ignore = game_.getLastGameState().getFile().delete();
         }
 
         // close all sockets
@@ -1566,7 +1571,7 @@ public class OnlineManager implements ChatManager
         // upon re-join (TD clears last timeout in start()).
         if (timeSinceLastMsg > ALIVE_TIMEOUT_MILLIS && last != 0 && player.getConnection() != null)
         {
-            logger.info("Alive timeout for " + player.getName() + ", forcing socket closed.");
+            logger.info("Alive timeout for {}, forcing socket closed.", player.getName());
             connectionClosing(player.getConnection());
         }
     }
@@ -1625,7 +1630,7 @@ public class OnlineManager implements ChatManager
     /**
      * Received on client from host when join is accepted
      */
-    private DDMessageTransporter processClientJoin(OnlineMessage omsg)
+    private void processClientJoin(OnlineMessage omsg)
     {
         // load game from data (this replaces temp player)
         loadGame(omsg, game_);
@@ -1649,13 +1654,11 @@ public class OnlineManager implements ChatManager
         // if reconnect, this sends ready message and causes resync
         // on initial connect, does nothing (waits for setTournamentDirector to be set)
         sendReadyMessage(true);
-
-        return null;
     }
 
-    ////
-    //// TournamentDirector related methods
-    ////
+    //
+    // TournamentDirector related methods
+    //
 
     /**
      * Set the TournamentDirector in use.  If game updates
@@ -1709,9 +1712,8 @@ public class OnlineManager implements ChatManager
             int nNum = tdQueue_.size();
             if (td_ != null && nNum > 0)
             {
-                for (int i = 0; i < nNum; i++)
-                {
-                    _processGameUpdate(tdQueue_.get(i));
+                for (OnlineMessage onlineMessage : tdQueue_) {
+                    _processGameUpdate(onlineMessage);
                 }
                 tdQueue_.clear();
             }
@@ -1754,7 +1756,7 @@ public class OnlineManager implements ChatManager
         // poker table display)
         synchronized (tdQueue_)
         {
-            if (td_ != null || (td_ == null && !omsg.isRunProcessTable()))
+            if (td_ != null || !omsg.isRunProcessTable())
             {
                 _processGameUpdate(omsg);
             }
@@ -1797,11 +1799,9 @@ public class OnlineManager implements ChatManager
         if (events != null)
         {
             PokerTableEvent event;
-            int nNum = events.size();
-            for (int i = 0; i < nNum; i++)
-            {
-                event = events.get(i);
-                if (TournamentDirector.DEBUG_EVENT) logger.debug("Firing event: " + event);
+            for (PokerTableEvent pokerTableEvent : events) {
+                event = pokerTableEvent;
+                if (TournamentDirector.DEBUG_EVENT) logger.debug("Firing event: {}", event);
                 event.getTable().firePokerTableEvent(event);
             }
         }
@@ -2018,9 +2018,9 @@ public class OnlineManager implements ChatManager
         td_.doRebuy(player, omsg.getLevel(), omsg.getCash(), omsg.getChips(), omsg.isPending());
     }
 
-    ////
-    //// save/load game utility
-    ////
+    //
+    // save/load game utility
+    //
 
     /**
      * Marshal the game into a string and store it with this message.
@@ -2045,9 +2045,9 @@ public class OnlineManager implements ChatManager
         game.loadGame(state, false);
     }
 
-    ////
-    //// chat
-    ////
+    //
+    // chat
+    //
 
     /**
      * Send chat (called from ChatPanel).  If table is specified,
@@ -2261,8 +2261,7 @@ public class OnlineManager implements ChatManager
                 PokerTable table = game_.getTableByNumber(nTableNum);
                 if (table == null)
                 {
-                    logger.warn("No table found for table num (" + nTableNum + ") to deliver chat: " + chat.getChat() + ", from-id: " +
-                                chat.getFromPlayerID() + ", chat-type: " + chat.getChatType());
+                    logger.warn("No table found for table num ({}) to deliver chat: {}, from-id: {}, chat-type: {}", nTableNum, chat.getChat(), chat.getFromPlayerID(), chat.getChatType());
                     return;
                 }
                 if (!table.isCurrent()) return;
@@ -2293,21 +2292,12 @@ public class OnlineManager implements ChatManager
 
             if (chat_ != null && nNum > 0)
             {
-                for (int i = 0; i < nNum; i++)
-                {
-                    chat_.chatReceived(chatQueue_.get(i));
+                for (OnlineMessage onlineMessage : chatQueue_) {
+                    chat_.chatReceived(onlineMessage);
                 }
                 chatQueue_.clear();
             }
         }
-    }
-
-    /**
-     * display dealer chat local
-     */
-    public void sendDealerChatLocal(int nType, String sMessage)
-    {
-        deliverChatLocal(nType, sMessage, OnlineMessage.CHAT_DEALER_MSG_ID);
     }
 
     /**
@@ -2327,9 +2317,9 @@ public class OnlineManager implements ChatManager
         }
     }
 
-    ////
-    //// Helper methods
-    ////
+    //
+    // Helper methods
+    //
 
     /**
      * Get player from id in message
@@ -2346,7 +2336,7 @@ public class OnlineManager implements ChatManager
             }
             else
             {
-                logger.warn("No player found for id in message: " + omsg);
+                logger.warn("No player found for id in message: {}", omsg);
             }
         }
         return player;
@@ -2388,7 +2378,7 @@ public class OnlineManager implements ChatManager
      */
     private void sendMessageAll(OnlineMessage omsg)
     {
-        sendMessageAllExcept(omsg, null, false);
+        sendMessageAll(omsg, false);
     }
 
     /**
@@ -2482,7 +2472,7 @@ public class OnlineManager implements ChatManager
         {
             if (pTo.isHost() && pTo == getLocalPlayer())
             {
-                logger.warn("Attempting to send message from host to host " + omsg.toStringNoData());
+                logger.warn("Attempting to send message from host to host {}", omsg.toStringNoData());
             }
             else if (pTo.isEliminated())
             {
@@ -2519,6 +2509,19 @@ public class OnlineManager implements ChatManager
     }
 
     /**
+     * Connection server to build a reply to the given message with.  A message does not
+     * always arrive on the transport the game is using - the chat lobby is always UDP,
+     * while a hosted game is TCP unless testing turns UDP on - so a reply built from
+     * p2p_ can be of a type the arriving link cannot send.  Falls back to p2p_ for
+     * messages we created ourselves, which carry no connection.
+     */
+    private PokerConnectionServer replyServer(OnlineMessage omsg)
+    {
+        PokerConnectionServer p2p = main_.getPokerConnectionServer(omsg.getConnection());
+        return p2p != null ? p2p : p2p_;
+    }
+
+    /**
      * get error reply
      */
     public static DDMessageTransporter getAppErrorReply(PokerConnectionServer p2p, OnlineMessage omsg, String sMsg, boolean bKeepAlive)
@@ -2549,7 +2552,7 @@ public class OnlineManager implements ChatManager
         omsg.setInReplyTo(in.getMessageID());
 
         // sleep briefly in udp mode so connection shows up on UDPStatus
-        if (p2p instanceof UDPServer)
+        if (p2p.isUDP())
         {
             Utils.sleepMillis(100);
         }
@@ -2651,16 +2654,16 @@ public class OnlineManager implements ChatManager
         }
     }
 
-    ////
-    //// For handling errors
-    ////
+    //
+    // For handling errors
+    //
 
     /**
      * Methods throw this error with the message to return
      */
     private static final class OnlineError extends RuntimeException
     {
-        private DDMessageTransporter reply;
+        private final DDMessageTransporter reply;
 
         private OnlineError(DDMessageTransporter reply)
         {

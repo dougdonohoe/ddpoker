@@ -142,6 +142,21 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.6.0</version>
+        <configuration>
+          <systemPropertyVariables>
+            <!-- Keep a test run out of the developer's real home directory.  Everything
+                 the client writes - logs, saved games, player profiles, the HSQLDB
+                 database - hangs off ConfigManager.getUserHome(), which resolves through
+                 user.home. -->
+            <user.home>${project.build.directory}/test-home</user.home>
+
+            <!-- user.home does not cover java.util.prefs: on a Mac, MacOSXPreferences
+                 writes to ~/Library/Preferences no matter what user.home says.  This
+                 keeps preferences in memory, per JVM, so tests neither read nor corrupt
+                 the real ones. -->
+            <java.util.prefs.PreferencesFactory>com.donohoedigital.config.MemoryPreferencesFactory</java.util.prefs.PreferencesFactory>
+          </systemPropertyVariables>
+        </configuration>
       </plugin>
 
     </plugins>

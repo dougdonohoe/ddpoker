@@ -148,6 +148,11 @@ public class PokerUDPServer extends UDPServer implements PokerConnectionServer, 
         return new PokerUDPTransporter(msg);
     }
 
+    public boolean isUDP()
+    {
+        return true;
+    }
+
     public void sendChat(PlayerProfile profile, String sMessage)
     {
         OnlineMessage omsg;
