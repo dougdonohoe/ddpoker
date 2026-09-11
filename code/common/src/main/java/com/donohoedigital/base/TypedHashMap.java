@@ -90,19 +90,20 @@ public class TypedHashMap extends TreeMap<String, Object>
     }
     
     /**
-     * return an integer param, nDefault if not found,
-     * bounds are checked (min/max)
+     * return an integer param, nDefault if not found.  A value that is found is bounds
+     * checked (min/max).  nDefault is returned as-is and is deliberately NOT bounds
+     * checked: callers rely on passing a default outside [nMin, nMax] as a "not set"
+     * sentinel.
      */
-    public int getInteger(String sName, int nDefault, int nMin, int nMax)
-    {
+    public int getInteger(String sName, int nDefault, int nMin, int nMax) {
         Integer n = (Integer) get(sName);
-        if (n == null) return nDefault;
+        if (n == null) return nDefault; // unclamped on purpose - see Javadoc
         int nValue = n;
         if (nValue < nMin) nValue = nMin;
         if (nValue > nMax) nValue = nMax;
         return nValue;
     }
-    
+
     /**
      * return an integer param, null if not found
      */
@@ -128,7 +129,7 @@ public class TypedHashMap extends TreeMap<String, Object>
     }
     
     /**
-     * return an long param, nDefault if not found
+     * return a long param, nDefault if not found
      */
     public long getLong(String sName, long nDefault)
     {
@@ -138,7 +139,7 @@ public class TypedHashMap extends TreeMap<String, Object>
     }
     
     /**
-     * return an long param, null if not found
+     * return a long param, null if not found
      */
     public Long getLong(String sName)
     {
@@ -156,7 +157,7 @@ public class TypedHashMap extends TreeMap<String, Object>
     }
 
     /**
-     * insert an long param
+     * insert a long param
      */
     public void setLong(String sName, Long iValue)
     {
@@ -195,7 +196,7 @@ public class TypedHashMap extends TreeMap<String, Object>
     }
     
     /**
-     * return an double param, null if not found
+     * return a double param, null if not found
      */
     public Double getDouble(String sName)
     {
@@ -229,7 +230,7 @@ public class TypedHashMap extends TreeMap<String, Object>
     }
     
     /**
-     * return an boolean param, null if not found
+     * return a boolean param, null if not found
      */
     public Boolean getBoolean(String sName)
     {
@@ -315,7 +316,7 @@ public class TypedHashMap extends TreeMap<String, Object>
         {
             sName = iter.next();
             oValue = get(sName);
-            if (sb.length() > 0) sb.append(", ");
+            if (!sb.isEmpty()) sb.append(", ");
             sb.append(sName);
             sb.append('=');
             if (oValue instanceof List)
