@@ -1010,7 +1010,18 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
 
                     if (data.getUserType() == PokerConstants.USERTYPE_CHAT)
                     {
-                        if (chatHandler_ != null) chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
+                        // only the chat server we connected to may put text in the lobby.
+                        // Without this, anything that can reach us can inject chat - which
+                        // is how one game client ended up acting as another client's chat
+                        // server, and why that looked like a chat bug for so long.
+                        if (link != udp_.getChatLink())
+                        {
+                            logger.warn("Ignoring chat from {} - not the chat server link", link.toStringNameIP());
+                        }
+                        else if (chatHandler_ != null)
+                        {
+                            chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
+                        }
                     }
                     // a hello is something we send to a chat server, never something we
                     // receive.  Say so rather than leaving the sender to time out - this
