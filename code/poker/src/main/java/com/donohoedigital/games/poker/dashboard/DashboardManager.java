@@ -43,6 +43,7 @@ import com.donohoedigital.base.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -55,7 +56,7 @@ public class DashboardManager
 {
     static Logger logger = LogManager.getLogger(DashboardManager.class);
 
-    private final ArrayList items_;
+    private final List<DashboardItem> items_;
     private DMTypedHashMap prefs_;
     private String sPrefName_;
     private final PokerGame game_;
@@ -63,7 +64,7 @@ public class DashboardManager
     public DashboardManager(PokerGame game)
     {
         game_ = game;
-        items_ = new ArrayList();
+        items_ = new ArrayList<>();
         sPrefName_ = PokerConstants.PREF_DASHBOARD + "-";
         if (game_.isOnlineGame())
         {
@@ -118,7 +119,7 @@ public class DashboardManager
 
     public DashboardItem getItem(int i)
     {
-        return (DashboardItem) items_.get(i);
+        return items_.get(i);
     }
 
     public void moveItem(DashboardItem move, boolean bUp)
