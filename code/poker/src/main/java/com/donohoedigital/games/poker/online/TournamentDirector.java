@@ -46,7 +46,6 @@ import com.donohoedigital.comms.DMTypedHashMap;
 import com.donohoedigital.config.DebugConfig;
 import com.donohoedigital.config.PropertyConfig;
 import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
 import com.donohoedigital.games.config.GameState;
 import com.donohoedigital.games.config.SaveDetails;
 import com.donohoedigital.games.engine.BasePhase;
@@ -150,7 +149,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         if (bHost_)
         {
             // starting up - new and loaded games, need to
-            // set the last change time to now to account for
+            // set the last change time now to account for
             // lobby/startup time
             PokerTable table;
             int nNum = game_.getNumTables();
@@ -304,7 +303,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                 }
                 catch (Throwable t)
                 {
-                    logger.error("TDAlive caught an unexcepted exception: " + Utils.formatExceptionText(t));
+                    logger.error("TDAlive caught an unexcepted exception: {}", Utils.formatExceptionText(t));
                 }
             }
         }
@@ -327,7 +326,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             }
             catch (Throwable t)
             {
-                logger.error("TournamentDirector caught an unexcepted exception: " + Utils.formatExceptionText(t));
+                logger.error("TournamentDirector caught an unexcepted exception: {}", Utils.formatExceptionText(t));
                 bDone_ = true;
 
                 // log current hand
@@ -342,7 +341,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                     }
                     catch (Throwable darnCantSave)
                     {
-                        logger.error("Attempted to save but caught an exception: " + Utils.formatExceptionText(darnCantSave));
+                        logger.error("Attempted to save but caught an exception: {}", Utils.formatExceptionText(darnCantSave));
                     }
                 }
 
@@ -361,7 +360,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             {
                 nSleep = SLEEP_MILLIS;
                 if (!bSleep) nSleep = 5; // if not sleeping, sleep very small amount to avoid reving up CPU
-                if (DEBUG_SLEEP) logger.debug("Sleeping " + nSleep);
+                if (DEBUG_SLEEP) logger.debug("Sleeping {}", nSleep);
                 Utils.sleepMillis(nSleep);
             }
         }
@@ -438,7 +437,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
     {
         synchronized (getSaveLockObject())
         {
-            if (DEBUG_SAVE) logger.debug("SAVING GAME: [" + sDesc + "]");
+            if (DEBUG_SAVE) logger.debug("SAVING GAME: [{}]", sDesc);
             game_.saveWriteGame();
         }
     }
@@ -446,7 +445,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
     /**
      * return value from process
      */
-    private class TDreturn implements PokerTableListener
+    private static class TDReturn implements PokerTableListener
     {
         private boolean bSave;
         private boolean bAutoSave;
@@ -596,13 +595,13 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         public void tableEventOccurred(PokerTableEvent event)
         {
             if (events == null) events = new DMArrayList<>();
-            if (DEBUG_EVENT) logger.debug("TDReturn event: " + event);
+            if (DEBUG_EVENT) logger.debug("TDReturn event: {}", event);
             events.add(event);
         }
     }
 
     // only need one instance since process() is synchronized
-    private TDreturn ret_ = new TDreturn();
+    private final TDReturn ret_ = new TDReturn();
 
     // used to pause
     private boolean bPaused_ = false;
@@ -714,7 +713,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             // run any phases (after send to client in case phase updates game state)
             if (table.isCurrent() && ret_.getPhaseToRun() != null)
             {
-                if (DEBUG) logger.debug("Running " + ret_.getPhaseToRun());
+                if (DEBUG) logger.debug("Running {}", ret_.getPhaseToRun());
                 context_.processPhase(ret_.getPhaseToRun(), ret_.getPhaseToRunParams());
             }
 
@@ -767,7 +766,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             String sPending = "";
             if (table.getPendingTableState() != PokerTable.STATE_NONE)
                 sPending = ", pending to do " + PokerTable.getStringForState(table.getPendingTableState());
-            logger.debug("=========> " + table.getName() + " at state " + table.toStringTableState() + sPending);
+            logger.debug("=========> {} at state {}{}", table.getName(), table.toStringTableState(), sPending);
             table.nDebugLast_ = table.getTableState();
         }
 
@@ -1014,7 +1013,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             // ...but first see if we have waited to long for a rejoin
             if (System.currentTimeMillis() - table.getLastRejoinStateChangeTime() > REJOIN_TIMEOUT_MILLIS)
             {
-                logger.info("Timeout waiting for rejoin on table " + table.getName() + "...");
+                logger.info("Timeout waiting for rejoin on table {}...", table.getName());
                 PokerPlayer player;
                 for (int i = 0; i < PokerConstants.SEATS; i++)
                 {
@@ -1022,7 +1021,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                     if (player == null) continue;
                     if (player.isRejoining())
                     {
-                        logger.info("   setRejoining(false) for " + player.getName());
+                        logger.info("   setRejoining(false) for {}", player.getName());
                         player.setRejoining(false);
                         table.removeWait(player);
                     }
@@ -1045,8 +1044,8 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                 // when save happens, we set to use pending save logic
                 // as used in getStateForSave(), which will cause the
                 // correct state to be passed along and run on the client
-                if (DEBUG_REJOIN) logger.debug("Sending rejoin table update to " + player.getName() +
-                                               ", prev state: " + PokerTable.getStringForState(table.getPreviousTableState()));
+                if (DEBUG_REJOIN)
+                    logger.debug("Sending rejoin table update to {}, prev state: {}", player.getName(), PokerTable.getStringForState(table.getPreviousTableState()));
                 player.setRejoining(false);
                 mgr_.sendTableUpdate(table, player, null, table.getPreviousTableState(), true, null, false, null, null, null);
             }
@@ -1155,7 +1154,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             int nTimeout = (nLastState == PokerTable.STATE_NEW_LEVEL_CHECK) ? NEWLEVEL_TIMEOUT_MILLIS : NON_BETTING_TIMEOUT_MILLIS;
             if (wait > nTimeout)
             {
-                logger.info("TIMEOUT " + PokerTable.getStringForState(nLastState) + ": " + Utils.toString(table.getWaitList()));
+                logger.info("TIMEOUT {}: {}", PokerTable.getStringForState(nLastState), Utils.toString(table.getWaitList()));
                 sendCancel(table);
                 table.removeWaitAll();
             }
@@ -1171,7 +1170,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         if (!player.isHumanControlled()) return;
 
         int nTimeoutSecs = game_.getProfile().getTimeoutSeconds();
-        long nTimeout = nTimeoutSecs * 1000 + SLEEP_MILLIS; // pad time out a bit (allows 15 second message if timeout is 15)
+        long nTimeout = nTimeoutSecs * 1000L + SLEEP_MILLIS; // pad time out a bit (allows 15 second message if timeout is 15)
         long nDiff = nTimeout - wait;
         int nThinkTank = player.getThinkBankMillis();
         int nThinkTankWhole = nThinkTank / 1000;
@@ -1183,7 +1182,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
             // send chat at 5 seconds to act
             int nWhole = getWholeSeconds(nDiff);
-            if (nWhole > 0 && nWhole == 5 && nWhole != player.getTimeoutMessageSecondsLeft())
+            if (nWhole == 5 && nWhole != player.getTimeoutMessageSecondsLeft())
             {
                 player.setTimeoutMessageSecondsLeft(nWhole);
                 String sMsg = PropertyConfig.getMessage(nThinkTankWhole > 0 ? "msg.chat.timeout.tankleft" : "msg.chat.timeout.notank",
@@ -1241,7 +1240,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         doHandAction(fold, true, false, false);
 
         // log it
-        logger.info("TIMEOUT  betting: " + player);
+        logger.info("TIMEOUT  betting: {}", player);
     }
 
     /**
@@ -1506,16 +1505,11 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                          PokerTableEvent.TYPE_TABLE_REMOVED;
 
             PokerTable table;
-            int nNum = tables.size();
-            for (int i = 0; i < nNum; i++)
-            {
-                table = tables.get(i);
-                if (bAdd)
-                {
+            for (PokerTable pokerTable : tables) {
+                table = pokerTable;
+                if (bAdd) {
                     table.addPokerTableListener(this, nTypes);
-                }
-                else
-                {
+                } else {
                     table.removePokerTableListener(this, nTypes);
                 }
             }
@@ -1538,7 +1532,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         public void tableEventOccurred(PokerTableEvent event)
         {
-            if (DEBUG_CLEANUP_TABLE) logger.debug("TDClean event: " + event);
+            if (DEBUG_CLEANUP_TABLE) logger.debug("TDClean event: {}", event);
             PokerTable table = event.getTable();
             PokerPlayer player = event.getPlayer();
             int type = event.getType();
@@ -1572,8 +1566,8 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             // however if they were added, then they were just moved
             if (type == PokerTableEvent.TYPE_PLAYER_ADDED)
             {
-                if (playersBusted.contains(player)) playersBusted.remove(player);
-                if (playersWaiting.contains(player)) playersWaiting.remove(player);
+                playersBusted.remove(player);
+                playersWaiting.remove(player);
             }
         }
 
@@ -1589,19 +1583,19 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         private void printPlayerList(String sName, List<PokerPlayer> players)
         {
-            logger.debug("  " + sName + ":");
+            logger.debug("  {}:", sName);
             for (PokerPlayer player : players)
             {
-                logger.debug("    => " + player.getName());
+                logger.debug("    => {}", player.getName());
             }
         }
 
         private void printTableList(String sName, List<PokerTable> printtables)
         {
-            logger.debug(sName + ":");
+            logger.debug("{}:", sName);
             for (PokerTable table : printtables)
             {
-                logger.debug("    => " + table.getName());
+                logger.debug("    => {}", table.getName());
             }
         }
 
@@ -1679,7 +1673,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
                 if (DEBUG_CLEANUP_TABLE)
                 {
-                    logger.debug(player.getName() + " waited, added to table as observer: " + newtable.getName());
+                    logger.debug("{} waited, added to table as observer: {}", player.getName(), newtable.getName());
                 }
             }
 
@@ -1811,7 +1805,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                 // only run phase if online or (if not online) if game over
                 // we do this because if not online and game not over, the
                 // only reason this code is run is if the human is watching the
-                // AI players finish out the game and we have already shown
+                // AI players finish out the game, and we have already shown
                 // them the GameOver dialog
                 if (bCleanDoneLogic && (bOnline_ || game_.isGameOver()))
                 {
@@ -1948,20 +1942,16 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         // busted
         PokerPlayer player;
-        int nNum = removed.size();
-        for (int i = 0; i < nNum; i++)
-        {
-            player = removed.get(i);
+        for (PokerPlayer pokerPlayer : removed) {
+            player = pokerPlayer;
             if (player.isComputer()) continue;
 
             // add player as an observer
             game_.addObserver(player);
             newtable.addObserver(player);
 
-            if (DEBUG_CLEANUP_TABLE)
-            {
-                logger.debug(player.getName() + " eliminated, added to table as observer: " +
-                             newtable.getName());
+            if (DEBUG_CLEANUP_TABLE) {
+                logger.debug("{} eliminated, added to table as observer: {}", player.getName(), newtable.getName());
             }
         }
 
@@ -2004,7 +1994,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         }
 
         // if we found a new table to set as current,
-        // use it.  Otherwise default to the all-ai
+        // use it.  Otherwise, default to the all-ai
         // table that was passed in (unless that
         // was removed, then go to the backup table - some
         // other all-ai table)
@@ -2033,8 +2023,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
             if (DEBUG_CLEANUP_TABLE)
             {
-                logger.debug(player.getName() + " observer moved from " + from.getName() +
-                             " to " + to.getName());
+                logger.debug("{} observer moved from {} to {}", player.getName(), from.getName(), to.getName());
             }
         }
     }
@@ -2382,8 +2371,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         // only run DealCommunity phase in practice mode (so all CardPieces are created for cheat purposes)
         // or in online mode when there are still players left in hand
-        if (!bOnline_ ||
-            (bOnline_ && hhand.getNumWithCards() > 1))
+        if (!bOnline_ || hhand.getNumWithCards() > 1)
         {
             ret_.setPhaseToRun("TD.DealCommunity");
             ret_.setRunOnClient(true);
@@ -2406,7 +2394,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         if (bHost_) hhand.preResolve(bOnline_);
 
         // client clear wait list since hosts sends it over
-        // and this avoid warning message (clients dont use wait list anyhow)
+        // and this avoid warning message (clients don't use wait list anyhow)
         if (!bHost_) table.removeWaitAll();
 
         // online games, figure out if we need to run pre-showdown step
@@ -2517,8 +2505,6 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
     /**
      * Get auto deal delay
-     *
-     * @param table
      */
     private int getAutoDealDelay(PokerTable table)
     {
@@ -2556,13 +2542,12 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             }
         }
 
-        //logger.debug("Autodeal delay: " + nDelay);
         return nDelay;
     }
 
-    /////
-    ///// updates to director from outside - must synchronize
-    /////
+    //
+    // updates to director from outside - must synchronize
+    //
 
     /**
      * Notify of rejoining player
@@ -2572,7 +2557,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         PokerTable table = p.getTable();
         if (!p.isObserver())
         {
-            if (DEBUG_REJOIN) logger.debug(p.getName() + " rejoin start, table now REJOIN_START");
+            if (DEBUG_REJOIN) logger.debug("{} rejoin start, table now REJOIN_START", p.getName());
             table.setRejoinState(PokerTable.REJOIN_START);
         }
         p.setRejoining(true);
@@ -2585,7 +2570,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
     public synchronized void notifyPlayerRejoinDone(PokerPlayer p)
     {
         PokerTable table = p.getTable();
-        // if this is a player and we are waiting on that player to act,
+        // if this is a player, and we are waiting on that player to act,
         // process them
         if (!p.isObserver() && table.isWaitListMember(p))
         {
@@ -2594,14 +2579,14 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             if (table.getTableState() == PokerTable.STATE_PENDING &&
                 table.getPendingTableState() == PokerTable.STATE_DEAL_FOR_BUTTON)
             {
-                if (DEBUG_REJOIN) logger.debug(p.getName() + " ready for deal for button");
+                if (DEBUG_REJOIN) logger.debug("{} ready for deal for button", p.getName());
                 table.removeWait(p);
             }
             // otherwise this player is done rejoining (TD is created and table is displayed),
             // so we can process the rejoin
             else
             {
-                if (DEBUG_REJOIN) logger.debug(p.getName() + " rejoin done, table now REJOIN_PROCESS");
+                if (DEBUG_REJOIN) logger.debug("{} rejoin done, table now REJOIN_PROCESS", p.getName());
                 table.setRejoinState(PokerTable.REJOIN_PROCESS);
             }
         }
@@ -2610,7 +2595,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             p.setRejoining(false);
             if (!p.isObserver())
             {
-                if (DEBUG_REJOIN) logger.debug(p.getName() + " rejoin done, table now REJOIN_NONE");
+                if (DEBUG_REJOIN) logger.debug("{} rejoin done, table now REJOIN_NONE", p.getName());
                 table.setRejoinState(PokerTable.REJOIN_NONE);
             }
         }
@@ -2678,9 +2663,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             int nLastState = table.getPreviousTableState();
             if (nState != PokerTable.STATE_PENDING && nLastState != PokerTable.STATE_BETTING)
             {
-                logger.warn("Current state: " + PokerTable.getStringForState(nState) +
-                            ", last state: " + PokerTable.getStringForState(nLastState) +
-                            "; incorrect for handling: " + action);
+                logger.warn("Current state: {}, last state: {}; incorrect for handling: {}", PokerTable.getStringForState(nState), PokerTable.getStringForState(nLastState), action);
                 return;
             }
 
@@ -2688,7 +2671,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             PokerPlayer expected = table.getWaitPlayer();
             if (expected == null || expected != player)
             {
-                logger.warn("Waiting on: " + (expected == null ? "(nobody)" : expected.getName()) + "; ignoring: " + action);
+                logger.warn("Waiting on: {}; ignoring: {}", expected == null ? "(nobody)" : expected.getName(), action);
                 return;
             }
         }
@@ -2703,29 +2686,20 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
                     //TODO: fold audio
                     break;
 
-                case HandAction.ACTION_CHECK:
+                case HandAction.ACTION_CHECK, HandAction.ACTION_CHECK_RAISE:
                     PokerUtils.checkAudio();
                     break;
 
-                case HandAction.ACTION_CHECK_RAISE:
-                    PokerUtils.checkAudio();
-                    break;
-
-                case HandAction.ACTION_BET:
-                    PokerUtils.betAudio();
-                    break;
-
-                case HandAction.ACTION_CALL:
+                case HandAction.ACTION_BET, HandAction.ACTION_CALL:
                     PokerUtils.betAudio();
                     break;
 
                 case HandAction.ACTION_RAISE:
                     PokerUtils.raiseAudio();
-                    //PokerUtils.betAudio();
                     break;
 
                 default:
-                    ApplicationError.assertTrue(false, "Unknown HandAction action: " + nAction);
+                    throw new ApplicationError("Unknown HandAction action: " + nAction);
             }
         }
 
@@ -2891,8 +2865,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         if (!table.isRebuyAllowed(player, nLevel))
         {
-            logger.warn("Skipping non-allowed rebuy for " + player.getName() + " level: " + nLevel +
-                        " amount: " + nAmount + " chips: " + nChips + " pending: " + bPending);
+            logger.warn("Skipping non-allowed rebuy for {} level: {} amount: {} chips: {} pending: {}", player.getName(), nLevel, nAmount, nChips, bPending);
             return;
         }
 
@@ -2930,9 +2903,9 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
         }
     }
 
-    ////
-    //// chat
-    ////
+    //
+    // chat
+    //
 
     /**
      * chat handler
