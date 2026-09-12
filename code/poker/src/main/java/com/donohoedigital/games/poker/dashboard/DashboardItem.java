@@ -204,8 +204,6 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
 
     /**
      * create ui
-     *
-     * @param dashboard
      */
     void createUI(DashboardPanel dashboard)
     {
@@ -215,10 +213,10 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
             header_ = new DashboardHeader("DashboardHeader", false);
             header_.setText(getTitle());
             header_.addAncestorListener(this);
-            header_.check_.addActionListener(e ->
+            header_.check_.addActionListener(_ ->
                 setOpen(header_.check_.isSelected()));
 
-            header_.delete_.addActionListener(e ->
+            header_.delete_.addActionListener(_ ->
                 setInDashboard(header_.delete_.isSelected()));
         }
 
@@ -467,7 +465,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
         }
     }
 
-    // only one needed for all instances  TODO: move to ulility
+    // only one needed for all instances  TODO: move to utility
     private static final java.util.Timer timer = new java.util.Timer("Dashboard-Timer", true);
 
     /**
@@ -485,7 +483,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
      */
     private final class TableEventTask extends TimerTask
     {
-        private PokerTableEvent event;
+        private final PokerTableEvent event;
 
         private TableEventTask(PokerTableEvent event)
         {
@@ -495,13 +493,7 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
         @Override
         public void run()
         {
-            GuiUtils.invokeAndWait(new Runnable()
-            {
-                public void run()
-                {
-                    DashboardItem.this.tableEventOccurred(event);
-                }
-            });
+            GuiUtils.invokeAndWait(() -> DashboardItem.this.tableEventOccurred(event));
         }
     }
 
@@ -541,42 +533,12 @@ public class DashboardItem implements Comparable<DashboardItem>, DataMarshal,
         }
     }
 
-    // DESIGN NOTE:   Removed this when changed listener_ above to use invokeAndWait so all listeners notified
-    // immediately (3.0p1)
-//    private boolean bSetTableEventsImmediateNotAllowed_ = false;
-//
-//    /**
-//     * Indicate that table events should be delivered immediately.
-//     * The default is to use invokeLater and put them in the Swing thread,
-//     * but in some cases that is undesirable because the table
-//     * can change state during the time between when a poker table
-//     * event is generated and when the swing runnable runs.
-//     * This should only be called from a constructor and
-//     * before trackTableEvents() is called.
-//     */
-//    protected void setTableEventsImmediate()
-//    {
-//        ApplicationError.assertTrue(!bSetTableEventsImmediateNotAllowed_,
-//                                    "Can't call after trackTableEvents called");
-//
-//        // TODO:  testing to see if invokeNow removes need for this method
-//        // bTableEventsInSwing_ = false;
-//    }
-
     /**
      * Indicate whether the title is dynamically updated
      */
     protected void setDynamicTitle(boolean b)
     {
         bDynamicTitle_ = b;
-    }
-
-    /**
-     * Is title dynamic?
-     */
-    protected boolean isDynamicTitle()
-    {
-        return bDynamicTitle_;
     }
 
     /**
