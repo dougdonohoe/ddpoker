@@ -61,12 +61,6 @@ const navData = {
         title: 'Donate',
         link: '/donate',
     },
-    forums: {
-        skipInDocMode: true,
-        title: 'Forums',
-        link: '/forums',
-        subPages: null,
-    },
     support: {
         skipInDocMode: true,
         title: 'Support',
