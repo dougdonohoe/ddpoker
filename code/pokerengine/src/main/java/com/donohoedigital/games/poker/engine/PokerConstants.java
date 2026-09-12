@@ -54,6 +54,7 @@ public class PokerConstants
      * needed).
      */
     public static final Version VERSION = latest(
+            new Version(3, 1, 10, true), // release 3.1.10 (TBD)
             new Version(3, 1, 9, true), // release 3.1.9 (check for updates)
             new Version(3, 1, 8, true), // release 3.1.8 (HiDPI rendering fixes)
             new Version(3, 1, 7, true), // release 3.1.7 (memory fix, dashboard improvements)

@@ -48,18 +48,6 @@
     <param name="url" strvalue="http://www.ddpoker.com/order.html?demo"/>
   </phase>
 
-  <phase name="LaunchOnlineWebsite" class="com.donohoedigital.games.poker.LaunchOnlineWebsite" transient="true">
-    <param name="url" strvalue="http://www.ddpoker.com/online"/>
-    <param name="key" strvalue="msg.launchonline.confirm"/>
-    <param name="showvers" boolvalue="true"/>
-  </phase>
-
-  <phase name="LaunchOnlineForums" class="com.donohoedigital.games.poker.LaunchOnlineWebsite" transient="true">
-    <param name="url" strvalue="http://www.ddpoker.com/forums"/>
-    <param name="key" strvalue="msg.launchforums.confirm"/>
-    <param name="showvers" boolvalue="false"/>
-  </phase>
-
   <phase name="Exit" class="com.donohoedigital.games.poker.ExitPoker" transient="true"/>
   <phase name="QuitGame" class="com.donohoedigital.games.poker.QuitPokerGame" transient="true"/>
   <phase name="QuitGameNoConfirm" class="com.donohoedigital.games.poker.QuitPokerGame" transient="true">
@@ -227,8 +215,6 @@
       <strvalue>hostonline:OnlineOptions</strvalue>
       <strvalue>joinonline:JoinGame</strvalue>
       <strvalue>loadgameonline:LoadOnlineGameMenu</strvalue>
-      <strvalue>website:LaunchOnlineWebsite</strvalue>
-      <strvalue>forums:LaunchOnlineForums</strvalue>
       <strvalue>helpdetail:Help:online</strvalue>
       <strvalue>cancelprev:PreviousPhase</strvalue>
     </paramlist>
