@@ -63,7 +63,6 @@ public class Rank extends DashboardItem
     {
         super(context, "rank");
         setDynamicTitle(true);
-        //setTableEventsImmediate(); // we need them immediately so rank is correct
 
         // TYPE_END_HAND is what keeps the rank current.  It is fired at the end of
         // HoldemHand.resolve(), once the pot has been awarded, so every chip count in
@@ -119,24 +118,16 @@ public class Rank extends DashboardItem
     public void tableEventOccurred(PokerTableEvent event)
     {
         boolean bUpdate = false;
-        switch (event.getType())
-        {
-            case PokerTableEvent.TYPE_STATE_CHANGED:
-                switch (event.getNew())
-                {
-                    case PokerTable.STATE_NEW_LEVEL_CHECK:
-                        // update for possible change in number player
-                        // because this occurs after cleanup.
-                        // do this only for online games because clients don't
-                        // get the PROP_PLAYER_FINISHED events
-                        bUpdate = true;
-                        break;
-
-                }
-                break;
-
-            default:
+        if (event.getType() == PokerTableEvent.TYPE_STATE_CHANGED) {
+            if (event.getNew() == PokerTable.STATE_NEW_LEVEL_CHECK) {
+                // update for possible change in number player
+                // because this occurs after cleanup.
+                // do this only for online games because clients don't
+                // get the PROP_PLAYER_FINISHED events
                 bUpdate = true;
+            }
+        } else {
+            bUpdate = true;
         }
         if (bUpdate) updateInfo();
     }
@@ -171,9 +162,9 @@ public class Rank extends DashboardItem
     }
 
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     /**
      * update level

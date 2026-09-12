@@ -60,7 +60,7 @@ public class LoadSavedGame extends BasePhase
     }
     
     /**
-     * Conveience function to create params/start this phase
+     * Convenience function to create params/start this phase
      */
     public static void loadGame(GameContext context, GameState state)
     {
@@ -95,7 +95,7 @@ public class LoadSavedGame extends BasePhase
     // 4) this phase (LoadSavedGame) actually reads and creates game (see start())
     // 5) loading of game in Game uses processStartPhase() which invokes the
     //    begin phase returned by the GameStateDelegate, which is assumed to be a 
-    //    subclass of chain phase.  Typically the begin phase creates the game board
+    //    subclass of chain phase.  Typically, the begin phase creates the game board
     //    but can be any chain phase for special cases.
     // 6) After the begin phase runs, it invokes the phase stored in the game
     //    file, using the ChainPhase PARAM_NEXT_PHASE, PARAM_NEXT_PHASE_PARAMS 

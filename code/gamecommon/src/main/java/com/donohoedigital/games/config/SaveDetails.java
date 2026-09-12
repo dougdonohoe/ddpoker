@@ -58,16 +58,16 @@ public class SaveDetails implements DataMarshal
     public static final int TERRITORY_OWNER_UNITS = 1;
     public static final int TERRITORY_ALL_UNITS = 2;
     
-    private int nGameHashData_ = SAVE_ALL;
-    private int nGameSubclassData_ = SAVE_ALL;
-    private int nPlayers_ = SAVE_ALL;
-    private int nAI_ = SAVE_ALL;
-    private int nObservers_ = SAVE_ALL;
-    private int nCurrentPhase_ = SAVE_ALL;
-    private int nTerritories_ = SAVE_ALL;
+    private int nGameHashData_;
+    private int nGameSubclassData_;
+    private int nPlayers_;
+    private int nAI_;
+    private int nObservers_;
+    private int nCurrentPhase_;
+    private int nTerritories_;
     private int nTerritoryDirtyType_;  // if dirty load, specifies type
     private int nTerritoryUnitOwnerID_;// if owner unit load, specifies owner id
-    private int nCustomSave_ = SAVE_ALL;
+    private final int nCustomSave_;
     
     private DataMarshal dCustomInfo_;
 
@@ -168,30 +168,15 @@ public class SaveDetails implements DataMarshal
     {
         return nTerritoryDirtyType_;
     }
-    
-    public void setTerritoriesDirtyType(int n)
-    {
-        nTerritoryDirtyType_ = n;
-    }
-    
+
     public int getTerritoriesUnitOwnerID()
     {
         return nTerritoryUnitOwnerID_;
     }
-    
-    public void setTerritoriesUnitOwnerID(int n)
-    {
-        nTerritoryUnitOwnerID_ = n;
-    }
-    
+
     public int getSaveCustom()
     {
         return nCustomSave_;
-    }
-    
-    public void setSaveCustom(int n)
-    {
-        nCustomSave_ = n;
     }
     
     public DataMarshal getCustomInfo()
@@ -222,6 +207,7 @@ public class SaveDetails implements DataMarshal
    
     public String marshal(MsgState state)
     {
+        //noinspection DuplicatedCode
         TokenizedList list = new TokenizedList();
         list.addToken(nGameHashData_);
     	list.addToken(nGameSubclassData_);

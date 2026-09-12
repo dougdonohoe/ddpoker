@@ -123,7 +123,6 @@ public class PokerGame extends Game implements PlayerActionListener
     private TournamentProfile profile_;
     private int nLevel_ = 0;
     private boolean bClockMode_ = false;
-    private boolean bSimulatorMode_ = false;
     private long id_;
     private int nMinChipIdx_ = 0;
     private int nLastMinChipIdx_ = 0;
@@ -243,22 +242,6 @@ public class PokerGame extends Game implements PlayerActionListener
     public boolean isClockMode()
     {
         return bClockMode_;
-    }
-
-    /**
-     * Set simulator mode
-     */
-    public void setSimulatorMode(boolean b)
-    {
-        bSimulatorMode_ = b;
-    }
-
-    /**
-     * Is simulator mode?
-     */
-    public boolean isSimulatorMode()
-    {
-        return bSimulatorMode_;
     }
 
     /**
@@ -854,14 +837,14 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * Get largest chip denom which divides into value
+     * Get the largest chip denom which divides into value
      */
     private int getMaxDenom(int n)
     {
         int nChip = 1;
         // start at largest chip and look for a chip that
         // is less than or equal to min ante/blind and
-        // is evenly divisble by that blind
+        // is evenly divisible by that blind
         for (int i = nChipDenom_.length - 1; i >= 0; i--)
         {
             if (nChipDenom_[i] <= n &&
@@ -964,30 +947,6 @@ public class PokerGame extends Game implements PlayerActionListener
             if (nNumWithChips > 1) return false;
         }
         return (nNumWithChips == 1);
-    }
-
-    /**
-     * Get big blind
-     */
-    public int getBigBlind()
-    {
-        return profile_.getBigBlind(nLevel_);
-    }
-
-    /**
-     * Get small blind
-     */
-    public int getSmallBlind()
-    {
-        return profile_.getSmallBlind(nLevel_);
-    }
-
-    /**
-     * Get ante
-     */
-    public int getAnte()
-    {
-        return profile_.getAnte(nLevel_);
     }
 
     /**
@@ -1179,7 +1138,7 @@ public class PokerGame extends Game implements PlayerActionListener
         // init first level - calc's min chip (need to do after initChipCount)
         nextLevel();
 
-        // set initial min chip now that its been set
+        // set initial min chip now that it's been set
         PokerTable table;
         for (int i = 0; i < getNumTables(); i++)
         {
@@ -1419,7 +1378,7 @@ public class PokerGame extends Game implements PlayerActionListener
             player = players.remove(idx);
             table.addPlayer(player);
 
-            // if practice mode and we place human, mark this table
+            // if practice mode, and we place human, mark this table
             // as current (online setCurrent handled in HostStart
             // and in load-game logic)
             if (!bOnline && player.isHuman())
@@ -1458,7 +1417,7 @@ public class PokerGame extends Game implements PlayerActionListener
         // rebuys/addons over yet still received prize money (rare case)
         if (nFinish == 1)
         {
-            // get prizepool as profile defines it (to account for house cut)
+            // get prize pool as profile defines it (to account for house cut)
             nPrize = profile_.getPrizePool() - getPrizesPaid();
         }
         // else get from profile
@@ -1606,21 +1565,9 @@ public class PokerGame extends Game implements PlayerActionListener
         }
     }
 
-    /**
-     * Debug print tables
-     */
-    public void debugPrintTables(boolean bShort)
-    {
-        for (int i = 0; i < getNumTables(); i++)
-        {
-            logger.debug(getTable(i).toString(bShort));
-        }
-    }
-
-
-    ////
-    //// 2.0 online stuff
-    ////
+    //
+    // 2.0 online stuff
+    //
 
     // transient (recreated upon load)
     private PokerGameState state_;
@@ -1633,7 +1580,7 @@ public class PokerGame extends Game implements PlayerActionListener
             // DDMessages containing objects like HandAction work properly
             // Only needed in online play.
             state_ = new PokerGameState(this, bInitIds);
-            DDMessage.setMsgState(state_); // FIX: ick!  Figure out a way to do this non-staticly (prohibits multi-games)
+            DDMessage.setMsgState(state_); // FIX: ick!  Figure out a way to do this non-statically (prohibits multi-games)
         }
     }
 
@@ -1815,7 +1762,7 @@ public class PokerGame extends Game implements PlayerActionListener
 
     /**
      * Get regular expression for connect URL for this game.  Essentially, it
-     * is a regexp which valiates a proper IP address
+     * is a regexp which validates a proper IP address
      */
     public String getConnectRegExp()
     {
@@ -1828,95 +1775,19 @@ public class PokerGame extends Game implements PlayerActionListener
     private String getConnectURL(String IP)
     {
         // SAMPLE:  poker://192.111.2.101:11885/n-1/QPF-841
-        StringBuilder sb = new StringBuilder();
-        sb.append(PokerConstants.URL_START);
-        sb.append(IP);
-        sb.append(P2PURL.PORT_DELIM);
-        sb.append(getPort());
-        sb.append(P2PURL.URI_DELIM);
-        sb.append(getOnlineGameID());
-        sb.append(PokerConstants.ID_PASS_DELIM);
-        sb.append(getOnlinePassword());
-        return sb.toString();
+        return PokerConstants.URL_START +
+                IP +
+                P2PURL.PORT_DELIM +
+                getPort() +
+                P2PURL.URI_DELIM +
+                getOnlineGameID() +
+                PokerConstants.ID_PASS_DELIM +
+                getOnlinePassword();
     }
 
-    ////
-    //// misc overrides
-    ////
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public void setOnlinePlayerIDs(DMArrayList<Integer> ids)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "setOnlinePlayerIDs() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public DMArrayList<Integer> getOnlinePlayerIDs()
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "getOnlinePlayerIDs() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public boolean isOnlinePlayer(GamePlayer player)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "isOnlinePlayer() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @SuppressWarnings({"RawUseOfParameterizedType"})
-    @Override
-    public DMArrayList getResendList()
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "getResendList() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @SuppressWarnings({"RawUseOfParameterizedType"})
-    @Override
-    public DMArrayList getTimestampList()
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "getTimestampList() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public void addCompletedPhase(String sPhase)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "addCompletedPhase() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public boolean isCompletedPhase(String sPhase)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "isCompletedPhase() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public void clearCompletedPhases()
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "clearCompletedPhases() not used in PokerGame", null);
-    }
+    //
+    // misc overrides
+    //
 
     /**
      * Override - not used
@@ -1936,54 +1807,9 @@ public class PokerGame extends Game implements PlayerActionListener
         throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "getTurn() not used in PokerGame", null);
     }
 
-    /**
-     * Override - not used
-     */
-    @Override
-    public void setCurrentPlayer(int i)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "setCurrentPlayer() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public void setCurrentPlayerByID(int id)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "setCurrentPlayerByID() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public void setCurrentPlayer(GamePlayer player)
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "setCurrentPlayer() not used in PokerGame", null);
-    }
-
-    /**
-     * Override - not used
-     */
-    @Override
-    public int getCurrentPlayerIndex()
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "getCurrentPlayerIndex() not used in PokerGame - use HoldemHand's instead", null);
-    }
-
-    /**
-     * Get the current player
-     */
-    @Override
-    public GamePlayer getCurrentPlayer()
-    {
-        throw new ApplicationError(ErrorCodes.ERROR_UNSUPPORTED, "getCurrentPlayer() not used in PokerGame - used HoldemHand's instead", null);
-    }
-
-    ////
-    //// save/load logic
-    ////
+    //
+    // save/load logic
+    //
 
     /**
      * Get save details with given init value
@@ -2081,7 +1907,6 @@ public class PokerGame extends Game implements PlayerActionListener
                 break;
 
             case SaveDetails.SAVE_NONE:
-                nNum = 0;
                 break;
 
         }
@@ -2367,7 +2192,7 @@ public class PokerGame extends Game implements PlayerActionListener
             player = getPokerPlayerAt(i);
             player.setDisconnected(!(player.isHost() || player.isComputer()));
             // I'm leaving this off - if a host exits and restarts right
-            // away, there might be players waiting to rejoing right
+            // away, there might be players waiting to rejoin right
             // away and setting them to sitting out seems wrong
             //if (player.isDisconnected()) player.setSittingOut(true);
         }
@@ -2417,11 +2242,6 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     private PlayerActionListener playerActionListener_ = null;
-
-    public PlayerActionListener getPlayerActionListener()
-    {
-        return playerActionListener_;
-    }
 
     public void setPlayerActionListener(PlayerActionListener listener)
     {

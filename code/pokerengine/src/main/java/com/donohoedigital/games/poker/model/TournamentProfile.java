@@ -51,15 +51,13 @@ import com.donohoedigital.games.config.SaveFile;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.xml.SimpleXMLEncodable;
 import com.donohoedigital.xml.SimpleXMLEncoder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Objects;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
 
 /**
  * @author donohoe
@@ -67,8 +65,6 @@ import static com.donohoedigital.config.DebugConfig.isTestingOn;
 @DataCoder('X')
 public class TournamentProfile extends BaseProfile implements DataMarshal, SimpleXMLEncodable
 {
-    static Logger logger = LogManager.getLogger(TournamentProfile.class);
-
     // defines
     public static final String PROFILE_BEGIN = "tourney";
     public static final String TOURNAMENT_DIR = "tournaments";
@@ -82,7 +78,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     // note on max players - if this changes above 6000, need to change
     // ids for territories in gameboard.xml and adjust PokerInit starting IDs
     public static final int MAX_PLAYERS = 5625;
-    public static final int MAX_ONLINE_PLAYERS = 30; // limit online to 3 tables; TODO: is this too few?
+    public static final int MAX_ONLINE_PLAYERS = 30; // limit online to 3 tables
     public static final int MAX_OBSERVERS = 10;
 
     public static final int MAX_CHIPS = TESTING(PokerConstants.TESTING_LEVELS) ? 10000000 : 50000;
@@ -307,7 +303,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public String getGreeting(String sName)
     {
         String sGreeting = map_.getString(PARAM_GREETING, "").trim();
-        if (sGreeting.length() == 0) return null;
+        if (sGreeting.isEmpty()) return null;
         sGreeting = Utils.replace(sGreeting, "\\$name", sName);
         return sGreeting;
     }
@@ -339,6 +335,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     /**
      * Set player list
      */
+    @SuppressWarnings("unchecked")
     public void setPlayers(List<String> players)
     {
         DMArrayList<String> list = (DMArrayList<String>) map_.getList(PARAM_PLAYERS);
@@ -352,10 +349,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             list.clear();
         }
 
-        for (String name : players)
-        {
-            list.add(name);
-        }
+        list.addAll(players);
 
         // change update date so it updates in LAN clients
         setUpdateDate();
@@ -364,6 +358,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     /**
      * Get player list
      */
+    @SuppressWarnings("unchecked")
     public List<String> getPlayers()
     {
         DMArrayList<String> players = (DMArrayList<String>) map_.getList(PARAM_PLAYERS);
@@ -380,27 +375,11 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     }
 
     /**
-     * Set invite only
-     */
-    public void setInviteOnly(boolean b)
-    {
-        map_.setBoolean(PARAM_INVITE_ONLY, b ? Boolean.TRUE : Boolean.FALSE);
-    }
-
-    /**
      * is invite only?
      */
     public boolean isInviteObserversPublic()
     {
         return map_.getBoolean(PARAM_INVITE_OBS, false);
-    }
-
-    /**
-     * Set public observers
-     */
-    public void setInviteObserversPublic(boolean b)
-    {
-        map_.setBoolean(PARAM_INVITE_OBS, b ? Boolean.TRUE : Boolean.FALSE);
     }
 
     /**
@@ -563,19 +542,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     }
 
     /**
-     * Get last small blind - if current level is a break, returns
-     * first prior non-break level
-     */
-    public int getLastSmallBlind(int nLevel)
-    {
-        while (isBreak(nLevel) && nLevel > 0)
-        {
-            nLevel--;
-        }
-        return getSmallBlind(nLevel);
-    }
-
-    /**
      * Get last big blind - if current level is a break, returns
      * first prior non-break level
      */
@@ -586,19 +552,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             nLevel--;
         }
         return getBigBlind(nLevel);
-    }
-
-    /**
-     * Get last ante - if current level is a break, returns
-     * first prior non-break level
-     */
-    public int getLastAnte(int nLevel)
-    {
-        while (isBreak(nLevel) && nLevel > 0)
-        {
-            nLevel--;
-        }
-        return getAnte(nLevel);
     }
 
     /**
@@ -647,7 +600,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public String getGameTypeString(int nLevel)
     {
         String sType = map_.getString(PARAM_GAMETYPE + nLevel);
-        if (sType == null || sType.length() == 0)
+        if (sType == null || sType.isEmpty())
         {
             sType = getDefaultGameTypeString();
         }
@@ -677,20 +630,13 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     {
         String sType = getGameTypeString(nLevel);
 
-        if (sType.equals(PokerConstants.DE_NO_LIMIT_HOLDEM))
-        {
-            return PokerConstants.TYPE_NO_LIMIT_HOLDEM;
-        }
-        else if (sType.equals(PokerConstants.DE_POT_LIMIT_HOLDEM))
-        {
-            return PokerConstants.TYPE_POT_LIMIT_HOLDEM;
-        }
-        if (sType.equals(PokerConstants.DE_LIMIT_HOLDEM))
-        {
-            return PokerConstants.TYPE_LIMIT_HOLDEM;
-        }
+        return switch (sType) {
+            case PokerConstants.DE_NO_LIMIT_HOLDEM -> PokerConstants.TYPE_NO_LIMIT_HOLDEM;
+            case PokerConstants.DE_POT_LIMIT_HOLDEM -> PokerConstants.TYPE_POT_LIMIT_HOLDEM;
+            case PokerConstants.DE_LIMIT_HOLDEM -> PokerConstants.TYPE_LIMIT_HOLDEM;
+            default -> throw new ApplicationError(ErrorCodes.ERROR_INVALID, "Unknown poker game type", sType, null);
+        };
 
-        throw new ApplicationError(ErrorCodes.ERROR_INVALID, "Unknown poker game type", sType, null);
     }
 
     /**
@@ -857,10 +803,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
                 setPayoutSpots(max);
             }
         }
-        else // PokerConstants.PAYOUT_SATELLITE
-        {
-            // no need to update if num players change
-        }
+        // else - PokerConstants.PAYOUT_SATELLITE -  no need to update if num players change
 
         // store new num players
         setNumPlayers(nNumPlayers);
@@ -880,7 +823,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             setAutoSpots();
         }
 
-        // fix all (html may have changed, remove old spots)
+        // fix all (HTML may have changed, remove old spots)
         fixAll();
     }
 
@@ -1013,7 +956,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         int nNumPlayers = getNumPlayers();
         if (getHouseCutType() == PokerConstants.HOUSE_PERC)
         {
-            nPool -= (((double) getHousePercent()) / 100d) * (double) nPool;
+            nPool = (int) (nPool - ((((double) getHousePercent()) / 100d) * (double) nPool));
         }
         else
         {
@@ -1150,7 +1093,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
                 // #seats (10) * num full tables * min payout (buyin) +
                 // #seats (10) * sum (1 .. full) * incremental payout
                 double nEst = (PokerConstants.SEATS * nFull * nMin) +
-                              (PokerConstants.SEATS * ((nFull * (nFull + 1)) / 2) * nInc);
+                              (PokerConstants.SEATS * ((double) (nFull * (nFull + 1)) / 2) * nInc);
                 int nFinalInc = (int) (nMin * (inc * (nFull + 1)));
 
                 // add payout to extra players
@@ -1210,7 +1153,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
 
         // STEP 2: compute percentage
         int nPoolLeft = nPool - nAllocdPool;
-        nMin *= mult;
+        nMin = (int) (nMin * mult);
         int nSplit = nPoolLeft / nLeft;
         if (nMin >= (nSplit * .8)) nMin = 0;
         if (nMin == 0) nRound = 1;
@@ -1355,7 +1298,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     private int getAmountFromString(String sName, boolean allowNegative)
     {
         String s = map_.getString(sName);
-        if (s == null || s.length() == 0) return 0;
+        if (s == null || s.isEmpty()) return 0;
 
         int n = Integer.parseInt(s);
         if (!allowNegative && n < 0) n = 0;
@@ -1669,19 +1612,19 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
                 map_.setString(m, "");
             }
 
-            if (sAnte.length() == 0 && sSmall.length() == 0 && sBig.length() == 0) continue;
+            if (sAnte.isEmpty() && sSmall.isEmpty() && sBig.isEmpty()) continue;
 
             // increment level (we have a valid level)
             nLevel++;
             if (!bBreak) nNonBreakLevel++;
 
-            if (sBig.length() == 0 && sBigL != null && !bBreak)
+            if (sBig.isEmpty() && sBigL != null && !bBreak)
             {
                 sBig = sBigL;
                 bUpdate = true;
             }
 
-            if (sSmall.length() == 0 && sSmallL != null && !bBreak)
+            if (sSmall.isEmpty() && sSmallL != null && !bBreak)
             {
                 sSmall = sSmallL;
                 bUpdate = true;
@@ -1731,7 +1674,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             map_.setString(PARAM_BIG + (nLevel), "2");
         }
 
-        // record (needed in getAnte() et al)
+        // record (needed in getAnte() et al.)
         map_.setInteger(PARAM_LASTLEVEL, nLevel);
 
         // now verify amounts and cleanup      
@@ -1810,7 +1753,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             if (sType != null) map_.setString(PARAM_GAMETYPE + i, sType);
             else map_.removeString(PARAM_GAMETYPE + i);
 
-            nAnteP = (nAnte == 0 ? nAnteP : nAnte); // don't store ante if its set to 0 (keep at last value)
+            nAnteP = (nAnte == 0 ? nAnteP : nAnte); // don't store ante if it's set to 0 (keep at last value)
             nSmallP = nSmall;
             nBigP = nBig;
         }
@@ -1909,14 +1852,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     {
         Integer pct = map_.getInteger(PARAM_MIX + sPlayerTypeUniqueId);
 
-        if (pct == null)
-        {
-            return 0;
-        }
-        else
-        {
-            return pct;
-        }
+        return Objects.requireNonNullElse(pct, 0);
     }
 
     /**
@@ -1943,9 +1879,9 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         return getName();
     }
 
-    ////
-    //// Saved tournaments
-    ////
+    //
+    // Saved tournaments
+    //
 
     /**
      * allow editing of all tournaments, even pre-shipped ones
@@ -1967,7 +1903,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     }
 
     /**
-     * fixstuff
+     * fix stuff
      */
     public void fixAll()
     {

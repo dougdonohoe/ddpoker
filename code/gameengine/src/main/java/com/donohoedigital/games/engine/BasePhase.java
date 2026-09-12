@@ -38,7 +38,6 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.comms.NameValueToken;
 import com.donohoedigital.config.Perf;
@@ -58,13 +57,12 @@ public abstract class BasePhase implements Phase
     protected GameContext context_;
     protected GamePhase gamephase_;
     protected Object oResult_;
-    protected Object onlineResult_;
-    
+
     /** 
      * Creates a new instance of BasePhase 
      */
     public BasePhase() {
-        if (false) Perf.construct(this, null);
+        if (Perf.isOn()) Perf.construct(this, null);
     }
 
     /**
@@ -107,7 +105,7 @@ public abstract class BasePhase implements Phase
      * Called when a phase is removed as the main component (
      * when using engine.setMainUIComponent()) or when
      * a DialogPhase's dialog is closed.  Other phases that 
-     * don't use a UI (e.g., ChainPhase or LoopPhases) are finished
+     * don't use a UI (e.g., ChainPhase) are finished
      * when their start() method is done, so any cleanup can be
      * done then.
      */
@@ -155,48 +153,7 @@ public abstract class BasePhase implements Phase
     {
         oResult_ = o;
     }
-    
-    
-    /**
-     * Used in online phases to return a result in action confirmation
-     */
-    public Object getOnlineResult()
-    {
-        return onlineResult_;
-    }
-    
-    /**
-     * Set the result
-     */
-    public void setOnlineResult(Object o)
-    {
-        onlineResult_ = o;
-    }
-    
-    /**
-     * By default, no phase should be added as an entry, unless it
-     * specifically allows it by overriding this.  It should call
-     * the _addGameStateEntry to do the default work
-     */
-    public GameStateEntry addGameStateEntry(GameState state)
-    {
-        ApplicationError.assertTrue(false, "Saving phase " + gamephase_.getName() + " is not supported");
-        return null;
-    }
-    
-    /**
-     * Return this phase encoded as a game state entry
-     */
-    protected GameStateEntry _addGameStateEntry(GameState state)
-    {
-        // pass null in as object - we don't need to create an id for this
-        // or recreate on loading side
-        GameStateEntry entry = new GameStateEntry(state, null, ConfigConstants.SAVE_PHASE);
-        state.addEntry(entry);
-        entry.addToken(gamephase_.getName());
-        return entry;
-    }
-   
+
     /**
      * Add empty entry
      */
@@ -207,18 +164,7 @@ public abstract class BasePhase implements Phase
         entry.addToken(sPhaseName);
         return entry;
     }
-    
-    /**
-     * Add empty entry
-     */
-    public static GameStateEntry addEmptyGameStateEntry(GameState state)
-    {
-        GameStateEntry entry = new GameStateEntry(state, null, ConfigConstants.SAVE_PHASE);
-        state.addEntry(entry);
-        entry.addTokenNull();
-        return entry;
-    }
-    
+
     /**
      * Take entry and return the phase and params in a TypedHashMap usable
      * by ChainPhase.  Returns null if no phase stored.
@@ -252,7 +198,7 @@ public abstract class BasePhase implements Phase
     }
     
     /**
-     * By default all phases are used in demo.  If a phase returns
+     * By default, all phases are used in demo.  If a phase returns
      * false and the game is in demo mode, the phase is not processed.
      */
     public boolean isUsedInDemo() 

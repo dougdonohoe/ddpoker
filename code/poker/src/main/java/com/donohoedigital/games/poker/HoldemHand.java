@@ -43,7 +43,6 @@ import com.donohoedigital.base.ErrorCodes;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.DebugConfig;
 import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
 import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.DiceRoller;
 import com.donohoedigital.games.engine.GameEngine;
@@ -94,21 +93,14 @@ public class HoldemHand implements DataMarshal
      */
     public static String getRoundName(int n)
     {
-        switch (n)
-        {
-            case HoldemHand.ROUND_PRE_FLOP:
-                return "preflop";
-            case HoldemHand.ROUND_FLOP:
-                return "flop";
-            case HoldemHand.ROUND_TURN:
-                return "turn";
-            case HoldemHand.ROUND_RIVER:
-                return "river";
-            case HoldemHand.ROUND_SHOWDOWN:
-                return "show";
-            default:
-                return "none: " + n;
-        }
+        return switch (n) {
+            case HoldemHand.ROUND_PRE_FLOP -> "preflop";
+            case HoldemHand.ROUND_FLOP -> "flop";
+            case HoldemHand.ROUND_TURN -> "turn";
+            case HoldemHand.ROUND_RIVER -> "river";
+            case HoldemHand.ROUND_SHOWDOWN -> "show";
+            default -> "none: " + n;
+        };
     }
 
     private PokerTable table_;
@@ -839,7 +831,7 @@ public class HoldemHand implements DataMarshal
 
                 case HoldemHand.ROUND_TURN:
                 case HoldemHand.ROUND_RIVER:
-                    community.remove(community.size() - 1);
+                    community.removeLast();
                     break;
             }
         }
@@ -874,7 +866,7 @@ public class HoldemHand implements DataMarshal
     {
         synchronized (pots_)
         {
-            return pots_.get(pots_.size() - 1);
+            return pots_.getLast();
         }
     }
 

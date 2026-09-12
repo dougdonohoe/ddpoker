@@ -75,10 +75,6 @@ public class EngineButtonListener implements ActionListener
      */
     public void actionPerformed(ActionEvent e) 
     {
-        //logger.debug("Button pressed: " + button_.getName() +
-        //            " phase: " + button_.getGotoPhase() +
-        //             " param: " + button_.getGenericParam());
-        //logger.debug("at " + Utils.formatExceptionText(new Throwable()));
         context_.buttonPressed(button_, phase_);
     }
 

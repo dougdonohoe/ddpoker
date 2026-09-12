@@ -125,8 +125,10 @@ public class DashboardEditorDialog extends DialogPhase
         }
 
         // disable down button
-        editor.down_.setEnabled(false);
-        editor.up_.setEnabled(true);
+        if (editor != null) {
+            editor.down_.setEnabled(false);
+            editor.up_.setEnabled(true);
+        }
 
         // set preferred size so scrolling works
         layout.setPreferredLayoutSize(width, ComponentEF.bottom(previous));
@@ -162,7 +164,7 @@ public class DashboardEditorDialog extends DialogPhase
         }
     }
 
-    private class ShowListener implements ActionListener
+    private static class ShowListener implements ActionListener
     {
         DashboardItem item;
 

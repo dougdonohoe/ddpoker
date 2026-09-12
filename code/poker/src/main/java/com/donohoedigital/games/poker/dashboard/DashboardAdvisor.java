@@ -74,7 +74,6 @@ public class DashboardAdvisor extends DashboardItem
     {
         super(context, "advisor");
         setDynamicTitle(true);
-        //setTableEventsImmediate(); // we need them immediately to prevent race conditions
         trackTableEvents(PokerTableEvent.TYPE_NEW_HAND |
                          PokerTableEvent.TYPE_CURRENT_PLAYER_CHANGED |
                          PokerTableEvent.TYPE_CARD_CHANGED |

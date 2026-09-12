@@ -104,7 +104,7 @@ public class TokenizedList implements DataMarshal
     private Object nextToken(Class<?> cExpected)
     {
         ApplicationError.assertTrue(!tokens_.isEmpty(), "No tokens left");
-        Object o = tokens_.remove(0);
+        Object o = tokens_.removeFirst();
         if (o == null) return null;
         ApplicationError.assertTrue(cExpected.isAssignableFrom(o.getClass()), "Next token wrong type", o.getClass().getName());
         return o;
@@ -116,7 +116,7 @@ public class TokenizedList implements DataMarshal
     public Object peekToken()
     {
         ApplicationError.assertTrue(!tokens_.isEmpty(), "No tokens left");
-        return tokens_.get(0);
+        return tokens_.getFirst();
     }
     
     /**
@@ -263,7 +263,7 @@ public class TokenizedList implements DataMarshal
     }
 
     /**
-     * Store name/value pair where value is an Long
+     * Store name/value pair where value is a Long
      */
     public void addNameValueToken(String sName, Long lValue)
     {
@@ -303,7 +303,7 @@ public class TokenizedList implements DataMarshal
     }
     
     /**
-     * Remove name value token token
+     * Remove NameValueToken token
      */
     public NameValueToken removeNameValueToken()
     {
@@ -363,7 +363,7 @@ public class TokenizedList implements DataMarshal
                     if (sbEscape == null)
                     {
                         sbEscape = new StringBuilder(length+1);
-                        sbEscape.append(sValue.substring(0, i));
+                        sbEscape.append(sValue, 0, i);
                     }
                     sbEscape.append(EscapeStringTokenizer.ESCAPE);
                     break;
@@ -374,7 +374,7 @@ public class TokenizedList implements DataMarshal
                     if (sbEscape == null)
                     {
                         sbEscape = new StringBuilder(length+2);
-                        sbEscape.append(sValue.substring(0, i));
+                        sbEscape.append(sValue, 0, i);
                     }
                     sbEscape.append(EscapeStringTokenizer.ESCAPE);
                     sbEscape.append(EscapeStringTokenizer.ESCAPED_RETURN);
@@ -393,7 +393,7 @@ public class TokenizedList implements DataMarshal
      */
     public void write(MsgState state, Writer writer) throws IOException
     {
-        Object token;
+        DataMarshal token;
         for (int i = 0; i < tokens_.size(); i++)
         {
             token = tokens_.get(i);
@@ -406,13 +406,8 @@ public class TokenizedList implements DataMarshal
             {
                 writer.write(TOKEN_NULL);
             }
-            else if (token instanceof DataMarshal)
-            {
-                writer.write(escape(DataMarshaller.marshal(state, (DataMarshal)token)));
-            }
-            else
-            {
-                ApplicationError.assertTrue(false, "Unsupported token", token);
+            else {
+                writer.write(escape(DataMarshaller.marshal(state, token)));
             }
         }
     }

@@ -78,7 +78,6 @@ public class GameContext
     private DDWindow window_;
     private EngineWindow frame_;
     private EngineDialog dialog_;
-    private JComponent main_;
 
     // Holds last phase to be set as main panel in this context
     private Phase currentMainUIPhase_ = null;
@@ -88,18 +87,13 @@ public class GameContext
     // set for info dialog type phases
     private Phase currentPhase_ = null;
 
-    // Last loop phase (subclass of GamePlayerLoopPhase) to be run.  This is
-    // important because it is used to determine which phase to return to when
-    // doing a loop.  Assumes one loop runs at a time!!
-    private GamePhase lastLoopPhase_ = null;
-
     // Stack of GamePhase's that have history=true
-    private Stack<GamePhase> pastPhases_ = new Stack<>();
+    private final Stack<GamePhase> pastPhases_ = new Stack<>();
 
     // Cached phases are Phase instances that are saved
     // for reuse because they typically retain state (e.g., loop phases and
     // menu phases which has user input
-    private Map<String, Phase> cachedPhases_ = new HashMap<>();
+    private final Map<String, Phase> cachedPhases_ = new HashMap<>();
 
 
     /**
@@ -211,9 +205,9 @@ public class GameContext
     /**
      * Create a new game from the given save file
      */
-    public Game createGame(GameState state)
+    public void createGame(GameState state)
     {
-        return createGame(state, true);
+        createGame(state, true);
     }
 
     /**
@@ -221,12 +215,11 @@ public class GameContext
      * the stored phase.  It can be processed later by calling
      * game.processStartPhase()
      */
-    public Game createGame(GameState state, boolean bProcessPhase)
+    public void createGame(GameState state, boolean bProcessPhase)
     {
         Game game = createNewGame();
         setGame(game);
         game.loadGame(state, bProcessPhase);
-        return game;
     }
 
     /**
@@ -274,10 +267,9 @@ public class GameContext
     /**
      * process button in given phase.  calls phase.processButton(),
      * which can return false to prevent processing phase associated
-     * with this button.  Returns result of processButton, which
-     * indicates whether next phase processed.
+     * with this button.
      */
-    public boolean buttonPressed(GameButton button, Phase phase)
+    public void buttonPressed(GameButton button, Phase phase)
     {
         if (phase.processButton(button))
         {
@@ -293,9 +285,7 @@ public class GameContext
                 }
                 processPhase(sPhase, params);
             }
-            return true;
         }
-        return false;
     }
 
     /**
@@ -309,7 +299,6 @@ public class GameContext
             currentMainUIPhase_.finish();
         }
         currentMainUIPhase_ = phase;
-        main_ = comp;
 
         if (!isInternal())
         {
@@ -324,15 +313,7 @@ public class GameContext
     }
 
     /**
-     * get Main ui component
-     */
-    public JComponent getMainUIComponent()
-    {
-        return main_;
-    }
-
-    /**
-     * Get highest component
+     * Get the highest component
      */
     public JComponent getRootComponent()
     {
@@ -358,7 +339,7 @@ public class GameContext
      * Process next phase (uses invokeLater to avoid any
      * possible swing locking issues.  Any params passed
      * in are added to the GamePhase's list of parameters,
-     * possibly overridding default values permanently.
+     * possibly overriding default values permanently.
      */
     public void processPhase(String sPhaseName, TypedHashMap params)
     {
@@ -405,7 +386,7 @@ public class GameContext
         return _processPhase(sPhaseName, params, false);
     }
 
-    // stores phase that should be done after registation is complete
+    // stores phase that should be done after registration is complete
     private String TODOphase_;
     private TypedHashMap TODOparams_;
     private boolean TODOhistory_;
@@ -432,7 +413,7 @@ public class GameContext
     }
 
     /**
-     * Return true if has TO-DO to process
+     * Return true if it has TO-DO to process
      */
     public boolean hasTODO()
     {
@@ -636,18 +617,12 @@ public class GameContext
 
         // if this phase isn't transient, store it as the current phase
         // dialog phases tend to be driven by other phases.  Current
-        // phase should be the last guiphase (that which changed the
+        // phase should be the last gui phase (that which changed the
         // base component) or the last phase invoked that is driving
         // responses to user interaction
         if (!gamephase.isTransient())
         {
             currentPhase_ = phase;
-        }
-
-        // store last loop phase
-        if (phase instanceof GamePlayerLoopPhase)
-        {
-            lastLoopPhase_ = gamephase;
         }
 
         // start the phase
@@ -670,19 +645,6 @@ public class GameContext
     public Phase getCurrentUIPhase()
     {
         return currentMainUIPhase_;
-    }
-
-    /**
-     * removed given phase from cache and history (if on top)
-     */
-    public void removeCachedPhase(GamePhase gamephase)
-    {
-        if (!pastPhases_.empty() && pastPhases_.peek() == gamephase)
-        {
-            pastPhases_.pop();
-        }
-
-        cachedPhases_.remove(gamephase.getName());
     }
 
     /**
@@ -729,36 +691,6 @@ public class GameContext
         else
         {
             logger.warn("Not able to step back {}", nStepsBack);
-        }
-    }
-
-    /**
-     * Goto last loop phase - called from PreviousLoopPhase
-     */
-    void gotoPreviousLoopPhase()
-    {
-        ApplicationError.assertNotNull(lastLoopPhase_, "No loop phase to go to");
-        processPhase(lastLoopPhase_.getName(), null);
-    }
-
-    /**
-     * finish whatever the curent phase is (unless the current phase is the
-     * main ui phase - used in rare cases like BUG 268)
-     */
-    public void finishCurrentNonUIPhase()
-    {
-        // cleanup any dialogs lying around (if non-internal context)
-        if (!isInternal())
-        {
-            frame_.removeAllDialogs();
-            frame_.endModalLogged();
-        }
-
-        if (currentPhase_ != null && currentPhase_ != currentMainUIPhase_
-            && !(currentPhase_ instanceof DialogPhase))
-        {
-            currentPhase_.finish();
-            // don't null it (needed in places like OnlineActionConfirmation)
         }
     }
 
@@ -867,20 +799,13 @@ public class GameContext
             frame_.endModalLogged();
         }
 
-        // cleanup any modal loops
-
-
         // cleanup current phase
         if (currentPhase_ != null)
         {
-            if (currentPhase_ instanceof DialogPhase)
-            {
-                // do nothing - removeAllDialogs() should have called finish()
-            }
-            else
+            if (!(currentPhase_ instanceof DialogPhase))
             {
                 currentPhase_.finish();
-            }
+            } // else do nothing - removeAllDialogs() should have called finish()
         }
 
         // cleanup current ui phase
@@ -909,9 +834,7 @@ public class GameContext
         // refresh lists and phase stuff
         sSpecialSave_ = null;
         currentMainUIPhase_ = null;
-        main_ = null;
         currentPhase_ = null;
-        lastLoopPhase_ = null;
         cachedPhases_.clear();
         pastPhases_.clear();
 
@@ -926,7 +849,7 @@ public class GameContext
     private Phase getInstance(GamePhase gamephase) throws ApplicationError
     {
         String sName = gamephase.getName();
-        Phase phase = null;
+        Phase phase;
 
         // first see if it is in the cache
 
@@ -938,7 +861,7 @@ public class GameContext
             phase.reinit(gamephase);
         }
         // if new, create it
-        else if (phase == null)
+        else
         {
             String sClass = gamephase.getClassName();
             try
@@ -1008,9 +931,9 @@ public class GameContext
         return phase;
     }
 
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
 
     /**
      * Return this piece encoded as a game state entry
@@ -1030,34 +953,33 @@ public class GameContext
             return BasePhase.addNamedGameStateEntry(state, mgr.getPhaseName());
         }
 
-        // not needed since we specifically set name of online game entry
-//        if (lastLoopPhase_ == null)
-//        {
-//            return BasePhase.addEmptyGameStateEntry(state);
-//        }
-
-        Phase cached = null;
-
-        // store last loop phase since that is all we support right now
-        // except for special save case
-        if (lastLoopPhase_ != null)
-        {
-            cached = cachedPhases_.get(lastLoopPhase_.getName());
-        }
-
-        // BUG 99/166 - allow save during War's DisplayPurchaseSummary
-        if (cached == null && sSpecialSave_ != null)
+        // A save from a phase the GameManager doesn't drive - the lobby, the home game,
+        // online configuration.  Those phases name themselves via setSpecialSavePhase()
+        // so the load knows where to restart.  (Originally BUG 99/166 - saving during
+        // War's DisplayPurchaseSummary.)
+        if (sSpecialSave_ != null)
         {
             return BasePhase.addNamedGameStateEntry(state, sSpecialSave_);
         }
 
-        // else make sure we have a cached loop phase
-        ApplicationError.assertNotNull(cached, "Cached phase not found", lastLoopPhase_);
-        return cached.addGameStateEntry(state);
+        throw new ApplicationError("Nowhere to restart this save from: no GameManager is set and no " +
+                                   "phase called setSpecialSavePhase().  game=" + state.getGameName() +
+                                   " file=" + state.getFile() + " currentPhase=" + phaseName(currentPhase_) +
+                                   " currentMainUIPhase=" + phaseName(currentMainUIPhase_));
     }
 
     /**
-     * used in cases where save done from other than a loop phase
+     * Name of a phase for debug messages
+     */
+    private static String phaseName(Phase phase)
+    {
+        if (phase == null) return "null";
+        GamePhase gamephase = phase.getGamePhase();
+        return gamephase == null ? phase.getClass().getName() : gamephase.getName();
+    }
+
+    /**
+     * used in cases where the save is done from a phase the GameManager doesn't drive
      */
     private String sSpecialSave_;
 
@@ -1069,9 +991,9 @@ public class GameContext
         sSpecialSave_ = sName;
     }
 
-    ///
-    /// WindowListener
-    ///
+    //
+    // WindowListener
+    //
 
     /**
      * Class to handle window closing events plus state changes issues

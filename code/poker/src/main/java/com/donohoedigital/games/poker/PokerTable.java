@@ -144,29 +144,28 @@ public class PokerTable implements ObjectID
     
     public static String getStringForState(int nTableState)
     {
-        switch (nTableState)
-        {
-            case STATE_NONE: return "none";
-            case STATE_PENDING: return "pending";
-            case STATE_DEAL_FOR_BUTTON: return "button";
-            case STATE_BEGIN: return "begin";
-            case STATE_BEGIN_WAIT: return "begin-wait";
-            case STATE_CLEAN: return "clean";
-            case STATE_CHECK_END_HAND: return "check-end-hand";
-            case STATE_NEW_LEVEL_CHECK: return "new-level-check";
-            case STATE_COLOR_UP: return "color-up";
-            case STATE_START_HAND: return "start";
-            case STATE_BETTING: return "betting";
-            case STATE_COMMUNITY: return "community";
-            case STATE_SHOWDOWN: return "showdown";
-            case STATE_DONE: return "done";   
-            case STATE_GAME_OVER: return "game-over";
-            case STATE_PENDING_LOAD: return "pending-load";
-            case STATE_ON_HOLD: return "on-hold";
-            case STATE_BREAK: return "break";
-            case STATE_PRE_SHOWDOWN: return "pre-showdown";
-            default: return "unknown - " + nTableState;
-        }
+        return switch (nTableState) {
+            case STATE_NONE -> "none";
+            case STATE_PENDING -> "pending";
+            case STATE_DEAL_FOR_BUTTON -> "button";
+            case STATE_BEGIN -> "begin";
+            case STATE_BEGIN_WAIT -> "begin-wait";
+            case STATE_CLEAN -> "clean";
+            case STATE_CHECK_END_HAND -> "check-end-hand";
+            case STATE_NEW_LEVEL_CHECK -> "new-level-check";
+            case STATE_COLOR_UP -> "color-up";
+            case STATE_START_HAND -> "start";
+            case STATE_BETTING -> "betting";
+            case STATE_COMMUNITY -> "community";
+            case STATE_SHOWDOWN -> "showdown";
+            case STATE_DONE -> "done";
+            case STATE_GAME_OVER -> "game-over";
+            case STATE_PENDING_LOAD -> "pending-load";
+            case STATE_ON_HOLD -> "on-hold";
+            case STATE_BREAK -> "break";
+            case STATE_PRE_SHOWDOWN -> "pre-showdown";
+            default -> "unknown - " + nTableState;
+        };
     }
     
     // transient (no need to save)
@@ -346,7 +345,7 @@ public class PokerTable implements ObjectID
     {
         if (players_[nSeat] != null)
         {
-            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, toString() + " already has a player in seat " + nSeat +
+            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, this + " already has a player in seat " + nSeat +
                                         ": " + players_[nSeat] + ", cannot seat: " + p, null);
         }
 
@@ -389,11 +388,11 @@ public class PokerTable implements ObjectID
     {
         if (getNumOpenSeats() == 0)
         {
-            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, toString() + " has no open seat for player " + p, null);
+            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, this + " has no open seat for player " + p, null);
         }
         if (isRemoved())
         {
-            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, toString() + " is removed but trying to add player " + p, null);
+            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, this + " is removed but trying to add player " + p, null);
         }
 
         // a little slower, but let's try this random thing
@@ -443,7 +442,7 @@ public class PokerTable implements ObjectID
      * Counted by RankUtils, the same way PokerGame.getRank() counts it, scoped to
      * one table - so a player's table rank and tournament rank can never disagree
      * about ties or about which chip count they compare.
-     *
+     * <p>
      * Returns 0 when the player is not seated here.  Unlike the tournament-wide
      * version that is not an error: this is read for whichever player is moused
      * over, who may be seated anywhere - or, once they are out, nowhere.
@@ -541,7 +540,7 @@ public class PokerTable implements ObjectID
     }
 
     /**
-     * Get the seat at this table which cooresponds to the display seat, adjusting
+     * Get the seat at this table which corresponds to the display seat, adjusting
      * for offset (does the opposite of getDisplaySeat)
      */
     public int getTableSeat(int nDisplaySeat)
@@ -566,7 +565,7 @@ public class PokerTable implements ObjectID
     {
         if (players_[nSeat] == null)
         {
-            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, toString() + " has no player in seat " + nSeat, null);
+            throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, this + " has no player in seat " + nSeat, null);
         }
 
         PokerPlayer p = players_[nSeat];
@@ -663,7 +662,7 @@ public class PokerTable implements ObjectID
     }
     
     /**
-     * get currrent state table is in
+     * get current state table is in
      */
     public int getTableState()
     {
@@ -679,7 +678,7 @@ public class PokerTable implements ObjectID
     }
 
     /**
-     * Set table state.  Synchronized so we can coordiate with
+     * Set table state.  Synchronized so we can coordinate with
      * tournament director.
      */
     public synchronized void setTableState(int n)
@@ -689,7 +688,7 @@ public class PokerTable implements ObjectID
         if (nOld != nTableState_)
         {
             // order is important here.  Fire event before updating previous state
-            // such that receipients event can see the "previous previous" state
+            // such that recipients event can see the "previous previous" state
             // by calling getPreviousTableState, the "previous" event from nOld
             // in the event and the new event from the table/or event.
             firePokerTableEvent(new PokerTableEvent(PokerTableEvent.TYPE_STATE_CHANGED, this,
@@ -713,14 +712,6 @@ public class PokerTable implements ObjectID
     }
 
     /**
-     * get timestamp of last state change
-     */
-    public long getLastStateChangeTime()
-    {
-        return nLastStateChange_;
-    }
-
-    /**
      * add millis to last state change timestamp and
      * player think banks - used when TD is paused.
      */
@@ -730,7 +721,7 @@ public class PokerTable implements ObjectID
 
         // BUG 467 - account for think bank too
         PokerPlayer p;
-        long nLast = 0;
+        long nLast;
         for (int i = 0; i < PokerConstants.SEATS; i ++)
         {
             p = getPlayer(i);
@@ -864,11 +855,11 @@ public class PokerTable implements ObjectID
      */
     public void addWait(PokerPlayer p)
     {
-        if (p.isDisconnected()) logger.warn("Disconnected player added to waiting list: " + p.getName());
+        if (p.isDisconnected()) logger.warn("Disconnected player added to waiting list: {}", p.getName());
         if (waitList_.contains(p))
         {
             //noinspection ThrowableInstanceNeverThrown
-            logger.warn("Attempting to add player already on wait list: " + p + " from: "+ Utils.formatExceptionText(new Throwable()));
+            logger.warn("Attempting to add player already on wait list: {} from: {}", p, Utils.formatExceptionText(new Throwable()));
             return;
         }
         waitList_.add(p);
@@ -947,7 +938,7 @@ public class PokerTable implements ObjectID
     }
 
     /**
-     * get time rejoing state changed
+     * get time rejoin state changed
      */
     public long getLastRejoinStateChangeTime()
     {
@@ -1015,7 +1006,7 @@ public class PokerTable implements ObjectID
                 }
             }
         }
-        ApplicationError.assertTrue(false, "Failed to randomly assign button", null);
+        throw new ApplicationError("Failed to randomly assign button");
     }
     
     /**
@@ -1277,7 +1268,7 @@ public class PokerTable implements ObjectID
         if (players.isEmpty()) return;
 
         // sort
-        Collections.sort(players, SORTCHIPRACE);
+        players.sort(SORTCHIPRACE);
 
         // allocate chips
         boolean bWon;
@@ -1301,7 +1292,7 @@ public class PokerTable implements ObjectID
             {
                 bWon = true;
             }
-            // finally if there are odd odd chips left, the next
+            // finally if there are odd chips left, the next
             // player gets a chip if they have >= 50% of the chips 
             // needed to combine to next chip (only the next player
             // gets this chance)
@@ -1468,7 +1459,7 @@ public class PokerTable implements ObjectID
             // use getGameAI to avoid extra logic in getPokerAI()
             if (p != null && p.getGameAI() != null)
             {
-                if (DebugConfig.isTestingOn()) logger.debug("Clearing left-over ai on " + p.getName());
+                if (DebugConfig.isTestingOn()) logger.debug("Clearing left-over ai on {}", p.getName());
                 p.setPokerAI(null);
             }
         }
@@ -1565,7 +1556,7 @@ public class PokerTable implements ObjectID
                 int nNewChips = nChips_ + nAdd;
                 p.setChipCount(nNewChips);
                 getGame().addExtraChips(nAdd);
-                logger.info(p.getName() + " chip count fixed by adding " + nAdd + " for total of $"+nNewChips);
+                logger.info("{} chip count fixed by adding {} for total of ${}", p.getName(), nAdd, nNewChips);
             }
         }
     }
@@ -1586,7 +1577,7 @@ public class PokerTable implements ObjectID
      * deliberately not PokerPlayer.getChipCountAtStart() - that snapshot is not taken
      * until the deal, which is too late for anything reacting to TYPE_NEW_HAND.
      * See BUG 420 for the original use of this test, in isRebuyAllowed() below.
-     *
+     * <p>
      * Not synchronized on purpose - this is read from the swing thread while the
      * tournament director holds this table's monitor.
      */
@@ -1618,7 +1609,6 @@ public class PokerTable implements ObjectID
     
     /**
      * Is addon allowed at current level?
-     * @param player
      */
     public boolean isAddonAllowed(PokerPlayer player)
     {
@@ -1860,25 +1850,10 @@ public class PokerTable implements ObjectID
         }
         return sb.toString();
     }
-    
-    /**
-     * another to string
-     */
-    public String toStringSummary()
-    {
-         StringBuilder sb = new StringBuilder();
-        sb.append(getName());
-        sb.append("; B[");
-        sb.append(nButton_);
-        sb.append("]; ");
-        sb.append(getNumOccupiedSeats());
-        sb.append(" players");
-        return sb.toString();
-    }
-    
-    ////
-    //// PokerTableListener
-    ////
+
+    //
+    // PokerTableListener
+    //
     private final List<ListenerInfo> listeners_ = new ArrayList<>();
     
     /**
@@ -1980,8 +1955,7 @@ public class PokerTable implements ObjectID
         @Override
         public boolean equals(Object o)
         {
-            if (!(o instanceof ListenerInfo)) return false;
-            ListenerInfo info = (ListenerInfo) o;
+            if (!(o instanceof ListenerInfo info)) return false;
             return info.listener == listener;
         }
 
@@ -1992,14 +1966,14 @@ public class PokerTable implements ObjectID
         }
     }
     
-    ////
-    //// Save/Load
-    ////
+    //
+    // Save/Load
+    //
     
     /**
      * Return this player encoded as a game state entry
      */
-    public GameStateEntry addGameStateEntry(GameState state)
+    public void addGameStateEntry(GameState state)
     {
         PokerSaveDetails pdetails = (PokerSaveDetails) state.getSaveDetails().getCustomInfo();
         
@@ -2040,8 +2014,6 @@ public class PokerTable implements ObjectID
         addPlayerList(state, entry, addonList_);
         addPlayerList(state, entry, rebuyList_);
         addPlayerList(state, entry, observers_);
-
-        return entry;
     }
     
     /**
