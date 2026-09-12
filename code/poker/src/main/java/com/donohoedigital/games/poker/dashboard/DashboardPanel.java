@@ -34,8 +34,6 @@ package com.donohoedigital.games.poker.dashboard;
 
 import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import com.zookitec.layout.*;
 
 import javax.swing.BorderFactory;
@@ -55,11 +53,8 @@ import java.awt.Dimension;
  */
 public class DashboardPanel extends DDPanel
 {
-    static Logger logger = LogManager.getLogger(DashboardPanel.class);
-
     private final DashboardManager mgr_;
     private final DDPanel dashitems_;
-    private final DDScrollPane sp_;
 
     public DashboardPanel(DashboardManager mgr)
     {
@@ -89,11 +84,11 @@ public class DashboardPanel extends DDPanel
         dashitems_ = new DDPanel();
 
         dashitems_.setLayout(new ExplicitLayout());
-        sp_ = new DDScrollPane(dashitems_, "ChatInGame", null,
-                                           JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                                           JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        sp_.setOpaque(false);
-        base.add(sp_, BorderLayout.CENTER);
+        DDScrollPane sp = new DDScrollPane(dashitems_, "ChatInGame", null,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        sp.setOpaque(false);
+        base.add(sp, BorderLayout.CENTER);
 
         // sync layout with DashboardManager
         sync();
@@ -152,16 +147,6 @@ public class DashboardPanel extends DDPanel
                                              bH,
                                              0.0, 0.0, true, true);
 
-/*
-                ec = new ExplicitConstraints(body,
-                                             bodyX, ComponentEF.bottom(header),
-                                             MathEF.max(
-                                             width.subtract(bodyX),
-                                             ComponentEF.preferredWidth(body)),
-                                             ComponentEF.preferredHeight(body),
-
-                                             0.0, 0.0, true, true);
-                                             */
                 dashitems_.add(body, ec);
 
                 previous = body;
@@ -185,12 +170,12 @@ public class DashboardPanel extends DDPanel
 
         GlassButton edit = new GlassButton("editdash", "Glass");
         edit.setPreferredSize(new Dimension(40,21));
-        // use explicit contraint since centering is slightly off
+        // use explicit constraint since centering is slightly off
         dashBG.add(edit, new ExplicitConstraints(
                              edit,
                              ContainerEF.right(dashBG).subtract(ComponentEF.preferredWidth(edit)),
                              ContainerEF.top(dashBG).add(5)));
-        edit.addActionListener(e -> {
+        edit.addActionListener(_ -> {
             TypedHashMap params = new TypedHashMap();
             params.setObject(DashboardEditorDialog.PARAM_DASHMGR, mgr_);
             mgr_.getGame().getGameContext().processPhaseNow("DashboardEditorDialog", params);
@@ -204,16 +189,16 @@ public class DashboardPanel extends DDPanel
     /**
      * Called by DashboardItem when user requested it be removed from dashboard
      */
-    void itemRemoveRequested(DashboardItem item)
+    void itemRemoveRequested(DashboardItem ignored)
     {
         sync();
-        mgr_.stateChanged();;
+        mgr_.stateChanged();
     }
 
     /**
      * Called by dashboard item when user closed an item
      */
-    void itemOpenClose(DashboardItem item)
+    void itemOpenClose(DashboardItem ignored)
     {
         // notify manager
         mgr_.stateChanged();
