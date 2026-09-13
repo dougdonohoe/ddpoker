@@ -425,7 +425,7 @@ public class GameContext
      */
     private Phase _processPhase(String sPhaseName, TypedHashMap params, boolean bHistory)
     {
-        if ((engine_.isActivationNeeded()) && TODOphase_ != null)
+        if (engine_.isActivationNeeded() && TODOphase_ != null)
         {
             logger.warn("Skipping {} because TODO phase is not null: {}", sPhaseName, TODOphase_);
             return null;

@@ -1127,7 +1127,7 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Should player be asked to showing losing hands?
+     * Should player be asked to show losing hands?
      */
     public boolean isAskShowLosing()
     {
@@ -1147,7 +1147,7 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Should player be asked to showing winning hands (when uncontested)?
+     * Should player be asked to show winning hands (when uncontested)?
      */
     public boolean isAskShowWinning()
     {
@@ -1390,7 +1390,7 @@ public class PokerPlayer extends GamePlayer
         }
 
         // safety check:
-        // if nothing to call and we haven't bet yet, make this a bet instead
+        // if nothing to call, and we haven't bet yet, make this a bet instead
         if (nCall == 0 && hhand.getBet(this) == 0)
         {
             bet(nAmount, sDebug);
@@ -1616,11 +1616,11 @@ public class PokerPlayer extends GamePlayer
         if (isSmallBlind()) return "S";
         if (isBigBlind()) return "B";
 
-        throw new ApplicationError(nPosition_ + " numplayers: " + nNumPlayers);
+        throw new ApplicationError("Bad position: " + nPosition_ + " numplayers: " + nNumPlayers);
     }
 
     /**
-     * get early,middle,late,etc - pre-flop use only
+     * get early,middle,late,etc. - pre-flop use only
      */
     public int getPositionCategory()
     {

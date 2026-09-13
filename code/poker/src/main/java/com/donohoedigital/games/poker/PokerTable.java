@@ -53,7 +53,6 @@ import com.donohoedigital.games.config.GameState;
 import com.donohoedigital.games.config.GameStateEntry;
 import com.donohoedigital.games.config.SaveDetails;
 import com.donohoedigital.games.engine.DiceRoller;
-import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.games.poker.event.PokerTableListener;
 import com.donohoedigital.games.poker.online.TournamentDirector;
@@ -1015,8 +1014,7 @@ public class PokerTable implements ObjectID
     private void setButtonHighCard()
     {
         // get deck
-        long seed = 0;
-        Deck deck = new Deck(true, seed);
+        Deck deck = new Deck(true, 0);
         
         // init
         PokerPlayer player;
@@ -1208,8 +1206,7 @@ public class PokerTable implements ObjectID
             Hand hand;
             Card card;
 
-            long seed = 0;
-            Deck deck = new Deck(true, seed);
+            Deck deck = new Deck(true, 0);
 
             // assign each player a card for each odd chip
             for (int i = 0; i < PokerConstants.SEATS; i++)

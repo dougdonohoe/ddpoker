@@ -131,9 +131,10 @@ public abstract class ShowPokerTable extends ChainPhase implements
         // its instance of common widgets like time, blinds labels
         subclassInit(engine, gamephase);
 
-        /////
-        ///// Game init (need to repaint all to ensure everything is displayed)
-        /////
+        //
+        // Game init (need to repaint all to ensure everything is displayed)
+        //
+
         updateName();
         board_.repaintAll();
 
@@ -383,7 +384,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
         buttonOptions_ = new PokerImageButton(this, getGameButton("options"));
         buttonHelp_ = new PokerImageButton(this, getGameButton("help"));
 
-        // button layout - in north west corner of right panel
+        // button layout - in north-west corner of right panel
         DDPanel buttonpanel = new DDPanel();
         if (bHorizontal)
         {
@@ -417,7 +418,6 @@ public abstract class ShowPokerTable extends ChainPhase implements
      */
     protected void subclassInit(GameEngine engine, GamePhase gamephase)
     {
-        return;
     }
 
     /**
@@ -489,7 +489,6 @@ public abstract class ShowPokerTable extends ChainPhase implements
             setVerticalAlignment(nVAlign);
             ScaleConstraints sc = new ScaleConstraints(x, y, scale, getFont());
             board_.add(this, sc);
-            //setBorder(GuiUtils.REDBORDER); // TESTING
         }
     }
 
@@ -590,9 +589,9 @@ public abstract class ShowPokerTable extends ChainPhase implements
         InternalDialog.setModalBlockerListener(null);
     }
 
-    ///
-    /// AWTListener/Focus methods for mouse scrolling
-    ///
+    //
+    // AWTListener/Focus methods for mouse scrolling
+    //
 
     /**
      * Invoked when an event is dispatched in the AWT.
@@ -600,10 +599,8 @@ public abstract class ShowPokerTable extends ChainPhase implements
     public void eventDispatched(AWTEvent event)
     {
         // fast action keys
-        if (event instanceof KeyEvent)
+        if (event instanceof KeyEvent k)
         {
-            KeyEvent k = (KeyEvent) event;
-
             // ignore keys when modal
             if (nModal_ > 0)
             {
@@ -640,7 +637,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
                 lastkey_ = key;
             }
 
-            handleKeyPressed((KeyEvent) event);
+            handleKeyPressed(k);
         }
     }
 
@@ -669,12 +666,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
         }
 
         // ignore if source is a text component other than spinner
-        if (k.getSource() instanceof javax.swing.text.JTextComponent)
-        {
-            return true;
-        }
-
-        return false;
+        return k.getSource() instanceof javax.swing.text.JTextComponent;
     }
 
     /**
@@ -685,15 +677,11 @@ public abstract class ShowPokerTable extends ChainPhase implements
     {
         int key = event.getKeyCode();
 
-        switch (key)
-        {
-            case KeyEvent.VK_I:
-                if (buttonInfo_ != null && buttonInfo_.isEnabled())
-                {
-                    buttonInfo_.doClick(10);
-                    return true;
-                }
-                break;
+        if (key == KeyEvent.VK_I) {
+            if (buttonInfo_ != null && buttonInfo_.isEnabled()) {
+                buttonInfo_.doClick(10);
+                return true;
+            }
         }
         return false;
     }
@@ -743,7 +731,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
         if (nSeat == -1) return 0;
 
         if (nSeat <= 0 || nSeat >= 9) return -(2.5 * tuDebug.lineHeight);
-        else if (nSeat <= 1 || nSeat >= 8) return -(4.0 * tuDebug.lineHeight);
+        else if (nSeat == 1 || nSeat == 8) return -(4.0 * tuDebug.lineHeight);
         else return tuName.totalHeight + tuDebug.lineHeight / 2 + 2;
     }
 
@@ -752,9 +740,9 @@ public abstract class ShowPokerTable extends ChainPhase implements
         return Color.orange;
     }
 
-    ////
-    //// Mouse listener
-    ////
+    //
+    // Mouse listener
+    //
 
     /**
      * EMPTY *
@@ -820,15 +808,11 @@ public abstract class ShowPokerTable extends ChainPhase implements
 
     /**
      * Passes clicks on buttons with action codes to Game object for broadcast to listeners.
-     *
-     * @param e
      */
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() instanceof DDButton)
+        if (e.getSource() instanceof DDButton button)
         {
-            DDButton button = (DDButton) e.getSource();
-
             int action = button.getActionID();
 
             if (action != 0)
@@ -839,9 +823,9 @@ public abstract class ShowPokerTable extends ChainPhase implements
     }
 
 
-    ////
-    //// PokerGameboardDelegate interface
-    ////
+    //
+    // PokerGameboardDelegate interface
+    //
 
     /**
      * Default doesn't do anything with request focus, let
@@ -863,8 +847,6 @@ public abstract class ShowPokerTable extends ChainPhase implements
     {
         if (resize_ != null)
         {
-            //resize_.paintImmediately(0,0,resize_.getWidth(),resize_.getHeight());
-            //resize_.paintComponent(g);
             g.getClipBounds(bounds_);
             Rectangle parent = SwingUtilities.convertRectangle(board_, bounds_, panelbase_);
             resize_.getBounds(resizeBounds_);
@@ -882,8 +864,6 @@ public abstract class ShowPokerTable extends ChainPhase implements
 
         if (camera_ != null)
         {
-            //resize_.paintImmediately(0,0,resize_.getWidth(),resize_.getHeight());
-            //resize_.paintComponent(g);
             g.getClipBounds(bounds_);
             Rectangle parent = SwingUtilities.convertRectangle(board_, bounds_, panelbase_);
             camera_.getBounds(resizeBounds_);

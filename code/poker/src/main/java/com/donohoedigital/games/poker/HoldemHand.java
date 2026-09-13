@@ -45,7 +45,6 @@ import com.donohoedigital.config.DebugConfig;
 import static com.donohoedigital.config.DebugConfig.TESTING;
 import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.DiceRoller;
-import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.ai.HandSelectionScheme;
 import com.donohoedigital.games.poker.ai.PocketWeights;
 import com.donohoedigital.games.poker.ai.V1Player;
@@ -184,7 +183,6 @@ public class HoldemHand implements DataMarshal
 
         long seed = NEXT_SEED();
         //logger.debug("SEED: "+ seed + " SEEDADJ: "+ SEEDADJ);
-        GameEngine engine = GameEngine.getGameEngine();
         deck_ = new Deck(true, seed);
         //deck_ = Deck.getDeckBUG280(); // BUG 280 debugging
         //deck_ = Deck.getDeckBUG284(); // BUG 284 debugging
