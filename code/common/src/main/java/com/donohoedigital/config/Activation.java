@@ -43,7 +43,6 @@ import com.donohoedigital.base.Base64;
 import com.donohoedigital.base.Utils;
 
 import java.security.MessageDigest;
-import java.util.regex.Pattern;
 
 /**
  * Key of form FFNN-NNNN-NNAA-AAAA
@@ -59,8 +58,6 @@ public class Activation
     public static final String REGKEY = "reg";
     public static final String OLDKEY = "old";
     public static final String BANKEY = "ban";
-    public static final String DEMOKEY = "demo";
-    public static final Pattern KEY_PATTERN = Pattern.compile("^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
     private static final String GUID_KEY_START = "KEY-";
     private static final int GUID_LENGTH = 36;
     private static final int RETAIL_KEY_LENGTH = 19;

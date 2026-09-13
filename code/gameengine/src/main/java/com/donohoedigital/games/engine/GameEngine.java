@@ -353,7 +353,7 @@ public abstract class GameEngine extends BaseApp
     {
         sKeyNode_ += "h";
         setActivationNeeded(false);
-        DDMessage.setDefaultRealKey(getDemoLicenseKey());
+        DDMessage.setDefaultRealKey(getHeadlessLicenseKey());
         DDMessage.setDefaultKey(getPublicUseKey());
     }
 
@@ -394,25 +394,7 @@ public abstract class GameEngine extends BaseApp
     protected abstract boolean isAutoGenLicenseKey();
 
     /**
-     * Demo license key - just DEMO + the GUID used when
-     * first run.  Stored in prefs for subsequent runs so
-     * key is same (for online games).
-     */
-    public String getDemoLicenseKey()
-    {
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        String sKey = node.get(Activation.DEMOKEY, null);
-        if (sKey == null)
-        {
-            sKey = "DEMO-" + getGUID();
-            node.put(Activation.DEMOKEY, sKey);
-        }
-        //logger.debug("Demo key is: "+ sKey);
-        return sKey;
-    }
-
-    /**
-     * Headless license key - just like DEMO, but unique each time run
+     * Headless license key - unique each time run
      */
     public String getHeadlessLicenseKey()
     {

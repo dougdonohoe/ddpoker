@@ -44,10 +44,6 @@
   <!-- PHASES  -->
   <!--         -->
 
-  <phase name="Order" class="com.donohoedigital.games.engine.Order" transient="true">
-    <param name="url" strvalue="http://www.ddpoker.com/order.html"/>
-  </phase>
-
   <phase name="Exit" class="com.donohoedigital.games.poker.ExitPoker" transient="true"/>
   <phase name="QuitGame" class="com.donohoedigital.games.poker.QuitPokerGame" transient="true"/>
   <phase name="QuitGameNoConfirm" class="com.donohoedigital.games.poker.QuitPokerGame" transient="true">
@@ -181,7 +177,6 @@
     <param name="calc.phase" strvalue="CalcTool"/>
     <param name="help.phase" strvalue="Help:mainmenu"/>
     <param name="register.phase" strvalue="UserRegistration"/>
-    <param name="order.phase" strvalue="Order"/>
     <param name="support.phase" strvalue="Support"/>
     <param name="exit.phase" strvalue="Exit"/>
   </phase>
