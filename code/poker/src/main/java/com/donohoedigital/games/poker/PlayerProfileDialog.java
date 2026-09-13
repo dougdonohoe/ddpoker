@@ -472,13 +472,6 @@ public class PlayerProfileDialog extends DialogPhase implements PropertyChangeLi
      */
     private void doRadio()
     {
-        if (isOnline() && engine_.isDemo())
-        {
-            EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo"));
-            noRadio_.setSelected(true);
-            return;
-        }
-
         if (noRadio_.isSelected())
         {
             removeEmail();

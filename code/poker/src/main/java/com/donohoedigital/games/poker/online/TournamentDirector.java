@@ -2254,12 +2254,12 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
             }
 
             // if player sitting out, fold
-            if (current.isSittingOut() || (bOnline_ && PokerUtils.isDemoOver(context_, current, true)))
+            if (current.isSittingOut())
             {
                 HandAction fold = new HandAction(current, table.getHoldemHand().getRound(), HandAction.ACTION_FOLD, 0, HandAction.FOLD_SITTING_OUT, "sittingout");
                 doHandAction(fold, false, false, false);
                 ret_.setTableState(nNext);
-                current.setSittingOut(true); // make sure it is set, for case of demo user being done
+                current.setSittingOut(true); // make sure it is set
                 table.setPause(SLEEP_MILLIS + 100);
             }
             // local player, either host or ai

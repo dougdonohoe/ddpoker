@@ -592,13 +592,6 @@ public class OnlineManager implements ChatManager
                                        sPlayerName.equals("Arcade GameOver") ||
                                        sPlayerName.equals("John14");
 
-            // if player is demo, check if profile allows demo players
-            if (omsg.isPlayerDemo() && !profile.isAllowDemo())
-            {
-                throw new OnlineError(getAppErrorReply(replyServer(omsg), omsg, PropertyConfig.getMessage("msg.nojoin.demo"),
-                                                       false));
-            }
-
             // check for banned player
             if ((banned_.containsPlayer(sPlayerName) || banned_.containsKey(omsg.getKey())) && !bAllowObsSpecial)
             {
@@ -688,7 +681,6 @@ public class OnlineManager implements ChatManager
 
                 // add new player.  ID is simply next integer (current player count)
                 player = new PokerPlayer(sKey, game_.getNextPlayerID(), sPlayerName, true);
-                player.setDemo(omsg.isPlayerDemo());
                 player.setOnlineActivated(omsg.isOnlineActivated());
                 game_.addPlayer(player);
 
@@ -716,7 +708,6 @@ public class OnlineManager implements ChatManager
 
                 player = new PokerPlayer(sKey, PokerConstants.START_OBSERVER_ID + game_.getNextObserverID(),
                                          sPlayerName, true);
-                player.setDemo(omsg.isPlayerDemo());
                 player.setOnlineActivated(omsg.isOnlineActivated());
                 game_.addObserver(player);
             }
@@ -1320,7 +1311,6 @@ public class OnlineManager implements ChatManager
         OnlineMessage msg = prepareMessage(OnlineMessage.CAT_JOIN);
         msg.setReconnect(bReconnect);
         msg.setPlayerName(local.getName());
-        msg.setPlayerDemo(local.isDemo());
         msg.setOnlineActivated(local.getProfile().isActivated());
         msg.setPlayerProfilePath(local.getProfilePath());
         msg.setObserve(bObserve);

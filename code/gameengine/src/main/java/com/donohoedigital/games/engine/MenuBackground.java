@@ -38,8 +38,6 @@
 
 package com.donohoedigital.games.engine;
 
-import com.donohoedigital.config.ImageConfig;
-import com.donohoedigital.config.ImageDef;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.config.StylesConfig;
 import com.donohoedigital.games.config.GamePhase;
@@ -58,8 +56,6 @@ import java.awt.Dimension;
  */
 public class MenuBackground extends DDScrollPane
 {
-    //static Logger logger = LogManager.getLogger(MenuBackground.class);
-
     public static final String PARAM_MENUBOX_HELP_NAME = "menubox-help-name";
 
     // members
@@ -108,23 +104,11 @@ public class MenuBackground extends DDScrollPane
         String sImageName = gamephase_.getString("menubox-background-image");
         if (sImageName != null && !"NONE".equalsIgnoreCase(sImageName))
         {
-            if (GameEngine.getGameEngine().isDemo())
-            {
-                // clear cache of old image since we won't be using it
-                // anymore
-                ImageDef id = ImageConfig.getImageDef(sImageName);
-                if (id != null)
-                {
-                    id.clearCache();
-                }
-
-                sImageName += "-demo";
-            }
-            ImageComponent ic = new ImageComponent(sImageName, 1.0);
+        ImageComponent ic = new ImageComponent(sImageName, 1.0);
             ic.setCentered(false);
 
             // background image
-            xy = new XYConstraints(0 - nBorderAdjust, 0 - nBorderAdjust, ic.getWidth(), ic.getHeight());
+            xy = new XYConstraints(-nBorderAdjust, -nBorderAdjust, ic.getWidth(), ic.getHeight());
             base.add(ic, xy);
         }
 
@@ -155,7 +139,7 @@ public class MenuBackground extends DDScrollPane
                     gamephase_.getString("menubox-title-prop", "menubox-title-prop"),
                     "This Space For Rent")); // no title found so leave funny title)
             Dimension pref2 = titlelabel.getPreferredSize();
-            pref2.width += 4; // on mac, doesn't layout right with some fonts
+            pref2.width += 4; // on Mac, doesn't lay out right with some fonts
             titlelabel.setPreferredSize(pref2);
             titlebase.add(titlelabel, BorderLayout.CENTER);
             menuboxbase.add(GuiUtils.CENTER(titlebase), BorderLayout.NORTH);
@@ -168,11 +152,6 @@ public class MenuBackground extends DDScrollPane
                 menubox_.setBorder(BorderFactory.createCompoundBorder(outside, inside));
             }
         }
-//        else
-//        {
-//            // testing
-//            menubox_.setBorder(GuiUtils.BLACKBORDER);
-//        }
 
         base.add(menuboxbase, xy, 0);
     }

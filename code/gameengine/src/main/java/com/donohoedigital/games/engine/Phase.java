@@ -64,6 +64,4 @@ public interface Phase {
     boolean processButton(GameButton button);
     
     Object getResult();
-
-    boolean isUsedInDemo();
 }

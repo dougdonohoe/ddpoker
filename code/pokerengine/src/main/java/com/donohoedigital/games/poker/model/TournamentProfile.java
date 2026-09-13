@@ -46,7 +46,6 @@ import com.donohoedigital.config.DataElement;
 import com.donohoedigital.config.DebugConfig;
 import com.donohoedigital.games.config.AbstractPlayerList;
 import com.donohoedigital.games.config.BaseProfile;
-import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.config.SaveFile;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.xml.SimpleXMLEncodable;
@@ -116,7 +115,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public static final String PARAM_MINUTES = "minutes";
     public static final String PARAM_BUYIN = "buyin";
     public static final String PARAM_BUYINCHIPS = "buyinchips";
-    public static final String PARAM_DEMO = "demo";
     public static final String PARAM_SMALL = "small";
     public static final String PARAM_BIG = "big";
     public static final String PARAM_ANTE = "ante";
@@ -149,7 +147,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public static final String PARAM_FILL_COMPUTER = "fillai";
     public static final String PARAM_ALLOW_DASH = "allowdash";
     public static final String PARAM_ALLOW_ADVISOR = "allowadvisor";
-    public static final String PARAM_ALLOW_DEMO = "allowdemo";
     public static final String PARAM_ONLINE_ACTIVATED_ONLY = "onlineactonly";
     public static final String PARAM_THINKBANK = "thinkbank";
     public static final String PARAM_MAX_OBSERVERS = "maxobservers";
@@ -271,22 +268,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public long getUpdateDate()
     {
         return map_.getLong(PARAM_UPDATE, getCreateDate());
-    }
-
-    /**
-     * Set demo
-     */
-    public void setDemo(boolean b)
-    {
-        map_.setBoolean(PARAM_DEMO, b ? Boolean.TRUE : Boolean.FALSE);
-    }
-
-    /**
-     * is demo?
-     */
-    boolean isDemo()
-    {
-        return map_.getBoolean(PARAM_DEMO, false);
     }
 
     /**
@@ -581,7 +562,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             nAmount = getDefaultMinutesPerLevel();
         }
         int nMax = MAX_MINUTES;
-        if (isDemo()) nMax = TESTING(EngineConstants.TESTING_DEMO) ? 1 : 5;
         if (nAmount > nMax) nAmount = nMax;
         return nAmount;
     }
@@ -1037,7 +1017,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
      */
     public void setAutoSpots()
     {
-        int nFinalSpots = 10; // top ten finishers use fibbo math
+        int nFinalSpots = 10; // top ten finishers use Fibonacci math
 
         int nPool = getPrizePool();
         int nNumSpots = getNumSpots();
@@ -1072,7 +1052,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
             // estimate total pool - if non-final payouts are too
             // high, lower increment paid until total is in desired
             // range
-            int nMinBottom = (int) (nFinalSpots / MAX_SPOTS_PERCENT); // based on max percentange
+            int nMinBottom = (int) (nFinalSpots / MAX_SPOTS_PERCENT); // based on max percentage
             // we won't be in here unless at 30+ players
             double dLow = .01d;
             double dHigh = .33d;
@@ -1141,7 +1121,7 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         int sum;
         int[] fibo = new int[Math.max(2, nNumSpots)];
 
-        // STEP 1: do fibonnaci sequence
+        // STEP 1: do Fibonacci sequence
         fibo[0] = 2;
         fibo[1] = 3;
         sum = fibo[0] + fibo[1];
@@ -1327,14 +1307,6 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
     public boolean isFillComputer()
     {
         return map_.getBoolean(PARAM_FILL_COMPUTER, true);
-    }
-
-    /**
-     * Get whether an online game allows demo players
-     */
-    public boolean isAllowDemo()
-    {
-        return map_.getBoolean(PARAM_ALLOW_DEMO, true);
     }
 
     /**

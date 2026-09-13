@@ -196,14 +196,4 @@ public abstract class BasePhase implements Phase
     {
         return gamephase_.getName() + ": " + this.getClass().getName();
     }
-    
-    /**
-     * By default, all phases are used in demo.  If a phase returns
-     * false and the game is in demo mode, the phase is not processed.
-     */
-    public boolean isUsedInDemo() 
-    {
-        return true;
-    }
-    
 }

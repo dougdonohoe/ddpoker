@@ -45,22 +45,24 @@ import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.DDMessage;
 import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.*;
-import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
-import com.donohoedigital.games.config.*;
+import com.donohoedigital.games.config.EngineConstants;
+import com.donohoedigital.games.config.GameConfigUtils;
+import com.donohoedigital.games.config.GameboardConfig;
+import com.donohoedigital.games.config.GamedefConfig;
 import com.donohoedigital.gui.*;
 import com.donohoedigital.udp.UDPServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.JDesktopPane;
-import java.awt.Dimension;
-import java.awt.DisplayMode;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 import java.util.prefs.Preferences;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * @author Doug Donohoe
@@ -68,10 +70,6 @@ import java.util.prefs.Preferences;
 public abstract class GameEngine extends BaseApp
 {
     private final Logger logger = LogManager.getLogger(GameEngine.class);
-
-    // debugging settings
-    private static final boolean TESTING_SKIP_SPLASH = false;
-    private final boolean bExitEarlyTest = false;
 
     // private stuff - does not change once created
     private static GameEngine engine_ = null;
@@ -87,7 +85,6 @@ public abstract class GameEngine extends BaseApp
     boolean bExpired_ = false;
     boolean activationNeeded = false;
     private boolean activationVoided = false;
-    private boolean bDemo_ = false;
 
     // other private stuff
     private String sOverrideKey_ = null;
@@ -97,7 +94,6 @@ public abstract class GameEngine extends BaseApp
     private EnginePrefs prefNode_;
     private final String sPrefNode_;
     private String sKeyNode_;
-    private boolean bSkipSplashChoice_ = false;
     private String guid_;
     private boolean bReady_ = false;
     private boolean bFull_ = false;
@@ -147,14 +143,6 @@ public abstract class GameEngine extends BaseApp
         Version v = getVersion();
         DDMessage.setDefaultVersion(v);
 
-        // before DD Poker 2.0, demo was separate installer,
-        // where compiled version was set to demo.  This is
-        // no longer used with the integrated full/demo
-        // version.  Thus isDemo() should never be true at
-        // this point, but we'll leave the logic in here in
-        // case we want to build a demo-only installer again.
-        bDemo_ = v.isDemo();
-
         // set locale in version
         v.setLocale(getLocale());
 
@@ -175,8 +163,7 @@ public abstract class GameEngine extends BaseApp
         }
 
         // get activation key
-        String sKey = null;
-        if (!bDemo_) sKey = getRealLicenseKey();
+        String sKey = getRealLicenseKey();
 
         // validate key
         boolean bAlphaBeta = v.isBeta() || v.isAlpha();
@@ -184,7 +171,7 @@ public abstract class GameEngine extends BaseApp
         {
             setHeadless();
         }
-        else if (!bDemo_)
+        else
         {
             if (sKey == null ||
                 !Activation.validate(getKeyStart(), sKey, getLocale()) ||
@@ -206,10 +193,10 @@ public abstract class GameEngine extends BaseApp
         // expired?
         if (bAlphaBeta)
         {
-            int YEAR = 2010;
-            int MONTH = 1;
+            int YEAR = 2100;
+            int MONTH = Calendar.JANUARY;
             int DAY = 1; // January 1, 2010
-            long expire = new GregorianCalendar(YEAR, MONTH - 1, DAY).getTime().getTime();
+            long expire = new GregorianCalendar(YEAR, MONTH, DAY).getTime().getTime();
             long now = System.currentTimeMillis();
             if (now > expire)
             {
@@ -235,64 +222,17 @@ public abstract class GameEngine extends BaseApp
         // seems slow desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
         frame_.setLayeredPane(desktop);
 
-        // set prefs for music - unweildly, but who cares right now?
+        // set prefs for music - unwieldy, but who cares right now?
         setAudioPrefs();
 
         // As of DD Poker 3, disable screen mode stuff
         bFull_ = false;
-        bSkipSplashChoice_ = true;
-
-//        // get prefs node
-//        Preferences prefs = getPrefsNode();
-//        // get preference for splash
-//        int nScreenMode = prefs.getInt(EngineConstants.PREF_WINDOW_MODE, EngineConstants.MODE_ASK);
-//
-//
-//        switch (nScreenMode)
-//        {
-//            case EngineConstants.MODE_WINDOW:
-//                bFull_ = false;
-//                bSkipSplashChoice_ = true;
-//                break;
-//
-//            case EngineConstants.MODE_FULL:
-//                bFull_ = true;
-//                bSkipSplashChoice_ = true;
-//                break;
-//
-//            case EngineConstants.MODE_ASK:
-//                // Java doesn't work in full screen mode in all cases
-//                if (true || Utils.ISLINUX || Utils.ISMAC) // no full screen
-//                {
-//                    bFull_ = false;
-//                    bSkipSplashChoice_ = true;
-//                }
-//                else
-//                {
-//                    // bFull_ set from splash
-//                    bSkipSplashChoice_ = false;
-//                }
-//            default:
-//        }
 
         // change splash screen UI to show details available after config files loaded
         if (splashscreen_ != null)
         {
-            splashscreen_.changeUI(this, bSkipSplashChoice_, null);
+            splashscreen_.changeUI(this, true, null);
         }
-
-        ///
-        //// TESTING
-
-        if (bExitEarlyTest)
-        {
-            AudioConfig.playMusic("explore");
-            Utils.sleepSeconds(140);
-            exit(0);
-        }
-
-        //// TESTING END
-        ///
     }
 
     /**
@@ -325,7 +265,7 @@ public abstract class GameEngine extends BaseApp
     @Override
     protected void preConfigManagerInit()
     {
-        if (!TESTING_SKIP_SPLASH && !bHeadless_)
+        if (!bHeadless_)
         {
             URL file = new MatchingResources("classpath*:config/" + sAppName + "/images/" + getSplashBackgroundFile()).getSingleRequiredResourceURL();
             URL icon = new MatchingResources("classpath*:config/" + sAppName + "/images/" + getSplashIconFile()).getSingleRequiredResourceURL();
@@ -380,7 +320,7 @@ public abstract class GameEngine extends BaseApp
     /**
      * UI for handling keyboard actions
      */
-    private class MyDesktopUI extends javax.swing.plaf.basic.BasicDesktopPaneUI
+    private static class MyDesktopUI extends javax.swing.plaf.basic.BasicDesktopPaneUI
     {
         @Override
         public void uninstallKeyboardActions()
@@ -407,22 +347,6 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
-     * start demo mode - cannot be un-done
-     */
-    public void setDemoMode()
-    {
-        sKeyNode_ += "d";
-        getVersion().setDemo(true);
-        setActivationNeeded(false);
-        DDMessage.setDefaultRealKey(getDemoLicenseKey());
-        DDMessage.setDefaultKey(getPublicUseKey());
-        GamePlayer.setDemo();
-        setTitle();
-        defaultContext_.processPhaseNow("Demo", null);
-        bDemo_ = true;
-    }
-
-    /**
      * start headless mode - cannot be un-done
      */
     private void setHeadless()
@@ -433,38 +357,9 @@ public abstract class GameEngine extends BaseApp
         DDMessage.setDefaultKey(getPublicUseKey());
     }
 
-    /**
-     * for DEMO versions
-     */
-    public boolean isDemo()
-    {
-        // NOTE: not using bDemo_ flag - that is for
-        // controlling when phases can move on
-        return getVersion().isDemo();
-    }
-
-    /**
-     * demo message has been displayed
-     */
-    public void setDemoMsgDisplayed()
-    {
-        bDemo_ = false;
-    }
-
-
     public boolean isActivationVoided()
     {
         return activationVoided;
-    }
-
-    public boolean isBDemo()
-    {
-        return bDemo_;
-    }
-
-    public void setBDemo(boolean bDemo)
-    {
-        this.bDemo_ = bDemo;
     }
 
     /**
@@ -536,11 +431,7 @@ public abstract class GameEngine extends BaseApp
         String sReal;
 
         // get key upon which public key is based
-        if (isDemo())
-        {
-            sReal = getDemoLicenseKey();
-        }
-        else if (isHeadless())
+        if (isHeadless())
         {
             sReal = getHeadlessLicenseKey();
         }
@@ -550,16 +441,12 @@ public abstract class GameEngine extends BaseApp
         }
 
         // generate public key if needed
-        if (sLastGen_ == null || sLastReal_ == null || sReal == null || !sLastReal_.equals(sReal))
+        if (sLastGen_ == null || sLastReal_ == null || !sLastReal_.equals(sReal))
         {
-            if (sReal != null && sReal.length() > 0)
+            if (sReal != null && !sReal.isEmpty())
             {
                 sLastReal_ = sReal;
-                if (isDemo())
-                {
-                    sLastGen_ = "D-" + Activation.getPublicKey("demo", sLastReal_);
-                }
-                else if (isHeadless())
+                if (isHeadless())
                 {
                     sLastGen_ = "H-" + Activation.getPublicKey("headless", sLastReal_);
                 }
@@ -653,12 +540,7 @@ public abstract class GameEngine extends BaseApp
      */
     public boolean isBannedLicenseKey(String sKey)
     {
-        if (sKey == null || sKey.length() == 0) return false;
-
-        // permanent ban - hackers
-        if (sKey.equals("1101-8603-2629-7418")) return true; // war 1.0
-        if (sKey.equals("2102-7935-2928-3201")) return true; // poker 1.0
-        if (sKey.equals("2202-3006-0455-2248")) return true; // poker 2.0
+        if (sKey == null || sKey.isEmpty()) return false;
 
         // get banned key list from prefs (previous attempts)
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
@@ -681,7 +563,7 @@ public abstract class GameEngine extends BaseApp
      */
     public void addBannedLicenseKey(String sKey)
     {
-        if (sKey == null || sKey.length() == 0) return;
+        if (sKey == null || sKey.isEmpty()) return;
         if (isBannedLicenseKey(sKey)) return;
 
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
@@ -713,17 +595,6 @@ public abstract class GameEngine extends BaseApp
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
         node.put(Activation.BANKEY, sKey);
     }
-
-    /**
-     * Stores last valid key entered (used for patch re-activation)
-     */
-    public void setLastLicenseKey(String sKey)
-    {
-        if (sKey == null) return;
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        node.put(Activation.OLDKEY, sKey);
-    }
-
     /**
      * Return last valid key entered (used for patch re-activation)
      */
@@ -868,10 +739,7 @@ public abstract class GameEngine extends BaseApp
         bReady_ = true;
 
         // show main window now if now waiting for splash screen (or skipping splash screen)
-        if (bSkipSplashChoice_ || TESTING_SKIP_SPLASH)
-        {
-            showMainWindow();
-        }
+        showMainWindow();
     }
 
     /**
@@ -879,19 +747,6 @@ public abstract class GameEngine extends BaseApp
      */
     protected void processingTODO(GameContext context)
     {
-    }
-
-    /**
-     * set title
-     */
-    private void setTitle()
-    {
-        frame_.setTitle(PropertyConfig.getRequiredStringProperty(isDemo() ? "msg.application.name.demo" : "msg.application.name"));
-        if (DebugConfig.isTestingOn())
-        {
-            String sTitle = frame_.getTitle() + " - Java " + System.getProperties().get("java.runtime.version");
-            frame_.setTitle(sTitle);
-        }
     }
 
     /**
@@ -1057,7 +912,7 @@ public abstract class GameEngine extends BaseApp
     /**
      * class to track all instances of a window
      */
-    private class ContextTracker
+    private static class ContextTracker
     {
         int nNum;
         String sName;
@@ -1092,7 +947,7 @@ public abstract class GameEngine extends BaseApp
         // GameContext 1st window
         GameContext get()
         {
-            return contexts.get(0);
+            return contexts.getFirst();
         }
     }
 }

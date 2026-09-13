@@ -325,9 +325,6 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             OptionMenu.add(new OptionBoolean(null, TournamentProfile.PARAM_ALLOW_DASH, STYLE, dummy_, true), players);
             OptionMenu.add(new OptionBoolean(null, TournamentProfile.PARAM_ALLOW_ADVISOR, STYLE, dummy_, true), players);
             OptionMenu.add(new OptionBoolean(null, TournamentProfile.PARAM_FILL_COMPUTER, STYLE, dummy_, true), players);
-            OptionBoolean ob = OptionMenu.add(new OptionBoolean(null, TournamentProfile.PARAM_ALLOW_DEMO, STYLE, dummy_, true), players);
-            // if running demo, don't let them shut out other demo users
-            if (engine_.isDemo()) ob.setEnabled(false);
             OptionMenu.add(new OptionBoolean(null, TournamentProfile.PARAM_ONLINE_ACTIVATED_ONLY, STYLE, dummy_, true), players);
 
             DDLabelBorder observers = new DDLabelBorder("observers", STYLE);
@@ -449,7 +446,6 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
                                               quantity, BorderLayout.WEST);
             oi.getSpinner().setUseBigStep(true);
             numPlayers_ = oi.getSpinner();
-            if (engine_.isDemo() && !TESTING(EngineConstants.TESTING_DEMO)) numPlayers_.setEnabled(false);
 
             // max at table
             oi = OptionMenu.add(new OptionInteger(null,

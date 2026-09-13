@@ -57,15 +57,6 @@ public class GamePlayer implements ObjectID
     
     /** by convention, host is 1st player added (id 0) */
     public static final int HOST_ID = 0;
-    private  static boolean DEMO = false;
-
-    /**
-     * Set in demo mode
-     */
-    public static void setDemo()
-    {
-        DEMO = true;
-    }
 
     // members
     protected int id_;
@@ -75,16 +66,11 @@ public class GamePlayer implements ObjectID
     private GameAI ai_;
     private boolean bCurrent_ = false; // used to indicate whether player is currently active
     boolean bObserver_;
-    boolean bDemo_;
-
-    // transient - not saved
-    private long lastOnline_ = 0; // used to indicate last time player polled server in online game
 
     /**
      * Empty constructor needed for demarshalling
      */
     public GamePlayer() {
-        bDemo_ = DEMO;
     }
     
     /** 
@@ -113,23 +99,7 @@ public class GamePlayer implements ObjectID
     {
         return (id_ == HOST_ID);
     }
-    
-    /**
-     * set last poll time
-     */
-    public void setLastPoll(long l)
-    {
-        lastOnline_ = l;
-    }
-    
-    /**
-     * Get last time online
-     */
-    public long getLastPoll()
-    {
-        return lastOnline_;
-    }
-    
+
     /**
      * Is this a computer controlled player?
      */
@@ -189,34 +159,7 @@ public class GamePlayer implements ObjectID
         
         firePropertyChange("eliminated", old, nu); // values changed so let listeners know
     }
-    
-    /**
-     * put the given name/object into the list
-     */
-    public void putInfo(String sName, Object oValue)
-    {
-        Object oOld = info_.get(sName);
-        info_.put(sName, oValue);
-        firePropertyChange(sName, oOld, oValue);
-    }
-    
-    /**
-     * Get the item with the given name
-     */
-    public Object getInfo(String sName)
-    {
-        return info_.get(sName);
-    }
-    
-    /**
-     * Remove the item with the given name
-     */
-    public void removeInfo(String sName)
-    {
-        Object oOld = info_.remove(sName);
-        firePropertyChange(sName, oOld, null);
-    }
-    
+
     /**
      * Return player's name
      */
@@ -238,10 +181,8 @@ public class GamePlayer implements ObjectID
      */
     public int compareTo(Object o)
     {
-        if (!(o instanceof GamePlayer)) return 0;
-        
-        GamePlayer gp = (GamePlayer) o;
-        
+        if (!(o instanceof GamePlayer gp)) return 0;
+
         return id_ - gp.id_;
     }
     
@@ -271,36 +212,15 @@ public class GamePlayer implements ObjectID
 
     /**
      *  Set as observer
-     *
-     * @param bObserver
      */
     public void setObserver(boolean bObserver)
     {
         bObserver_ = bObserver;
     }
 
-    /**
-     * Is player from a demo copy?
-     */
-    public boolean isDemo()
-    {
-        return bDemo_;
-    }
-
-    /**
-     * Set whether player is demo copy.  Only
-     * really used when creating player for online,
-     * where the remote player may or may not be
-     * a demo user.
-     */
-    public void setDemo(boolean b)
-    {
-        bDemo_ = b;
-    }
-
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
     
     /**
      * Return this player encoded as a game state entry
@@ -324,7 +244,7 @@ public class GamePlayer implements ObjectID
         entry.addToken(bEliminated_);
         entry.addToken(bCurrent_);
         entry.addToken(bObserver_);
-        entry.addToken(bDemo_);
+        entry.addToken(false); // used to be demo flag; leaving for backwards compat
         entry.addToken(bDirty_);
         
         addExtraToGameStateEntry(state, entry);
@@ -361,7 +281,7 @@ public class GamePlayer implements ObjectID
         bEliminated_ = entry.removeBooleanToken();
         bCurrent_ = entry.removeBooleanToken();
         bObserver_ = entry.removeBooleanToken();
-        bDemo_ = entry.removeBooleanToken();
+        entry.removeBooleanToken(); // used to be demo flag; leaving for backwards compat
         boolean bDirty = entry.removeBooleanToken();
         
         // ignore bDirty flag on dirty load
@@ -440,7 +360,7 @@ public class GamePlayer implements ObjectID
         if (changeSupport != null) {
             // BUG 251 - need to make sure this runs from swing loop because it
             // tends to trigger UI updates.  Also, need to sync since we use
-            // final varibles
+            // final variables
             if (SwingUtilities.isEventDispatchThread())
             {
                 changeSupport.firePropertyChange(propertyName, oldValue, newValue);
@@ -449,9 +369,9 @@ public class GamePlayer implements ObjectID
             {
                 SwingUtilities.invokeLater(
                     new Runnable() {
-                        String prop = propertyName;
-                        Object old = oldValue;
-                        Object nu = newValue;
+                        final String prop = propertyName;
+                        final Object old = oldValue;
+                        final Object nu = newValue;
                         public void run() {
                             changeSupport.firePropertyChange(prop, old, nu);
                         }
@@ -519,7 +439,6 @@ public class GamePlayer implements ObjectID
         }
     }
 
-
     /**
      * Removes a <code>PropertyChangeListener</code> for a specific property.
      * If listener is <code>null</code>, no exception is thrown and no
@@ -538,42 +457,5 @@ public class GamePlayer implements ObjectID
 	    return;
 	}
 	changeSupport.removePropertyChangeListener(propertyName, listener);
-    }
-
-    /**
-     * Returns an array of all the <code>PropertyChangeListener</code>s
-     * added to this Component with addPropertyChangeListener().
-     *
-     * @return all of the <code>PropertyChangeListener</code>s added or
-     *         an empty array if no listeners have been added
-     *
-     * @see      #addPropertyChangeListener
-     * @see      #removePropertyChangeListener
-     * @see      #getPropertyChangeListeners(java.lang.String)
-     * @see      java.beans.PropertyChangeSupport#getPropertyChangeListeners
-     * @since    1.4
-     */
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
-	if (changeSupport == null) {
-	    return new PropertyChangeListener[0];
-	}
-	return changeSupport.getPropertyChangeListeners();
-    }    
-
-    /**
-     * Returns an array of all the listeners which have been associated 
-     * with the named property.
-     *
-     * @return all of the <code>PropertyChangeListeners</code> associated with
-     *         the named property or an empty array if no listeners have 
-     *         been added
-     * @see #getPropertyChangeListeners
-     * @since 1.4
-     */
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-	if (changeSupport == null) {
-	    return new PropertyChangeListener[0];
-	}
-	return changeSupport.getPropertyChangeListeners(propertyName);
     }
 }

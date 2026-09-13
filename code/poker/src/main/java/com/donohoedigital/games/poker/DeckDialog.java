@@ -70,7 +70,6 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
     private DeckProfile profile_;
     private JFileChooser choose_;
     private File selected_;
-    private boolean bRegistered_;
     private DeckProfilePanel.DeckCardPanel card_;
     private DDLabelBorder displayBorder_;
     
@@ -88,36 +87,26 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
         layout.setVgap(5);
         base.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         
-        // Poker 1.2 - allow choosing deck regardless if user registered
-        bRegistered_ = true; // UserRegistration.isRegistered();
-        if (!engine_.isDemo() && bRegistered_)
-        {
-            DDLabel name = new DDLabel("deckimage", STYLE);
-            name.setHorizontalAlignment(SwingConstants.CENTER);
-            base.add(name, BorderLayout.NORTH);
-            
-            card_ = new DeckProfilePanel.DeckCardPanel();
-            displayBorder_ = DeckProfilePanel.getPreviewPanel(card_, STYLE);
-            DDPanel format = new DDPanel();
-            format.add(displayBorder_);
-            format.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        DDLabel name = new DDLabel("deckimage", STYLE);
+        name.setHorizontalAlignment(SwingConstants.CENTER);
+        base.add(name, BorderLayout.NORTH);
 
-            UIManager.put("FileChooser.readOnly", Boolean.TRUE); // disable new folder, renaming
-            choose_ = new DDFileChooser("deckimage", STYLE, engine_.getPrefsNode().getPrefs());
-            choose_.addChoosableFileFilter(new DeckProfile.DeckFilter());
-            choose_.setAccessory(format);
-            choose_.addPropertyChangeListener(this);
-            base.add(choose_, BorderLayout.CENTER);
-            UIManager.put("FileChooser.readOnly", Boolean.FALSE); // restore
-        
-            checkButtons();
-        }
-        else
-        {
-            DDLabel name = new DDLabel(engine_.isDemo() ? "deckimagedemo" : "deckimagereg", "DisplayMessage");
-            base.add(name, BorderLayout.NORTH);
-        }
-        
+        card_ = new DeckProfilePanel.DeckCardPanel();
+        displayBorder_ = DeckProfilePanel.getPreviewPanel(card_, STYLE);
+        DDPanel format = new DDPanel();
+        format.add(displayBorder_);
+        format.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+
+        UIManager.put("FileChooser.readOnly", Boolean.TRUE); // disable new folder, renaming
+        choose_ = new DDFileChooser("deckimage", STYLE, engine_.getPrefsNode().getPrefs());
+        choose_.addChoosableFileFilter(new DeckProfile.DeckFilter());
+        choose_.setAccessory(format);
+        choose_.addPropertyChangeListener(this);
+        base.add(choose_, BorderLayout.CENTER);
+        UIManager.put("FileChooser.readOnly", Boolean.FALSE); // restore
+
+        checkButtons();
+
         return base;
     }
     
@@ -136,27 +125,22 @@ public class DeckDialog extends DialogPhase implements PropertyChangeListener
     {   
         Boolean bResult = Boolean.FALSE;
         
-        if (!engine_.isDemo() && bRegistered_ && button.getName().equals(okayButton_.getName()))
+        if (button.getName().equals(okayButton_.getName()))
         {
             // okay
             // copy file to save dir
             File dir = DeckProfile.getProfileDir(DeckProfile.DECK_DIR);
-            File dest = null;
+            File dest = new File(dir, selected_.getName());
             try {
-                dest = new File(dir, selected_.getName());
-                // Create channel on the source
-                FileChannel srcChannel = new FileInputStream(selected_).getChannel();
-
-                // Create channel on the destination
-                FileChannel dstChannel = new FileOutputStream(dest).getChannel();
-
                 // Copy file contents from source to destination
-                dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
+                try (FileInputStream in = new FileInputStream(selected_);
+                     FileOutputStream out = new FileOutputStream(dest))
+                {
+                    FileChannel srcChannel = in.getChannel();
+                    FileChannel dstChannel = out.getChannel();
+                    dstChannel.transferFrom(srcChannel, 0, srcChannel.size());
+                }
 
-                // Close the channels
-                srcChannel.close();
-                dstChannel.close();
-                
                 // remember file
                 profile_.setFile(dest);
                 bResult = Boolean.TRUE;

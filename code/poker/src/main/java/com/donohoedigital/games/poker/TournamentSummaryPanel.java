@@ -73,7 +73,6 @@ public class TournamentSummaryPanel extends DDPanel
     private final String sHelpName_;
     private TournamentProfile profile_;
     private TournamentProfileHtml profileHtml_;
-    private final ImageComponent ic_ = new ImageComponent("ddlogo20", 1.0d);
     private final boolean bListMode_;
 
 
@@ -94,29 +93,30 @@ public class TournamentSummaryPanel extends DDPanel
 
         for (int i = 0; i < LEVELS_WIDTHS.length; i++)
         {
-            LEVELS_WIDTHS[i] *= dScale;
+            LEVELS_WIDTHS[i] = (int) (LEVELS_WIDTHS[i] * dScale);
         }
         for (int i = 0; i < PAYOUT_WIDTHS.length; i++)
         {
-            PAYOUT_WIDTHS[i] *= dScale;
+            PAYOUT_WIDTHS[i] = (int) (PAYOUT_WIDTHS[i] * dScale);
         }
         for (int i = 0; i < OPP_WIDTHS.length; i++)
         {
-            OPP_WIDTHS[i] *= dScale;
+            OPP_WIDTHS[i] = (int) (OPP_WIDTHS[i] * dScale);
         }
 
         SummaryPanel sumtab = new SummaryPanel();
         sumtab.createUI();
-        tab_.addTab(PropertyConfig.getMessage("msg.tournsummary"), ic_, sumtab, null);
-        tab_.addTab(PropertyConfig.getMessage("msg.levelssummary"), ic_, new LevelsTab(), null);
-        tab_.addTab(PropertyConfig.getMessage("msg.payouts"), ic_, new PayoutTab(), null);
+        ImageComponent ic = new ImageComponent("ddlogo20", 1.0d);
+        tab_.addTab(PropertyConfig.getMessage("msg.tournsummary"), ic, sumtab, null);
+        tab_.addTab(PropertyConfig.getMessage("msg.levelssummary"), ic, new LevelsTab(), null);
+        tab_.addTab(PropertyConfig.getMessage("msg.payouts"), ic, new PayoutTab(), null);
 
         if (bShowOppTab)
         {
-            tab_.addTab(PropertyConfig.getMessage("msg.oppmix"), ic_, new OpponentTab(), null);
+            tab_.addTab(PropertyConfig.getMessage("msg.oppmix"), ic, new OpponentTab(), null);
         }
 
-        tab_.addTab(PropertyConfig.getMessage("msg.online"), ic_, new OnlineTab(), null);
+        tab_.addTab(PropertyConfig.getMessage("msg.online"), ic, new OnlineTab(), null);
     }
 
     private class SummaryPanel extends DDTabPanel
@@ -397,7 +397,6 @@ public class TournamentSummaryPanel extends DDPanel
     public static final String COL_OPPONENT_TYPE = "opponent";
     public static final String COL_PERC = "percent";
 
-    static int RW = 60; // rank width
     static int CW = 88; // chip width
 
     private static final String[] PAYOUT_NAMES = new String[]{
@@ -509,76 +508,57 @@ public class TournamentSummaryPanel extends DDPanel
             String sValue = "[bad column]";
             int idx = rowIndex + 1;
 
-            if (names[colIndex].equals(COL_NUM))
-            {
-                sValue = "" + idx;
-            }
-            else if (names[colIndex].equals(COL_ANTE))
-            {
-                if (profile.isBreak(idx)) return PropertyConfig.getMessage("msg.break");
-                else sValue = getNumber(profile.getAnte(idx));
-            }
-            else if (names[colIndex].equals(COL_SMALL))
-            {
-                if (profile.isBreak(idx)) sValue = "";
-                else sValue = getNumber(profile.getSmallBlind(idx));
-            }
-            else if (names[colIndex].equals(COL_BIG))
-            {
-                if (profile.isBreak(idx)) sValue = "";
-                else sValue = getNumber(profile.getBigBlind(idx));
-            }
-            else if (names[colIndex].equals(COL_TIME))
-            {
-                int nTime = profile.getMinutes(idx);
-                if (nTime != profile.getDefaultMinutesPerLevel())
-                {
-                    sValue = "" + nTime;
+            switch (names[colIndex]) {
+                case COL_NUM -> sValue = "" + idx;
+                case COL_ANTE -> {
+                    if (profile.isBreak(idx)) return PropertyConfig.getMessage("msg.break");
+                    else sValue = getNumber(profile.getAnte(idx));
                 }
-                else
-                {
-                    sValue = "";
+                case COL_SMALL -> {
+                    if (profile.isBreak(idx)) sValue = "";
+                    else sValue = getNumber(profile.getSmallBlind(idx));
                 }
-            }
-            else if (names[colIndex].equals(COL_GAMETYPE))
-            {
-                //if (profile.isBreak(idx)) sValue = "";
-                sValue = ' ' + profile.getGameTypeDisplay(idx);
-            }
-            else if (names[colIndex].equals(COL_PLACE))
-            {
-                sValue = PropertyConfig.getPlace(idx);
-            }
-            else if (names[colIndex].equals(COL_PAYOUT))
-            {
-                boolean bSet = false;
-                // if we have a rank list, display actual prize paid
-                if (rank != null && rowIndex < rank.size())
-                {
-                    PokerPlayer at = rank.get(rowIndex);
-                    if (at.getPrize() > 0)
-                    {
-                        PokerGame game = (PokerGame) context.getGame();
-                        sValue = PropertyConfig.getMessage("msg.spot.paid",
-                                                           Utils.encodeHTML(at.getDisplayName(game.isOnlineGame())),
-                                                           at.getPrize());
-                        bSet = true;
+                case COL_BIG -> {
+                    if (profile.isBreak(idx)) sValue = "";
+                    else sValue = getNumber(profile.getBigBlind(idx));
+                }
+                case COL_TIME -> {
+                    int nTime = profile.getMinutes(idx);
+                    if (nTime != profile.getDefaultMinutesPerLevel()) {
+                        sValue = "" + nTime;
+                    } else {
+                        sValue = "";
                     }
                 }
-                if (!bSet)
-                {
-                    sValue = html.getSpotHTML(idx, true, "2");
+                case COL_GAMETYPE ->
+                    //if (profile.isBreak(idx)) sValue = "";
+                        sValue = ' ' + profile.getGameTypeDisplay(idx);
+                case COL_PLACE -> sValue = PropertyConfig.getPlace(idx);
+                case COL_PAYOUT -> {
+                    boolean bSet = false;
+                    // if we have a rank list, display actual prize paid
+                    if (rank != null && rowIndex < rank.size()) {
+                        PokerPlayer at = rank.get(rowIndex);
+                        if (at.getPrize() > 0) {
+                            PokerGame game = (PokerGame) context.getGame();
+                            sValue = PropertyConfig.getMessage("msg.spot.paid",
+                                    Utils.encodeHTML(at.getDisplayName(game.isOnlineGame())),
+                                    at.getPrize());
+                            bSet = true;
+                        }
+                    }
+                    if (!bSet) {
+                        sValue = html.getSpotHTML(idx, true, "2");
+                    }
                 }
-            }
-            else if (names[colIndex].equals(COL_PERC))
-            {
-                PlayerType type = (PlayerType) playerTypes.get(rowIndex);
-                sValue = profile.getPlayerTypePercent(type.getUniqueKey()) + "%";
-            }
-            else if (names[colIndex].equals(COL_OPPONENT_TYPE))
-            {
-                PlayerType type = (PlayerType) playerTypes.get(rowIndex);
-                sValue = type.getName();
+                case COL_PERC -> {
+                    PlayerType type = (PlayerType) playerTypes.get(rowIndex);
+                    sValue = profile.getPlayerTypePercent(type.getUniqueKey()) + "%";
+                }
+                case COL_OPPONENT_TYPE -> {
+                    PlayerType type = (PlayerType) playerTypes.get(rowIndex);
+                    sValue = type.getName();
+                }
             }
 
             return sValue;

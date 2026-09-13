@@ -77,14 +77,6 @@ public class LoadSavedGame extends BasePhase
         context.processPhase("InitializeGameLoad", params);
     }
 
-    /**
-     * No loading in demo
-     */
-    public boolean isUsedInDemo()
-    {
-        return TESTING(EngineConstants.TESTING_DEMO);
-    }
-
     // Notes:
     //
     // Load sequence works as such:

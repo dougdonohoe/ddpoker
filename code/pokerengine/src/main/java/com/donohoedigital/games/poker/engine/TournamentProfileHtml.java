@@ -98,17 +98,11 @@ public class TournamentProfileHtml
         {
             String sKey = (profile.getMaxRebuys() == 0) ? "msg.rebuyinfo.unlimited" : "msg.rebuyinfo.limited";
 
-            String sExpr = null;
-            switch (profile.getRebuyExpressionType())
-            {
-                case PokerConstants.REBUY_LT:
-                    sExpr = "&lt;";
-                    break;
-
-                case PokerConstants.REBUY_LTE:
-                    sExpr = "&lt;=";
-
-            }
+            String sExpr = switch (profile.getRebuyExpressionType()) {
+                case PokerConstants.REBUY_LT -> "&lt;";
+                case PokerConstants.REBUY_LTE -> "&lt;=";
+                default -> null;
+            };
             params[5] = PropertyConfig.getMessage(sKey,
                                                   profile.getMap().get(PARAM_REBUYCOST),
                                                   profile.getMap().get(PARAM_REBUYCHIPS),
@@ -209,8 +203,6 @@ public class TournamentProfileHtml
 
     /**
      * Get HTML summary of this tournament (used on server for jsp)
-     *
-     * @param sLocale
      */
     public String toHTML(String sLocale)
     {
@@ -233,17 +225,11 @@ public class TournamentProfileHtml
         {
             String sKey = (profile.getMaxRebuys() == 0) ? "msg.rebuyinfo.unlimited" : "msg.rebuyinfo.limited";
 
-            String sExpr = null;
-            switch (profile.getRebuyExpressionType())
-            {
-                case PokerConstants.REBUY_LT:
-                    sExpr = "&lt;";
-                    break;
-
-                case PokerConstants.REBUY_LTE:
-                    sExpr = "&lt;=";
-
-            }
+            String sExpr = switch (profile.getRebuyExpressionType()) {
+                case PokerConstants.REBUY_LT -> "&lt;";
+                case PokerConstants.REBUY_LTE -> "&lt;=";
+                default -> null;
+            };
             params[5] = PropertyConfig.getMessage(sKey,
                                                   profile.getMap().get(PARAM_REBUYCOST),
                                                   profile.getMap().get(PARAM_REBUYCHIPS),
@@ -407,7 +393,6 @@ public class TournamentProfileHtml
         return PropertyConfig.getMessage("msg.tournamentonline",
                                          PropertyConfig.getYesNo(profile.isAllowDash()),
                                          PropertyConfig.getYesNo(profile.isFillComputer()),
-                                         PropertyConfig.getYesNo(profile.isAllowDemo()),
                                          profile.getMaxObservers(),
                                          profile.getTimeoutSeconds(),
                                          profile.getThinkBankSeconds(),
@@ -470,7 +455,7 @@ public class TournamentProfileHtml
     {
         // show gametype if different from default
         String sGameType = profile.getGameTypeDisplay(nLevel);
-        if (sGameType.length() > 0) sGameType = PropertyConfig.getMessage(prefix + "gametype", sGameType);
+        if (!sGameType.isEmpty()) sGameType = PropertyConfig.getMessage(prefix + "gametype", sGameType);
 
         int nAnte = profile.getAnte(nLevel);
         int nBig = profile.getBigBlind(nLevel);

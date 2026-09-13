@@ -94,15 +94,8 @@ public class JoinGame extends ListGames
         pub.add(inside, BorderLayout.CENTER);
 
         GlassButton find = new GlassButton("okayfind", "Glass");
-        find.addActionListener(e -> {
-            if (engine_.isDemo())
-            {
-                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo2"));
-            }
-            else
-            {
-                context_.processPhase("FindGames");
-            }
+        find.addActionListener(_ -> {
+            context_.processPhase("FindGames");
         });
         inside.add(find, BorderLayout.WEST);
 

@@ -38,9 +38,6 @@
 
 package com.donohoedigital.comms;
 
-import com.donohoedigital.base.ApplicationError;
-import com.donohoedigital.base.ErrorCodes;
-
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +54,6 @@ public class Version implements DataMarshal, Comparable<Version>
     private boolean bBeta_;
     private boolean bAlpha_;
     private int nAlphaBetaVersion_;
-    private boolean bDemo_;
     private String sLocale_;
     private boolean bVerify_; // only used on client - don't send down
 
@@ -92,8 +88,6 @@ public class Version implements DataMarshal, Comparable<Version>
         bBeta_ = nType == TYPE_BETA;
         bAlpha_ = nType == TYPE_ALPHA;
         nAlphaBetaVersion_ = nAlphaBetaVersion;
-        if (bDemo_ && (bBeta_ || bAlpha_)) throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR,
-                                                                      "Can't be demo and alpha/beta at same time", "fix code");
     }
 
     public boolean isVerify()
@@ -139,16 +133,6 @@ public class Version implements DataMarshal, Comparable<Version>
     public int getAlphaBetaVersion()
     {
         return nAlphaBetaVersion_;
-    }
-
-    public void setDemo(boolean b)
-    {
-        bDemo_ = b;
-    }
-
-    public boolean isDemo()
-    {
-        return bDemo_;
     }
 
     public String getLocale()
@@ -203,8 +187,7 @@ public class Version implements DataMarshal, Comparable<Version>
      * the patch.  An alpha or beta of a version comes before the version itself - 2.0a3, then
      * 2.0b1, then 2.0 - and the patch is ranked last because it applies within a release, which
      * is the order this project has actually shipped in (2.0b6.4 is Beta 6, Patch 4; see the
-     * history in PokerConstants).  Neither the locale nor the demo flag plays a part; they say
-     * who a build is for, not when it is from.
+     * history in PokerConstants).
      */
     @Override
     public int compareTo(Version o)
@@ -234,7 +217,7 @@ public class Version implements DataMarshal, Comparable<Version>
         return 2;
     }
 
-    /** Consistent with {@link #compareTo(Version)}, so the locale and demo flag are left out of this too. */
+    /** Consistent with {@link #compareTo(Version)}, so the locale flag is left out of this too. */
     @Override
     public boolean equals(Object o)
     {
@@ -255,7 +238,7 @@ public class Version implements DataMarshal, Comparable<Version>
         nMinor_ = list.removeIntToken();
         bBeta_ = list.removeBooleanToken();
         nAlphaBetaVersion_ = list.removeIntToken();
-        bDemo_ = list.removeBooleanToken();
+        list.removeBooleanToken(); // used to be demo flag; leaving for backwards compat
         nPatch_ = list.removeIntToken();
 
         // Locale (added for French, 3/3/2004)
@@ -278,7 +261,7 @@ public class Version implements DataMarshal, Comparable<Version>
         list.addToken(nMinor_);
         list.addToken(bBeta_);
         list.addToken(nAlphaBetaVersion_);
-        list.addToken(bDemo_);
+        list.addToken(false); // used to be demo flag; leaving for backwards compat
         list.addToken(nPatch_);
         list.addToken(sLocale_);
         list.addToken(bAlpha_);
@@ -290,17 +273,16 @@ public class Version implements DataMarshal, Comparable<Version>
     {
         return nMajor_ + "." + nMinor_ + (bAlpha_ | bBeta_ ? (bAlpha_ ? "a" : "b") + nAlphaBetaVersion_ : "") +
                (nPatch_ > 0 ? "." + nPatch_ : "") +
-               (bDemo_ ? "d" : "") +
                (sLocale_ != null ? "_" + sLocale_ : "");
     }
 
     /**
-     * Mirrors {@link #toString}: major.minor, an optional a/b number, an optional patch, an
-     * optional demo flag, an optional locale.  The old "3.1p2" way of writing a patch is still
+     * Mirrors {@link #toString}: major.minor, an optional a/b number, an optional patch,
+     * an optional locale.  The old "3.1p2" way of writing a patch is still
      * understood, as are release tags written with a leading "v".
      */
     private static final Pattern PARSE =
-            Pattern.compile("^v?(\\d+)\\.(\\d+)(?:([ab])(\\d+))?(?:[.p](\\d+))?(d)?(?:_(.+))?$");
+            Pattern.compile("^v?(\\d+)\\.(\\d+)(?:([ab])(\\d+))?(?:[.p](\\d+))?(?:_(.+))?$");
 
     /**
      * The inverse of {@link #toString}: "3.1", "3.1.8", "2.0b6.4", "1.2d", "3.1.8_en".
@@ -325,8 +307,7 @@ public class Version implements DataMarshal, Comparable<Version>
             // not the running build, so nothing to verify an activation key against
             Version v = new Version(nType, Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)),
                                     nAlphaBeta, nPatch, false);
-            if (m.group(6) != null) v.setDemo(true);
-            v.setLocale(m.group(7));
+            v.setLocale(m.group(6));
             return v;
         }
         catch (NumberFormatException e)

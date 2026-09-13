@@ -156,36 +156,6 @@ public class Activate extends BasePhase implements PropertyChangeListener
         actButtonBase.add(registerButton_, BorderLayout.NORTH);
         actButtonBase.setBorder(BorderFactory.createEmptyBorder(1, 0, 0, 0));
         regbase.add(actButtonBase, BorderLayout.EAST);
-
-        ////
-        //// demo
-        ////
-        DDLabelBorder demo = new DDLabelBorder("demo", STYLE);
-        base.add(demo, BorderLayout.SOUTH);
-
-        // text
-        DDHtmlArea demoText = new DDHtmlArea(GuiManager.DEFAULT, "Activation");
-        demoText.setDisplayOnly(true);
-        demoText.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        demoText.setText(PropertyConfig.getMessage("msg.activate.demo"));
-        demo.add(demoText, BorderLayout.CENTER);
-
-        // button
-        DDPanel demoButtonBase = new DDPanel();
-        demoButtonBase.setLayout(new GridLayout(2, 1, 0, 5));
-        DDButton demoButton = new GlassButton("demo", "Glass");
-        demoButton.addActionListener(e ->
-            engine_.setDemoMode());
-        DDButton orderButton = new GlassButton("order", "Glass");
-        orderButton.addActionListener(e -> {
-            engine_.setActivationNeeded(false); // temporary so can show order dialog
-            context_.processPhaseNow("Order", null);
-            engine_.setActivationNeeded(true);
-        });
-        demoButtonBase.add(demoButton);
-        demoButtonBase.add(orderButton);
-        demo.add(GuiUtils.CENTER(demoButtonBase), BorderLayout.EAST);
-
     }
 
     // override to avoid selectall-on-focus behavoir

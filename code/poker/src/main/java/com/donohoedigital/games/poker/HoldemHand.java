@@ -185,17 +185,6 @@ public class HoldemHand implements DataMarshal
         long seed = NEXT_SEED();
         //logger.debug("SEED: "+ seed + " SEEDADJ: "+ SEEDADJ);
         GameEngine engine = GameEngine.getGameEngine();
-        if (engine != null && engine.isDemo())
-        {
-            // game could be null from calctool
-            PokerGame game = table.getGame();
-            if (game != null && !game.isClockMode())
-            {
-                PokerPlayer player = game.getHumanPlayer();
-                int nNum = (player.isObserver()) ? table.getHandNum() : player.getHandsPlayed();
-                seed = 9183349 + (nNum * 129L);
-            }
-        }
         deck_ = new Deck(true, seed);
         //deck_ = Deck.getDeckBUG280(); // BUG 280 debugging
         //deck_ = Deck.getDeckBUG284(); // BUG 284 debugging

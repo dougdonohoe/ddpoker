@@ -300,47 +300,29 @@ public class PokerServlet extends EngineServlet
     }
 
     /**
-     * allow demo users to test internet connection
-     */
-    @Override
-    protected boolean isCategoryValidated(EngineMessage received)
-    {
-        if (received.getCategory() == OnlineMessage.CAT_TEST &&
-            received.getVersion().isDemo())
-        {
-            return false;
-        }
-
-        return super.isCategoryValidated(received);
-    }
-
-    /**
      * Is database access required for category?
      */
     @Override
     protected boolean subclassIsDatabaseRequired(int nCategory)
     {
-        switch (nCategory)
-        {
-            case OnlineMessage.CAT_WAN_GAME_ADD:
-            case OnlineMessage.CAT_WAN_GAME_UPDATE:
-            case OnlineMessage.CAT_WAN_GAME_REMOVE:
-            case OnlineMessage.CAT_WAN_GAME_LIST:
-            case OnlineMessage.CAT_WAN_GAME_START:
-            case OnlineMessage.CAT_WAN_GAME_STOP:
-            case OnlineMessage.CAT_WAN_GAME_END:
-            case OnlineMessage.CAT_WAN_PROFILE_ADD:
-            case OnlineMessage.CAT_WAN_PROFILE_RESET:
-            case OnlineMessage.CAT_WAN_PROFILE_LINK:
-            case OnlineMessage.CAT_WAN_PROFILE_ACTIVATE:
-            case OnlineMessage.CAT_WAN_PROFILE_VALIDATE:
-            case OnlineMessage.CAT_WAN_PROFILE_SEND_PASSWORD:
-            case OnlineMessage.CAT_WAN_PROFILE_CHANGE_PASSWORD:
-            case OnlineMessage.CAT_WAN_PROFILE_SYNC_PASSWORD:
-                return true;
-            default:
-                return false;
-        }
+        return switch (nCategory) {
+            case OnlineMessage.CAT_WAN_GAME_ADD,
+                 OnlineMessage.CAT_WAN_GAME_UPDATE,
+                 OnlineMessage.CAT_WAN_GAME_REMOVE,
+                 OnlineMessage.CAT_WAN_GAME_LIST,
+                 OnlineMessage.CAT_WAN_GAME_START,
+                 OnlineMessage.CAT_WAN_GAME_STOP,
+                 OnlineMessage.CAT_WAN_GAME_END,
+                 OnlineMessage.CAT_WAN_PROFILE_ADD,
+                 OnlineMessage.CAT_WAN_PROFILE_RESET,
+                 OnlineMessage.CAT_WAN_PROFILE_LINK,
+                 OnlineMessage.CAT_WAN_PROFILE_ACTIVATE,
+                 OnlineMessage.CAT_WAN_PROFILE_VALIDATE,
+                 OnlineMessage.CAT_WAN_PROFILE_SEND_PASSWORD,
+                 OnlineMessage.CAT_WAN_PROFILE_CHANGE_PASSWORD,
+                 OnlineMessage.CAT_WAN_PROFILE_SYNC_PASSWORD -> true;
+            default -> false;
+        };
     }
 
     /**

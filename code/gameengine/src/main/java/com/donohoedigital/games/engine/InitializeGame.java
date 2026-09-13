@@ -62,15 +62,6 @@ public class InitializeGame extends ChainPhase
         AudioConfig.stopBackgroundMusic();
         String STYLE = gamephase_.getString("style", "default");
         String sLabel =  gamephase_.getString("label", INIT_GAME);
-        // no save file loading in demo, and if they attempt to,
-        // it shows this screen before the engine aborts when
-        // they try and run LoadSavedGame.  in this case,
-        // don't show the "loading save file..." message and
-        // show the default
-        if (engine.isDemo())
-        {
-            sLabel = INIT_GAME;
-        }
         label_ = new InitLabel(sLabel, STYLE);
     }
     

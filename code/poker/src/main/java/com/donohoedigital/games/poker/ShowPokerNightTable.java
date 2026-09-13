@@ -85,7 +85,7 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
         // panels
         DDPanel center = createCenterPanel();
         DDPanel buttons = createButtonPanel(true);
-        ImageComponent banner = new ImageComponent(engine_.isDemo() ? "pokermenu-demo" : "pokermenu", 1.0d);
+        ImageComponent banner = new ImageComponent("pokermenu", 1.0d);
 
         // HACK - change default size of map so it better occupies
         // the space below the banner/buttons, which is a different
@@ -329,15 +329,13 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
             buttonRewind_.setEnabled(rewind);
         }
 
-        boolean forward = !engine_.isDemo() || (game_.getLevel() < PokerNight.DEMO_MAX);
-
+        boolean forward = true;
         if (forward != buttonForward_.isEnabled())
         {
             buttonForward_.setEnabled(forward);
         }
 
-        boolean startpause = !engine_.isDemo() || (game_.getLevel() <= PokerNight.DEMO_MAX);
-
+        boolean startpause = true;
         if (startpause != buttonStartPause_.isEnabled())
         {
             buttonStartPause_.setEnabled(startpause);

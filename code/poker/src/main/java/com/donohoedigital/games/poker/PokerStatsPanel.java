@@ -33,35 +33,24 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.engine.Card;
 import com.donohoedigital.games.poker.engine.Hand;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 
 public class PokerStatsPanel extends DDTabPanel
 {
-    static Logger logger = LogManager.getLogger(PokerStatsPanel.class);
-
     public static final int FLOP = 1;
     public static final int TURN = 2;
     public static final int RIVER = 3;
     public static final int LADDER = 4;
     public static final int STRENGTH = 5;
 
-    private DDScrollPane scroll_;
-
     private Hand pocket_;
     private Hand community_;
-    private int mode_;
-    private boolean bDemo_;
+    private final int mode_;
 
     DDHtmlArea htmlArea_;
     DDHtmlArea header_;
@@ -76,7 +65,6 @@ public class PokerStatsPanel extends DDTabPanel
         super();
 
         mode_ = mode;
-        bDemo_ = GameEngine.getGameEngine().isDemo();
 
         if (player != null)
         {
@@ -106,10 +94,10 @@ public class PokerStatsPanel extends DDTabPanel
         // html results
         htmlArea_ = new DDHtmlArea("PokerStats", "PokerStats");
         htmlArea_.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-        scroll_ = new DDScrollPane(htmlArea_, "PokerStandardDialog", null, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroll_.setOpaque(false);
-        add(scroll_, BorderLayout.CENTER);
+        DDScrollPane scroll = new DDScrollPane(htmlArea_, "PokerStandardDialog", null, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setOpaque(false);
+        add(scroll, BorderLayout.CENTER);
 
         // update stats
         if (pocket_ != null)
@@ -124,31 +112,31 @@ public class PokerStatsPanel extends DDTabPanel
      */
     private void updateHeader()
     {
-        String sMsg = null;
+        String sMsg;
         int nMin = 0;
-        switch (mode_)
-        {
-            case FLOP:
+        sMsg = switch (mode_) {
+            case FLOP -> {
                 nMin = 3;
-                sMsg = PropertyConfig.getMessage("msg.sim.flop");
-                break;
-            case TURN:
+                yield PropertyConfig.getMessage("msg.sim.flop");
+            }
+            case TURN -> {
                 nMin = 4;
-                sMsg = PropertyConfig.getMessage("msg.sim.turn");
-                break;
-            case RIVER:
+                yield PropertyConfig.getMessage("msg.sim.turn");
+            }
+            case RIVER -> {
                 nMin = 5;
-                sMsg = PropertyConfig.getMessage("msg.sim.river");
-                break;
-            case LADDER:
+                yield PropertyConfig.getMessage("msg.sim.river");
+            }
+            case LADDER -> {
                 nMin = 5;
-                sMsg = PropertyConfig.getMessage("msg.sim.ladder");
-                break;
-            case STRENGTH:
+                yield PropertyConfig.getMessage("msg.sim.ladder");
+            }
+            case STRENGTH -> {
                 nMin = 5;
-                sMsg = PropertyConfig.getMessage("msg.sim.strength");
-                break;
-        }
+                yield PropertyConfig.getMessage("msg.sim.strength");
+            }
+            default -> null;
+        };
 
         Hand pocket = new Hand(pocket_);
         while (pocket.size() < 2) pocket.addCard(Card.BLANK);
@@ -180,7 +168,7 @@ public class PokerStatsPanel extends DDTabPanel
     private boolean checkRequiredCards()
     {
         String sText = null;
-        if (pocket_.size() != 2 && !(bDemo_ && (mode_ == TURN || mode_ == RIVER)))
+        if (pocket_.size() != 2)
         {
             sText = PropertyConfig.getMessage("msg.sim.needboth");
         }
@@ -193,13 +181,11 @@ public class PokerStatsPanel extends DDTabPanel
                     if (com >= 3) sText = PropertyConfig.getMessage("msg.sim.seenflop");
                     break;
                 case TURN:
-                    if (bDemo_) sText = PropertyConfig.getMessage("msg.sim.demo");
-                    else if (com <= 2) sText = PropertyConfig.getMessage("msg.sim.needflop.1");
+                    if (com <= 2) sText = PropertyConfig.getMessage("msg.sim.needflop.1");
                     else if (com == 4 || com == 5) sText = PropertyConfig.getMessage("msg.sim.seenturn");
                     break;
                 case RIVER:
-                    if (bDemo_) sText = PropertyConfig.getMessage("msg.sim.demo");
-                    else if (com <= 2) sText = PropertyConfig.getMessage("msg.sim.needflop.2");
+                    if (com <= 2) sText = PropertyConfig.getMessage("msg.sim.needflop.2");
                     else if (com == 5) sText = PropertyConfig.getMessage("msg.sim.seenriver");
                     break;
                 case LADDER:

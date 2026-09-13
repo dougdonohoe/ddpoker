@@ -104,79 +104,43 @@ public class OnlineMessage
      */
     public String toStringCategory()
     {
-        switch (getCategory())
-        {
-            case CAT_TEST:
-                return "test";
-            case CAT_JOIN:
-                return "join";
-            case CAT_CHAT:
-                return "chat" + (getPlayerName() == null ? ": " : " from " + getPlayerName() + ": ") + getChat();
-            case CAT_CHAT_HELLO:
-                return "chat-hello from " + getPlayerName();
-            case CAT_CHAT_ADMIN:
-                return "chat-admin: " + PokerConstants.toStringAdminType(getChatType());
-            case CAT_GAME_UPDATE:
-                return "game-update";// (run phase: " + getPhaseName() +", runProcessTable(): " + isRunProcessTable() +")";
-            case CAT_QUIT:
-                return "quit";
-            case CAT_CANCEL:
-                return "cancel";
-            case CAT_REMOVE_WAIT_LIST:
-                return "remove-wait-list id " + getFromPlayerID();
-            case CAT_HAND_ACTION:
-                return "hand-action " + getHandAction().toString();
-            case CAT_REBUY:
-                return "rebuy cash: " + getCash() + "; chips: " + getChips();
-            case CAT_ADDON:
-                return "add-on cash: " + getCash() + "; chips: " + getChips();
-            case CAT_READY:
-                return "ready id " + getFromPlayerID();
-            case CAT_WAN_GAME_ADD:
-                return "wan-game-add";
-            case CAT_WAN_GAME_REMOVE:
-                return "wan-game-remove";
-            case CAT_WAN_GAME_LIST:
-                return "wan-game-list";
-            case CAT_WAN_GAME_START:
-                return "wan-game-start";
-            case CAT_WAN_GAME_STOP:
-                return "wan-game-pause";
-            case CAT_WAN_GAME_END:
-                return "wan-game-end";
-            case CAT_WAN_PROFILE_ADD:
-                return "wan-profile-add";
-            case CAT_WAN_PROFILE_RESET:
-                return "wan-profile-reset";
-            case CAT_WAN_PROFILE_VALIDATE:
-                return "wan-profile-validate";
-            case CAT_WAN_PROFILE_ACTIVATE:
-                return "wan-profile-activate";
-            case CAT_CANCEL_ACTION:
-                return "cancel action";
-            case CAT_PLAYER_UPDATE:
-                return "player update " + getPlayerSettings();
-            case CAT_WAN_PROFILE_SEND_PASSWORD:
-                return "wan-profile-send";
-            case CAT_WAN_PROFILE_CHANGE_PASSWORD:
-                return "wan-profile-change-password";
-            case CAT_WAN_PROFILE_SYNC_PASSWORD:
-                return "wan-profile-sync-password";
-            case CAT_CONNECTION:
-                return "connection-status";
-            case CAT_CHANGE_TABLE:
-                return "change-table";
-            case CAT_ALIVE:
-                return "alive";
-
-            case CAT_CLIENT_JOIN:
-                return "client-join";
-            case CAT_PROCESS_PHASE:
-                return "process-phase " + getPhaseName();
-
-            default:
-                return "Undefined cat (" + getCategory() + ')';
-        }
+        return switch (getCategory()) {
+            case CAT_TEST -> "test";
+            case CAT_JOIN -> "join";
+            case CAT_CHAT -> "chat" + (getPlayerName() == null ? ": " : " from " + getPlayerName() + ": ") + getChat();
+            case CAT_CHAT_HELLO -> "chat-hello from " + getPlayerName();
+            case CAT_CHAT_ADMIN -> "chat-admin: " + PokerConstants.toStringAdminType(getChatType());
+            case CAT_GAME_UPDATE ->
+                    "game-update";// (run phase: " + getPhaseName() +", runProcessTable(): " + isRunProcessTable() +")";
+            case CAT_QUIT -> "quit";
+            case CAT_CANCEL -> "cancel";
+            case CAT_REMOVE_WAIT_LIST -> "remove-wait-list id " + getFromPlayerID();
+            case CAT_HAND_ACTION -> "hand-action " + getHandAction().toString();
+            case CAT_REBUY -> "rebuy cash: " + getCash() + "; chips: " + getChips();
+            case CAT_ADDON -> "add-on cash: " + getCash() + "; chips: " + getChips();
+            case CAT_READY -> "ready id " + getFromPlayerID();
+            case CAT_WAN_GAME_ADD -> "wan-game-add";
+            case CAT_WAN_GAME_REMOVE -> "wan-game-remove";
+            case CAT_WAN_GAME_LIST -> "wan-game-list";
+            case CAT_WAN_GAME_START -> "wan-game-start";
+            case CAT_WAN_GAME_STOP -> "wan-game-pause";
+            case CAT_WAN_GAME_END -> "wan-game-end";
+            case CAT_WAN_PROFILE_ADD -> "wan-profile-add";
+            case CAT_WAN_PROFILE_RESET -> "wan-profile-reset";
+            case CAT_WAN_PROFILE_VALIDATE -> "wan-profile-validate";
+            case CAT_WAN_PROFILE_ACTIVATE -> "wan-profile-activate";
+            case CAT_CANCEL_ACTION -> "cancel action";
+            case CAT_PLAYER_UPDATE -> "player update " + getPlayerSettings();
+            case CAT_WAN_PROFILE_SEND_PASSWORD -> "wan-profile-send";
+            case CAT_WAN_PROFILE_CHANGE_PASSWORD -> "wan-profile-change-password";
+            case CAT_WAN_PROFILE_SYNC_PASSWORD -> "wan-profile-sync-password";
+            case CAT_CONNECTION -> "connection-status";
+            case CAT_CHANGE_TABLE -> "change-table";
+            case CAT_ALIVE -> "alive";
+            case CAT_CLIENT_JOIN -> "client-join";
+            case CAT_PROCESS_PHASE -> "process-phase " + getPhaseName();
+            default -> "Undefined cat (" + getCategory() + ')';
+        };
     }
 
     /**
@@ -223,7 +187,6 @@ public class OnlineMessage
     public static final String ON_WAN_GAMES = "games";
     public static final String ON_WAN_HISTORIES = "histories";
     public static final String ON_PLAYER_SETTINGS = "settings";
-    public static final String ON_DEMO = "demo";
     public static final String ON_ONLINE_ACTIVATED = "online";
     public static final String ON_CONNECTED = "connected";
     public static final String ON_PAUSE_CLOCK = "pauseclock";
@@ -335,11 +298,6 @@ public class OnlineMessage
         data_.setApplicationErrorMessage(sMsg);
     }
 
-    public String getApplicationStatusMessage()
-    {
-        return data_.getApplicationStatusMessage();
-    }
-
     public void setApplicationStatusMessage(String sMsg)
     {
         data_.setApplicationStatusMessage(sMsg);
@@ -353,16 +311,6 @@ public class OnlineMessage
     public void setPlayerName(String s)
     {
         data_.setString(ON_PLAYER_NAME, s);
-    }
-
-    public boolean isPlayerDemo()
-    {
-        return data_.getBoolean(ON_DEMO, false);
-    }
-
-    public void setPlayerDemo(boolean b)
-    {
-        data_.setBoolean(ON_DEMO, b ? Boolean.TRUE : Boolean.FALSE);
     }
 
     public boolean isOnlineActivated()
@@ -584,6 +532,7 @@ public class OnlineMessage
         data_.setList(ON_POKER_TABLE_EVENTS, events);
     }
 
+    @SuppressWarnings("unchecked")
     public DMArrayList<? extends DataMarshal> getPokerTableEvents()
     {
         return (DMArrayList<? extends DataMarshal>) data_.getList(ON_POKER_TABLE_EVENTS);
@@ -709,6 +658,7 @@ public class OnlineMessage
         data_.setObject(ON_WAN_GAME, m);
     }
 
+    @SuppressWarnings("unchecked")
     public DMArrayList<DMTypedHashMap> getWanGames()
     {
         return (DMArrayList<DMTypedHashMap>) data_.getList(ON_WAN_GAMES);
@@ -719,6 +669,7 @@ public class OnlineMessage
         data_.setList(ON_WAN_GAMES, l);
     }
 
+    @SuppressWarnings("unchecked")
     public DMArrayList<? extends DataMarshal> getWanHistories()
     {
         return (DMArrayList<? extends DataMarshal>) data_.getList(ON_WAN_HISTORIES);
@@ -742,6 +693,7 @@ public class OnlineMessage
     /**
      * Get player list as array of OnlinePlayerInfo (constructed each time, so caller should cache)
      */
+    @SuppressWarnings("unchecked")
     public List<OnlinePlayerInfo> getPlayerList()
     {
         DMArrayList<DMTypedHashMap> raw = (DMArrayList<DMTypedHashMap>) data_.getList(ON_PLAYER_LIST);

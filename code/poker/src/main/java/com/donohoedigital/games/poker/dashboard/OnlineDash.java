@@ -33,20 +33,19 @@
 package com.donohoedigital.games.poker.dashboard;
 
 import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.poker.PokerGame;
 import com.donohoedigital.games.poker.PokerPlayer;
 import com.donohoedigital.games.poker.PokerUtils;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.games.poker.online.TournamentDirector;
-import com.donohoedigital.games.engine.EngineUtils;
-import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.gui.DDCheckBox;
 import com.donohoedigital.gui.DDLabel;
 import com.donohoedigital.gui.DDPanel;
 import com.donohoedigital.gui.GuiUtils;
 
-import javax.swing.JComponent;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 
 /**
@@ -72,8 +71,7 @@ public class OnlineDash extends DashboardItem
 
         player_ = game_.getLocalPlayer();
         setDynamicTitle(true);
-        trackTableEvents(PokerTableEvent.TYPE_PLAYER_SETTINGS_CHANGED|
-                         PokerTableEvent.TYPE_NEW_HAND); // for demo
+        trackTableEvents(PokerTableEvent.TYPE_PLAYER_SETTINGS_CHANGED|PokerTableEvent.TYPE_NEW_HAND);
         game_.addPropertyChangeListener(PokerGame.PROP_GAME_LOADED, this);
         //game_.addPropertyChangeListener(PokerGame.PROP_GAME_OVER, this); // may be needed in future
     }
@@ -112,28 +110,21 @@ public class OnlineDash extends DashboardItem
         else
         {
             sitout_ = new DDCheckBox("sitout", STYLE);
-            sitout_.addActionListener(e -> {
-                if (PokerUtils.isDemoOver(context_, player_, true) && !sitout_.isSelected())
-                {
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.onlinedone.demo"));
-                    sitout_.setSelected(true);
-                    return;
-                }
-
+            sitout_.addActionListener(_ -> {
                 player_.setSittingOut(sitout_.isSelected());
                 getTD().playerUpdate(player_, player_.getOnlineSettings());
             });
             base_.add(sitout_);
 
             mucklose_ = new DDCheckBox("mucklose", STYLE);
-            mucklose_.addActionListener(e -> {
+            mucklose_.addActionListener(_ -> {
                 player_.setAskShowLosing(!mucklose_.isSelected());
                 getTD().playerUpdate(player_, player_.getOnlineSettings());
             });
             base_.add(mucklose_);
 
             muckwin_ = new DDCheckBox("muckwin", STYLE);
-            muckwin_.addActionListener(e -> {
+            muckwin_.addActionListener(_ -> {
                 player_.setAskShowWinning(!muckwin_.isSelected());
                 getTD().playerUpdate(player_, player_.getOnlineSettings());
             });
@@ -161,22 +152,18 @@ public class OnlineDash extends DashboardItem
      */
     public void tableEventOccurred(PokerTableEvent event)
     {
-        switch (event.getType())
-        {
-            case PokerTableEvent.TYPE_PLAYER_SETTINGS_CHANGED:
-                // update board if settings changed for any player at table -
-                // this single place catches all changes to setSittingOut()
-                PokerPlayer player = event.getPlayer();
-                if (player.getTable() == player_.getTable())
-                {
-                    PokerUtils.setConnectionStatus(context_, player, false);
-                }
+        if (event.getType() == PokerTableEvent.TYPE_PLAYER_SETTINGS_CHANGED) {
+            // update board if settings changed for any player at table -
+            // this single place catches all changes to setSittingOut()
+            PokerPlayer player = event.getPlayer();
+            if (player.getTable() == player_.getTable()) {
+                PokerUtils.setConnectionStatus(context_, player, false);
+            }
 
-                if (player == player_)
-                {
-                    super.tableEventOccurred(event);
-                }
-                return;
+            if (player == player_) {
+                super.tableEventOccurred(event);
+            }
+            return;
         }
 
         super.tableEventOccurred(event);
@@ -194,20 +181,16 @@ public class OnlineDash extends DashboardItem
         {
             if (isDisplayed()) GuiUtils.invoke(updateRunner_);
         }
-        // keep this incase we need to deal with game over
-        //else if (name.equals(PokerGame.PROP_GAME_OVER))
-        //{
-        //    if (isDisplayed()) GuiUtils.invoke(updateRunner_);
-        //}
+
         super.propertyChange(evt);
     }
 
     // runnable for setting label text in swing thread
     private final Runnable updateRunner_ = this::updateAll;
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     /**
      * update level
@@ -227,20 +210,14 @@ public class OnlineDash extends DashboardItem
             sitout_.setSelected(player_.isSittingOut());
         }
 
-        if (mucklose_ != null && mucklose_.isSelected() != !player_.isAskShowLosing())
+        if (mucklose_ != null && mucklose_.isSelected() == player_.isAskShowLosing())
         {
             mucklose_.setSelected(!player_.isAskShowLosing());
         }
 
-        if (muckwin_ != null && muckwin_.isSelected() != !player_.isAskShowWinning())
+        if (muckwin_ != null && muckwin_.isSelected() == player_.isAskShowWinning())
         {
             muckwin_.setSelected(!player_.isAskShowWinning());
-        }
-
-        if (sitout_ != null && PokerUtils.isDemoOver(context_, player_, true))
-        {
-            sitout_.setSelected(true);
-            sitout_.setText(PropertyConfig.getMessage("checkbox.sitoutdemo.label"));
         }
     }
 }
