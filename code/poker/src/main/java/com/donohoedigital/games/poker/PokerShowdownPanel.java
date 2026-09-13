@@ -33,37 +33,29 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.TypedHashMap;
-import static com.donohoedigital.config.DebugConfig.TESTING;
 import com.donohoedigital.config.Perf;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.EngineUtils;
 import com.donohoedigital.games.engine.GameContext;
-import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.engine.Card;
 import com.donohoedigital.games.poker.engine.Hand;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.donohoedigital.config.DebugConfig.TESTING;
+
 public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback, ChangeListener
 {
-    static Logger logger = LogManager.getLogger(PokerShowdownPanel.class);
-
     private static final Dimension resultsSize = new Dimension(90, 50);
 
     private final GameContext context_;
@@ -77,7 +69,6 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
     private boolean bStopRequested_ = false;
     private boolean bIterWayBig_;
     private GlassButton run_, stop_;
-    private boolean bDemo_;
 
     /**
      * Create showdown panel
@@ -125,7 +116,7 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         TypedHashMap dummy = new TypedHashMap();
         numOpponents_ = new OptionInteger(null, "numopp", STYLE, dummy, null, 1, 9, -1, true);
         numOpponents_.addChangeListener(this);
-        numOpponents_.addChangeListener(e -> {
+        numOpponents_.addChangeListener(_ -> {
             if (numOpponents_.getSpinner().isValidData())
             {
                 updateNumOpponents();
@@ -145,7 +136,7 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         group.add(simcombo_);
         simbase.add(simcombo_, BorderLayout.WEST);
         // listener to control # sims
-        ActionListener comboListener = e ->
+        ActionListener comboListener = _ ->
             numSims_.setEnabled(simcombo_.isSelected());
 
         allcombo_ = new DDRadioButton("allcombos", STYLE);
@@ -156,21 +147,13 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         allcombo_.addActionListener(comboListener);
 
         int nMax = 10000000;
-        bDemo_ = GameEngine.getGameEngine().isDemo();
-        numSims_ = new OptionInteger(null, "hands", STYLE, dummy, bDemo_ ? 10000 : null,
-                                     bDemo_ ? 1000 : 25000,
-                                     bDemo_ ? 10000 : nMax, -1, true);
-        numSims_.getSpinner().setValue(bDemo_ ? 10000 : nMax);
-        if (!bDemo_)
-        {
-            numSims_.getSpinner().setUseBigStep(true);
-            numSims_.getSpinner().resetPreferredSize();
-            numSims_.resetToDefault();
-        }
-        else
-        {
-            numSims_.getSpinner().setStep(1000);
-        }
+        numSims_ = new OptionInteger(null, "hands", STYLE, dummy,  null,
+                                     25000,
+                                     nMax, -1, true);
+        numSims_.getSpinner().setValue(nMax);
+        numSims_.getSpinner().setUseBigStep(true);
+        numSims_.getSpinner().resetPreferredSize();
+        numSims_.resetToDefault();
         numSims_.setEnabled(true);
         numSims_.addChangeListener(this);
         simbase.add(numSims_, BorderLayout.CENTER);
@@ -183,7 +166,7 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         pb.setBorderLayoutGap(0, 5);
 
         run_ = new GlassButton("run", "Glass");
-        run_.addActionListener(e -> {
+        run_.addActionListener(_ -> {
             sim_.bSimRunning_ = true;
             bStopRequested_ = false;
             clearResults();
@@ -195,10 +178,6 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
             stop_.setEnabled(true);
             if (simcombo_.isSelected())
             {
-                if (bDemo_)
-                {
-                    EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.showdown.demo"));
-                }
                 runSimulator();
             }
             else
@@ -208,7 +187,7 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         });
         stop_ = new GlassButton("stop", "Glass");
         stop_.setEnabled(false);
-        stop_.addActionListener(e ->
+        stop_.addActionListener(_ ->
             setStopRequested());
 
         pb.add(run_, BorderLayout.WEST);
@@ -467,7 +446,7 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
      */
     private class UpdateThread extends Thread
     {
-        private boolean bSimulate;
+        private final boolean bSimulate;
 
         public UpdateThread(boolean bSim)
         {

@@ -60,7 +60,6 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
     private PokerButton buttonForward_;
     private PokerImageButton buttonPrizes_;
     private PokerImageButton buttonEdit_;
-    private PokerImageButton buttonCalc_;
 
     private DDLabel labelPaused_;
     private DDLabel labelDetails_;
@@ -69,10 +68,6 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
     private DisplayLabel labelBblind_;
     private DisplayLabel labelLevel_;
     private DisplayLabel labelAnte_;
-    private DDLabel labelLevelX_;
-    private DDLabel labelSblindX;
-    private DDLabel labelBblindX;
-    private DDLabel labelAnteX_;
 
     private DDText labelNextBlinds_;
 
@@ -85,7 +80,7 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
         // panels
         DDPanel center = createCenterPanel();
         DDPanel buttons = createButtonPanel(true);
-        ImageComponent banner = new ImageComponent(engine_.isDemo() ? "pokermenu-demo" : "pokermenu", 1.0d);
+        ImageComponent banner = new ImageComponent("pokermenu", 1.0d);
 
         // HACK - change default size of map so it better occupies
         // the space below the banner/buttons, which is a different
@@ -133,14 +128,14 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
         labelName_.setForeground(StylesConfig.getColor("clock.fg")); // top label same color as clock
         labelTime_ = new DisplayLabel(460 / 12f, 143.5f / 12f, 200f / W, 72 / H, 800f / W, RIGHT, TOP, DF, "PokerClock");
 
-        labelLevelX_ = new DisplayPill(200 / PF, 40 / PF, 55f / W, 400 / H, 200f / W, CENTER, TOP, "levelx");
+        new DisplayPill(200 / PF, 40 / PF, 55f / W, 400 / H, 200f / W, CENTER, TOP, "levelx");
         labelLevel_ = new DisplayLabel(200 / NF, 87 / NF, 55f / W, 455 / H, 200f / W, CENTER, TOP, DF, "PokerClockBlind");
-        labelAnteX_ = new DisplayPill(500 / PF, 40 / PF, 645f / W, 400 / H, 500f / W, CENTER, TOP, "ante");
+        new DisplayPill(500 / PF, 40 / PF, 645f / W, 400 / H, 500f / W, CENTER, TOP, "ante");
         labelAnte_ = new DisplayLabel(500 / NF, 87 / NF, 645f / W, 455 / H, 500f / W, CENTER, TOP, DF, "PokerClockBlind");
 
-        labelSblindX = new DisplayPill(500 / PF, 40 / PF, 55f / W, 580 / H, 500f / W, CENTER, TOP, "sblind");
+        new DisplayPill(500 / PF, 40 / PF, 55f / W, 580 / H, 500f / W, CENTER, TOP, "sblind");
         labelSblind_ = new DisplayLabel(500 / NF2, 105 / NF2, 55f / W, 635 / H, 500f / W, CENTER, TOP, DF, "PokerClockBlind");
-        labelBblindX = new DisplayPill(500 / PF, 40 / PF, 645f / W, 580 / H, 500f / W, CENTER, TOP, "bblind");
+        new DisplayPill(500 / PF, 40 / PF, 645f / W, 580 / H, 500f / W, CENTER, TOP, "bblind");
         labelBblind_ = new DisplayLabel(500 / NF2, 105 / NF2, 645f / W, 635 / H, 500f / W, CENTER, TOP, DF, "PokerClockBlind");
 
         // game buttons                                             PF, PH, x,             y,               w
@@ -154,19 +149,19 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
         labelDetails_ = new DisplayLabel(430 / NF3, 120 / NF3, 790 / W, 790 / H, 430f / W, LEFT, TOP);
 
         // listeners/borders
-        buttonRewind_.addActionListener(e ->
+        buttonRewind_.addActionListener(_ ->
             rewind());
         buttonRewind_.setBorderGap(0, 0, 0, 0);
 
         buttonStartPause_.addActionListener(
-            e ->
+                _ ->
                 game_.getGameClock().toggle());
 
-        buttonForward_.addActionListener(e ->
+        buttonForward_.addActionListener(_ ->
             forward());
         buttonForward_.setBorderGap(0, 0, 0, 0);
 
-        buttonEdit_.addActionListener(e ->
+        buttonEdit_.addActionListener(_ ->
             edit());
 
         // customizations
@@ -202,9 +197,9 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
         buttonHelp_ = new PokerImageButton(this, getGameButton("help"));
         buttonEdit_ = new PokerImageButton(this, getGameButton("edit"));
         buttonPrizes_ = new PokerImageButton(this, getGameButton("prizepool"));
-        buttonCalc_ = new PokerImageButton(this, getGameButton("calc"));
+        PokerImageButton buttonCalc_ = new PokerImageButton(this, getGameButton("calc"));
 
-        // button layout - in north west corner of right panel
+        // button layout - in north-west corner of right panel
         DDPanel buttonpanel = new DDPanel();
         if (bHorizontal)
         {
@@ -329,18 +324,14 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
             buttonRewind_.setEnabled(rewind);
         }
 
-        boolean forward = !engine_.isDemo() || (game_.getLevel() < PokerNight.DEMO_MAX);
-
-        if (forward != buttonForward_.isEnabled())
+        if (!buttonForward_.isEnabled())
         {
-            buttonForward_.setEnabled(forward);
+            buttonForward_.setEnabled(true);
         }
 
-        boolean startpause = !engine_.isDemo() || (game_.getLevel() <= PokerNight.DEMO_MAX);
-
-        if (startpause != buttonStartPause_.isEnabled())
+        if (!buttonStartPause_.isEnabled())
         {
-            buttonStartPause_.setEnabled(startpause);
+            buttonStartPause_.setEnabled(true);
         }
     }
 
@@ -348,8 +339,6 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
      * GameClockListener implementation.
      * <p/>
      * Does nothing, subclasses may override.
-     *
-     * @param clock
      */
     public void gameClockTicked(GameClock clock)
     {
@@ -362,8 +351,6 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
      * GameClockListener implementation.
      * <p/>
      * Does nothing, subclasses may override.
-     *
-     * @param clock
      */
     public void gameClockSet(GameClock clock)
     {
@@ -375,8 +362,6 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
      * GameClockListener implementation.
      * <p/>
      * Clears "*** PAUSED ***" label, changes button text to "Start".
-     *
-     * @param clock
      */
     public void gameClockStarted(GameClock clock)
     {
@@ -388,8 +373,6 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
      * GameClockListener implementation.
      * <p/>
      * Sets "*** PAUSED ***" label, changes button text to "Pause".
-     *
-     * @param clock
      */
     public void gameClockStopped(GameClock clock)
     {
@@ -579,8 +562,8 @@ public class ShowPokerNightTable extends ShowPokerTable implements PropertyChang
             int nMaxRebuy = profile.getMaxRebuys();
             int nAddonLevel = profile.getAddonLevel();
 
-            String sRebuy = null;
-            String sAddon = null;
+            String sRebuy;
+            String sAddon;
 
             // rebuy message
             if (bRebuy)

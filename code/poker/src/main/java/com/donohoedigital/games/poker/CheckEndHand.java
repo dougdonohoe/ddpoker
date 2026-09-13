@@ -38,20 +38,20 @@
 
 package com.donohoedigital.games.poker;
 
-import com.donohoedigital.config.DebugConfig;
-import com.donohoedigital.config.PropertyConfig;
-import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
-import com.donohoedigital.games.engine.*;
-import com.donohoedigital.games.poker.online.TournamentDirector;
-import com.donohoedigital.games.poker.engine.PokerConstants;
-import com.donohoedigital.games.config.GameButton;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.DebugConfig;
+import com.donohoedigital.config.PropertyConfig;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.engine.ChainPhase;
+import com.donohoedigital.games.engine.EngineUtils;
+import com.donohoedigital.games.engine.Phase;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.online.TournamentDirector;
 
 import java.util.List;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  *
@@ -59,8 +59,6 @@ import java.util.List;
  */
 public class CheckEndHand extends ChainPhase
 {
-    static Logger logger = LogManager.getLogger(CheckEndHand.class);
-
     private boolean bGameOver_ = false;
     private PokerGame game_;
     private TournamentDirector td_;
@@ -85,27 +83,13 @@ public class CheckEndHand extends ChainPhase
 		PokerTable table = game.getCurrentTable();
 
         boolean bGameOver = false;
-        boolean bDemo = GameEngine.getGameEngine().isDemo();
         boolean bOnline = game.isOnlineGame();
-        
-        // demo check
-        if (bDemo && PokerUtils.isDemoOver(game.getGameContext(), human, false) && !bOnline)
-        {
-            int n = human.getChipCount();
-            human.setChipCount(0);
-            game.addExtraChips(-n);
-            human.setDemoLimit();
-        }
-        else // game not over, allow them to do never-broke, rebuys
-        {
-            bDemo = false;
-        }
 
         // if human player has no more chips, tournament is over
         if (human.getChipCount() == 0 && !human.isObserver())
         {
             // if player can rebuy, given them chance to
-            if (!bDemo && bDoRebuyAndCleanup && table.isRebuyAllowed(human))
+            if (bDoRebuyAndCleanup && table.isRebuyAllowed(human))
             {
                 // if they didn't rebuy, game is over
                 if (!NewLevelActions.rebuy(game, ShowTournamentTable.REBUY_BROKE, table.getLevel()))
@@ -121,14 +105,14 @@ public class CheckEndHand extends ChainPhase
             }
 
             // never go broke option - human gets amount equal to chip leader
-            if (bGameOver && !bDemo && !bOnline &&
+            if (bGameOver && !bOnline &&
                  PokerUtils.isCheatOn(game.getGameContext(), PokerConstants.OPTION_CHEAT_NEVERBROKE))
             {
                 // only transfer if done from normal mode
                 if (bDoRebuyAndCleanup)
                 {
                     List<PokerPlayer> rank = game.getPlayersByRank();
-                    PokerPlayer lead = rank.get(0);
+                    PokerPlayer lead = rank.getFirst();
                     int nAdd = lead.getChipCount() / 2;
                     nAdd -= nAdd % table.getMinChip();
                     human.setChipCount(nAdd);
@@ -157,7 +141,7 @@ public class CheckEndHand extends ChainPhase
 
         // if practice mode, and game is over for human, do cleanup
         // so the place/prize is recorded correctly and displayed
-        // propertly when we show the GameOver dialog below.  We
+        // properly when we show the GameOver dialog below.  We
         // do this here so that we can use a modal dialog to ask
         // user whether they wish to continue watching the AI or
         // to quit.  If num player with chips is one, skip this

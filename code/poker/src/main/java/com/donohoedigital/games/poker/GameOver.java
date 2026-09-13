@@ -125,20 +125,9 @@ public class GameOver extends DialogPhase
         DDPanel base = new DDPanel();
         base.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
 
-        // demo?
+        // configure msg
         String sExtra = "";
-        if (engine_.isDemo())
-        {
-            sExtra = PropertyConfig.getMessage("msg.gameover.demo",
-                                               bOnline_ ? PokerUtils.DEMO_LIMIT_ONLINE : PokerUtils.DEMO_LIMIT);
-
-            GlassButton order = new GlassButton("order", "Glass");
-            order.addActionListener(e ->
-                context_.processPhase("Order"));
-            back_.getButtonBox().addButton(order);
-            removeMatchingButton("yesWatch");
-        }
-        else if (game_.isGameOver())
+        if (game_.isGameOver())
         {
             sExtra = PropertyConfig.getMessage("msg.gameover.done");
         }
@@ -178,10 +167,6 @@ public class GameOver extends DialogPhase
         else if (game_.isGameOver())
         {
             sMsg = PropertyConfig.getMessage("msg.gameover.out.observer");
-        }
-        else if (engine_.isDemo() && human.isDemoLimit())
-        {
-            sMsg = PropertyConfig.getMessage("msg.gameover.out.demo");
         }
         else
         {

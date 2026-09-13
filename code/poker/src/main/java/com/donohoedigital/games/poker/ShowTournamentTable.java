@@ -2535,12 +2535,6 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
         public void actionPerformed(ActionEvent e)
         {
-            if (PokerUtils.isDemoOver(context_, player, true) && !bSitout)
-            {
-                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.onlinedone.demo"));
-                return;
-            }
-
             player.setSittingOut(bSitout);
             TD().playerUpdate(player, player.getOnlineSettings());
         }

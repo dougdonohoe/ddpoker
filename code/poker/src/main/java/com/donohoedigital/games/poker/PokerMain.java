@@ -416,7 +416,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         /*
          * handle load
          */
-        if (!isDemo() && sFileParam_ != null)
+        if (sFileParam_ != null)
         {
             Logger log = LogManager.getLogger(PokerMain.class);
             if (sFileParam_.endsWith(GameListPanel.SAVE_EXT))

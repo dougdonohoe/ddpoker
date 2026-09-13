@@ -127,7 +127,6 @@
   <image name="led-yellow" location="led-yellow.png"/>
 
   <image name="pokermenu" location="pokermenu.png"/>
-  <image name="pokermenu-demo" location="pokermenu-demo.png"/>
   <image name="pokerdialog" location="pokerdialog.png"/>
   <!-- dialog title bar icon; drawn at 20 logical px, larger variants for scaled displays
        (see DDMultiResIcon) - 125% needs 25 real pixels, 150% needs 30, 200% needs 40 -->
@@ -181,11 +180,6 @@
   <image name="button.quit.up" location="button-quit-up.png"/>
   <image name="button.quit.down" location="button-quit-down.png"/>
   <image name="button.quit.disable" location="button-quit-disable.png"/>
-
-  <image name="button.order.over" location="button-order-over.png"/>
-  <image name="button.order.up" location="button-order-up.png"/>
-  <image name="button.order.down" location="button-order-down.png"/>
-  <image name="button.order.disable" location="button-order-disable.png"/>
 
   <image name="button.info.over" location="button-info-over.png"/>
   <image name="button.info.up" location="button-info-up.png"/>

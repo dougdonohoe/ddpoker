@@ -125,14 +125,7 @@ public class PokerStartMenu extends StartMenu
         addControlButton(ctrlbuttonbase, "exit");
         addControlButton(ctrlbuttonbase, "calc");
         addControlButton(ctrlbuttonbase, "options");
-        if (!engine_.isDemo())
-        {
-            addControlButton(ctrlbuttonbase, "register");
-        }
-        else
-        {
-            addControlButton(ctrlbuttonbase, "order");
-        }
+        addControlButton(ctrlbuttonbase, "register");
         addControlButton(ctrlbuttonbase, "support");
         addControlButton(ctrlbuttonbase, "help");
 
@@ -301,7 +294,7 @@ public class PokerStartMenu extends StartMenu
         // Ask GitHub whether a newer DD Poker has been released.  Independent of the DD message
         // check above: GitHub is not a DD server, so neither the online-servers option nor a
         // player profile is required.  Runs off the EDT and stays quiet unless there is news.
-        if (isStartMenu() && !engine_.isDemo() && PokerUtils.isOptionOn(PokerConstants.OPTION_AUTO_CHECK_UPDATE))
+        if (isStartMenu() && PokerUtils.isOptionOn(PokerConstants.OPTION_AUTO_CHECK_UPDATE))
         {
             UpdateCheck.checkAtStartup(context_, () -> context_.getCurrentUIPhase() == this);
         }

@@ -772,23 +772,6 @@ public class PokerUtils extends EngineUtils
         return engine.getPrefsNode().getInt(sName, nDefault);
     }
 
-    public static final int DEMO_LIMIT = 30;
-    public static final int DEMO_LIMIT_ONLINE = 15;
-
-    /**
-     * is game done for this player in demo?
-     */
-    public static boolean isDemoOver(GameContext context, PokerPlayer player, boolean bDuringHand)
-    {
-        boolean bOnline = false;
-        PokerGame game = (PokerGame) context.getGame();
-        if (game != null) bOnline = game.isOnlineGame();
-        int nLimit = TESTING(EngineConstants.TESTING_DEMO) ? 2 :
-                     (bOnline ? DEMO_LIMIT_ONLINE : DEMO_LIMIT);
-        if (bDuringHand) nLimit++;
-        return (player.isHuman() && player.isDemo() && player.getHandsPlayed() >= nLimit);
-    }
-
     /**
      * Format as important dealer message
      */

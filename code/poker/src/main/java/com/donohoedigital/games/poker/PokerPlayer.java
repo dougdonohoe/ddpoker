@@ -42,8 +42,6 @@ import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
 import com.donohoedigital.base.Format;
 import com.donohoedigital.base.Utils;
-import static com.donohoedigital.config.DebugConfig.TESTING;
-import static com.donohoedigital.config.DebugConfig.isTestingOn;
 import com.donohoedigital.comms.TokenizedList;
 import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.DebugConfig;
@@ -53,15 +51,17 @@ import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.poker.ai.OpponentModel;
 import com.donohoedigital.games.poker.ai.PlayerType;
 import com.donohoedigital.games.poker.ai.PokerAI;
+import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.event.PokerTableEvent;
 import com.donohoedigital.games.poker.model.TournamentProfile;
-import com.donohoedigital.games.poker.engine.*;
 import com.donohoedigital.games.poker.network.PokerConnection;
 import com.donohoedigital.games.poker.network.PokerURL;
 import com.donohoedigital.server.WorkerThread;
 
 import java.io.File;
 import java.util.Comparator;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  *
@@ -124,7 +124,6 @@ public class PokerPlayer extends GamePlayer
     private long nThinkTankAccessed_ = 0;
     private int nTimeoutMsgSent_ = 0;
     private int nPendingWin_ = 0;
-    private boolean bDemoLimit_ = false;
 
     // online transient info
     private volatile WorkerThread worker_;
@@ -172,7 +171,7 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Get display name - in online game, adds (ai) to ai players and (demo) to demo players
+     * Get display name - in online game, adds (ai) to ai players
      * and (host) to the host.
      */
     public String getDisplayName(boolean bOnline)
@@ -181,8 +180,8 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Get display name - in online game, adds (ai) to ai players and (demo) to demo players
-     * and (host) to the host. If bLong is false, (d) and (h) are appended instead.
+     * Get display name - in online game, adds (ai) to ai players
+     * and (host) to the host. If bLong is false, (h) is appended instead.
      */
     public String getDisplayName(boolean bOnline, boolean bLong)
     {
@@ -192,16 +191,11 @@ public class PokerPlayer extends GamePlayer
 
         if (isHost())
         {
-            return PropertyConfig.getMessage(isDemo() ? "msg.playername.host.demo"+sExtra:
-                                             "msg.playername.host"+sExtra, getName());
+            return PropertyConfig.getMessage("msg.playername.host"+sExtra, getName());
         }
         else if (isComputer())
         {
             return PropertyConfig.getMessage("msg.playername.ai", getName());
-        }
-        else if (isDemo())
-        {
-            return PropertyConfig.getMessage("msg.playername.demo"+sExtra   , getName());
         }
         else
         {
@@ -774,22 +768,6 @@ public class PokerPlayer extends GamePlayer
         nChips_ += n;
     }
 
-    /**
-     * demo limit
-     */
-    public void setDemoLimit()
-    {
-        bDemoLimit_ = true;
-    }
-
-    /**
-     * is demo limit reached?
-     */
-    public boolean isDemoLimit()
-    {
-        return bDemoLimit_;
-    }
-
     // Store timeout and thinkbank in same int (so we don't have
     // to change save format - not accessed on client prior to 2.5)
     // Store thinkbank in first million (as millis) and timeout
@@ -876,7 +854,7 @@ public class PokerPlayer extends GamePlayer
         if (table_ != null)
         {
             throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR,
-                toString() + " already at table " + table_ + ", but trying to assign to another table: "+
+                this + " already at table " + table_ + ", but trying to assign to another table: "+
                 table, null);
         }
         table_ = table;
@@ -1149,7 +1127,7 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Should player be asked to showing losing hands?
+     * Should player be asked to show losing hands?
      */
     public boolean isAskShowLosing()
     {
@@ -1169,7 +1147,7 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Should player be asked to showing winning hands (when uncontested)?
+     * Should player be asked to show winning hands (when uncontested)?
      */
     public boolean isAskShowWinning()
     {
@@ -1313,7 +1291,7 @@ public class PokerPlayer extends GamePlayer
                 break;
 
             default:
-                ApplicationError.assertTrue(false, "Unknown HandAction action: " + action.getAction());
+                throw new ApplicationError("Unknown HandAction action: " + action.getAction());
         }
     }
 
@@ -1412,7 +1390,7 @@ public class PokerPlayer extends GamePlayer
         }
 
         // safety check:
-        // if nothing to call and we haven't bet yet, make this a bet instead
+        // if nothing to call, and we haven't bet yet, make this a bet instead
         if (nCall == 0 && hhand.getBet(this) == 0)
         {
             bet(nAmount, sDebug);
@@ -1583,15 +1561,14 @@ public class PokerPlayer extends GamePlayer
      */
     public static String getPositionName(int n)
     {
-        switch (n)
-        {
-            case EARLY: return "early";
-            case MIDDLE: return "middle";
-            case LATE:     return "late";
-            case SMALL:    return "small";
-            case BIG: return "big";
-                default: return "none";
-        }
+        return switch (n) {
+            case EARLY -> "early";
+            case MIDDLE -> "middle";
+            case LATE -> "late";
+            case SMALL -> "small";
+            case BIG -> "big";
+            default -> "none";
+        };
     }
 
     /**
@@ -1639,12 +1616,11 @@ public class PokerPlayer extends GamePlayer
         if (isSmallBlind()) return "S";
         if (isBigBlind()) return "B";
 
-        ApplicationError.assertTrue(false, "Bad position: " + nPosition_ + " numplayers: " + nNumPlayers);
-        return null;
+        throw new ApplicationError("Bad position: " + nPosition_ + " numplayers: " + nNumPlayers);
     }
 
     /**
-     * get early,middle,late,etc - pre-flop use only
+     * get early,middle,late,etc. - pre-flop use only
      */
     public int getPositionCategory()
     {
@@ -1791,15 +1767,15 @@ public class PokerPlayer extends GamePlayer
     {
         StringBuilder sb = new StringBuilder();
         sb.append(getName()).append(" ");
-        if (hand_ != null) sb.append(hand_.toString());
+        if (hand_ != null) sb.append(hand_);
         else sb.append("[no hand]");
         sb.append(" $").append(nChips_);
         return sb.toString();
     }
 
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
 
     /**
      * Add extra items to entry
@@ -2175,9 +2151,9 @@ public class PokerPlayer extends GamePlayer
         }
     }
 
-    /////
-    ///// Online
-    /////
+    //
+    // Online
+    //
 
     /**
      * For online games, the host uses this to store the connection
@@ -2300,12 +2276,12 @@ public class PokerPlayer extends GamePlayer
     }
 
 
-    ///
-    /// Player prefs - we use separate marshal/unmarshal to
-    /// send updates to host because we don't want to send
-    /// updates from client to host and override the most
-    /// recent data
-    ///
+    //
+    // Player prefs - we use separate marshal/unmarshal to
+    // send updates to host because we don't want to send
+    // updates from client to host and override the most
+    // recent data
+    //
 
     /**
      * marshal player-settings to string

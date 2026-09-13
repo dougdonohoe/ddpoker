@@ -1335,20 +1335,11 @@ public class PokerGame extends Game implements PlayerActionListener
 
         // num seats to fill
         int nOpen = table.getNumOpenSeats();
-        boolean bDemo = GameEngine.getGameEngine().isDemo();
 
         // randomly assign player
         PokerPlayer player;
         for (int i = 0; i < nOpen && i < nMax; i++)
         {
-            // if demo, set seed so order is same
-            // do in loop since adding player to table
-            // triggers AI creation, which could change seed
-            if (bDemo)
-            {
-                DiceRoller.setSeed(49469233 + i);
-            }
-
             idx = DiceRoller.rollDieInt(players.size()) - 1;
 
             // testing with two players and more than 10 players - keep at diff tables

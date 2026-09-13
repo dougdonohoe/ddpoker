@@ -425,7 +425,7 @@ public class GameContext
      */
     private Phase _processPhase(String sPhaseName, TypedHashMap params, boolean bHistory)
     {
-        if ((engine_.isBDemo() || engine_.isActivationNeeded()) && TODOphase_ != null)
+        if (engine_.isActivationNeeded() && TODOphase_ != null)
         {
             logger.warn("Skipping {} because TODO phase is not null: {}", sPhaseName, TODOphase_);
             return null;
@@ -457,15 +457,6 @@ public class GameContext
                     TODOhistory_ = bHistory;
                 }
                 sPhaseName = "Activate";
-                params = null;
-                bHistory = false;
-            }
-            else if (engine_.isBDemo())
-            {
-                TODOphase_ = sPhaseName;
-                TODOparams_ = params;
-                TODOhistory_ = bHistory;
-                sPhaseName = "Demo";
                 params = null;
                 bHistory = false;
             }
@@ -595,13 +586,6 @@ public class GameContext
 
         // get instance of phase
         Phase phase = getInstance(gamephase);
-
-        // bug 212 - demo mode - if asking for a phase that is in demo,
-        // which generally should not happen, then show start menu
-        if (engine_.isDemo() && !phase.isUsedInDemo())
-        {
-            return _processPhase("StartMenu", null, true);
-        }
 
         // store in history if the phase says too, and the
         // calling function wants it stored.  Note:  bHistory
@@ -878,11 +862,6 @@ public class GameContext
                 {
                     sClass = "com.donohoedigital.games.engine.Activate";
                     cClass = Activate.class;
-                }
-                else if (engine_.isBDemo())
-                {
-                    sClass = "com.donohoedigital.games.engine.Demo";
-                    cClass = Demo.class;
                 }
                 else if (sName.equals("License")) // BUG 198 - ensure license class used
                 {

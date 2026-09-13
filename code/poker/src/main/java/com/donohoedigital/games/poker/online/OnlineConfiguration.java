@@ -248,15 +248,6 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         // add game checkbox
         listPublic_ = new DDCheckBox("publiclist", STYLE);
         listPublic_.setSelected(false);
-
-        // shouldn't happen unless player copies a player profile file over
-        listPublic_.addActionListener(e -> {
-            if (listPublic_.isSelected() && engine_.isDemo())
-            {
-                EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.playerprofile.demo"));
-                listPublic_.setSelected(false);
-            }
-        });
         gbox.add(listPublic_, BorderLayout.SOUTH);
 
         //**// options

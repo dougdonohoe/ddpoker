@@ -60,7 +60,6 @@ public class VersionTest {
         assertRoundTrip("3.1.8");
         assertRoundTrip("2.0b6.4");
         assertRoundTrip("3.1a2");
-        assertRoundTrip("1.2d");
         assertRoundTrip("3.1.8_en");
         assertRoundTrip("10.20.30");
         assertRoundTrip("2.0b12_fr");
@@ -81,7 +80,6 @@ public class VersionTest {
         assertEquals(1, v.getMinor());
         assertEquals(0, v.getPatch());
         assertTrue(v.isProduction());
-        assertFalse(v.isDemo());
         assertNull(v.getLocale());
 
         // new style patch
@@ -103,7 +101,6 @@ public class VersionTest {
         assertTrue(alpha.isAlpha());
         assertFalse(alpha.isBeta());
 
-        assertTrue(Version.parse("1.2d").isDemo());
         assertEquals("en", Version.parse("3.1.8_en").getLocale());
     }
 
@@ -186,11 +183,10 @@ public class VersionTest {
         assertFalse(Version.parse("9.9.9").isNewerThan(null));
     }
 
-    /** The locale says who a build is for, not when it is from; same for the demo flag. */
+    /** The locale says who a build is for, not when it is from. */
     @Test
-    public void ordering_ignoresLocaleAndDemo() {
+    public void ordering_ignoresLocale() {
         assertEquals(Version.parse("3.1.8"), Version.parse("3.1.8_fr"));
-        assertEquals(Version.parse("1.2"), Version.parse("1.2d"));
         assertFalse(Version.parse("3.1.8_fr").isNewerThan(Version.parse("3.1.8_en")));
     }
 
