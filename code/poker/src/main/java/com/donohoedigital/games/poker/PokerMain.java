@@ -326,12 +326,12 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
     /**
-     * initial splash file name
+     * initial splash icon file name (shown in Windows/Linux taskbar during startup)
      */
     @Override
     protected String getSplashIconFile()
     {
-        return "pokericon32.gif";
+        return "pokericon128.png";
     }
 
     /**
