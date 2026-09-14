@@ -36,7 +36,12 @@
 
   <imagedir>images</imagedir>
 
-  <image name="gui.icon" location="pokericon32.gif"/>
+  <!-- window icons; BaseFrame loads all sizes via setIconImages() -->
+  <image name="gui.icon.16" location="pokericon16.png"/>
+  <image name="gui.icon.32" location="pokericon32.png"/>
+  <image name="gui.icon.48" location="pokericon48.png"/>
+  <image name="gui.icon.64" location="pokericon64.png"/>
+  <image name="gui.icon.128" location="pokericon128.png"/>
   <image name="engine.basepanel" location="gray-rock.jpg"/>
 
   <image name="splash" location="poker-splash-nochoice.jpg" cache="false"/>
@@ -48,7 +53,6 @@
 
   <image name="ddspade48" location="ddspade48.png"/>
   <image name="pokericon48" location="pokericon48.png"/>
-  <image name="pokericon32" location="pokericon32.gif"/>
   <image name="pokericon32png" location="pokericon32.png"/>
   <image name="pokericon16" location="pokericon16.gif"/>
   <image name="pokericon16png" location="pokericon16.png"/>
