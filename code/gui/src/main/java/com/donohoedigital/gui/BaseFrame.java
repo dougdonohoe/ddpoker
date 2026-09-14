@@ -42,7 +42,6 @@ import javax.swing.*;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,19 +50,12 @@ public class BaseFrame extends JFrame implements DDWindow
     static Logger logger = LogManager.getLogger(JFrame.class);
 
     GraphicsDevice device_;
-    BaseFrame thisFrame;
-    boolean bFixAltTabBug_ = false;
-    boolean bIgnoreNextDeactive_ = false;
-    boolean bActive_ = false;
-    DisplayMode dmLastSet_ = null;
     private final List<InternalDialog> allDialogs_ = new ArrayList<>();
 
     public BaseFrame()
     {
         super();
-        thisFrame = this;
         device_ = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        addWindowListener(new BaseFrameWindowAdapter());
         ImageIcon icon = ImageConfig.getImageIcon("gui.icon");
         if (icon != null)
         {
@@ -73,11 +65,6 @@ public class BaseFrame extends JFrame implements DDWindow
         {
             logger.warn("Icon not found in images.xml: 'gui.icon'");
         }
-    }
-
-    public GraphicsDevice getGraphicsDevice()
-    {
-        return device_;
     }
 
     public void center()
@@ -90,166 +77,26 @@ public class BaseFrame extends JFrame implements DDWindow
     }
 
     /**
-     * Display (default no full screen)
+     * Display
      */
     public void display()
     {
-        display(false);
-    }
-
-    /**
-     * display
-     */
-    public void display(boolean bFull)
-    {
-        if (bFull && Utils.ISWINDOWS && Utils.IS141)
-        {
-            setMinimized();
-        }
         setVisible(true);
-
-        // need to run later so that window is drawn first/initialized
-        if (bFull)
-        {
-            //frame_.setDisplayMode(800, 600, 32, 75); // TODO: configure, get depth/refresh from current
-            SwingUtilities.invokeLater(
-                    this::setFullScreenOn
-            );
-        }
     }
 
     /**
-     * Cleanup for exit (dispose, turn off full screen mode)
+     * Cleanup for exit
      */
     public void cleanup()
     {
         dispose();
-        if (isFullScreenSupported())
-        {
-            try
-            {
-                setFullScreenWindow(null);
-            }
-            catch (Throwable ignored)
-            {
-            }
-        }
     }
 
     /**
-     * Set new display mode
-     */
-    public void setDisplayMode(int nWidth, int nHeight, int nBitDepth, int nRefreshRate)
-    {
-        setDisplayMode(new DisplayMode(nWidth, nHeight, nBitDepth, nRefreshRate));
-    }
-
-    /**
-     * Set new display mode
-     */
-    public void setDisplayMode(DisplayMode dm)
-    {
-        if (!isFullScreen() || !isDisplayChangeSupported()) return;
-        if (dm == null) return;
-        dmLastSet_ = dm;
-        //System.out.println("Setting display mode to: " + dm);
-        _setDisplayMode(dm);
-        setSize(new Dimension(dm.getWidth(), dm.getHeight()));
-        validate();
-
-        // need to repaint content pane after set display mode
-        SwingUtilities.invokeLater(
-                () -> {
-                    getContentPane().validate();
-                    getContentPane().repaint();
-                }
-        );
-    }
-
-    /**
-     * Turn full screen mode on.  Returns true if succeeded.
-     * False if failed (i.e., already in full screen mode).
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    public boolean setFullScreenOn()
-    {
-        if (!isFullScreenSupported()) return false;
-
-        if (!isFullScreen())
-        {
-            if (bActive_) bIgnoreNextDeactive_ = true;
-
-            // order of following calls is important
-            dispose();
-            setUndecorated(true);
-            setFullScreenWindow(this);
-            //setIgnoreRepaint(true); // seems this is only good for animated apps, not swing
-            setResizable(false);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Turn full screen mode off.  Returns true if succeeded.
-     * False if failed (i.e., not currently in full screen mode).
-     */
-    public boolean setFullScreenOff()
-    {
-        return setFullScreenOff(false);
-    }
-
-    /**
-     * Private function for use to handle alt-tab bug
-     */
-    private boolean setFullScreenOff(boolean bAltTabBug)
-    {
-        if (!isFullScreenSupported()) return false;
-
-        if (isFullScreen())
-        {
-            setFullScreenWindow(null); // must call first or get exceptions in text area scrolling
-            dispose(); // release all native window resources
-            setUndecorated(false); // add back window border
-            setResizable(true); // make resizable
-            //setIgnoreRepaint(false); // process repaints (already on - see above)
-            setVisible(true);
-
-            // if turning off due to alt-tab, set state to iconified and
-            // set flag for processing later to restore full-screen
-            if (bAltTabBug)
-            {
-                setExtendedState(Frame.ICONIFIED);
-                bFixAltTabBug_ = true;
-            }
-            // if not restoring full screen, set last display mode to null
-            else
-            {
-                dmLastSet_ = null;
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Return whether frame is in full screen mode
-     */
-    public boolean isFullScreen()
-    {
-        if (!isFullScreenSupported()) return false;
-
-        return (getFullScreenWindow() != null);
-    }
-
-    /**
-     * Maximizes the screen.  Does nothing if frame isFullScreen()
+     * Maximizes the screen
      */
     public void setMaximized()
     {
-        if (isFullScreen()) return;
         setExtendedState(MAXIMIZED_BOTH);
     }
 
@@ -258,16 +105,14 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     public boolean isMaximized()
     {
-        if (isFullScreen()) return false;
         return (getExtendedState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH;
     }
 
     /**
-     * Minimizes the screen.  Does nothing if frame isFullScreen()
+     * Minimizes the screen
      */
     public void setMinimized()
     {
-        if (isFullScreen()) return;
         setExtendedState(ICONIFIED);
     }
 
@@ -276,16 +121,14 @@ public class BaseFrame extends JFrame implements DDWindow
      */
     public boolean isMinimized()
     {
-        if (isFullScreen()) return false;
         return (getExtendedState() & Frame.ICONIFIED) == Frame.ICONIFIED;
     }
 
     /**
-     * Sets frame to normal size.  Does nothing if frame isFullScreen()
+     * Sets frame to normal size
      */
     public void setNormal()
     {
-        if (isFullScreen()) return;
         setExtendedState(NORMAL);
     }
 
@@ -319,30 +162,6 @@ public class BaseFrame extends JFrame implements DDWindow
         for (InternalDialog dialog : all)
         {
             dialog.removeDialog();
-        }
-    }
-
-    /**
-     * Unselected (de activate) all dialogs
-     */
-    public void unselectAllDialogs()
-    {
-        if (allDialogs_.isEmpty()) return;
-        InternalDialog dialog;
-
-        for (int i = allDialogs_.size() - 1; i >= 0; i--)
-        {
-            dialog = allDialogs_.get(i);
-            if (dialog.isSelected())
-            {
-                try
-                {
-                    dialog.setSelected(false);
-                }
-                catch (PropertyVetoException ignored)
-                {
-                }
-            }
         }
     }
 
@@ -402,111 +221,13 @@ public class BaseFrame extends JFrame implements DDWindow
             //logger.debug("XX BASE window activated focus to " + getContentPane());
             restoreTo = getContentPane();
         }
-//        else
-//        {
-//            //logger.debug("YY BASE window activated focus to " + restoreTo);
-//        }
 
         restoreTo.requestFocus();
     }
 
-    /**
-     * Used to track window events to deal with alt-tab bug
-     */
-    private class BaseFrameWindowAdapter extends WindowAdapter
-    {
-        /**
-         * If re-iconifying after alt-tabbing from fullscreen mode,
-         * we need to validate to make sure window is
-         * relayed out properly
-         */
-        @Override
-        public void windowDeiconified(WindowEvent e)
-        {
-
-            if (bFixAltTabBug_)
-            {
-                //System.out.println("Deiconified - restoring");
-                //validate(); // needed only if de-iconifing and not going to full-screen
-                bActive_ = true; // need to set here to make next call work right
-
-                setFullScreenOn(); // go back to full screen
-                setDisplayMode(dmLastSet_); // set back to last display mode
-                bFixAltTabBug_ = false;
-            }
-        }
-
-        @Override
-        public void windowActivated(WindowEvent e)
-        {
-            //System.out.println("Window Activated " + getName());
-            bActive_ = true;
-            //restoreFocus(null); // TODO: remove perm?  turned off for testing for 2.5 (leave off for now - seems not needed)
-        }
-
-        /**
-         * If window deactivated in full screen mode,
-         * need to reset values to work around JDK 1.4.1 bug
-         */
-        @Override
-        public void windowDeactivated(WindowEvent e)
-        {
-            bActive_ = false;
-
-            // ignore the deactivated event after moving to full
-            // screen mode
-            if (bIgnoreNextDeactive_)
-            {
-                //System.out.println("Ignoring deactivate");
-                bIgnoreNextDeactive_ = false;
-                return;
-            }
-
-            //System.out.println("Window Deactivated " + getName());
-            if (isFullScreen())
-            {
-                //System.out.println("Turning full screen off");
-                setFullScreenOff(true);
-            }
-        }
-    }
-
-    ////
-    //// Convienence methods
-    ////
-
-    /**
-     * Return whether full screen is supported
-     */
-    public boolean isFullScreenSupported()
-    {
-        return device_.isFullScreenSupported();
-    }
-
-    /**
-     * Return whether display change is supported
-     */
-    public boolean isDisplayChangeSupported()
-    {
-        return device_.isDisplayChangeSupported();
-    }
-
-    /**
-     * Set full screen window
-     */
-    private void setFullScreenWindow(Window w)
-    {
-        //logger.debug("Setting full screen window: " + w);
-        device_.setFullScreenWindow(w);
-    }
-
-    /**
-     * Return full screen window
-     */
-    private Window getFullScreenWindow()
-    {
-        return device_.getFullScreenWindow();
-    }
+    //
+    // Convenience methods
+    //
 
     /**
      * Get DisplayMode
@@ -514,22 +235,6 @@ public class BaseFrame extends JFrame implements DDWindow
     public DisplayMode getDisplayMode()
     {
         return device_.getDisplayMode();
-    }
-
-    /**
-     * Get all DisplayModes
-     */
-    public DisplayMode[] getDisplayModes()
-    {
-        return device_.getDisplayModes();
-    }
-
-    /**
-     * Set DisplayMode
-     */
-    private void _setDisplayMode(DisplayMode dm)
-    {
-        device_.setDisplayMode(dm);
     }
 
     ////
@@ -668,32 +373,9 @@ public class BaseFrame extends JFrame implements DDWindow
         boolean bModal_ = false;
 
         /**
-         * Sets up DELETE / BACKSPACE / SPACE as keys which end modal
-         * and then calls beginModal()
-         */
-        public void beginModalEscapable(JComponent comp)
-        {
-            HandleKey hk = new HandleKey();
-
-            GuiUtils.addEscapeKeyActions(comp, hk);
-            comp.addMouseListener(hk);
-            beginModal();
-            GuiUtils.removeEscapeKeyActions(comp);
-            comp.removeMouseListener(hk);
-        }
-
-        /**
          * Begin a modal event loop.  End by calling endModal()
          */
-        public void beginModal()
-        {
-            beginModal(true);
-        }
-
-        /**
-         * Begin a modal event loop.  End by calling endModal()
-         */
-        @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod", "ChainOfInstanceofChecks"})
+        @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod", "ChainOfInstanceofChecks", "SameParameterValue"})
         void beginModal(boolean bLog)
         {
             bModal_ = true;
@@ -753,41 +435,5 @@ public class BaseFrame extends JFrame implements DDWindow
             //logger.debug("GUI Modal is false");
             bModal_ = false;
         }
-
-        private class HandleKey extends AbstractAction implements MouseListener
-        {
-            // end modal
-            public void actionPerformed(ActionEvent e)
-            {
-                endModal();
-            }
-
-            public void mouseReleased(MouseEvent e)
-            {
-                if (e.getButton() != MouseEvent.BUTTON1 &&
-                    !e.isShiftDown() && !e.isControlDown())
-                {
-                    endModal();
-                }
-            }
-
-            public void mouseClicked(MouseEvent e)
-            {
-            }
-
-            public void mouseEntered(MouseEvent e)
-            {
-            }
-
-            public void mouseExited(MouseEvent e)
-            {
-            }
-
-            public void mousePressed(MouseEvent e)
-            {
-            }
-        }
     }
-
-
 }

@@ -482,12 +482,12 @@ public class GameContext
                 int nMinWidth = gamephase.getInteger("window-width-min", 100);
                 boolean bResizable = gamephase.getBoolean("window-resize", true);
 
-                if (!TESTING(EngineConstants.TESTING_NO_EXTERNAL) && !frame_.isFullScreen())
+                if (!TESTING(EngineConstants.TESTING_NO_EXTERNAL))
                 {
                     context = engine_.createGameContext(game_, sWindowName, nMinWidth, nMinHeight, false);
                     context.setParent(this);
                     EngineWindow window = context.getFrame();
-                    window.init(gamephase, false, new Dimension(nWidth, nHeight), false, sTitle, bResizable);
+                    window.init(gamephase, false, new Dimension(nWidth, nHeight), sTitle, bResizable);
                     engine_.contextInited(context);
                     window.display();
                 }

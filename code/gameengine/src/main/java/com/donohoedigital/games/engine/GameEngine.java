@@ -561,7 +561,7 @@ public abstract class GameEngine extends BaseApp
     public void showMainWindow()
     {
         // init main window
-        defaultContext_.getFrame().init(null, true, getStartingSize(), false, PropertyConfig.getRequiredStringProperty("msg.application.name"), true);
+        defaultContext_.getFrame().init(null, true, getStartingSize(), PropertyConfig.getRequiredStringProperty("msg.application.name"), true);
 
         // need to do after init so title is set
         contextInited(defaultContext_);
