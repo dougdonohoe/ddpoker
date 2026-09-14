@@ -94,68 +94,39 @@ public class EngineMessage extends DDMessage
     public String getDebugCat()
     {
         int nCat = getCategory();
-        switch (nCat)
-        {
-            case CAT_SERVER_QUERY:
-                return "server query";
-            case CAT_NEW_GAME:
-                return "new game";
-            case CAT_JOIN_GAME:
-                return "join game";
-            case CAT_POLL_UPDATES:
-                return "poll";
-            case CAT_GET_GAME_STATE:
-                return "get game state";
-            case CAT_ACTION_DONE:
-                return "action done";
-            case CAT_CHAT:
-                return "chat";
-            case CAT_INFO:
-                return "info";
-            case CAT_ACTION_REQUEST:
-                return "action request";
-            case CAT_PLAYER_UPDATE:
-                return "player update";
-            case CAT_STATUS:
-                return "status";
-            case CAT_USER_REG:
-                return "user registration";
-            case CAT_VERIFY_KEY:
-                return "verify key";
-            case CAT_PUBLIC_IP:
-                return "public ip";
-            case CAT_CHECK_DDMSG:
-                return "check DD msg";
-
-            case CAT_COMPOSITE_MESSAGE:
-                return "composite";
-            case CAT_GAME_DATA:
-                return "game data";
-            case CAT_OK:
-                return "ok";
-            case CAT_GAME_UPDATE:
-                return "game update";
-            case CAT_EMPTY:
-                return "empty";
-
-            case CAT_EMAIL_JOIN_GAME:
-                return "join email";
-
-            case CAT_ERROR_BAD_EMAIL:
-                return "bad email";
-
-            default:
-                return "(" + nCat + ")";
-        }
+        return switch (nCat) {
+            case CAT_SERVER_QUERY -> "server query";
+            case CAT_NEW_GAME -> "new game";
+            case CAT_JOIN_GAME -> "join game";
+            case CAT_POLL_UPDATES -> "poll";
+            case CAT_GET_GAME_STATE -> "get game state";
+            case CAT_ACTION_DONE -> "action done";
+            case CAT_CHAT -> "chat";
+            case CAT_INFO -> "info";
+            case CAT_ACTION_REQUEST -> "action request";
+            case CAT_PLAYER_UPDATE -> "player update";
+            case CAT_STATUS -> "status";
+            case CAT_USER_REG -> "user registration";
+            case CAT_VERIFY_KEY -> "verify key";
+            case CAT_PUBLIC_IP -> "public ip";
+            case CAT_CHECK_DDMSG -> "check DD msg";
+            case CAT_COMPOSITE_MESSAGE -> "composite";
+            case CAT_GAME_DATA -> "game data";
+            case CAT_OK -> "ok";
+            case CAT_GAME_UPDATE -> "game update";
+            case CAT_EMPTY -> "empty";
+            case CAT_EMAIL_JOIN_GAME -> "join email";
+            case CAT_ERROR_BAD_EMAIL -> "bad email";
+            default -> "(" + nCat + ")";
+        };
     }
 
     public static final String PARAM_GAME_OPTIONS = "options";  // game options hash map
-    public static final String PARAM_LAST_TIMESTAMPS = "last";  // time stamp of last message recieved and processed
+    public static final String PARAM_LAST_TIMESTAMPS = "last";  // time stamp of last message received and processed
     public static final String PARAM_PLAYER_TIMESTAMPS = "playerts"; // timestamp of last action by given player
     public static final String PARAM_GAME_ID = "gid";           // all messages (constructor)
     public static final String PARAM_FROM_PLAYER_ID = "pid";    // all messages (constructor)
     public static final String PARAM_SEQ_ID = "seq";            // all messages (set upon send)
-    public static final String PARAM_TO_PLAYER_ID = "tid";      // id of player message intended for (typically set in PlayerQueue)
     public static final String PARAM_NUM_PLAYERS = "np";        // register games
     public static final String PARAM_EMAIL_ADDRS = "em";        // register game emails
     public static final String PARAM_NAMES = "nm";              // register game names
@@ -168,9 +139,6 @@ public class EngineMessage extends DDMessage
     public static final String PARAM_PLAYER_IDS = "ids";        // list of player ids a client controls
     public static final String PARAM_ACTION = "act";            // action server is waiting on / or player requesting
     public static final String PARAM_UPDATE_TYPE = "updtyp";    // update type for incorporating game changes
-    public static final String PARAM_RESULT = "result";         // result from in an action confirmation (optional)
-    public static final String PARAM_PARAMS = "params";         // extra params (for action requests)
-    public static final String PARAM_OPTION = "option";         // option param (used in game data updates)
     public static final String PARAM_ELIMINATED = "elim";       // player eliminated
     public static final String PARAM_EVICTED = "evict";         // player evicted
     public static final String PARAM_GAME_OVER = "gameover";    // sent when game over
@@ -297,44 +265,22 @@ public class EngineMessage extends DDMessage
         return pid;
     }
 
-    /**
-     * Set seq id
-     */
-    public void setSeqID(long id)
-    {
-        setLong(PARAM_SEQ_ID, id);
-    }
-
-    /////
-    ///// DEBUGGING
-    /////
+    //
+    // DEBUGGING
+    //
 
     public String getDebugInfoShort()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("CAT: [").append(getDebugCat()).append("]");
-        sb.append(", time=").append(getLong(PARAM_TIME));
-        sb.append(", key=").append(getKey());
-        return sb.toString();
+        return "CAT: [" + getDebugCat() + "]" +
+                ", time=" + getLong(PARAM_TIME) +
+                ", key=" + getKey();
     }
 
     public String getDebugInfo()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("CAT: [").append(getDebugCat()).append("]");
-        sb.append(", WHO: ").append(getDebugFrom());
-        sb.append(", PARAMS: ").append(toStringParams());
-        return sb.toString();
-    }
-
-    public String getDebugInfoLong()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("CAT: [").append(getDebugCat()).append("]");
-        sb.append(", WHO: ").append(getDebugFrom());
-        sb.append(", PARAMS: ").append(toStringParams());
-        sb.append(", DATA: ").append(getDataAsString());
-        return sb.toString();
+        return "CAT: [" + getDebugCat() + "]" +
+                ", WHO: " + getDebugFrom() +
+                ", PARAMS: " + toStringParams();
     }
 
     /**
@@ -343,16 +289,11 @@ public class EngineMessage extends DDMessage
     private String getDebugFrom()
     {
         int id = getFromPlayerID();
-        switch (id)
-        {
-            case PLAYER_NOTDEFINED:
-                return "(not defined)";
-            case PLAYER_SERVER:
-                return "(server)";
-            case PLAYER_GROUP:
-                return "(group)";
-            default:
-                return "(player " + id + ")";
-        }
+        return switch (id) {
+            case PLAYER_NOTDEFINED -> "(not defined)";
+            case PLAYER_SERVER -> "(server)";
+            case PLAYER_GROUP -> "(group)";
+            default -> "(player " + id + ")";
+        };
     }
 }

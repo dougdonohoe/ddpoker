@@ -386,81 +386,13 @@ public class GameContext
         return _processPhase(sPhaseName, params, false);
     }
 
-    // stores phase that should be done after registration is complete
-    private String TODOphase_;
-    private TypedHashMap TODOparams_;
-    private boolean TODOhistory_;
-
-    /**
-     * Process the TO-DO stored phase
-     */
-    public void processTODO()
-    {
-        if (TODOphase_ != null)
-        {
-            String ph = TODOphase_;
-            TODOphase_ = null;
-            TypedHashMap pa = TODOparams_;
-            TODOparams_ = null;
-            boolean b = TODOhistory_;
-            TODOhistory_ = false;
-
-            // process phase that we were going to do before registering
-            // and notify engine we are doing so
-            engine_.processingTODO(this);
-            processPhase(ph, pa, b);
-        }
-    }
-
-    /**
-     * Return true if it has TO-DO to process
-     */
-    public boolean hasTODO()
-    {
-        return TODOphase_ != null;
-    }
-
     /**
      * process phase actual logic
      */
     private Phase _processPhase(String sPhaseName, TypedHashMap params, boolean bHistory)
     {
-        if (engine_.isActivationNeeded() && TODOphase_ != null)
-        {
-            logger.warn("Skipping {} because TODO phase is not null: {}", sPhaseName, TODOphase_);
-            return null;
-        }
-
         try
         {
-            // force startmenu params to load (class is hardcoded below to prevent
-            // tampering with gamedef.xml file)
-            if (engine_.bExpired_)
-            {
-                sPhaseName = "StartMenu";
-                params = new TypedHashMap();
-                params.setBoolean(StartMenu.PARAM_EXPIRED, Boolean.TRUE);
-            }
-            else if (engine_.isActivationNeeded())
-            {
-                // if registration was void, to-do phase should be the start menu
-                if (engine_.isActivationVoided())
-                {
-                    TODOphase_ = "StartMenu";
-                    TODOparams_ = null;
-                    TODOhistory_ = true;
-                }
-                else
-                {
-                    TODOphase_ = sPhaseName;
-                    TODOparams_ = params;
-                    TODOhistory_ = bHistory;
-                }
-                sPhaseName = "Activate";
-                params = null;
-                bHistory = false;
-            }
-
             GamePhase phase = engine_.getGamedefconfig().getGamePhases().get(sPhaseName);
             ApplicationError.assertNotNull(phase, "GamePhase not found", sPhaseName);
 
@@ -852,18 +784,7 @@ public class GameContext
             {
                 Class<? extends Phase> cClass = gamephase.getClassObject();
 
-                // force startmenu to load if expired (matches above)
-                if (engine_.bExpired_)
-                {
-                    sClass = "com.donohoedigital.games.engine.StartMenu";
-                    cClass = StartMenu.class;
-                }
-                else if (engine_.isActivationNeeded())
-                {
-                    sClass = "com.donohoedigital.games.engine.Activate";
-                    cClass = Activate.class;
-                }
-                else if (sName.equals("License")) // BUG 198 - ensure license class used
+                if (sName.equals("License")) // BUG 198 - ensure license class used
                 {
                     sClass = "com.donohoedigital.games.engine.License";
                     cClass = License.class;
@@ -917,6 +838,7 @@ public class GameContext
     /**
      * Return this piece encoded as a game state entry
      */
+    @SuppressWarnings("UnusedReturnValue")
     public GameStateEntry addGameStateEntry(GameState state)
     {
         GameManager mgr = getGameManager();

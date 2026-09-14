@@ -57,7 +57,7 @@ import java.util.StringTokenizer;
 @DataCoder('M')
 public class DDMessage extends TypedHashMap implements PostWriter, PostReader, DataMarshal
 {
-    private static Logger logger = LogManager.getLogger(DDMessage.class);
+    private static final Logger logger = LogManager.getLogger(DDMessage.class);
 
     public static final String CONTENT_TYPE = "application/x-donohoedigital-msg";
 
@@ -145,7 +145,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     private int nStatus_ = DDMessageListener.STATUS_NONE;
 
     // class to represent data chunks
-    private final class MessageData
+    private static final class MessageData
     {
         private byte[] bytedata_;
         private File filedata_;
@@ -224,7 +224,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     /**
      * Create new message from file data.
      * Note: getData() will return null when this is used
-     * as the file data is not read in until marshalled
+     * as the file data is not read in until marshaled
      */
     public DDMessage(int nCategory, File file)
     {
@@ -236,7 +236,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     /**
      * Create new message from file data.
      * Note: getData() will return null when this is used
-     * as the file data is not read in until marshalled
+     * as the file data is not read in until marshaled
      */
     public DDMessage(int nCategory, File[] files)
     {
@@ -544,7 +544,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     }
     
     /**
-     * Get params marshalled from tokenized list
+     * Get params marshaled from tokenized list
      */
     private String marshalParams()
     {
@@ -554,7 +554,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     }
     
     /** 
-     * Recreate params from marshalled tokenized list
+     * Recreate params from marshaled tokenized list
      */
     private void demarshalParams(String sData)
     {
@@ -582,6 +582,11 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
             for (int i = 0; i < msgdata_.size(); i++)
             {
                 sData = getDataAtAsString(i);
+                if (sData == null)
+                {
+                    logger.debug("MSG-Data[{}]: (file data not loaded)", i);
+                    continue;
+                }
                 logger.debug("MSG-Data[{}]: {} bytes of data, displayed below:", i, sData.length());
                 StringTokenizer tok = new StringTokenizer(sData,"\n");
                 while (tok.hasMoreTokens())
@@ -708,7 +713,6 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         if (msgdata_ != null && !msgdata_.isEmpty())
         {
             int nNumData = msgdata_.size();
-            FileChannel in = null;
             MessageData data;
             WritableByteChannel out = Channels.newChannel(output);
             long nSize;
@@ -722,19 +726,15 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
                 
                 if (data.filedata_ != null)
                 {
-                    try
+                    try (FileInputStream fis = new FileInputStream(data.filedata_);
+                         FileChannel in = fis.getChannel())
                     {
-                        in = new FileInputStream(data.filedata_).getChannel();
                         long nNum = in.transferTo(0, nSize, out);
                         if (nNum != nSize)
                         {
                             throw new ApplicationError(ErrorCodes.ERROR_CREATE,
                                     "Failed to write all data", data.filedata_.getAbsolutePath(), null);
                         }
-                    }
-                    finally
-                    {
-                        in.close();
                     }
                 }
                 else
@@ -805,24 +805,21 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
             demarshalParams(sParams);
 
             // get rest of data
+            @SuppressWarnings("unchecked")
             DMArrayList<Integer> sizes = (DMArrayList<Integer>) removeList(PARAM_NUM_CHUNKS);
             if (sizes == null) return;
             int length;
-            int nNum = sizes.size();
             byte[] bytedata;
 
-            for (int i = 0; i < nNum; i++)
-            {
+            for (Integer size : sizes) {
                 nRead = 0;
-                length = sizes.get(i);
+                length = size;
                 bytedata = new byte[length];
-                while (nRead != length)
-                {
-                    n = input.read(bytedata, nRead, length-nRead);
-                    if (n == -1)
-                    {
+                while (nRead != length) {
+                    n = input.read(bytedata, nRead, length - nRead);
+                    if (n == -1) {
                         throw new EOFException("End of file decoding message data portion of DDMessage");
-                    }   
+                    }
                     nRead += n;
                 }
                 //logger.debug("TOTAL READ: " + nRead);
@@ -865,9 +862,9 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
             
     }
   
-    /////
-    ///// Version 
-    /////
+    //
+    // Version
+    //
     
     /**
      * software version
@@ -890,17 +887,31 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         return version_;
     }
     
-    /////
-    ///// License 
-    /////
+    //
+    // License
+    //
     
     /**
-     * software key for public viewing
+     * software key for public viewing (hash of real key).
+     * <p>
+     * Every message carries a license key in PARAM_KEY.  There are two defaults,
+     * both set by GameEngine at startup:
+     * <ul>
+     * <li>public key: stamped on every message by the constructor.  This is what
+     * other players see (P2P/lobby/chat messages - used for ban/mute matching,
+     * LanClientInfo, etc.).  It is a one-way hash of the real key
+     * ("P-" prefix, or "H-" when headless) so a player's real key is never
+     * exposed to other clients.</li>
+     * <li>real key: swapped in by DDMessenger.sendMessage() just before posting
+     * to the server, so the server can validate the client (registration, online profiles).
+     * Headless instances have no real key, so GameEngine uses a generated "HEADLESS-" key instead.</li>
+     * </ul>
      */
     private static String key_ = null;
     
     /**
-     * Store key for sending in public message
+     * Store key for sending in public (non-server) messages.
+     * Applied to all messages in the constructor.
      */
     public static void setDefaultKey(String key)
     {
@@ -916,12 +927,13 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     }
 
     /**
-     * software key
+     * software key (actual license key) - only ever sent to the server
      */
     private static String realkey_ = null;
 
     /**
-     * Store key for sending in server message
+     * Store key for sending in server messages.  Replaces
+     * the public key in DDMessenger.sendMessage().
      */
     public static void setDefaultRealKey(String key)
     {
@@ -936,9 +948,9 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         return realkey_;
     }
 
-    /////
-    ///// MsgState
-    /////
+    //
+    // MsgState
+    //
 
     private static MsgState state_ = null;
 
@@ -951,13 +963,5 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
     public static void setMsgState(MsgState state)
     {
         state_ = state;
-    }
-    
-    /**
-     * Get state currently used
-     */
-    public static MsgState getMsgState()
-    {
-        return state_;
     }
 }

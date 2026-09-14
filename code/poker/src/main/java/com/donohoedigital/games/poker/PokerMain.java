@@ -265,7 +265,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     protected boolean checkPreReq()
     {
         // skip on init if no key
-        if (bHeadless_ || getRealLicenseKey() == null || isActivationNeeded()) return true;
+        if (bHeadless_ || getRealLicenseKey() == null) return true;
 
         // in dev, allow one failure, then wait 3 seconds in case
         // we just killed and restarted right away
@@ -343,18 +343,6 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         return "DD Poker";
     }
 
-    @Override
-    protected boolean isAutoGenLicenseKey()
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isActivationNeeded()
-    {
-        return false;
-    }
-
     /**
      * Create a context - create our PokerContext
      */
@@ -379,17 +367,6 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     }
 
     /**
-     * for case where we just activated, need to start P2P before we
-     * do to-do phase
-     */
-    @Override
-    protected void processingTODO(GameContext context)
-    {
-        initP2P();
-        super.processingTODO(context);
-    }
-
-    /**
      * We use gameboard config
      */
     @Override
@@ -406,9 +383,8 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     protected void initialStart()
     {
         // start p2p server if we are validated (have a valid key)
-        // see processTODO() below for case startup after activation
         // start after main window initialized required (so engine is ready)
-        if (getRealLicenseKey() != null && !isActivationNeeded())
+        if (getRealLicenseKey() != null)
         {
             initP2P();
         }
@@ -491,17 +467,6 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         {
             getDefaultContext().processPhase("GamePrefsDialog"); // TODO: active context?
         }
-    }
-
-    /**
-     * Message for expired copies
-     */
-    @Override
-    protected String getExpiredMessage()
-    {
-        return "<font color=\"white\"> Version " + getVersion() + "</font>" +
-               " of DD Poker has expired.  Please contact Donohoe Digital to get the " +
-               " most recent version.";
     }
 
     /**

@@ -43,7 +43,6 @@ import com.donohoedigital.base.Base64;
 import com.donohoedigital.base.Utils;
 
 import java.security.MessageDigest;
-import java.util.regex.Pattern;
 
 /**
  * Key of form FFNN-NNNN-NNAA-AAAA
@@ -57,10 +56,6 @@ import java.util.regex.Pattern;
 public class Activation
 {
     public static final String REGKEY = "reg";
-    public static final String OLDKEY = "old";
-    public static final String BANKEY = "ban";
-    public static final String DEMOKEY = "demo";
-    public static final Pattern KEY_PATTERN = Pattern.compile("^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$");
     private static final String GUID_KEY_START = "KEY-";
     private static final int GUID_LENGTH = 36;
     private static final int RETAIL_KEY_LENGTH = 19;
@@ -99,7 +94,7 @@ public class Activation
         // validate start
         if (!sID.startsWith(String.valueOf(nStart))) return false;
 
-        // validae hash
+        // validate hash
         String sSeq = sID.substring(0, RETAIL_KEY_LENGTH - HASH_LENGTH);
         String sHash = sID.substring(RETAIL_KEY_LENGTH - HASH_LENGTH);
         return sHash.equals(hash(sSeq, sLocale));
@@ -203,122 +198,4 @@ public class Activation
     {
         System.out.print(s + '\n');
     }
-
-    // COMMENT OUT FOR RELEASE
-
-//    /**
-//     * Generate list of sequence numbers
-//     */
-//    public static void generateIDs(int nKeyStart, int nStart, int nEnd, String sLocale)
-//    {
-//        long nBase = 100000000l * nKeyStart;
-//        long nNum;
-//        long nLast = 0;
-//        int nMod;
-//        String sHash;
-//        String sSEQ;
-//        String sID;
-//        for (int i = nStart; i < nEnd; i++)
-//        {
-//            // modify each number so gap in sequence isn't predictable
-//            // the mod % 29/37 is done so it is less than the multiple
-//            // of 43 - we use all primes too for math/mods
-//            if (i % 2 == 0) {
-//                nMod = (i*(i+29)) % 29;
-//            } else {
-//                nMod = (i*(i-241)) % 37;
-//            }
-//            // make sure it is positive
-//            nMod = Math.abs(nMod);
-//
-//            // calclate num
-//            nNum = nBase + (i * 43) - nMod;
-//
-//            // make sure num isn't less than last num
-//            if (nNum <= nLast) { debug("ERROR nNum=" + nNum + " nLast="+nLast +" nBase="+nBase + " nMod+"+nMod); return; }
-//
-//            // get id
-//            sSEQ = format(""+nNum);
-//
-//            // get digest
-//            sHash = hash(sSEQ, sLocale);
-//
-//            // full id
-//            sID = sSEQ+sHash;
-//
-//            // debug print
-//            //debug(i+":  SEQ: " + sSEQ + "   ID: " + sID + "   diff: " + (nNum - nLast) + "   valid: " + validate(nKeyStart, sID));
-//            debug(sID);
-//
-//            // remember last
-//            nLast = nNum;
-//
-//            if (i % 10000 == 0) { System.err.println("At: " +i); }
-//        }
-//    }
-//
-//    /**
-//     * Format the sequence number with dashes
-//     */
-//    private static String format(String s)
-//    {
-//        sb_.setLength(0);
-//        for (int i = 0; i < s.length(); i++)
-//        {
-//            sb_.append(s.charAt(i));
-//            if (((i+1)%4) == 0 && i != (s.length() -1)) sb_.append("-");
-//        }
-//        return sb_.toString();
-//    }
-//
-//    /**
-//     * Main function to generate IDs
-//     */
-//    public static void main(String args[])
-//    {
-//        //// WAR! AGE OF IMPERIALISM
-//
-//        // note the 11 start matches WarConstants.java
-//        //generateIDs(11, 9000, 9100); // War! release 1.0, test ids - BANNED
-//        //generateIDs(11, 9100, 9200); // War! release 1.0, private ids
-//        //generateIDs(11, 10000, 32000); // War! release 1.0, sent to Denon Digital 8/31/03
-//        //generateIDs(11, 40000, 41000); // War! Release 1.2, download version sent to Kati @ Eagle
-//        //generateIDs(11, 50000, 50100, "fr"); // War! Release 1.3, french version (private)
-//        //generateIDs(11, 51000, 55000, "fr");   // War! Release 1.3, french (sent to nobilis)
-//        //generateIDs(11, 55000, 55050, "fr");   // War! Release 1.3, french (sent to nobilis, press keys)
-//        //generateIDs(11, 200000, 201000, null);   // War! Release 1.3 downloadable keys set 1 (increase to 200K due to new alg.)
-//        //generateIDs(11, 201000, 201100, null);   // War! Release 1.3 downloadable keys IGF set
-//
-//        //// POKER 1.x
-//
-//        //generateIDs(20, 1000, 1100, null); // Poker beta keys (20 start matches PokerConstants.java)
-//        //generateIDs(21, 1, 100, null); // Poker 1.0 private keys
-//        //generateIDs(21, 100, 200, null); // more Poker 1.0 private keys
-//        //generateIDs(21, 1000, 2000, null); // Poker 1.0 downloadable keys set 1
-//        //generateIDs(21, 2000, 3000, null); // Poker 1.0 downloadable keys set 2
-//        //generateIDs(21, 3000, 4000, null); // Poker 1.0 downloadable keys set 3
-//        //generateIDs(21, 4000, 5000, null); // Poker 1.0 downloadable keys set 4
-//        //generateIDs(21, 5000, 6000, null); // Poker 1.0 downloadable keys set 5
-//        //generateIDs(21, 10000, 71000, null); // Poker 1.0 61K for Insight world
-//        //generateIDs(21, 71000, 72000, null); // Poker 1.0 1K for Insight world
-//        //generateIDs(21, 72000, 92500, null); // Poker 1.1 22.5K for Insight world (sam's club run)
-//        //generateIDs(21, 92500, 93200, null); // Poker 1.1 +700 for Insight world (sam's club run)
-//        //generateIDs(21, 93200, 156200, null); // Poker 1.1 63K for Insight world (2nd run)
-//        //generateIDs(21, 156200, 166100, null); // Poker 1.1 9.9K for Insight world (Ultimate Poker Giftset)
-//        //generateIDs(21, 166100, 188100, null); // Poker 1.1 22K for Insight world (3rd run)
-//        //generateIDs(21, 188100, 298100, null); // Poker 1.1 110K for Insight world (3rd run)
-//
-//        //// Poker 2.x
-//        //generateIDs(19, 1000, 1100, null); // Poker beta keys (19 start matches PokerConstants.java)
-//        //generateIDs(19, 1100, 1200, null); // Poker beta keys (19 start matches PokerConstants.java)
-//        //generateIDs(22, 0, 1000, null); // poker private key list
-//        //generateIDs(22, 1000, 3000, null); // download set 1
-//        //generateIDs(22, 3000, 5000, null); // download set 2
-//        //generateIDs(22, 5000, 7000, null); // download set 3
-//        generateIDs(22, 7000, 9000, null); // download set 4
-//        //generateIDs(22, 20000, 60000, null); // retail set 1
-//        //generateIDs(22, 60000, 85000, null); // retail set 2
-//        //generateIDs(22, 85000, 90010, null); // retail - trymedia
-//    }
-// 
 }

@@ -85,18 +85,7 @@ public class UserRegistration extends BasePhase implements PropertyChangeListene
      */
     public UserRegistration() {
     }
-    
-    /**
-     * return whether registered
-     */
-    public static boolean isRegistered()
-    {
-        String NODE = GameEngine.getGameEngine().getPrefsNodeName() + "/userreg";
-        Preferences prefs = DDOption.getOptionPrefs(NODE);
-        long nRegTime = prefs.getLong(REGTIME, 0);
-        return nRegTime > 0;
-    }
-    
+
     /**
      * init
      */
@@ -269,17 +258,6 @@ public class UserRegistration extends BasePhase implements PropertyChangeListene
                 regCheck();
             }
             return true;
-        }
-        else
-        {
-            // if other button press, process TO-DO phase if that is defined
-            // (from activation) and return false to prevent normal processing
-            if (context_.hasTODO())
-            {
-                context_.processTODO();
-                return false;
-            }
-
         }
         
         return true;
