@@ -41,7 +41,6 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.CommandLine;
 import com.donohoedigital.base.RandomGUID;
-import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.DDMessage;
 import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.*;
@@ -92,8 +91,6 @@ public abstract class GameEngine extends BaseApp
     private final String sPrefNode_;
     private String sKeyNode_;
     private String guid_;
-    private boolean bReady_ = false;
-    private boolean bFull_ = false;
 
     // variable based on current state/game
     private GameContext defaultContext_;
@@ -194,13 +191,10 @@ public abstract class GameEngine extends BaseApp
         // set prefs for music - unwieldy, but who cares right now?
         setAudioPrefs();
 
-        // As of DD Poker 3, disable screen mode stuff
-        bFull_ = false;
-
         // change splash screen UI to show details available after config files loaded
         if (splashscreen_ != null)
         {
-            splashscreen_.changeUI(this, true, null);
+            splashscreen_.changeUI(this, null);
         }
     }
 
@@ -434,14 +428,6 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
-     * Set whether to display full screen
-     */
-    public void setFull(boolean b)
-    {
-        bFull_ = b;
-    }
-
-    /**
      * copy any pre-installed save files
      */
     protected void copySaveFiles()
@@ -487,7 +473,7 @@ public abstract class GameEngine extends BaseApp
             String sMessage = PropertyConfig.getMessage("msg.wrongsize",
                                                         mode.getWidth(),
                                                         mode.getHeight());
-            splashscreen_.changeUI(this, true, sMessage);
+            splashscreen_.changeUI(this, sMessage);
 
             return false;
         }
@@ -564,10 +550,7 @@ public abstract class GameEngine extends BaseApp
         gamedef_ = new GamedefConfig(sMainModule_);
         if (loadGameboardConfig()) gameconfig_ = new GameboardConfig(sMainModule_);
 
-        // ready to go
-        bReady_ = true;
-
-        // show main window now if now waiting for splash screen (or skipping splash screen)
+        // show main window
         showMainWindow();
     }
 
@@ -577,20 +560,8 @@ public abstract class GameEngine extends BaseApp
      */
     public void showMainWindow()
     {
-        // if splash screen visible, remove it
-        if (splashscreen_ != null)
-        {
-            splashscreen_.setVisible(false);
-            splashscreen_.dispose();
-            splashscreen_ = null;
-        }
-
-        // wait until ready (for case when user clicks splash choice
-        // [which calls this method] before initMainWindow is done)
-        while (!bReady_) Utils.sleepMillis(100);
-
         // init main window
-        defaultContext_.getFrame().init(null, true, getStartingSize(), bFull_, PropertyConfig.getRequiredStringProperty("msg.application.name"), true);
+        defaultContext_.getFrame().init(null, true, getStartingSize(), false, PropertyConfig.getRequiredStringProperty("msg.application.name"), true);
 
         // need to do after init so title is set
         contextInited(defaultContext_);
@@ -600,6 +571,18 @@ public abstract class GameEngine extends BaseApp
 
         // display the frame
         displayMainWindow();
+
+        // Remove the splash only AFTER the main window is mapped.  Disposing it
+        // earlier leaves a moment where the app has no mapped top-level window,
+        // which makes GNOME/Wayland drop the dock icon (and restore it only
+        // unreliably) when it re-associates the main window.  Keeping the splash
+        // up until now also covers the config-load/initialStart period visually.
+        if (splashscreen_ != null)
+        {
+            splashscreen_.setVisible(false);
+            splashscreen_.dispose();
+            splashscreen_ = null;
+        }
     }
 
     /**
