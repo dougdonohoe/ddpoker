@@ -31,24 +31,30 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 /*
- * UnicastTest2.java
+ * UDPLinkTester.java
  *
- * Created on October 13, 2005, 8:55 AM 
+ * Created on October 13, 2005, 8:55 AM
  */
 
-package com.donohoedigital.proto.tests;
+package com.donohoedigital.udp;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.BaseCommandLineApp;
-import com.donohoedigital.config.Prefs;
-import com.donohoedigital.udp.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * Manual harness for the UDP stack (not a unit test).  Run a receiver and a sender
+ * in two terminals; the sender does MTU discovery, queues messages over a UDPLink,
+ * then closes and logs link stats.  The second instance fails over to a lower port.
+ * <pre>
+ * EXTRA_CLASSPATH=$WORK/ddpoker/code/udp/target/test-classes runjava udp com.donohoedigital.udp.UDPLinkTester
+ * EXTRA_CLASSPATH=$WORK/ddpoker/code/udp/target/test-classes runjava udp com.donohoedigital.udp.UDPLinkTester -send -num 500
+ * </pre>
+ *
  * @author Doug Donohoe
  */
-public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
+public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
 {
     // logging
     private final Logger logger;
@@ -59,19 +65,18 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
     private final int port;
 
     /**
-     * Run emailer
+     * Run tester
      */
     static void main(String[] args)
     {
         try
         {
-            Prefs.setRootNodeName("poker3");
-            new UnicastTest2("poker", args);
+            new UDPLinkTester("udp", args);
         }
 
         catch (ApplicationError ae)
         {
-            System.err.println("UnicastTest2 ending due to ApplicationError: " + ae.toString());
+            System.err.println("UDPLinkTester ending due to ApplicationError: " + ae.toString());
             System.exit(1);
         }
         catch (java.lang.OutOfMemoryError nomem)
@@ -82,7 +87,7 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
         }
         catch (Throwable t)
         {
-            System.err.println("UnicastTest2 ending due to ApplicationError: " + Utils.formatExceptionText(t));
+            System.err.println("UDPLinkTester ending due to ApplicationError: " + Utils.formatExceptionText(t));
             System.exit(1);
         }
     }
@@ -117,9 +122,9 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
     UDPServer udp_;
 
     /**
-     * Create War from config file
+     * Start UDP server and, if sending, connect to the other side
      */
-    public UnicastTest2(String sConfigName, String[] args)
+    public UDPLinkTester(String sConfigName, String[] args)
     {
         super(sConfigName, args);
 

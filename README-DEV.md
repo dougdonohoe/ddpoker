@@ -939,7 +939,7 @@ A couple of notes:
   but picks up every other module as a jar from your local Maven repository, which is why
   the `install` above is a separate step.  After editing `poker` you need a `package`
   first, and after editing any other module you need to re-run the `install`.
-* The `install` builds all 21 modules.  You could narrow it with `-pl`, but `poker` pulls in
+* The `install` builds all 20 modules.  You could narrow it with `-pl`, but `poker` pulls in
   `gameengine`, `pokernetwork` and `db` plus their transitive dependencies, so the list is
   long and easy to get out of step — a full install is simpler.
 
