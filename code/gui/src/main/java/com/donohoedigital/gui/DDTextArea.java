@@ -333,6 +333,16 @@ public class DDTextArea extends JTextArea implements DDTextVisibleComponent,
         getDocument().addDocumentListener(this);
     }
 
+    /**
+     * Use TextLayout so caret aligns with text (see DDTextField.useTextLayout)
+     */
+    @Override
+    public void setDocument(Document doc)
+    {
+        DDTextField.useTextLayout(doc);
+        super.setDocument(doc);
+    }
+
     /*
     * Class used to Limit length
     */

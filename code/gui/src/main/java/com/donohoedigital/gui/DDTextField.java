@@ -401,8 +401,23 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
         {
             current.removeDocumentListener(this);
         }
+        useTextLayout(doc);
         super.setDocument(doc);
         doc.addDocumentListener(this);
+    }
+
+    /**
+     * Mark document so Swing's text views measure and paint with TextLayout (GlyphPainter2)
+     * instead of GlyphPainter1.  GlyphPainter1 measures at an identity transform but paints
+     * through the device transform (2x on Retina), and fonts loaded from a bundled .ttf
+     * quantize advances to the device pixel grid, so the caret drifts further from the text
+     * as the text gets longer (~15px over 85 chars for Inter/Yantramanav).  TextLayout paints
+     * glyphs at the positions it measured, so there is no drift at any scale.  Must be set
+     * before the document is installed, since views are built at that point.
+     */
+    static void useTextLayout(Document doc)
+    {
+        doc.putProperty("i18n", Boolean.TRUE);
     }
 
     /*
