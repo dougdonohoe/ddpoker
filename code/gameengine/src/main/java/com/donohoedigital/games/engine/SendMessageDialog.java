@@ -443,7 +443,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
             SwingUtilities.invokeLater(
                     new Runnable()
                     {
-                        private int nStatus = nStatus_;
+                        private final int nStatus = nStatus_;
 
                         public void run()
                         {
@@ -503,7 +503,8 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
             // banned keys
             if (mReturn_.getBoolean(EngineMessage.PARAM_BANNED_KEY, false))
             {
-                engine_.banLicenseKey();
+                logger.warn("Server says key is banned, but we don't handle banned keys anymore: {}",
+                        mReturn_.getKey());
             }
 
             // bad key
@@ -591,7 +592,7 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
         SwingUtilities.invokeLater(
                 new Runnable()
                 {
-                    String _sText = sText;
+                    final String _sText = sText;
 
                     public void run()
                     {

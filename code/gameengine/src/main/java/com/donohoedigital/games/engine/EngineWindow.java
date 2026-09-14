@@ -33,6 +33,7 @@
 package com.donohoedigital.games.engine;
 
 import com.donohoedigital.base.Utils;
+import com.donohoedigital.config.ConfigUtils;
 import com.donohoedigital.config.DebugConfig;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.EngineConstants;
@@ -140,7 +141,7 @@ public class EngineWindow extends BaseFrame
         // focus stuff
         base_.setFocusTraversalKeysEnabled(false); // prevent focus from leaving panel via tab
 
-        // add actions for alt-q and crtl-q, meta-w, alt-w, ctrl-w
+        // add actions for alt-q and ctrl-q, meta-w, alt-w, ctrl-w
         AbstractAction quit = new QuitAction();
         AbstractAction close = new CloseAction();
 
@@ -166,7 +167,7 @@ public class EngineWindow extends BaseFrame
                             "gameengineclose", bMain ? quit : close,
                             KeyEvent.VK_W, KeyEvent.ALT_DOWN_MASK);
         }
-        // mac version is apple-w
+        // Mac version is apple-w
         else
         {
             GuiUtils.addKeyAction(base_, JComponent.WHEN_IN_FOCUSED_WINDOW,
@@ -193,6 +194,13 @@ public class EngineWindow extends BaseFrame
         GuiUtils.addKeyAction(base_, JComponent.WHEN_IN_FOCUSED_WINDOW,
                             "help", new HelpAction(),
                             KeyEvent.VK_SLASH, Utils.ISMAC ? KeyEvent.META_DOWN_MASK : KeyEvent.CTRL_DOWN_MASK);
+
+        // clear prefs in debug mode action
+        if (DebugConfig.isTestingOn()) {
+            GuiUtils.addKeyAction(base_, JComponent.WHEN_IN_FOCUSED_WINDOW,
+                    "clearprefs", new ClearPrefsAction(),
+                    KeyEvent.VK_DOWN, Utils.ISMAC ? KeyEvent.META_DOWN_MASK : KeyEvent.CTRL_DOWN_MASK);
+        }
 
         // the base_ is the content pane for the BaseApp frame_
         setContentPane(base_);
@@ -294,7 +302,7 @@ public class EngineWindow extends BaseFrame
     /**
      * Debug dump action
      */
-    private class DumpAction extends AbstractAction
+    private static class DumpAction extends AbstractAction
     {
        public void actionPerformed(ActionEvent e)
        {
@@ -305,7 +313,7 @@ public class EngineWindow extends BaseFrame
     /**
      * UDP debugging action
      */
-    private class UDPAction extends AbstractAction
+    private static class UDPAction extends AbstractAction
     {
        public void actionPerformed(ActionEvent e)
        {
@@ -318,7 +326,7 @@ public class EngineWindow extends BaseFrame
     /**
      * UDP debugging action
      */
-    private class UDPAction2 extends AbstractAction
+    private static class UDPAction2 extends AbstractAction
     {
        public void actionPerformed(ActionEvent e)
        {
@@ -326,7 +334,6 @@ public class EngineWindow extends BaseFrame
             logger.debug("UDP APP flags turned {}", (TESTING(EngineConstants.TESTING_UDP_APP) ? "on" : "off"));
        }
     }
-
 
     /**
      * help action
@@ -336,6 +343,18 @@ public class EngineWindow extends BaseFrame
        public void actionPerformed(ActionEvent e)
        {
             context_.processPhase("Help");
+       }
+    }
+
+    /**
+     * clear prefs action
+     */
+    private class ClearPrefsAction extends AbstractAction
+    {
+       public void actionPerformed(ActionEvent e)
+       {
+            engine_.clearAllPrefs();
+            logger.debug("Cleared all preferences.");
        }
     }
 
@@ -367,18 +386,18 @@ public class EngineWindow extends BaseFrame
         super.toFront();
     }
 
-    ////
-    //// Listen for window events
-    ////
+    //
+    // Listen for window events
+    //
 
     /**
      * Class to handle window closing events plus state changes issues
      */
     private class EngineWindowAdapter extends WindowAdapter implements ComponentListener
     {
-        private Point prevLocation_ = new Point();
-        private Point location_ = new Point();
-        private Dimension size_ = new Dimension();
+        private final Point prevLocation_ = new Point();
+        private final Point location_ = new Point();
+        private final Dimension size_ = new Dimension();
 
         /**
          * allow us to store user's preference

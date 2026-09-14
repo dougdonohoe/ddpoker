@@ -425,42 +425,8 @@ public class GameContext
      */
     private Phase _processPhase(String sPhaseName, TypedHashMap params, boolean bHistory)
     {
-        if (engine_.isActivationNeeded() && TODOphase_ != null)
-        {
-            logger.warn("Skipping {} because TODO phase is not null: {}", sPhaseName, TODOphase_);
-            return null;
-        }
-
         try
         {
-            // force startmenu params to load (class is hardcoded below to prevent
-            // tampering with gamedef.xml file)
-            if (engine_.bExpired_)
-            {
-                sPhaseName = "StartMenu";
-                params = new TypedHashMap();
-                params.setBoolean(StartMenu.PARAM_EXPIRED, Boolean.TRUE);
-            }
-            else if (engine_.isActivationNeeded())
-            {
-                // if registration was void, to-do phase should be the start menu
-                if (engine_.isActivationVoided())
-                {
-                    TODOphase_ = "StartMenu";
-                    TODOparams_ = null;
-                    TODOhistory_ = true;
-                }
-                else
-                {
-                    TODOphase_ = sPhaseName;
-                    TODOparams_ = params;
-                    TODOhistory_ = bHistory;
-                }
-                sPhaseName = "Activate";
-                params = null;
-                bHistory = false;
-            }
-
             GamePhase phase = engine_.getGamedefconfig().getGamePhases().get(sPhaseName);
             ApplicationError.assertNotNull(phase, "GamePhase not found", sPhaseName);
 
@@ -852,18 +818,7 @@ public class GameContext
             {
                 Class<? extends Phase> cClass = gamephase.getClassObject();
 
-                // force startmenu to load if expired (matches above)
-                if (engine_.bExpired_)
-                {
-                    sClass = "com.donohoedigital.games.engine.StartMenu";
-                    cClass = StartMenu.class;
-                }
-                else if (engine_.isActivationNeeded())
-                {
-                    sClass = "com.donohoedigital.games.engine.Activate";
-                    cClass = Activate.class;
-                }
-                else if (sName.equals("License")) // BUG 198 - ensure license class used
+                if (sName.equals("License")) // BUG 198 - ensure license class used
                 {
                     sClass = "com.donohoedigital.games.engine.License";
                     cClass = License.class;
@@ -917,7 +872,7 @@ public class GameContext
     /**
      * Return this piece encoded as a game state entry
      */
-    public GameStateEntry addGameStateEntry(GameState state)
+    public void addGameStateEntry(GameState state)
     {
         GameManager mgr = getGameManager();
         Game game = getGame();
@@ -925,11 +880,11 @@ public class GameContext
         // game over - this phase overrides GameManager
         if (game.isGameOver())
         {
-            return BasePhase.addNamedGameStateEntry(state, "GameOver");
+            BasePhase.addNamedGameStateEntry(state, "GameOver");
         }
         else if (mgr != null)
         {
-            return BasePhase.addNamedGameStateEntry(state, mgr.getPhaseName());
+            BasePhase.addNamedGameStateEntry(state, mgr.getPhaseName());
         }
 
         // A save from a phase the GameManager doesn't drive - the lobby, the home game,
@@ -938,7 +893,7 @@ public class GameContext
         // War's DisplayPurchaseSummary.)
         if (sSpecialSave_ != null)
         {
-            return BasePhase.addNamedGameStateEntry(state, sSpecialSave_);
+            BasePhase.addNamedGameStateEntry(state, sSpecialSave_);
         }
 
         throw new ApplicationError("Nowhere to restart this save from: no GameManager is set and no " +

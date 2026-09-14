@@ -716,11 +716,6 @@
     </paramlist>
   </phase>
 
-  <phase name="VerifyActivationKey" class="com.donohoedigital.games.engine.VerifyActivationKey"
-         extends="UserRegistrationSend">
-    <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.verifyKey"/>
-  </phase>
-
   <!-- GetPublicIP extends SendMessageDialog (used to talk to the server) -->
   <phase name="GetPublicIP" class="com.donohoedigital.games.poker.online.GetPublicIP" extends="UserRegistrationSend">
     <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.getPublicIP"/>

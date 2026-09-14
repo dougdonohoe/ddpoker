@@ -82,9 +82,6 @@ public abstract class GameEngine extends BaseApp
 
     // shared by GameContext
     GameboardConfig gameconfig_;
-    boolean bExpired_ = false;
-    boolean activationNeeded = false;
-    private boolean activationVoided = false;
 
     // other private stuff
     private String sOverrideKey_ = null;
@@ -166,42 +163,14 @@ public abstract class GameEngine extends BaseApp
         String sKey = getRealLicenseKey();
 
         // validate key
-        boolean bAlphaBeta = v.isBeta() || v.isAlpha();
         if (bHeadless_)
         {
             setHeadless();
         }
         else
         {
-            if (sKey == null ||
-                !Activation.validate(getKeyStart(), sKey, getLocale()) ||
-                isBannedLicenseKey(sKey))
-            {
-                // TODO: remove debug once bug figured out
-                logger.debug("Activation needed, sKey={} validate: {} (keystart = {} locale= {})" +
-                    " isBanned?: {}", sKey, !Activation.validate(getKeyStart(), sKey, getLocale()), getKeyStart(), getLocale(), isBannedLicenseKey(sKey));
-
-                activationNeeded = true;
-            }
-            else
-            {
-                DDMessage.setDefaultRealKey(sKey);
-                DDMessage.setDefaultKey(getPublicUseKey());
-            }
-        }
-
-        // expired?
-        if (bAlphaBeta)
-        {
-            int YEAR = 2100;
-            int MONTH = Calendar.JANUARY;
-            int DAY = 1; // January 1, 2010
-            long expire = new GregorianCalendar(YEAR, MONTH, DAY).getTime().getTime();
-            long now = System.currentTimeMillis();
-            if (now > expire)
-            {
-                bExpired_ = true;
-            }
+            DDMessage.setDefaultRealKey(sKey);
+            DDMessage.setDefaultKey(getPublicUseKey());
         }
 
         // check prereqs
@@ -352,14 +321,8 @@ public abstract class GameEngine extends BaseApp
     private void setHeadless()
     {
         sKeyNode_ += "h";
-        setActivationNeeded(false);
         DDMessage.setDefaultRealKey(getHeadlessLicenseKey());
         DDMessage.setDefaultKey(getPublicUseKey());
-    }
-
-    public boolean isActivationVoided()
-    {
-        return activationVoided;
     }
 
     /**
@@ -382,16 +345,14 @@ public abstract class GameEngine extends BaseApp
         }
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
         String key = node.get(Activation.REGKEY, null);
-        if (key == null && isAutoGenLicenseKey())
+        if (key == null)
         {
             key = Activation.createKeyFromGuid(getKeyStart(), getGUID(), getLocale());
-            logger.debug("KEY: {}", key);
-            node.put(Activation.REGKEY, key);
+            logger.debug("NEW KEY: {}", key);
+            setLicenseKey(key);
         }
         return key;
     }
-
-    protected abstract boolean isAutoGenLicenseKey();
 
     /**
      * Headless license key - unique each time run
@@ -460,99 +421,17 @@ public abstract class GameEngine extends BaseApp
         clearAllPrefs();
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
         node.put(Activation.REGKEY, "");
-        activationNeeded = true;
-        activationVoided = true;
     }
 
     /**
-     * Ban the current key, reset it
+     * Set the license key (assumes key is valid)
      */
-    public void banLicenseKey()
-    {
-        addBannedLicenseKey(getRealLicenseKey());
-        resetLicenseKey();
-    }
-
-    /**
-     * Is activation needed
-     */
-    public boolean isActivationNeeded()
-    {
-        return activationNeeded;
-    }
-
-    /**
-     * Set activation needed
-     */
-    void setActivationNeeded(boolean b)
-    {
-        activationNeeded = b;
-    }
-
-    /**
-     * Set the license key (assumes key is valid, turns off activationNeeded flag)
-     */
-    public void setLicenseKey(String sKey)
+    private void setLicenseKey(String sKey)
     {
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
         node.put(Activation.REGKEY, sKey);
         DDMessage.setDefaultRealKey(sKey);
         DDMessage.setDefaultKey(getPublicUseKey());
-        activationNeeded = false;
-        activationVoided = false;
-    }
-
-    /**
-     * Key validated - cleanup
-     */
-    public void keyValidated(boolean bPatch)
-    {
-        if (!bPatch)
-        {
-            String sKey = getRealLicenseKey(); // fetch key before...
-            clearAllPrefs(); // ...start fresh each time a new registration happens
-            setLicenseKey(sKey); // restore key
-        }
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        node.remove(Activation.OLDKEY);
-    }
-
-    /**
-     * Get banned license key
-     */
-    public boolean isBannedLicenseKey(String sKey)
-    {
-        if (sKey == null || sKey.isEmpty()) return false;
-
-        // get banned key list from prefs (previous attempts)
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        String sBanned = node.get(Activation.BANKEY, null);
-        if (sBanned == null) return false;
-
-        // loop through all
-        String s;
-        StringTokenizer st = new StringTokenizer(sBanned, ".");
-        while (st.hasMoreTokens())
-        {
-            s = st.nextToken();
-            if (sKey.equals(s)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * add license key to list
-     */
-    public void addBannedLicenseKey(String sKey)
-    {
-        if (sKey == null || sKey.isEmpty()) return;
-        if (isBannedLicenseKey(sKey)) return;
-
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        String sBanned = node.get(Activation.BANKEY, null);
-
-        if (sBanned == null) setBannedLicenseKeys(sKey);
-        else setBannedLicenseKeys(sBanned + "." + sKey);
     }
 
     /**
@@ -561,29 +440,8 @@ public abstract class GameEngine extends BaseApp
     public void clearAllPrefs()
     {
         prefNode_ = null;
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        String sBanned = node.get(Activation.BANKEY, null);
         Prefs.clearAll();
-        setBannedLicenseKeys(sBanned);
         setAudioPrefs();
-    }
-
-    /**
-     * Set the banned license key (so user can't use it again)
-     */
-    private void setBannedLicenseKeys(String sKey)
-    {
-        if (sKey == null) return;
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        node.put(Activation.BANKEY, sKey);
-    }
-    /**
-     * Return last valid key entered (used for patch re-activation)
-     */
-    public String getLastLicenseKey()
-    {
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        return node.get(Activation.OLDKEY, null);
     }
 
     /**
