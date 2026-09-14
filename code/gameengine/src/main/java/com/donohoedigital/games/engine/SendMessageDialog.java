@@ -510,7 +510,8 @@ public abstract class SendMessageDialog extends DialogPhase implements DDMessage
             // bad key
             if (mReturn_.getBoolean(EngineMessage.PARAM_BAD_KEY, false))
             {
-                engine_.resetLicenseKey();
+                logger.warn("Server says key is bad, but we don't handle bad keys anymore: {}",
+                        mReturn_.getKey());
             }
         }
         // else a standard error, display the corresponding message

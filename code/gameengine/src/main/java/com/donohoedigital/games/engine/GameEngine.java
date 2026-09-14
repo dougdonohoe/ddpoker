@@ -345,6 +345,8 @@ public abstract class GameEngine extends BaseApp
         }
         Preferences node = Prefs.getUserPrefs(sKeyNode_);
         String key = node.get(Activation.REGKEY, null);
+
+        // auto create key if we don't have one
         if (key == null)
         {
             key = Activation.createKeyFromGuid(getKeyStart(), getGUID(), getLocale());
@@ -367,7 +369,7 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
-     * Get license key
+     * Get obfuscated license key for use in online games
      */
     public String getPublicUseKey()
     {
@@ -408,19 +410,6 @@ public abstract class GameEngine extends BaseApp
             }
         }
         return sLastGen_;
-    }
-
-    /**
-     * Reset the license key, set activationNeeded flag
-     */
-    public void resetLicenseKey()
-    {
-        //noinspection ThrowableInstanceNeverThrown
-        logger.debug("Reset license key called from ", new Throwable());
-
-        clearAllPrefs();
-        Preferences node = Prefs.getUserPrefs(sKeyNode_);
-        node.put(Activation.REGKEY, "");
     }
 
     /**

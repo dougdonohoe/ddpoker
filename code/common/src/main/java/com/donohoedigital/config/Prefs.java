@@ -96,7 +96,6 @@ public class Prefs
     {
         return Preferences.userRoot().node("com/donohoedigital/" + getRootNodeName());
     }
-
     /**
      * Clear all prefs
      */
@@ -104,14 +103,21 @@ public class Prefs
     {
         try
         {
-            Preferences prefs = getUserRootPrefs();
-            prefs.clear();
-            prefs.removeNode();
+            clearNode(getUserRootPrefs());
         }
         catch (BackingStoreException bse)
         {
             // no worries
         }
+    }
+
+    private static void clearNode(Preferences node) throws BackingStoreException
+    {
+        for (String child : node.childrenNames())
+        {
+            clearNode(node.node(child));
+        }
+        node.clear();
     }
 
     /**
