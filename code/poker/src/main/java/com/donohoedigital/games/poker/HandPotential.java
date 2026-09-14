@@ -554,17 +554,11 @@ public class HandPotential
         }
         else
         {
-            switch (community_.size())
-            {
-                case 0:
-                    stage = 0;
-                    break;
-                case 3:
-                    stage = 1;
-                    break;
-                default:
-                    stage = 2;
-            }
+            stage = switch (community_.size()) {
+                case 0 -> 0;
+                case 3 -> 1;
+                default -> 2;
+            };
         }
 
         boolean twoColumns = ((stage == 1) && (round == HoldemHand.ROUND_NONE));

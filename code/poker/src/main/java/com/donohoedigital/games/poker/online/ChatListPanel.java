@@ -72,7 +72,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
     private Point end_;
 
     // limit display
-    private int MAX_MESSAGES = 500;
+    private int MAX_MESSAGES;
     private final ArrayList messages_;
 
     /**
@@ -240,11 +240,11 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
                 sText = html.getSelectedText();
                 // replace white space \s and nbsp (ascii 160 == AO)
                 sText = sText.replaceAll(WHITESPACE, " ");
-                if (sb.length() > 0) sb.append("\n");
+                if (!sb.isEmpty()) sb.append("\n");
                 sb.append(sText.trim());
             }
         }
-        if (sb.length() == 0) return;
+        if (sb.isEmpty()) return;
         //logger.debug("Copy: "+ sb);
         GuiUtils.copyToClipboard(sb.toString());
     }

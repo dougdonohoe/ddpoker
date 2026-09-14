@@ -67,7 +67,7 @@ public class EngineBasePanel extends JPanel
 {
     static Logger logger = LogManager.getLogger(EngineBasePanel.class);
 
-    JComponent bottom_ = null;
+    JComponent bottom_;
     Component center_ = null;
     Component focus_ = null;
     CenterLayout centerLayout_ = new CenterLayout();
@@ -179,16 +179,8 @@ public class EngineBasePanel extends JPanel
         }
     }
 
-    /**
-     * Return base frame this is in
-     */
-    public BaseFrame getBaseFrame()
-    {
-        return frame_;
-    }
-
     // flag used in Gameboard to know when to repaint
-    // mac grow box
+    // Mac grow box
     boolean bPainting_ = false;
 
     // growbox color
@@ -198,7 +190,7 @@ public class EngineBasePanel extends JPanel
     static boolean PAINT_GROW_BOX = true;
 
     /**
-     * Override to paint bottom corner on mac for grow box
+     * Override to paint bottom corner on Mac for grow box
      */
     @Override
     public void paint(Graphics g1)

@@ -82,11 +82,8 @@ public class Gameboard extends ImageComponent implements Scrollable,
     protected JComponent scroll_ = null;
     protected GameContext context_;
 
-    protected boolean bScaleBig_ = false;
-    // not currently used
-    //private GeneralPath bordersPath_;
-    //private GeneralPath borderScaledPath_;
-    
+    protected boolean bScaleBig_;
+
     protected boolean bUseImage_ = true;
     protected GameEngine engine_;
 
@@ -220,15 +217,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         scroll_ = s;
     }
-    
-    /**
-     * Return scrollgame board used
-     */
-    public JComponent getScrollGameboard()
-    {
-        return scroll_;
-    }
-    
+
     /**
      * Return gameboard config
      */
@@ -240,7 +229,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     /**
      * override to set preferred size based on parent's size -
      * we scale so that the map is as big as possible w/out having
-     * to scroll in two dimensions (we scroll in dimension with least room)
+     * to scroll in two dimensions (we scroll in dimension with the least room)
      */
     @Override
     public Dimension getPreferredSize()
@@ -326,7 +315,8 @@ public class Gameboard extends ImageComponent implements Scrollable,
      */
     public void repaintVisible(boolean bImmediate)
     {
-        if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT)) logger.debug("REPAINT VISIBLE " + (CNT++) + " immediate: " + bImmediate);
+        if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
+            logger.debug("REPAINT VISIBLE {} immediate: {}", CNT++, bImmediate);
         if (scroll_ == null)
         {
             if (bImmediate){
@@ -437,7 +427,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     
     /**
      * Calculates the resize dimensions based on the starting smallest
-     * size.  Calcs 150%, 200%, 300% and 400%.  Resizes board to smallest size
+     * size.  Calcs 150%, 200%, 300% and 400%.  Resizes board to the smallest size
      */
     public void setResizeDimensions(Dimension dSmall)
     {
@@ -464,27 +454,11 @@ public class Gameboard extends ImageComponent implements Scrollable,
     private Dimension calcResizeDimension(Dimension dBase, double dScale)
     {
         Dimension d = new Dimension(dBase);
-        d.width *= dScale;
-        d.height *= dScale;
+        d.width = (int) (d.width * dScale);
+        d.height = (int) (d.height * dScale);
         return d;
     }
-    
-    /**
-     * Get current index into resize dimension
-     */
-    public int getResizeDimensionIndex()
-    {
-        return nCurrentDimension_;
-    }
-    
-    /**
-     * Get resize dimensions
-     */
-    public Dimension[] getResizeDimensions()
-    {
-        return resizeDimensions_;
-    }
-    
+
     public boolean canIncreaseSize()
     {
         return nCurrentDimension_ != (resizeDimensions_.length - 1);
@@ -549,7 +523,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
         {
-            logger.debug("REPAINT "+(CNT++)+" ALL");
+            logger.debug("REPAINT {} ALL", CNT++);
             //logger.debug(Utils.formatExceptionText(new Throwable()));
         }
         super.repaint();
@@ -563,7 +537,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
         {
-            logger.debug("REPAINT "+(CNT++)+" portion " + x +","+y+" " +width+"x"+height);   
+            logger.debug("REPAINT {} portion {},{} {}x{}", CNT++, x, y, width, height);
             //logger.debug(Utils.formatExceptionText(new Throwable()));
         }
         super.repaint(x,y,width,height);
@@ -577,14 +551,14 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
         {
-            logger.debug("REPAINT IMMEDIATELY "+(CNT++)+" portion " + x +","+y+" " +width+"x"+height);   
+            logger.debug("REPAINT IMMEDIATELY {} portion {},{} {}x{}", CNT++, x, y, width, height);
             //logger.debug(Utils.formatExceptionText(new Throwable()));
         }
         super.paintImmediately(x,y,width,height);
     }
     
     // used for performance so new rect isn't needed everytime we repaint
-    private Rectangle bounds_ = new Rectangle();
+    private final Rectangle bounds_ = new Rectangle();
  
     // used so we create once per paint
     private java.awt.geom.Area cliparea_;
@@ -628,7 +602,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
         
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT))
         {
-            logger.debug("REPAINT COMPONENT "+(CNT++)+" ("+getDebugColorName()+") portion " + bounds_.x +","+bounds_.y+" " +bounds_.width+"x"+bounds_.height);   
+            logger.debug("REPAINT COMPONENT {} ({}) portion {},{} {}x{}", CNT++, getDebugColorName(), bounds_.x, bounds_.y, bounds_.width, bounds_.height);
             //logger.debug(Utils.formatExceptionText(new Throwable()));
         }
         
@@ -682,9 +656,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
             Point origin = SwingUtilities.convertPoint(this, OO, p);
             
             // if this paint didn't originate from the base panel,
-            // and the area we just painted covers the grow box,
+            // and the area we just painted covers the grow-box,
             // then repaint it.  The 51/52 check is to prevent
-            // an infinited loop
+            // an infinite loop
             if (!p.bPainting_ &&
                 origin.x + bounds_.x + bounds_.width > w &&
                 origin.y + bounds_.y + bounds_.height > h &&
@@ -697,7 +671,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     }
     
     // only need one of these for above
-    private Point OO = new Point(0,0);
+    private final Point OO = new Point(0,0);
 
     // used to control drawing features
     protected boolean bAntiAlias_ = true;
@@ -945,12 +919,12 @@ public class Gameboard extends ImageComponent implements Scrollable,
     /**
      * Interface for AI debugging
      */
-    public static interface AIDebug
+    public interface AIDebug
     {
-        public String getDebugDisplay(Territory t);
-        public Color getTextColor();
-        public double getScale();
-        public double getYAdjust(Territory t, TextUtil tuName, TextUtil tuDebug);
+        String getDebugDisplay(Territory t);
+        Color getTextColor();
+        double getScale();
+        double getYAdjust(Territory t, TextUtil tuName, TextUtil tuDebug);
     }
     
     private AIDebug aidebug_;
@@ -961,7 +935,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     }
     
     // stroke used in borders
-    private BasicStroke borderStroke_ = new BasicStroke((float)1.0, BasicStroke.CAP_BUTT,
+    private final BasicStroke borderStroke_ = new BasicStroke((float)1.0, BasicStroke.CAP_BUTT,
                                                 BasicStroke.JOIN_ROUND);
     
     CustomTerritoryDrawer customDrawer_ = null;
@@ -973,31 +947,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         customDrawer_ = custom;
     }
-    
-    /**
-     * Get custom territory drawer
-     */
-    public CustomTerritoryDrawer getCustomTerritoryDrawer()
-    {
-        return customDrawer_;
-    }
-    
-    /**
-     * Repaint a game piece container by figuring out
-     * what the actual territory is     
-     */
-    public void repaintContainer(GamePieceContainer container)
-    {
-        if (container instanceof Territory)
-        {
-            repaintTerritory((Territory) container);
-        }
-        else if (container instanceof Token)
-        {
-            repaintTerritory(((Token) container).getGamePiece().getTerritory());
-        }
-    }
-    
+
     /**
      * Repaint territory, bImmediate = false
      */
@@ -1020,7 +970,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
         // I think this is needed due to floating point math
         
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT_DETAILS)) {
-            logger.debug("REPAINT TERRITORY " + t.getName() + ": " + r);
+            logger.debug("REPAINT TERRITORY {}: {}", t.getName(), r);
         }
         
         if (bImmediate)
@@ -1032,21 +982,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
             repaint(r.x, r.y, r.width+1, r.height+1);
         }
     }
-    
-    // kind of a hack, but i don't want to pass bMouseAction 
-    // into gamepiece listeners in findPieceAt
-    private boolean bMouseMovementTriggeredPieceFound_ = false;
-    
-    /**
-     * Repaint gamepiece, passing bImmediate based on whether the
-     * use triggered the mouse movement or not (can enter through
-     * scrolling
-     */
-    public void repaintGamePiece(EngineGamePiece gp)
-    {
-        repaintGamePiece(gp, bMouseMovementTriggeredPieceFound_);
-    }
-    
+
     /**
      * Repaint gamepiece
      */
@@ -1061,14 +997,14 @@ public class Gameboard extends ImageComponent implements Scrollable,
         if (r.width == 0)
         {
             if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT_DETAILS)) {
-                logger.debug("REPAINT GAMEPIECE " + e.getName() + ": delegating to Territory");
+                logger.debug("REPAINT GAMEPIECE {}: delegating to Territory", e.getName());
             }
             repaintTerritory(e.getTerritory());
             return;
         }
         
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT_DETAILS)) {
-            logger.debug("REPAINT GAMEPIECE " + e.getName() + ": " + r);
+            logger.debug("REPAINT GAMEPIECE {}: {}", e.getName(), r);
         }
         
         if (bImmediate)
@@ -1083,8 +1019,8 @@ public class Gameboard extends ImageComponent implements Scrollable,
     
     private static final int MIN_MOUSEPIECE_WIDTH = 20;//Cursors.CURSOR_WIDTH + 5;
     
-    private static int YSHIFT = 10;
-    private static int XSHIFT = -10;
+    private static final int YSHIFT = 10;
+    private static final int XSHIFT = -10;
     
     /**
      * Draw items at mouse
@@ -1103,7 +1039,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
         x += scaleToCurrentSpace(XSHIFT);
         
         if (TESTING(EngineConstants.TESTING_DEBUG_REPAINT_DETAILS)) {
-            logger.debug(paintAtMouse_.getName() + " calling drawImage: " + x+","+y+ " " +r.width+"x"+r.height+ " scale: " + dScale_);
+            logger.debug("{} calling drawImage: {},{} {}x{} scale: {}", paintAtMouse_.getName(), x, y, r.width, r.height, dScale_);
         }
         
         int nMoving = paintAtMouse_.getMovingQuantity();
@@ -1172,14 +1108,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
     EngineGamePiece paintAtMouse_ = null;
 
     /**
-     * Set gamepiece we are painting at mouse (bImmediate == false)
-     */
-    public void setPaintAtMouse(EngineGamePiece piece)
-    {
-        setPaintAtMouse(piece, false);
-    }
-    
-    /**
      * Set gamepiece we are painting at mouse
      */
     public void setPaintAtMouse(EngineGamePiece piece, boolean bImmediate)
@@ -1234,15 +1162,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
     public Point getLastMousePoint()
     {
         return new Point(lastMouseX_, lastMouseY_);
-    }
-    
-    /**
-     * Set board's mouse point to last AWT point
-     * (needed for case where last point not known)
-     */
-    public void setLastMousePointFromAWT()
-    {
-        setLastMousePoint(lastPointFromAWT_);
     }
 
     /**
@@ -1316,7 +1235,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
         
         // if we have a new territory, fire exit/enter events
         // Always fire if this wasn't from a mouse action (useful
-        // to ensure correct behavoir when scrolling)
+        // to ensure correct behavior when scrolling)
         if (old != territoryAtMouse_ || !bMouseAction)
         {
             if (old != null) fireMouseExited(old);
@@ -1329,7 +1248,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
      */
     private void findPieceAt(double x, double y, boolean bMouseAction)
     {
-        bMouseMovementTriggeredPieceFound_ = bMouseAction;
         EngineGamePiece newPiece = null;
         
         //logger.debug("findPieceAt " + x +","+y);
@@ -1363,9 +1281,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
             pieceAtMouse_.setUnderMouse(true);
         }
         
-        // if we have a new territoyr, fire exit/enter events
+        // if we have a new territory, fire exit/enter events
         // Always fire if this wasn't from a mouse action (useful
-        // to ensure correct behavoir when scrolling)
+        // to ensure correct behavior when scrolling)
         if (old != pieceAtMouse_ || !bMouseAction)
         {
             if (old != null) fireMouseExited(old);
@@ -1389,6 +1307,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
 
         synchronized (t.getMap())
         {
+            @SuppressWarnings("rawtypes")
             Iterator pieces = t.getGamePieces();
             while (pieces.hasNext())
             {
@@ -1408,7 +1327,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
                     // get image
                     image = piece.getImageComponent();
                     
-                    // if non transparent, piece is found
+                    // if non-transparent, piece is found
                     if (image.isNonTransparent(imagex, imagey))
                     {
                         foundPiece = piece;
@@ -1436,21 +1355,13 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         return pieceAtMouse_;
     }
-    
-    /**
-     * Return currently selected territory
-     */
-    public Territory getSelectedTerritory()
-    {
-        return territorySelected_;
-    }
-    
+
     ///
     /// Territory listeners
     ///
     
-    private List<TerritorySelectionListener> tlisteners_ = new ArrayList<>();
-    private List<GamePieceSelectionListener> elisteners_ = new ArrayList<>();
+    private final List<TerritorySelectionListener> tlisteners_ = new ArrayList<>();
+    private final List<GamePieceSelectionListener> elisteners_ = new ArrayList<>();
     
     /**
      * Add a territory selection listener
@@ -1481,15 +1392,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
             elisteners_.add(t);
         }
     }
-    
-    /**
-     * Remove a territory selection listener
-     */
-    public synchronized void removeGamePieceSelectionListener(GamePieceSelectionListener t)
-    {
-        elisteners_.remove(t);
-    }
-    
+
     private TerritoryDisplayListener tdisplaylistener_ = null;
     
     /**
@@ -1499,15 +1402,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         tdisplaylistener_ = t;
     }
-    
-    /**
-     * Get the territory display listener
-     */
-    public TerritoryDisplayListener getTerritoryDisplayListener()
-    {
-        return tdisplaylistener_;
-    }
-    
+
     /**
      * Notify all TerritorySelectionListeners of a selected territory
      */
@@ -1701,31 +1596,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         nSelectionMode_ = nMode;
     }
-    
-    /**
-     * Get selection mode for territories
-     */
-    public int getTerritorySelectionMode()
-    {
-        return nSelectionMode_;
-    }
-    
-    /**
-     * Set selection mode for game pieces
-     */
-    public void setGamePieceSelectionMode(int nMode)
-    {
-        nPieceSelectionMode_ = nMode;
-    }
-    
-    /**
-     * Get selection mode for territories
-     */
-    public int getGamePieceSelectionMode()
-    {
-        return nPieceSelectionMode_;
-    }
- 
+
     /**
      * Handles a mouse click on a territory
      */
@@ -1808,15 +1679,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
         
         setSelectedGamePiece(pieceAtMouse_, e);
     }
- 
-    /**
-     * Set selected territory (fires any registered listeners)
-     */
-    public void setSelectedGamePiece(EngineGamePiece gp)
-    {
-        setSelectedGamePiece(gp, null);
-    }
-    
+
     /**
      * Set selected territory (fires any registered listeners)
      */
@@ -1917,9 +1780,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         return 25;
     }
 
-    ////
-    //// Mouse Motion Listener methods
-    ////
+    //
+    // Mouse Motion Listener methods
+    //
     
     /**
      * Finds items under mouse
@@ -1937,9 +1800,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         repaintMouseItems(false);
     }
     
-    ////
-    //// Mouse Motion Listener methods
-    ////
+    //
+    // Mouse Motion Listener methods
+    //
     
     /**
      * Empty
