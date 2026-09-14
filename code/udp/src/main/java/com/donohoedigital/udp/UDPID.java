@@ -62,22 +62,20 @@ public class UDPID
         this(UNKNOWN);
     }
 
-    // NOTE:  reading is done single-threaded via UDPServer, so we can share
-    // objects for perf for the ByteBuffer constructor
-    private static byte[] _data = new byte[LENGTH];
-    private static char[] _chars = new char[LENGTH];
-
     /**
-     * load from ByteBuffer
+     * load from ByteBuffer.  Buffers are local (not shared statics) since multiple
+     * UDPServers in one JVM (e.g., unit tests) each read on their own thread.
      */
     UDPID(ByteBuffer buffer)
     {
-        buffer.get(_data);
+        byte[] data = new byte[LENGTH];
+        char[] chars = new char[LENGTH];
+        buffer.get(data);
         for (int i = 0; i < LENGTH; i++)
         {
-            _chars[i] = (char) _data[i];
+            chars[i] = (char) data[i];
         }
-        setID(new String(_chars)); // String copies chars
+        setID(new String(chars));
     }
 
     /**
@@ -94,7 +92,9 @@ public class UDPID
     private void setID(String sID)
     {
         sID_ = sID;
-        if (sID_.length() != 36) ApplicationError.assertTrue(false, "UPDID length not 36 ("+sID_.length()+")", sID_);
+        if (sID_.length() != 36) {
+            throw new ApplicationError("UPDID length not 36 ("+sID_.length()+ "): " +  sID_);
+        }
         bUnknown_ = sID_.equals(UNKNOWN);
         bytes_ = null;
     }

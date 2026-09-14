@@ -39,10 +39,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,6 +49,7 @@ import java.util.LinkedList;
  * To change this template use File | Settings | File Templates.
  *
  */
+@SuppressWarnings("unused")
 public class UDPLink
 {
     static Logger logger = LogManager.getLogger(UDPLink.class);
@@ -268,40 +266,17 @@ public class UDPLink
      */
     private void fireEvent(UDPLinkEvent event)
     {
-        // copy to avoid deadlock situations
-        UDPLinkMonitor[] mons = null;
-        UDPLinkMonitor mon = null;
+        // copy to avoid deadlock situations (don't call monitors while holding lock)
+        UDPLinkMonitor[] mons;
         synchronized(monitors_)
         {
-            // do nothing if no monitors
-            int nNum = monitors_.size();
-            if (nNum == 0) return;
-
-            // only one, so avoid array alloc
-            if (nNum == 1)
-            {
-                mon = monitors_.get(0);
-            }
-            // multiple
-            else
-            {
-                mons = new UDPLinkMonitor[nNum];
-                monitors_.toArray(mons);
-            }
+            if (monitors_.isEmpty()) return;
+            mons = monitors_.toArray(new UDPLinkMonitor[0]);
         }
 
-        // handle case of one
-        if (mon != null)
+        for (UDPLinkMonitor monitor : mons)
         {
-            fireEvent(mon, event);
-        }
-        // handle case of multiple
-        else
-        {
-            for (UDPLinkMonitor monitor : mons)
-            {
-                fireEvent(monitor, event);
-            }
+            fireEvent(monitor, event);
         }
     }
 
@@ -310,18 +285,18 @@ public class UDPLink
      */
     private void fireEvent(UDPLinkMonitor monitor, UDPLinkEvent event)
     {
-        // notify hanlder of new message
+        // notify handler of new message
         try {
             monitor.monitorEvent(event);
         } catch (Throwable t)
         {
-            logger.error("Monitor error on event "+event+ ": "+ Utils.formatExceptionText(t));
+            logger.error("Monitor error on event {}: {}", event, Utils.formatExceptionText(t));
         }
     }
 
-    /////
-    ///// OUTGOING METHODS
-    /////
+    //
+    // OUTGOING METHODS
+    //
 
     /**
      * Get MTU
@@ -355,8 +330,6 @@ public class UDPLink
         return getMaxMessageSize() - UDPData.HEADER_SIZE;
     }
 
-    // mtu test num (used to identify new test on receiving end)
-    private final byte testNum = 0;
     private int nLastMTUTest_;
     private boolean bMTUTestDone_;
 
@@ -384,6 +357,8 @@ public class UDPLink
             id = i + headers;
 
             // queue it
+            // mtu test num (used to identify new test on receiving end)
+            byte testNum = 0;
             queue(new UDPData(UDPData.Type.MTU_TEST, id, (short) 1, (short) 1, data, 0, i, testNum));
 
             // increment differently based on proximity to max
@@ -409,7 +384,7 @@ public class UDPLink
     {
         if (UDPServer.DEBUG_MTU)
         {
-            logger.debug("  MTU done, set to " + nMTU_ + " bytes " + toStringNameIP());
+            logger.debug("  MTU done, set to {} bytes {}", nMTU_, toStringNameIP());
         }
         bMTUTestDone_ = true;
         fireEvent(new UDPLinkEvent(UDPLinkEvent.Type.MTU_TEST_FINISHED, this));
@@ -509,7 +484,7 @@ public class UDPLink
     {
         UDPData part;
 
-        // no more messages if good-bye in progress (check here also to avoid alloc new objects)
+        // no more messages if goodbye in progress (check here also to avoid alloc new objects)
         if (bGoodbyeInProgress_) return;
 
         if (length == 0)
@@ -528,6 +503,7 @@ public class UDPLink
             // unlikely to happen, but always safe to check.  This allows
             // max size of message (UDPMessage.DATA_SIZE - UDPData.HEADER_SIZE) * Short.MAX_VALUE,
             // or approx. 44,169,916 bytes.
+            //noinspection ConstantValue
             if (nParts > UDPData.MAX_PARTS)
             {
                 ApplicationError.assertTrue(false, "Data too big to send: " + length + " bytes (max: " +
@@ -535,10 +511,10 @@ public class UDPLink
                                                    MAX_DATA_SIZE + " per chunk ... MTU="+getMTU());
             }
 
-            // Each UDPdata has its own id.  A multi part messsage is made
+            // Each UDPdata has its own id.  A multipart message is made
             // up of sequential ids.  The nPartID of nParts is used to identify
             // these parts.
-            for (int i = offset; i < length; i += MAX_DATA_SIZE)
+            for (int i = offset; i < offset + length; i += MAX_DATA_SIZE)
             {
                 nPartID++;  // part IDs start at 1
                 partlength = Math.min(MAX_DATA_SIZE, length + offset - i);
@@ -548,7 +524,7 @@ public class UDPLink
 
             if (nPartID != nParts)
             {
-                ApplicationError.assertTrue(false, "# parts mismatch - expected " + nParts + " but got " +
+                throw new ApplicationError("# parts mismatch - expected " + nParts + " but got " +
                                                    nPartID + " for length " + length + " and MAX_DATA_SIZE " +
                                                    MAX_DATA_SIZE);
             }
@@ -581,7 +557,7 @@ public class UDPLink
      */
     void queue(UDPData part, int nIndex)
     {
-        // no more messages if good-bye in progress
+        // no more messages if goodbye in progress
         if (bGoodbyeInProgress_) return;
 
         // queue it
@@ -614,7 +590,7 @@ public class UDPLink
 
     /**
      * Does the following things:
-     *
+     * <p>
      * 1) Adds acks to the queue
      * 2) check for resends - any message not ack'd in reasonable time is marked for resending
      * 3) sends all queued messages (acks, resends, new messages)
@@ -642,52 +618,39 @@ public class UDPLink
             int maxResends = 5;
             int resendCNT = 0;
 
-            LOOP: while (iter.hasNext() && resendCNT < maxResends)
-            {
+            while (iter.hasNext() && resendCNT < maxResends) {
                 data = iter.next();
                 type = data.getType();
-                if (data.elapsed() > minAck)
-                {
-                    switch (type)
-                    {
-                        case MTU_TEST:
-                            if (data.getSendCount() == mtuMaxAttempts)
-                            {
-                                if (UDPServer.DEBUG_MTU)
-                                {
-                                    logger.debug("  MTU failed - " + data.getID() + " bytes (attempted "+mtuMaxAttempts+" times) " + toStringNameIP());
-                                }
-
-                                iter.remove();
-
-                                if (isLastMTU(data))
-                                {
-                                    mtuTestDone();
-                                }
-                                continue;
+                if (data.elapsed() > minAck) {
+                    if (Objects.requireNonNull(type) == UDPData.Type.MTU_TEST) {
+                        if (data.getSendCount() == mtuMaxAttempts) {
+                            if (UDPServer.DEBUG_MTU) {
+                                logger.debug("  MTU failed - {} bytes (attempted {} times) {}", data.getID(), mtuMaxAttempts, toStringNameIP());
                             }
-                            break;
 
-                       default:
-                            if (data.getSendCount() == msgMaxAttempts)
-                            {
-                                if (UDPServer.DEBUG_RESEND)
-                                {
-                                    logger.debug("  XXXX RESEND FAIL " + data + " " + toStringNameIP());
-                                }
+                            iter.remove();
 
-                                iter.remove();
-
-                                fireEvent(new UDPLinkEvent(UDPLinkEvent.Type.RESEND_FAILURE, this, data));
-                                close();
-                                break LOOP;
+                            if (isLastMTU(data)) {
+                                mtuTestDone();
                             }
+                            continue;
+                        }
+                    } else {
+                        if (data.getSendCount() == msgMaxAttempts) {
+                            if (UDPServer.DEBUG_RESEND) {
+                                logger.debug("  XXXX RESEND FAIL {} {}", data, toStringNameIP());
+                            }
+
+                            iter.remove();
+
+                            fireEvent(new UDPLinkEvent(UDPLinkEvent.Type.RESEND_FAILURE, this, data));
+                            close();
                             break;
+                        }
                     }
 
-                    if (UDPServer.DEBUG_RESEND)
-                    {
-                        logger.debug("  **** RESEND " + data.elapsed() + " ms (min: " + minAck +"): " + data + " " + toStringNameIP());
+                    if (UDPServer.DEBUG_RESEND) {
+                        logger.debug("  **** RESEND {} ms (min: {}): {} {}", data.elapsed(), minAck, data, toStringNameIP());
                     }
 
                     data.resend();
@@ -720,7 +683,7 @@ public class UDPLink
         if (acks_ == null || bGoodbyeInProgress_ || bDone_) return;
 
         // send out acks (unless it is empty)
-        if (UDPServer.DEBUG_ACKS_OUT) logger.debug("ACKS out: "+ acks_);
+        if (UDPServer.DEBUG_ACKS_OUT) logger.debug("ACKS out: {}", acks_);
         acks_.queueAcks(this, UDPData.Type.PING_ACK);
         if (bSendImmediate) send();
     }
@@ -741,8 +704,7 @@ public class UDPLink
             boolean bLimitOne = false;
             UDPData.Type type;
 
-            ITER: while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 data = iter.next();
                 type = data.getType();
 
@@ -752,30 +714,27 @@ public class UDPLink
                 // already queued or sent, but not ack'd
                 if (data.isSent() || data.isQueued()) continue;
 
-                // if this is a message and we haven't finished the mtu test, skip for now
-                if (type == UDPData.Type.MESSAGE && !bMTUTestDone_)
-                {
-                    if (UDPServer.DEBUG_MTU)
-                    {
+                // if this is a message, and we haven't finished the mtu test, skip for now
+                if (type == UDPData.Type.MESSAGE && !bMTUTestDone_) {
+                    //noinspection StatementWithEmptyBody
+                    if (UDPServer.DEBUG_MTU) {
                         //logger.debug("  SKP (mtu test not done): " + data);
                     }
                     continue;
                 }
 
                 // if we have a message, but no space for this chunk,
-                // (or this chunk or previous is a MTU_TEST message)
+                // (or this chunk or previous is an MTU_TEST message)
                 // then send current message (and start new message)
                 if (msg != null && (type == UDPData.Type.MTU_TEST || type == UDPData.Type.MTU_ACK || bLimitOne ||
-                                    !msg.hasSpace(getMaxPayloadSize(), data)))
-                {
+                        !msg.hasSpace(getMaxPayloadSize(), data))) {
                     outgoingQueue_.addSend(this, msg);
                     msg = null;
                     bLimitOne = false;
                 }
 
                 // no message (or starting new one), so create message
-                if (msg == null)
-                {
+                if (msg == null) {
                     msg = new UDPMessage(manager_.server(), localSessionID_, id_, local_, remote_);
                 }
 
@@ -786,13 +745,11 @@ public class UDPLink
                 // remove ping/acks here. Even though there is
                 // a small possibility they won't be received, that is
                 // okay since we'll send them again
-                if (type == UDPData.Type.PING_ACK || type == UDPData.Type.MTU_ACK)
-                {
+                if (type == UDPData.Type.PING_ACK || type == UDPData.Type.MTU_ACK) {
                     iter.remove();
                 }
                 // if MTU_TEST or MTU_ACK, only allow one per message
-                else if (type == UDPData.Type.MTU_TEST || type == UDPData.Type.MTU_ACK )
-                {
+                if (type == UDPData.Type.MTU_TEST || type == UDPData.Type.MTU_ACK) {
                     bLimitOne = true;
                 }
             }
@@ -832,7 +789,7 @@ public class UDPLink
             // if we had previous errors, note total that occurred and clear cnt/error
             if (nLastErrorCnt_ > 0)
             {
-                logger.info(Utils.getAddressPort(local_)+" send successful.  Last send error ("+sLastError_+") occurred a total of "+(nLastErrorCnt_+1)+" times");
+                logger.info("{} send successful.  Last send error ({}) occurred a total of {} times", Utils.getAddressPort(local_), sLastError_, nLastErrorCnt_ + 1);
             }
             nLastErrorCnt_ = 0;
             sLastError_ = null;
@@ -848,14 +805,14 @@ public class UDPLink
                 nLastErrorCnt_++;
                 if (nLastErrorCnt_ % 10 == 0)
                 {
-                    logger.error(Utils.getAddressPort(local_)+ " last send error ("+sError+") repeated "+nLastErrorCnt_+" times");
+                    logger.error("{} last send error ({}) repeated {} times", Utils.getAddressPort(local_), sError, nLastErrorCnt_);
                 }
                 return;
             }
 
             // new error - log it and remember it
             sLastError_ = sError;
-            logger.error(Utils.getAddressPort(local_)+" send error " + Utils.formatExceptionText(ioe));
+            logger.error("{} send error {}", Utils.getAddressPort(local_), Utils.formatExceptionText(ioe));
         }
     }
 
@@ -879,7 +836,7 @@ public class UDPLink
 
         long elapsed = now - lastMessageReceived_;
 
-        // if good bye is in progress and no ack, then just exit
+        // if goodbye is in progress and no ack, then just exit
         if (bGoodbyeInProgress_ && elapsed > GOODBYE_TIMEOUT) // TODO: does this work?
         {
             finish(); // sender finish (no ack from remote)
@@ -888,7 +845,8 @@ public class UDPLink
 
         if (elapsed > TIMEOUT_MILLIS)
         {
-            if (UDPServer.DEBUG_TIMEOUT) logger.debug("Timeout after " + elapsed + " millis on " + Utils.getAddressPort(remote_) + " (new session "+localSessionID_+")");
+            if (UDPServer.DEBUG_TIMEOUT)
+                logger.debug("Timeout after {} millis on {} (new session {})", elapsed, Utils.getAddressPort(remote_), localSessionID_);
             fireEvent(new UDPLinkEvent(UDPLinkEvent.Type.TIMEOUT, this, elapsed));
             resetSession();
             finish();
@@ -968,15 +926,16 @@ public class UDPLink
 
                     if (!bHelloReceived_) break;
 
-                    // Attempt to add to queue if HELLO message received and we haven't already
+                    // Attempt to add to queue if HELLO message received, and we haven't already
                     // added it (by checking acks).  If we added, then update acklist and
                     // mark for dispatching
                     if (!acks_.contains(data) && incomingQueue_.addMessage(data))
                     {
                         if (UDPServer.DEBUG_INCOMING)
                         {
-                            logger.debug("  IN  " + data + " (" + incomingQueue_.size() +" queue) " + toStringNameIP());
-                            if (UDPServer.DEBUG_INCOMING_QUEUE || incomingQueue_.hasGapAtBeginning()) logger.debug("Queue now " + toStringNameIP() +": "+ incomingQueue_);
+                            logger.debug("  IN  {} ({} queue) {}", data, incomingQueue_.size(), toStringNameIP());
+                            if (UDPServer.DEBUG_INCOMING_QUEUE || incomingQueue_.hasGapAtBeginning())
+                                logger.debug("Queue now {}: {}", toStringNameIP(), incomingQueue_);
                         }
 
                         acks_.ack(data);
@@ -985,6 +944,7 @@ public class UDPLink
                     // otherwise it is a duplicate, so ignore it
                     else
                     {
+                        //noinspection StatementWithEmptyBody
                         if (UDPServer.DEBUG_INCOMING)
                         {
                             //logger.debug("  <== " + data + " (dup-ignored)");
@@ -997,8 +957,9 @@ public class UDPLink
                     // debug
                     if (UDPServer.DEBUG_INCOMING)
                     {
-                        logger.debug("  IN  " + data + " (" + incomingQueue_.size() +" queue) " + toStringNameIP());
-                        if (UDPServer.DEBUG_INCOMING_QUEUE || incomingQueue_.hasGapAtBeginning()) logger.debug("Queue now " + toStringNameIP() +": "+ incomingQueue_);
+                        logger.debug("  IN  {} ({} queue) {}", data, incomingQueue_.size(), toStringNameIP());
+                        if (UDPServer.DEBUG_INCOMING_QUEUE || incomingQueue_.hasGapAtBeginning())
+                            logger.debug("Queue now {}: {}", toStringNameIP(), incomingQueue_);
                     }
 
                     // send final acks (could be null if duplicate goodbye received)
@@ -1020,6 +981,7 @@ public class UDPLink
                     byte tstid = data.getUserType();
                     if (mtuAcks_ == null || mtuAcks_.getSessionID() != tstid)
                     {
+                        //noinspection StatementWithEmptyBody
                         if (UDPServer.DEBUG_MTU)
                         {
                             //logger.debug("  TST-"+tstid+" starting");
@@ -1031,6 +993,7 @@ public class UDPLink
                     // if this is a new test message, ack it and log it
                     if (!mtuAcks_.contains(data))
                     {
+                        //noinspection StatementWithEmptyBody
                         if (UDPServer.DEBUG_MTU)
                         {
                             //logger.debug("  TST-"+tstid+" " + data + " (" + msg.getPacketLength() +" pkt size) " + toStringIPs());
@@ -1041,6 +1004,7 @@ public class UDPLink
                     // otherwise it is a duplicate, so ignore it
                     else
                     {
+                        //noinspection StatementWithEmptyBody
                         if (UDPServer.DEBUG_MTU)
                         {
                             //logger.debug("  TST-"+tstid+" " + data + " (duplicate) " + toStringIPs());
@@ -1161,7 +1125,7 @@ public class UDPLink
             // this is a no-op
             if (hello())
             {
-                if (UDPServer.DEBUG_ACKS_IGNORED) logger.debug("ACKS ignored, HELLO sent: "+ acks);
+                if (UDPServer.DEBUG_ACKS_IGNORED) logger.debug("ACKS ignored, HELLO sent: {}", acks);
             }
             return;
         }
@@ -1187,7 +1151,8 @@ public class UDPLink
                 {
                     iter.remove();
                     stats_.recordRoundTripTime(qData);
-                    if (UDPServer.DEBUG_ACKS_IN_DETAIL && !bMTUAcks) logger.debug("  "+ACK+" " + qData + " average round trip is " + stats_.getAverage() + " " + toStringNameIP());
+                    if (UDPServer.DEBUG_ACKS_IN_DETAIL && !bMTUAcks)
+                        logger.debug("  {} {} average round trip is {} {}", ACK, qData, stats_.getAverage(), toStringNameIP());
 
                     // if our hello was acknowledged, the connection is established
                     switch(type)
@@ -1205,6 +1170,7 @@ public class UDPLink
                             if (nMTU_ < qData.getID())
                             {
                                 nMTU_ = qData.getID();
+                                //noinspection StatementWithEmptyBody
                                 if (UDPServer.DEBUG_MTU)
                                 {
                                     //logger.debug("  MTU increased to " + nMTU_ + " bytes " + toStringNameIP());
@@ -1221,7 +1187,7 @@ public class UDPLink
             }
 
             if (UDPServer.DEBUG_ACKS_IN && nOldSize != sendQueue_.size() && !bMTUAcks) {
-                logger.debug(ACK+"S in " + acks+" from " + getName() +", queue now has " + sendQueue_.size() + " messages ("+(nOldSize-sendQueue_.size())+" removed)");
+                logger.debug("{}S in {} from {}, queue now has {} messages ({} removed)", ACK, acks, getName(), sendQueue_.size(), nOldSize - sendQueue_.size());
             }
         }
     }
@@ -1242,9 +1208,9 @@ public class UDPLink
         fireEvent(new UDPLinkEvent(UDPLinkEvent.Type.RECEIVED, this, data));
     }
 
-    ////
-    //// Stats
-    ////
+    //
+    // Stats
+    //
 
     /**
      * Get average roundtrip
@@ -1276,7 +1242,7 @@ public class UDPLink
         private long bytesOutCP;
 
         // roundtrip
-        private MovingAverage roundtrip = new MovingAverage(100);
+        private final MovingAverage roundtrip = new MovingAverage(100);
 
         /**
          * constructor
@@ -1485,10 +1451,9 @@ public class UDPLink
          */
         public String toString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.append("AVG: ").append(getAverage()).append(", OUT: ").append(dataOut).append(", RE: ").append(dataresend).append(", IN: ").append(dataIn).append(", DUP: ").append(dataDups).append(", BIN: ").append(Utils.formatSizeBytes(bytesIn)).append(", BOUT: ").append(Utils.formatSizeBytes(bytesOut));
-
-            return sb.toString();
+            return "AVG: " + getAverage() + ", OUT: " + dataOut + ", RE: " + dataresend + ", IN: " +
+                    dataIn + ", DUP: " + dataDups + ", BIN: " + Utils.formatSizeBytes(bytesIn) + ", BOUT: " +
+                    Utils.formatSizeBytes(bytesOut);
         }
     }
 

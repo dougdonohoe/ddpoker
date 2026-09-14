@@ -76,7 +76,7 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
 
         catch (ApplicationError ae)
         {
-            System.err.println("UDPLinkTester ending due to ApplicationError: " + ae.toString());
+            System.err.println("UDPLinkTester ending due to ApplicationError: " + ae);
             System.exit(1);
         }
         catch (java.lang.OutOfMemoryError nomem)
@@ -161,7 +161,6 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
 
         //int port = PropertyConfig.getRequiredIntegerProperty("settings.udp.port"); // get port on which server should be running
 
-        //linkAckTest();
         UDPLink link = udp_.manager().getLink(DEST_HOST, port);
 
         if (bDebug)
@@ -263,15 +262,6 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
             " ({} high - {} peak)" +
             ",  Bytes Out: {}/sec" +
             " ({} high - {} peak)", Utils.formatSizeBytes(in.getAverageLong()), Utils.formatSizeBytes(in.getHigh()), Utils.formatSizeBytes(in.getPeak()), Utils.formatSizeBytes(out.getAverageLong()), Utils.formatSizeBytes(out.getHigh()), Utils.formatSizeBytes(out.getPeak()));
-    }
-
-    /**
-     * UDPLink test
-     */
-    public void linkAckTest()
-    {
-        AckList list = new AckList(System.currentTimeMillis());
-        list.ackTest(false, 10000, 7);
     }
 
     ////
