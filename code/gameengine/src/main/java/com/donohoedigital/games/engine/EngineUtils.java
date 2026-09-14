@@ -307,6 +307,17 @@ public class EngineUtils
     }
 
     /**
+     * Message for the unexpected-error dialog.  Uses the exception's message, or its
+     * class name if it has none (e.g., an NPE).  Full details are in the log.
+     */
+    public static String getUnexpectedErrorMessage(Throwable e)
+    {
+        String sDetail = e.getMessage();
+        if (sDetail == null || sDetail.isBlank()) sDetail = e.getClass().getSimpleName();
+        return PropertyConfig.getMessage("msg.error.unexpected", sDetail);
+    }
+
+    /**
      * Show message in a information dialog
      */
     public static void displayInformationDialog(GameContext context,

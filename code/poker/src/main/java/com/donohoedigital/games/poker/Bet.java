@@ -99,7 +99,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
 
         //logger.debug("BET started for " + player_.getName() + " round: " + hhand_.getRoundName(hhand_.getRound()));
 
-        // check for old phase.  Before we implemented online time outs,
+        // check for old phase.  Before we implemented online time-outs,
         // the setPlayerActionListener() would throw an exception if we
         // tried to set a listener with one already existing (which was good
         // because it meant something not cleaned up properly).  However,
@@ -112,7 +112,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             ((PokerContext) context_).getCurrentBetPhase().finish();
         }
 
-        // remember, add to cancellist, set action listener
+        // remember, add to cancel list, set action listener
         ((PokerContext) context_).setCurrentBetPhase(this);
         EngineUtils.addCancelable(this);
         game_.setPlayerActionListener(this);
@@ -175,22 +175,18 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
             if (Utils.ISWINDOWS && game_.isOnlineGame() && PokerUtils.isOptionOn(PokerConstants.OPTION_ONLINE_FRONT))
             {
                 BaseFrame frame = context_.getFrame();
-                if (!frame.isFullScreen())
+                if (frame.isMinimized())
                 {
-                    if (frame.isMinimized())
+                    if (frame.isMaximized())
                     {
-                        if (frame.isMaximized())
-                        {
-                            frame.setMaximized();
-                        }
-                        else
-                        {
-                            frame.setNormal();
-                        }
+                        frame.setMaximized();
                     }
-                    frame.toFront();
-
+                    else
+                    {
+                        frame.setNormal();
+                    }
                 }
+                frame.toFront();
 
             }
 
@@ -240,6 +236,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
                 // encore idea - have ai pause to increase drama after human has bet - to
                 // make it appear like ai is "thinking" ... even if no delay is set
                 // TODO: off for now - need to think more about this, maybe make an option
+                //noinspection PointlessBooleanExpression
                 if (false && !table_.isZipMode() && !game_.isOnlineGame() && hhand_.getRound() == HoldemHand.ROUND_RIVER)
                 {
                     PokerPlayer human = game_.getHumanPlayer();
@@ -301,7 +298,7 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
      */
     public void doAI()
     {
-        // if no AI, just fold (online, auto pilot case)
+        // if no AI, just fold (online, autopilot case)
         if (TESTING(PokerConstants.TESTING_AUTOPILOT) && player_.getPokerAI() == null)
         {
             handleAction(fold());
@@ -318,28 +315,14 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
      */
     public void playerActionPerformed(int nAction, int nAmount)
     {
-        HandAction action = null;
-        
-        switch (nAction)
-        {
-            case PokerGame.ACTION_FOLD:
-                action = fold();
-                break;
-            case PokerGame.ACTION_BET:
-            case PokerGame.ACTION_RAISE:
-                action = betRaise(nAmount);
-                break;
-            case PokerGame.ACTION_CHECK:
-            case PokerGame.ACTION_CALL:
-                action = checkCall();
-                break;
-            case PokerGame.ACTION_ALL_IN:
-                action = allin();
-                break;
-            default:
-                throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "Shouldn't be here", null);
-        }
-        
+        HandAction action = switch (nAction) {
+            case PokerGame.ACTION_FOLD -> fold();
+            case PokerGame.ACTION_BET, PokerGame.ACTION_RAISE -> betRaise(nAmount);
+            case PokerGame.ACTION_CHECK, PokerGame.ACTION_CALL -> checkCall();
+            case PokerGame.ACTION_ALL_IN -> allin();
+            default -> throw new ApplicationError(ErrorCodes.ERROR_CODE_ERROR, "Shouldn't be here", null);
+        };
+
         if (action == null) return;
         
         handleAction(action);
@@ -354,11 +337,8 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
         int nAction = action.getAction();
         if (!table_.isZipMode())
         {
-            switch (nAction)
-            {
-                case HandAction.ACTION_FOLD:
-                    foldHumanCheck();
-                    break;
+            if (nAction == HandAction.ACTION_FOLD) {
+                foldHumanCheck();
             }
         }
 
@@ -557,11 +537,10 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
         {
             if (bet == null) return;
 
-            if (event instanceof KeyEvent)
+            if (event instanceof KeyEvent k)
             {
-                KeyEvent k = (KeyEvent) event;
 
-                 // if not pressed or source is a text component, ignore (unless
+                // if not pressed or source is a text component, ignore (unless
                 // the text source is the amount spinner)
                 if (k.getID() != KeyEvent.KEY_PRESSED ||
                     (k.getSource() instanceof javax.swing.text.JTextComponent &&

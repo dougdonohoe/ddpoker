@@ -94,29 +94,14 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         setResizable(false);
         setDesktopIcon(new InternalIcon(this));
         
-        // BUG 133 - turn off requesting of focus to
-        // avoid apparent memory leak in KeyboardFocusManager.newFocusOwner
-        //if (Perf.isOn())
-        //{
-            //TODO needed with JProfile? setRequestFocusEnabled(false);
-        //}
-
         addInternalFrameListener(new InternalFrameAdapter() {
             public void internalFrameIconified(InternalFrameEvent e)
             {
                 InternalIcon icon = (InternalIcon) getDesktopIcon();
 
-                if (icon != null) // && icon.shouldSetLocation())
+                if (icon != null)
                 {
                     icon.setSize(175, icon.getHeight());
-                    // change location is not needed for poker
-                    //Point p = getLocation();
-                    // move icon to center, bottom
-                    //Point newLocation = new Point(//(getWidth() - icon.getWidth())/2 + p.x,
-                     //       10,
-                     //                           frame_.getContentPane().getHeight() - icon.getHeight() - 5);
-                    //icon.setLocation(newLocation);
-                    //icon.storeLocation(newLocation);
                 }
             }
         });
@@ -353,7 +338,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     // Listeners for modal mouse blocker layer
     private static final MouseAdapter MY_MOUSE = new MouseAdapter() {};
     private static final MouseMotionAdapter MY_MOUSE_MOTION = new MouseMotionAdapter() {};
-    private static final MouseWheelListener MY_MOUSE_WHEEL = e -> {};
+    private static final MouseWheelListener MY_MOUSE_WHEEL = _ -> {};
     
     // list of all modal info
     private static final Stack<ModalInfo> modal_ = new Stack<>();
@@ -636,13 +621,8 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         int nScreenHeight = frame_.getHeight();
         int nX = (nScreenWidth - size.width) / 2;
         int nY = (nScreenHeight - size.height) / 2;
-        
-        if (!frame_.isFullScreen())
-        {
-            // TODO: get programmatically
-            nY -= 15; // account for windows title bar
-        }
-        
+        nY -= 15; // account for windows title bar (TODO: get programmatically)
+
         setLocation(nX, nY);
     }
 
@@ -741,7 +721,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
                 // if least space off-screen on horizontal
                 if (nHoriz < nVertical)
                 {
-                    y = (fh-bh)/2; // center on y axis
+                    y = (fh-bh)/2; // center on y-axis
                     
                     if (nLeftDiff < nRightDiff)
                     {

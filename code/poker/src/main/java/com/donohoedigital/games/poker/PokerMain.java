@@ -307,7 +307,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 {
                     logger.warn("Another copy running (database already in use).  Showing warning splash.");
                     String sMsg = PropertyConfig.getMessage("msg.2ndcopy");
-                    splashscreen_.changeUI(this, true, sMsg);
+                    splashscreen_.changeUI(this, sMsg);
                     return false;
                 }
             }

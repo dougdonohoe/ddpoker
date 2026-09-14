@@ -443,10 +443,46 @@ public class GameContext
     }
 
     /**
-     * override for subclass logging
+     * Tell the user an error occurred (details already logged) and point them
+     * at the logs.  Override for app-specific handling (call super to keep the dialog).
      */
     protected void handleProcessPhaseException(Throwable e)
     {
+        String sMsg = EngineUtils.getUnexpectedErrorMessage(e);
+        if (SwingUtilities.isEventDispatchThread())
+        {
+            displayErrorDialog(sMsg);
+        }
+        else
+        {
+            SwingUtilities.invokeLater(() -> displayErrorDialog(sMsg));
+        }
+    }
+
+    // guards against recursion: displaying the error dialog runs another
+    // phase, which could itself fail and route back here.  EDT-only.
+    private boolean showingErrorDialog_;
+
+    /**
+     * Show the unexpected-error dialog, unless one is already being shown
+     */
+    private void displayErrorDialog(String sMsg)
+    {
+        if (showingErrorDialog_)
+        {
+            logger.warn("GameContext - exception while handling a prior error; not showing another dialog");
+            return;
+        }
+
+        showingErrorDialog_ = true;
+        try
+        {
+            EngineUtils.displayInformationDialog(this, sMsg);
+        }
+        finally
+        {
+            showingErrorDialog_ = false;
+        }
     }
 
     /**
@@ -482,12 +518,12 @@ public class GameContext
                 int nMinWidth = gamephase.getInteger("window-width-min", 100);
                 boolean bResizable = gamephase.getBoolean("window-resize", true);
 
-                if (!TESTING(EngineConstants.TESTING_NO_EXTERNAL) && !frame_.isFullScreen())
+                if (!TESTING(EngineConstants.TESTING_NO_EXTERNAL))
                 {
                     context = engine_.createGameContext(game_, sWindowName, nMinWidth, nMinHeight, false);
                     context.setParent(this);
                     EngineWindow window = context.getFrame();
-                    window.init(gamephase, false, new Dimension(nWidth, nHeight), false, sTitle, bResizable);
+                    window.init(gamephase, false, new Dimension(nWidth, nHeight), sTitle, bResizable);
                     engine_.contextInited(context);
                     window.display();
                 }

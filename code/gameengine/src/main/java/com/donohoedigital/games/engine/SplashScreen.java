@@ -46,7 +46,8 @@ import com.donohoedigital.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
@@ -57,13 +58,8 @@ import java.net.URL;
  *
  * @author Doug Donohoe
  */
-public class SplashScreen extends JFrame implements ActionListener, MouseListener
+public class SplashScreen extends JFrame
 {
-    private DDButton full_;
-    private DDButton win_;
-    private DDButton del_;
-    private GameEngine engine_;
-    private JLabel bpfull_, bpwin_;
     private final ImageComponent ic_;
     private final URL bgFile_;
 
@@ -89,7 +85,7 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
         ic_.setLayout(new XYLayout());
         setContentPane(ic_);
 
-        // iocn
+        // icon
         setIconImage(ImageDef.getBufferedImage(icon));
 
         // frame final setup
@@ -101,66 +97,31 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
     /**
      * Called by GameEngine after config files loaded
      */
-    public void changeUI(GameEngine engine, boolean bSkipSplashChoice, String sErrorMessage)
+    public void changeUI(GameEngine engine, String sErrorMessage)
     {
-        engine_ = engine;
-
         int BUTTONSIZE = 15;
         XYConstraints xy;
         setTitle(PropertyConfig.getMessage("msg.title.splash"));
 
-        String sKey = bSkipSplashChoice ? "splash-nochoice" : "splash";
+        String sKey = "splash";
         if (sErrorMessage != null) sKey = "splash-empty";
 
         // localize
-        sKey = PropertyConfig.localize(sKey, engine_.getLocale());
+        sKey = PropertyConfig.localize(sKey, engine.getLocale());
         ImageDef img = ImageConfig.getImageDef(sKey);
-        if (!img.getImageURL().equals(bgFile_))
+        if (!img.getImageURL().toString().equals(bgFile_.toString()))
         {
             ic_.changeName(sKey);
         }
 
         // version label
         DDLabel version = new DDLabel("version", "Splash");
-        GuiManager.setLabelAsMessage(version, engine_.getVersion());
+        GuiManager.setLabelAsMessage(version, engine.getVersion());
         version.setHorizontalAlignment(SwingConstants.CENTER);
         Dimension size = version.getPreferredSize();
         JComponent versionpanel = GuiUtils.NORTH(version);
         xy = new XYConstraints(ic_.getWidth() - size.width - BUTTONSIZE - 8, 5, size.width, size.height);
         ic_.add(versionpanel, xy);
-
-        // screen mode buttons
-        if (!bSkipSplashChoice)
-        {
-            // fullscreen button
-            full_ = new GlassButton("fullscreen", "Glass");
-            full_.addActionListener(this);
-            JComponent fullpanel = GuiUtils.NORTH(full_);
-            xy = new XYConstraints(70, 210, 80, 40);
-            ic_.add(fullpanel, xy);
-
-            bpfull_ = new JLabel();
-            xy = new XYConstraints(48, 103, 120, 90);
-            ic_.add(bpfull_, xy);
-            bpfull_.addMouseListener(this);
-            bpfull_.setCursor(Cursors.HAND);
-
-            // windows button
-            win_ = new GlassButton("window", "Glass");
-            win_.addActionListener(this);
-            JComponent winpanel = GuiUtils.NORTH(win_);
-            xy = new XYConstraints(250, 210, 80, 40);
-            ic_.add(winpanel, xy);
-
-            bpwin_ = new JLabel();
-            xy = new XYConstraints(228, 103, 120, 90);
-            ic_.add(bpwin_, xy);
-            bpwin_.addMouseListener(this);
-            bpwin_.setCursor(Cursors.HAND);
-
-            // notify user input required
-            AudioConfig.playFX("bell");
-        }
 
         if (sErrorMessage != null)
         {
@@ -174,7 +135,7 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
                 // exit if clicked
                 public void mouseReleased(MouseEvent e)
                 {
-                    engine_.exit(0);
+                    engine.exit(0);
                 }
             };
             GuiUtils.addMouseListenerChildren(this, listener);
@@ -184,75 +145,18 @@ public class SplashScreen extends JFrame implements ActionListener, MouseListene
             AudioConfig.playFX("bell");
         }
 
-        // delete button
-        del_ = new GlassButton("deleteitem", "Glass");
-        del_.setBorderGap(0, 2, 0, 0);
-        del_.addActionListener(this);
-        del_.setFocusable(false);
-        del_.setFocusPainted(false);
-        xy = new XYConstraints(380, 4, BUTTONSIZE, BUTTONSIZE);
-        ic_.add(del_, xy);
+        // exit button
+        DDButton exit = new GlassButton("deleteitem", "Glass");
+        exit.setBorderGap(0, 2, 0, 0);
+        exit.addActionListener(_ -> System.exit(0));
+        exit.setFocusable(false);
+        exit.setFocusPainted(false);
+        xy = new XYConstraints(ic_.getWidth() - BUTTONSIZE - 5, 4, BUTTONSIZE, BUTTONSIZE);
+        ic_.add(exit, xy);
 
         // frame final setup
         validate();
         repaint();
-    }
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(ActionEvent e)
-    {
-        action(e.getSource());
-    }
-
-    /**
-     * button press
-     */
-    private void action(Object source)
-    {
-        if (source == del_)
-        {
-            System.exit(0);
-        }
-        else if (source == full_ || source == bpfull_)
-        {
-            engine_.setFull(true);
-        }
-        else if (source == win_ || source == bpwin_)
-        {
-            engine_.setFull(false);
-        }
-
-        SwingUtilities.invokeLater(
-            () ->
-                engine_.showMainWindow()
-        );
-    }
-
-    /**
-     * mouse click
-     */
-    public void mouseClicked(MouseEvent e)
-    {
-        action(e.getSource());
-    }
-
-    public void mouseEntered(MouseEvent e)
-    {
-    }
-
-    public void mouseExited(MouseEvent e)
-    {
-    }
-
-    public void mousePressed(MouseEvent e)
-    {
-    }
-
-    public void mouseReleased(MouseEvent e)
-    {
-
     }
 
     /**

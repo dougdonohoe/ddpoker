@@ -106,12 +106,12 @@ public class PokerContext extends GameContext
         }
 
         /**
-         * init to given size (or full screen if passed in)
+         * init to given size
          */
         @Override
-        public void init(GamePhase gamephase, boolean bMain, Dimension size, boolean bFull, String sTitle, boolean bResizable)
+        public void init(GamePhase gamephase, boolean bMain, Dimension size, String sTitle, boolean bResizable)
         {
-            super.init(gamephase, bMain, size, bFull, sTitle, bResizable);
+            super.init(gamephase, bMain, size, sTitle, bResizable);
 
             GuiUtils.addKeyAction((JComponent) getContentPane(), JComponent.WHEN_IN_FOCUSED_WINDOW,
                                   "onlinelobby", new LobbyAction(),
@@ -185,6 +185,7 @@ public class PokerContext extends GameContext
     protected void handleProcessPhaseException(Throwable e)
     {
         LogGameInfo((PokerGame) getGame());
+        super.handleProcessPhaseException(e);
     }
 
     /**

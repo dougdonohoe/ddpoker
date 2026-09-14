@@ -39,8 +39,7 @@
   <image name="gui.icon" location="pokericon32.gif"/>
   <image name="engine.basepanel" location="gray-rock.jpg"/>
 
-  <image name="splash" location="poker-splash.jpg" cache="false"/>
-  <image name="splash-nochoice" location="poker-splash-nochoice.jpg" cache="false"/>
+  <image name="splash" location="poker-splash-nochoice.jpg" cache="false"/>
   <image name="splash-empty" location="poker-splash-installer.jpg" cache="false"/>
 
   <image name="rating16_full" location="rating16_full.png"/>

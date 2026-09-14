@@ -93,8 +93,8 @@ public abstract class ShowPokerTable extends ChainPhase implements
     protected DDLabel labelName_;
 
     // Dimensions
-    private static int SMALLEST_WIDTH = 25;
-    private static int SMALLEST_HEIGHT = 18;
+    private static final int SMALLEST_WIDTH = 25;
+    private static final int SMALLEST_HEIGHT = 18;
     private int nInputMode_ = MODE_INIT;
     public static final int LEFT_PANEL_WIDTH = 200;
 
@@ -109,14 +109,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
         game_ = (PokerGame) context.getGame();
         game_.setInput(this);
 
-        // if full screen, change smallest width/height to the screen size
         frame_ = context.getFrame();
-        if (frame_.isFullScreen())
-        {
-            DisplayMode mode = frame_.getDisplayMode();
-            SMALLEST_WIDTH = mode.getWidth();
-            SMALLEST_HEIGHT = mode.getHeight();
-        }
 
         // base for gameboard
         base_ = new ImageComponent("engine.basepanel", 1.0d);
@@ -375,6 +368,7 @@ public abstract class ShowPokerTable extends ChainPhase implements
     /**
      * Create button panel (quit,save,etc.)
      */
+    @SuppressWarnings("SameParameterValue")
     protected DDPanel createButtonPanel(boolean bHorizontal)
     {
         // create buttons

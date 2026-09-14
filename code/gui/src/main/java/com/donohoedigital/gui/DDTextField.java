@@ -39,8 +39,7 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.Utils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.donohoedigital.config.DebugConfig;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -61,8 +60,6 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
                                                                 FocusListener, MouseListener,
                                                                 DDCustomHelp
 {
-    static Logger logger = LogManager.getLogger(DDTextField.class);
-
     // default border used for all text fields
     public static final Border TEXTBORDER = createTextBorder(null);
 
@@ -74,7 +71,7 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
      */
     public static Border createTextBorder(String sBevelStyle)
     {
-        Border bb = null;
+        Border bb;
         if (sBevelStyle != null)
         {
             bb = new DDBevelBorder(sBevelStyle, BevelBorder.LOWERED);
@@ -91,7 +88,7 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
 
     // members
     private Caret cNormal_;
-    private Caret cNothing_ = new DoNothingCaret();
+    private final Caret cNothing_ = new DoNothingCaret();
     private boolean bDisplayOnly_ = false;
     private Color bgNormal_;
     private Color bgError_ = Color.black;
@@ -191,7 +188,7 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
     /**
      * Set this text area as a display area that:
      * can't take focus, wraps words/lines, is not opaque,
-     * can't drag and draw's with anti aliasing.
+     * can't drag and draw's with antialiasing.
      */
     public void setDisplayOnly(boolean bDisplayOnly)
     {
@@ -271,7 +268,7 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
     }
 
     /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
+     * Override to set antialiasing hit if isAntiAlias() is true
      */
     @Override
     public void paintComponent(Graphics g1)
@@ -372,7 +369,7 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
      * for text areas where opaque=false and their parent has
      * a semi-transparent background.  Fixs a swing bug.
      */
-    private class DoNothingCaret extends javax.swing.text.DefaultCaret
+    private static class DoNothingCaret extends javax.swing.text.DefaultCaret
     {
         @Override
         public void paint(Graphics g)
@@ -411,10 +408,9 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
     /*
     * Class used to Limit length
     */
-    private class LengthLimit extends PlainDocument
+    private static class LengthLimit extends PlainDocument
     {
-
-        private int limit;
+        private final int limit;
 
         LengthLimit(int limit)
         {
@@ -456,6 +452,11 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
      */
     private void regexpValidate()
     {
+        // for testing error handling in modal dialogs ... just type BOOM! in any text field
+        if (DebugConfig.isTestingOn() && getText().contains("BOOM!")) {
+            throw new RuntimeException("BOOM!");
+        }
+
         if (pattern_ != null)
         {
             String sNew = getText().trim();
@@ -520,9 +521,9 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
         return bValid_;
     }
 
-    ////
-    //// DocumentListener methods
-    ////
+    //
+    // DocumentListener methods
+    //
 
     /**
      * calls regexpValidate()

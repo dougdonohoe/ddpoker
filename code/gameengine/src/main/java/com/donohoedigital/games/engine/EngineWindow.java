@@ -33,7 +33,6 @@
 package com.donohoedigital.games.engine;
 
 import com.donohoedigital.base.Utils;
-import com.donohoedigital.config.ConfigUtils;
 import com.donohoedigital.config.DebugConfig;
 import static com.donohoedigital.config.DebugConfig.*;
 import com.donohoedigital.games.config.EngineConstants;
@@ -70,7 +69,6 @@ public class EngineWindow extends BaseFrame
     private EngineBasePanel base_;
     private final int DESIRED_MIN_WIDTH;
     private final int DESIRED_MIN_HEIGHT;
-    private boolean bFull_;
 
     /**
      * Constructor
@@ -88,12 +86,11 @@ public class EngineWindow extends BaseFrame
     }
 
     /**
-     * init to given size (or full screen if passed in)
+     * init to given size
      */
-    public void init(GamePhase gamephase, boolean bMain, Dimension size, boolean bFull, String sTitle, boolean bResizable)
+    public void init(GamePhase gamephase, boolean bMain, Dimension size, String sTitle, boolean bResizable)
     {
         // create base panel and setup frame
-        bFull_ = bFull;
         base_ = new EngineBasePanel(this, gamephase);
         setResizable(bResizable);
         boolean bReset = engine_.getCommandLineOptions().getBoolean("reset", false);
@@ -122,9 +119,9 @@ public class EngineWindow extends BaseFrame
         if (size.width < DESIRED_MIN_WIDTH) size.width = DESIRED_MIN_WIDTH;
         if (size.height < DESIRED_MIN_HEIGHT) size.height = DESIRED_MIN_HEIGHT;
 
-        // can't be bigger than screen size (and should be screen size in full)
-        if (bFull || size.height > mode.getHeight()) size.height = mode.getHeight();
-        if (bFull || size.width > mode.getWidth()) size.width = mode.getWidth();
+        // can't be bigger than screen size
+        if (size.height > mode.getHeight()) size.height = mode.getHeight();
+        if (size.width > mode.getWidth()) size.width = mode.getWidth();
 
         // testing stuff
         if (TESTING(EngineConstants.TESTING_CHANGE_STARTING_SIZE) && getName().equals("main"))
@@ -215,38 +212,35 @@ public class EngineWindow extends BaseFrame
         center();
 
         // listener, set location
-        if (!bFull)
+        EngineWindowAdapter adapter = new EngineWindowAdapter();
+        addComponentListener(adapter);
+        addWindowStateListener(adapter);
+
+        // look for x,y setting
+        int x = engine_.getCommandLineOptions().getInteger("x", -1);
+        int y = engine_.getCommandLineOptions().getInteger("y", -1);
+
+        if (DebugConfig.isTestingOn() && getName().equals("main") && (x != -1 || y != -1))
         {
-			EngineWindowAdapter adapter = new EngineWindowAdapter();
-			addComponentListener(adapter);
-			addWindowStateListener(adapter);
+            if (x == -1) x = getX();
+            if (y == -1) y = 10;
 
-            // look for x,y setting
-            int x = engine_.getCommandLineOptions().getInteger("x", -1);
-            int y = engine_.getCommandLineOptions().getInteger("y", -1);
-
-            if (DebugConfig.isTestingOn() && getName().equals("main") && (x != -1 || y != -1))
+            setLocation(x, y);
+        }
+        else if (bMaximized)
+        {
+            setMaximized();
+        }
+        else
+        {
+            if (!bReset)
             {
-                if (x == -1) x = getX();
-                if (y == -1) y = 10;
-
-                setLocation(x, y);
+                x = prefs.getInt(EngineConstants.PREF_X+"-"+getName(), -1);
+                y = prefs.getInt(EngineConstants.PREF_Y+"-"+getName(),  -1);
             }
-            else if (bMaximized)
+            if (x != -1 && y != -1)
             {
-                setMaximized();
-            }
-            else
-            {
-                if (!bReset)
-                {
-                    x = prefs.getInt(EngineConstants.PREF_X+"-"+getName(), -1);
-                    y = prefs.getInt(EngineConstants.PREF_Y+"-"+getName(),  -1);
-                }
-                if (x != -1 && y != -1)
-                {
-                    setLocation(x,y);
-                }
+                setLocation(x,y);
             }
         }
     }
@@ -267,14 +261,6 @@ public class EngineWindow extends BaseFrame
     {
         if (dialog instanceof EngineDialog) return true;
         return super.removeDialog(dialog);
-    }
-
-    /**
-     * display
-     */
-    public void display()
-    {
-        super.display(bFull_);
     }
 
     /**
@@ -424,7 +410,7 @@ public class EngineWindow extends BaseFrame
          */
         public void componentResized(ComponentEvent e)
         {
-            if (bFull_ || isMaximized() || (TESTING(EngineConstants.TESTING_CHANGE_STARTING_SIZE) && getName().equals("main"))) return;
+            if (isMaximized() || (TESTING(EngineConstants.TESTING_CHANGE_STARTING_SIZE) && getName().equals("main"))) return;
             getContentPane().getSize(size_);
 
             // logger.debug("Window size changed: "+ size_+ " is Max: "+ isMaximized());
@@ -440,7 +426,7 @@ public class EngineWindow extends BaseFrame
          */
         public void componentMoved(ComponentEvent e)
         {
-            if (bFull_ || isMaximized()) return;
+            if (isMaximized()) return;
             prevLocation_.setLocation(location_);
             getLocation(location_);
             if (prevLocation_.equals(location_)) return;

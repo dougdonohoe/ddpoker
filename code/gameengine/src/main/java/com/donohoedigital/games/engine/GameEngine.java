@@ -41,7 +41,6 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.CommandLine;
 import com.donohoedigital.base.RandomGUID;
-import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.DDMessage;
 import com.donohoedigital.comms.Version;
 import com.donohoedigital.config.*;
@@ -92,8 +91,6 @@ public abstract class GameEngine extends BaseApp
     private final String sPrefNode_;
     private String sKeyNode_;
     private String guid_;
-    private boolean bReady_ = false;
-    private boolean bFull_ = false;
 
     // variable based on current state/game
     private GameContext defaultContext_;
@@ -127,6 +124,11 @@ public abstract class GameEngine extends BaseApp
     public void init()
     {
         super.init();
+
+        // route otherwise-uncaught EDT exceptions through our handler so they
+        // are logged and surfaced to the user, instead of AWT silently dumping
+        // them to stderr (and so the app stays alive)
+        if (!bHeadless_) Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EngineEventQueue());
 
         // BUG 278 - use user dir for save files
         // make sure save files in user's dir have all files
@@ -194,13 +196,10 @@ public abstract class GameEngine extends BaseApp
         // set prefs for music - unwieldy, but who cares right now?
         setAudioPrefs();
 
-        // As of DD Poker 3, disable screen mode stuff
-        bFull_ = false;
-
         // change splash screen UI to show details available after config files loaded
         if (splashscreen_ != null)
         {
-            splashscreen_.changeUI(this, true, null);
+            splashscreen_.changeUI(this, null);
         }
     }
 
@@ -434,14 +433,6 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
-     * Set whether to display full screen
-     */
-    public void setFull(boolean b)
-    {
-        bFull_ = b;
-    }
-
-    /**
      * copy any pre-installed save files
      */
     protected void copySaveFiles()
@@ -487,7 +478,7 @@ public abstract class GameEngine extends BaseApp
             String sMessage = PropertyConfig.getMessage("msg.wrongsize",
                                                         mode.getWidth(),
                                                         mode.getHeight());
-            splashscreen_.changeUI(this, true, sMessage);
+            splashscreen_.changeUI(this, sMessage);
 
             return false;
         }
@@ -556,6 +547,77 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
+     * Event queue that catches exceptions escaping normal event dispatch -
+     * i.e., those not already handled by {@link GameContext#processPhase} - so
+     * we can log them and tell the user, rather than letting AWT dump them to
+     * stderr.  Dispatch continues afterward, so the app stays alive.
+     */
+    private class EngineEventQueue extends EventQueue
+    {
+        @Override
+        protected void dispatchEvent(AWTEvent event)
+        {
+            try
+            {
+                super.dispatchEvent(event);
+            }
+            catch (Throwable e)
+            {
+                if (!handleDispatchException(event, e))
+                {
+                    handleUncaughtException(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Hook for subclasses to swallow specific, known-benign dispatch
+     * exceptions before they reach the generic error handler.  Return true
+     * if the exception was handled and should be ignored.
+     */
+    @SuppressWarnings("unused")
+    protected boolean handleDispatchException(AWTEvent event, Throwable e)
+    {
+        return false;
+    }
+
+    // true while the unexpected-error dialog is up, so a repeating failure
+    // (e.g., in paint) doesn't stack up dialogs.  EDT-only.
+    private boolean showingErrorDialog_;
+
+    /**
+     * Log an uncaught EDT exception and show an error dialog.
+     */
+    private void handleUncaughtException(Throwable e)
+    {
+        logger.error("GameEngine - uncaught exception on the event thread", e);
+
+        GameContext context = getDefaultContext();
+        if (context == null || showingErrorDialog_) return;
+
+        // Defer to a fresh event cycle: we're inside the catch of the faulting dispatch,
+        // so the modal dialog's nested event loop would start before that event finishes
+        // unwinding, leaving keyboard focus unsettled (OK button looks focused but Enter/
+        // Space don't reach it).  invokeLater lets the faulting event fully unwind first.
+        showingErrorDialog_ = true;
+        SwingUtilities.invokeLater(() -> {
+            try
+            {
+                EngineUtils.displayInformationDialog(context, EngineUtils.getUnexpectedErrorMessage(e));
+            }
+            catch (Throwable t)
+            {
+                logger.warn("GameEngine - Exception caught showing error dialog", t);
+            }
+            finally
+            {
+                showingErrorDialog_ = false;
+            }
+        });
+    }
+
+    /**
      * Call to init main window
      */
     protected void initMainWindow()
@@ -564,10 +626,7 @@ public abstract class GameEngine extends BaseApp
         gamedef_ = new GamedefConfig(sMainModule_);
         if (loadGameboardConfig()) gameconfig_ = new GameboardConfig(sMainModule_);
 
-        // ready to go
-        bReady_ = true;
-
-        // show main window now if now waiting for splash screen (or skipping splash screen)
+        // show main window
         showMainWindow();
     }
 
@@ -577,20 +636,8 @@ public abstract class GameEngine extends BaseApp
      */
     public void showMainWindow()
     {
-        // if splash screen visible, remove it
-        if (splashscreen_ != null)
-        {
-            splashscreen_.setVisible(false);
-            splashscreen_.dispose();
-            splashscreen_ = null;
-        }
-
-        // wait until ready (for case when user clicks splash choice
-        // [which calls this method] before initMainWindow is done)
-        while (!bReady_) Utils.sleepMillis(100);
-
         // init main window
-        defaultContext_.getFrame().init(null, true, getStartingSize(), bFull_, PropertyConfig.getRequiredStringProperty("msg.application.name"), true);
+        defaultContext_.getFrame().init(null, true, getStartingSize(), PropertyConfig.getRequiredStringProperty("msg.application.name"), true);
 
         // need to do after init so title is set
         contextInited(defaultContext_);
@@ -600,6 +647,18 @@ public abstract class GameEngine extends BaseApp
 
         // display the frame
         displayMainWindow();
+
+        // Remove the splash only AFTER the main window is mapped.  Disposing it
+        // earlier leaves a moment where the app has no mapped top-level window,
+        // which makes GNOME/Wayland drop the dock icon (and restore it only
+        // unreliably) when it re-associates the main window.  Keeping the splash
+        // up until now also covers the config-load/initialStart period visually.
+        if (splashscreen_ != null)
+        {
+            splashscreen_.setVisible(false);
+            splashscreen_.dispose();
+            splashscreen_ = null;
+        }
     }
 
     /**
