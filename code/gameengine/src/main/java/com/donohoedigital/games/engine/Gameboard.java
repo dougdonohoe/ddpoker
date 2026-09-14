@@ -39,7 +39,6 @@
 package com.donohoedigital.games.engine;
 
 import com.donohoedigital.base.Utils;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.games.config.*;
 import com.donohoedigital.gui.GuiUtils;
 import com.donohoedigital.gui.ImageComponent;
@@ -130,7 +129,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
                      Territory tUpperLeft, boolean bScaleBig)
     {
         super(gameconfig.getImage(), 1.0);
-        Perf.construct(this, null);
         bScaleBig_ = bScaleBig;
         
         // SETUP
@@ -614,11 +612,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
     @Override
     protected void paintComponent(Graphics g1)
     {
-        if (TESTING(EngineConstants.TESTING_PERFORMANCE))
-        {
-            //Perf.start();
-        }
-        
         Graphics2D g = (Graphics2D) g1;
         if (bUseImage_)
         {
@@ -676,15 +669,10 @@ public class Gameboard extends ImageComponent implements Scrollable,
             g.drawRect(bounds_.x, bounds_.y, bounds_.width-1, bounds_.height-1);
         }
         
-        if (TESTING(EngineConstants.TESTING_PERFORMANCE))
-        {
-            //Perf.stop();
-        }
-
         // JDD 2019
         // disabled in DD Poker 3.0p2 - realized not really used (probably since 1.0 actually)
         // Keeping code around in case I want to add something like this back.
-        // paint corner on mac
+        // paint corner on Mac
         if (EngineBasePanel.PAINT_GROW_BOX && Utils.ISMAC && engine_ != null)
         {
             EngineWindow win = context_.getFrame();

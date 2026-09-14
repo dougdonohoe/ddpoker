@@ -37,7 +37,6 @@ import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ConfigUtils;
 import com.donohoedigital.config.ImageConfig;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.engine.FileChooserDialog;
 import com.donohoedigital.games.engine.GameContext;
@@ -575,7 +574,6 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
         public ChatItemPanel(ListPanel p, Object item, String sStyle)
         {
             super(p, item, sStyle);
-            if (false) Perf.construct(this, "Chat");
 
             ChatListPanel panel = (ChatListPanel) p;
 

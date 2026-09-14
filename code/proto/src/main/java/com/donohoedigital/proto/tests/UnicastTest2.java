@@ -40,7 +40,6 @@ package com.donohoedigital.proto.tests;
 
 import com.donohoedigital.base.*;
 import com.donohoedigital.config.BaseCommandLineApp;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.config.Prefs;
 import com.donohoedigital.udp.*;
 import org.apache.logging.log4j.LogManager;
@@ -136,8 +135,6 @@ public class UnicastTest2 extends BaseCommandLineApp implements UDPLinkHandler, 
         UDPServer.DEBUG_INCOMING = false;
         UDPServer.DEBUG_ACKS_IN_DETAIL = false;
         //UDPServer.DEBUG_ACKS_OUT = true;
-        Perf.setOn(true);
-        Perf.start();
         udp_ = new UDPServer(this, true, true, Integer.toString(port));
         udp_.init();
         udp_.manager().addMonitor(this);

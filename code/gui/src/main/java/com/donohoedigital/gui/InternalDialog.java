@@ -40,7 +40,6 @@ package com.donohoedigital.gui;
 
 import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
-import com.donohoedigital.config.Perf;
 
 import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
@@ -65,8 +64,6 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     protected BaseFrame frame_;
     private final boolean bModal_;
     private Component previousFocusOwner_;
-    @SuppressWarnings("FieldCanBeLocal")
-    private final boolean PERF = false;
 
     /**
      * Creates a new InternalDialog - set BaseFrame later
@@ -84,7 +81,6 @@ public class InternalDialog extends JInternalFrame implements DDWindow
         super(sTitle, true, true);
         bModal_ = bModal;
         setName(sName);
-        if (PERF) Perf.construct(this, getName());
 
         // store frame
         setBaseFrame(frame);
@@ -290,12 +286,7 @@ public class InternalDialog extends JInternalFrame implements DDWindow
                     if (focus_ == null) return;
 
                     //logger.debug("Setting focus to: " +focus_);
-                    // BUG 133 - turn off requesting of focus to
-                    // avoid apparent memory leak in KeyboardFocusManager.newFocusOwner
-                    if (!Perf.isOn())
-                    {
-                        focus_.requestFocus();
-                    }
+                    focus_.requestFocus();
                 }
         );
     }

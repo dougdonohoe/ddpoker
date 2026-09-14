@@ -40,7 +40,6 @@ import com.donohoedigital.comms.DataCoder;
 import com.donohoedigital.comms.MsgState;
 import com.donohoedigital.comms.TokenizedList;
 import com.donohoedigital.config.ConfigUtils;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.games.config.GameState;
 import com.donohoedigital.games.engine.EngineGameAI;
 import com.donohoedigital.games.poker.*;
@@ -91,7 +90,6 @@ public class PokerAI extends EngineGameAI implements PokerTableListener, Propert
     public PokerAI()
     {
         super(false);
-        if (false) Perf.construct(this, null);
     }
 
     public void propertyChange(PropertyChangeEvent evt)

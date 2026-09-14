@@ -350,9 +350,7 @@ public class V2Player extends V1Player implements AIConstants
         fpPocket_ = hole.fingerprint();
         fpCommunity_ = community.fingerprint();
 
-        //if (TESTING(EngineConstants.TESTING_PERFORMANCE)) Perf.start();
         _computeOdds(hole, community);
-        //if (TESTING(EngineConstants.TESTING_PERFORMANCE)) Perf.stop();
     }
 
     private boolean noPotential = false;
