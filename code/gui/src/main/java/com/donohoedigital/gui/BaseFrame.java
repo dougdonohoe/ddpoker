@@ -48,6 +48,11 @@ public class BaseFrame extends JFrame implements DDWindow
 {
     static Logger logger = LogManager.getLogger(JFrame.class);
 
+    // Window icon sizes.  Windows + Linux use these for title bar, taskbar and Alt-Tab.
+    // On macOS, the Dock icon comes from the app bundle's .icns (or -Xdock:icon), but
+    // these are used for the badge on a minimized window's Dock thumbnail.
+    private static final int[] ICON_SIZES = {16, 32, 48, 64, 128};
+
     GraphicsDevice device_;
     private final List<InternalDialog> allDialogs_ = new ArrayList<>();
 
@@ -55,14 +60,29 @@ public class BaseFrame extends JFrame implements DDWindow
     {
         super();
         device_ = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        ImageIcon icon = ImageConfig.getImageIcon("gui.icon");
-        if (icon != null)
+        loadWindowIcons();
+    }
+
+    /**
+     * Set the window icon(s) from the multi-resolution 'gui.icon.{size}' set, so each
+     * context picks the best match.
+     */
+    private void loadWindowIcons()
+    {
+        List<Image> icons = new ArrayList<>();
+        for (int size : ICON_SIZES)
         {
-            setIconImage(icon.getImage());
+            ImageIcon icon = ImageConfig.getImageIcon("gui.icon." + size, null);
+            if (icon != null) icons.add(icon.getImage());
+        }
+
+        if (!icons.isEmpty())
+        {
+            setIconImages(icons);
         }
         else
         {
-            logger.warn("Icon not found in images.xml: 'gui.icon'");
+            logger.warn("No window icon found in images.xml: 'gui.icon.{size}'");
         }
     }
 

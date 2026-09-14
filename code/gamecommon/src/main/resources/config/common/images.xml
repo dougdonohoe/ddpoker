@@ -39,7 +39,7 @@
 
 		<imagedir>images</imagedir>
 
-        <image name="gui.icon" location="donohoedigital.gif"/>
+        <image name="gui.icon.32" location="donohoedigital.gif"/>
         <image name="splash" location="splashscreen.jpg"/>
 
         <image name="cursor-move" location="cursor-move.gif" x="1" y="1"/>
