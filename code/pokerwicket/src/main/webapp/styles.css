@@ -693,11 +693,11 @@ table.tournament-info {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    border: 2px solid #333333;
+    border: 2px solid #555555;
 }
 
 table.tournament-info th {
-    background-color: #333333;
+    background-color: #555555;
     text-align: center;
     color: yellow;
     padding: 2px;
@@ -941,7 +941,7 @@ div.tournament-createdate {
 }
 
 div.tournament-details table.tournament-info td.header {
-    background-color: #333333;
+    background-color: #555555;
     color: yellow;
     text-align: right;
     vertical-align: top;
@@ -952,7 +952,7 @@ div.tournament-details table.tournament-info table.sub-table {
     margin-right: auto;
     margin-top: 8px;
     margin-bottom: 6px;
-    border: 2px solid #333333;
+    border: 2px solid #555555;
 }
 
 /* override tournament-info defaults */

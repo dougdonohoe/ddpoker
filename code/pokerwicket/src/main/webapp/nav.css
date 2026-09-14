@@ -31,8 +31,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/* Header */
-.header {
+/* Header (element-qualified so it doesn't hit td.header in tournament profile tables) */
+header.header {
     background-image: url('/images/titlebar-background-pattern.png');
     background-repeat: repeat;
     background-size: auto;
