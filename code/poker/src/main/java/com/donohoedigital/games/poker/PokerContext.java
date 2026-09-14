@@ -185,6 +185,7 @@ public class PokerContext extends GameContext
     protected void handleProcessPhaseException(Throwable e)
     {
         LogGameInfo((PokerGame) getGame());
+        super.handleProcessPhaseException(e);
     }
 
     /**

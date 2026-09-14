@@ -125,6 +125,11 @@ public abstract class GameEngine extends BaseApp
     {
         super.init();
 
+        // route otherwise-uncaught EDT exceptions through our handler so they
+        // are logged and surfaced to the user, instead of AWT silently dumping
+        // them to stderr (and so the app stays alive)
+        if (!bHeadless_) Toolkit.getDefaultToolkit().getSystemEventQueue().push(new EngineEventQueue());
+
         // BUG 278 - use user dir for save files
         // make sure save files in user's dir have all files
         // in installation dir
@@ -539,6 +544,77 @@ public abstract class GameEngine extends BaseApp
     public GameContext getDefaultContext()
     {
         return defaultContext_;
+    }
+
+    /**
+     * Event queue that catches exceptions escaping normal event dispatch -
+     * i.e., those not already handled by {@link GameContext#processPhase} - so
+     * we can log them and tell the user, rather than letting AWT dump them to
+     * stderr.  Dispatch continues afterward, so the app stays alive.
+     */
+    private class EngineEventQueue extends EventQueue
+    {
+        @Override
+        protected void dispatchEvent(AWTEvent event)
+        {
+            try
+            {
+                super.dispatchEvent(event);
+            }
+            catch (Throwable e)
+            {
+                if (!handleDispatchException(event, e))
+                {
+                    handleUncaughtException(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Hook for subclasses to swallow specific, known-benign dispatch
+     * exceptions before they reach the generic error handler.  Return true
+     * if the exception was handled and should be ignored.
+     */
+    @SuppressWarnings("unused")
+    protected boolean handleDispatchException(AWTEvent event, Throwable e)
+    {
+        return false;
+    }
+
+    // true while the unexpected-error dialog is up, so a repeating failure
+    // (e.g., in paint) doesn't stack up dialogs.  EDT-only.
+    private boolean showingErrorDialog_;
+
+    /**
+     * Log an uncaught EDT exception and show an error dialog.
+     */
+    private void handleUncaughtException(Throwable e)
+    {
+        logger.error("GameEngine - uncaught exception on the event thread", e);
+
+        GameContext context = getDefaultContext();
+        if (context == null || showingErrorDialog_) return;
+
+        // Defer to a fresh event cycle: we're inside the catch of the faulting dispatch,
+        // so the modal dialog's nested event loop would start before that event finishes
+        // unwinding, leaving keyboard focus unsettled (OK button looks focused but Enter/
+        // Space don't reach it).  invokeLater lets the faulting event fully unwind first.
+        showingErrorDialog_ = true;
+        SwingUtilities.invokeLater(() -> {
+            try
+            {
+                EngineUtils.displayInformationDialog(context, EngineUtils.getUnexpectedErrorMessage(e));
+            }
+            catch (Throwable t)
+            {
+                logger.warn("GameEngine - Exception caught showing error dialog", t);
+            }
+            finally
+            {
+                showingErrorDialog_ = false;
+            }
+        });
     }
 
     /**

@@ -33,7 +33,6 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.ApplicationError;
-import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ImageConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -111,6 +110,7 @@ public class BaseFrame extends JFrame implements DDWindow
     /**
      * Minimizes the screen
      */
+    @SuppressWarnings("unused")
     public void setMinimized()
     {
         setExtendedState(ICONIFIED);
@@ -337,9 +337,6 @@ public class BaseFrame extends JFrame implements DDWindow
     //// Modal stuff
     ////
 
-    // sequence for modal thread
-    private static int SEQ = 0;
-
     // list of all logged modals
     private final List<Modal> logged_ = new ArrayList<>();
 
@@ -370,70 +367,46 @@ public class BaseFrame extends JFrame implements DDWindow
     @SuppressWarnings({"PublicInnerClass"})
     public class Modal
     {
-        boolean bModal_ = false;
+        // The nested event loop that keeps events pumping while the dialog is
+        // up.  Created in beginModal(), ended by endModal().  EDT-only.
+        private SecondaryLoop loop_;
 
         /**
-         * Begin a modal event loop.  End by calling endModal()
+         * Begin a modal event loop.  Blocks here - while continuing to
+         * dispatch events - until endModal() is called.
          */
-        @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod", "ChainOfInstanceofChecks", "SameParameterValue"})
+        @SuppressWarnings("SameParameterValue")
         void beginModal(boolean bLog)
         {
-            bModal_ = true;
+            ApplicationError.assertTrue(SwingUtilities.isEventDispatchThread(), "Not in swing thread", Thread.currentThread().getName());
+
             if (bLog) logged_.add(this);
-            String sName = Thread.currentThread().getName();
-            Thread.currentThread().setName("Modal-" + (SEQ++));
-            //logger.debug("GUI Modal is started");
             try
             {
-                ApplicationError.assertTrue(SwingUtilities.isEventDispatchThread(), "Not in swing thread", Thread.currentThread().getName());
-                EventQueue theQueue = Toolkit.getDefaultToolkit().getSystemEventQueue();
-                while (bModal_)
+                loop_ = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
+
+                // enter() blocks until endModal() (loop.exit()) is called, while
+                // events keep flowing through the normal EventQueue.dispatchEvent
+                if (!loop_.enter())
                 {
-                    // This is essentially the body of EventDispatchThread
-                    AWTEvent event = theQueue.getNextEvent();
-                    if (!bModal_) logger.warn("***** GUI dispatching when not modal: {}", event);
-                    Object src = event.getSource();
-                    // can't call theQueue.dispatchEvent, so I pasted its body here
-                    if (event instanceof ActiveEvent)
-                    {
-                        ((ActiveEvent) event).dispatch();
-                    }
-                    else if (src instanceof Component)
-                    {
-                        ((Component) src).dispatchEvent(event);
-                    }
-                    else if (src instanceof MenuComponent)
-                    {
-                        ((MenuComponent) src).dispatchEvent(event);
-                    }
-                    else
-                    {
-                        logger.warn("Unable to dispatch event: {}", event);
-                    }
+                    logger.warn("GUI modal loop failed to start");
                 }
             }
-            catch (InterruptedException e)
+            finally
             {
-                Thread.interrupted();
+                loop_ = null;
+                if (bLog) logged_.remove(this);
             }
-            catch (Throwable t)
-            {
-                logger.debug("Error during modal: {}", Utils.formatExceptionText(t));
-            }
-
-            //logger.debug("GUI Modal is ended");
-            Thread.currentThread().setName(sName);
-            if (bLog) logged_.remove(this);
         }
 
         /*
-         * Stops the event dispatching loop created by a previous call to
-         * <code>beginModal</code>
+         * Ends the event loop started by beginModal().  Safe to call more than
+         * once, or after the loop has already ended.
          */
         public void endModal()
         {
-            //logger.debug("GUI Modal is false");
-            bModal_ = false;
+            SecondaryLoop loop = loop_;
+            if (loop != null) loop.exit();
         }
     }
 }
