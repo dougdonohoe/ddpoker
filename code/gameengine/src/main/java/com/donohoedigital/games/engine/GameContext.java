@@ -386,40 +386,6 @@ public class GameContext
         return _processPhase(sPhaseName, params, false);
     }
 
-    // stores phase that should be done after registration is complete
-    private String TODOphase_;
-    private TypedHashMap TODOparams_;
-    private boolean TODOhistory_;
-
-    /**
-     * Process the TO-DO stored phase
-     */
-    public void processTODO()
-    {
-        if (TODOphase_ != null)
-        {
-            String ph = TODOphase_;
-            TODOphase_ = null;
-            TypedHashMap pa = TODOparams_;
-            TODOparams_ = null;
-            boolean b = TODOhistory_;
-            TODOhistory_ = false;
-
-            // process phase that we were going to do before registering
-            // and notify engine we are doing so
-            engine_.processingTODO(this);
-            processPhase(ph, pa, b);
-        }
-    }
-
-    /**
-     * Return true if it has TO-DO to process
-     */
-    public boolean hasTODO()
-    {
-        return TODOphase_ != null;
-    }
-
     /**
      * process phase actual logic
      */
@@ -872,7 +838,8 @@ public class GameContext
     /**
      * Return this piece encoded as a game state entry
      */
-    public void addGameStateEntry(GameState state)
+    @SuppressWarnings("UnusedReturnValue")
+    public GameStateEntry addGameStateEntry(GameState state)
     {
         GameManager mgr = getGameManager();
         Game game = getGame();
@@ -880,11 +847,11 @@ public class GameContext
         // game over - this phase overrides GameManager
         if (game.isGameOver())
         {
-            BasePhase.addNamedGameStateEntry(state, "GameOver");
+            return BasePhase.addNamedGameStateEntry(state, "GameOver");
         }
         else if (mgr != null)
         {
-            BasePhase.addNamedGameStateEntry(state, mgr.getPhaseName());
+            return BasePhase.addNamedGameStateEntry(state, mgr.getPhaseName());
         }
 
         // A save from a phase the GameManager doesn't drive - the lobby, the home game,
@@ -893,7 +860,7 @@ public class GameContext
         // War's DisplayPurchaseSummary.)
         if (sSpecialSave_ != null)
         {
-            BasePhase.addNamedGameStateEntry(state, sSpecialSave_);
+            return BasePhase.addNamedGameStateEntry(state, sSpecialSave_);
         }
 
         throw new ApplicationError("Nowhere to restart this save from: no GameManager is set and no " +

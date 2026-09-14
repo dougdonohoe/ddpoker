@@ -199,7 +199,7 @@ public class EngineWindow extends BaseFrame
         if (DebugConfig.isTestingOn()) {
             GuiUtils.addKeyAction(base_, JComponent.WHEN_IN_FOCUSED_WINDOW,
                     "clearprefs", new ClearPrefsAction(),
-                    KeyEvent.VK_DOWN, Utils.ISMAC ? KeyEvent.META_DOWN_MASK : KeyEvent.CTRL_DOWN_MASK);
+                    KeyEvent.VK_BACK_SPACE, Utils.ISMAC ? KeyEvent.META_DOWN_MASK : KeyEvent.CTRL_DOWN_MASK);
         }
 
         // the base_ is the content pane for the BaseApp frame_

@@ -90,13 +90,6 @@ public class PokerStartMenu extends StartMenu
     @Override
     protected void layoutMenu(DDPanel base, JComponent helptext)
     {
-        // if expired or regular menu, let super handle
-        if (bExpired_)
-        {
-            super.layoutMenu(base, helptext);
-            return;
-        }
-
         // big suit buttons
         DDPanel bigbuttons = new DDPanel();
         base.add(bigbuttons, BorderLayout.WEST);
@@ -196,13 +189,7 @@ public class PokerStartMenu extends StartMenu
     @Override
     protected void addButtons(DDPanel parent)
     {
-        // if expired or regular menu, let super handle
-        if (bExpired_)
-        {
-            super.addButtons(parent);
-        }
-
-        // otherwise we don't use the standard MenuPhase button positions
+        // we don't use the standard MenuPhase button positions
     }
 
     /**

@@ -193,9 +193,6 @@
     </paramlist>
   </phase>
 
-  <phase name="Activate" extends="StartMenu">
-  </phase>
-
   <phase name="OnlineMenu" class="com.donohoedigital.games.poker.online.OnlineMenu" extends="Menu">
     <param name="menubox-title" boolvalue="true"/>
     <param name="menubox-title-prop" strvalue="msg.title.OnlineMenu"/>

@@ -895,7 +895,7 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
      * software key for public viewing (hash of real key).
      * <p>
      * Every message carries a license key in PARAM_KEY.  There are two defaults,
-     * both set by GameEngine at startup (and when the user activates):
+     * both set by GameEngine at startup:
      * <ul>
      * <li>public key: stamped on every message by the constructor.  This is what
      * other players see (P2P/lobby/chat messages - used for ban/mute matching,
@@ -903,9 +903,8 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
      * ("P-" prefix, or "H-" when headless) so a player's real key is never
      * exposed to other clients.</li>
      * <li>real key: swapped in by DDMessenger.sendMessage() just before posting
-     * to the server, so the server can validate the client (banned keys,
-     * registration, online profiles).  Headless instances have no real key,
-     * so GameEngine uses a generated "HEADLESS-" key instead.</li>
+     * to the server, so the server can validate the client (registration, online profiles).
+     * Headless instances have no real key, so GameEngine uses a generated "HEADLESS-" key instead.</li>
      * </ul>
      */
     private static String key_ = null;

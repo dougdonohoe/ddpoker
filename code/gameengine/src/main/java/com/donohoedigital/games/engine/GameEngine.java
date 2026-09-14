@@ -572,13 +572,6 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
-     * called before the TO DO phase is processed (for any subclass specific needs)
-     */
-    protected void processingTODO(GameContext context)
-    {
-    }
-
-    /**
      * Call when ready to show main window.  Removes the
      * splash screen if visible
      */
@@ -610,14 +603,6 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
-     * Subclass should override
-     */
-    protected String getExpiredMessage()
-    {
-        return "Version " + getVersion() + " has expired.";
-    }
-
-    /**
      * Very first start phase - calls start() by default, but
      * can be overridden (e.g., for load saved game)
      */
@@ -634,9 +619,6 @@ public abstract class GameEngine extends BaseApp
     @Override
     public boolean okayToClose()
     {
-        // if registering, just go ahead and quit
-        if (defaultContext_.hasTODO()) return true;
-
         // this prompts users
         defaultContext_.processPhase("Exit"); // TODO: active context?
         return false;
