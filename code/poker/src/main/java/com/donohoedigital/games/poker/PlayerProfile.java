@@ -57,7 +57,7 @@ import java.util.List;
  */
 public class PlayerProfile extends BaseProfile
 {
-    private static Logger logger = LogManager.getLogger(PlayerProfile.class);
+    private static final Logger logger = LogManager.getLogger(PlayerProfile.class);
 
     // defines
     public static final String PROFILE_BEGIN = "profile";
@@ -81,6 +81,7 @@ public class PlayerProfile extends BaseProfile
     /**
      * debug
      */
+    @SuppressWarnings("unused")
     public void debugPrint()
     {
         logger.debug("");
@@ -534,7 +535,7 @@ public class PlayerProfile extends BaseProfile
     {
         String s = "48349ad7a22d3b47445d309921323379";
         byte[] k = new byte[s.length() / 2];
-        int n = 0;
+        int n;
 
         for (int i = 0; i < k.length; ++i)
         {
