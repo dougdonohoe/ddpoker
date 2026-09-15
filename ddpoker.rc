@@ -51,6 +51,10 @@ alias mvn-package='(cd $CODE;mvn package)'
 alias mvn-test='(cd $CODE;mvn test)'
 alias mvn-tree='mvn dependency:tree -q -Dscope=runtime -Ddependency.classpath.outputFile=/tmp/t && cat /tmp/t && rm -f /tmp/t'
 
+# testing shortcuts - assumes profiles with these names exist
+alias player1='poker -key KEY-23-6569DDEF-258B-470E-8081-9CF251941638-25-4647 -profile "Test Profile 1" -x 25 -y 40'
+alias player2='poker -key KEY-23-AEAC9471-EAB6-4FE8-8EB5-500707990851-84-0631 -profile "Test Profile 2" -x 900 -y 40'
+
 # act shortcut
 alias act-ddpoker='mkdir -p $HOME/.m2-act && act --platform ubuntu-latest=ddpoker-act-runner --pull=false \
   --container-options "-v $HOME/.m2-act:/home/runner/.m2" \

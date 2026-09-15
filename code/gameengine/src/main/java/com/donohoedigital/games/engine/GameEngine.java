@@ -160,6 +160,10 @@ public abstract class GameEngine extends BaseApp
                 logger.debug("Activation key set to {}", sOverrideKey_);
             }
         }
+        else if (getCommandLineOptions().getString("key", null) != null)
+        {
+            logger.warn("-key ignored: requires {}=true (and settings.debug.enabled=true)", EngineConstants.TESTING_OVERRIDE_KEY);
+        }
 
         // get activation key
         String sKey = getRealLicenseKey();
@@ -216,6 +220,7 @@ public abstract class GameEngine extends BaseApp
         //if (TESTING(EngineConstants.TESTING_OVERRIDE_KEY))
         //{
         CommandLine.addStringOption("key", null);
+        CommandLine.setDescription("key", "activation key to use (testing)", "key");
         //}
 
         // used for shifting starting position for testing
