@@ -45,7 +45,6 @@ import com.donohoedigital.base.Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -61,7 +60,7 @@ public class DDMessenger
     /**
      * User agent for our requests
      */
-    private static String USERAGENT = "DD/Java Arch 1.0";
+    private static final String USERAGENT = "DD/Java Arch 1.0";
 
     /**
      * Get user agent
@@ -71,14 +70,6 @@ public class DDMessenger
         return USERAGENT;
     }
 
-    /**
-     * Set user agent
-     */
-    public static void setUSERAGENT(String useragent)
-    {
-        USERAGENT = useragent;
-    }
-        
     /** 
      * Creates a new instance of Messenger 
      */
@@ -100,7 +91,7 @@ public class DDMessenger
      */
     public DDMessage sendMessage(String sURL, DDMessage send)
     {
-        URL url = null;
+        URL url;
        
         try {
             url = URI.create(sURL).toURL();
@@ -147,7 +138,7 @@ public class DDMessenger
             if (isDisabled(url.toString())) {
                 nStatus = DDMessageListener.STATUS_DISABLED;
             } else {
-                getURL(url, send, DDMessage.CONTENT_TYPE, ret, listener, null);
+                getURL(url, send, DDMessage.CONTENT_TYPE, ret, listener);
                 if (ret.getCategory() == DDMessage.CAT_ERROR)
                 {
                     nStatus = DDMessageListener.STATUS_SERVER_ERROR;
@@ -169,35 +160,23 @@ public class DDMessenger
 
             nStatus = DDMessageListener.STATUS_UNKNOWN_ERROR;
             //noinspection ChainOfInstanceofChecks
-            if (e instanceof ApplicationError)
-            {
-                ApplicationError ae2 = (ApplicationError) e;
-                if (ae2.getErrorCode() == ErrorCodes.ERROR_404 ||
-                    ae2.getErrorCode() == ErrorCodes.ERROR_403 ||
-                    ae2.getErrorCode() == ErrorCodes.ERROR_503)
-                {
-                    nStatus = DDMessageListener.STATUS_CONNECT_FAILED;
+            switch (e) {
+                case ApplicationError ae2 -> {
+                    if (ae2.getErrorCode() == ErrorCodes.ERROR_404 ||
+                            ae2.getErrorCode() == ErrorCodes.ERROR_403 ||
+                            ae2.getErrorCode() == ErrorCodes.ERROR_503) {
+                        nStatus = DDMessageListener.STATUS_CONNECT_FAILED;
+                    }
                 }
-            }
-            else if (e instanceof java.net.ConnectException)
-            {
-                nStatus = DDMessageListener.STATUS_CONNECT_FAILED;
-            }
-            else if (e instanceof java.net.SocketException)
-            {
-                nStatus = DDMessageListener.STATUS_CONNECT_FAILED;
-            }
-            else if (e instanceof java.net.UnknownHostException)
-            {
-                nStatus = DDMessageListener.STATUS_UNKNOWN_HOST;
-            }
-            else if (e instanceof java.net.SocketTimeoutException)
-            {
-                nStatus = DDMessageListener.STATUS_TIMEOUT;
-            }
-            else if (e instanceof DNSTimeoutException)
-            {
-                nStatus = DDMessageListener.STATUS_DNS_TIMEOUT;
+                case java.net.SocketException _ -> nStatus = DDMessageListener.STATUS_CONNECT_FAILED;
+                case java.net.UnknownHostException _ ->
+                        nStatus = DDMessageListener.STATUS_UNKNOWN_HOST;
+                case DNSTimeoutException _ ->
+                        nStatus = DDMessageListener.STATUS_DNS_TIMEOUT;
+                case java.net.SocketTimeoutException _ ->
+                        nStatus = DDMessageListener.STATUS_TIMEOUT;
+                default -> {
+                }
             }
 
             ret.setString(DDMessage.PARAM_EXCEPTION_MESSAGE, Utils.getExceptionMessage(e));
@@ -241,79 +220,36 @@ public class DDMessenger
     }
     
     /**
-     * Get URL, passing post data as a String.
-     */
-    public ReturnData getURL(String sURL, String sPost, String sPostContentType)
-    {
-        return getURL(sURL, new BytePostWriter(sPost),  sPostContentType, null, null);
-    }
-
-    /**
-     * Get URL, passing post data as a byte[].
-     */
-    public ReturnData getURL(String sURL, byte[] baPost, String sPostContentType)
-    {
-        return getURL(sURL, new BytePostWriter(baPost),  sPostContentType, null, null);
-    }
-    
-    /**
-     * Connect to site and get content of the given URL.  If writer is not null, initiate
-     * the request using POST method, calling writer.write() to write the data 
-     * and sPostContentType as the content-type.
-     */
-    public ReturnData getURL(String sURL, PostWriter writer, String sPostContentType, PostReader reader, DDHttpClient.HttpOptions options)
-    {
-        URL url = null;
-       
-        try {
-            url = URI.create(sURL).toURL();
-            return getURL(url, writer, sPostContentType, reader, null, options);
-        }
-        catch (MalformedURLException | IllegalArgumentException me)
-        {
-            // URI.create() throws IllegalArgumentException where new URL() threw
-            // MalformedURLException - both mean the same thing to callers
-            throw new ApplicationError(me);
-        }
-    }
-    
-    /**
      * Connect to site and get content of the given URL.  If writer is not null, initiate
      * the request using POST method, calling writer.write() to write the data 
      * and sPostContentType as the content-type.  If reader is non-null, data is
      * expected to be read using the reader.  Return Data will contain no data, but
      * will contain content-type and length;
      */
-    public ReturnData getURL(URL url, PostWriter writer, String sPostContentType, 
-                                    PostReader reader, DDMessageListener listener,
-                                    DDHttpClient.HttpOptions options)
+    @SuppressWarnings("UnusedReturnValue")
+    public ReturnData getURL(URL url, PostWriter writer, String sPostContentType,
+                             PostReader reader, DDMessageListener listener)
     {
         DDHttpClient conn = null;
 
-        int nRead = 0;
+        int nRead;
         try 
         {    
             // create http client
-            conn = new DDHttpClient(url, listener, options);
-            
+            conn = new DDHttpClient(url, listener);
+
             // open connection to server
             conn.connect();
 
-            // write request (based on options and writer)
+            // write request (POST if writer, otherwise GET)
             conn.write(writer, sPostContentType, USERAGENT);
 
             // start reading - which process headers to get content-type
             // length and response code.  Reading ends at end of header
-            // data (two CrLf in a row).  Note that if HTTPOptions is
-            // specifying bProxyPassThru, then the start read doesn't
-            // parse any headers - all request data will be read below.
-            // DDHttpClient sets fixed values for content-type, length
-            // and response code for bProxyPassThru requests since we
-            // are acting just as an inbetween
+            // data (two CrLf in a row).
             conn.startRead();
             
             // get data gleamed from headers
-            String sContentType = conn.getContentType();
             int nLength = conn.getContentLength();
             int nResponseCode = conn.getResponseCode();
             DDByteArrayOutputStream ddbytes = null;
@@ -336,7 +272,7 @@ public class DDMessenger
                 
                 throw new ApplicationError(ErrorCodes.ERROR_BAD_RESPONSE + nResponseCode,
                             "Connect failed, response code = " + nResponseCode,
-                            (ddbytes == null ? null : Utils.decodeBasic(ddbytes.getBuffer(), 0, ddbytes.size())), null);
+                        Utils.decodeBasic(ddbytes.getBuffer(), 0, ddbytes.size()), null);
             }
             // No error - read the "meat" of the reply
             else
@@ -351,19 +287,10 @@ public class DDMessenger
                 // else read into a buffer and pass back with ReturnData
                 else
                 {
-                    boolean bFirstRead = true;
                     byte[] bytes = new byte[1000];
                     ddbytes = new DDByteArrayOutputStream(1000);
                     while ((nRead = is.read(bytes)) != -1)
                     {
-                        // status update receiving - needed here for proxy pass thru
-                        // since startRead(), which normally does it, skips reading 
-                        if (listener != null && bFirstRead && options != null && options.bProxyPassThru) { 
-                            listener.updateStep(DDMessageListener.STEP_RECEIVING);
-                            bFirstRead = false;
-                        }
-                        
-                        // save read bytes
                         ddbytes.write(bytes, 0, nRead);
                     }
                 }
@@ -371,7 +298,7 @@ public class DDMessenger
             
             // finished - notify listener and return data
             if (listener != null) listener.updateStep(DDMessageListener.STEP_DONE);
-            return new ReturnData(conn.getHeaderBuffer(), ddbytes, sContentType, nResponseCode);
+            return new ReturnData(conn.getHeaderBuffer(), ddbytes);
         }
         catch (Exception io)
         {
@@ -392,21 +319,15 @@ public class DDMessenger
     /**
      * Class to represent return data from getURL
      */
-    @SuppressWarnings({"PublicInnerClass"})
     public static final class ReturnData
     {
-        private DDByteArrayOutputStream headers;
-        private DDByteArrayOutputStream out;
-        private String sContentType;
-        private int nResponseCode;
-        
-        private ReturnData(DDByteArrayOutputStream headers, DDByteArrayOutputStream out,
-                           String sContentType, int nResponseCode)
+        private final DDByteArrayOutputStream headers;
+        private final DDByteArrayOutputStream out;
+
+        private ReturnData(DDByteArrayOutputStream headers, DDByteArrayOutputStream out)
         {
             this.headers = headers;
             this.out = out;
-            this.sContentType = sContentType;
-            this.nResponseCode = nResponseCode;
         }
 
         public DDByteArrayOutputStream getHeaders()
@@ -417,38 +338,6 @@ public class DDMessenger
         public DDByteArrayOutputStream getOut()
         {
             return out;
-        }
-
-        public String getContentType()
-        {
-            return sContentType;
-        }
-
-        public int getResponseCode()
-        {
-            return nResponseCode;
-        }
-    }
-    
-    /**
-     * class to handle byte/string data for URL posts
-     */
-    private static class BytePostWriter implements PostWriter
-    {
-        byte[] bytes;
-        public BytePostWriter(String s)
-        {
-            this.bytes=Utils.encode(s);
-        }
-        
-        public BytePostWriter(byte[] b)
-        {
-            bytes = b;
-        }
-        
-        public void write(OutputStream writer) throws IOException
-        {
-            writer.write(bytes);
         }
     }
 }

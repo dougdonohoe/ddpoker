@@ -39,7 +39,6 @@
 package com.donohoedigital.comms;
 
 import com.donohoedigital.base.*;
-import com.donohoedigital.base.Base64;
 import com.donohoedigital.config.PropertyConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,7 +50,6 @@ import java.io.OutputStream;
 import java.net.*;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,32 +101,20 @@ public class DDHttpClient
     // members used during read/write
     private InputStream is_;
     private int nContentLength_ = -1;
-    private String sContentType_ = null;
     private int nResponseCode_ = 0;
     private final DDMessageListener listener_;
-    private final HttpOptions options_;
     private final DDByteArrayOutputStream buffer_ = new DDByteArrayOutputStream(1000);
-    
-    /** 
-     * Creates a new instance of DDHttpClient 
+
+    /**
+     * Creates a new instance of DDHttpClient
      */
-    public DDHttpClient(URL url, DDMessageListener listener, HttpOptions options) throws IOException
+    public DDHttpClient(URL url, DDMessageListener listener) throws IOException
     {
         url_ = url;
         listener_ = listener;
-        options_ = options;
         String sHost = url.getHost();
         int nPort = url.getPort();
         if (nPort == -1) nPort = 80;
-
-        if (options_ != null)
-        {
-            if (options_.bProxyPassThru) {
-                nResponseCode_ = 200;
-                sContentType_ = "proxy/pass-thru";
-                nContentLength_ = 0;
-            }
-        }
 
         // cache using host and port since inet address is defined using both
         boolean bFromCache = true;
@@ -141,7 +127,8 @@ public class DDHttpClient
             addr_ = new InetSocketAddress(addr, nPort);
             DNSCACHE.put(sKey, addr_);
         }
-        if (DEBUG_DETAILS) logger.debug(sHost + " is " + addr_.getAddress().getHostAddress() + (bFromCache ? " (from cache)" : ""));
+        if (DEBUG_DETAILS)
+            logger.debug("{} is {}{}", sHost, addr_.getAddress().getHostAddress(), bFromCache ? " (from cache)" : "");
 
         sc_ = SocketChannel.open();
         sc_.configureBlocking(false);
@@ -175,9 +162,7 @@ public class DDHttpClient
         {
             //noinspection ResultOfMethodCallIgnored
             Thread.interrupted();
-            SocketException se = new SocketException("Interrupted - connect()");
-            se.initCause(cbie);
-            throw se;
+            throw new SocketException("Interrupted - connect()", cbie);
         }
         catch (IOException ioe)
         {
@@ -213,43 +198,23 @@ public class DDHttpClient
     }
     
     /**
-     * Do the write - this calls the appropriate write method based on the
-     * HTTP Options provided and the existence of the writer
+     * Do the write - POST if writer is non-null, otherwise GET
      */
     public void write(PostWriter writer, String sPostContentType, String sUserAgent) throws IOException
     {
-        boolean bProxyConnect = (options_ != null && options_.sConnectDestViaProxy != null);
-        boolean bProxyPassThru = (!bProxyConnect && options_ != null && options_.bProxyPassThru);
-
-        // if we have data to send, either a POST or CONNECT (connect proxy) or
-        // just pass through data (regular proxy)
         DDByteArrayOutputStream data;
-        
+
         // post data
-        if (writer != null) 
+        if (writer != null)
         {
-            // write post data to stream so we can get 
+            // write post data to stream so we can get
             // the size
             DDByteArrayOutputStream post = new DDByteArrayOutputStream(512);
             writer.write(post);
-            
+
             // create data stream based on post size
             data = new DDByteArrayOutputStream(post.size() + HEADER_BUFFER);
-            
-            // proxy via CONNECT
-            if (bProxyConnect)
-            {
-                writeProxyConnectHeaders(data, options_.sConnectDestViaProxy);
-            }
-            // proxy pass thru
-            else
-            {
-                if (!bProxyPassThru) {
-                    // regular post
-                    writeHeaders(data, "POST", sPostContentType, sUserAgent, post.size());
-                } // no headers if proxy
-            }
-
+            writeHeaders(data, "POST", sPostContentType, sUserAgent, post.size());
             data.write(post.getBuffer(), 0, post.size());
         }
         // normal get
@@ -286,51 +251,18 @@ public class DDHttpClient
         //sb.append("Accept: text/html, image/gif, image/jpeg, image/png, *; q=.2, */*; q=.2").append(CRLF);
         if (sContentType != null) sb.append("Content-Type: ").append(sContentType).append(CRLF);
         if (nLength > 0) sb.append("Content-Length: ").append(nLength).append(CRLF);
-        if (options_ != null)
-        {
-            if (options_.sUsername != null && options_.sPassword != null)
-            {
-                String sEncode = options_.sUsername + ':' + options_.sPassword;
-                sEncode = Base64.encodeBytes(sEncode.getBytes(StandardCharsets.UTF_8));
-                sb.append("Authorization: Basic ").append(sEncode).append(CRLF);
-            }
-
-            if ((options_.nBeginRange > 0) || (options_.nEndRange > 0))
-            {
-                sb.append("range: bytes=");
-                if (options_.nBeginRange > 0) sb.append(options_.nBeginRange);
-                sb.append('-');
-                if (options_.nEndRange > 0) sb.append(options_.nBeginRange);
-                sb.append(CRLF);
-            }
-        }
         sb.append(CRLF);
         os.write(Utils.encodeBasic(sb.toString()));
     }
-    
+
     /**
-     * Write request to proxy server - CONNECT line plus data to send to
-     * proxied host
-     */
-    public void writeProxyConnectHeaders(OutputStream os, String sDestHostAndPort) throws IOException
-    {
-        String sb = "CONNECT " + sDestHostAndPort + " HTTP/1.0" + CRLF + CRLF;
-        os.write(Utils.encodeBasic(sb));
-    }
-    
-    /**
-     * Begin reading the response (up to headers), unless
-     * bProxyPassThru is true in HttpOptions, in which case we simply initialize
-     * the input stream
+     * Begin reading the response (up to headers)
      */
     public void startRead() throws IOException
     {
         if (listener_ != null) listener_.updateStep(DDMessageListener.STEP_WAITING_FOR_REPLY);
         is_ = sc_.socket().getInputStream();
-        
-        // if doing a proxy pass thru, don't process headers
-        if (options_ != null && options_.bProxyPassThru) return;
-        
+
         // read a char at a time, looking for headers along the way
         char c;
         int n;
@@ -398,11 +330,7 @@ public class DDHttpClient
                     {
                         tok = new StringTokenizer(sLine, " ");
                         String sName = tok.nextToken();
-                        if (sName.equalsIgnoreCase("Content-Type:"))
-                        {
-                            sContentType_ = tok.nextToken();
-                        }
-                        else if (sName.equalsIgnoreCase("Content-Length:"))
+                        if (sName.equalsIgnoreCase("Content-Length:"))
                         {
                             String sNum = tok.nextToken();
                             try {
@@ -437,15 +365,7 @@ public class DDHttpClient
     {
         return nContentLength_;
     }
-    
-    /**
-     * After startWrite(), this returns content type
-     */
-    public String getContentType()
-    {
-        return sContentType_;
-    }
-    
+
     /**
      * After startWrite(), this returns response code
      */
@@ -525,16 +445,7 @@ public class DDHttpClient
                 uhe = e;
             }
         }
-        
-        /*
-         * Returns true if address defined or exception occurred
-         * Not used, but keep it in case I remember why here in first place
-         */
-//        private boolean isDone()
-//        {
-//            return addr != null || uhe != null;
-//        }
-        
+
         /**
          * Returns address, or if exception occurred, throws that
          */
@@ -548,51 +459,5 @@ public class DDHttpClient
             
             return addr;
         }
-    }
-    
-    /**
-     * Options for use when connecting to a URL
-     */
-    @SuppressWarnings({"PublicInnerClass", "PublicField"})
-    public static class HttpOptions
-    {
-        /**
-         * Basic auth - username
-         */ 
-        public String sUsername;
-        
-        /**
-         * Basic auth - password
-         */
-        public String sPassword;
-        
-        /**
-         * If non-null, set to a host or IP,
-         * means the URL given is the proxy
-         * and this host is the ultimate destination,
-         * via the CONNECT method
-         */
-        public String sConnectDestViaProxy;
-        
-        /**
-         * If true, the URL given is the proxy and the "post"
-         * data is the original get/post with headers, with a modified
-         * URI/host (caller is responsible for modifying the URI/host)
-         * Note: this and sConnectDestViaProxy are independent; and
-         * sConnectDestViaProxy takes precedence.
-         * This is basically used to simulate the transparent use
-         * of a 3rd party proxy
-         */
-        public boolean bProxyPassThru;
-
-        /**
-         * The begin byte range for the requested data.
-         */
-        public int nBeginRange;
-
-        /**
-         * The end byte range for the requested data.
-         */
-        public int nEndRange;
     }
 }

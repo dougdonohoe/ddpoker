@@ -37,7 +37,6 @@ import com.donohoedigital.base.DDByteArrayOutputStream;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.DDMessage;
 import com.donohoedigital.comms.DDMessenger;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,12 +58,6 @@ public abstract class BaseServlet extends HttpServlet
 
     // our server
     private GameServer server;
-    
-    // used to track current servlet context
-    private static final ThreadLocal<ServletContext> local = new ThreadLocal<>();
-
-    // settings
-    private boolean ddMessageHandler;
 
     /**
      * used for any subclass init, called from GameServer after config files have been loaded.
@@ -92,22 +85,6 @@ public abstract class BaseServlet extends HttpServlet
     }
 
     /**
-     * set thread data
-     */
-    public static void setThreadServletContext(ServletContext c)
-    {
-        local.set(c);
-    }
-    
-    /** 
-     * Get thread data
-     */
-    public static ServletContext getThreadServletContext()
-    {
-        return local.get();
-    }
-    
-    /**
      * Handle post - same as get, so calls doGet()
      */
     @Override
@@ -128,29 +105,18 @@ public abstract class BaseServlet extends HttpServlet
         String sUserAgent = request.getHeader("user-agent");
         if (sUserAgent == null || !sUserAgent.equals(DDMessenger.getUSERAGENT()))
         {
-            //useful for testing content-type behavoir in browsers
-            //ret = new DDMessage(DDMessage.CAT_TESTING, "Test message returning back at you.");
-            //response.setContentType(DDMessage.getContentType());
-            //returnMessage(response, ret);
             response.sendError(403, "Permission denied dude.");
             return;
         }
         
         //ServletDebug.debugGet(request, response);
-        DDMessage ret = null;
+        DDMessage ret;
         DDMessage received = createNewMessage();
         received.setFromIP(request.getRemoteAddr());
         
         try {
-            
-            // TODO: needed for email
-            if (!(request instanceof GameServletRequest))
-            {
-                setThreadServletContext(getServletContext());
-            }
-
             // create DDMessage from the data
-            InputStream stream = null;
+            InputStream stream;
             if (request instanceof GameServletRequest)
             {
                 stream = ((GameServletRequest) request).getInputStream2();
@@ -279,24 +245,7 @@ public abstract class BaseServlet extends HttpServlet
     {
         return new DDMessage();
     }
-    
-    /**
-     * Does this servlet expect dd messages in and out?
-     * Default is true.
-     */
-    public final boolean isDDMessageHandler()
-    {
-        return ddMessageHandler;
-    }
 
-    /**
-     * Set whether we expect dd messages.
-     */
-    public final void setDDMessageHandler(boolean b)
-    {
-        ddMessageHandler = b;
-    }
-    
     /**
      * debugging - override in subclass
      */

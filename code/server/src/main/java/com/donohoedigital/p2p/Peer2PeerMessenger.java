@@ -136,6 +136,10 @@ public class Peer2PeerMessenger
             {
                 nStatus = DDMessageListener.STATUS_UNKNOWN_HOST;
             }
+            else if (e instanceof DNSTimeoutException)
+            {
+                nStatus = DDMessageListener.STATUS_DNS_TIMEOUT;
+            }
             else if (e instanceof java.net.SocketTimeoutException)
             {
                 nStatus = DDMessageListener.STATUS_TIMEOUT;
@@ -143,10 +147,6 @@ public class Peer2PeerMessenger
             else if (e instanceof java.io.EOFException)
             {
                 nStatus = DDMessageListener.STATUS_TIMEOUT;
-            }
-            else if (e instanceof DNSTimeoutException)
-            {
-                nStatus = DDMessageListener.STATUS_DNS_TIMEOUT;
             }
 
             ret.setString(DDMessage.PARAM_EXCEPTION_MESSAGE, Utils.getExceptionMessage(e));
