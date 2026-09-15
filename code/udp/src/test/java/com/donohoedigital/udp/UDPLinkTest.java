@@ -39,20 +39,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.donohoedigital.udp.TestPeer.waitFor;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Two UDPServers in one JVM talk over a real UDPLink: connect (hello + MTU discovery),
- * deliver messages in order - including one split into multiple parts - and close
- * cleanly on both ends.  See UDPLinkTester for a manual version that runs across machines.
+ * Two UDPServers in one JVM talk over real UDPLinks on this machine.  Packet loss and
+ * path MTU limits are simulated with UDPServer's drop filter.  See UDPLinkTester for a
+ * manual version that runs across machines.
  */
 public class UDPLinkTest
 {
@@ -61,58 +62,223 @@ public class UDPLinkTest
     private static final String RECEIVER_PORT = "11779";
     private static final String SENDER_PORT = "11769";
 
-    private static final int NUM_MESSAGES = 50;
-    private static final long TIMEOUT_SECONDS = 20;
-
-    private UDPServer receiver;
-    private UDPServer sender;
+    private TestPeer rx;
+    private TestPeer tx;
 
     @BeforeEach
     public void setUp()
     {
         new ConfigManager("udptest", ApplicationType.COMMAND_LINE);
+        rx = new TestPeer();
+        tx = new TestPeer();
     }
 
     @AfterEach
     public void tearDown()
     {
-        if (sender != null) sender.shutdown();
-        if (receiver != null) receiver.shutdown();
+        tx.shutdown();
+        rx.shutdown();
     }
 
     @Test
-    public void messagesArriveInOrderAndLinkCloses() throws InterruptedException
+    public void messagesArriveInOrderAndLinkCloses()
     {
-        Peer rx = new Peer();
-        Peer tx = new Peer();
-        receiver = rx.start(RECEIVER_PORT);
-        sender = tx.start(SENDER_PORT);
-
-        // connect: hello, then MTU discovery
-        UDPLink link = sender.manager().getLink(receiver.getPreferredIP(), receiver.getPreferredPort());
-        link.connect();
-        await(tx.mtuDone, "MTU discovery");
+        rx.start(RECEIVER_PORT);
+        tx.start(SENDER_PORT);
+        UDPLink link = tx.connect(rx);
         assertTrue(link.isEstablished(), "link established");
 
         // mostly small messages, with one in the middle big enough to need several parts;
         // every 5th (including the big one) is sliced out of a larger buffer
         List<String> sent = new ArrayList<>();
-        for (int i = 1; i <= NUM_MESSAGES; i++)
+        for (int i = 1; i <= 50; i++)
         {
             String msg = "message " + i;
-            if (i == NUM_MESSAGES / 2) msg = big(msg, link.getMaxDataSize() * 3 + 17);
+            if (i == 25) msg = big(msg, link.getMaxDataSize() * 3 + 17);
             sent.add(msg);
             if (i % 5 == 0) queueWithOffset(link, msg);
             else link.queue(Utils.encode(msg));
         }
-        rx.expect(sent.size());
-        await(rx.allReceived, "all messages received");
+        waitFor(() -> rx.received.size() == sent.size(), "all messages received");
         assertEquals(sent, rx.received);
 
         // close from sender - goodbye reaches receiver and both sides finish
         link.close();
-        await(tx.closed, "sender link closed");
-        await(rx.closed, "receiver link closed");
+        waitFor(() -> tx.has(UDPLinkEvent.Type.CLOSED), "sender link closed");
+        waitFor(() -> rx.has(UDPLinkEvent.Type.CLOSED), "receiver link closed");
+    }
+
+    /**
+     * Production code queues a reply and closes right away (e.g., ChatServer.sendError())
+     */
+    @Test
+    public void messagesQueuedJustBeforeCloseAreDelivered()
+    {
+        rx.start(RECEIVER_PORT);
+        tx.start(SENDER_PORT);
+        UDPLink link = tx.connect(rx);
+
+        List<String> sent = List.of("one", "two", "three");
+        for (String msg : sent) link.queue(Utils.encode(msg));
+        link.close();
+
+        waitFor(() -> rx.has(UDPLinkEvent.Type.CLOSED), "receiver link closed");
+        assertEquals(sent, rx.received);
+    }
+
+    @Test
+    public void bothDirectionsSurvivePacketLoss()
+    {
+        rx.start(RECEIVER_PORT).setDropFilter(lossy(15, 1));
+        tx.start(SENDER_PORT).setDropFilter(lossy(15, 2));
+        UDPLink txLink = tx.connect(rx);
+        waitFor(() -> rx.link != null && rx.link.isEstablished(), "receiver link established");
+        UDPLink rxLink = rx.link;
+
+        List<String> toRx = new ArrayList<>();
+        List<String> toTx = new ArrayList<>();
+        for (int i = 1; i <= 30; i++)
+        {
+            toRx.add("to receiver " + i);
+            toTx.add("to sender " + i);
+            txLink.queue(Utils.encode(toRx.getLast()));
+            rxLink.queue(Utils.encode(toTx.getLast()));
+        }
+        String big = big("big", txLink.getMaxDataSize() * 4);
+        toRx.add(big);
+        txLink.queue(Utils.encode(big));
+
+        waitFor(() -> rx.received.size() >= toRx.size() && tx.received.size() >= toTx.size(), "all messages received");
+        assertEquals(toRx, rx.received, "in order, no duplicates");
+        assertEquals(toTx, tx.received, "in order, no duplicates");
+        assertTrue(txLink.getStats().getDataResend() + rxLink.getStats().getDataResend() > 0, "loss caused resends");
+    }
+
+    /**
+     * A GOODBYE can arrive before earlier messages that were lost - those must still be delivered
+     */
+    @Test
+    public void closeWithPacketLossDeliversEverything()
+    {
+        rx.start(RECEIVER_PORT);
+        tx.start(SENDER_PORT);
+        UDPLink link = tx.connect(rx);
+
+        // lose the first send of every message so the goodbye arrives before any of them
+        tx.server.setDropFilter(msg -> {
+            for (int i = 0; i < msg.getNumData(); i++)
+            {
+                UDPData data = msg.getData(i);
+                if (data.getType() == UDPData.Type.MESSAGE && data.getSendCount() == 0) return true;
+            }
+            return false;
+        });
+
+        List<String> sent = new ArrayList<>();
+        for (int i = 1; i <= 5; i++)
+        {
+            sent.add("message " + i);
+            link.queue(Utils.encode(sent.getLast()));
+        }
+        link.send();
+        link.close();
+
+        waitFor(() -> rx.has(UDPLinkEvent.Type.CLOSED), "receiver link closed");
+        waitFor(() -> tx.has(UDPLinkEvent.Type.CLOSED), "sender link closed");
+        assertEquals(sent, rx.received);
+    }
+
+    @Test
+    public void mtuDiscoveryHonorsPathLimit()
+    {
+        rx.start(RECEIVER_PORT);
+        tx.start(SENDER_PORT).setDropFilter(msg -> msg.getPacketLength() > 1000);
+        UDPLink link = tx.connect(rx);
+
+        // probes are 576, 704, 832, 960, 1088, ... bytes
+        assertEquals(960, link.getMTU());
+
+        String big = big("big", 5000);
+        link.queue(Utils.encode(big));
+        waitFor(() -> rx.received.size() == 1, "big message received");
+        assertEquals(big, rx.received.getFirst());
+    }
+
+    @Test
+    public void peerDisappearingTimesOut()
+    {
+        rx.start(RECEIVER_PORT);
+        tx.timeouts(1500, 300, 300).start(SENDER_PORT);
+        tx.connect(rx);
+
+        rx.shutdown(); // no goodbye
+
+        waitFor(() -> tx.has(UDPLinkEvent.Type.CLOSED), "sender link closed");
+        List<UDPLinkEvent.Type> events = tx.events;
+        int possible = events.indexOf(UDPLinkEvent.Type.POSSIBLE_TIMEOUT);
+        int timeout = events.indexOf(UDPLinkEvent.Type.TIMEOUT);
+        assertTrue(possible >= 0, "possible timeout notified: " + events);
+        assertTrue(timeout > possible, "timeout after possible timeout: " + events);
+        assertTrue(events.indexOf(UDPLinkEvent.Type.CLOSED) > timeout, "closed after timeout: " + events);
+    }
+
+    @Test
+    public void peerRestartStartsNewSession()
+    {
+        rx.start(RECEIVER_PORT);
+        tx.start(SENDER_PORT);
+        tx.connect(rx).queue(Utils.encode("before restart"));
+        waitFor(() -> rx.received.size() == 1, "first message received");
+
+        // sender restarts (no goodbye) on same port and reconnects
+        tx.shutdown();
+        TestPeer tx2 = new TestPeer();
+        tx = tx2; // so tearDown shuts it down
+        tx2.start(SENDER_PORT);
+        tx2.connect(rx).queue(Utils.encode("after restart"));
+
+        waitFor(() -> rx.received.size() == 2, "message after restart received");
+        assertEquals(List.of("before restart", "after restart"), rx.received);
+        assertTrue(rx.has(UDPLinkEvent.Type.SESSION_CHANGED), "receiver saw new session: " + rx.events);
+    }
+
+    @Test
+    public void junkPacketsIgnored() throws Exception
+    {
+        rx.start(RECEIVER_PORT);
+        tx.start(SENDER_PORT);
+
+        // random bytes of various sizes, including one that is header-sized
+        InetSocketAddress to = new InetSocketAddress(rx.server.getPreferredIP(), rx.server.getPreferredPort());
+        Random random = new Random(42);
+        try (DatagramSocket socket = new DatagramSocket())
+        {
+            for (int size : new int[] {1, 20, UDPMessage.HEADER_SIZE, 500, UDPLink.MAX_PAYLOAD_SIZE + 100})
+            {
+                byte[] junk = new byte[size];
+                random.nextBytes(junk);
+                socket.send(new DatagramPacket(junk, size, to));
+            }
+        }
+
+        UDPLink link = tx.connect(rx);
+        link.queue(Utils.encode("still works"));
+        waitFor(() -> rx.received.size() == 1, "message received");
+        assertEquals(List.of("still works"), rx.received);
+
+        List<UDPLink> links = new ArrayList<>();
+        rx.server.manager().getLinks(links);
+        assertEquals(1, links.size(), "junk created no links");
+    }
+
+    /**
+     * Drop percent of outgoing packets, repeatably
+     */
+    @SuppressWarnings("SameParameterValue")
+    private static java.util.function.Predicate<UDPMessage> lossy(int percent, long seed)
+    {
+        Random random = new Random(seed);
+        return _ -> random.nextInt(100) < percent;
     }
 
     /**
@@ -134,83 +300,5 @@ public class UDPLinkTest
         StringBuilder sb = new StringBuilder(prefix).append(' ');
         while (sb.length() < length - 1) sb.append((char) ('a' + (sb.length() % 26)));
         return sb.append('~').toString();
-    }
-
-    private static void await(CountDownLatch latch, String what) throws InterruptedException
-    {
-        assertTrue(latch.await(TIMEOUT_SECONDS, TimeUnit.SECONDS), "timed out waiting for " + what);
-    }
-
-    /**
-     * One end of the link - starts a server and records what happens on its links
-     */
-    private static class Peer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMonitor
-    {
-        final CountDownLatch mtuDone = new CountDownLatch(1);
-        final CountDownLatch closed = new CountDownLatch(1);
-        final List<String> received = new CopyOnWriteArrayList<>();
-        volatile int expected = Integer.MAX_VALUE;
-        final CountDownLatch allReceived = new CountDownLatch(1);
-
-        UDPServer start(String port)
-        {
-            UDPServer server = new UDPServer(this, true, true, port);
-            server.init();
-            server.manager().addMonitor(this);
-            server.start();
-            return server;
-        }
-
-        void expect(int count)
-        {
-            expected = count;
-            checkReceived();
-        }
-
-        private void checkReceived()
-        {
-            if (received.size() >= expected) allReceived.countDown();
-        }
-
-        public int getTimeout(UDPLink link)
-        {
-            return 5000;
-        }
-
-        public int getPossibleTimeoutNotificationInterval(UDPLink link)
-        {
-            return 1000;
-        }
-
-        public int getPossibleTimeoutNotificationStart(UDPLink link)
-        {
-            return 2000;
-        }
-
-        public void monitorEvent(UDPManagerEvent event)
-        {
-            if (event.getType() == UDPManagerEvent.Type.CREATED) event.getLink().addMonitor(this);
-        }
-
-        public void monitorEvent(UDPLinkEvent event)
-        {
-            switch (event.getType())
-            {
-                case MTU_TEST_FINISHED:
-                    mtuDone.countDown();
-                    break;
-                case CLOSED:
-                    closed.countDown();
-                    break;
-                case RECEIVED:
-                    UDPData data = event.getData();
-                    if (data.getType() == UDPData.Type.MESSAGE)
-                    {
-                        received.add(Utils.decode(data.getData(), data.getOffset(), data.getLength()));
-                        checkReceived();
-                    }
-                    break;
-            }
-        }
     }
 }

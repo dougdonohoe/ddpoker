@@ -236,12 +236,62 @@ public class UDPMessage
                                           ;
 
     /**
-     * write data, return #bytes written
+     * write data to the channel for our source address
      */
     public void write(UDPServer server) throws IOException
     {
-        DatagramChannel channel = server.getChannel(srcAddrActual_);
+        ByteBuffer outBuffer = toBuffer();
 
+        // testing: simulate a lost packet (data is marked sent so resend logic kicks in)
+        if (server.isDropped(this))
+        {
+            for (UDPData data : data_) data.sent();
+            return;
+        }
+
+        DatagramChannel channel = server.getChannel(srcAddrActual_);
+        int nSleep = 0;
+        boolean bDone = false;
+        while (!bDone)
+        {
+            synchronized (channel)
+            {
+                channel.send(outBuffer, dstAddr_);
+                Utils.sleepMillis(7); // TODO: calc based on user's def of connection (35 = DSL)
+            }
+
+            // UDP will either send all or nothing - wait and try again.  This is very unlikely to happen
+            if (outBuffer.hasRemaining())
+            {
+                // if already slept too much, we timed out
+                if (nSleep >= WRITE_TIMEOUT_MILLIS)
+                {
+                    throw new SocketTimeoutException("UDP send timeout. Packet size: " + outBuffer.remaining() +
+                                                     " send buffer size: " + channel.socket().getSendBufferSize() +
+                                                     " recv buffer size: " + channel.socket().getReceiveBufferSize());
+                }
+
+                nSleep += WRITE_WAIT_MILLIS;
+                Utils.sleepMillis(WRITE_WAIT_MILLIS);
+            }
+            else
+            {
+                bDone = true;
+            }
+        }
+
+        // mark data as sent
+        for (UDPData data : data_)
+        {
+            data.sent();
+        }
+    }
+
+    /**
+     * Serialize header and data into a buffer ready to send (flipped)
+     */
+    ByteBuffer toBuffer()
+    {
         // allocate buffer
         ByteBuffer outBuffer = ByteBuffer.allocate(getBufferedLength());
 
@@ -279,43 +329,8 @@ public class UDPMessage
                             " != Position " + outBuffer.position());
         }
 
-        // send the buffer
         outBuffer.flip();
-        int nSleep = 0;
-        boolean bDone = false;
-        while (!bDone)
-        {
-            synchronized (channel)
-            {
-                channel.send(outBuffer, dstAddr_);
-                Utils.sleepMillis(7); // TODO: calc based on user's def of connection (35 = DSL)
-            }
-
-            // UDP will either send all or nothing - wait and try again.  This is very unlikely to happen
-            if (outBuffer.hasRemaining())
-            {
-                // if already slept too much, we timed out
-                if (nSleep >= WRITE_TIMEOUT_MILLIS)
-                {
-                    throw new SocketTimeoutException("UDP send timeout. Packet size: " + outBuffer.remaining() +
-                                                     " send buffer size: " + channel.socket().getSendBufferSize() +
-                                                     " recv buffer size: " + channel.socket().getReceiveBufferSize());
-                }
-
-                nSleep += WRITE_WAIT_MILLIS;
-                Utils.sleepMillis(WRITE_WAIT_MILLIS);
-            }
-            else
-            {
-                bDone = true;
-            }
-        }
-
-        // mark data as sent
-        for (UDPData data : data_)
-        {
-            data.sent();
-        }
+        return outBuffer;
     }
 
     /**

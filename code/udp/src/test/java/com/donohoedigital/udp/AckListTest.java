@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -78,6 +79,22 @@ public class AckListTest
         list.ack(9);
         list.ack(0);
         assertEquals("[0...1], [5], [9...10]", list.toString());
+    }
+
+    @Test
+    public void containsThroughRequiresNoGapsFromOne()
+    {
+        assertTrue(new AckList(1).containsThrough(0), "nothing to contain");
+        assertFalse(new AckList(1).containsThrough(1), "empty");
+
+        AckList list = ack(1, 2, 3, 5);
+        assertTrue(list.containsThrough(3));
+        assertFalse(list.containsThrough(4));
+        assertFalse(list.containsThrough(5));
+
+        list.ack(4);
+        assertTrue(list.containsThrough(5));
+        assertFalse(ack(2, 3).containsThrough(3), "missing 1");
     }
 
     @Test

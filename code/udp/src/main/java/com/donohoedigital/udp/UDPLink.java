@@ -40,6 +40,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -97,7 +98,7 @@ public class UDPLink
     private long lastMessageReceived_;
     private boolean bGoodbyeInProgress_ = false;
     private boolean bDone_ = false;
-    private final ArrayList<UDPLinkMonitor> monitors_ = new ArrayList<>();
+    private final CopyOnWriteArrayList<UDPLinkMonitor> monitors_ = new CopyOnWriteArrayList<>();
     private final long start = System.currentTimeMillis();
 
     // data size related stuff
@@ -243,11 +244,7 @@ public class UDPLink
      */
     public void addMonitor(UDPLinkMonitor monitor)
     {
-        synchronized(monitors_)
-        {
-            if (monitors_.contains(monitor)) return;
-            monitors_.add(monitor);
-        }
+        monitors_.addIfAbsent(monitor);
     }
 
     /**
@@ -255,26 +252,15 @@ public class UDPLink
      */
     public void removeMonitor(UDPLinkMonitor monitor)
     {
-        synchronized(monitors_)
-        {
-            monitors_.remove(monitor);
-        }
+        monitors_.remove(monitor);
     }
 
     /**
-     * fire event
+     * fire event - iterates a snapshot, so monitors may add/remove monitors while handling
      */
     private void fireEvent(UDPLinkEvent event)
     {
-        // copy to avoid deadlock situations (don't call monitors while holding lock)
-        UDPLinkMonitor[] mons;
-        synchronized(monitors_)
-        {
-            if (monitors_.isEmpty()) return;
-            mons = monitors_.toArray(new UDPLinkMonitor[0]);
-        }
-
-        for (UDPLinkMonitor monitor : mons)
+        for (UDPLinkMonitor monitor : monitors_)
         {
             fireEvent(monitor, event);
         }
@@ -961,6 +947,10 @@ public class UDPLink
                         if (UDPServer.DEBUG_INCOMING_QUEUE || incomingQueue_.hasGapAtBeginning())
                             logger.debug("Queue now {}: {}", toStringNameIP(), incomingQueue_);
                     }
+
+                    // if earlier messages are still missing (lost, being resent), ignore the goodbye for
+                    // now - the sender resends it until acked, and we act on it once the gap is filled
+                    if (acks_ != null && !acks_.containsThrough(data.getID() - 1)) break LOOP;
 
                     // send final acks (could be null if duplicate goodbye received)
                     if (acks_ != null) acks_.ack(data);

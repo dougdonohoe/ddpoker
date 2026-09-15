@@ -185,6 +185,7 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
             this.link = link;
         }
 
+        @SuppressWarnings("ConstantValue")
         public void run()
         {
             int nNum = htOptions_.getInteger("num", 1);

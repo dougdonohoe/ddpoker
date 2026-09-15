@@ -217,6 +217,15 @@ public class AckList
     }
 
     /**
+     * return if every id from 1 through nID has been acked (message ids start at 1 each session)
+     */
+    boolean containsThrough(int nID)
+    {
+        if (nID < 1) return true;
+        return header_ != null && header_.nStart <= 1 && header_.nEnd >= nID;
+    }
+
+    /**
      * queue acks on queue - using as many data's as it takes
      */
     void queueAcks(UDPLink link, UDPData.Type type)
