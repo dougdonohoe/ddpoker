@@ -32,10 +32,6 @@
  */
 package com.donohoedigital.udp;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import com.donohoedigital.base.MersenneTwisterFast;
-
 import java.nio.ByteBuffer;
 
 /**
@@ -47,15 +43,13 @@ import java.nio.ByteBuffer;
  */
 public class AckList
 {
-    static Logger logger = LogManager.getLogger(AckList.class);
-
     // ping ack ids are in a different "space" than regular messages -
     // they are primarily used for debugging - to see how many are
     // coming across.
     private int nAckMessageID_ = 0;
 
-    // session id these messags came in on
-    private long sessionID_;
+    // session id these messages came in on
+    private final long sessionID_;
 
     // first node
     private Ack header_ = null;
@@ -73,11 +67,10 @@ public class AckList
     public AckList(long sessionID)
     {
         sessionID_ = sessionID;
-        //ackTest(false, 1000, .5f);
     }
 
     /**
-     * set whether or not we should meter the acks going out based on modcount changes
+     * set whether we should meter the acks going out based on modcount changes
      */
     public void setMeter(boolean b)
     {
@@ -116,7 +109,7 @@ public class AckList
         // look for a place to either add this ID to a range or
         // a place to create a new range
         Ack ack = header_;
-        Ack nu = null;
+        Ack nu;
         do
         {
             // if we can include this id in this ack range, do so
@@ -155,6 +148,7 @@ public class AckList
     /**
      * see if we can combine this ack range with the given ack range
      */
+    @SuppressWarnings("UnusedReturnValue")
     private boolean combine(Ack one, Ack two)
     {
         // both must be non-null
@@ -183,7 +177,7 @@ public class AckList
         if (ack == null) sb.append("[empty]");
         else while (ack != null)
         {
-            if (sb.length() > 0) sb.append(", ");
+            if (!sb.isEmpty()) sb.append(", ");
             sb.append(ack);
             ack = ack.next;
         }
@@ -222,9 +216,14 @@ public class AckList
         return false;
     }
 
-    private static int SIZEOF_NUM = 4;
-    private static int SIZEOF_SESSION_ID = 8;
-    private static int SIZEOF_MESSAGE_ID = 4;
+    /**
+     * return if every id from 1 through nID has been acked (message ids start at 1 each session)
+     */
+    boolean containsThrough(int nID)
+    {
+        if (nID < 1) return true;
+        return header_ != null && header_.nStart <= 1 && header_.nEnd >= nID;
+    }
 
     /**
      * queue acks on queue - using as many data's as it takes
@@ -249,7 +248,10 @@ public class AckList
 
         //logger.debug("Sending ack, mod count = " + modCount_);
 
+        int SIZEOF_NUM = 4;
+        int SIZEOF_SESSION_ID = 8;
         int MAX_BYTES = link.getMaxDataSize() - SIZEOF_NUM - SIZEOF_SESSION_ID;
+        int SIZEOF_MESSAGE_ID = 4;
         int MAX_COUNT = MAX_BYTES / (SIZEOF_MESSAGE_ID * 2);
 
         int nNum = size();
@@ -285,7 +287,7 @@ public class AckList
         ByteBuffer buffer = ByteBuffer.wrap(data.getData(), data.getOffset(), data.getLength());
         sessionID_ = buffer.getLong();
         int nNum = buffer.getInt();
-        Ack ack = null, prev = null;
+        Ack ack = null, prev;
         for (int i = 0; i < nNum; i++)
         {
             prev = ack;
@@ -302,7 +304,7 @@ public class AckList
     }
 
     /**
-     * tracks an range of messages received
+     * tracks a range of messages received
      */
     private static class Ack
     {
@@ -362,47 +364,6 @@ public class AckList
         {
             if (nStart == nEnd) return "["+nStart+"]";
             return "[" + nStart + "..." + nEnd + "]";
-        }
-    }
-
-    ////
-    //// TESTING
-    ////
-    public void ackTest(boolean bShortTest, int size, float iters)
-    {
-        if (false)
-        {
-            int[] acks = { 200, 201, 202, 205, 204, 203, 197, 195, 196, 198, 199, 180, 185, 190, 192,
-                           193, 195, 194, 183, 196, 197, 201, 184, 182, 189, 186, 188, 187, 181, 191, 182 };
-
-            for (int i = 0; i < acks.length; i++)
-            {
-                ack(acks[i]);
-                logger.debug("Added {}: {}", acks[i], this);
-            }
-        }
-        else
-        {
-            int[] hits = new int[size+1];
-            MersenneTwisterFast random_ = new MersenneTwisterFast();
-            for (int i = 0; i < size * iters; i++)
-            {
-                int nNum = random_.nextInt(size) + 1;
-                hits[nNum] = 1;
-                ack(nNum);
-                //logger.debug("Added " + nNum + ": "+ list);
-            }
-            logger.debug("After {}: {}", size, this);
-            StringBuilder missed = new StringBuilder();
-            for (int i = 1; i < (size+1); i++)
-            {
-                if (hits[i] == 0)
-                {
-                    if (missed.length() > 0) missed.append(", ");
-                    missed.append(i);
-                }
-            }
-            logger.debug("Missed: {}", missed);
         }
     }
 }

@@ -42,6 +42,7 @@ import com.donohoedigital.html.TableRow;
 
 import java.net.InetSocketAddress;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -61,10 +62,10 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
     // members
     private final UDPServer server_;
     private final UDPLinkHandler handler_;
-    private final List<UDPManagerMonitor> monitors_ = new ArrayList<>();
+    private final CopyOnWriteArrayList<UDPManagerMonitor> monitors_ = new CopyOnWriteArrayList<>();
     private final LinkedBlockingQueue<Object> queue_ = new LinkedBlockingQueue<>();
-    private final List<UDPLink> links_ = Collections.synchronizedList(new ArrayList<UDPLink>());
-    private final List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<UDPLink>());
+    private final List<UDPLink> links_ = Collections.synchronizedList(new ArrayList<>());
+    private final List<UDPLink> linksCopy_ = Collections.synchronizedList(new ArrayList<>());
     boolean bDone_ = false;
     private final Timer timer_;
 
@@ -75,7 +76,6 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
 
     /**
      * new udp manager
-     * @param server
      */
     public UDPManager(UDPServer server)
     {
@@ -106,11 +106,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
      */
     public void addMonitor(UDPManagerMonitor monitor)
     {
-        synchronized(monitors_)
-        {
-            if (monitors_.contains(monitor)) return;
-            monitors_.add(monitor);
-        }
+        monitors_.addIfAbsent(monitor);
     }
 
     /**
@@ -118,51 +114,17 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
      */
     public void removeMonitor(UDPManagerMonitor monitor)
     {
-        synchronized(monitors_)
-        {
-            monitors_.remove(monitor);
-        }
+        monitors_.remove(monitor);
     }
 
     /**
-     * fire event
+     * fire event - iterates a snapshot, so monitors may add/remove monitors while handling
      */
     private void fireEvent(UDPManagerEvent event)
     {
-        // copy to avoid deadlock situations
-        UDPManagerMonitor[] mons = null;
-        UDPManagerMonitor mon = null;
-        synchronized(monitors_)
+        for (UDPManagerMonitor monitor : monitors_)
         {
-            // do nothing if no monitors
-            int nNum = monitors_.size();
-            if (nNum == 0) return;
-
-            // only one, so avoid array alloc
-            if (nNum == 1)
-            {
-                mon = monitors_.get(0);
-            }
-            // multiple
-            else
-            {
-                mons = new UDPManagerMonitor[nNum];
-                monitors_.toArray(mons);
-            }
-        }
-
-        // handle case of one
-        if (mon != null)
-        {
-            fireEvent(mon, event);
-        }
-        // handle case of multiple
-        else
-        {
-            for (UDPManagerMonitor monitor : mons)
-            {
-                fireEvent(monitor, event);
-            }
+            fireEvent(monitor, event);
         }
     }
 
@@ -171,7 +133,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
      */
     private void fireEvent(UDPManagerMonitor monitor, UDPManagerEvent event)
     {
-        // notify hanlder of new message
+        // notify handler of new message
         try {
             monitor.monitorEvent(event);
         } catch (Throwable t)
@@ -199,6 +161,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
         {
             try {
                 msg = queue_.take();
+                //noinspection StatementWithEmptyBody
                 if (msg == QUIT || bDone_) { /* continue */ }
                 else if (msg == SENDALL) processSendAll();
                 else if (msg == SENDACK) processSendAcksPing();
@@ -291,7 +254,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
     /**
      * class for closing a link to avoid concurrent modification exception
      */
-    private class CloseLink
+    private static class CloseLink
     {
         UDPLink link;
 
@@ -466,7 +429,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
                     return link;
                 }
                 //
-                // Note: if there happend to be a match on ID and/or remote and the local didn't match, then that
+                // Note: if there happened to be a match on ID and/or remote and the local didn't match, then that
                 // is a different connection - to a different port
             }
 
@@ -527,7 +490,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
         {
             while (!links_.isEmpty())
             {
-                UDPLink link = links_.remove(0);
+                UDPLink link = links_.removeFirst();
                 link.finish(false);
                 notifyRemoved(link);
             }
@@ -612,7 +575,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
      */
     public String getStatusHTML(Comparator<UDPLink> comparator)
     {
-        List<UDPLink> links = null;
+        List<UDPLink> links;
 
         synchronized(links_)
         {
@@ -621,7 +584,7 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
         }
 
         if (comparator == null) comparator = this;
-        Collections.sort(links, comparator);
+        links.sort(comparator);
 
         // create table
         Table table  = new Table(3, 1);

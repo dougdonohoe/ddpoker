@@ -40,7 +40,6 @@ package com.donohoedigital.games.engine;
 
 import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.comms.NameValueToken;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.games.config.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,13 +56,6 @@ public abstract class BasePhase implements Phase
     protected GameContext context_;
     protected GamePhase gamephase_;
     protected Object oResult_;
-
-    /** 
-     * Creates a new instance of BasePhase 
-     */
-    public BasePhase() {
-        if (Perf.isOn()) Perf.construct(this, null);
-    }
 
     /**
      * Init phase, storing engine and gamephase

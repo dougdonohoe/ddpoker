@@ -37,7 +37,6 @@ import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.ConfigUtils;
 import com.donohoedigital.config.ImageConfig;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.engine.FileChooserDialog;
 import com.donohoedigital.games.engine.GameContext;
@@ -73,7 +72,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
     private Point end_;
 
     // limit display
-    private int MAX_MESSAGES = 500;
+    private int MAX_MESSAGES;
     private final ArrayList messages_;
 
     /**
@@ -241,11 +240,11 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
                 sText = html.getSelectedText();
                 // replace white space \s and nbsp (ascii 160 == AO)
                 sText = sText.replaceAll(WHITESPACE, " ");
-                if (sb.length() > 0) sb.append("\n");
+                if (!sb.isEmpty()) sb.append("\n");
                 sb.append(sText.trim());
             }
         }
-        if (sb.length() == 0) return;
+        if (sb.isEmpty()) return;
         //logger.debug("Copy: "+ sb);
         GuiUtils.copyToClipboard(sb.toString());
     }
@@ -575,7 +574,6 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
         public ChatItemPanel(ListPanel p, Object item, String sStyle)
         {
             super(p, item, sStyle);
-            if (false) Perf.construct(this, "Chat");
 
             ChatListPanel panel = (ChatListPanel) p;
 

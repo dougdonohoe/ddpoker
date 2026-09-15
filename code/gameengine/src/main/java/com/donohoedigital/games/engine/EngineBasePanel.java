@@ -41,7 +41,6 @@ package com.donohoedigital.games.engine;
 import com.donohoedigital.base.Utils;
 import static com.donohoedigital.config.DebugConfig.TESTING;
 import com.donohoedigital.config.ImageConfig;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.config.StylesConfig;
 import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.config.GamePhase;
@@ -68,7 +67,7 @@ public class EngineBasePanel extends JPanel
 {
     static Logger logger = LogManager.getLogger(EngineBasePanel.class);
 
-    JComponent bottom_ = null;
+    JComponent bottom_;
     Component center_ = null;
     Component focus_ = null;
     CenterLayout centerLayout_ = new CenterLayout();
@@ -112,11 +111,7 @@ public class EngineBasePanel extends JPanel
         if (TESTING(EngineConstants.TESTING_PERFORMANCE))
         {
             GuiUtils.addKeyAction(this, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                                  "perf", new DebugPerf(), KeyEvent.VK_P, 0);
-            GuiUtils.addKeyAction(this, JComponent.WHEN_IN_FOCUSED_WINDOW,
                                   "gc", new DebugGC(), KeyEvent.VK_G, 0);
-            GuiUtils.addKeyAction(this, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                                  "objcount", new DebugCount(), KeyEvent.VK_O, 0);
         }
     }
 
@@ -184,16 +179,8 @@ public class EngineBasePanel extends JPanel
         }
     }
 
-    /**
-     * Return base frame this is in
-     */
-    public BaseFrame getBaseFrame()
-    {
-        return frame_;
-    }
-
     // flag used in Gameboard to know when to repaint
-    // mac grow box
+    // Mac grow box
     boolean bPainting_ = false;
 
     // growbox color
@@ -203,7 +190,7 @@ public class EngineBasePanel extends JPanel
     static boolean PAINT_GROW_BOX = true;
 
     /**
-     * Override to paint bottom corner on mac for grow box
+     * Override to paint bottom corner on Mac for grow box
      */
     @Override
     public void paint(Graphics g1)
@@ -230,38 +217,9 @@ public class EngineBasePanel extends JPanel
     }
 
     /**
-     * Called when 'p' pressed - toggles Perf on/off
-     */
-    private class DebugPerf extends AbstractAction
-    {
-        public void actionPerformed(ActionEvent e)
-        {
-            if (Perf.isStarted())
-            {
-                Perf.stop();
-            }
-            else
-            {
-                Perf.start();
-            }
-        }
-    }
-
-    /**
-     * Called when 'o' pressed - display object count
-     */
-    private class DebugCount extends AbstractAction
-    {
-        public void actionPerformed(ActionEvent e)
-        {
-            Perf.displayCurrentCount();
-        }
-    }
-
-    /**
      * Called when 'g' pressed - run GC
      */
-    private class DebugGC extends AbstractAction
+    private static class DebugGC extends AbstractAction
     {
         public void actionPerformed(ActionEvent e)
         {

@@ -51,6 +51,7 @@ import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.prefs.Preferences;
 
 /**
@@ -83,6 +84,7 @@ public class UDPServer extends Thread
     public static final String TESTING_UDP = "testing.debug.udp";
 
     // set debug flags
+    @SuppressWarnings("ConstantValue")
     public static void setDebugFlags()
     {
         boolean detail = DebugConfig.TESTING(TESTING_UDP);
@@ -108,27 +110,30 @@ public class UDPServer extends Thread
 
     // config stuff
     private Selector selector_;
-    private boolean bExceptionOnNoBind_;
-    private boolean bBindLoopback_;
+    private final boolean bExceptionOnNoBind_;
+    private final boolean bBindLoopback_;
     private boolean bDone_ = false;
-    private String sPort_ = null;
+    private String sPort_;
     private boolean bBindFailover_;
     private int nFailoverAttempts_;
-    private List<DatagramChannel> channels_ = new ArrayList<>();
-    private Map<DatagramChannel, InetSocketAddress> channelToIP_ = new HashMap<>();
-    private Map<InetSocketAddress, DatagramChannel> ipToChannel_ = new HashMap<>();
-    private Map<InetSocketAddress, UDPID> ipToID_ = new HashMap<>();
+    private final List<DatagramChannel> channels_ = new ArrayList<>();
+    private final Map<DatagramChannel, InetSocketAddress> channelToIP_ = new HashMap<>();
+    private final Map<InetSocketAddress, DatagramChannel> ipToChannel_ = new HashMap<>();
+    private final Map<InetSocketAddress, UDPID> ipToID_ = new HashMap<>();
     private Shutdown shutdown_;
 
     // one buffer for incoming (main UDP thread reads and then queues)
-    private ByteBuffer bb_ = ByteBuffer.allocate(UDPLink.MAX_PAYLOAD_SIZE);
+    private final ByteBuffer bb_ = ByteBuffer.allocate(UDPLink.MAX_PAYLOAD_SIZE);
 
     // main components
     private UDPManager mgr_;
-    private UDPLinkHandler handler_;
+    private final UDPLinkHandler handler_;
     private DispatchQueue dispatchQueue_;
     private OutgoingQueue outgoingQueue_;
     private DatagramChannel defaultChannel_;
+
+    // testing: outgoing messages matching this are dropped to simulate packet loss (null in production)
+    private volatile Predicate<UDPMessage> dropFilter_;
 
     /**
      * New UDPServer.  Pass in a handler.  We'll use one for now - may need
@@ -184,7 +189,7 @@ public class UDPServer extends Thread
         if (sPort_ == null) sPort_ = PropertyConfig.getRequiredStringProperty("settings.udp.port");
         String sIP = PropertyConfig.getStringProperty("settings.udp.ip", null, false);
         bBindFailover_ = PropertyConfig.getBooleanProperty("settings.udp.failover", true, false);
-        nFailoverAttempts_ = PropertyConfig.getIntegerProperty("settings.udp.failover.attempts", 3);
+        nFailoverAttempts_ = PropertyConfig.getIntegerProperty("settings.udp.failover.attempts", 5);
 
         // display info
         logger.info("Config port(s): {}", sPort_);
@@ -351,9 +356,8 @@ public class UDPServer extends Thread
      */
     private InetSocketAddress bind(DatagramSocket socket, InetAddress ia, int nPort) throws SocketException
     {
-        int nAttempts = nFailoverAttempts_;
-        SocketException e = null;
-        for (int i = 0; i < nAttempts; i++)
+        int nAttempts = Math.max(1, nFailoverAttempts_); // always try at least once
+        for (int attempt = 1; ; attempt++)
         {
             try
             {
@@ -361,18 +365,13 @@ public class UDPServer extends Thread
                 socket.bind(addr);
                 return addr;
             }
-            catch (SocketException e2)
+            catch (SocketException e)
             {
-                if (!bBindFailover_) throw e2;
+                if (!bBindFailover_ || attempt >= nAttempts) throw e;
                 logger.info("Failed binding to {}:{}, trying port {}", ia.getHostAddress(), nPort, (nPort - 1));
                 nPort--;
-                e = e2;
             }
         }
-        if (e != null) {
-            throw e;
-        }
-        return null;
     }
 
     /**
@@ -463,6 +462,23 @@ public class UDPServer extends Thread
     public DatagramChannel getChannel(InetSocketAddress ip)
     {
         return ipToChannel_.get(ip);
+    }
+
+    /**
+     * Testing: drop outgoing messages matching filter (null to stop dropping)
+     */
+    void setDropFilter(Predicate<UDPMessage> filter)
+    {
+        dropFilter_ = filter;
+    }
+
+    /**
+     * Testing: should this outgoing message be dropped?
+     */
+    boolean isDropped(UDPMessage msg)
+    {
+        Predicate<UDPMessage> filter = dropFilter_;
+        return filter != null && filter.test(msg);
     }
 
     /**

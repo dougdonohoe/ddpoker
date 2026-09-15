@@ -68,15 +68,15 @@ public class UDPMessage
 
     // members
     private byte bProtocol_ = 'A'; // reserve for future use
-    private long sessionID_;
-    private UDPID srcID_;
+    private final long sessionID_;
+    private final UDPID srcID_;
     private UDPID dstID_;
-    private InetSocketAddress srcAddrActual_;
-    private InetSocketAddress srcAddrApparent_;
-    private InetSocketAddress dstAddr_; // TODO: will this be needed?  In future, could use for UDP tunneling
-    private ArrayList<UDPData> data_ = new ArrayList<>(5);
+    private final InetSocketAddress srcAddrActual_;
+    private final InetSocketAddress srcAddrApparent_;
+    private final InetSocketAddress dstAddr_; // TODO: will this be needed?  In future, could use for UDP tunneling
+    private final ArrayList<UDPData> data_ = new ArrayList<>(5);
 
-    // uknown address
+    // unknown address
     public static final InetSocketAddress ADDRESS_UNKNOWN = new InetSocketAddress("0.0.0.0", 0);
     
     /**
@@ -96,6 +96,7 @@ public class UDPMessage
      * Get version - reserved for future usage in case we need
      * to change the protocol
      */
+    @SuppressWarnings("unused")
     public byte getProtocol()
     {
         return bProtocol_;
@@ -121,6 +122,7 @@ public class UDPMessage
     /**
      * Get who message is to
      */
+    @SuppressWarnings("unused")
     public UDPID getDestinationID()
     {
         return dstID_;
@@ -129,6 +131,7 @@ public class UDPMessage
     /**
      * Get actual source IP (ip of the machine that sent it)
      */
+    @SuppressWarnings("unused")
     public InetSocketAddress getSourceIPActual()
     {
         return srcAddrActual_;
@@ -196,10 +199,8 @@ public class UDPMessage
     public int getBufferedLength()
     {
         int nSize = HEADER_SIZE;
-        int nNumData = data_.size();
-        for (int i = 0; i < nNumData; i++)
-        {
-            nSize += data_.get(i).getBufferedLength();
+        for (UDPData udpData : data_) {
+            nSize += udpData.getBufferedLength();
         }
         return nSize;
     }
@@ -222,7 +223,7 @@ public class UDPMessage
 
     // crc stuff
     private static final int CRC_SIZE =   8; // long
-    private static final byte[] crcExtra = { 8, 6, 7, 5, 3, 0, 9, 55, 39, 1, 10, 31, 19, 68, 5, 27, 20, 01 };
+    private static final byte[] crcExtra = { 8, 6, 7, 5, 3, 0, 9, 55, 39, 1, 10, 31, 19, 68, 5, 27, 20, 1};
 
     // header size of our UDPMessage
     public static final int HEADER_SIZE = 1 // protocol (byte)
@@ -235,48 +236,20 @@ public class UDPMessage
                                           ;
 
     /**
-     * write data, return #bytes written
+     * write data to the channel for our source address
      */
     public void write(UDPServer server) throws IOException
     {
-        DatagramChannel channel = server.getChannel(srcAddrActual_);
+        ByteBuffer outBuffer = toBuffer();
 
-        // allocate buffer
-        ByteBuffer outBuffer = ByteBuffer.allocate(getBufferedLength());
-
-        // put header - this should match the HEADER_SIZE definition above
-        outBuffer.put(bProtocol_);
-        outBuffer.putLong(sessionID_);
-        outBuffer.put(srcID_.toBytes());
-        outBuffer.put(dstID_.toBytes());
-        putAddress(outBuffer, dstAddr_);
-        putAddress(outBuffer, srcAddrActual_);
-        outBuffer.putShort((short) data_.size());
-
-        // checksum
-        CRC32 crc32 = new CRC32();
-        crc32.update(outBuffer.array(), outBuffer.arrayOffset(), outBuffer.position());
-        crc32.update(crcExtra);
-        outBuffer.putLong(crc32.getValue());
-
-        // verify size of header
-        if (outBuffer.position() != HEADER_SIZE) ApplicationError.assertTrue(false,
-                                                            "Mismatched header size " + outBuffer.position() +
-                                                            " != HEADER_SIZE of " + HEADER_SIZE);
-
-        // put data
-        for (UDPData data : data_)
+        // testing: simulate a lost packet (data is marked sent so resend logic kicks in)
+        if (server.isDropped(this))
         {
-            data.put(outBuffer);
+            for (UDPData data : data_) data.sent();
+            return;
         }
 
-        // verify we filled the buffer
-        if (outBuffer.capacity() != outBuffer.position()) ApplicationError.assertTrue(false,
-                                                                     "Capacity " + outBuffer.capacity() +
-                                                                     " != Position " + outBuffer.position());
-
-        // send the buffer
-        outBuffer.flip();
+        DatagramChannel channel = server.getChannel(srcAddrActual_);
         int nSleep = 0;
         boolean bDone = false;
         while (!bDone)
@@ -284,7 +257,7 @@ public class UDPMessage
             synchronized (channel)
             {
                 channel.send(outBuffer, dstAddr_);
-                Utils.sleepMillis(7); // TODO: calc based on user's def of conn (35 = DSL)
+                Utils.sleepMillis(7); // TODO: calc based on user's def of connection (35 = DSL)
             }
 
             // UDP will either send all or nothing - wait and try again.  This is very unlikely to happen
@@ -314,14 +287,55 @@ public class UDPMessage
         }
     }
 
-    //
-    // NOTE:  reading is done single-threaded via UDPServer, so we can share objects for perf
-    //
-    private static CRC32 _crc32 = new CRC32();
-    private static byte[] _addr = new byte[4];
+    /**
+     * Serialize header and data into a buffer ready to send (flipped)
+     */
+    ByteBuffer toBuffer()
+    {
+        // allocate buffer
+        ByteBuffer outBuffer = ByteBuffer.allocate(getBufferedLength());
+
+        // put header - this should match the HEADER_SIZE definition above
+        outBuffer.put(bProtocol_);
+        outBuffer.putLong(sessionID_);
+        outBuffer.put(srcID_.toBytes());
+        outBuffer.put(dstID_.toBytes());
+        putAddress(outBuffer, dstAddr_);
+        putAddress(outBuffer, srcAddrActual_);
+        outBuffer.putShort((short) data_.size());
+
+        // checksum
+        CRC32 crc32 = new CRC32();
+        crc32.update(outBuffer.array(), outBuffer.arrayOffset(), outBuffer.position());
+        crc32.update(crcExtra);
+        outBuffer.putLong(crc32.getValue());
+
+        // verify size of header
+        if (outBuffer.position() != HEADER_SIZE) {
+            throw new ApplicationError("Mismatched header size " + outBuffer.position() +
+                    " != HEADER_SIZE of " + HEADER_SIZE);
+        }
+
+        // put data
+        for (UDPData data : data_)
+        {
+            data.put(outBuffer);
+        }
+
+        // verify we filled the buffer
+        if (outBuffer.capacity() != outBuffer.position())
+        {
+            throw new ApplicationError("Capacity " + outBuffer.capacity() +
+                            " != Position " + outBuffer.position());
+        }
+
+        outBuffer.flip();
+        return outBuffer;
+    }
 
     /**
-     * Read data via constructor
+     * Read data via constructor.  CRC and address buffers are local (not shared statics)
+     * since multiple UDPServers in one JVM (e.g., unit tests) each read on their own thread.
      */
     UDPMessage(UDPServer server, ByteBuffer inBuffer, InetSocketAddress to, InetSocketAddress from)
     {
@@ -334,10 +348,10 @@ public class UDPMessage
         }
 
         // calculate checksum
-        _crc32.reset();
-        _crc32.update(inBuffer.array(), inBuffer.arrayOffset(), HEADER_SIZE - CRC_SIZE); // CRC is on header less CRC at end
-        _crc32.update(crcExtra);
-        long crcCalc = _crc32.getValue();
+        CRC32 crc32 = new CRC32();
+        crc32.update(inBuffer.array(), inBuffer.arrayOffset(), HEADER_SIZE - CRC_SIZE); // CRC is on header less CRC at end
+        crc32.update(crcExtra);
+        long crcCalc = crc32.getValue();
         long crcRead = inBuffer.getLong(HEADER_SIZE - CRC_SIZE); // get checksum before processing header
 
         // validate checksum - used to verify this is a DD message and not some random message
@@ -354,13 +368,14 @@ public class UDPMessage
         sessionID_ = inBuffer.getLong();
         srcID_ = new UDPID(inBuffer);
         dstID_ = new UDPID(inBuffer);
-        dstAddr_ = getAddress(inBuffer, _addr);
+        byte[] addr = new byte[4];
+        getAddress(inBuffer, addr); // skip destination address in header - we use the actual 'to'
         dstAddr_ = to;
         // TODO: compare received and read
-        srcAddrActual_ = getAddress(inBuffer, _addr);
+        srcAddrActual_ = getAddress(inBuffer, addr);
         srcAddrApparent_ = from;
         short nNumData = inBuffer.getShort();
-        crcRead = inBuffer.getLong(); // read again to advance position
+        inBuffer.getLong(); // read again to advance position
 
         // read data - no need to checksum this data since UDP does its own checksum
         UDPData data;
@@ -418,10 +433,11 @@ public class UDPMessage
     /**
      * debug
      */
+    @SuppressWarnings("unused")
     public String toStringIDs()
     {
         int numData = getNumData();
-        if (numData == 1) return "" + getData(0).toStringType();
+        if (numData == 1) return getData(0).toStringType();
         else
         {
             StringBuilder sb = new StringBuilder();

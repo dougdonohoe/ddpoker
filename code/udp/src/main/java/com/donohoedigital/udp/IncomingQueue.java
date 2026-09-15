@@ -53,9 +53,6 @@ public class IncomingQueue
     // message comparator
     private static final UDPMessageComparator comparator_ = new UDPMessageComparator();
 
-    // last dispatch count
-    static final int LAST_DISPATCH_CNT = -1;
-
     // members
     private final ArrayList<UDPData> queue_ = new ArrayList<>();
     private int nLastProcessedID_;
@@ -103,13 +100,13 @@ public class IncomingQueue
         synchronized(queue_)
         {
             if (queue_.isEmpty()) return false;
-            return (queue_.get(0).getID() - 1 != nLastProcessedID_);
+            return (queue_.getFirst().getID() - 1 != nLastProcessedID_);
         }
     }
 
-    ////
-    //// QUEUE
-    ////
+    //
+    // QUEUE
+    //
 
     /**
      * Add message to the queue, in sort order.  Return if added
@@ -117,7 +114,7 @@ public class IncomingQueue
     public boolean addMessage(UDPData data)
     {
         // if already processed, ignore (shouldn't happen, but we
-        // double check even though we are are using acks list in UDPLink)
+        // double-check even though we are using acks list in UDPLink)
         if (data.getID() <= nLastProcessedID_)
         {
             return false;
@@ -142,13 +139,10 @@ public class IncomingQueue
     /**
      * Sort UDPData by message id
      */
-    private static class UDPMessageComparator implements Comparator
+    private static class UDPMessageComparator implements Comparator<UDPData>
     {
-        public int compare(Object o1, Object o2)
+        public int compare(UDPData u1, UDPData u2)
         {
-            UDPData u1 = (UDPData) o1;
-            UDPData u2 = (UDPData) o2;
-
             return u1.getID() - u2.getID();
         }
     }
@@ -162,9 +156,9 @@ public class IncomingQueue
     /**
      * Dispatch messages.  Basically the messages in the queue are sorted
      * by message id.  We start at the top of the queue and look to see if
-     * the message at he top is the next message we are expecting.  If it
-     * is, we make sure all parts are there (if it is a multi-part).  If so,
-     * we remove from the queue then, reassemble (if multi-part), then
+     * the message at the top is the next message we are expecting.  If it
+     * is, we make sure all parts are there (if it is a multipart).  If so,
+     * we remove from the queue then, reassemble (if multipart), then
      * dispatch to the handler.  The logic while sync'ing on the queue is
      * short and should be quick, so as not to hold up the UDPManager
      * thread that is putting items on the queue.  Number of messages dispatched
@@ -174,7 +168,8 @@ public class IncomingQueue
      */
     boolean dispatch(boolean bLastDispatch)
     {
-        int MAX = bLastDispatch ? 1 : 10;
+        // last dispatch (goodbye received) delivers everything since the link closes after
+        int MAX = bLastDispatch ? Integer.MAX_VALUE : 10;
 
         // dispatch
         try {
@@ -188,7 +183,7 @@ public class IncomingQueue
                     if (queue_.isEmpty()) return false;
 
                     // first item on queue must be next message in sequence
-                    data = queue_.get(0);
+                    data = queue_.getFirst();
                     int id = data.getID();
                     if (id - 1 != nLastProcessedID_) return false;
 
@@ -198,7 +193,7 @@ public class IncomingQueue
                     // see if queue has enough parts to check
                     if (nParts - 1 > queue_.size() - 1) return false;
 
-                    // if multi-part, see if remaining parts are there (last part id must match)
+                    // if multipart, see if remaining parts are there (last part id must match)
                     // (we used sequential ids)
                     if (nParts > 1 && queue_.get(nParts - 1).getID() != id + (nParts - 1)) return false;
 
@@ -209,13 +204,13 @@ public class IncomingQueue
                     // got here so actually remove the elements
                     for (int i = 0; i < nParts; i++)
                     {
-                        process_.add(queue_.remove(0));
+                        process_.add(queue_.removeFirst());
                     }
                 }
 
-                // process data found (outside of sync loop)
+                // process data found (outside sync loop)
                 nLastProcessedID_ += process_.size();
-                data = process_.remove(0);
+                data = process_.removeFirst();
                 if (!process_.isEmpty())
                 {
                     data.combine(process_);
@@ -245,16 +240,16 @@ public class IncomingQueue
         }
     }
 
-    ////
-    //// DEBUG
-    ////
+    //
+    // DEBUG
+    //
 
     /**
      * debug
      */
     public String toString()
     {
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb = new StringBuilder();
         synchronized (queue_)
         {
             for (int i = 0; i < queue_.size(); i++)

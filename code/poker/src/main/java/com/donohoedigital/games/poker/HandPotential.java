@@ -120,9 +120,6 @@ public class HandPotential
     private final int[][] handCounts_ = new int[aStatKeys_.size()][2];
     private final int[] totalHandCount_ = new int[2];
 
-    // debug
-    private static final boolean PERF = false;
-    
     // indicies into hp[3] array
     private static final int AHEAD = 0;
     private static final int TIED = 1;
@@ -557,17 +554,11 @@ public class HandPotential
         }
         else
         {
-            switch (community_.size())
-            {
-                case 0:
-                    stage = 0;
-                    break;
-                case 3:
-                    stage = 1;
-                    break;
-                default:
-                    stage = 2;
-            }
+            stage = switch (community_.size()) {
+                case 0 -> 0;
+                case 3 -> 1;
+                default -> 2;
+            };
         }
 
         boolean twoColumns = ((stage == 1) && (round == HoldemHand.ROUND_NONE));
@@ -704,11 +695,8 @@ public class HandPotential
      * Calculate strength of hand against N opponents.  Return is float from
      * 0 to 1 indicating probability of this hand being the best hand
      */
-    @SuppressWarnings("ConstantValue")
     public static float getPotential(Hand hole, Hand community)
     {
-        if (PERF) Perf.start();
-        
         // init (use floats for counting to avoid casting)
         float[][] hp = new float[3][3];
         float[] hpTotal = new float[3];
@@ -801,9 +789,6 @@ public class HandPotential
         
         // negative potential: were ahead or tied, but moved down to tie/behind
         float npot = (hp[AHEAD][BEHIND] + hp[TIED][BEHIND]/2 + hp[AHEAD][TIED]/2) / (hpTotal[AHEAD] + hpTotal[TIED]/2);
-        
-        if (PERF) Perf.stop();
-        
 //        StringBuilder log = new StringBuilder("Array:\n");
 //        int sum = 0;
 //        for (int i = 0; i < 3; i++)
@@ -837,7 +822,6 @@ public class HandPotential
         loggingConfig.init();
         logger = LogManager.getLogger(HandPotential.class);
 
-        Perf.setOn(true);
         new ConfigManager("poker", ApplicationType.CLIENT);
 
         new Hand(Card.CLUBS_3, Card.CLUBS_5);

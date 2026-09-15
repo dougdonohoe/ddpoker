@@ -33,9 +33,7 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.TypedHashMap;
-import com.donohoedigital.config.Perf;
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.EngineUtils;
 import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.poker.engine.Card;
@@ -51,8 +49,6 @@ import java.awt.event.ActionListener;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.donohoedigital.config.DebugConfig.TESTING;
 
 public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback, ChangeListener
 {
@@ -457,8 +453,6 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
         @Override
         public void run()
         {
-            if (false && TESTING(EngineConstants.TESTING_PERFORMANCE)) Perf.start();
-
             HoldemHand hhand = sim_.hhand_;
             PokerTable table = sim_.table_;
 
@@ -482,8 +476,6 @@ public class PokerShowdownPanel extends DDTabPanel implements DDProgressFeedback
             {
                 HoldemSimulator.iterate(hands, community, progress_);
             }
-
-            if (false && TESTING(EngineConstants.TESTING_PERFORMANCE)) Perf.stop();
         }
     }
 
