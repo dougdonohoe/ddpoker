@@ -42,15 +42,11 @@ import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.DDMessage;
 import com.donohoedigital.comms.DDMessageListener;
+import com.donohoedigital.config.ConfigUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.UnknownHostException;
-import java.util.Enumeration;
-import java.util.StringTokenizer;
 
 /**
  * @author donohoe
@@ -67,8 +63,8 @@ public class LanManager implements DDMessageListener
 
     private Peer2PeerMulticast multi_;
     private Alive alive_;
-    private String sLocalHost_;
-    private String sLocalIP_;
+    private final String sLocalHost_;
+    private final String sLocalIP_;
     private final LanControllerInterface controller_;
     private final LanClientList clients_;
     private final String guid_;
@@ -92,61 +88,12 @@ public class LanManager implements DDMessageListener
         key_ = controller.getPublicUseKey();
 
         // our host
-        try
-        {
-            InetAddress local = InetAddress.getLocalHost();
-            sLocalHost_ = local.getHostName();
-            sLocalIP_ = local.getHostAddress();
+        String host = ConfigUtils.getLocalHost(true);
+        sLocalHost_ = host == null ? "[unknown]" : host;
 
-            // strip ".local" at end of mac host name
-            if (Utils.ISMAC)
-            {
-                sLocalHost_ = sLocalHost_.replaceAll("\\.local$", "");
-            }
-        }
-        catch (UnknownHostException uhe)
-        {
-            StringTokenizer st = new StringTokenizer(uhe.getMessage(), ":");
-            if (st.hasMoreTokens())
-            {
-                sLocalHost_ = st.nextToken();
-                logger.warn("Unable to determine local host name, guessing it is: {}", sLocalHost_);
-            }
-            else
-            {
-                logger.warn("Unable to determine local host name: {}", uhe.getMessage());
-                sLocalHost_ = "[unknown]";
-            }
-
-            // try and determine local IP from network interface
-            try
-            {
-                // default to loopback addr
-                sLocalIP_ = "127.0.0.1";
-
-                // loop over all IPs
-                Enumeration<NetworkInterface> enu = NetworkInterface.getNetworkInterfaces();
-                while (enu.hasMoreElements())
-                {
-                    Enumeration<InetAddress> ias = enu.nextElement().getInetAddresses();
-                    while (ias.hasMoreElements())
-                    {
-                        // if an IP4 (non loopback), add it to list
-                        InetAddress i = ias.nextElement();
-                        if (i instanceof Inet4Address)
-                        {
-                            if (i.isLoopbackAddress()) continue;
-                            sLocalIP_ = i.getHostAddress();
-                        }
-                    }
-                }
-
-                logger.warn("Local ip set to: {}", sLocalIP_);
-            }
-            catch (Throwable ignored)
-            {
-            }
-        }
+        // our IP - same address multicast uses, so it matches what other clients see
+        InetAddress lan = Peer2PeerMulticast.getLanAddress();
+        sLocalIP_ = lan == null ? "127.0.0.1" : lan.getHostAddress();
     }
 
     /**

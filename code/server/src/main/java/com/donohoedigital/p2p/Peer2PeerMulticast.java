@@ -109,28 +109,63 @@ public class Peer2PeerMulticast implements Runnable
      * https://stackoverflow.com/questions/18747134/getting-cant-assign-requested-address-java-net-socketexception-using-ehcache
      */
     private NetworkInterface setInterface() throws SocketException {
-        Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-        while (networkInterfaces.hasMoreElements()) {
-            NetworkInterface networkInterface = networkInterfaces.nextElement();
-            Enumeration<InetAddress> addressesFromNetworkInterface = networkInterface.getInetAddresses();
-            while (addressesFromNetworkInterface.hasMoreElements()) {
-                InetAddress inetAddress = addressesFromNetworkInterface.nextElement();
-                if (inetAddress.isSiteLocalAddress()
-                        && !inetAddress.isAnyLocalAddress()
-                        && !inetAddress.isLinkLocalAddress()
-                        && !inetAddress.isLoopbackAddress()
-                        && !inetAddress.isMulticastAddress()) {
-                    NetworkInterface nic = NetworkInterface.getByName(networkInterface.getName());
-                    ms_.setNetworkInterface(nic);
-                    //logger.debug("Setting " + networkInterface);
-                    return nic;
-                } else {
-                    //logger.debug("Not setting " + networkInterface);
-                }
+        InetAddress lan = getLanAddress();
+        if (lan != null) {
+            NetworkInterface nic = NetworkInterface.getByInetAddress(lan);
+            if (nic != null) {
+                logger.info("Multicast interface {} ({})", nic.getName(), lan.getHostAddress());
+                ms_.setNetworkInterface(nic);
+                return nic;
             }
         }
         // null tells joinGroup() to use the interface chosen by the OS
         return null;
+    }
+
+    /**
+     * Get the local LAN address, or null if none found.  Prefers the address the OS uses for
+     * outbound traffic, because the first site-local address may belong to a virtual interface
+     * (e.g., Docker's bridge100 on Mac), where multicast never reaches other clients.
+     */
+    public static InetAddress getLanAddress() {
+        // connecting a UDP socket sends nothing; it just picks the outbound route
+        try (DatagramSocket s = new DatagramSocket()) {
+            s.connect(InetAddress.getByName("8.8.8.8"), 53);
+            InetAddress local = s.getLocalAddress();
+            if (isLanAddress(local)) {
+                NetworkInterface nic = NetworkInterface.getByInetAddress(local);
+                if (nic != null && nic.supportsMulticast() && !nic.isPointToPoint()) {
+                    return local;
+                }
+            }
+        } catch (IOException ignored) {
+            // no route (e.g., offline); fall back to scanning interfaces
+        }
+
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                Enumeration<InetAddress> addresses = networkInterfaces.nextElement().getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress inetAddress = addresses.nextElement();
+                    if (isLanAddress(inetAddress)) {
+                        return inetAddress;
+                    }
+                }
+            }
+        } catch (SocketException se) {
+            logger.warn("Unable to list network interfaces: {}", se.getMessage());
+        }
+        return null;
+    }
+
+    private static boolean isLanAddress(InetAddress inetAddress) {
+        return inetAddress instanceof Inet4Address
+                && inetAddress.isSiteLocalAddress()
+                && !inetAddress.isAnyLocalAddress()
+                && !inetAddress.isLinkLocalAddress()
+                && !inetAddress.isLoopbackAddress()
+                && !inetAddress.isMulticastAddress();
     }
 
     /**
