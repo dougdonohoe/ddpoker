@@ -84,6 +84,18 @@ A spare key, for a third client:
 KEY-23-6B38FBB4-340C-4ABC-9F18-AA6C77B5A1C4-50-9311
 ```
 
+If you need more, mint one from a random GUID with `jshell` (after `mvn-package-notests`):
+
+```shell
+jshell --class-path "code/common/target/classes:$(cat code/common/target/classpath.txt)" /dev/stdin <<'JSH'
+System.out.println(com.donohoedigital.config.Activation.createKeyFromGuid(23, java.util.UUID.randomUUID().toString().toUpperCase(), null))
+/exit
+JSH
+```
+
+`23` is the key prefix for version 3.  Leave the locale `null`: it is part of the key's hash,
+and the game validates with no locale unless started with `-locale`.
+
 ## Testing Tools
 
 ### `activateprofile` — online activation without email
