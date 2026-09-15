@@ -156,7 +156,7 @@ public class PokerChip implements ImageComponent.CustomImage
             TextUtil util = new TextUtil(g, font_, sText_);
             float fx = x + ((width) / 2.0f)*.99f;
             float fy = y + ((height) / 2.0f)*.915f;
-            util.prepareDraw(fx, fy, null, (width / 30.0d) * fontScale_, true);
+            util.prepareDraw(fx, fy, null, (width / 30.0d) * fontScale_);
             util.drawString(text_, null);
             util.finishDraw();
         }

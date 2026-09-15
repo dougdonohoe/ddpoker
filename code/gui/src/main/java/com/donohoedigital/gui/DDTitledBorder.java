@@ -49,19 +49,4 @@ public class DDTitledBorder extends TitledBorder
     {
         super(border, title, titleJustification, titlePosition, titleFont, titleColor);
     }
-
-    public void paintBorder(Component c, Graphics g1, int x, int y, int width, int height)
-    {
-        Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
- 		Object old =g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (GuiUtils.drawAntiAlias(getTitleFont(), 1.0))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        super.paintBorder(c, g, x, y, width, height);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
-    }
 }

@@ -769,8 +769,7 @@ public class CardPiece extends PokerGamePiece
             fy += height * .04d;
         }
         TextUtil tuNum = new TextUtil(g, cardFont_, sRank);
-        tuNum.setAlwaysAntiAlias(true);
-        tuNum.prepareDraw(fx, fy, null, textscale, true);
+        tuNum.prepareDraw(fx, fy, null, textscale);
         tuNum.drawString(c, null);
         tuNum.finishDraw();
 
@@ -779,8 +778,7 @@ public class CardPiece extends PokerGamePiece
         {
             fx += (width * font10_zero_scale * dADJ);
             tuNum = new TextUtil(g, cardFont_, "0");
-            tuNum.setAlwaysAntiAlias(true);
-            tuNum.prepareDraw(fx, fy, null, textscale, true);
+            tuNum.prepareDraw(fx, fy, null, textscale);
             tuNum.drawString(c, null);
             tuNum.finishDraw();
         }
@@ -798,8 +796,7 @@ public class CardPiece extends PokerGamePiece
             fx = ((x + width) - width*(SUIT_HORZFONT_INDENT+xadjust));
             fy = ((y + height) - height*SUIT_VERTFONT_INDENT);
             tuNum = new TextUtil(g, cardFont_, sRank);
-            tuNum.setAlwaysAntiAlias(true);
-            tuNum.prepareDraw(fx, fy, UPSIDE_DOWN, textscale, true);
+            tuNum.prepareDraw(fx, fy, UPSIDE_DOWN, textscale);
             tuNum.drawString(c, null);
             tuNum.finishDraw();
 
@@ -807,8 +804,7 @@ public class CardPiece extends PokerGamePiece
             {
                 fx -= (width * font10_zero_scale);
                 tuNum = new TextUtil(g, cardFont_, "0");
-                tuNum.setAlwaysAntiAlias(true);
-                tuNum.prepareDraw(fx, fy, UPSIDE_DOWN, textscale, true);
+                tuNum.prepareDraw(fx, fy, UPSIDE_DOWN, textscale);
                 tuNum.drawString(c, null);
                 tuNum.finishDraw();
             }

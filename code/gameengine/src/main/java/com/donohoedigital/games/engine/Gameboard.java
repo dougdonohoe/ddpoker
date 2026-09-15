@@ -609,21 +609,16 @@ public class Gameboard extends ImageComponent implements Scrollable,
         // draw fills first
         drawTerritories(g, PART_FILL);
         
-        // draw borders next
-        if (bAntiAlias_)
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        
+        // draw borders next - smooth the curves, then back off so the
+        // remaining parts draw with the caller's setting
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
+
         drawTerritories(g, PART_BORDERS);
-        
-        if (bAntiAlias_)
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                        RenderingHints.VALUE_ANTIALIAS_OFF);
-        }
-        
+
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_OFF);
+
         // draw label
         drawTerritories(g, PART_LABEL);
         
@@ -673,9 +668,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
     // only need one of these for above
     private final Point OO = new Point(0,0);
 
-    // used to control drawing features
-    protected boolean bAntiAlias_ = true;
-    
     // types of things drawTerritories can draw
     protected static final int PART_BORDERS = 1;
     protected static final int PART_FILL = 2;
@@ -821,7 +813,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
                 TextUtil tu = new TextUtil(g, font, getTerritoryDisplay(t), getTerritoryDisplayLineSpacing());                
                 if (iPart == PART_LABEL)
                 {    
-                    tu.prepareDraw(x, y, tp.getAngle(), dScale_, getTerritoryLabelAntiAliased(t));
+                    tu.prepareDraw(x, y, tp.getAngle(), dScale_);
                     tu.drawString(textColor, shadowColor);
                     tu.finishDraw();
                 }
@@ -832,7 +824,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
                     if (s != null)
                     {
                         TextUtil tu2 = new TextUtil(g, font, s);
-                        tu2.prepareDraw(x,y, tp.getAngle(), dScale_ * aidebug_.getScale(), getTerritoryLabelAntiAliased(t));
+                        tu2.prepareDraw(x,y, tp.getAngle(), dScale_ * aidebug_.getScale());
                         tu2.yadjust = aidebug_.getYAdjust(t, tu, tu2);
                         tu2.drawString(aidebug_.getTextColor(),  shadowColor);
                         tu2.finishDraw();
@@ -848,15 +840,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
                 break;
         }
     }
-    
-    /**
-     * Get whether labels are antialiased
-     */
-    protected boolean getTerritoryLabelAntiAliased(Territory t)
-    {
-        return true;
-    }
-    
+
     /**
      * Get line spacing for territory labels
      */

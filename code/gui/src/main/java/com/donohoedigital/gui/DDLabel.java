@@ -126,20 +126,12 @@ public class DDLabel extends JLabel implements DDHasLabelComponent, DDText, DDCu
     }
 
     /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
+     * Override to paint the background ourselves when opaque
      */
     @Override
     public void paintComponent(Graphics g1)
     {
         Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
-        Object old = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (GuiUtils.drawAntiAlias(this))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                               RenderingHints.VALUE_ANTIALIAS_ON);
-        }
 
         // when opaque, we paint everything except the border
         // this allows for borders with alpha to paint correctly
@@ -150,7 +142,6 @@ public class DDLabel extends JLabel implements DDHasLabelComponent, DDText, DDCu
         }
 
         super.paintComponent(g);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
     }
 
     /**

@@ -379,7 +379,7 @@ public abstract class EngineGamePiece extends GamePiece {
         
         // prepare to draw string
         TextUtil tu = new TextUtil(g, quantityFont_, sNum);
-        tu.prepareDraw(x, y, null, dScale, true);
+        tu.prepareDraw(x, y, null, dScale);
         
         // background circle coordinates
         int PAD = 5;

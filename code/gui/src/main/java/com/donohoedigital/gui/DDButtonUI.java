@@ -173,14 +173,6 @@ public class DDButtonUI extends MetalButtonUI
         int nOffset = 0;
         if (model.isArmed()) nOffset = 1;
 
-        // we want font to look nice
- 		Object old =g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (b.isAlwaysAntiAlias() || GuiUtils.drawAntiAlias(c))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-
         /* Draw the Text */
         if (model.isEnabled() || ((b.getDisableMode() & DDButton.DISABLED_GRAY) == 0))
         {
@@ -212,7 +204,6 @@ public class DDButtonUI extends MetalButtonUI
             BasicGraphicsUtils.drawStringUnderlineCharAt(g,text,mnemIndex,
 					  textRect.x, textRect.y + fm.getAscent());
         }
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
     }
 
     protected BasicButtonListener createButtonListener(AbstractButton b) {

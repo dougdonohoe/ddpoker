@@ -218,8 +218,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
 
     /**
      * Set this html area as a display area that:
-     * can't take focus, is not opaque,
-     * can't drag and draw's with anti aliasing.
+     * can't take focus, is not opaque and can't drag.
      * Set to true by default.
      */
     public void setDisplayOnly(boolean bDisplayOnly)
@@ -250,26 +249,6 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
     {
         super.setForeground(c);
         this.setCaretColor(c);
-    }
-
-    // always anti alias?
-    private boolean bAlwaysAntiAlias_ = false;
-
-    /**
-     * set whether anti aliases should always occur,
-     * overriding GuiUtils.drawAntiAlias()
-     */
-    public void setAlwaysAntiAlias(boolean b)
-    {
-        bAlwaysAntiAlias_ = b;
-    }
-
-    /**
-     * is GuiUtils.drawAntiAlias() overriden
-     */
-    public boolean isAlwaysAntiAlias()
-    {
-        return bAlwaysAntiAlias_;
     }
 
     /**
@@ -305,7 +284,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
     }
 
     /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
+     * Override to honor skipNextRepaint
      */
     @Override
     public void paintComponent(Graphics g1)
@@ -315,17 +294,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
             skipNextRepaint = false;
             return;
         }
-        Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
-        Object old = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (bAlwaysAntiAlias_ || GuiUtils.drawAntiAlias(this))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                               RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        super.paintComponent(g);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
+        super.paintComponent(g1);
     }
 
     /**

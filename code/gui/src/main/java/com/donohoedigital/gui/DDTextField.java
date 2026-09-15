@@ -187,8 +187,8 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
 
     /**
      * Set this text area as a display area that:
-     * can't take focus, wraps words/lines, is not opaque,
-     * can't drag and draw's with antialiasing.
+     * can't take focus, wraps words/lines, is not opaque
+     * and can't drag.
      */
     public void setDisplayOnly(boolean bDisplayOnly)
     {
@@ -268,20 +268,12 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
     }
 
     /**
-     * Override to set antialiasing hit if isAntiAlias() is true
+     * Override to paint the background ourselves when opaque
      */
     @Override
     public void paintComponent(Graphics g1)
     {
         Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
-        Object old = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (GuiUtils.drawAntiAlias(this))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                               RenderingHints.VALUE_ANTIALIAS_ON);
-        }
 
         // when opaque, we paint everything except the border
         // this allows for borders with alpha to paint correctly
@@ -299,7 +291,6 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
 
         }
         super.paintComponent(g);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
     }
 
     ////

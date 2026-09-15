@@ -113,7 +113,6 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
         text_ = new DDHtmlArea(GuiManager.DEFAULT, "UDPStatus");
         text_.setDisplayOnly(true);
         text_.setBorder(BorderFactory.createEmptyBorder(2,4,2,20));
-        text_.setAlwaysAntiAlias(true);
         text_.setText("&nbsp;");
 
         // status table

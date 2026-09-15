@@ -253,7 +253,7 @@ public class TerritoryComponent extends DDPanel
                 
                 // draw name
                 TextUtil tu = new TextUtil(g, font_, t.getMapDisplayName());
-                tu.prepareDraw(dx, dy, tp.getAngle(), dScale, true);
+                tu.prepareDraw(dx, dy, tp.getAngle(), dScale);
                 tu.drawString(getForeground().brighter(), Color.white);
                 tu.finishDraw();
             }

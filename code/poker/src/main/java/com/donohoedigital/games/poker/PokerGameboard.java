@@ -213,14 +213,6 @@ public class PokerGameboard extends Gameboard
         g.setTransform(txOld);
     }
 
-    /**
-     * Get whether labels are antialiased
-     */
-    @Override
-    protected boolean getTerritoryLabelAntiAliased(Territory t)
-    {
-        return true;
-    }
     
     /**
      * Get line spacing for territory labels

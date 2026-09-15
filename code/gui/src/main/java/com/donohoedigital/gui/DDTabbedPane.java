@@ -151,9 +151,6 @@ public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, Ch
     public void setText(String s) {
     }
 
-    // always anti-alias?
-    private boolean bAlwaysAntiAlias_ = true;
-
     public Color getSelectedTabColor()
     {
         return cSelectedTab_;
@@ -162,23 +159,6 @@ public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, Ch
     public void setSelectedTabColor(Color c)
     {
         cSelectedTab_ = c;
-    }
-
-    /**
-     * set whether anti aliases should always occur,
-     * overriding GuiUtils.drawAntiAlias()
-     */
-    public void setAlwaysAntiAlias(boolean b)
-    {
-        bAlwaysAntiAlias_ = b;
-    }
-
-    /**
-     * is GuiUtils.drawAntiAlias() overriden
-     */
-    public boolean isAlwaysAntiAlias()
-    {
-        return bAlwaysAntiAlias_;
     }
 
     /**
@@ -196,24 +176,6 @@ public class DDTabbedPane extends JTabbedPane implements DDHasLabelComponent, Ch
         }
 
         super.repaint(tm, x, y, width, height);
-    }
-
-    /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
-     */
-    public void paintComponent(Graphics g1)
-    {
-	    Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
- 		Object old =g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (bAlwaysAntiAlias_ || GuiUtils.drawAntiAlias(this))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                                RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        super.paintComponent(g);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
     }
 
     ///

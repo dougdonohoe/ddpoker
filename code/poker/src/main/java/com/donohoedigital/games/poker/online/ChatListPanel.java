@@ -580,7 +580,6 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
             html_ = new DDHtmlArea(GuiManager.DEFAULT, sStyle, null, panel.styleproto_);
             html_.setBorder(EMPTY_BORDER);
             html_.setOpaque(true);
-            html_.setAlwaysAntiAlias(true);
             html_.addMouseListener(panel);
             html_.addMouseMotionListener(panel);
 

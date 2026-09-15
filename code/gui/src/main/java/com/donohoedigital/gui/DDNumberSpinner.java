@@ -736,7 +736,6 @@ public class DDNumberSpinner extends JPanel implements ActionListener,
             addMouseWheelListener(text_); // BUG 359
             autoRepeatTimer = new AutoTimer(this, 2, DDNumberSpinner.this);
 	        autoRepeatTimer.setInitialDelay(250);
-            setAlwaysAntiAlias(true);
         }
         
         public void mousePressed(MouseEvent e) 

@@ -128,7 +128,7 @@ public class DDPanel extends JPanel implements DDComponent
     private static int CNT = 0;
 
     /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
+     * Override to paint the background ourselves and to log repaint debugging
      */
     @Override
     public void paintComponent(Graphics g1)

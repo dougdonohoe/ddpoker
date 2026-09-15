@@ -71,7 +71,6 @@ public class TerritoryBoard extends Gameboard implements KeyListener, DrawingUti
                                 GameboardConfig gameconfig) 
     {
         super(gameconfig, false); 
-        bAntiAlias_ = false;
         manager_ = manager;
         frame_ = frame;
         allPoints_ = gameconfig.getMapPoints();

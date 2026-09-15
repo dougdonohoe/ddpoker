@@ -1052,25 +1052,6 @@ public class GuiUtils
         return (InternalDialog) p;
     }
 
-    /**
-     * do we draw this component anti-aliased?
-     * (looks bad when antialiased in smaller fonts)
-     */
-    public static boolean drawAntiAlias(JComponent c)
-    {
-        return drawAntiAlias(c.getFont(), 1.0d);
-    }
-
-    /**
-     * do we draw this font anti-aliased at given scale?
-     * (looks bad when antialiased in smaller fonts)
-     */
-    public static boolean drawAntiAlias(Font f, double scale)
-    {
-        //if (Utils.ISMAC)  return true;
-        return (f.getSize() * scale > 12.0d);
-    }
-
     ////
     //// DDOption Helper interface
     ////

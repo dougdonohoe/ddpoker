@@ -150,8 +150,8 @@ public class DDTextArea extends JTextArea implements DDTextVisibleComponent,
 
     /**
      * Set this text area as a display area that:
-     * can't take focus, wraps words/lines, is not opaque,
-     * can't drag and draw's with anti aliasing.
+     * can't take focus, wraps words/lines, is not opaque
+     * and can't drag.
      */
     public void setDisplayOnly(boolean bDisplayOnly)
     {
@@ -236,25 +236,6 @@ public class DDTextArea extends JTextArea implements DDTextVisibleComponent,
         {
             super.repaint();
         }
-    }
-
-    /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
-     */
-    @Override
-    public void paintComponent(Graphics g1)
-    {
-        Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
-        Object old = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (GuiUtils.drawAntiAlias(this))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                               RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        super.paintComponent(g);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
     }
 
     ////

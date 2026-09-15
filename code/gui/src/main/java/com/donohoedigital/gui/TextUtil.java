@@ -36,7 +36,6 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.AffineTransform;
@@ -59,8 +58,6 @@ public class TextUtil
     public Graphics2D g;
     public FontRenderContext frc;
     AffineTransform old;
-    Object oldAlias;
-    boolean bAntiAlias;
     public double xadjust = 0;
     public double yadjust = 0;
     public LineMetrics metrics = null;
@@ -131,14 +128,13 @@ public class TextUtil
     
     /**
      * Prepare to draw string associated with TextMetrics - sets font
-     * angle/size transforms and anti alias flag
+     * and angle/size transforms
      */
-    public void prepareDraw(double x, double y, Integer nAngle, double dScale, boolean bAntiAlias)
+    public void prepareDraw(double x, double y, Integer nAngle, double dScale)
     {
         this.x = x;
         this.y = y;
-        this.bAntiAlias = bAntiAlias;
-        
+
         // set font again
         g.setFont(fFont);
         
@@ -157,18 +153,6 @@ public class TextUtil
         Tx.scale(dScale, dScale);
         Tx.translate(-x, -y);
         g.transform(Tx);
-        
-        oldAlias = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (bAntiAlias && (bAlwaysAntiAlias_ || GuiUtils.drawAntiAlias(fFont, dScale)))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                            RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        else
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                            RenderingHints.VALUE_ANTIALIAS_OFF);
-        }
     }
     
     /**
@@ -244,32 +228,11 @@ public class TextUtil
     }
     
     /**
-     * Cleanup after drawing (reset antialias flag, transform
+     * Cleanup after drawing (reset transform)
      */
     public void finishDraw()
     {
         // restore settings
         g.setTransform(old);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAlias);
-    }
-
-        // always anti alias?
-    private boolean bAlwaysAntiAlias_ = false;
-
-    /**
-     * set whether anti aliases should always occur,
-     * overriding GuiUtils.drawAntiAlias()
-     */
-    public void setAlwaysAntiAlias(boolean b)
-    {
-        bAlwaysAntiAlias_ = b;
-    }
-
-    /**
-     * is GuiUtils.drawAntiAlias() overriden
-     */
-    public boolean isAlwaysAntiAlias()
-    {
-        return bAlwaysAntiAlias_;
     }
 }

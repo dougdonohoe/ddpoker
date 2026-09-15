@@ -347,26 +347,6 @@ public class DDButton extends JButton implements DDHasLabelComponent, DDExtended
         return action_;
     }
 
-    // always anti alias?
-    private boolean bAlwaysAntiAlias_ = false;
-
-    /**
-     * set whether anti aliases should always occur,
-     * overriding GuiUtils.drawAntiAlias()
-     */
-    public void setAlwaysAntiAlias(boolean b)
-    {
-        bAlwaysAntiAlias_ = b;
-    }
-
-    /**
-     * is GuiUtils.drawAntiAlias() overriden
-     */
-    public boolean isAlwaysAntiAlias()
-    {
-        return bAlwaysAntiAlias_;
-    }
-
     /**
      * set disabled color
      */

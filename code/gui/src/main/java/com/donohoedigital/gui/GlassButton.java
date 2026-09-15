@@ -64,7 +64,6 @@ public class GlassButton extends DDButton
      */
     public GlassButton(String sName, String sStyleName) {
         super(sName, sStyleName);
-        setAlwaysAntiAlias(true);
     }
 
     /**

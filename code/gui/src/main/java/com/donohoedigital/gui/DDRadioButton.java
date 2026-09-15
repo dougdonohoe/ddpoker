@@ -122,24 +122,6 @@ public class DDRadioButton extends JRadioButton implements DDHasLabelComponent
         }
     }
 
-    /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
-     */
-    public void paintComponent(Graphics g1)
-    {
-        Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
- 		Object old =g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (GuiUtils.drawAntiAlias(this))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        super.paintComponent(g);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
-    }
-
     // Radio button code
     private class RadioButtonIcon implements Icon 
 	{

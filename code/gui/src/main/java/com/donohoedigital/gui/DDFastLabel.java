@@ -71,7 +71,7 @@ public class DDFastLabel extends DDLabel
     Insets insets_ = new Insets(0,0,0,0);
     
     /**
-     * Override to set anti aliasing hit if isAntiAlias() is true
+     * Override to draw the text directly rather than via JLabel
      */
     public void paintComponent(Graphics g1)
     {
@@ -97,7 +97,7 @@ public class DDFastLabel extends DDLabel
             fx += getWidth() - insets_.right - 2;
         }
 
-        util.prepareDraw(fx, fy, null, 1.0d, true);
+        util.prepareDraw(fx, fy, null, 1.0d);
         util.drawString(getForeground(), null, nAlign);
         util.finishDraw();        
     }

@@ -206,22 +206,6 @@ public class DDTabbedPaneUI extends MetalTabbedPaneUI
         return 0;
     }
 
-    protected void paintText(Graphics g1, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected)
-    {
-        Graphics2D g = (Graphics2D) g1;
-
-        // we want font to look nice
- 		Object old =g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-        if (tab_.isAlwaysAntiAlias() || GuiUtils.drawAntiAlias(tab_))
-        {
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                RenderingHints.VALUE_ANTIALIAS_ON);
-        }
-        super.paintText(g, tabPlacement, font, metrics, tabIndex, title, textRect, isSelected);
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, old);
-
-    }
-
     /**
      * Override to not paint focus
      */
