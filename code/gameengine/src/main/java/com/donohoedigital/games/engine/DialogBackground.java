@@ -45,7 +45,10 @@ import com.donohoedigital.gui.ImageComponent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 
 /**
@@ -60,9 +63,13 @@ public class DialogBackground extends DDPanel
     ButtonBox buttonbox_;
     DDCheckBox checkbox_;
     DDPanel buttonbase_;
-    
-    /** 
-     * Creates a new instance of DialogBackground 
+
+    // Max width applied to wrapping text contents (e.g. DDHtmlArea messages) so long
+    // lines wrap instead of stretching the dialog. 0 disables. See setCenterContents().
+    private final int maxWidth_;
+
+    /**
+     * Creates a new instance of DialogBackground
      */
     public DialogBackground(GameContext context, GamePhase gamephase, Phase phase,
                             boolean bNoShowOption, String sNoShowCheckboxName)
@@ -114,12 +121,50 @@ public class DialogBackground extends DDPanel
             spacer.setPreferredSize(new Dimension(nMinWidth, 0));
             dialogbox_.add(spacer, BorderLayout.NORTH);
         }
+        maxWidth_ = gamephase.getInteger("dialog-maxwidth", 750);
         parent.add(dialogbox_, BorderLayout.CENTER);
     }
-    
+
     public void setCenterContents(JComponent c)
     {
+        applyMaxWidth(c);
         dialogbox_.add(c, BorderLayout.CENTER);
+    }
+
+    /**
+     * Bound the width of any wrapping text component (JEditorPane, e.g. DDHtmlArea) inside the
+     * contents so long lines wrap at dialog-maxwidth instead of stretching the dialog. The
+     * component's preferred height is recomputed for the bounded width so the dialog packs tall
+     * enough. No-op when dialog-maxwidth is 0 or the content is already narrower.
+     */
+    private void applyMaxWidth(JComponent c)
+    {
+        if (maxWidth_ <= 0) return;
+        JEditorPane editor = findEditorPane(c);
+        if (editor == null) return;
+        // Wrap at the narrower of maxWidth_ and any width the contents already established.
+        // Honoring that width keeps the recomputed height in sync with the width the editor is
+        // actually displayed at - otherwise the height is computed for fewer, wider lines and
+        // the text is clipped.
+        int width = editor.getWidth() > 0 ? Math.min(editor.getWidth(), maxWidth_) : maxWidth_;
+        if (editor.getPreferredSize().width <= width) return;
+        editor.setSize(width, Short.MAX_VALUE);
+        int height = editor.getPreferredSize().height;
+        editor.setPreferredSize(new Dimension(width, height));
+    }
+
+    private static JEditorPane findEditorPane(Component c)
+    {
+        if (c instanceof JEditorPane editor) return editor;
+        if (c instanceof Container container)
+        {
+            for (Component child : container.getComponents())
+            {
+                JEditorPane found = findEditorPane(child);
+                if (found != null) return found;
+            }
+        }
+        return null;
     }
     
     public ButtonBox getButtonBox()

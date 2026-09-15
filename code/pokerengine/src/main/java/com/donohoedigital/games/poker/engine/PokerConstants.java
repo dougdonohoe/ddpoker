@@ -141,8 +141,6 @@ public class PokerConstants
     public static final int PIECE_RESULTS = 15;
 
     // game options node and defines
-    public static final String NODE_OPTION = "poker";
-
     public static final String OPTION_SHOW_PLAYER_TYPE = "showplayertype";
     public static final String OPTION_AUTO_CHECK_UPDATE = "autocheckupdate";
     public static final String OPTION_RIGHT_CLICK_ONLY = "rightclickonly";
@@ -206,7 +204,7 @@ public class PokerConstants
     public static final int DISPLAY_TAB = 2;         // tabbed chat
     public static final int DISPLAY_SPLIT = 3;       // split chat
 
-    // dealer chat levles
+    // dealer chat levels
     public static final int CHAT_PRIVATE = -1;
     public static final int CHAT_ALWAYS = 0;
     public static final int CHAT_1 = 1;
@@ -282,6 +280,8 @@ public class PokerConstants
     public static final byte[] CHAT_BYTES = {'6', 'e', 'h', 'g', '@', '!', 'T', 'A', 'Z', 'D', 'C', '%'};
     public static final byte USERTYPE_CHAT = 1;
     public static final byte USERTYPE_HELLO = 2;
+    public static final byte USERTYPE_PING = 3; // chat server test (see ChatPing)
+    public static final byte USERTYPE_PONG = 4;
 
     // admin chat types
     public static final byte CHAT_ADMIN_MSG = 0;
@@ -294,21 +294,14 @@ public class PokerConstants
 
     public static String toStringAdminType(int n)
     {
-        switch (n)
-        {
-            case CHAT_ADMIN_MSG:
-                return "message";
-            case CHAT_ADMIN_JOIN:
-                return "join";
-            case CHAT_ADMIN_LEAVE:
-                return "leave";
-            case CHAT_ADMIN_WELCOME:
-                return "welcome";
-            case CHAT_ADMIN_ERROR:
-                return "error";
-            default:
-                return "unknown-" + n;
-        }
+        return switch (n) {
+            case CHAT_ADMIN_MSG -> "message";
+            case CHAT_ADMIN_JOIN -> "join";
+            case CHAT_ADMIN_LEAVE -> "leave";
+            case CHAT_ADMIN_WELCOME -> "welcome";
+            case CHAT_ADMIN_ERROR -> "error";
+            default -> "unknown-" + n;
+        };
     }
 
     // misc
@@ -332,10 +325,8 @@ public class PokerConstants
     public static final String TESTING_ALLOW_CHEAT_ONLINE = "settings.debug.cheatonline";
     public static final String TESTING_CHAT_PERF = "settings.debug.chat.perf";
     public static final String TESTING_ALLOW_CHANGE_LEVEL = "settings.debug.changelevel";
-    public static final String TESTING_MATRIX_POST_FLOP = "settings.debug.matrixpostflop";
     public static final String TESTING_LOG_AI = "settings.debug.logai";
     public static final String TESTING_HAND_WEIGHT_GRID = "settings.debug.handweightgrid";
-    public static final String TESTING_CHAT_AI = "settings.debug.chatai";
     public static final String TESTING_SPLIT_HUMANS = "settings.debug.onlinesplithumans";
     public static final String TESTING_ONLINE_AI_NO_WAIT = "settings.debug.onlineainowait";
     public static final String TESTING_PROCESS_ALL_COMPUTER_TABLES = "settings.debug.processallaitables";
