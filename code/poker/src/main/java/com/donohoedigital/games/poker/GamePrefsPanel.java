@@ -52,8 +52,10 @@ import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.ai.gui.HandSelectionManager;
 import com.donohoedigital.games.poker.ai.gui.PlayerTypeManager;
 import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.network.ChatPing;
 import com.donohoedigital.games.poker.online.GetPublicIP;
 import com.donohoedigital.gui.*;
+import com.donohoedigital.p2p.P2PURL;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,6 +63,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -87,7 +90,8 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
     private OptionText onlineServer_;
     private OptionText chatServer_;
     private OptionBoolean onlineEnabled_;
-    private GlassButton test_;
+    private GlassButton testServer_;
+    private GlassButton testChat_;
 
     private final String NODE;
     private int GRIDADJUST2;
@@ -572,21 +576,29 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
             serversTable.add(chatServer_, gbc);
             serverBorder.add(serversTable, BorderLayout.CENTER);
 
-            // test button
-            test_ = new GlassButton("testonline", "Glass");
-            serverBorder.add(GuiUtils.CENTER(test_), BorderLayout.EAST);
-            test_.addActionListener(_ -> testConnection());
+            // test buttons
+            testServer_ = new GlassButton("testonline", "Glass");
+            testServer_.addActionListener(_ -> testConnection());
+            testChat_ = new GlassButton("testchat", "Glass");
+            testChat_.addActionListener(_ -> testChat());
+
+            DDPanel testbase = new DDPanel();
+            testbase.setLayout(new GridLayout(0, 1, 0, 4));
+            testbase.add(testServer_);
+            testbase.add(testChat_);
+            serverBorder.add(GuiUtils.CENTER(testbase), BorderLayout.EAST);
 
             // update text fields based on pref
             doOnlineEnabled();
         }
+    }
 
-        private void doOnlineEnabled() {
-            boolean enabled = onlineEnabled_.getCheckBox().isSelected();
-            onlineServer_.setEnabled(enabled);
-            chatServer_.setEnabled(enabled);
-            test_.setEnabled(enabled);
-        }
+    private void doOnlineEnabled() {
+        boolean enabled = onlineEnabled_.getCheckBox().isSelected();
+        onlineServer_.setEnabled(enabled);
+        chatServer_.setEnabled(enabled);
+        testServer_.setEnabled(enabled);
+        testChat_.setEnabled(enabled);
     }
 
     private void testConnection() {
@@ -597,6 +609,55 @@ public class GamePrefsPanel extends DDPanel implements ActionListener
         {
             dialog.getReturnMessage().getString(EngineMessage.PARAM_IP);
         }
+    }
+
+    /**
+     * Ping the chat server address as typed (not yet saved) and report pass/fail
+     */
+    private void testChat()
+    {
+        String sAddress = chatServer_.getTextField().getText().trim();
+        if (sAddress.isEmpty() || !chatServer_.isValidData())
+        {
+            EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.testchat.invalid"));
+            return;
+        }
+
+        PokerUDPServer udp = PokerMain.getPokerMain().getChatServer();
+        if (!udp.isBound())
+        {
+            EngineUtils.displayInformationDialog(context_, PropertyConfig.getMessage("msg.testchat.notbound"));
+            return;
+        }
+
+        // lookup and ping block, so do them off the Swing thread
+        testChat_.setEnabled(false);
+        Thread thread = new Thread(() -> {
+            P2PURL url = new P2PURL("chat://" + sAddress + '/'); // easy parsing
+            InetSocketAddress addr = new InetSocketAddress(url.getHost(), url.getPort());
+            String sMsg;
+            if (addr.isUnresolved())
+            {
+                sMsg = PropertyConfig.getMessage("msg.testchat.unresolved", url.getHost());
+            }
+            else
+            {
+                String sKey = switch (ChatPing.check(udp.manager(), addr, ChatPing.DEFAULT_TIMEOUT_MILLIS))
+                {
+                    case OK -> "msg.testchat.ok";
+                    case NOT_CHAT_SERVER -> "msg.testchat.notchat";
+                    case NO_REPLY -> "msg.testchat.noreply";
+                    case UNREACHABLE -> "msg.testchat.unreachable";
+                };
+                sMsg = PropertyConfig.getMessage(sKey, sAddress, String.valueOf(url.getPort()));
+            }
+
+            SwingUtilities.invokeLater(() -> {
+                testChat_.setEnabled(onlineEnabled_.getCheckBox().isSelected());
+                EngineUtils.displayInformationDialog(context_, sMsg);
+            });
+        }, "ChatPing");
+        thread.start();
     }
 
     /**

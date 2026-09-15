@@ -51,6 +51,7 @@ import com.donohoedigital.games.config.GameStateFactory;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.model.TournamentProfile;
+import com.donohoedigital.games.poker.network.ChatPing;
 import com.donohoedigital.games.poker.network.OnlineMessage;
 import com.donohoedigital.games.poker.network.PokerConnection;
 import com.donohoedigital.games.poker.network.PokerConnectionServer;
@@ -893,13 +894,13 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
 
             case CLOSING:
                 if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Closing: {}", link.toStringNameIP());
-                if (!link.getRemoteIP().equals(udp_.getChatServer()))
+                if (!link.getRemoteIP().equals(udp_.getChatServer()) && !ChatPing.isPingLink(link))
                     connectionClosing(new PokerConnection(link.getID()));
                 break;
 
             case CLOSED:
                 if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER Closed: {}", link.toStringNameIP());
-                if (!link.getRemoteIP().equals(udp_.getChatServer()))
+                if (!link.getRemoteIP().equals(udp_.getChatServer()) && !ChatPing.isPingLink(link))
                     connectionClosing(new PokerConnection(link.getID()));
                 break;
 
@@ -989,16 +990,22 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                             chatHandler_.chatReceived(new OnlineMessage(msg.getMessage()));
                         }
                     }
-                    // a hello is something we send to a chat server, never something we
+                    // a hello or ping is something we send to a chat server, never something we
                     // receive.  Say so rather than leaving the sender to time out - this
                     // happens when someone's chat server address points at a game client.
-                    else if (data.getUserType() == PokerConstants.USERTYPE_HELLO)
+                    else if (data.getUserType() == PokerConstants.USERTYPE_HELLO ||
+                             data.getUserType() == PokerConstants.USERTYPE_PING)
                     {
-                        logger.warn("Hello received from {} - this client is not a chat lobby: {}",
+                        logger.warn("Hello/ping received from {} - this client is not a chat lobby: {}",
                                     link.toStringNameIP(), data.toStringShort());
                         link.queue(notChatLobbyReply(link.getLocalIP()).getData(), PokerConstants.USERTYPE_CHAT);
                         link.send(); // send right away
                         link.close();
+                    }
+                    // chat server's answer to our ping - ChatPing watches the link for it
+                    else if (data.getUserType() == PokerConstants.USERTYPE_PONG)
+                    {
+                        if (TESTING(UDPServer.TESTING_UDP)) logger.debug("POKER pong from {}", link.toStringNameIP());
                     }
                     else
                     {
