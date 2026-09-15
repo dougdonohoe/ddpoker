@@ -47,7 +47,7 @@ settings.debug.override.key=           true
   skips that check.
 * `settings.debug.override.key` - lets `-key` replace the stored activation key.  Each client
   needs a different key, because joining a game rejects a key already at the table, and no
-  debug flag gets around that.  Without this flag, `-key` is silently ignored.
+  debug flag gets around that.  Without this flag, `-key` is ignored (with a warning in the log).
 
 **2. Create two activated test profiles** (once; see [`activateprofile`](#activateprofile--online-activation-without-email)
 below).  This needs MySQL running:

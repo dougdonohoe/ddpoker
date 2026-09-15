@@ -320,7 +320,21 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
                         lastmod = choose.getLastModified();
                     }
                 }
-                
+
+                // fail hard on no match - don't fall through to the most recent profile
+                if (sCmdlineOverride != null && (choose == null || !choose.getName().equalsIgnoreCase(sCmdlineOverride)))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("-profile: no profile named '").append(sCmdlineOverride).append("'. Available:");
+                    for (int i = 0; list != null && i < list.size(); i++)
+                    {
+                        sb.append("\n  ").append(list.get(i).getName());
+                    }
+                    logger.error(sb.toString());
+                    System.err.println(sb);
+                    PokerMain.getPokerMain().exit(1);
+                }
+
                 // if found one, remember it
                 if (choose != null)
                 {                    

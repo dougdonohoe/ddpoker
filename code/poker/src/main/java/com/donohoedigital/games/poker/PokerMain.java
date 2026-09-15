@@ -237,6 +237,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
     {
         super.setupApplicationCommandLineOptions();
         CommandLine.addStringOption("profile", null);
+        CommandLine.setDescription("profile", "player profile to use instead of the last used (testing)", "name");
     }
 
     /**
