@@ -277,6 +277,7 @@ public class GuiUtils
             }
         }
     }
+
     /**
      * Set opaque on all appropriate children
      */

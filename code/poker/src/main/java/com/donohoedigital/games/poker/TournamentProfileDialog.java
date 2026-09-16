@@ -70,7 +70,8 @@ import java.util.ArrayList;
 public class TournamentProfileDialog extends OptionMenuDialog implements PropertyChangeListener, ActionListener, FocusListener
 {
     static com.donohoedigital.base.Format fPerc = new com.donohoedigital.base.Format("%1.3f");
-    private final static javax.swing.border.Border empty_ = null;
+    /** no border - readability hint at call sites */
+    private final static javax.swing.border.Border EMPTY = null;
     private TournamentProfile profile_;
     private PokerGame game_; // used when editing during a tournament
     private final TypedHashMap dummy_ = new TypedHashMap();
@@ -803,7 +804,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly || bBreak)
             {
                 otAnte.setDisplayOnly(true);
-                ante.setBorder(empty_);
+                ante.setBorder(EMPTY);
             }
             if (bBreak) ante.setText(PropertyConfig.getMessage("msg.break.edit"));
             if (bBreak || i < 0) otAnte.setIgnored(true);
@@ -816,7 +817,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly || bBreak)
             {
                 otSmall.setDisplayOnly(true);
-                small.setBorder(empty_);
+                small.setBorder(EMPTY);
             }
             if (bBreak || i < 0) otSmall.setIgnored(true);
 
@@ -828,7 +829,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly || bBreak)
             {
                 otBig.setDisplayOnly(true);
-                big.setBorder(empty_);
+                big.setBorder(EMPTY);
             }
             if (bBreak || i < 0) otBig.setIgnored(true);
 
@@ -840,7 +841,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly)
             {
                 otMinutes.setDisplayOnly(true);
-                minutes.setBorder(empty_);
+                minutes.setBorder(EMPTY);
             }
             if (i < 0) otMinutes.setIgnored(true);
 
@@ -1179,7 +1180,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
                 {
                     sp.spot.setDisplayOnly(bAuto);
                     if (bAuto)
-                        sp.spot.setBorder(empty_);
+                        sp.spot.setBorder(EMPTY);
                     else
                         sp.spot.setBorder(DDTextField.TEXTBORDER);
                 }

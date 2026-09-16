@@ -43,9 +43,6 @@ import com.donohoedigital.comms.MsgState;
 import com.donohoedigital.comms.TokenizedList;
 import com.donohoedigital.games.config.GameAI;
 import com.donohoedigital.games.config.GamePlayer;
-import com.donohoedigital.games.config.Territory;
-
-import java.util.Objects;
 
 /**
  *
@@ -55,23 +52,7 @@ import java.util.Objects;
 public abstract class EngineGameAI extends GameAI
 {
     protected GamePlayer gamePlayer_;
-    protected Territory[] my_;
 
-    /*
-     * Creates a new instance of EngineGameAI.  Stores the current
-     * engine and game (so this class needs to be created after a game
-     * has been created)
-     */
-    /**
-     * Version which controls whether territory cache is created
-     */
-    public EngineGameAI(boolean bUseTerritoryCache)
-    {
-        // array to hold our territories for perf
-        // we use nNum_ to hold length
-        if (bUseTerritoryCache) my_ = new Territory[Objects.requireNonNull(Territory.getTerritoryArrayCached()).length];
-    }
-    
     /**
      * Set player we are AI for
      */

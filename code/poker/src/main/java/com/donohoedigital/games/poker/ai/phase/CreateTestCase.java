@@ -55,8 +55,11 @@ import com.donohoedigital.games.poker.ai.RuleEngine;
 import com.donohoedigital.games.poker.ai.V2Player;
 import com.donohoedigital.gui.*;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
