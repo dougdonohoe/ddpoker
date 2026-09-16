@@ -33,12 +33,8 @@
 package com.donohoedigital.gui;
 
 import com.donohoedigital.base.Utils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
@@ -53,16 +49,14 @@ import java.util.ArrayList;
  */
 public class BasicSVG
 {
-    static Logger logger = LogManager.getLogger(BasicSVG.class);
-
-    ArrayList paths_ = new ArrayList();
+    ArrayList<SVGPath> paths_ = new ArrayList<>();
     Rectangle2D bounds_;
 
     public void addPath(String sFill, String sStroke, String sPath)
     {
         SVGPath sp = new SVGPath(Utils.getHtmlColor(sFill),
-                                 Utils.getHtmlColor(sStroke),
-                                 GuiUtils.drawSVGpath(sPath, false));
+                Utils.getHtmlColor(sStroke),
+                GuiUtils.drawSVGpath(sPath, false));
         paths_.add(sp);
     }
 
@@ -70,11 +64,7 @@ public class BasicSVG
     {
         bounds_ = new Rectangle2D.Double(0,0,0,0);
         Rectangle2D b;
-        int n = paths_.size();
-        SVGPath path;
-        for (int i = 0; i < n; i ++)
-        {
-            path = (SVGPath) paths_.get(i);
+        for (SVGPath path : paths_) {
             b = path.path.getBounds2D();
             bounds_.setRect(
                     Math.min(bounds_.getX(), b.getX()),
@@ -105,20 +95,13 @@ public class BasicSVG
 
         g.setTransform(nu);
 
-        int n = paths_.size();
-        SVGPath path;
-        for (int i = 0; i < n; i ++)
-        {
-            path = (SVGPath) paths_.get(i);
-
-            if (path.fill != null)
-            {
+        for (SVGPath path : paths_) {
+            if (path.fill != null) {
                 g.setColor(path.fill);
                 g.fill(path.path);
             }
 
-            if (path.stroke != null)
-            {
+            if (path.stroke != null) {
                 g.setColor(path.stroke);
                 g.draw(path.path);
             }
@@ -128,7 +111,7 @@ public class BasicSVG
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldaa);
     }
 
-    private class SVGPath
+    private static class SVGPath
     {
         Color fill;
         Color stroke;
