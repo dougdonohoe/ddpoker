@@ -47,6 +47,8 @@ import com.donohoedigital.games.config.Territory;
 import com.donohoedigital.games.engine.GameContext;
 import com.donohoedigital.games.engine.GameEngine;
 import com.donohoedigital.games.engine.Gameboard;
+import com.donohoedigital.games.poker.engine.Card;
+import com.donohoedigital.games.poker.engine.Hand;
 import com.donohoedigital.games.poker.online.TournamentDirector;
 import com.donohoedigital.gui.DDText;
 import com.donohoedigital.gui.GuiUtils;
@@ -58,6 +60,8 @@ import javax.swing.BorderFactory;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -79,6 +83,10 @@ public class PokerGameboard extends Gameboard
     // default - green felt
     private Color top_ = new Color(38,175,23);
     private Color bottom_ = new Color(20,82,1);
+
+    // AI debug display ('x' key) - cached hand strength text, see getHandStrengthLabel()
+    private final Map<PokerPlayer, String> handStrengths_ = new HashMap<>();
+    private long nHandStrengthKey_ = -1;
 
     /**
      * Create new scrollgameboard
@@ -262,12 +270,65 @@ public class PokerGameboard extends Gameboard
     {
         if (DEBUG_AI)
         {
-            // negative means no value (folded, or fewer than three community cards)
-            double hs = player.getHandStrength() * 100;
-            if (hs >= 0) return "HS " + HandStat.fPerc.form(hs) + '%';
+            String sStrength = getHandStrengthLabel(player);
+            if (sStrength != null) return sStrength;
         }
 
         return player.getDisplayName(game_.isOnlineGame(), false);
+    }
+
+    /**
+     * Hand strength for the seat label, or null when there is none to show.  Cached
+     * until the hand, round or number of players with cards changes, which keeps the
+     * calculation off the repaint path - see computeHandStrengthLabel().
+     */
+    private String getHandStrengthLabel(PokerPlayer player)
+    {
+        PokerTable table = game_.getCurrentTable();
+        HoldemHand hhand = (table == null) ? null : table.getHoldemHand();
+        if (hhand == null) return null;
+
+        // recalculate when the board changes, and also as players fold, since the
+        // number of opponents feeds the calculation
+        long key = ((long) table.getHandNum() << 16) |
+                   ((long) hhand.getRound() << 8) |
+                   hhand.getNumWithCards();
+        if (key != nHandStrengthKey_)
+        {
+            nHandStrengthKey_ = key;
+            handStrengths_.clear();
+        }
+
+        // null is a legitimate cached answer, so check membership rather than the value
+        if (!handStrengths_.containsKey(player))
+        {
+            handStrengths_.put(player, computeHandStrengthLabel(player, hhand));
+        }
+
+        return handStrengths_.get(player);
+    }
+
+    /**
+     * Work out the hand strength text for a seat.  Deliberately does not call
+     * PokerPlayer.getHandStrength(): that goes through PokerPlayer.getHandSorted() and
+     * HoldemHand.getCommunitySorted(), which lazily assign to shared fields the game
+     * thread is also writing.  Painting happens on the event thread, so we take copies
+     * of the cards and leave those caches alone.
+     */
+    private String computeHandStrengthLabel(PokerPlayer player, HoldemHand hhand)
+    {
+        if (player.isFolded()) return null;
+
+        // blank cards are what we get for hands we aren't allowed to see online
+        Hand hole = player.getHand();
+        if (hole == null || hole.size() < 2 || hole.countCard(Card.BLANK) > 0) return null;
+
+        Hand community = hhand.getCommunity();
+        if (community == null || community.size() < 3) return null;
+
+        float hs = new HandStrength().getStrength(new Hand(hole), new Hand(community),
+                                                  hhand.getNumWithCards() - 1);
+        return "HS " + HandStat.fPerc.form(hs * 100) + '%';
     }
 
     /**
