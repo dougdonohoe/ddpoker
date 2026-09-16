@@ -67,7 +67,7 @@ public class BooleanTracker
     {
         if (b == null) return;
 
-        boolean bv = b.booleanValue();
+        boolean bv = b;
 
         if (entries_[next_] != bv)
         {
@@ -97,11 +97,6 @@ public class BooleanTracker
     public int getCount()
     {
         return entries_.length;
-    }
-
-    public int getCountTrue()
-    {
-        return countTrue_;
     }
 
     public float getPercentTrue(float defPercent)
@@ -204,9 +199,9 @@ public class BooleanTracker
         buf.append(entries_.length);
         buf.append(",");
 
-        for (int i = 0; i < entries_.length; ++i)
+        for (boolean entry : entries_)
         {
-            buf.append(entries_[i] ? "T":"F");
+            buf.append(entry ? "T":"F");
         }
 
         return buf.toString();

@@ -53,7 +53,7 @@ import org.jdom2.Namespace;
  *
  * @author  Doug Donohoe
  */
-public class Areas extends TreeMap {
+public class Areas extends TreeMap<String, Area> {
     
     //static Logger logger = LogManager.getLogger(Areas.class);
     
@@ -64,7 +64,7 @@ public class Areas extends TreeMap {
                     throws ApplicationError
     {
         
-        List children = XMLConfigFileLoader.getChildren(root, "area", ns, false, null);
+        List<Element> children = XMLConfigFileLoader.getChildren(root, "area", ns, false, null);
         int nSize = children.size();
         if (nSize != 0) 
         {
@@ -73,7 +73,7 @@ public class Areas extends TreeMap {
             for (int i = 0; i < nSize; i++)
             {
                 sAttrErrorDesc = "Area #" +(i+1)+" in " + GameboardConfig.GAMEBOARD_CONFIG;
-                area = (Element)children.get(i);
+                area = children.get(i);
                 addArea(new Area(area, sAttrErrorDesc));
             }
         }
@@ -92,7 +92,7 @@ public class Areas extends TreeMap {
      */
     public Area getArea(String sName)
     {
-        return (Area) get(sName);
+        return get(sName);
     }
     
     /**
@@ -100,12 +100,12 @@ public class Areas extends TreeMap {
      */
     public void printXML(XMLWriter writer, int nIndent)
     {
-        Set areas = this.keySet();
-        Iterator iter = areas.iterator();
+        Set<String> areas = this.keySet();
+        Iterator<String> iter = areas.iterator();
         String sAreaName;
         while (iter.hasNext())
         {
-            sAreaName = (String) iter.next();
+            sAreaName = iter.next();
             getArea(sAreaName).printXML(writer, nIndent);
         }   
     }
@@ -125,13 +125,13 @@ public class Areas extends TreeMap {
     public Area[] getAreaArray()
     {
         Area[] array = new Area[size()];
-        Set areas = this.keySet();
-        Iterator iter = areas.iterator();
+        Set<String> areas = this.keySet();
+        Iterator<String> iter = areas.iterator();
         String sAreaName;
         int nCnt = 0;
         while (iter.hasNext())
         {
-            sAreaName = (String) iter.next();
+            sAreaName = iter.next();
             array[nCnt++] = getArea(sAreaName);
         }   
         return array;
@@ -158,9 +158,9 @@ public class Areas extends TreeMap {
     public void calculateStats()
     {
         Area[] areas = getAreaArrayCached();
-        for (int i = 0; i < areas.length; i++)
+        for (Area area : areas)
         {
-            areas[i].calculateStats();
+            area.calculateStats();
         }
     }
 }

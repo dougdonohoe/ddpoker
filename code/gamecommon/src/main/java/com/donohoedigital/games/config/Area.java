@@ -39,24 +39,21 @@
 package com.donohoedigital.games.config;
 
 import com.donohoedigital.base.ApplicationError;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.config.XMLConfigFileLoader;
 import com.donohoedigital.config.XMLWriter;
+import org.jdom2.Element;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import org.jdom2.Element;
 
 /**
  *
  * @author  Doug Donohoe
  */
-public class Area 
-{ 
-    static Logger logger = LogManager.getLogger(Area.class);
-    
+@SuppressWarnings("unused")
+public class Area
+{
     /**
      * Name of area representing no area
      */
@@ -122,12 +119,11 @@ public class Area
      * Return whether given object equals this Area
      */
     public boolean equals(Object obj) {
-	if (this == obj) return true;
+	    if (this == obj) return true;
         
-        if (obj instanceof Area)
+        if (obj instanceof Area t)
         {
-            Area t = (Area) obj;
-            if (t.sName_.equals(sName_)) return true;
+            return t.sName_.equals(sName_);
         }
         
         return false;
@@ -136,7 +132,7 @@ public class Area
     /**
      * Comparator which can be used to compare to areas
      */
-    public static final Comparator COMPARATOR = new AreaComparator();
+    public static final Comparator<Area> COMPARATOR = new AreaComparator();
     
     /**
      * Used to compare two areas
@@ -149,13 +145,10 @@ public class Area
     /**
      * Comparator for areas
      */
-    private static class AreaComparator implements Comparator
+    private static class AreaComparator implements Comparator<Area>
     {
-        public int compare(Object o1, Object o2)
+        public int compare(Area a1, Area a2)
         {
-            Area a1 = (Area) o1;
-            Area a2 = (Area) o2;
-            
             if (a1.equals(a2)) return 0;
            
             return a1.sName_.compareTo(a2.sName_);
@@ -163,8 +156,7 @@ public class Area
         
         public boolean equals(Object obj)
         {
-            if (obj instanceof AreaComparator) return true;
-            return false;
+            return obj instanceof AreaComparator;
         }
     }
     
@@ -218,21 +210,23 @@ public class Area
     private Territory[] createTerritoryArray()
     {
         Territory[] all = Territory.getTerritoryArrayCached();
+        assert all != null;
+
         int nNum = 0;
         // first get count
-        for (int i = 0; i < all.length; i++)
+        for (Territory territory : all)
         {
-            if (all[i].getArea() == this && !all[i].isDecoration()) nNum++;
+            if (territory.getArea() == this && !territory.isDecoration()) nNum++;
         }
         
         // then create array
         int nCnt = 0;
         ts_ = new Territory[nNum];
-        for (int i = 0; i < all.length; i++)
+        for (Territory territory : all)
         {
-            if (all[i].getArea() == this && !all[i].isDecoration())
+            if (territory.getArea() == this && !territory.isDecoration())
             {
-                ts_[nCnt++] = all[i];
+                ts_[nCnt++] = territory;
             }
         }
         
@@ -254,35 +248,30 @@ public class Area
         Territory[] ts = createTerritoryArray();
         nNumRegions_ = ts.length;
         Territory[] as;
-        HashMap area = new HashMap();
-        HashMap water = new HashMap();
-        HashMap land = new HashMap();
-        
-        for (int i = 0; i < ts.length; i++)
-        {
-            t = ts[i];
+        HashMap<Area, String> area = new HashMap<>();
+        HashMap<Territory, String> water = new HashMap<>();
+        HashMap<Territory, String> land = new HashMap<>();
+
+        for (Territory territory : ts) {
+            t = territory;
             if (t.isIsland()) nNumIslands_++;
-            
+
             // add adjacent territories to relevant lists
             // dups okay because using hashmap
             as = t.getAdjacentTerritories();
-            for (int j = 0; j < as.length; j++)
-            {
-                a = as[j];
+            for (Territory value : as) {
+                a = value;
                 if (a.isDecoration() || a.getArea() == this) continue;
-                
-                if (a.isWater())
-                {
-                    water.put(a,null);
+
+                if (a.isWater()) {
+                    water.put(a, null);
                 }
 
-                if (a.isLand())
-                {
-                    land.put(a,null);
+                if (a.isLand()) {
+                    land.put(a, null);
                 }
-                
-                if (!a.getArea().isNone())
-                {
+
+                if (!a.getArea().isNone()) {
                     area.put(a.getArea(), null);
                 }
             }
@@ -298,22 +287,20 @@ public class Area
     /**
      * Return string showing area information
      */
+    @SuppressWarnings("unused")
     public String toStringDebug()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append(sName_);
-        sb.append(": num=");
-        sb.append(nNumRegions_);
-        sb.append(" islands=");
-        sb.append(nNumIslands_);
-        sb.append(" adjland=");
-        sb.append(nTotalAdjacentLandRegions_);
-        sb.append(" adjwater=");
-        sb.append(nTotalAdjacentWaterRegions_);
-        sb.append(" adjarea=");
-        sb.append(nTotalAdjacentAreas_);
-        
-        return sb.toString();
+        return sName_ +
+                ": num=" +
+                nNumRegions_ +
+                " islands=" +
+                nNumIslands_ +
+                " adjland=" +
+                nTotalAdjacentLandRegions_ +
+                " adjwater=" +
+                nTotalAdjacentWaterRegions_ +
+                " adjarea=" +
+                nTotalAdjacentAreas_;
     }
     
     /**
@@ -365,9 +352,9 @@ public class Area
         Territory[] ts = getTerritories();
         GamePlayer player;
         
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            player = ts[i].getGamePlayer();
+            player = t.getGamePlayer();
             
             if (player != null)
             {
@@ -391,13 +378,13 @@ public class Area
     {
         int nCnt = 0;
         Territory[] ts = getTerritories();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            if (ts[i].getGamePlayer() != pl)
+            if (t.getGamePlayer() != pl)
             {
                     return false;
             }
-            else if (ts[i].getGamePlayer() == pl)
+            else if (t.getGamePlayer() == pl)
             {
                 nCnt++;
             }
@@ -415,7 +402,7 @@ public class Area
     
     /**
      * Set user data (allow applications to store arbitrary info
-     * on territory).  This information is not saved/marshalled
+     * on territory).  This information is not saved/marshaled
      */
     public void setUserData(Object oUser)
     {

@@ -312,9 +312,9 @@ public class PokerDatabase
 
         File[] files = databaseDir.listFiles((dir, name) -> name.startsWith(databaseName + "."));
 
-        for (int i = 0; i < files.length; ++i)
+        for (File file : files)
         {
-            files[i].delete();
+            file.delete();
         }
 
         if (profile.equals(profile_))
@@ -2734,17 +2734,13 @@ public class PokerDatabase
 
     private static void appendShowdown(StringBuilder sb, List<HandAction> hist, Hand community, boolean bShowAll, int nPot)
     {
-        HandAction action;
-
         int nNum = 0;
         int potTotal = 0;
 
         // first loop to count and sum
 
-        for (int i = 0; i < hist.size(); i++)
+        for (HandAction action : hist)
         {
-            action = (HandAction) hist.get(i);
-
             if (action.getRound() != HoldemHand.ROUND_SHOWDOWN) continue;
             if (action.getSubAmount() != nPot) continue;
 
@@ -2781,10 +2777,8 @@ public class PokerDatabase
 
         StringBuilder sb2 = new StringBuilder();
 
-        for (int i = 0; i < hist.size(); i++)
+        for (HandAction action : hist)
         {
-            action = (HandAction) hist.get(i);
-
             if (action.getRound() != HoldemHand.ROUND_SHOWDOWN) continue;
             if (action.getSubAmount() != nPot) continue;
 

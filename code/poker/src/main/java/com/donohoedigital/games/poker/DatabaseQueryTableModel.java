@@ -120,9 +120,9 @@ public class DatabaseQueryTableModel extends DDPagingTableModel
         query_ = query;
         bindArray_ = bindArray;
 
-        for (int i = 0; i < colNames.length; ++i)
+        for (String colName : colNames)
         {
-            addColumn(colNames[i]);
+            addColumn(colName);
         }
 
        refresh(0, 0);

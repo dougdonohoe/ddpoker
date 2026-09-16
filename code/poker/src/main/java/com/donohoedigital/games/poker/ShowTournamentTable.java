@@ -309,7 +309,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         {
             buttonRebuy_ = new PokerGlassButton(getGameButton("rebuy"));
             buttonbase_.add(buttonRebuy_);
-            buttonRebuy_.addActionListener(e ->
+            buttonRebuy_.addActionListener(_ ->
                 NewLevelActions.rebuy(game_, REBUY_BUTTON, game_.getHumanPlayer().getTable().getLevel()));
         }
 
@@ -317,7 +317,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         {
             buttonTestCase_ = new GlassButton("testcase", "GlassBig");
             buttonbase_.add(buttonTestCase_);
-            buttonTestCase_.addActionListener(e ->
+            buttonTestCase_.addActionListener(_ ->
                 createTestCase());
         }
 
@@ -604,7 +604,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     }
 
     /**
-     * poker image button sub class
+     * poker image button subclass
      */
     private class PokerGlassButton extends GlassButton
     {
@@ -764,8 +764,8 @@ public class ShowTournamentTable extends ShowPokerTable implements
                     // modal for practice / non-modal for online
                     Runnable rmsg = new Runnable()
                     {
-                        String _sMsg = sMsg;
-                        PokerPlayer _human = human;
+                        final String _sMsg = sMsg;
+                        final PokerPlayer _human = human;
 
                         public void run()
                         {
@@ -979,8 +979,6 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
     /**
      * min chip
-     *
-     * @param bRepaint
      */
     private void updateMinChip(boolean bRepaint)
     {
@@ -991,6 +989,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         if (bRepaint) minChip_.repaint();
     }
 
+    @SuppressWarnings("ConstantValue")
     @Override
     public String getDebugDisplay(Territory t)
     {
@@ -1002,7 +1001,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         PokerPlayer player = PokerUtils.getPokerPlayer(context_, t);
         if (player == null) return null;
 
-        // get hand strenght
+        // get hand strength
         double hs = player.getHandStrength();
         hs *= 100;
 
@@ -1075,15 +1074,12 @@ public class ShowTournamentTable extends ShowPokerTable implements
         // set buttons based on mode
         switch (nMode)
         {
-            case MODE_INIT:
+            case MODE_INIT, MODE_QUITSAVE:
                 break;
 
             case MODE_NONE:
                 bAllowQuit = false;
                 bAllowSave = false;
-                break;
-
-            case MODE_QUITSAVE:
                 break;
 
             case MODE_DEAL:
@@ -1294,6 +1290,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
     /**
      * set rebuy button
      */
+    @SuppressWarnings("SameParameterValue")
     private void setRebuyButton(boolean bEnabledIfAvailable)
     {
         // if no rebuy button, do nothing
@@ -1346,7 +1343,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
             else nMax = hhand.getMaxBet(player);
         }
 
-        // if max is non zero, set value, min, max
+        // if max is non-zero, set value, min, max
         if (nMax > 0)
         {
             // figure out min bet (usually big blind)
@@ -1365,7 +1362,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
             amountPanel_.setBigStep(nMinChip * 10);
 
             // set min/max (max before min to ensure correct updating
-            // in case previous max is less then new min)
+            // in case previous max is less than new min)
             amountPanel_.setMax(nMax);
             amountPanel_.setMin(nMin);
             amountPanel_.setValue(nMin);
@@ -1379,10 +1376,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
         {
             if (!isFocusInChat()) board_.requestFocusDirect();
         }
-        else
-        {
-            // request focus handled after enabled set to true (below) - BUG 502
-        }
+        // else request focus handled after enabled set to true (below) - BUG 502
 
         buttonBetRaise_.setEnabled(bEnabled);
         if (bEnabled)
@@ -1424,8 +1418,6 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
     /**
      * Display side pot button if there are side pots; hide otherwise
-     *
-     * @param bRepaint
      */
     private void updatePotDisplay(boolean bRepaint)
     {
@@ -1474,24 +1466,6 @@ public class ShowTournamentTable extends ShowPokerTable implements
             buttonDeal_.setEnabled(false);
         }
     }
-
-
-// In POKER 2.0, disable right-click to deal cuz it is more natural
-// to right click to bring up context menu
-//    /**
-//     * right click - deal
-//     */
-//    public void mousePressed(MouseEvent e)
-//	{
-//        if (e.getButton() != MouseEvent.BUTTON1 && (!(e.getSource() instanceof JButton)))
-//		{
-//            deal();
-//        }
-//        else
-//        {
-//            super.mousePressed(e);
-//        }
-//    }
 
     /**
      * Override to only accept keystrokes from board or from amount spinner
@@ -1678,7 +1652,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
             double adj = scale * .10d;
             x -= (adj * .90);
             scale += (adj * 2);
-            nPrefW += (nPrefW * .22d);
+            nPrefW = (int) (nPrefW + (nPrefW * .22d));
 
             // setup
             setHorizontalAlignment(SwingConstants.CENTER);
@@ -1720,10 +1694,8 @@ public class ShowTournamentTable extends ShowPokerTable implements
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() instanceof DDButton)
+        if (e.getSource() instanceof DDButton button)
         {
-            DDButton button = (DDButton) e.getSource();
-
             int action = button.getActionID();
 
             if (action != 0)
@@ -1800,15 +1772,13 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
         private void checkCard(Gameboard g, EngineGamePiece gp, boolean bVisible)
         {
-            if (gp instanceof CardPiece)
+            if (gp instanceof CardPiece card)
             {
                 Territory t = gp.getTerritory();
                 if (t == null) return; // could happen when cards are removed
 
-                CardPiece card = (CardPiece) gp;
                 if (card.isFolded()) return;
 
-                GameEngine engine = GameEngine.getGameEngine();
                 boolean bAIPeek = PokerUtils.isCheatOn(context_, PokerConstants.OPTION_CHEAT_MOUSEOVER);
                 boolean bHoleFaceDown = PokerUtils.isOptionOn(PokerConstants.OPTION_HOLE_CARDS_DOWN);
 
@@ -2006,7 +1976,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
                 //menu.setName("Popup " + (++POPUP_CNT)); // for debugging
                 lastTerritory_ = t;
 
-                // showmenu
+                // show menu
                 showMenu(menu, point.x, point.y);
             }
 
@@ -2018,7 +1988,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
             if (!amount_.hasFocus()) board_.requestFocus();
         }
 
-        // deslect so use can click again
+        // deselect so use can click again
         board_.setSelectedTerritory(null);
     }
 
@@ -2440,7 +2410,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
                 }
 
                 // if the selected card is in play, replace it with a new card from the deck
-                if ((hand != null) && (cardIndex >= 0))
+                if (hand != null)
                 {
                     hand.setCard(cardIndex, deck.nextCard());
                     board_.repaintTerritory(t);
@@ -2461,7 +2431,7 @@ public class ShowTournamentTable extends ShowPokerTable implements
                 // set the new cards
                 hand.setCard(cardIndex, selectedCard);
 
-                if (hhand != null && hhand.isAllInShowdown())
+                if (hhand.isAllInShowdown())
                 {
                     // if we are changing a card after all have been displayed (when pause after
                     // deal is on, need to do showdown based on actual comm cards)

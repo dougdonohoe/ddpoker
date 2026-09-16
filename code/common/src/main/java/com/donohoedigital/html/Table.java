@@ -84,16 +84,16 @@ public class Table
 
         // header
         sb.append("<TR>");
-        for (int i = 0; i < cols_.size(); i++)
+        for (TableColumn col : cols_)
         {
-            sb.append(cols_.get(i).toString());
+            sb.append(col.toString());
         }
         sb.append("</TR>");
 
         // rows
-        for (int i = 0; i < rows_.size(); i++)
+        for (TableRow row : rows_)
         {
-            sb.append(rows_.get(i).toString(this));
+            sb.append(row.toString(this));
         }
         sb.append("</TABLE>");
 

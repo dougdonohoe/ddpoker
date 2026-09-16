@@ -2012,9 +2012,9 @@ public class PokerTable implements ObjectID
     {
         int nNum = list.size();
         entry.addToken(nNum);
-        for (int i = 0; i < nNum; i++)
+        for (PokerPlayer pokerPlayer : list)
         {
-            entry.addToken(state.getId(list.get(i)));
+            entry.addToken(state.getId(pokerPlayer));
         }
     }
     

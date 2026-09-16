@@ -89,7 +89,6 @@ public class PokerAI extends EngineGameAI implements PokerTableListener, Propert
      */
     public PokerAI()
     {
-        super(false);
     }
 
     public void propertyChange(PropertyChangeEvent evt)

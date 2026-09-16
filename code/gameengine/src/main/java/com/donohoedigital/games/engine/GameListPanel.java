@@ -66,6 +66,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -83,25 +84,21 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
     public static final String SAVE_EXT = PropertyConfig.getRequiredStringProperty("settings.save.ext");
 
     // member stuff
-    protected DialogPhase dialog_;
-    protected DDButton okayButton_;
-    protected GameEngine engine_;
-    protected GameContext context_;
-    protected GamePhase gamephase_;
-    private final String STYLE;
+    private final DialogPhase dialog_;
+    private final DDButton okayButton_;
+    private final GameEngine engine_;
+    private final GameContext context_;
     private final int[] COLUMN_WIDTHS;
     private final String[] COLUMN_NAMES;
-    private DDTextField name_;
+    private final DDTextField name_;
     private com.donohoedigital.gui.DDButton delete_;
     private DDTable saveTable_;
-    private DDScrollTable saveScroll_;
     private SaveTableModel model_;
     private GameState selected_;
-    boolean bSaveMode_ = true;
+    boolean bSaveMode_;
     private GameState lastSave_;
     private boolean bOnlineSave_ = false;
-    public boolean bOnlineLoad_ = false;
-    private String sBegin_;
+    private final String sBegin_;
 
     // save game info
     private static final int[] COLUMN_WIDTHS_LOAD = new int[] {
@@ -141,15 +138,13 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
     {    
         engine_ = engine;
         context_ = context;
-        gamephase_ = gamephase;
-        STYLE = sStyle;
         COLUMN_WIDTHS = widths;
         COLUMN_NAMES = names;
         dialog_ = dialog;
         okayButton_ = okay;
 
         Game game = context_.getGame();
-        bSaveMode_ = gamephase_.getBoolean("savemode", true);
+        bSaveMode_ = gamephase.getBoolean("savemode", true);
         
         // base
         DDPanel base = this;
@@ -166,7 +161,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
         }
         else
         {
-            sBegin_ = gamephase_.getString("loadbegin", GameState.GAME_BEGIN);
+            sBegin_ = gamephase.getString("loadbegin", GameState.GAME_BEGIN);
         }
         
         
@@ -181,7 +176,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
         namelabel.setBorder(BorderFactory.createEmptyBorder(0,0,0,8));
         namebase.add(namelabel);
         
-        name_ = new DDTextField(GuiManager.DEFAULT, STYLE, sBevelStyle);
+        name_ = new DDTextField(GuiManager.DEFAULT, sStyle, sBevelStyle);
         
         if (bOnlineSave_)
         {
@@ -199,7 +194,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
         
         if (!bOnlineSave_)
         {
-            // list of previous savedgames
+            // list of previous saved games
             DDPanel savebase = new DDPanel();
             BorderLayout layout = (BorderLayout) savebase.getLayout();
             layout.setVgap(5);
@@ -212,7 +207,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
             DDPanel titlearea = new DDPanel();
             savebase.add(titlearea, BorderLayout.NORTH);
 
-            // savedgames title
+            // saved games title
             DDLabel prev = new DDLabel("savedgames."+sBegin_, labelStyle);
             titlearea.add(prev, BorderLayout.WEST);
 
@@ -224,11 +219,11 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
             //
             // Table
             //
-            saveScroll_ = new DDScrollTable(GuiManager.DEFAULT, STYLE, "BrushedMetal", COLUMN_NAMES, COLUMN_WIDTHS);
-            saveScroll_.setPreferredSize(new Dimension(saveScroll_.getPreferredWidth(), 200));
-            savebase.add(saveScroll_, BorderLayout.CENTER);
+            DDScrollTable saveScroll = new DDScrollTable(GuiManager.DEFAULT, sStyle, "BrushedMetal", COLUMN_NAMES, COLUMN_WIDTHS);
+            saveScroll.setPreferredSize(new Dimension(saveScroll.getPreferredWidth(), 200));
+            savebase.add(saveScroll, BorderLayout.CENTER);
 
-            saveTable_ = saveScroll_.getDDTable();
+            saveTable_ = saveScroll.getDDTable();
             model_ = getSavedFileModel();
             saveTable_.setModel(model_);
             saveTable_.setShowHorizontalLines(true);
@@ -246,7 +241,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
         }
         else
         {
-            DDHtmlArea online = new DDHtmlArea(GuiManager.DEFAULT, STYLE);
+            DDHtmlArea online = new DDHtmlArea(GuiManager.DEFAULT, sStyle);
             online.setText(PropertyConfig.getMessage("msg.onlinesave"));
             online.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
             online.setPreferredSize(new Dimension(300, 75));
@@ -265,11 +260,8 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
      */
     private void handleDoubleClick()
     {
-        if (bSaveMode_)
-        {
-            // nothing to do in save mode for dbl click
-        }
-        else
+        // nothing to do in save mode for dbl click
+        if (!bSaveMode_)
         {
             // load mode - load selected file
             processButton(okayButton_.getName());
@@ -485,16 +477,13 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
      */
     private class SaveTableModel extends DefaultTableModel 
     {
-        private ArrayList files;
+        private final ArrayList<GameState> files;
 
         public SaveTableModel(GameState[] filesin) 
         {
             Arrays.sort(filesin, LISTSORTER);
-            files = new ArrayList(filesin.length);
-            for (int i = 0; i < filesin.length; i++)
-            {
-                files.add(filesin[i]);
-            }
+            files = new ArrayList<>(filesin.length);
+            Collections.addAll(files, filesin);
         }
         
         public void removeRow(GameState f)
@@ -505,7 +494,7 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
         }
 
         public GameState getGameState(int r) {
-            return (GameState) files.get(r);
+            return files.get(r);
         }
 
         public String getColumnName(int c) {
@@ -529,20 +518,15 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
 
         public Object getValueAt(int rowIndex, int colIndex) {
             GameState game = getGameState(rowIndex);
-            switch (colIndex) {
-                case 0:
-                    return game.getGameName();
-                    
-                case 1:
-                    return game.getDescription();
-                    
-                case 2:
+            return switch (colIndex) {
+                case 0 -> game.getGameName();
+                case 1 -> game.getDescription();
+                case 2 -> {
                     Date date = new Date(game.lastModified());
-                    return PropertyConfig.getDateFormat("msg.format.shortdatetime", engine_.getLocale()).format(date);
-                    
-                
-            }
-            throw new ArrayIndexOutOfBoundsException("Invalid column value");
+                    yield PropertyConfig.getDateFormat("msg.format.shortdatetime", engine_.getLocale()).format(date);
+                }
+                default -> throw new ArrayIndexOutOfBoundsException("Invalid column value");
+            };
         }
     }
 
@@ -551,11 +535,9 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
     /**
      * Sort in descending order (most recent at top)
      */
-    private static class CompareFile implements Comparator
+    private static class CompareFile implements Comparator<GameState>
     {
-        public int compare(Object o1, Object o2) {
-            GameState gs1 = (GameState) o1;
-            GameState gs2 = (GameState) o2;
+        public int compare(GameState gs1, GameState gs2) {
             long dif = (gs2.lastModified() - gs1.lastModified());
             if (dif < 0) return -1;
             else if (dif > 0) return 1;

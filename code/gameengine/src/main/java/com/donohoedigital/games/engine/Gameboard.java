@@ -1120,7 +1120,7 @@ public class Gameboard extends ImageComponent implements Scrollable,
     }
     
     //
-    // convienence methods
+    // convenience methods
     //
     
     Point lastPointFromAWT_ = null;

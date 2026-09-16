@@ -53,10 +53,8 @@ import org.jdom2.Namespace;
  *
  * @author  Doug Donohoe
  */
-public class Territories extends TreeMap {
-    
-    //static Logger logger = LogManager.getLogger(Territories.class);
-    
+public class Territories extends TreeMap<String, Territory>
+{
     /** 
      * Creates a new Territories from XML element
      */
@@ -66,7 +64,7 @@ public class Territories extends TreeMap {
         Territory.setAreas(areas);
         Territory.setMapPoints(allPoints);
         Territory.setTerritories(this);
-        List children = XMLConfigFileLoader.getChildren(root, "territory", ns, false, null);
+        List<Element> children = XMLConfigFileLoader.getChildren(root, "territory", ns, false, null);
         int nSize = children.size();
         if (nSize != 0) 
         {
@@ -75,7 +73,7 @@ public class Territories extends TreeMap {
             for (int i = 0; i < nSize; i++)
             {
                 sAttrErrorDesc = "Territory #" +(i+1)+" in " + GameboardConfig.GAMEBOARD_CONFIG;
-                territory = (Element)children.get(i);
+                territory = children.get(i);
                 addTerritory(new Territory(territory, ns, sAttrErrorDesc));
             }
         }
@@ -94,7 +92,7 @@ public class Territories extends TreeMap {
      */
     public Territory getTerritory(String sName)
     {
-        return (Territory) get(sName);
+        return get(sName);
     }
     
     /**
@@ -102,12 +100,12 @@ public class Territories extends TreeMap {
      */
     public void printXML(XMLWriter writer, int nIndent)
     {
-        Set territories = this.keySet();
-        Iterator iter = territories.iterator();
+        Set<String> territories = this.keySet();
+        Iterator<String> iter = territories.iterator();
         String sTerritoryName;
         while (iter.hasNext())
         {
-            sTerritoryName = (String) iter.next();
+            sTerritoryName = iter.next();
             getTerritory(sTerritoryName).printXML(writer, nIndent);
         }   
     }
@@ -127,13 +125,13 @@ public class Territories extends TreeMap {
     public Territory[] getTerritoryArray()
     {
         Territory[] array = new Territory[size()];
-        Set territories = this.keySet();
-        Iterator iter = territories.iterator();
+        Set<String> territories = this.keySet();
+        Iterator<String> iter = territories.iterator();
         String sTerritoryName;
         int nCnt = 0;
         while (iter.hasNext())
         {
-            sTerritoryName = (String) iter.next();
+            sTerritoryName = iter.next();
             array[nCnt++] = getTerritory(sTerritoryName);
         }   
         return array;
@@ -160,9 +158,9 @@ public class Territories extends TreeMap {
     {   
         // Create path in each territory
         Territory[] ts = getTerritoryArrayCached();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            ts[i].initForGame();
+            t.initForGame();
         }   
     }
     
@@ -174,9 +172,9 @@ public class Territories extends TreeMap {
     {   
         // Create path in each territory
         Territory[] ts = getTerritoryArrayCached();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            ts[i].createPath();
+            t.createPath();
         }   
     }
     
@@ -188,9 +186,9 @@ public class Territories extends TreeMap {
     {
         // figure adjacent territories
         Territory[] ts = getTerritoryArrayCached();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            ts[i].determineAdjacentTerritories(bClearBorders);
+            t.determineAdjacentTerritories(bClearBorders);
         }   
     }
 }
