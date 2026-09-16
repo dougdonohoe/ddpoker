@@ -223,6 +223,9 @@ public class EngineBasePanel extends JPanel
     {
         public void actionPerformed(ActionEvent e)
         {
+            // bound to an unmodified key, so ignore it while the user is typing
+            if (GuiUtils.isFocusInTextComponent()) return;
+
             System.gc();
             logger.debug("Running GC....");
         }

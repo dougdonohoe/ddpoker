@@ -6,6 +6,223 @@ building, running and setting up the servers and database, see [README-DEV.md](R
 **NOTE**: all commands below assume you have sourced `ddpoker.rc` and are in the root of the
 `ddpoker` repository.
 
+## Debug Settings
+
+There are lots of `settings.debug.*` entries in the code which are used to make
+development easier.  Typically, you put these in your
+`config/poker/override/[username].properties` file, so they only are used by you
+(see *Properties Files* in [README-DEV.md](README-DEV.md#properties-files)).
+
+The defaults live in `code/pokerengine/src/main/resources/config/poker/common.properties`.
+Flags are read through `DebugConfig.TESTING(...)`; the constants are defined in
+`EngineConstants` (engine) and `PokerConstants` (poker), with a handful declared
+inline at the point of use.
+
+Several flags enable a keyboard shortcut - those are described in
+[README-DEV.md - Keyboard Shortcuts](README-DEV.md#keyboard-shortcuts).
+
+### Master Switch
+
+```properties
+# Master switch.  No other settings.debug.* flag has any effect unless this is
+# on, because DebugConfig.TESTING() returns false whenever it is off.
+#
+# It also enables "Use UDP When Hosting (beta testing)" under
+# Options -> Online -> Miscellaneous.  That checkbox is always shown, but without
+# this flag it is forced off and disabled with a "reserved for DD Poker personnel"
+# tooltip.  Hosting only picks the UDP game prefix when this flag is on as well,
+# so both the flag and the checkbox are needed to host over UDP
+settings.debug.enabled=true
+```
+
+### Engine Settings
+
+```properties
+# Add "Start"/"Stop" chat flood-test buttons to the chat panel, show the chat
+# send controls even where chat is normally read-only, and enable the 'g' key
+# on the base panel to force a garbage collection
+settings.debug.performance=true
+
+# Enable the Edit/Copy/Delete buttons in profile lists even for profiles that
+# normally don't allow it
+settings.debug.editprofile=true
+
+# Force the main window to start at 800x600 (EngineConstants.TESTING_CHANGE_SIZE_*)
+# and stop saving its size to preferences.  Defaults to true
+settings.debug.changesize=true
+
+# Log the begin and end of every servlet call (doGet, processMessage,
+# returnMessage) with a sequence number
+settings.debug.servlet=true
+
+# Server skips sending profile emails and game invites.  The generated password
+# is written to the log instead, so you can activate without a mail server
+settings.debug.skipemail=true
+
+# Log every peer-to-peer online message sent, received and replied to
+settings.debug.p2p=true
+
+# Time every JDBC query and log the elapsed time along with a stack trace
+# trimmed to DD Poker frames
+settings.debug.dbperf=true
+
+# In game, log each repaint and draw a colored border around the area Swing is
+# repainting
+settings.debug.repaint=true
+
+# Additional per-territory and per-game-piece repaint logging, on top of the above
+settings.debug.repaint.details=true
+
+# AI debugging: log a line at the start of each hand, plus each AI action and
+# the AI's "improve" value for the current table (see V1Player and
+# HoldemHand.addHistory).  Also enables the 'x' key, which swaps each seat's name
+# for that player's hand strength.
+#
+# Note the hand strength and hand potential log sites this flag also guards are
+# unreachable: HandStrength has a hard-coded DEBUG=false, and HandPotential's is
+# only reached from PokerPlayer.getHandPotential(), which has no live callers
+settings.debug.ai=true
+
+# Log low-level UDP traffic (incoming, outgoing, resends, acks, timeouts, MTU).
+# Ctrl-F12 (Cmd-F12 on Mac) toggles this at runtime
+settings.debug.udp=true
+
+# Log application-level UDP traffic, including lobby chat.  Ctrl-F11 (Cmd-F11 on
+# Mac) toggles this at runtime
+settings.debug.udp.app=true
+
+# Open secondary windows as internal dialogs inside the main window instead of
+# as separate top-level windows
+settings.debug.no.external=true
+
+# Let the -key command line argument replace the stored activation key.
+# Defaults to true.  Without it, -key is ignored with a warning in the log
+settings.debug.override.key=true
+
+# Skip the startup check that exits when another client on the LAN has the same
+# IP or activation key.  Required to run two clients on one machine
+settings.debug.skip.dup.key.check=true
+
+```
+
+### Poker Settings
+
+```properties
+# Arm autopilot.  While it is running, isHumanControlled() is false for every
+# player, so the AI plays the human's hand, and the pauses at new levels, color
+# ups and community card deals are skipped.  F5 or F9 pauses and resumes it
+settings.debug.autopilot=true
+
+# Autopilot's running state - this is what F5/F9 toggles.  Set it here to start
+# already running; otherwise autopilot starts armed but paused, and the game
+# says so on startup
+settings.debug.autopilot.on=true
+
+# Human player makes decisions for AI players in game (useful for creating
+# various scenarios, like all players go all-in)
+settings.debug.dougcontrolsai=true
+
+# Pause before each AI decision and wait for the 'n' key to step it forward
+settings.debug.pauseai=true
+
+# Auto-save once at the first pre-flop betting round, before any AI decisions
+# are made, and enable the 's' key to save at any time without going through the
+# save menu
+settings.debug.fastsave=true
+
+# AI calls every bet, never folds or raises
+settings.debug.aialwayscalls=true
+
+# Add "Players" and "Debug" tabs to the Advisor dialog and log the V2 AI's
+# reasoning behind each recommendation
+settings.debug.advisordebug=true
+
+# Verbose output in the Advisor dashboard item
+settings.debug.advisorverbose=true
+
+# Log the rule engine's results for every AI decision
+settings.debug.logai=true
+
+# Add a hand weight grid to the Player Info dashboard item
+settings.debug.handweightgrid=true
+
+# Print info about each pot, including the pots at the end of a hand
+settings.debug.pots=true
+
+# Raise the tournament profile limits (max chips, max rebuy chips, max buy-in)
+# from their normal values to 10,000,000
+settings.debug.levels=true
+
+# Add a "Test Case" button to the table, which writes out the current hand as a
+# test case
+settings.debug.testcase=true
+
+# Allow "Change Blinds" in the table right-click menu (only at showdown, and
+# known to have issues - testing only).  Defaults to true
+settings.debug.changelevel=true
+
+# Show the cheat popup items (peek at cards, etc.) in online games, where they
+# are normally suppressed.  Defaults to false
+settings.debug.cheatonline=true
+
+# Let an online game start with a single human plus computer players.
+# Defaults to true
+settings.debug.singleplayeronline=true
+
+# Turn off auto-deal in online games, so each hand has to be dealt manually
+settings.debug.onlineautodealoff=true
+
+# Remove the AI's artificial pause in online games so hands play out at full speed
+settings.debug.onlineainowait=true
+
+# Seat humans at different tables when testing with 2 humans and >10 players
+# (or 3 humans and >20).  Defaults to true
+settings.debug.onlinesplithumans=true
+
+# Process all-computer tables the same as tables with humans, rather than
+# fast-forwarding them
+settings.debug.processallaitables=true
+
+# Chat performance testing - adds the flood-test buttons and attaches padding
+# data to each chat message
+settings.debug.chat.perf=true
+```
+
+### Server Settings
+
+```properties
+# On server, when sending online profile email, always send to this address,
+# which is useful for testing registrations with other emails
+settings.debug.profile.email.override=true
+settings.debug.profile.email.override.to=my-email@my-domain.com
+```
+
+### Website Settings
+
+```properties
+# Documentation mode - drops the interactive portal and admin pieces so
+# generate-website can extract a static ddpoker.com (see README-DEV.md
+# Appendix G).  Must be on before starting PokerJetty or pokerweb
+settings.debug.docmode=true
+```
+
+### `ddmailer` Settings
+
+These live in `config/ddmailer/override/[username].properties`, not the `poker`
+config, and are read directly with `PropertyConfig` rather than through
+`DebugConfig.TESTING()`.
+
+```properties
+# Master switch for the two settings below
+settings.debug.enabled=true
+
+# Stop after sending this many messages
+settings.debug.limit=3
+
+# Send every message to this address instead of the real recipient
+settings.debug.testto=my-email@my-domain.com
+```
+
 ## Release Checklist
 
 When testing major changes, here's a checklist of things to manually

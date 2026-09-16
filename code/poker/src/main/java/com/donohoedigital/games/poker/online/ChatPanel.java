@@ -199,7 +199,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
         // clear button
         GlassButton clear = new GlassButton("chat.clear", "Glass");
-        clear.addActionListener(e -> {
+        clear.addActionListener(_ -> {
             if (center_ == tab_)
             {
                 ChatTab tab = (ChatTab) tab_.getSelectedComponent();
@@ -233,7 +233,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
             // send button
             GlassButton send = new GlassButton("chat.send", "Glass");
-            send.addActionListener(e -> {
+            send.addActionListener(_ -> {
                 // make sure we have something to send
                 if (msg_.isValidData())
                 {
@@ -250,7 +250,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 {
                     // send button
                     GlassButton sendall = new GlassButton("chat.sendall", "Glass");
-                    sendall.addActionListener(e -> {
+                    sendall.addActionListener(_ -> {
                         // make sure we have something to send
                         if (msg_.isValidData())
                         {
@@ -263,7 +263,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 {
                     // send button
                     GlassButton sendhost = new GlassButton("chat.sendhost", "Glass");
-                    sendhost.addActionListener(e -> {
+                    sendhost.addActionListener(_ -> {
                         // make sure we have something to send
                         if (msg_.isValidData())
                         {
@@ -286,7 +286,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 startTest_ = new GlassButton(GuiManager.DEFAULT, "Glass");
                 startTest_.setText("Start");
                 buttonbase.add(startTest_);
-                startTest_.addActionListener(e -> {
+                startTest_.addActionListener(_ -> {
                     startTest_.setEnabled(false);
                     stopTest_.setEnabled(true);
                     startTest();
@@ -296,7 +296,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 stopTest_.setText("Stop");
                 stopTest_.setEnabled(false);
                 buttonbase.add(stopTest_);
-                stopTest_.addActionListener(e -> {
+                stopTest_.addActionListener(_ -> {
                     startTest_.setEnabled(true);
                     stopTest_.setEnabled(false);
                     stopTest();
@@ -305,7 +305,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
                 GlassButton dump = new GlassButton(GuiManager.DEFAULT, "Glass");
                 dump.setText("Dump");
                 buttonbase.add(dump);
-                dump.addActionListener(e ->
+                dump.addActionListener(_ ->
                     logger.debug("Thread dump:\n{}", Utils.getAllStacktraces()));
             }
         }
@@ -332,7 +332,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         if (!profile.isActivated()) return;
 
         GlassButton lobby = new GlassButton("chat.lobby", "Glass");
-        lobby.addActionListener(e -> {
+        lobby.addActionListener(_ -> {
             if (OnlineLobby.showLobby(GameEngine.getGameEngine(), context_, PlayerProfileOptions.getDefaultProfile()))
             {
                 context_.processPhase("OnlineLobby");
@@ -399,7 +399,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         }
     }
 
-    private class ChatTab extends DDTabPanel
+    private static class ChatTab extends DDTabPanel
     {
         ChatListPanel chatList;
 
@@ -414,11 +414,6 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         {
             add(chatList, BorderLayout.CENTER);
         }
-
-        public ChatListPanel getChatListPanel()
-        {
-            return chatList;
-        }
     }
 
     /**
@@ -430,7 +425,7 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
         // close button
         GlassButton close = new GlassButton("close", "Glass");
-        close.addActionListener(e ->
+        close.addActionListener(_ ->
             context.close());
 
         add(GuiUtils.CENTER(close), BorderLayout.SOUTH);
@@ -785,7 +780,6 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
 
     private void startTest()
     {
-
         test_ = new TestThread();
         logger.debug("<<<<<<<<<<<<<<<<<<<< Started Test {}", test_.nTestNum);
         test_.start();

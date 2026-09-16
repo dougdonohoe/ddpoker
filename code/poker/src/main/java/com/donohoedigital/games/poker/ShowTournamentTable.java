@@ -989,40 +989,6 @@ public class ShowTournamentTable extends ShowPokerTable implements
         if (bRepaint) minChip_.repaint();
     }
 
-    @SuppressWarnings("ConstantValue")
-    @Override
-    public String getDebugDisplay(Territory t)
-    {
-        // only do player seats
-        int nSeat = PokerUtils.getDisplaySeatForTerritory(t);
-        if (nSeat == -1) return null;
-
-        // if no player there, skip
-        PokerPlayer player = PokerUtils.getPokerPlayer(context_, t);
-        if (player == null) return null;
-
-        // get hand strength
-        double hs = player.getHandStrength();
-        hs *= 100;
-
-        // get hand pot
-        double hp = -1;//player.getHandPotentialDisplay();
-        hp *= 100;
-
-        // negative means no value
-        if (hs < 0 && hp < 0) return null;
-
-        StringBuilder sb = new StringBuilder();
-        if (hs >= 0) sb.append("HS ").append(HandStat.fPerc.form(hs)).append("% ");
-        if (hp >= 0)
-        {
-            //sb.append("HP ").append(HandStat.fPerc.form(hp)).append("% ");
-            sb.append("EHS ").append(HandStat.fPerc.form(100 * player.getEffectiveHandStrength())).append("%");
-        }
-
-        return sb.toString();
-    }
-
     /**
      * Setup buttons on pokertable based on current mode
      */

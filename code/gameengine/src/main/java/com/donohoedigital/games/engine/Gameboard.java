@@ -184,10 +184,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
         {
             GuiUtils.addKeyAction(this, JComponent.WHEN_IN_FOCUSED_WINDOW, 
                                 "debugai", new DebugAI(), KeyEvent.VK_X, 0);
-            GuiUtils.addKeyAction(this, JComponent.WHEN_IN_FOCUSED_WINDOW, 
-                                "debugai2", new DebugAI2(), KeyEvent.VK_V, 0);
-            GuiUtils.addKeyAction(this, JComponent.WHEN_IN_FOCUSED_WINDOW, 
-                                "debugai3", new DebugAI3(), KeyEvent.VK_S, 0);
         }
     }
 
@@ -625,9 +621,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
         // draw custom
         drawTerritories(g, PART_CUSTOM);
         
-        // draw label for AI
-        if (DEBUG_AI) drawTerritories(g, PART_LABEL_AI);
-        
         // draw mouse related items
         drawMouseItems(g);
         
@@ -673,7 +666,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
     protected static final int PART_FILL = 2;
     protected static final int PART_LABEL = 3;
     protected static final int PART_CUSTOM = 4;
-    protected static final int PART_LABEL_AI = 50;
     
     /**
      * Logic to draw territory parts
@@ -791,7 +783,6 @@ public class Gameboard extends ImageComponent implements Scrollable,
                 break;
 
             case PART_LABEL:
-            case PART_LABEL_AI:
                 
                 Font font = fireGetTerritoryLabelFont(t);
                 if (font == null) return; // don't draw label if we don't know font
@@ -809,27 +800,11 @@ public class Gameboard extends ImageComponent implements Scrollable,
                 double x = scaleToCurrentSpace((double)tp.getX());
                 double y = scaleToCurrentSpace((double)tp.getY());
                 
-                // draw name   
+                // draw name
                 TextUtil tu = new TextUtil(g, font, getTerritoryDisplay(t), getTerritoryDisplayLineSpacing());                
-                if (iPart == PART_LABEL)
-                {    
-                    tu.prepareDraw(x, y, tp.getAngle(), dScale_);
-                    tu.drawString(textColor, shadowColor);
-                    tu.finishDraw();
-                }
-                // PART_LABEL_AI
-                else if (DEBUG_AI && aidebug_ != null)
-                {
-                    String s = aidebug_.getDebugDisplay(t);
-                    if (s != null)
-                    {
-                        TextUtil tu2 = new TextUtil(g, font, s);
-                        tu2.prepareDraw(x,y, tp.getAngle(), dScale_ * aidebug_.getScale());
-                        tu2.yadjust = aidebug_.getYAdjust(t, tu, tu2);
-                        tu2.drawString(aidebug_.getTextColor(),  shadowColor);
-                        tu2.finishDraw();
-                    }
-                }
+                tu.prepareDraw(x, y, tp.getAngle(), dScale_);
+                tu.drawString(textColor, shadowColor);
+                tu.finishDraw();
                 break;
 
             case PART_CUSTOM:
@@ -856,12 +831,10 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         return t.getMapDisplayName();
     }
-    
-    // used for debugging
-    boolean DEBUG_AI = TESTING(EngineConstants.TESTING_AI_DEBUG);
-    public int CURRENT_INDEX = 0;
-    public boolean DEBUG_OPTION_1 = false;
-    
+
+    // used for debugging - subclasses decide what to display when on
+    protected boolean DEBUG_AI = TESTING(EngineConstants.TESTING_AI_DEBUG);
+
     /**
      * Called when 'x' pressed - toggles AI Debugging on/off
      */
@@ -869,53 +842,13 @@ public class Gameboard extends ImageComponent implements Scrollable,
     {
         public void actionPerformed(ActionEvent e) 
         {
+            // bound to an unmodified key, so ignore it while the user is typing
+            if (GuiUtils.isFocusInTextComponent()) return;
+
             DEBUG_AI = !DEBUG_AI;
+            logger.debug("AI debug enabled: {}", DEBUG_AI);
             Gameboard.this.repaintVisible(false);
         }
-    }
-    
-    /**
-     * Called when 'v' pressed - toggles AI current player
-     */
-    private class DebugAI2 extends AbstractAction
-    {
-        public void actionPerformed(ActionEvent e) 
-        {
-            int nNum = context_.getGame().getNumPlayers();
-            CURRENT_INDEX++;
-            if (CURRENT_INDEX == nNum) CURRENT_INDEX = 0;
-            Gameboard.this.repaintVisible(false);
-        }
-    }
-    
-    /**
-     * Called when 's' pressed - toggles AI OPTION 1 on/off
-     */
-    private class DebugAI3 extends AbstractAction
-    {
-        public void actionPerformed(ActionEvent e) 
-        {
-            DEBUG_OPTION_1 = !DEBUG_OPTION_1;
-            Gameboard.this.repaintVisible(false);
-        }
-    }
-    
-    /**
-     * Interface for AI debugging
-     */
-    public interface AIDebug
-    {
-        String getDebugDisplay(Territory t);
-        Color getTextColor();
-        double getScale();
-        double getYAdjust(Territory t, TextUtil tuName, TextUtil tuDebug);
-    }
-    
-    private AIDebug aidebug_;
-    
-    public void setAIDebug(AIDebug ai)
-    {
-        aidebug_ = ai;
     }
     
     // stroke used in borders

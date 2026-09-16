@@ -45,7 +45,6 @@ import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.config.StylesConfig;
 import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.config.GamePhase;
-import com.donohoedigital.games.config.Territory;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.dashboard.DashboardManager;
 import com.donohoedigital.games.poker.dashboard.DashboardPanel;
@@ -63,7 +62,7 @@ import java.awt.event.*;
  * @author Doug Donohoe
  */
 public abstract class ShowPokerTable extends ChainPhase implements
-                                                        Gameboard.AIDebug, AWTEventListener,
+                                                        AWTEventListener,
                                                         ChangeListener, InternalDialog.ModalBlockerListener,
                                                         MouseListener, PokerTableInput,
                                                         ActionListener, PokerGameboardDelegate
@@ -329,7 +328,6 @@ public abstract class ShowPokerTable extends ChainPhase implements
                                                   frame_.getContentPane().getWidth(),
                                                   frame_.getContentPane().getHeight(),
                                                   this, base_);
-        board.setAIDebug(this);
         PokerUtils.setPokerGameboard(board);
         return board;
     }
@@ -703,35 +701,6 @@ public abstract class ShowPokerTable extends ChainPhase implements
     {
         nModal_--;
         //logger.debug("Finish: " + nModal_);
-    }
-
-    //
-    // Debugging AI
-    //
-
-    public String getDebugDisplay(Territory t)
-    {
-        return null;
-    }
-
-    public double getScale()
-    {
-        return 1.0d;
-    }
-
-    public double getYAdjust(Territory t, TextUtil tuName, TextUtil tuDebug)
-    {
-        int nSeat = PokerUtils.getDisplaySeatForTerritory(t);
-        if (nSeat == -1) return 0;
-
-        if (nSeat <= 0 || nSeat >= 9) return -(2.5 * tuDebug.lineHeight);
-        else if (nSeat == 1 || nSeat == 8) return -(4.0 * tuDebug.lineHeight);
-        else return tuName.totalHeight + tuDebug.lineHeight / 2 + 2;
-    }
-
-    public Color getTextColor()
-    {
-        return Color.orange;
     }
 
     //

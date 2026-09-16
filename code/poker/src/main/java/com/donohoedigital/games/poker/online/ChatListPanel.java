@@ -72,7 +72,7 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
     private Point end_;
 
     // limit display
-    private int MAX_MESSAGES;
+    private final int MAX_MESSAGES;
     private final ArrayList messages_;
 
     /**
@@ -432,16 +432,15 @@ class ChatListPanel extends ListPanel implements MouseListener, MouseMotionListe
         DDMenuItem item = new DDMenuItem(GuiManager.DEFAULT, "PopupMenu");
         item.setText(PropertyConfig.getMessage("menuitem.chat.export"));
         item.setIcon(exportIcon_);
-        item.addActionListener(ae -> {
+        item.addActionListener(_ -> {
                 TypedHashMap params = new TypedHashMap();
                 params.setString(FileChooserDialog.PARAM_SUGGESTED_NAME, "chat");
                 Phase choose = context_.processPhaseNow("ExportChat", params);
                 Object oResult = choose.getResult();
-                if (oResult != null && oResult instanceof File)
+                if (oResult instanceof File file)
                 {
-                    File file = (File) oResult;
                     logger.info("Exporting chat to {}", file.getAbsolutePath());
-                    ConfigUtils.writeFile((File) oResult, toHtml(), false);
+                    ConfigUtils.writeFile(file, toHtml(), false);
                 }
         });
         menu.add(item);

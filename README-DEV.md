@@ -344,7 +344,7 @@ so they only are used by you.
 Here are a few interesting ones
 
 ```properties
-# Enable debug flags
+# Enable debug flags - the master switch, nothing else takes effect without it
 settings.debug.enabled=true
 
 # In game, draw border around areas that Swing is repainting
@@ -353,18 +353,101 @@ settings.debug.repaint=true
 # Human player makes decisions for AI players in game (useful for
 # creating various scenarios, like all players go all-in)
 settings.debug.dougcontrolsai=true
-
-# Print info about each pot
-settings.debug.pots=true
-
-# On server, when sending online profile email, always send to this address,
-# Which is useful for testing registrations with other emails
-settings.debug.profile.email.override=true
-settings.debug.profile.email.override.to=my-email@my-domain.com
 ```
 
-There are many other examples, just take a look in the code for `settings.debug` to
-find the constants and then find usages of those constants.
+Every flag is documented in
+[README-TESTING.md - Debug Settings](README-TESTING.md#debug-settings).
+
+### Keyboard Shortcuts
+
+These are the shortcuts registered with `GuiUtils.addKeyAction()`, which binds a
+key to an `Action` through Swing's `InputMap`/`ActionMap`.  Shortcuts marked
+**debug** are only registered when the given `settings.debug.*` flag is on (which
+in turn requires `settings.debug.enabled=true`).
+
+#### Application Window
+
+Registered on the window's base panel with `WHEN_IN_FOCUSED_WINDOW`, so they work
+wherever focus is in that window (`EngineWindow`).
+
+| Keys                                | Action                                                                                     |
+|-------------------------------------|--------------------------------------------------------------------------------------------|
+| `Ctrl-Q` / `Alt-Q`                  | Quit the application.  Windows and Linux only - Mac uses `Cmd-Q` from the application menu |
+| `Ctrl-W` / `Alt-W` (`Cmd-W` on Mac) | Close the window, or quit if it is the main window                                         |
+| `Ctrl-D` (`Cmd-D`)                  | Dump every thread's stack trace to the log                                                 |
+| `Ctrl-F12` (`Cmd-F12`)              | Toggle low-level UDP logging (`settings.debug.udp`)                                        |
+| `Ctrl-F11` (`Cmd-F11`)              | Toggle application-level UDP logging (`settings.debug.udp.app`)                            |
+| `Ctrl-/` (`Cmd-/`)                  | Open Help                                                                                  |
+| `Ctrl-Backspace` (`Cmd-Backspace`)  | Clear all saved preferences - **debug** (`settings.debug.enabled`)                         |
+
+The two UDP toggles are always registered, but they flip flags that are read
+through `DebugConfig.TESTING()`, which returns false unless
+`settings.debug.enabled` is on - so they do nothing outside debug mode.
+
+#### Poker Game Window
+
+Added on top of the above by `PokerContext.PokerWindow`.
+
+| Keys               | Action                                         |
+|--------------------|------------------------------------------------|
+| `Ctrl-L` (`Cmd-L`) | Open the Online Lobby                          |
+| `Ctrl-U` (`Cmd-U`) | Open the UDP Status screen                     |
+| `Ctrl-T` (`Cmd-T`) | Open the Calculator tool                       |
+| `Ctrl-P` (`Cmd-P`) | Save a screenshot of the game window to a file |
+
+#### Dialogs
+
+| Keys                                | Action                                                                                         | Where          |
+|-------------------------------------|------------------------------------------------------------------------------------------------|----------------|
+| `Ctrl-W` / `Alt-W` (`Cmd-W` on Mac) | Close the dialog                                                                               | `EngineDialog` |
+| `Delete`                            | Activate the dialog's close button, when the phase sets `dialog-window-close-activates-button` | `DialogPhase`  |
+
+#### Widgets
+
+| Keys                    | Action                                           | Where                 |
+|-------------------------|--------------------------------------------------|-----------------------|
+| `Enter`                 | Click the focused button                         | `DDButton`            |
+| `Up` / `Down`           | Step the number spinner by one                   | `DDNumberSpinner`     |
+| `Ctrl-Up` / `Ctrl-Down` | Jump the number spinner to its maximum / minimum | `DDNumberSpinner`     |
+| `Enter`                 | Click Bet/Raise, from the bet amount field       | `ShowTournamentTable` |
+| `Ctrl-C` (`Cmd-C`)      | Copy the selected chat text                      | `ChatListPanel`       |
+| `Ctrl-A` (`Cmd-A`)      | Select all chat text                             | `ChatListPanel`       |
+
+At the poker table, `ShowTournamentTable` also installs the spinner's arrow
+actions on the chat text field, so the arrow keys adjust the bet amount while
+the cursor is in chat.
+
+#### Debug Shortcuts
+
+| Keys | Action                                                             | Debug flag                   |
+|------|--------------------------------------------------------------------|------------------------------|
+| `x`  | Toggle each seat's label between the player name and hand strength | `settings.debug.ai`          |
+| `g`  | Force a garbage collection                                         | `settings.debug.performance` |
+
+#### Territory Manager
+
+Used by `territorymgr` (see [Game Engine Tools](#game-engine-tools)).  These two
+are the only shortcuts in the tools registered this way - the rest are handled by
+`KeyListener` implementations in `GameManager`, `TerritoryBoard` and `XPoints`.
+
+| Keys | Action                  |
+|------|-------------------------|
+| `[`  | Decrease the board size |
+| `]`  | Increase the board size |
+
+#### Shortcuts Registered Some Other Way
+
+Not every shortcut goes through `addKeyAction`.  The two worth knowing about:
+
+* **In-game table keys** - `F1` (cycle focus between board and chat), `D` (deal),
+  `F` (fold), `C` (check/call/continue), `B` (bet), `R` (raise), `A` (all-in),
+  `P` (bet pot), `E` (rebuy), and `F5`/`F9` (pause and resume autopilot, **debug**,
+  `settings.debug.autopilot`).  These are handled in
+  `ShowTournamentTable.handleKeyPressed()`.
+* **Betting debug keys** - `N` steps the AI forward one decision
+  (`settings.debug.pauseai`) and `S` saves the game mid-hand
+  (`settings.debug.fastsave`).  These use an AWT event listener in `Bet`, installed
+  only while one of those two flags is on.
 
 ### Installers
 
@@ -741,8 +824,9 @@ Bind for 0.0.0.0:3306 failed: port is already allocated
 
 ## Appendix F: Testing Notes
 
-Moved to [README-TESTING.md](README-TESTING.md): the release checklist, running a second
-client for online tests, and testing tools such as `activateprofile`.
+Moved to [README-TESTING.md](README-TESTING.md): the full
+[`settings.debug.*` reference](README-TESTING.md#debug-settings), the release checklist,
+running a second client for online tests, and testing tools such as `activateprofile`.
 
 ## Appendix G: DD Poker Website
 
