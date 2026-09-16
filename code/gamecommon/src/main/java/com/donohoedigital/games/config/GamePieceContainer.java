@@ -47,22 +47,22 @@ import java.util.Map;
  */
 public interface GamePieceContainer
 {
-    public String getName();
-    public String getDisplayName();
+    String getName();
+    String getDisplayName();
     
-    public void setGamePlayer(GamePlayer player);
-    public GamePlayer getGamePlayer();
+    void setGamePlayer(GamePlayer player);
+    GamePlayer getGamePlayer();
     
-    public GamePiece addGamePiece(GamePiece gp);
-    public void removeGamePiece(GamePiece gp);
+    GamePiece addGamePiece(GamePiece gp);
+    void removeGamePiece(GamePiece gp);
     
-    public int getNumPieces();
-    public Iterator getGamePieces();
-    public GamePiece getGamePiece(int nType, GamePlayer owner);
-    public boolean hasNonOwnerGamePiece(int nType, GamePlayer owner);
+    int getNumPieces();
+    Iterator getGamePieces();
+    GamePiece getGamePiece(int nType, GamePlayer owner);
+    boolean hasNonOwnerGamePiece(int nType, GamePlayer owner);
     
-    public boolean hasMovedPieces();
-    public boolean equals(GamePieceContainer c);
+    boolean hasMovedPieces();
+    boolean equals(GamePieceContainer c);
     
-    public Map getMap();
+    Map getMap();
 }

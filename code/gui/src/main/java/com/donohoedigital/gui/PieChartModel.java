@@ -36,11 +36,11 @@ import java.awt.Color;
 
 public interface PieChartModel
 {
-    public int getWedgeCount();
+    int getWedgeCount();
 
-    public double getWedgeValue(int index);
+    double getWedgeValue(int index);
 
-    public void setWedgeValue(int index, double value);
+    void setWedgeValue(int index, double value);
 
-    public Color getWedgeColor(int index);
+    Color getWedgeColor(int index);
 }

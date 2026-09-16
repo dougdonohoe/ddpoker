@@ -46,38 +46,38 @@ public interface DDMessageListener
 {
     // status - numbered so can be used in array lookups (i.e., SendMessageDialog)
     // set in DDMessage.setStatus()
-    public static final int STATUS_NONE = -1;
-    public static final int STATUS_CONNECT_FAILED = 0;
-    public static final int STATUS_TIMEOUT = 1;
-    public static final int STATUS_SERVER_ERROR = 2;
-    public static final int STATUS_UNKNOWN_HOST = 3;
-    public static final int STATUS_UNKNOWN_ERROR = 4;
-    public static final int STATUS_DNS_TIMEOUT = 5;
-    public static final int STATUS_APPL_ERROR = 6;
-    public static final int STATUS_DISABLED = 7;
+    int STATUS_NONE = -1;
+    int STATUS_CONNECT_FAILED = 0;
+    int STATUS_TIMEOUT = 1;
+    int STATUS_SERVER_ERROR = 2;
+    int STATUS_UNKNOWN_HOST = 3;
+    int STATUS_UNKNOWN_ERROR = 4;
+    int STATUS_DNS_TIMEOUT = 5;
+    int STATUS_APPL_ERROR = 6;
+    int STATUS_DISABLED = 7;
 
-    public static final int STATUS_OK = 10;
+    int STATUS_OK = 10;
     
     /**
      * Called when a message has been received
      */
-    public void messageReceived(DDMessage message);
+    void messageReceived(DDMessage message);
     
     // steps - numbered so can be used in array lookups (i.e., SendMessageDialog) 
-    public static final int STEP_CONNECTING = 0;
-    public static final int STEP_SENDING = 1;
-    public static final int STEP_WAITING_FOR_REPLY = 2;
-    public static final int STEP_RECEIVING = 3;
-    public static final int STEP_DONE = 4;
+    int STEP_CONNECTING = 0;
+    int STEP_SENDING = 1;
+    int STEP_WAITING_FOR_REPLY = 2;
+    int STEP_RECEIVING = 3;
+    int STEP_DONE = 4;
     
     // debug steps, used for fine debugging
-    public static final int DEBUG_STEP_BEGUN_CONNECTING = 10;
-    public static final int DEBUG_STEP_SLEEP_CONNECTING = 11;
+    int DEBUG_STEP_BEGUN_CONNECTING = 10;
+    int DEBUG_STEP_SLEEP_CONNECTING = 11;
     
     /**
      * Called at various times during the connection so the UI can update the 
      * status
      */
-    public void updateStep(int nStep);
-    public void debugStep(int nStep, String sMsg);
+    void updateStep(int nStep);
+    void debugStep(int nStep, String sMsg);
 }

@@ -44,6 +44,6 @@ package com.donohoedigital.comms;
  */
 public interface DataMarshal {
     
-    public String marshal(MsgState state);
-    public void demarshal(MsgState state, String sData);
+    String marshal(MsgState state);
+    void demarshal(MsgState state, String sData);
 }

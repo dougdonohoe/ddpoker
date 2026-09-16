@@ -52,10 +52,10 @@ public interface Peer2PeerControllerInterface
     /** 
      * Handle p2p message received.  Return reply message.
      */
-    public DDMessageTransporter p2pMessageReceived(SocketChannel channel, DDMessageTransporter msg);
+    DDMessageTransporter p2pMessageReceived(SocketChannel channel, DDMessageTransporter msg);
     
     /**
      * handle when a socket is closed
      */
-    public void socketClosing(SocketChannel channel);
+    void socketClosing(SocketChannel channel);
 }

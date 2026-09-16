@@ -46,13 +46,13 @@ import com.donohoedigital.games.comms.ActionItem;
  */
 public interface OnlineStatus
 {
-    public static final String PARAM_ITEM = "item";
+    String PARAM_ITEM = "item";
     
-    public void updateStatus(ActionItem item);
+    void updateStatus(ActionItem item);
     
-    public void hide();
+    void hide();
     
-    public void show();
+    void show();
     
-    public boolean isAutoPopup();
+    boolean isAutoPopup();
 }

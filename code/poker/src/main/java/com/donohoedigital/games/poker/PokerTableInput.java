@@ -48,5 +48,5 @@ public interface PokerTableInput
 
     void setInputMode(int nMode, HoldemHand hhand, PokerPlayer player);
 
-    public int getInputMode();
+    int getInputMode();
 }

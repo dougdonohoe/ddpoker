@@ -41,6 +41,6 @@ package com.donohoedigital.gui;
  */
 public interface DDCustomHelp
 {
-    public String getHelpText();
-    public void setHelpText(String s);
+    String getHelpText();
+    void setHelpText(String s);
 }

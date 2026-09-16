@@ -47,15 +47,15 @@ import java.awt.Color;
  */
 public interface DDText {
     
-    public void setText(String s);
-    public String getText();
-    public void setForeground(Color c);
-    public void setBackground(Color c);
-    public Color getForeground();
-    public Color getBackground();
-    public void setBorder(Border border);
-    public Border getBorder();
-    public void setOpaque(boolean b);
-    public boolean isOpaque();
+    void setText(String s);
+    String getText();
+    void setForeground(Color c);
+    void setBackground(Color c);
+    Color getForeground();
+    Color getBackground();
+    void setBorder(Border border);
+    Border getBorder();
+    void setOpaque(boolean b);
+    boolean isOpaque();
     
 }

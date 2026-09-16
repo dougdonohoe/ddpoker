@@ -46,5 +46,5 @@ import com.donohoedigital.games.poker.network.OnlineMessage;
  */
 public interface ChatHandler {
     
-    public void chatReceived(OnlineMessage omsg);
+    void chatReceived(OnlineMessage omsg);
 }

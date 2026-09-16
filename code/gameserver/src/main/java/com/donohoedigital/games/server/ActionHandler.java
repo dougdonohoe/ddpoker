@@ -47,10 +47,10 @@ import com.donohoedigital.games.comms.EngineMessage;
  */
 public interface ActionHandler
 {
-    public void init();
-    public void processActionDone(ServerSideGame game, ActionItem action, EngineMessage message);
-    public ActionItem getNextActionItem(ServerSideGame game, ActionItem last);
-    public ActionItem processActionRequest(ServerSideGame game, EngineMessage message);
-    public String getInviteAttachmentName();
-    public String getInviteAttachmentMime();
+    void init();
+    void processActionDone(ServerSideGame game, ActionItem action, EngineMessage message);
+    ActionItem getNextActionItem(ServerSideGame game, ActionItem last);
+    ActionItem processActionRequest(ServerSideGame game, EngineMessage message);
+    String getInviteAttachmentName();
+    String getInviteAttachmentMime();
 }

@@ -1175,7 +1175,7 @@ public class ImageComponent extends JComponent implements Icon
 
     public static interface CustomImage
     {
-        public void paintCustom(Graphics2D g,
+        void paintCustom(Graphics2D g,
                                 int x, int y, int width, int height);
     }
 }

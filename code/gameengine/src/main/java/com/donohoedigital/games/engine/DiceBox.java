@@ -303,6 +303,6 @@ public class DiceBox extends DDPanel implements ActionListener
      */
     public static interface DiceRolled
     {
-        public void dieRolled(DiceBox box, GamePlayer player, int nTotal);
+        void dieRolled(DiceBox box, GamePlayer player, int nTotal);
     }
 }

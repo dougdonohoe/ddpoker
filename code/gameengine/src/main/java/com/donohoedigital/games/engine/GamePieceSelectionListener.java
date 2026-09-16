@@ -46,15 +46,15 @@ import java.awt.event.MouseEvent;
  */
 public interface GamePieceSelectionListener {
     
-    public void mouseEntered(Gameboard g, EngineGamePiece gp);
+    void mouseEntered(Gameboard g, EngineGamePiece gp);
     
-    public void mouseExited(Gameboard g, EngineGamePiece gp);
+    void mouseExited(Gameboard g, EngineGamePiece gp);
     
-    public void gamePieceSelected(EngineGamePiece gp, MouseEvent e);
+    void gamePieceSelected(EngineGamePiece gp, MouseEvent e);
 
-    public void gamePieceDeselected(EngineGamePiece gp, MouseEvent e);
+    void gamePieceDeselected(EngineGamePiece gp, MouseEvent e);
 
-    public boolean allowGamePieceSelection(EngineGamePiece gp, MouseEvent e);
+    boolean allowGamePieceSelection(EngineGamePiece gp, MouseEvent e);
     
 }
 

@@ -46,10 +46,10 @@ import com.donohoedigital.comms.DMTypedHashMap;
  */
 public interface GameInfo
 {
-    public int getNumPlayers();
-    public int getPlayerIdAt(int i);
-    public DMTypedHashMap getGameOptions();
-    public boolean isEliminated(int id);
-    public int getTurn();
-    public void setTurn(int n);
+    int getNumPlayers();
+    int getPlayerIdAt(int i);
+    DMTypedHashMap getGameOptions();
+    boolean isEliminated(int id);
+    int getTurn();
+    void setTurn(int n);
 }

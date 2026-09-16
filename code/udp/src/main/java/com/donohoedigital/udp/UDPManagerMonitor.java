@@ -41,5 +41,5 @@ package com.donohoedigital.udp;
  */
 public interface UDPManagerMonitor
 {
-    public void monitorEvent(UDPManagerEvent event);
+    void monitorEvent(UDPManagerEvent event);
 }

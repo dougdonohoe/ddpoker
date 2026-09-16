@@ -44,5 +44,5 @@ package com.donohoedigital.p2p;
  */
 public interface LanListener {
     
-    public void lanEventReceived(LanEvent event);
+    void lanEventReceived(LanEvent event);
 }

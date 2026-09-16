@@ -249,9 +249,9 @@ public class StatisticsViewer extends BasePhase implements ActionListener
      */
     private interface ShowDetails
     {
-        public boolean canShowDetails();
-        public void showDetails();
-        public void exportHistory();
+        boolean canShowDetails();
+        void showDetails();
+        void exportHistory();
     }
 
     private static final String[] byHandColNames_ =

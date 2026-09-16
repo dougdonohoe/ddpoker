@@ -53,31 +53,31 @@ public interface TerritoryDisplayListener {
     /**
      * Used by gameboard - if null returned, territory not filled
      */
-    public Color getTerritoryColor(Territory t);
+    Color getTerritoryColor(Territory t);
 
     /**
      * Used by gameboard - if null returned, no border drawn
      */
-    public BasicStroke getTerritoryBorderStroke(Territory t);
+    BasicStroke getTerritoryBorderStroke(Territory t);
     
     /**
      * Used by gameboard - if null returned, no border drawn
      */
-    public Color getTerritoryBorderColor(Territory t);
+    Color getTerritoryBorderColor(Territory t);
     
     /**
      * Used by gameboard - if null returned, no label drawn
      */
-    public Font getTerritoryLabelFont(GameContext context, Territory t);
+    Font getTerritoryLabelFont(GameContext context, Territory t);
     
     /**
      * Used by gameboard - if null returned, a default is used
      */
-    public Color getTerritoryLabelColor(GameContext context, Territory t);
+    Color getTerritoryLabelColor(GameContext context, Territory t);
     
     /**
      * Used by gameboard - if null returnd, a default is used
      */ 
-    public Color getTerritoryLabelShadowColor(Territory t);
+    Color getTerritoryLabelShadowColor(Territory t);
     
 }

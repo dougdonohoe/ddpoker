@@ -41,7 +41,7 @@ package com.donohoedigital.udp;
  */
 public interface UDPLinkHandler
 {
-    public int getTimeout(UDPLink link);
-    public int getPossibleTimeoutNotificationInterval(UDPLink link);
-    public int getPossibleTimeoutNotificationStart(UDPLink link);
+    int getTimeout(UDPLink link);
+    int getPossibleTimeoutNotificationInterval(UDPLink link);
+    int getPossibleTimeoutNotificationStart(UDPLink link);
 }

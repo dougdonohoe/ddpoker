@@ -39,13 +39,13 @@ package com.donohoedigital.games.config;
  */
 public interface GamePlayerList
 {
-    public GamePlayer getPlayerAt(int i);
+    GamePlayer getPlayerAt(int i);
     
-    public int getNumPlayers();
+    int getNumPlayers();
     
-    public void addPlayer(GamePlayer p);
+    void addPlayer(GamePlayer p);
     
-    public boolean containsPlayer(GamePlayer player);
+    boolean containsPlayer(GamePlayer player);
     
-    public void clearPlayerList(int nNewCount);
+    void clearPlayerList(int nNewCount);
 }

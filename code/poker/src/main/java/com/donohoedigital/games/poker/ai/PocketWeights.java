@@ -492,7 +492,7 @@ public final class PocketWeights
 
     private interface PreFlopWeightFunction
     {
-        public float adjustWeight(PokerPlayer player, int card1, int card2, float weight, float rhs);
+        float adjustWeight(PokerPlayer player, int card1, int card2, float weight, float rhs);
     }
 
     private final PreFlopActor preflopActor = new PreFlopActor();
@@ -647,7 +647,7 @@ public final class PocketWeights
 
     private interface PostFlopWeightFunction
     {
-        public float adjustWeight(float weight, float rhs, float ppot, float npot);
+        float adjustWeight(float weight, float rhs, float ppot, float npot);
     }
 
     private void processPostFlopAction(Hand community, HandAction action)

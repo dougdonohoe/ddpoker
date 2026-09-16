@@ -47,5 +47,5 @@ import java.io.OutputStream;
  */
 public interface PostWriter
 {
-    public void write(OutputStream writer) throws IOException;
+    void write(OutputStream writer) throws IOException;
 }

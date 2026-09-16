@@ -34,9 +34,9 @@ package com.donohoedigital.games.poker.ai;
 
 public interface AIConstants
 {
-    public static final int HOH_DEAD=0;
-    public static final int HOH_RED=1;
-    public static final int HOH_ORANGE=2;
-    public static final int HOH_YELLOW=3;
-    public static final int HOH_GREEN=4;
+    int HOH_DEAD=0;
+    int HOH_RED=1;
+    int HOH_ORANGE=2;
+    int HOH_YELLOW=3;
+    int HOH_GREEN=4;
 }

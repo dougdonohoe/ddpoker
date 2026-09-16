@@ -46,5 +46,5 @@ import com.donohoedigital.games.comms.EngineMessage;
  */
 public interface OnlineChat {
     
-    public void messageReceived(EngineMessage message, boolean bCreatedLocally);
+    void messageReceived(EngineMessage message, boolean bCreatedLocally);
 }

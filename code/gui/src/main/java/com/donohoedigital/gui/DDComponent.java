@@ -47,20 +47,20 @@ import java.awt.event.MouseListener;
  */
 public interface DDComponent {
     
-    public String getType();
+    String getType();
     
     // naming of component (provided by Component)
-    public void setName(String s);
-    public String getName();
+    void setName(String s);
+    String getName();
     
-    public void setForeground(Color c);
-    public Color getForeground();
+    void setForeground(Color c);
+    Color getForeground();
     
-    public void setBackground(Color c);
-    public Color getBackground();
+    void setBackground(Color c);
+    Color getBackground();
     
-    public void addMouseListener(MouseListener m);
-    public void removeMouseListener(MouseListener m);
+    void addMouseListener(MouseListener m);
+    void removeMouseListener(MouseListener m);
 
-    public void setToolTipText(String s);
+    void setToolTipText(String s);
 }

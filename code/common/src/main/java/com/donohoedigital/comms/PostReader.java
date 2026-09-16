@@ -47,5 +47,5 @@ import java.io.InputStream;
  */
 public interface PostReader
 {
-    public void read(InputStream reader, int nLength) throws IOException;
+    void read(InputStream reader, int nLength) throws IOException;
 }

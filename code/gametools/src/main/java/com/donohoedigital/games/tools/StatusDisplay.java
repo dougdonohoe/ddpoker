@@ -44,6 +44,6 @@ package com.donohoedigital.games.tools;
  */
 public interface StatusDisplay {
     
-    public void setStatus(String sStatus);
+    void setStatus(String sStatus);
     
 }

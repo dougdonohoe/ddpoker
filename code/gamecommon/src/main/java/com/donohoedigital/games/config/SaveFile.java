@@ -47,7 +47,7 @@ import java.io.File;
  */
 public interface SaveFile 
 {
-    public static final String DELIM = BaseDataFile.DELIM;
+    String DELIM = BaseDataFile.DELIM;
     
-    public File getFile();
+    File getFile();
 }

@@ -46,6 +46,6 @@ import java.awt.Color;
  */
 public interface DDExtendedComponent {
     
-    public void setMouseOverForeground(Color c);
-    public Color getMouseOverForeground();
+    void setMouseOverForeground(Color c);
+    Color getMouseOverForeground();
 }

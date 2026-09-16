@@ -47,6 +47,6 @@ public interface Peer2PeerMessageListener
     /**
      * called when message received
      */ 
-    public void messageReceived(Peer2PeerMessage msg);
+    void messageReceived(Peer2PeerMessage msg);
     
 }

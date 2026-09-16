@@ -46,9 +46,9 @@ import java.awt.Color;
  */
 public interface DDListComponent {
     
-    public Color getSelectionBackground();
-    public void setSelectionBackground(Color c);
+    Color getSelectionBackground();
+    void setSelectionBackground(Color c);
     
-    public Color getSelectionForeground();
-    public void setSelectionForeground(Color c);
+    Color getSelectionForeground();
+    void setSelectionForeground(Color c);
 }

@@ -37,7 +37,7 @@ package com.donohoedigital.base;
  */
 public interface NamedObject
 {
-    public void setName(String sName);
+    void setName(String sName);
 
-    public String getName();
+    String getName();
 }

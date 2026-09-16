@@ -51,45 +51,45 @@ public interface LanControllerInterface
     /**
      * Get key for this client
      */
-    public String getPublicUseKey();
+    String getPublicUseKey();
 
     /**
      * Get global unique id for instance of game
      */
-    public String getGUID();
+    String getGUID();
 
     /**
      * Get player name
      */
-    public String getPlayerName();
+    String getPlayerName();
 
     /**
      * return whether key is valid in this message
      */
-    public boolean isValid(DDMessage msg);
+    boolean isValid(DDMessage msg);
 
     /**
      * handle duplicate key case
      */
-    public void handleDuplicateKey(String sName, String sHost, String sIP);
+    void handleDuplicateKey(String sName, String sHost, String sIP);
 
     /**
      * handle duplicate ip case
      */
-    public void handleDuplicateIp(String sName, String sHost, String sIP);
+    void handleDuplicateIp(String sName, String sHost, String sIP);
 
     /**
      * Allow duplicate copies running?
      */
-    public boolean allowDuplicate();
+    boolean allowDuplicate();
 
     /**
      * Get game description
      */
-    public DataMarshal getOnlineGame();
+    DataMarshal getOnlineGame();
 
     /**
      * Return true if two online game descriptions are same
      */
-    public boolean isEquivalentOnlineGame(DataMarshal one, DataMarshal two);
+    boolean isEquivalentOnlineGame(DataMarshal one, DataMarshal two);
 }

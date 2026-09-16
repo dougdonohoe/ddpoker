@@ -52,10 +52,10 @@ public interface PokerGameboardDelegate
      * if desired and return true if done so.  Return false
      * if no focus requested so Gameboard can do so.
      */
-    public boolean processRequestFocus();
+    boolean processRequestFocus();
 
     /**
      * Notify delegate that board is repainting, so resize control can repaint
      */
-    public void repainting(Graphics2D g);
+    void repainting(Graphics2D g);
 }

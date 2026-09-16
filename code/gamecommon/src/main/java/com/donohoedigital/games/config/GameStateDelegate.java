@@ -46,17 +46,17 @@ import com.donohoedigital.base.TypedHashMap;
  */
 public interface GameStateDelegate {
     
-    public boolean saveTerritory(Territory t);
+    boolean saveTerritory(Territory t);
  
-    public void prepopulateCustomIds(Object game, GameState state);
+    void prepopulateCustomIds(Object game, GameState state);
     
-    public boolean createNewInstance(Class cClass);
+    boolean createNewInstance(Class cClass);
     
-    public Object getInstance(Class cClass, GameState state, GameStateEntry entry);
+    Object getInstance(Class cClass, GameState state, GameStateEntry entry);
     
-    public void saveCustomData(GameState state);
+    void saveCustomData(GameState state);
     
-    public void loadCustomData(GameState state);
+    void loadCustomData(GameState state);
     
-    public String getBeginGamePhase(Object context, Object game, GameState state, TypedHashMap params);
+    String getBeginGamePhase(Object context, Object game, GameState state, TypedHashMap params);
 }

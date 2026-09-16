@@ -40,5 +40,5 @@ public interface LayoutListener extends Serializable {
     /**
      * Called before ExplicitLayout lays out its container.
      */
-    public void beforeLayout(ExplicitLayout layout);
+    void beforeLayout(ExplicitLayout layout);
 }

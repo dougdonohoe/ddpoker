@@ -44,5 +44,5 @@ package com.donohoedigital.comms;
  */
 public interface ObjectID
 {
-    public int getObjectID();
+    int getObjectID();
 }

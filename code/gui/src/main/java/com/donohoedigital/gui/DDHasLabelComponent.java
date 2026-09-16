@@ -46,6 +46,6 @@ package com.donohoedigital.gui;
  */
 public interface DDHasLabelComponent extends DDTextVisibleComponent {
     
-    public void setText(String s);
-    public String getText();
+    void setText(String s);
+    String getText();
 }

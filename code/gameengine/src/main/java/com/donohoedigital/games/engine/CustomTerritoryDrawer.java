@@ -49,6 +49,6 @@ import com.donohoedigital.games.config.Territory;
  */
 public interface CustomTerritoryDrawer {
   
-    public void drawTerritoryPart(Gameboard board, Graphics2D g, Territory t, GeneralPath path, 
+    void drawTerritoryPart(Gameboard board, Graphics2D g, Territory t, GeneralPath path, 
                                     Rectangle territoryBounds, int iPart);
 }

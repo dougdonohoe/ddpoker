@@ -34,5 +34,5 @@ package com.donohoedigital.games.poker;
 
 public interface PlayerActionListener
 {
-    public void playerActionPerformed(int action, int nAmount);
+    void playerActionPerformed(int action, int nAmount);
 }

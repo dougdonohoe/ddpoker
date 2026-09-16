@@ -46,11 +46,11 @@ import com.donohoedigital.games.config.MapPoint;
  */
 public interface DrawingUtilInterface {
     
-    public void delete(MapPoint point);
-    public void moveRelative(MapPoint point, int x, int y);
-    public void moveAllRelative(int x, int y);
-    public void scaleAllRelative(int amount);
-    public void changeFocus(MapPoint point);
-    public void processMouseClick(MouseEvent e);
-    public boolean verifyPointUnderMouse(MapPoint point);
+    void delete(MapPoint point);
+    void moveRelative(MapPoint point, int x, int y);
+    void moveAllRelative(int x, int y);
+    void scaleAllRelative(int amount);
+    void changeFocus(MapPoint point);
+    void processMouseClick(MouseEvent e);
+    boolean verifyPointUnderMouse(MapPoint point);
 }

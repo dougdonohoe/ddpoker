@@ -46,7 +46,7 @@ import java.awt.Font;
  */
 public interface DDTextVisibleComponent extends DDComponent {
 
-    public void setFont(Font f);
-    public Font getFont();
+    void setFont(Font f);
+    Font getFont();
     
 }

@@ -41,9 +41,9 @@ package com.donohoedigital.gui;
  */
 public interface DDProgressFeedback
 {
-    public boolean isStopRequested();
-    public void setMessage(String sMessage);
-    public void setPercentDone(int n);
-    public void setFinalResult(Object oResult);
-    public void setIntermediateResult(Object oResult);
+    boolean isStopRequested();
+    void setMessage(String sMessage);
+    void setPercentDone(int n);
+    void setFinalResult(Object oResult);
+    void setIntermediateResult(Object oResult);
 }

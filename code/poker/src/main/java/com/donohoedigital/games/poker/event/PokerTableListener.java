@@ -44,6 +44,6 @@ package com.donohoedigital.games.poker.event;
  */
 public interface PokerTableListener {
     
-    public void tableEventOccurred(PokerTableEvent event);
+    void tableEventOccurred(PokerTableEvent event);
     
 }

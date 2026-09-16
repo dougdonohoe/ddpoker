@@ -48,12 +48,12 @@ import java.awt.event.MouseEvent;
  */
 public interface TerritorySelectionListener {
     
-    public void mouseEntered(Gameboard g, Territory t);
+    void mouseEntered(Gameboard g, Territory t);
     
-    public void mouseExited(Gameboard g, Territory t);
+    void mouseExited(Gameboard g, Territory t);
     
-    public void territorySelected(Territory t, MouseEvent e);
+    void territorySelected(Territory t, MouseEvent e);
     
-    public boolean allowTerritorySelection(Territory t, MouseEvent e);
+    boolean allowTerritorySelection(Territory t, MouseEvent e);
     
 }

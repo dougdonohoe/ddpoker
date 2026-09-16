@@ -49,6 +49,6 @@ public interface OnlineMessageListener
     /**
      * called when message received
      */ 
-    public void messageReceived(OnlineMessage omsg);
+    void messageReceived(OnlineMessage omsg);
     
 }

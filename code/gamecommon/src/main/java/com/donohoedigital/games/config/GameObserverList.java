@@ -39,13 +39,13 @@ package com.donohoedigital.games.config;
  */
 public interface GameObserverList
 {
-    public GamePlayer getObserverAt(int nIndex);
+    GamePlayer getObserverAt(int nIndex);
 
-    public int getNumObservers();
+    int getNumObservers();
 
-    public void addObserver(GamePlayer player);
+    void addObserver(GamePlayer player);
 
-    public boolean containsObserver(GamePlayer player);
+    boolean containsObserver(GamePlayer player);
 
-    public void clearObserverList(int nNewCount);
+    void clearObserverList(int nNewCount);
 }

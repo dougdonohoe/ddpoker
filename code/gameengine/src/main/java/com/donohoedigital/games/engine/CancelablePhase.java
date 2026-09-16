@@ -41,5 +41,5 @@ package com.donohoedigital.games.engine;
  */
 public interface CancelablePhase
 {
-    public void cancelPhase();
+    void cancelPhase();
 }

@@ -36,9 +36,9 @@ package com.donohoedigital.games.poker.impexp;
 
 public interface ImpExp
 {
-    public String exportTournament(ImpExpHand ieHand);
+    String exportTournament(ImpExpHand ieHand);
 
-    public String exportHand(ImpExpHand ieHand);
+    String exportHand(ImpExpHand ieHand);
 
-    public void setPlayerName(String playerName);
+    void setPlayerName(String playerName);
 }
