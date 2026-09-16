@@ -220,19 +220,19 @@ public class Area
         Territory[] all = Territory.getTerritoryArrayCached();
         int nNum = 0;
         // first get count
-        for (int i = 0; i < all.length; i++)
+        for (Territory territory : all)
         {
-            if (all[i].getArea() == this && !all[i].isDecoration()) nNum++;
+            if (territory.getArea() == this && !territory.isDecoration()) nNum++;
         }
         
         // then create array
         int nCnt = 0;
         ts_ = new Territory[nNum];
-        for (int i = 0; i < all.length; i++)
+        for (Territory territory : all)
         {
-            if (all[i].getArea() == this && !all[i].isDecoration())
+            if (territory.getArea() == this && !territory.isDecoration())
             {
-                ts_[nCnt++] = all[i];
+                ts_[nCnt++] = territory;
             }
         }
         
@@ -365,9 +365,9 @@ public class Area
         Territory[] ts = getTerritories();
         GamePlayer player;
         
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            player = ts[i].getGamePlayer();
+            player = t.getGamePlayer();
             
             if (player != null)
             {
@@ -391,13 +391,13 @@ public class Area
     {
         int nCnt = 0;
         Territory[] ts = getTerritories();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            if (ts[i].getGamePlayer() != pl)
+            if (t.getGamePlayer() != pl)
             {
                     return false;
             }
-            else if (ts[i].getGamePlayer() == pl)
+            else if (t.getGamePlayer() == pl)
             {
                 nCnt++;
             }

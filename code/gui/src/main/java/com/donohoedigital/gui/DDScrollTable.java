@@ -97,9 +97,9 @@ public class DDScrollTable extends DDScrollPane
     {
         int nWidth = getVerticalScrollBarPolicy() == JScrollPane.VERTICAL_SCROLLBAR_NEVER ? 0 :
                      getVerticalScrollBar().getPreferredSize().width; // add some for scrollbar
-        for (int i = 0; i < columnWidths_.length; i++)
+        for (int columnWidth : columnWidths_)
         {
-            nWidth += columnWidths_[i];
+            nWidth += columnWidth;
         }
         Insets insets = getInsets();
         nWidth += (insets.left + insets.right);

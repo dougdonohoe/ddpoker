@@ -1529,10 +1529,8 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         // set dummy map to prevent updates upon exiting (due to lost focus)
         DMTypedHashMap dummy = new DMTypedHashMap();
         fillOptions();
-        DDOption dd;
-        for (int i = 0; i < options_.size(); i++)
+        for (DDOption dd : options_)
         {
-            dd = ((DDOption) options_.get(i));
             dd.setMap(dummy);
         }
     }
@@ -1547,10 +1545,8 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         leveltab_.reset();
 
         fillOptions();
-        DDOption dd;
-        for (int i = 0; i < options_.size(); i++)
+        for (DDOption dd : options_)
         {
-            dd = ((DDOption) options_.get(i));
             dd.resetToMap();
         }
     }

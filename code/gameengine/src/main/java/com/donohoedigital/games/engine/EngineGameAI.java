@@ -99,11 +99,11 @@ public abstract class EngineGameAI extends GameAI
     {
         Territory[] ts = Territory.getTerritoryArrayCached();
         myNum_ = 0;
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            if (ts[i].getGamePlayer() == gamePlayer_)
+            if (t.getGamePlayer() == gamePlayer_)
             {
-                my_[myNum_++] = ts[i];
+                my_[myNum_++] = t;
             }
         }
     }

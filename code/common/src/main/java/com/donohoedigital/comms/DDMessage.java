@@ -685,11 +685,9 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         {
             int nNumData = msgdata_.size();
             DMArrayList<Integer> sizes = new DMArrayList<>(nNumData);
-            MessageData data;
             
-            for (int i = 0; i < nNumData; i++)
+            for (MessageData data : msgdata_)
             {
-                data = msgdata_.get(i);
                 sizes.add(data.nSize_);
             }
             setList(PARAM_NUM_CHUNKS, sizes);
@@ -712,14 +710,11 @@ public class DDMessage extends TypedHashMap implements PostWriter, PostReader, D
         // data chunks
         if (msgdata_ != null && !msgdata_.isEmpty())
         {
-            int nNumData = msgdata_.size();
-            MessageData data;
             WritableByteChannel out = Channels.newChannel(output);
             long nSize;
             
-            for (int i = 0; i < nNumData; i++)
+            for (MessageData data : msgdata_)
             {
-                data = msgdata_.get(i);
                 nSize = data.nSize_;
                 
                 if (nSize == 0) continue;

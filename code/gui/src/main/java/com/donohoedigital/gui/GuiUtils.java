@@ -450,22 +450,18 @@ public class GuiUtils
         List<DDOption> options = new ArrayList<>();
         getDDOptions(container, options);
 
-        int nNum = options.size();
         int nMaxWidth = 0;
-        DDOption dd;
         JComponent label;
-        for (int i = 0; i < nNum; i++)
+        for (DDOption dd : options)
         {
-            dd = options.get(i);
             label = dd.getLabelComponent();
             if (label == null) continue;
             nMaxWidth = Math.max(nMaxWidth, label.getPreferredSize().width);
         }
 
         Dimension pref;
-        for (int i = 0; i < nNum; i++)
+        for (DDOption dd : options)
         {
-            dd = options.get(i);
             label = dd.getLabelComponent();
             if (label == null) continue;
             pref = label.getPreferredSize();

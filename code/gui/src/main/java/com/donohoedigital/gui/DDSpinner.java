@@ -84,17 +84,17 @@ public class DDSpinner extends JSpinner implements DDTextVisibleComponent
     {
         //GuiUtils.printChildren(this, 0);
         Component[] children = getComponents();
-        for (int i = 0; i < children.length; i++)
+        for (Component component : children)
         {
             
-            if (children[i] instanceof JButton)
+            if (component instanceof JButton)
             {   // this doesn't seem to do anything - must be do to UI
-                //((JButton)children[i]).setBorder(BorderFactory.createEmptyBorder());//.createBevelBorder(BevelBorder.RAISED));
-                children[i].setFocusable(false);
+                //((JButton)component).setBorder(BorderFactory.createEmptyBorder());//.createBevelBorder(BevelBorder.RAISED));
+                component.setFocusable(false);
             }
-            else if (children[i] instanceof JPanel)
+            else if (component instanceof JPanel)
             {
-                Component child = ((JPanel)children[i]).getComponent(0);
+                Component child = ((JPanel)component).getComponent(0);
                 if (child instanceof JTextComponent)
                 {
                     ((JTextComponent) child).setBorder(BorderFactory.createCompoundBorder(
@@ -117,12 +117,12 @@ public class DDSpinner extends JSpinner implements DDTextVisibleComponent
         if (bProtected_ == b) return;
         bProtected_ = b;
         Component[] children = getComponents();
-        for (int i = 0; i < children.length; i++)
+        for (Component component : children)
         {
             
-            if (children[i] instanceof JButton)
+            if (component instanceof JButton)
             {   
-                children[i].setEnabled(!b);
+                component.setEnabled(!b);
             }
         }
     }

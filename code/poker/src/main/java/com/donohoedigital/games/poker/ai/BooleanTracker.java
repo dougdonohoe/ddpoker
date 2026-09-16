@@ -204,9 +204,9 @@ public class BooleanTracker
         buf.append(entries_.length);
         buf.append(",");
 
-        for (int i = 0; i < entries_.length; ++i)
+        for (boolean entry : entries_)
         {
-            buf.append(entries_[i] ? "T":"F");
+            buf.append(entry ? "T":"F");
         }
 
         return buf.toString();

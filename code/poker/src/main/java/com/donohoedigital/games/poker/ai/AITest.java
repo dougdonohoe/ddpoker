@@ -204,16 +204,16 @@ public class AITest
 
             Arrays.sort(files);
 
-            for (int i = 0; i < files.length; ++i)
+            for (File file : files)
             {
                 try
                 {
-                    runTest(playerType_, errbuf, okbuf, files[i]);
+                    runTest(playerType_, errbuf, okbuf, file);
                 }
                 catch (IOException e)
                 {
                     buf.append("IO Exception processing ");
-                    buf.append(files[i].getName());
+                    buf.append(file.getName());
                     buf.append("<pre><tt>");
                     buf.append(e.toString());
                     buf.append("</tt></pre>");

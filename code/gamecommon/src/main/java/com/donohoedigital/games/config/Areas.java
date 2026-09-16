@@ -158,9 +158,9 @@ public class Areas extends TreeMap {
     public void calculateStats()
     {
         Area[] areas = getAreaArrayCached();
-        for (int i = 0; i < areas.length; i++)
+        for (Area area : areas)
         {
-            areas[i].calculateStats();
+            area.calculateStats();
         }
     }
 }

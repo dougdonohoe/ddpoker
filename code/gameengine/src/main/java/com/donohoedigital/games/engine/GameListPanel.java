@@ -491,9 +491,9 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
         {
             Arrays.sort(filesin, LISTSORTER);
             files = new ArrayList(filesin.length);
-            for (int i = 0; i < filesin.length; i++)
+            for (GameState gameState : filesin)
             {
-                files.add(filesin[i]);
+                files.add(gameState);
             }
         }
         

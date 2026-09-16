@@ -431,11 +431,11 @@ public class EngineUtils
     public static boolean isPreExistingAdjacent(Territory t, GamePlayer playerOwner, int nType)
     {
         Territory[] adjacentTerritories = t.getAdjacentTerritories();
-        for (int i = 0; i < adjacentTerritories.length; i++)
+        for (Territory adjacentTerritory : adjacentTerritories)
         {
-            if (adjacentTerritories[i].getGamePlayer() == playerOwner &&
-                adjacentTerritories[i].hasOwnerPiece(nType, playerOwner) &&
-                adjacentTerritories[i].getGamePiece(nType, playerOwner).getQuantity() > 0) return true;
+            if (adjacentTerritory.getGamePlayer() == playerOwner &&
+                adjacentTerritory.hasOwnerPiece(nType, playerOwner) &&
+                adjacentTerritory.getGamePiece(nType, playerOwner).getQuantity() > 0) return true;
         }
         return false;
     }

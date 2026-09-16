@@ -160,9 +160,9 @@ public class Territories extends TreeMap {
     {   
         // Create path in each territory
         Territory[] ts = getTerritoryArrayCached();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            ts[i].initForGame();
+            t.initForGame();
         }   
     }
     
@@ -174,9 +174,9 @@ public class Territories extends TreeMap {
     {   
         // Create path in each territory
         Territory[] ts = getTerritoryArrayCached();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            ts[i].createPath();
+            t.createPath();
         }   
     }
     
@@ -188,9 +188,9 @@ public class Territories extends TreeMap {
     {
         // figure adjacent territories
         Territory[] ts = getTerritoryArrayCached();
-        for (int i = 0; i < ts.length; i++)
+        for (Territory t : ts)
         {
-            ts[i].determineAdjacentTerritories(bClearBorders);
+            t.determineAdjacentTerritories(bClearBorders);
         }   
     }
 }

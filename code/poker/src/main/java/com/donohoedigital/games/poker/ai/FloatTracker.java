@@ -187,9 +187,9 @@ public class FloatTracker
         buf.append(entries_.length);
         buf.append(",");
 
-        for (int i = 0; i < entries_.length; ++i)
+        for (float entry : entries_)
         {
-            buf.append(entries_[i]);
+            buf.append(entry);
             buf.append(":");
         }
 
