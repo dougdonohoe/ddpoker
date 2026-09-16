@@ -84,9 +84,9 @@ public class UpNext extends DashboardItem
     }
 
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     /**
      * update level

@@ -135,9 +135,9 @@ public class NameValueToken implements DataMarshal
         return sb.toString();
     }
     
-    ////
-    //// Convience method for loading
-    ////
+    //
+    // Convience method for loading
+    //
     
     /**
      * create a NameValueToken from each entry in the map and insert into the 

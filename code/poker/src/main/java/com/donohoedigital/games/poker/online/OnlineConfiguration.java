@@ -205,7 +205,7 @@ public class OnlineConfiguration extends BasePhase implements PropertyChangeList
         test_.addActionListener(e ->
             testConnection());
 
-        ////// BOTTOM
+        // BOTTOM
         DDPanel bottom = new DDPanel();
         bottom.setBorderLayoutGap(0, 10);
         iptop.add(bottom, BorderLayout.SOUTH);

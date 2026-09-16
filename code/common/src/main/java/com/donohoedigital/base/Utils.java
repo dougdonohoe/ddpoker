@@ -976,9 +976,9 @@ public class Utils
         }
     }
 
-    ////
-    //// Time
-    ////
+    //
+    // Time
+    //
 
     private static long nSeq_ = 0;
 

@@ -638,9 +638,9 @@ public class EngineUtils
         return null;
     }
 
-    ///
-    /// cancelable phases
-    ///
+    //
+    // cancelable phases
+    //
 
     private static ArrayList cancelables_;
 

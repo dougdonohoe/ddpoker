@@ -853,9 +853,9 @@ public class Game extends TypedHashMap implements GameInfo, GamePlayerList, Game
         sBeginPhase_ = null;
     }
     
-    ////
-    //// PropertyChangeListener support - modeled after JComponent
-    ////
+    //
+    // PropertyChangeListener support - modeled after JComponent
+    //
     
     private SwingPropertyChangeSupport changeSupport;
     

@@ -1545,9 +1545,9 @@ public class PokerPlayer extends GamePlayer
         return handInfo_;
     }
 
-    ////
-    //// In game logic
-    ////
+    //
+    // In game logic
+    //
 
     // position categories - start at 0 for use in arrays
     public static final int EARLY = 0;
@@ -2030,9 +2030,9 @@ public class PokerPlayer extends GamePlayer
         }
     }
 
-    //////
-    ////// AI stats
-    //////
+    //
+    // AI stats
+    //
 
     private float nStrength_;
     private int nNumStraights_;

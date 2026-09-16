@@ -150,9 +150,9 @@ public class ScrollGameboard extends JViewport implements
         board_ = null;
     }
     
-    //////
-    ////// SIZE CHANGE logic
-    //////
+    //
+    // SIZE CHANGE logic
+    //
     
     /**
      * Setup resize sizes given starting nWidth/nHeight (smallest size)
@@ -352,9 +352,9 @@ public class ScrollGameboard extends JViewport implements
         board_.setLastMousePoint(pAfter);
     }
     
-    ////
-    //// Component Listener methods
-    ////
+    //
+    // Component Listener methods
+    //
     public void componentResized(ComponentEvent e)
     {
         int nWidth = getWidth();
@@ -377,9 +377,9 @@ public class ScrollGameboard extends JViewport implements
     /** EMPTY **/
     public void componentHidden(ComponentEvent e) {}    
     
-    //////
-    ////// AUTO SCROLLING logic
-    //////
+    //
+    // AUTO SCROLLING logic
+    //
     
     private Thread SCROLL_THREAD = null; 
     private int adjustx_;
@@ -653,9 +653,9 @@ public class ScrollGameboard extends JViewport implements
         board_.setPaintAtMouse(paintAtMouse, true);
     }
     
-    ///
-    /// Mouse Motion Listener
-    ///
+    //
+    // Mouse Motion Listener
+    //
     
     /** 
      * calls mouseMoved, since logic is same
@@ -690,9 +690,9 @@ public class ScrollGameboard extends JViewport implements
         board_.mouseMoved(e);
     }
     
-    ///
-    /// Mouse Listener
-    ///
+    //
+    // Mouse Listener
+    //
     
     /**
      * propagate to board
@@ -761,9 +761,9 @@ public class ScrollGameboard extends JViewport implements
         if (!isModalMode()) board_.mouseClicked(e);
     }
     
-    ///
-    /// Mouse Wheel Listener
-    ///
+    //
+    // Mouse Wheel Listener
+    //
     /** 
      * Scroll/Zoom if mouse wheel moved
      */
@@ -801,9 +801,9 @@ public class ScrollGameboard extends JViewport implements
         e.consume();
     }
     
-    ///
-    /// key actions
-    ///
+    //
+    // key actions
+    //
     private void scrollLeft()
     {
         scroll(-1, 0);
@@ -839,9 +839,9 @@ public class ScrollGameboard extends JViewport implements
         scroll(0, 10000);
     }
     
-    ///
-    /// helper
-    ///
+    //
+    // helper
+    //
     private void scroll(int adjustx, int adjusty)
     {
         adjustx_ = adjustx;
@@ -850,9 +850,9 @@ public class ScrollGameboard extends JViewport implements
         scrollBoard();
     }
 
-    ///
-    /// AWTListener/Focus methods for mouse scrolling
-    ///
+    //
+    // AWTListener/Focus methods for mouse scrolling
+    //
     
     /** 
      * Invoked when an event is dispatched in the AWT.
@@ -996,9 +996,9 @@ public class ScrollGameboard extends JViewport implements
         lastMouse_.y = e.getY();
     }
 
-    /////
-    ///// modal handler
-    /////
+    //
+    // modal handler
+    //
     
     // handler for modal panels
     ModalHandler handler_ = new ModalHandler();

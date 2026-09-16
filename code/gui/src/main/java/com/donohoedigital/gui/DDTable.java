@@ -144,9 +144,9 @@ public class DDTable extends JTable implements DDTextVisibleComponent, MouseList
         getColumnModel().getColumn(col).setCellRenderer(r);
     }
 
-    ////
-    //// Mouse listener for popup-menu
-    ////
+    //
+    // Mouse listener for popup-menu
+    //
 
     public void mouseClicked(MouseEvent e)
     {

@@ -143,9 +143,9 @@ public class PokerGameboard extends Gameboard
         super.requestFocus();
     }
 
-    //////
-    ////// Customizations
-    //////
+    //
+    // Customizations
+    //
 
     /**
      * update felt colors
@@ -507,9 +507,9 @@ public class PokerGameboard extends Gameboard
         if (delegate_ != null) delegate_.repainting(g);
     }
 
-    //////
-    ////// SIZE CHANGE logic
-    //////
+    //
+    // SIZE CHANGE logic
+    //
     
     /**
      * Setup resize sizes given starting nWidth/nHeight (smallest size)
@@ -526,9 +526,9 @@ public class PokerGameboard extends Gameboard
         setResizeDimensions(dPref);
     }
     
-    ////
-    //// territory data
-    ////
+    //
+    // territory data
+    //
     
     public static class TerritoryInfo
     {
@@ -551,9 +551,9 @@ public class PokerGameboard extends Gameboard
     }
 
 
-    ////
-    //// sample gameboard for table designer
-    ////
+    //
+    // sample gameboard for table designer
+    //
     public static class FauxPokerGameboard extends ImageComponent
     {
         Color top_, bottom_;

@@ -165,9 +165,9 @@ public class Showdown extends ChainPhase
             // cleanup % win (all-in)
             player.setAllInPerc(null);
 
-            ///
-            /// folded players
-            ///
+            //
+            // folded players
+            //
             if (player.isFolded())
             {
                 if (player.showFoldedHand())
@@ -199,9 +199,9 @@ public class Showdown extends ChainPhase
                 continue;
             }
 
-            ///
-            /// players who reached showdown
-            ///
+            //
+            // players who reached showdown
+            //
 
             // amount won
             nAmount = hhand.getWin(player);

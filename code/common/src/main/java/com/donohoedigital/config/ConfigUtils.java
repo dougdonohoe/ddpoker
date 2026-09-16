@@ -71,9 +71,9 @@ public class ConfigUtils
         logger = LogManager.getLogger(ConfigUtils.class);
     }
 
-    ///
-    /// Convenience functions for loading classes
-    ///
+    //
+    // Convenience functions for loading classes
+    //
 
     /**
      * Get a class given a class name

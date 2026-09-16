@@ -53,9 +53,9 @@ public class HoldemExpert {
     public HoldemExpert() {
     }
     
-    ////
-    //// Sklansky's starting hands
-    ////
+    //
+    // Sklansky's starting hands
+    //
     
     public static final int MULT = 100;
     

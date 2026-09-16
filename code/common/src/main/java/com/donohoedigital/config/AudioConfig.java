@@ -270,9 +270,9 @@ public class AudioConfig extends XMLConfigFileLoader
         }
     }
 
-    //////
-    ////// Background music
-    //////
+    //
+    // Background music
+    //
 
     private static AudioPlayer bgMusic_ = null;
     private static String sLoop_ = null;
@@ -389,9 +389,9 @@ public class AudioConfig extends XMLConfigFileLoader
         }
     }
 
-    ///////
-    /////// INIT - load config
-    ///////
+    //
+    // INIT - load config
+    //
 
     /**
      * Get audio def of given name

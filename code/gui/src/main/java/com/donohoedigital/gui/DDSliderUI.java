@@ -183,9 +183,9 @@ public class DDSliderUI extends MetalSliderUI
         return size;
     }
 
-    ///
-    /// ICONS: copied from MetalIconFactory since they are private.  Dumbasses.
-    ///
+    //
+    // ICONS: copied from MetalIconFactory since they are private.  Dumbasses.
+    //
 
     private static class VerticalSlider implements Icon, Serializable, UIResource
     {

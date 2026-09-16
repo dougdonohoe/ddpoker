@@ -369,9 +369,9 @@ public class Registration implements BaseModel<Long>
         setVersionAsString(getVersionAsString());
     }
 
-    ////
-    //// Helpers
-    ////
+    //
+    // Helpers
+    //
 
     /**
      * Is this a regular registration?

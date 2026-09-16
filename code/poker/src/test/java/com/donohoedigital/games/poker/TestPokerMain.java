@@ -88,9 +88,9 @@ public class TestPokerMain extends PokerMain
         game_ = p2p;
     }
 
-    ////
-    //// PokerMain overrides - hand out the fakes instead of binding anything
-    ////
+    //
+    // PokerMain overrides - hand out the fakes instead of binding anything
+    //
 
     @Override
     PokerConnectionServer udpServer()

@@ -86,9 +86,9 @@ public abstract class JpaBaseDao<T extends BaseModel<ID>, ID extends Serializabl
         return persistentModelClass;
     }
 
-    ///
-    /// BaseDao Implementation
-    ///
+    //
+    // BaseDao Implementation
+    //
 
     /**
      * return name of class for use in queries
@@ -159,9 +159,9 @@ public abstract class JpaBaseDao<T extends BaseModel<ID>, ID extends Serializabl
         return entityManager.createQuery("select x from " + getName() + " x order by x.id").getResultList();
     }
 
-    ////
-    //// Common convienence methods for subclasses
-    ////
+    //
+    // Common convienence methods for subclasses
+    //
 
     /**
      * For calls returning single item using JPQL.  Caller must format query properly with numbered parameters (?#).

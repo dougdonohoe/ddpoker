@@ -121,7 +121,7 @@ public class EngineGamePieceComponent extends JComponent
     public void drawImage(Graphics2D g)
     {
         if (piece_ == null) return;
-        /// draw image of piece
+        // draw image of piece
         
         
         ImageComponent ic = piece_.getImageComponent();

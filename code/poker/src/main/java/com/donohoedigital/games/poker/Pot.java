@@ -244,9 +244,9 @@ public class Pot implements DataMarshal
                nRound_ + "." + nSeq_ + "  (base: " + nBase_ + ")  (side: " + nSideBet_ + ")  (CHIPS: " + nChips_ + ")   Players: " + sb;
     }
 
-    ////
-    //// Save/Load
-    ////
+    //
+    // Save/Load
+    //
 
     public void demarshal(MsgState state, String sData)
     {

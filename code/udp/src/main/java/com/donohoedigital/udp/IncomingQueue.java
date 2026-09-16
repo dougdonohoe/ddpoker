@@ -147,9 +147,9 @@ public class IncomingQueue
         }
     }
 
-    ////
-    //// DISPATCH
-    ////
+    //
+    // DISPATCH
+    //
 
     private final ArrayList<UDPData> process_ = new ArrayList<>(10);
 

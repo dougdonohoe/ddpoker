@@ -156,9 +156,9 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         header.setText(PropertyConfig.getMessage("msg.lobby.header"));
         left.add(GuiUtils.CENTER(header), BorderLayout.NORTH);
 
-        ///
-        /// player list table
-        ///
+        //
+        // player list table
+        //
         DDPanel playerbase = new DDPanel();
         left.add(playerbase, BorderLayout.CENTER);
 
@@ -385,9 +385,9 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         return model_.getPlayer(n);
     }
 
-    ////
-    //// Table menu interface
-    ////
+    //
+    // Table menu interface
+    //
 
     public boolean isItemsToBeAdded(DDTable table)
     {
@@ -460,9 +460,9 @@ public class OnlineLobby extends BasePhase implements ChatHandler, DDTable.Table
         }
     }
 
-    ////
-    //// ChatManager (used to display ban/mute messages only)
-    ////
+    //
+    // ChatManager (used to display ban/mute messages only)
+    //
 
     public void sendChat(int nPlayerID, String sMessage) { }
 

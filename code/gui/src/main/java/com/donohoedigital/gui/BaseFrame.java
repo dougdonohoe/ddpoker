@@ -257,9 +257,9 @@ public class BaseFrame extends JFrame implements DDWindow
         return device_.getDisplayMode();
     }
 
-    ////
-    //// Help widget stuff - keep same in BaseFrame and InternalDialog
-    ////
+    //
+    // Help widget stuff - keep same in BaseFrame and InternalDialog
+    //
 
     private JTextComponent tHelp_ = null;
     private boolean bIgnore_ = false;
@@ -353,9 +353,9 @@ public class BaseFrame extends JFrame implements DDWindow
         bIgnore_ = true;
     }
 
-    ////
-    //// Modal stuff
-    ////
+    //
+    // Modal stuff
+    //
 
     // list of all logged modals
     private final List<Modal> logged_ = new ArrayList<>();

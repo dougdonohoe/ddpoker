@@ -127,9 +127,9 @@ public abstract class EngineGameAI extends GameAI
         return myNum_;
     }
 
-    /////
-    ///// Marshalling code
-    /////
+    //
+    // Marshalling code
+    //
     
     /**
      * read from string

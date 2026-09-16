@@ -96,9 +96,9 @@ public class PlayerListDialog extends DialogPhase implements PropertyChangeListe
         data.setBorder(BorderFactory.createEmptyBorder(10,10,5,10));
         data.setBorderLayoutGap(10,0);
 
-        ///
-        /// entry field and buttons
-        ///
+        //
+        // entry field and buttons
+        //
         DDPanel top = new DDPanel();
         top.setBorderLayoutGap(0, 10);
         data.add(top, BorderLayout.NORTH);
@@ -140,9 +140,9 @@ public class PlayerListDialog extends DialogPhase implements PropertyChangeListe
         buttonbase.add(delete_);
         top.add(GuiUtils.CENTER(buttonbase), BorderLayout.EAST);
 
-        ///
-        /// player list (tabs)
-        ///
+        //
+        // player list (tabs)
+        //
 
         tabs_ = new DDTabbedPane(STYLE, null, JTabbedPane.TOP);
         //tabs_.setOpaque(false);

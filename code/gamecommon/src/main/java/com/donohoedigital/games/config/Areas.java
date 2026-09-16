@@ -110,9 +110,9 @@ public class Areas extends TreeMap {
         }   
     }
     
-    ////
-    //// GAME MODE FUNCTIONALITY
-    ////
+    //
+    // GAME MODE FUNCTIONALITY
+    //
         
     /**
      * Get array of areas to avoid using iters.

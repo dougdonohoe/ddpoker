@@ -680,9 +680,9 @@ public abstract class ShowPokerTable extends ChainPhase implements
         return false;
     }
 
-    ////
-    //// modal handling
-    ////
+    //
+    // modal handling
+    //
 
     // count modals
     int nModal_ = 0;
@@ -705,9 +705,9 @@ public abstract class ShowPokerTable extends ChainPhase implements
         //logger.debug("Finish: " + nModal_);
     }
 
-    ////
-    //// Debugging AI
-    ////
+    //
+    // Debugging AI
+    //
 
     public String getDebugDisplay(Territory t)
     {

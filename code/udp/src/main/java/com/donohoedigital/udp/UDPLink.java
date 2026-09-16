@@ -802,9 +802,9 @@ public class UDPLink
         }
     }
 
-    /////
-    ///// INCOMING METHODS
-    /////
+    //
+    // INCOMING METHODS
+    //
 
     private long lastNotification_;
 

@@ -112,9 +112,9 @@ public class Territories extends TreeMap {
         }   
     }
     
-    ////
-    //// GAME MODE FUNCTIONALITY
-    ////
+    //
+    // GAME MODE FUNCTIONALITY
+    //
     
     /**
      * Get array of territories to avoid using iters.

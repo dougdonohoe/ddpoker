@@ -307,7 +307,7 @@ public class HandInfoFaster
             }
         }
         
-        /// if high is set, we have a straight
+        // if high is set, we have a straight
         if (high == 0) return false;
         
         // store new high card

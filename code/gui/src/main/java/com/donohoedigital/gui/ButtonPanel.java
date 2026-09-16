@@ -253,9 +253,9 @@ public class ButtonPanel extends DDPanel implements MouseListener
         repaint();
     }
     
-    ///
-    /// Mouse Listener methods
-    ///
+    //
+    // Mouse Listener methods
+    //
     public void mouseClicked(MouseEvent e) {
     }
     
@@ -296,9 +296,9 @@ public class ButtonPanel extends DDPanel implements MouseListener
         repaint();
     }
     
-    ///
-    /// Painting
-    ///
+    //
+    // Painting
+    //
     
     /**
      * Swing doesn't exactly do semi-transparent correctly unless

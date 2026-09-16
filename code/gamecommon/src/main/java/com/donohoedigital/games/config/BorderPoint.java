@@ -181,9 +181,9 @@ public class BorderPoint extends MapPoint
         return msg.toString();
     }
     
-    ///
-    /// UI helper methods
-    ///
+    //
+    // UI helper methods
+    //
     
     // current (active) border in UI
     private Border bCurrentBorder_;

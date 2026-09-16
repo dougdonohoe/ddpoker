@@ -299,9 +299,9 @@ public class Token
         }
     }
     
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
     
     /**
      * Return this piece encoded as a game state entry

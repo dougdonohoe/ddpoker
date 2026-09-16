@@ -394,9 +394,9 @@ public class DrawingUtil implements KeyListener, MouseMotionListener, MouseListe
     }
     
     
-    ///
-    /// Mouse Motion Listener methods
-    ///
+    //
+    // Mouse Motion Listener methods
+    //
     
     /**
      * Set flag to indicate whether mouse is inside this component
@@ -434,9 +434,9 @@ public class DrawingUtil implements KeyListener, MouseMotionListener, MouseListe
         setCursor();
     }
     
-    ///
-    /// Mouse Listener methods
-    ///
+    //
+    // Mouse Listener methods
+    //
     
     public void mouseClicked(MouseEvent e) {
         component_.requestFocus(); // make sure we have focus

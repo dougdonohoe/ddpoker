@@ -775,9 +775,9 @@ public class ChatPanel extends DDPanel implements PropertyChangeListener, ChatHa
         }
     }
 
-    /////
-    ///// TESTING CODE
-    /////
+    //
+    // TESTING CODE
+    //
 
     private int CNT = 0;
     private TestThread test_;

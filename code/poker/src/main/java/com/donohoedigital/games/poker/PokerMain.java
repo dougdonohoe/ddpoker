@@ -484,9 +484,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         return new Dimension(width, height);
     }
 
-    ////
-    //// Player names
-    ////
+    //
+    // Player names
+    //
 
     private final List<String> names_ = new ArrayList<>();
 
@@ -526,9 +526,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         }
     }
 
-    ////
-    //// Peer2Peer stuff
-    ////
+    //
+    // Peer2Peer stuff
+    //
 
     private PokerConnectionServer p2p_;
     private PokerUDPServer udp_;
@@ -849,9 +849,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         connectionClosing(new PokerConnection(channel));
     }
 
-    ////
-    //// UDPManagerMonitor
-    ////
+    //
+    // UDPManagerMonitor
+    //
 
     public void monitorEvent(UDPManagerEvent event)
     {
@@ -874,9 +874,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         }
     }
 
-    ////
-    //// UDPLinkMonitor (UDP)
-    ////
+    //
+    // UDPLinkMonitor (UDP)
+    //
 
     public void monitorEvent(UDPLinkEvent event)
     {
@@ -1075,9 +1075,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         }
     }
 
-    ////
-    //// UDPLinkHandler interface
-    ////
+    //
+    // UDPLinkHandler interface
+    //
 
     public int getTimeout(UDPLink link)
     {
@@ -1094,9 +1094,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         return getTimeout(link); // we don't ues this in poker
     }
 
-    ////
-    //// Chat
-    ////
+    //
+    // Chat
+    //
 
     private ChatHandler chatHandler_;
 

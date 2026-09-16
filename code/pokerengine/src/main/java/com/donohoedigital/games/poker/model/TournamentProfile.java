@@ -1925,9 +1925,9 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
                 (TOURNAMENT_DIR, Utils.getFilenameFilter(SaveFile.DELIM + PROFILE_EXT, PROFILE_BEGIN), TournamentProfile.class, false);
     }
 
-    ////
-    //// DataMarshal 
-    ////
+    //
+    // DataMarshal 
+    //
 
     public void demarshal(MsgState state, String sData)
     {
@@ -1956,9 +1956,9 @@ public class TournamentProfile extends BaseProfile implements DataMarshal, Simpl
         return writer.toString();
     }
 
-    ////
-    //// XML Encoding
-    ////
+    //
+    // XML Encoding
+    //
 
     public void encodeXML(SimpleXMLEncoder encoder)
     {

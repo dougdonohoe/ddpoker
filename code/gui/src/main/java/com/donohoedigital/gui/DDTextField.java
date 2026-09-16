@@ -293,9 +293,9 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
         super.paintComponent(g);
     }
 
-    ////
-    //// Key listener
-    ////
+    //
+    // Key listener
+    //
     private int keypressed = 0;
 
     /**
@@ -598,9 +598,9 @@ public class DDTextField extends JFormattedTextField implements DDTextVisibleCom
         bMouse_ = false;
     }
 
-    ////
-    //// Custom help
-    ////
+    //
+    // Custom help
+    //
 
     private String sHelp_;
 

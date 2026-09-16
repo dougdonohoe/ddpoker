@@ -64,9 +64,9 @@ public class HandStrengthDash extends Odds
         return sStrength_;
     }
 
-	///
-    /// display logic
-    ///
+	//
+    // display logic
+    //
 
     protected String getDisplay(int nRound, HoldemHand hhand, PokerPlayer asViewedBy, Hand hand)
     {

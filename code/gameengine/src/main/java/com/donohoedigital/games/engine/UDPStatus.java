@@ -119,9 +119,9 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
         DDPanel left = new DDPanel();
         left.setBorderLayoutGap(3, 0);
 
-        ///
-        /// player list table
-        ///
+        //
+        // player list table
+        //
         DDPanel statsbase = new DDPanel();
         statsScroll_ = new DDScrollTable(GuiManager.DEFAULT, STYLE, BEVEL_STYLE, COLUMN_NAMES, COLUMN_WIDTHS);
         statsScroll_.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -407,9 +407,9 @@ public class UDPStatus extends BasePhase implements DDTable.TableMenuItems
 //        return model_.getPlayer(n);
 //    }
 
-    ////
-    //// Table menu interface
-    ////
+    //
+    // Table menu interface
+    //
 
     public boolean isItemsToBeAdded(DDTable table)
     {

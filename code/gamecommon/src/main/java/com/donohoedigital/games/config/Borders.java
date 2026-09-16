@@ -219,9 +219,9 @@ public class Borders extends TreeSet<Border> {
         writer.printNewLine();
     }
     
-    ////
-    //// GAME MODE FUNCTIONALITY
-    ////
+    //
+    // GAME MODE FUNCTIONALITY
+    //
     
 //  NOT CURRENTLY USED  
 //    /**

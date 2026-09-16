@@ -248,9 +248,9 @@ public abstract class OptionMenu extends BasePhase implements ChangeListener, Gu
         checkButtons();
     }
 
-    ////
-    //// Helper static methods
-    ////
+    //
+    // Helper static methods
+    //
 
     /**
      * Add option to base and options list, return option

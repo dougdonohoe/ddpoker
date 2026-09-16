@@ -312,9 +312,9 @@ public class GamePlayer implements ObjectID
     }
     
     
-    ////
-    //// Online game methods
-    ////
+    //
+    // Online game methods
+    //
     
     private boolean bDirty_ = false;
     
@@ -328,9 +328,9 @@ public class GamePlayer implements ObjectID
         return bDirty_;
     }
     
-    ////
-    //// PropertyChangeListener support - modeled after JComponent
-    ////
+    //
+    // PropertyChangeListener support - modeled after JComponent
+    //
     
     private SwingPropertyChangeSupport changeSupport;
     

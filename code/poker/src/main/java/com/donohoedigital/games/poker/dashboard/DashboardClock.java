@@ -132,9 +132,9 @@ public class DashboardClock extends DashboardItem implements GameClockListener
         updateLevel();
     }
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     protected void updateInfo()
     {
@@ -203,9 +203,9 @@ public class DashboardClock extends DashboardItem implements GameClockListener
 
     }
 
-    ////
-    //// GameClockListener
-    ////
+    //
+    // GameClockListener
+    //
 
     public void gameClockStarted(GameClock clock)
     {

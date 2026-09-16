@@ -105,11 +105,11 @@ public class PokerGameState extends GameState implements PropertyChangeListener
         return PokerConstants.START_OTHER_ID;
     }
 
-    ////
-    //// Stuff below only used as a MsgState for handling online game messages
-    //// that have id references to items not in the message itself (e.g.,
-    //// HandActions that reference a player
-    ////
+    //
+    // Stuff below only used as a MsgState for handling online game messages
+    // that have id references to items not in the message itself (e.g.,
+    // HandActions that reference a player
+    //
 
     /**
      * Used in online games on the receiving end

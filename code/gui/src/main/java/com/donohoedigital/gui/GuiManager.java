@@ -327,9 +327,9 @@ public final class GuiManager implements MouseListener
         }
     }
 
-    ////
-    //// MouseListener
-    ////
+    //
+    // MouseListener
+    //
 
     /**
      * when get mouse entered, set help text

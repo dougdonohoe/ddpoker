@@ -187,9 +187,9 @@ public class DashboardPlayerInfo extends DashboardItem implements TerritorySelec
     }
 
 
-    ////
-    //// Territory listener - used to change display when mouse moves
-    ////
+    //
+    // Territory listener - used to change display when mouse moves
+    //
 
     public void mouseEntered(Gameboard g, Territory t)
     {

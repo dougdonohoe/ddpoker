@@ -495,9 +495,9 @@ public class HoldemSimulator
     }
 
 
-    ////
-    //// Items below go together - not sure what is the purpose since Sam doesn't comment his code
-    ////
+    //
+    // Items below go together - not sure what is the purpose since Sam doesn't comment his code
+    //
 
     /**
      * Simulate active hands in given HoldemHand over handCount trials, replacing

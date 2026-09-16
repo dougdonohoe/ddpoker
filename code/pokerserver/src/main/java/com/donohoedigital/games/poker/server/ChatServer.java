@@ -115,9 +115,9 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
         return (link.getLocalIP().getPort() == nPort_);
     }
 
-    ////
-    //// UDPLinkMonitor (UDP)
-    ////
+    //
+    // UDPLinkMonitor (UDP)
+    //
 
     public void monitorEvent(UDPLinkEvent event)
     {
@@ -483,9 +483,9 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
         }
     }
 
-    ////
-    //// UDPManagerMonitor
-    ////
+    //
+    // UDPManagerMonitor
+    //
 
     public void monitorEvent(UDPManagerEvent event)
     {
@@ -507,9 +507,9 @@ public class ChatServer implements UDPLinkHandler, UDPManagerMonitor, UDPLinkMon
         }
     }
 
-    ////
-    //// UDPLinkHandler interface
-    ////
+    //
+    // UDPLinkHandler interface
+    //
 
     public int getTimeout(UDPLink link)
     {

@@ -632,9 +632,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return s;
     }
     
-    ////
-    //// GAME MODE FUNCTIONALITY
-    ////
+    //
+    // GAME MODE FUNCTIONALITY
+    //
     
     private Territory[] adjacentTerritories_;
     private int nNumAdjLand_ = 0;
@@ -755,9 +755,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return adjacentTerritories_;
     }
        
-    /////
-    ///// Path/drawing stuff related to territories
-    /////
+    //
+    // Path/drawing stuff related to territories
+    //
     GeneralPath path_;      // path as defined in config file
     Rectangle pathBounds_;  // bounds of this path
      
@@ -1070,9 +1070,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         impl_ = new GamePieceContainerImpl(this);
     }
     
-    ////
-    //// GUI helpers for selection/mouse
-    ////
+    //
+    // GUI helpers for selection/mouse
+    //
     protected boolean bSelected_ = false;
     protected boolean bUnderMouse_ = false;
     
@@ -1108,16 +1108,16 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return bUnderMouse_;
     }
 
-    ///// Related to below
+    // Related to below
     
     public GamePlayer getGamePlayerPrevious()
     {
         return previousOwner_;
     }
     
-    /////
-    ///// GamePieceContainer methods
-    /////
+    //
+    // GamePieceContainer methods
+    //
     
     public void setGamePlayer(GamePlayer player) {
         GamePlayer old = impl_.getGamePlayer();
@@ -1168,9 +1168,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return impl_.getMap();
     }
 
-    ////
-    //// Territory helper methods
-    ////
+    //
+    // Territory helper methods
+    //
     
     /**
      * Return true if this territories owner has a piece of the given type
@@ -1263,9 +1263,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return false;
     }
     
-    ////
-    //// data/list for storing user data list of territories related to this one
-    ////
+    //
+    // data/list for storing user data list of territories related to this one
+    //
     
     private DMArrayList userTerritory_ = new DMArrayList();
     
@@ -1298,9 +1298,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         nUserInt_ = n;
     }
     
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
     
     /**
      * Return this piece encoded as a game state entry
@@ -1444,9 +1444,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return getID();
     }   
     
-    ////
-    //// More flags for drawing / other (DATA BELOW HERE NOT MARSHALLED/SAVED)
-    ////
+    //
+    // More flags for drawing / other (DATA BELOW HERE NOT MARSHALLED/SAVED)
+    //
     
     private boolean bUserFlag_ = false;
     
@@ -1466,9 +1466,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return bUserFlag_;
     }
     
-    ////
-    //// Online game methods
-    ////
+    //
+    // Online game methods
+    //
     
     private boolean bDirty_ = false;
     
@@ -1517,9 +1517,9 @@ public class Territory implements GamePieceContainer, ObjectID, Comparable
         return a_.getAreaArrayCached();
     }
     
-    ////
-    //// AI spurred methods
-    ////
+    //
+    // AI spurred methods
+    //
     
     private Object oUser_;
     

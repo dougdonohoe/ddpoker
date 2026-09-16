@@ -502,9 +502,9 @@ public abstract class GamePiece implements Comparable
         return bUnderMouse_;
     }
     
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
     
     /**
      * Return this piece encoded as a game state entry.   If bAdd is true,

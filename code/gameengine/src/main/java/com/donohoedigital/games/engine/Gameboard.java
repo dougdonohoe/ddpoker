@@ -511,9 +511,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         return mapDefaultSize_;
     }
     
-    ///
-    /// Drawing methods
-    /// 
+    //
+    // Drawing methods
+    // 
  
     
     private int CNT = 0;
@@ -1119,9 +1119,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         return paintAtMouse_;
     }
     
-    ///
-    /// convienence methods
-    ///
+    //
+    // convienence methods
+    //
     
     Point lastPointFromAWT_ = null;
     private int prevMouseX_ = 0;
@@ -1340,9 +1340,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         return pieceAtMouse_;
     }
 
-    ///
-    /// Territory listeners
-    ///
+    //
+    // Territory listeners
+    //
     
     private final List<TerritorySelectionListener> tlisteners_ = new ArrayList<>();
     private final List<GamePieceSelectionListener> elisteners_ = new ArrayList<>();
@@ -1695,9 +1695,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         }
     }
     
-    ////
-    //// Scrollable interface methods (and other scroll stuff)
-    ////
+    //
+    // Scrollable interface methods (and other scroll stuff)
+    //
     
     private boolean bScrolling_ = false;
     
@@ -1866,9 +1866,9 @@ public class Gameboard extends ImageComponent implements Scrollable,
         }
     }
     
-    ///
-    /// Cursor
-    ///
+    //
+    // Cursor
+    //
     
     Cursor cursor_ = getCursor();
     Cursor overrideCursor_ = null;

@@ -189,9 +189,9 @@ public class Area
     }
     
     
-    ////
-    //// GAME MODE FUNCTIONALITY
-    ////
+    //
+    // GAME MODE FUNCTIONALITY
+    //
     
     Territory[] ts_ = null;
     private int nNumRegions_;
@@ -407,9 +407,9 @@ public class Area
         return (nCnt > 0);
     }
     
-    ////
-    //// AI spurred methods
-    ////
+    //
+    // AI spurred methods
+    //
     
     private Object oUser_;
     

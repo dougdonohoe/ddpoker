@@ -519,9 +519,9 @@ public class UDPManager extends Thread implements Comparator<UDPLink>
         }
     }
 
-    ////
-    //// Stats - calculate bytes per second over last sample interval
-    ////
+    //
+    // Stats - calculate bytes per second over last sample interval
+    //
 
 
     // calc stats interval - every second

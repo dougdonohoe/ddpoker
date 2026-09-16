@@ -95,9 +95,9 @@ public class MyTable extends DashboardItem implements ActionListener
         return table.getNumber();
     }
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     /**
      * update level

@@ -182,9 +182,9 @@ public class OnlineProfileServiceImpl implements OnlineProfileService
         return dao.getOnlineProfilePurgeSummary(count, offset, pagesize);
     }
 
-    ///
-    /// internal support methods
-    ///
+    //
+    // internal support methods
+    //
 
     private static final int PASSWORD_LENGTH = 8;
 

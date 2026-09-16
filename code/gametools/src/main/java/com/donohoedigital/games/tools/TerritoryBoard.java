@@ -277,9 +277,9 @@ public class TerritoryBoard extends Gameboard implements KeyListener, DrawingUti
         return false;
     }
     
-    ///
-    /// Key Listener methods
-    ///
+    //
+    // Key Listener methods
+    //
     
     /** 
      * Handle specific key presses not covered by DrawingUtil

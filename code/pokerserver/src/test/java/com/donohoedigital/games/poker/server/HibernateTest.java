@@ -116,7 +116,7 @@ public class HibernateTest
         fetchTx.commit();
         fetchEm.close();
 
-        /// delete
+        // delete
         EntityManager delEm = emf.createEntityManager();
         EntityTransaction delTx = delEm.getTransaction();
         delTx.begin();

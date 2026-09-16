@@ -238,9 +238,9 @@ public class DDTextArea extends JTextArea implements DDTextVisibleComponent,
         }
     }
 
-    ////
-    //// Key listener 
-    ////
+    //
+    // Key listener 
+    //
     private boolean keypressed = false;
 
     public void keyPressed(KeyEvent e)
@@ -414,9 +414,9 @@ public class DDTextArea extends JTextArea implements DDTextVisibleComponent,
         return bValid_;
     }
 
-    ////
-    //// DocumentListener methods
-    ////
+    //
+    // DocumentListener methods
+    //
 
     /**
      * calls regexpValidate()

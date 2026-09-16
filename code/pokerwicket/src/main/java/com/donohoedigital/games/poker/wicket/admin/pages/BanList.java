@@ -157,9 +157,9 @@ public class BanList extends AdminPokerPage
         }
     }
 
-    ////
-    //// List
-    ////
+    //
+    // List
+    //
 
     private class BanData extends PageableServiceProvider<BannedKey>
     {

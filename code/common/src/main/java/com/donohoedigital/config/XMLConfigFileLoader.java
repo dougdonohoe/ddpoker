@@ -300,9 +300,9 @@ public class XMLConfigFileLoader implements ErrorHandler
         return str.toString();
     }
 
-    ///
-    /// Convienence functions for parsing documents
-    ///
+    //
+    // Convienence functions for parsing documents
+    //
 
     /**
      * Return String array of contents of children with given name
@@ -891,9 +891,9 @@ public class XMLConfigFileLoader implements ErrorHandler
         return sName + " " + sType + " missing in " + sElementName + sLocation;
     }
 
-    ///
-    /// Debugging functions
-    ///
+    //
+    // Debugging functions
+    //
 
     /**
      * Print Jdom element and its children

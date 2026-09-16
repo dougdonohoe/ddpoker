@@ -84,9 +84,9 @@ public class TokenAction {
         return "Moved " + nMovesUsed_ + " from " + (from_ != null ? from_.getName() : "null");
     }
     
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
     
     /**
      * Return this piece encoded as a game state entry

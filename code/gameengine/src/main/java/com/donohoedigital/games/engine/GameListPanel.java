@@ -206,9 +206,9 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
             savebase.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
             base.add(savebase, BorderLayout.CENTER);
 
-            ////
-            //// Title Area
-            ////
+            //
+            // Title Area
+            //
             DDPanel titlearea = new DDPanel();
             savebase.add(titlearea, BorderLayout.NORTH);
 
@@ -221,9 +221,9 @@ public final class GameListPanel extends DDPanel implements ListSelectionListene
             delete_.addActionListener(this);
             titlearea.add(delete_, BorderLayout.EAST);
 
-            ////
-            //// Table
-            ////
+            //
+            // Table
+            //
             saveScroll_ = new DDScrollTable(GuiManager.DEFAULT, STYLE, "BrushedMetal", COLUMN_NAMES, COLUMN_WIDTHS);
             saveScroll_.setPreferredSize(new Dimension(saveScroll_.getPreferredWidth(), 200));
             savebase.add(saveScroll_, BorderLayout.CENTER);

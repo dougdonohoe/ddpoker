@@ -128,9 +128,9 @@ public class OnlineProfileSearch extends AdminPokerPage
         );
     }
 
-    ////
-    //// List
-    ////
+    //
+    // List
+    //
 
     class SearchData extends PageableServiceProvider<OnlineProfile>
     {

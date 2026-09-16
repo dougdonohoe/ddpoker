@@ -337,9 +337,9 @@ public class GameboardConfig extends XMLConfigFileLoader
         writer.printElementEndLine(GAMEBOARD_TAG, nIndent);
     }
     
-    ////
-    //// GAME MODE FUNCTIONALITY
-    ////
+    //
+    // GAME MODE FUNCTIONALITY
+    //
     
     boolean bSave_ = true;
     

@@ -145,9 +145,9 @@ public class Deck extends DMArrayList<Card>
         }
     }
 
-    ////
-    //// shuffle logic borrowed from Collections
-    ////
+    //
+    // shuffle logic borrowed from Collections
+    //
 
     /**
      * shuffle

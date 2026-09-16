@@ -215,9 +215,9 @@ public class ResultsPiece extends PokerGamePiece
         }
     }
     
-    ////
-    //// Save/Load logic
-    ////
+    //
+    // Save/Load logic
+    //
     
     /**
      * Return this piece encoded as a game state entry

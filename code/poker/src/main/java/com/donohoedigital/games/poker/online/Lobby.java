@@ -179,9 +179,9 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
         west.setBorderLayoutGap(10, 0);
         middle.add(west, BorderLayout.WEST);
 
-        ///
-        /// player list
-        ///
+        //
+        // player list
+        //
         playerborder_ = new DDLabelBorder("playerlist", STYLE);
         west.add(playerborder_, BorderLayout.CENTER);
         DDPanel playerbase = new DDPanel();
@@ -218,9 +218,9 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
         }
 
 
-        ///
-        /// observer list
-        ///
+        //
+        // observer list
+        //
         observerborder_ = new DDLabelBorder("observerlist", STYLE);
         west.add(observerborder_, BorderLayout.SOUTH);
         DDPanel observerbase = new DDPanel();
@@ -241,14 +241,14 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
         otable_.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         otable_.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        /////// RIGHT SIDE ///////
+        // RIGHT SIDE ///////
         DDPanel rightbase = new DDPanel();
         rightbase.setBorderLayoutGap(10, 0);
         middle.add(rightbase, BorderLayout.CENTER);
         
-        ///
-        /// URLs
-        ///
+        //
+        // URLs
+        //
         if (bHost_)
         {
             rightbase.add(createURLPanel(game_, STYLE, "LobbyURL", "BrushedMetal", 20), BorderLayout.NORTH);
@@ -258,9 +258,9 @@ public class Lobby extends BasePhase implements ChangeListener, PropertyChangeLi
             rightbase.add(createStatusPanel(STYLE, "LobbyURL"), BorderLayout.NORTH);
         }
 
-        ///
-        /// chat
-        ///
+        //
+        // chat
+        //
         DDLabelBorder chatborder = new DDLabelBorder("chat", STYLE);
         rightbase.add(chatborder, BorderLayout.CENTER);
         DDPanel chatbase = new DDPanel();

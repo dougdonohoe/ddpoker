@@ -791,9 +791,9 @@ public class InternalDialog extends JInternalFrame implements DDWindow
     }
 
 
-    ////
-    //// Help widget stuff - keep same in BaseFrame and InternalDialog
-    ////
+    //
+    // Help widget stuff - keep same in BaseFrame and InternalDialog
+    //
 
     private JTextComponent tHelp_ = null;
     private boolean bIgnore_ = false;

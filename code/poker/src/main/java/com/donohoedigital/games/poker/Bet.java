@@ -491,9 +491,9 @@ public class Bet extends ChainPhase implements PlayerActionListener, CancelableP
     }
 
 
-    /////
-    ///// Debugging
-    /////
+    //
+    // Debugging
+    //
 
     private static BetDebug betDebugger = null;
 

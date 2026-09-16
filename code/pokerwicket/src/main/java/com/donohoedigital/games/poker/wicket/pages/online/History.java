@@ -217,9 +217,9 @@ public class History extends OnlinePokerPage
         return user;
     }
 
-    ////
-     //// List
-     ////
+    //
+     // List
+     //
 
     private final class HistoryTable extends Fragment
     {
@@ -380,9 +380,9 @@ public class History extends OnlinePokerPage
         }
     }
 
-    ////
-    //// Fragments
-    ////
+    //
+    // Fragments
+    //
 
     private class FinishFragment extends Fragment
     {
@@ -437,9 +437,9 @@ public class History extends OnlinePokerPage
         }
     }
 
-    ////
-    //// Links
-    ////
+    //
+    // Links
+    //
 
     public static BookmarkablePageLink<History> getHistoryLink(String id, String userName)
     {

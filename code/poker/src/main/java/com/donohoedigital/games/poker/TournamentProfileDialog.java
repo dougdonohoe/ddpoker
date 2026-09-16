@@ -343,9 +343,9 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             OptionMenu.add(new OptionInteger(null, TournamentProfile.PARAM_TIMEOUT, STYLE, dummy_, null, TournamentProfile.MIN_TIMEOUT, TournamentProfile.MAX_TIMEOUT, 50, true), base);
             OptionMenu.add(new OptionInteger(null, TournamentProfile.PARAM_THINKBANK, STYLE, dummy_, null, 0, TournamentProfile.MAX_THINKBANK, 50, true), base);
 
-            ///
-            /// boot disconnect/sitout
-            ///
+            //
+            // boot disconnect/sitout
+            //
 
             DDLabelBorder bootbase = createBootControls(STYLE, dummy_, null);
             left.add(bootbase);

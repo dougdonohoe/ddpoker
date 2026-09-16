@@ -158,7 +158,7 @@ public abstract class EngineServlet extends BaseServlet
     }
 
     //
-    /// DEBUGGING
+    // DEBUGGING
     private static int SEQ = 0;
     private static final Object SEQOBJ = new Object();
 
@@ -185,7 +185,7 @@ public abstract class EngineServlet extends BaseServlet
     {
         return TESTING(EngineConstants.TESTING_SERVLET);
     }
-    ///
+    //
     //
 
     /**
@@ -1248,9 +1248,9 @@ public abstract class EngineServlet extends BaseServlet
     // no need to localize, this is for DD eyes only
     private static final SimpleDateFormat formatter2_ = new SimpleDateFormat("MMMMM dd, yyyy 'at' HH:mm:ss", Locale.US);
 
-    ///
-    /// P2P additions (generic)
-    ///
+    //
+    // P2P additions (generic)
+    //
 
     /**
      * Return the IP the request is coming from (public IP of the user)

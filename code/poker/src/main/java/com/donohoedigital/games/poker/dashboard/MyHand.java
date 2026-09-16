@@ -153,9 +153,9 @@ public class MyHand extends DashboardItem
         }
     }
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     /**
      * update level

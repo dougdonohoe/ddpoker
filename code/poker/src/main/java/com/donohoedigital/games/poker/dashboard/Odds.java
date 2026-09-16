@@ -126,9 +126,9 @@ public abstract class Odds extends DashboardItem
         return false;
     }
 
-    ///
-    /// display logic
-    ///
+    //
+    // display logic
+    //
 
     /**
      * update level

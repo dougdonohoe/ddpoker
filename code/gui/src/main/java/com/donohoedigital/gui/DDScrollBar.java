@@ -141,9 +141,9 @@ public class DDScrollBar extends JScrollBar implements DDComponent, FocusListene
         super.repaint(tm, x, y, width, height);
     }
 
-    ////
-    //// Mouse listener to track when scrolling
-    ////
+    //
+    // Mouse listener to track when scrolling
+    //
 
     private boolean bScrolling_ = false;
 

@@ -258,9 +258,9 @@ public abstract class GamesList extends OnlinePokerPage
         return null; // won't get here - why is compiler complaining?        
     }
 
-    ////
-     //// List
-     ////
+    //
+     // List
+     //
 
     private final class GameData extends PageableServiceProvider<OnlineGame> implements NameRangeSearch
     {
@@ -409,9 +409,9 @@ public abstract class GamesList extends OnlinePokerPage
         }
     }
 
-    ////
-     //// Fragments
-     ////
+    //
+     // Fragments
+     //
 
     private final class RecentGamesDescription extends Fragment
     {

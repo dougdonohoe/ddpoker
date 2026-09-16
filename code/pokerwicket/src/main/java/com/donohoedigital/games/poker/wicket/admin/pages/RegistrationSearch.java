@@ -133,9 +133,9 @@ public class RegistrationSearch extends AdminPokerPage
         );
     }
 
-    ////
-    //// List
-    ////
+    //
+    // List
+    //
 
     private class SearchData extends PageableServiceProvider<Registration>
     {

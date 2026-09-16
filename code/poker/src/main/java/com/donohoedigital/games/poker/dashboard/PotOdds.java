@@ -64,9 +64,9 @@ public class PotOdds extends Odds
         return sOdds_;
     }
 
-	///
-    /// display logic
-    ///
+	//
+    // display logic
+    //
 
     protected String getDisplay(int nRound, HoldemHand hhand, PokerPlayer asViewedBy, Hand hand)
     {

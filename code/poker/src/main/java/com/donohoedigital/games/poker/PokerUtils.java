@@ -510,9 +510,9 @@ public class PokerUtils extends EngineUtils
         getPokerGameboard().repaintVisible(false);
     }
 
-    /////
-    ///// Update display fields
-    /////
+    //
+    // Update display fields
+    //
 
     static Color fgNormal = StylesConfig.getColor("clock.fg");
     static Color bgNormal = StylesConfig.getColor("clock.bg");
@@ -565,9 +565,9 @@ public class PokerUtils extends EngineUtils
         return sIcon;
     }
 
-    //////
-    ////// AUDIO
-    //////
+    //
+    // AUDIO
+    //
 
     private static int lastAudio_ = -1;
 
@@ -611,9 +611,9 @@ public class PokerUtils extends EngineUtils
         AudioConfig.playFX("cheers" + nNum);
     }
 
-    /////
-    ///// MISC
-    /////
+    //
+    // MISC
+    //
 
     public static int pow(int n, int p)
     {

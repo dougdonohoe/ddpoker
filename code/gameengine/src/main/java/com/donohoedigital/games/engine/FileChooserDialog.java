@@ -314,9 +314,9 @@ public class FileChooserDialog extends DialogPhase implements PropertyChangeList
         return null;
     }
 
-    ///
-    /// Key listener for changes to file name field
-    ///
+    //
+    // Key listener for changes to file name field
+    //
 
     public void keyTyped(KeyEvent e)
     {

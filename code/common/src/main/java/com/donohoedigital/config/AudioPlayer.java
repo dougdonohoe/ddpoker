@@ -200,9 +200,9 @@ public class AudioPlayer implements Runnable, LineListener
     }
     
     
-    //////
-    ////// Playback logic
-    //////
+    //
+    // Playback logic
+    //
 
     private class MyStream
     {

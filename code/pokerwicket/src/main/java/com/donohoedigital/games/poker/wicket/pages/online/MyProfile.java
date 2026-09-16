@@ -141,9 +141,9 @@ public class MyProfile extends OnlinePokerPage
         }
     }
 
-    ////
-     //// List
-     ////
+    //
+     // List
+     //
 
     private final class AliasTable extends Fragment
     {

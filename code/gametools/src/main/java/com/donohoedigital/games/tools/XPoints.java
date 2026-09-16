@@ -93,9 +93,9 @@ public class XPoints extends XConnectorLines implements KeyListener,
     // used for performance so new rect isn't needed everytime we repaint
     private final Rectangle bounds_ = new Rectangle();
     
-    ///
-    /// Drawing methods
-    ///
+    //
+    // Drawing methods
+    //
     
     /**
      * Paint this component
@@ -170,9 +170,9 @@ public class XPoints extends XConnectorLines implements KeyListener,
         util_.paintPoint(g, point, point.isAnchor());
     }
     
-    ///
-    /// convienence methods
-    ///
+    //
+    // convienence methods
+    //
     
     /**
      * Change focus to this point
@@ -375,9 +375,9 @@ public class XPoints extends XConnectorLines implements KeyListener,
         point.setY((int)(point.getY() + (point.getY() * factor)));
     }
     
-    ///
-    /// Key Listener methods
-    ///
+    //
+    // Key Listener methods
+    //
     
     /** 
      * Handle specific key presses not covered by DrawingUtil

@@ -480,7 +480,7 @@ public class PokerServlet extends EngineServlet
         {
             profile = onlineProfileService.getOnlineProfileByName(game.getHostPlayer());
         }
-        /// Version 3 and later, we validate user/password
+        // Version 3 and later, we validate user/password
         else
         {
             OnlineProfile auth = new OnlineProfile(reqMsg.getWanAuth());

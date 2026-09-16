@@ -2609,9 +2609,9 @@ public class OnlineManager implements ChatManager
         return bHost_;
     }
 
-    ////
-    //// OnlineMessageListener stuff
-    ////
+    //
+    // OnlineMessageListener stuff
+    //
 
     // listener list
     protected List<OnlineMessageListener> listenerList = new ArrayList<>();

@@ -357,9 +357,9 @@ public abstract class EngineGamePiece extends GamePiece {
         ic.setHighlighted(bOld);
         ic.setEnabled(bOldEnabled);
         
-        ////
-        //// draw quantity
-        ////
+        //
+        // draw quantity
+        //
         
         // nothing possible to draw
         if (nNum == 0 && nHiddenNum == 0 && nMovingNum == 0) return;
@@ -497,9 +497,9 @@ public abstract class EngineGamePiece extends GamePiece {
         return getImageComponent();
     }
     
-    ////
-    //// Game save logic
-    ////
+    //
+    // Game save logic
+    //
     
     /**
      * Return this piece encoded as a game state entry

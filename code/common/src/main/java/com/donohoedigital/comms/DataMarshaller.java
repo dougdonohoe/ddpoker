@@ -100,9 +100,9 @@ public class DataMarshaller
         }
     }
 
-    ////
-    //// Registered demarshallers 
-    ////
+    //
+    // Registered demarshallers 
+    //
     private static final Map<Character, Class<? extends DataMarshal>> typeToCoder_ = new HashMap<>();
     private static final Map<Class<? extends DataMarshal>, Character> coderToType_ = new HashMap<>();
 
@@ -178,9 +178,9 @@ public class DataMarshaller
         return cType;
     }
 
-    ////
-    //// marshaller wrapper classes
-    ////
+    //
+    // marshaller wrapper classes
+    //
 
     public interface DMWrapper extends DataMarshal
     {
@@ -467,9 +467,9 @@ public class DataMarshaller
         }
     }
 
-    ////
-    //// For use during installer build time
-    ////
+    //
+    // For use during installer build time
+    //
 
     @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
     static void main()

@@ -465,9 +465,9 @@ public class TournamentHistory implements BaseModel<Long>, DataMarshal, SimpleXM
         ended = b;
     }
 
-    /////
-    ///// Client-only methods
-    /////
+    //
+    // Client-only methods
+    //
 
     /**
      * id
@@ -533,9 +533,9 @@ public class TournamentHistory implements BaseModel<Long>, DataMarshal, SimpleXM
         numRemaining = nNum;
     }
 
-    /////
-    ///// equality / marshalling
-    /////
+    //
+    // equality / marshalling
+    //
 
     /**
      * Equality based on id_

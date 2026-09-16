@@ -359,9 +359,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
 
     private boolean bIgnoreNext_ = false;
 
-    ////
-    //// Focus listener - used to change icon to indicate when we have focus
-    ////
+    //
+    // Focus listener - used to change icon to indicate when we have focus
+    //
     public void focusGained(FocusEvent e)
     {
         focus_.setIcon(focusOn_);
@@ -1733,9 +1733,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
         }
     }
 
-    ////
-    //// PokerGameboardDelegate
-    ////
+    //
+    // PokerGameboardDelegate
+    //
 
     /**
      * transfer focus to continue button or amount spinner
@@ -1836,9 +1836,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
     }
 
 
-    ////
-    //// TerritorySelectionListener
-    ////
+    //
+    // TerritorySelectionListener
+    //
 
     public void mouseEntered(Gameboard g, Territory t)
     {
@@ -2022,9 +2022,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
         board_.setSelectedTerritory(null);
     }
 
-    ////
-    //// popup menu listener
-    ////
+    //
+    // popup menu listener
+    //
 
     private void showMenu(DDPopupMenu menu, int x, int y)
     {
@@ -2063,9 +2063,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
     {
     }
 
-    ////
-    //// popup menu items
-    ////
+    //
+    // popup menu items
+    //
 
     private static final ImageIcon blankIcon_ = ImageConfig.getImageIcon("menuicon.blank");
     private static final ImageIcon moneyIcon_ = ImageConfig.getImageIcon("menuicon.money");
@@ -2738,9 +2738,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
         }
     }
 
-    ////
-    //// mouse translation
-    ////
+    //
+    // mouse translation
+    //
 
     private final MouseTranslator mouseTrans_ = new MouseTranslator();
 
@@ -2750,9 +2750,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
      */
     private class MouseTranslator extends MouseInputAdapter
     {
-        ////
-        //// Mouse Listener methods
-        ////
+        //
+        // Mouse Listener methods
+        //
 
         /**
          * Finds items under mouse
@@ -2776,9 +2776,9 @@ public class ShowTournamentTable extends ShowPokerTable implements
                                                 p.x, p.y, e.getClickCount(), e.isPopupTrigger()));
         }
 
-        ////
-        //// Mouse Motion Listener methods
-        ////
+        //
+        // Mouse Motion Listener methods
+        //
 
         /**
          * Finds items under mouse

@@ -101,9 +101,9 @@ public class PokerRankUpdater extends BaseCommandLineApp
         logger.debug("Elapsed time: {}", (System.currentTimeMillis() - time));
     }
 
-    ///
-    /// GUTS of the Program...
-    ///
+    //
+    // GUTS of the Program...
+    //
 
     private static int GAMES_CHUNK = 1000;
 

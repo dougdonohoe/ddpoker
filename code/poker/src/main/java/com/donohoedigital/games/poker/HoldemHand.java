@@ -138,9 +138,9 @@ public class HoldemHand implements DataMarshal
     {
     }
 
-    ////
-    //// seed for deck
-    ////
+    //
+    // seed for deck
+    //
 
     private static int lastSEED = (int) System.currentTimeMillis();
     private static int SEEDADJ = 2; // BUG 510 - must be non-one

@@ -228,9 +228,9 @@ public class CardPiece extends PokerGamePiece
         return bTempVisible_;
     }
     
-    ////
-    //// Overridden drawing methods
-    ////
+    //
+    // Overridden drawing methods
+    //
 
     /**
      * Get image based on whether card is up/down
@@ -1048,9 +1048,9 @@ public class CardPiece extends PokerGamePiece
         return null;
     }
 
-    ////
-    //// suits
-    ////
+    //
+    // suits
+    //
     private static GeneralPath club_ = GuiUtils.drawSVGpath(CardSuitPaths.CLUB, true);
     private static GeneralPath spade_ = GuiUtils.drawSVGpath(CardSuitPaths.SPADE, true);
     private static GeneralPath diamond_ = GuiUtils.drawSVGpath(CardSuitPaths.DIAMOND, true);
@@ -1149,9 +1149,9 @@ public class CardPiece extends PokerGamePiece
         }
     }
 
-    ////
-    //// cards
-    ////
+    //
+    // cards
+    //
     private static final Color BORDER = StylesConfig.getColor("card.border");
     private static final Color SELECTED = StylesConfig.getColor("card.selected");
     private static final Color STROKE = StylesConfig.getColor("card.stroke");
@@ -1324,9 +1324,9 @@ public class CardPiece extends PokerGamePiece
     private static Color gradFrom_ = new Color(255,255,255,255);
     private static Color gradTo_ = new Color(222,222,222,255);
 
-    ////
-    //// Save/Load logic
-    ////
+    //
+    // Save/Load logic
+    //
     
     /**
      * Return this piece encoded as a game state entry

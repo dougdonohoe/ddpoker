@@ -830,9 +830,9 @@ public class GuiUtils
         }
     }
 
-    ////
-    //// Layout Helpers
-    ////
+    //
+    // Layout Helpers
+    //
 
     // debugging borders
     public static final Border REDBORDER = BorderFactory.createLineBorder(Color.red);
@@ -887,9 +887,9 @@ public class GuiUtils
         return east;
     }
 
-    ////
-    //// Things copied from swing since they aren't public
-    ////
+    //
+    // Things copied from swing since they aren't public
+    //
 
     /**
      * This draws the "Flush 3D Border" which is used throughout the Metal L&F
@@ -1052,9 +1052,9 @@ public class GuiUtils
         return (InternalDialog) p;
     }
 
-    ////
-    //// DDOption Helper interface
-    ////
+    //
+    // DDOption Helper interface
+    //
     @SuppressWarnings({"PublicInnerClass"})
     public static interface CheckListener
     {

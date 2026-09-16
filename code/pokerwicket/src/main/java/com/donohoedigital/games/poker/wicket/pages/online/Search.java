@@ -141,9 +141,9 @@ public class Search extends OnlinePokerPage
         add(new StringLabel("term", text).setVisible(text != null && data.isEmpty()));
     }
 
-    ////
-     //// List
-     ////
+    //
+     // List
+     //
 
     private final class SearchData extends PageableServiceProvider<OnlineProfile>
     {

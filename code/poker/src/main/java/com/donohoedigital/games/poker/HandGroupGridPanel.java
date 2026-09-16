@@ -279,9 +279,9 @@ public class HandGroupGridPanel extends DDPanel implements ActionListener, KeyLi
         }
     }
 
-    ////
-    //// Key/Focus listener for custom focus changes
-    ////
+    //
+    // Key/Focus listener for custom focus changes
+    //
 
     public void keyTyped(KeyEvent e)
     {

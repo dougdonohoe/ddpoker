@@ -285,9 +285,9 @@ public abstract class BaseProfile extends BaseDataFile implements SaveFile, Comp
         return sFileName_.hashCode();
     }
 
-    ////
-    //// Saved profiles
-    ////
+    //
+    // Saved profiles
+    //
 
     /**
      * subclass implements to load its contents from the given reader

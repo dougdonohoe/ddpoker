@@ -342,9 +342,9 @@ public class OtherTables
         ApplicationError.assertTrue(false, "Unable to place player (see above for details)");
     }
 
-    /////
-    ///// CLEAN routines
-    /////
+    //
+    // CLEAN routines
+    //
 
     /**
      * Remove broke players and add to the removed array.  If bRemovePlayers is false,
@@ -419,9 +419,9 @@ public class OtherTables
         }
     }
 
-    /////
-    ///// SORT stuff
-    /////
+    //
+    // SORT stuff
+    //
 
     // instances for sorting
     private static final SortChipsAtStart SORTCHIPSATSTART = new SortChipsAtStart();

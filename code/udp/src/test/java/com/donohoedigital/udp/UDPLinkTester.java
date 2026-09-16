@@ -265,9 +265,9 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
             " ({} high - {} peak)", Utils.formatSizeBytes(in.getAverageLong()), Utils.formatSizeBytes(in.getHigh()), Utils.formatSizeBytes(in.getPeak()), Utils.formatSizeBytes(out.getAverageLong()), Utils.formatSizeBytes(out.getHigh()), Utils.formatSizeBytes(out.getPeak()));
     }
 
-    ////
-    //// UDPLinkHandler
-    ////
+    //
+    // UDPLinkHandler
+    //
 
     public int getTimeout(UDPLink link)
     {
@@ -284,9 +284,9 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
         return 2000;
     }
 
-    ////
-    //// UDPManagerMonitor
-    ////
+    //
+    // UDPManagerMonitor
+    //
 
     public void monitorEvent(UDPManagerEvent event)
     {
@@ -317,9 +317,9 @@ public class UDPLinkTester extends BaseCommandLineApp implements UDPLinkHandler,
         }
     }
 
-    ////
-    //// UDPLinkMonitor
-    ////
+    //
+    // UDPLinkMonitor
+    //
 
     int CNT = 0;
 

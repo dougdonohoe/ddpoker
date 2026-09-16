@@ -911,9 +911,9 @@ public final class ServerSideGame extends ServerDataFile implements GameInfo
         return sbPass.toString();
     }
 
-    ////
-    //// Save Files
-    ////
+    //
+    // Save Files
+    //
 
     /**
      * Get next save file number given the list of existing files.

@@ -178,9 +178,9 @@ public class PokerSaveDetails implements DataMarshal
         return files_;
     }
 
-    ///
-    /// save/load
-    ///
+    //
+    // save/load
+    //
     
     public void demarshal(MsgState state, String sData)
     {

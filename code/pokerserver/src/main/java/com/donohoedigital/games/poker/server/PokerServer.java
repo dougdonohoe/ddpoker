@@ -107,9 +107,9 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
         chat_ = chat;
     }
 
-    ////
-    //// UDPManagerMonitor
-    ////
+    //
+    // UDPManagerMonitor
+    //
 
     public void monitorEvent(UDPManagerEvent event)
     {
@@ -130,9 +130,9 @@ public class PokerServer extends EngineServer implements UDPLinkHandler, UDPMana
         //logger.debug("Event: "+ event + " on " + Utils.getAddressPort(event.getLink().getLocalIP()));
     }
 
-    ////
-    //// UDPLinkHandler interface
-    ////
+    //
+    // UDPLinkHandler interface
+    //
 
     public int getTimeout(UDPLink link)
     {

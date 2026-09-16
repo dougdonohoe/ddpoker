@@ -284,9 +284,9 @@ public abstract class GameManager extends BaseApp implements KeyListener, Status
         scrollThis_.repaint();
     }
     
-    ////
-    //// Key listeners
-    ////
+    //
+    // Key listeners
+    //
     
     /**
      * Empty
@@ -369,9 +369,9 @@ public abstract class GameManager extends BaseApp implements KeyListener, Status
     public void keyTyped(KeyEvent e) {
     }
     
-    ///
-    /// WindowListener
-    ///
+    //
+    // WindowListener
+    //
     
     /**
      * make sure board has focus on reactivate

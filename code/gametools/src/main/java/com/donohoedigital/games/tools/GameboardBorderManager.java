@@ -230,9 +230,9 @@ public class GameboardBorderManager extends GameManager
         }
     }
     
-    ////
-    //// Key listeners
-    ////
+    //
+    // Key listeners
+    //
     
     public void keyPressed(KeyEvent e) 
     {

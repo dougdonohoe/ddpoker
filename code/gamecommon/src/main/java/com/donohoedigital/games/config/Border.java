@@ -498,9 +498,9 @@ public class Border
                      "]";
     }
     
-    ///
-    /// GAME MODE FUNCTIONALITY
-    ///
+    //
+    // GAME MODE FUNCTIONALITY
+    //
     
     boolean bPathStartsAtBeginning_ = true;
     

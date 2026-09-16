@@ -270,9 +270,9 @@ public class LanClientList
         
     }
     
-    ////
-    //// LanListener stuff
-    ////
+    //
+    // LanListener stuff
+    //
     
     // listener list
     protected List<LanListener> listenerList = new ArrayList<>();

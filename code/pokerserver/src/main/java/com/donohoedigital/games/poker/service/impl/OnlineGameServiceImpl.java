@@ -204,9 +204,9 @@ public class OnlineGameServiceImpl implements OnlineGameService
         return gameDao.purge(date, mode);
     }
 
-    ////
-    //// helper methods
-    ////
+    //
+    // helper methods
+    //
 
     private void insertTournamentHistories(OnlineGame game, TournamentHistoryList histories)
     {

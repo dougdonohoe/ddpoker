@@ -323,9 +323,9 @@ public class GameDetail extends OnlinePokerPage
         return game;
     }
 
-    ////
-    //// Links
-    ////
+    //
+    // Links
+    //
 
     public static BookmarkablePageLink<GameDetail> getGameIdLink(String id, long gameId)
     {

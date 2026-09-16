@@ -533,9 +533,9 @@ public class GameState extends MsgState implements SaveFile
         return file_.lastModified();
     }
     
-    ///
-    /// game information
-    ///
+    //
+    // game information
+    //
     
     /**
      * Add an entry
@@ -850,9 +850,9 @@ public class GameState extends MsgState implements SaveFile
         return null;
     }
     
-    ////
-    //// Save Files
-    ////
+    //
+    // Save Files
+    //
     
     /**
      * Get list of save files in save directory

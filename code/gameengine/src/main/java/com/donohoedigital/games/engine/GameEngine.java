@@ -731,9 +731,9 @@ public abstract class GameEngine extends BaseApp
         return gameconfig_;
     }
 
-    ////
-    //// Keep track of contexts
-    ////
+    //
+    // Keep track of contexts
+    //
 
     // list of contexts
     private final Map<String, ContextTracker> contexts_ = new HashMap<>();

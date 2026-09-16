@@ -123,9 +123,9 @@ public class HostList extends OnlinePokerPage
         add(new StringLabel("nameSearch", data.getName()));
     }
 
-    ////
-    //// List
-    ////
+    //
+    // List
+    //
 
     private class HostData extends PageableServiceProvider<HostSummary> implements NameRangeSearch
     {

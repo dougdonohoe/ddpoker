@@ -193,9 +193,9 @@ public class DDLabel extends JLabel implements DDHasLabelComponent, DDText, DDCu
         super.setText("");
     }
 
-    ////
-    //// Custom help
-    ////
+    //
+    // Custom help
+    //
 
     private String sHelp_;
 

@@ -825,8 +825,8 @@ public abstract class ProfileList extends DDPanel implements AWTEventListener, F
         profilesParent_.repaint();
     }
 
-    ////
-    //// Ancestor listener
+    //
+    // Ancestor listener
 
     /*
     ** added - call start

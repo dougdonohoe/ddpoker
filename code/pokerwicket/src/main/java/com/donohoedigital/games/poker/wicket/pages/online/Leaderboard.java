@@ -391,9 +391,9 @@ public class Leaderboard extends OnlinePokerPage
         }
     }
 
-    ////
-    //// Links
-    ////
+    //
+    // Links
+    //
 
     public static BookmarkablePageLink<Leaderboard> getDDR1Link(String id, PageParameters params)
     {

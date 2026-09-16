@@ -700,9 +700,9 @@ public class Hand extends DMArrayList<Card>
         }
     }
 
-    /////
-    ///// SAVE
-    /////
+    //
+    // SAVE
+    //
     
     /**
      * get type before passing to array list logic

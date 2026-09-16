@@ -172,9 +172,9 @@ function addMenuEventHandlers() {
     });
 }
 
-///
-/// main script
-///
+//
+// main script
+//
 
 // get wicket info
 const mountPath = document.getElementById('header').dataset.mount;

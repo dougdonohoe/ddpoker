@@ -351,9 +351,9 @@ public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
         return "OnlineGame: " + data_;
     }
 
-    ////
-    //// XML Encoding
-    ////
+    //
+    // XML Encoding
+    //
 
     public void encodeXML(SimpleXMLEncoder encoder)
     {

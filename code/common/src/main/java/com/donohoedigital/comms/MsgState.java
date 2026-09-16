@@ -103,9 +103,9 @@ public class MsgState
         classNames_ = classNames;
     }
     
-    ////
-    //// object id methods
-    ////
+    //
+    // object id methods
+    //
     
     /**
      * Reset game state for use again

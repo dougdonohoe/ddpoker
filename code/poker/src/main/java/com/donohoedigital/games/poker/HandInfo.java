@@ -492,9 +492,9 @@ public class HandInfo implements Comparable<HandInfo>
 //        
 //    }
     
-    /////
-    ///// Methods to determine type & fill in best_ hand
-    /////
+    //
+    // Methods to determine type & fill in best_ hand
+    //
     
     /**
      * Does this hand have a straight flush?
@@ -959,9 +959,9 @@ public class HandInfo implements Comparable<HandInfo>
         return false;
     }
     
-    ////
-    //// TESTING
-    ////
+    //
+    // TESTING
+    //
 
     // TODO: make a unit test!
     static void main()

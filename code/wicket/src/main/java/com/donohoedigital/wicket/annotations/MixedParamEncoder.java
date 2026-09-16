@@ -157,16 +157,16 @@ public class MixedParamEncoder implements IPageParametersEncoder {
         return params;
     }
 
-    ////
-    //// code below to allow any character in the path.  We deal with:
-    ////
-    //// . and .. which are interpreted by the servlet container
-    //// / and \ which are also path components
-    //// the null/empty param.
-    ////
-    //// All these characters are replaced with aliases - an escape char
-    //// and a normal ascii char for the special character
-    ////
+    //
+    // code below to allow any character in the path.  We deal with:
+    //
+    // . and .. which are interpreted by the servlet container
+    // / and \ which are also path components
+    // the null/empty param.
+    //
+    // All these characters are replaced with aliases - an escape char
+    // and a normal ascii char for the special character
+    //
 
     private static final char ESCAPE_CHAR = ':';
     private static final char NULL_CHAR = '-';

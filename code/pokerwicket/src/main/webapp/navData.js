@@ -101,9 +101,9 @@ const navData = {
     }
 };
 
-///
-/// Node.js module export (only works in Node.js, ignored in browser)
-///
+//
+// Node.js module export (only works in Node.js, ignored in browser)
+//
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { navData };
 }

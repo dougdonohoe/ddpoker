@@ -147,9 +147,9 @@ public class Help extends BasePhase implements ListSelectionListener,
         html_.setBackground(Color.WHITE);
         base_.add(scroll, BorderLayout.CENTER);
 
-        ////
-        //// Table
-        ////
+        //
+        // Table
+        //
         DDScrollTable tScroll = new DDScrollTable(GuiManager.DEFAULT, STYLE, BEVEL_STYLE, COLUMN_NAMES, COLUMN_WIDTHS);
         tScroll.setPreferredSize(new Dimension(tScroll.getPreferredWidth(), 200));
         base_.add(tScroll, BorderLayout.WEST);

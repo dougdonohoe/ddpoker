@@ -163,14 +163,14 @@ public abstract class ListGames extends BasePhase implements PropertyChangeListe
             }
         });
 
-        /// middle
+        // middle
         DDPanel middle = new DDPanel();
         middle.setBorderLayoutGap(10, 10);
         data.add(middle, BorderLayout.CENTER);
 
-        ////
-        //// Table (north part of 'middle')
-        ////
+        //
+        // Table (north part of 'middle')
+        //
         String listName = getListName();
         DDLabelBorder listborder = new DDLabelBorder(listName, STYLE);
         middle.add(listborder, BorderLayout.NORTH);

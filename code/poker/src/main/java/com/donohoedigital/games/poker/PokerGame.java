@@ -2198,9 +2198,9 @@ public class PokerGame extends Game implements PlayerActionListener
             }
         }
     }
-    ////
-    //// ui bridge methods
-    ////
+    //
+    // ui bridge methods
+    //
 
     public void setInput(PokerTableInput input)
     {

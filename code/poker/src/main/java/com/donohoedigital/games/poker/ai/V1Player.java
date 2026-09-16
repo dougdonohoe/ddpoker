@@ -302,9 +302,9 @@ public class V1Player extends PokerAI
     }
 
 
-    /////
-    ///// PRE-FLOP
-    /////
+    //
+    // PRE-FLOP
+    //
 
     /**
      * Sklansky's system as described pp 128-133 in
@@ -451,9 +451,9 @@ public class V1Player extends PokerAI
         else
             nLooseThreshold = 5;
 
-        ////
-        //// EARLY
-        ////
+        //
+        // EARLY
+        //
         if (player.isEarly())
         {
             if (isPotRaised())
@@ -542,9 +542,9 @@ public class V1Player extends PokerAI
                 return _foldLooseCheck("early");
             }
         }
-        ////
-        //// MIDDLE
-        ////
+        //
+        // MIDDLE
+        //
         else if (player.isMiddle())
         {
             if (isPotRaised())
@@ -624,9 +624,9 @@ public class V1Player extends PokerAI
                 return _foldLooseCheck("middle");
             }
         }
-        ////
-        //// LATE
-        ////
+        //
+        // LATE
+        //
         else if (player.isLate())
         {
             if (isPotRaised())
@@ -786,9 +786,9 @@ public class V1Player extends PokerAI
                 return _foldLooseCheck("late");
             }
         }
-        ////
-        //// BLINDS
-        ////
+        //
+        // BLINDS
+        //
         else if (player.isBlind())
         {
             if (isPotRaised())
@@ -857,9 +857,9 @@ public class V1Player extends PokerAI
     }
 
 
-    /////
-    ///// FLOP/TURN/RIVER
-    /////
+    //
+    // FLOP/TURN/RIVER
+    //
 
     /**
      * flop/turn/river
@@ -945,12 +945,12 @@ public class V1Player extends PokerAI
         // iter over hand types
         switch (nType)
         {
-            /////
-            ///// ROYAL FLUSH
-            ///// STRAIGHT FLUSH
-            ///// QUADS
-            ///// FULL HOUSE
-            /////
+            //
+            // ROYAL FLUSH
+            // STRAIGHT FLUSH
+            // QUADS
+            // FULL HOUSE
+            //
             case HandInfo.ROYAL_FLUSH:
             case HandInfo.STRAIGHT_FLUSH:
             case HandInfo.QUADS:
@@ -973,9 +973,9 @@ public class V1Player extends PokerAI
                     }
                 }
 
-                /////
-                ///// FLUSH
-                /////
+                //
+                // FLUSH
+                //
             case HandInfo.FLUSH:
                 // TODO: look for full house possibility - maybe using hand
                 // TODO: strength, or if board has a pair
@@ -1084,9 +1084,9 @@ public class V1Player extends PokerAI
                 }
                 break;
 
-                /////
-                ///// STRAIGHT
-                /////
+                //
+                // STRAIGHT
+                //
             case HandInfo.STRAIGHT:
                 if (inHole)
                 {
@@ -1126,9 +1126,9 @@ public class V1Player extends PokerAI
                     }
                 }
 
-                /////
-                ///// TRIPS
-                /////
+                //
+                // TRIPS
+                //
             case HandInfo.TRIPS:
 
                 if (inHole)
@@ -1208,9 +1208,9 @@ public class V1Player extends PokerAI
                     }
                 }
 
-                /////
-                ///// TWO PAIR
-                /////
+                //
+                // TWO PAIR
+                //
             case HandInfo.TWO_PAIR:
                 if (inHole)
                 {
@@ -1253,9 +1253,9 @@ public class V1Player extends PokerAI
                     }
                 }
 
-                /////
-                ///// PAIR
-                /////
+                //
+                // PAIR
+                //
             case HandInfo.PAIR:
                 if (inHole)
                 {
@@ -1350,9 +1350,9 @@ public class V1Player extends PokerAI
                 if (action != null) return action;
                 break;
 
-                /////
-                ///// HIGH CARD
-                /////
+                //
+                // HIGH CARD
+                //
             case HandInfo.HIGH_CARD:
                 // proceed with caution
                 // overcards
@@ -1376,7 +1376,7 @@ public class V1Player extends PokerAI
                 ApplicationError.assertTrue(false, "Type not handled: " + nType);
         }
 
-        /// generic hand strength
+        // generic hand strength
         boolean better = (bThreeFlush || nNumOppStraights > 0 || bBoardPair);
 
         if (dStrength > 90 && !better)
@@ -1397,7 +1397,7 @@ public class V1Player extends PokerAI
         else if (_nToCall == 0)
         {
 
-            /// checked around previous hand
+            // checked around previous hand
             if (_nLastRoundBet == 0)
             {
                 if (_nNumAfter == 0)
@@ -1437,9 +1437,9 @@ public class V1Player extends PokerAI
         return _foldPotOdds("default");
     }
 
-    /////
-    ///// HELPER
-    /////
+    //
+    // HELPER
+    //
 
     /**
      * Do fold unless pot odds say otherwise
@@ -1975,9 +1975,9 @@ public class V1Player extends PokerAI
         return _bet(nBet, sDebug);
     }
 
-    //////
-    ////// Marshalling code
-    //////
+    //
+    // Marshalling code
+    //
 
     /**
      * Get our own stuff

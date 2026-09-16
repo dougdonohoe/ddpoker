@@ -64,9 +64,9 @@ public class ImproveOdds extends Odds
         return sTotal_;
     }
 
-	///
-    /// display logic
-    ///
+	//
+    // display logic
+    //
 
     /**
      * we update during all-in showdown
