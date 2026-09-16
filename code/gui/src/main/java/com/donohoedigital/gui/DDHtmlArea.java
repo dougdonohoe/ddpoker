@@ -38,7 +38,6 @@
 
 package com.donohoedigital.gui;
 
-import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.Utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,9 +45,7 @@ import org.apache.logging.log4j.Logger;
 import javax.swing.JEditorPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.Caret;
-import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
-import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.StyleSheet;
 import java.awt.*;
 
@@ -61,8 +58,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
 
     private DDHtmlEditorKit htmlKit_;
     private Caret cNormal_;
-    private Caret cNothing_ = new DoNothingCaret();
-    private boolean bDisplayOnly_ = false;
+    private final Caret cNothing_ = new DoNothingCaret();
 
     /**
      *
@@ -134,11 +130,6 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
         if (Utils.ISMAC) JTextComponent.loadKeymap(getKeymap(), GuiUtils.MAC_CUT_COPY_PASTE, getActions());
     }
 
-    public HTMLDocument getHtmlDocument()
-    {
-        return (HTMLDocument) getDocument();
-    }
-
     /**
      * Set font/color from this widget into HTML style sheet
      */
@@ -149,7 +140,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
         Color bg = getForeground();
 
         // create rule like body { font-family: Lucida Sans Regular; font-size: 12pt; color: #ffffff}
-        // which sets font for entire html body
+        // which sets font for entire HTML body
         StringBuilder sb = new StringBuilder();
         sb.append("body {");
         sb.append("font-family: ");
@@ -191,39 +182,12 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
     }
 
     /**
-     * Insert html at given location
-     */
-    public void insertText(String html, int location)
-    {
-        GuiUtils.requireSwingThread();
-
-        Document doc = getDocument();
-        try
-        {
-            htmlKit_.insertHTML((HTMLDocument) doc, location, html, 0, 0, null);
-        }
-        catch (Exception ioe)
-        {
-            throw new ApplicationError(ioe);
-        }
-    }
-
-    /**
-     * Append text at end
-     */
-    public void appendText(String html)
-    {
-        insertText(html, getDocument().getLength());
-    }
-
-    /**
      * Set this html area as a display area that:
      * can't take focus, is not opaque and can't drag.
      * Set to true by default.
      */
     public void setDisplayOnly(boolean bDisplayOnly)
     {
-        bDisplayOnly_ = bDisplayOnly;
         setFocusable(!bDisplayOnly);
         setOpaque(!bDisplayOnly);
         setEditable(!bDisplayOnly);
@@ -238,12 +202,6 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
         }
     }
 
-    public boolean isDisplayOnly()
-    {
-        return bDisplayOnly_;
-    }
-
-    // TODO: set caret separately with own style?
     @Override
     public void setForeground(Color c)
     {
@@ -272,12 +230,6 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
 
     private boolean skipNextRepaint = false;
 
-
-    public boolean isSkipNextRepaint()
-    {
-        return skipNextRepaint;
-    }
-
     public void setSkipNextRepaint(boolean skipNextRepaint)
     {
         this.skipNextRepaint = skipNextRepaint;
@@ -302,7 +254,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
      * for text areas where opaque=false and their parent has
      * a semi-transparent background.  Fixs a swing bug.
      */
-    private class DoNothingCaret extends javax.swing.text.DefaultCaret
+    private static class DoNothingCaret extends javax.swing.text.DefaultCaret
     {
         @Override
         public void paint(Graphics g)
@@ -314,7 +266,7 @@ public class DDHtmlArea extends JEditorPane implements DDTextVisibleComponent
         {
         }
 
-        // override behavoir where changing text adjusts a parent's visibility
+        // override behavior where changing text adjusts a parent's visibility
         @Override
         protected void adjustVisibility(Rectangle nloc)
         {
