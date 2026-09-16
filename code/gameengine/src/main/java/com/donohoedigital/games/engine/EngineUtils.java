@@ -39,19 +39,15 @@
 package com.donohoedigital.games.engine;
 
 import com.donohoedigital.base.TypedHashMap;
-import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.AudioConfig;
-import com.donohoedigital.config.AudioPlayer;
-import com.donohoedigital.config.ImageConfig;
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.config.*;
-import com.donohoedigital.gui.DDButton;
-import com.donohoedigital.gui.DDLabel;
+import com.donohoedigital.games.config.GameButton;
+import com.donohoedigital.games.config.GamePhase;
+import com.donohoedigital.games.config.GamePiece;
+import com.donohoedigital.games.config.GamePieceContainer;
 import com.donohoedigital.gui.GuiUtils;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
-import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,10 +57,7 @@ import java.util.List;
  * @author  Doug Donohoe
  */
 public class EngineUtils 
-{  
-    //static Logger logger = LogManager.getLogger(EngineUtils.class);
-    
-    private static JTextComponent msg_;
+{
     protected static Gameboard gameboard_;
     protected static JComponent scroll_;
     
@@ -120,73 +113,7 @@ public class EngineUtils
     {
         scroll_ = scroll;
     }
-    
-    /**
-     * Set cursor used on gameboard
-     */
-    public static void setGameboardCursor(Cursor c)
-    {
-        if (scroll_ != null)
-        {
-            scroll_.setCursor(c);
-        }
-    }
-    
-    /**
-     * Set cursor using invokeLater - used to do things like
-     * scrolling where the painting happens before cursor is
-     * set (looks more natural)
-     */
-    public static void setGameboardCursorLater(final Cursor c)
-    {
-        if (scroll_ == null) return;
-        
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    Cursor _c = c;
-                    public void run() {     
-                            setGameboardCursor(_c);
-                    }
-                }
-            );
-    }
-    /**
-     * Get cursor used on gameboard
-     */
-    public static Cursor getGameboardCursor()
-    {
-        if (scroll_ == null) return null;
-        
-        return scroll_.getCursor();
-    }
-    
-    /**
-     * Display a message
-     */
-    public static void setMessage(String sMsg)
-    {
-        if (msg_ != null)
-        {
-            msg_.setText(sMsg);
-        }
-    }
-    
-    /**
-     * Set message area
-     */
-    public static void setMsgArea(JTextComponent msg)
-    {
-        msg_ = msg;
-    }
-    
-    /**
-     * Get message area
-     */
-    public static JTextComponent getMsgArea()
-    {
-        return msg_;
-    }
-    
+
     /**
      * Show message in a confirmation dialog. Return true if 'yes'
      * pressed, false otherwise.
@@ -228,13 +155,8 @@ public class EngineUtils
     {
         GameButton buttonpressed = displayConfirmationDialogCustom(context, "DisplayConfirmation",
                         sMsg, sTitleKey, sNoShowKey, sNoShowCheckBoxName);
-        
-        if (buttonpressed != null && buttonpressed.getName().equals("yes"))
-        {
-            return true;
-        }
-        
-        return false;
+
+        return buttonpressed != null && buttonpressed.getName().equals("yes");
     }
 
     /**
@@ -250,12 +172,7 @@ public class EngineUtils
                         nTimeout == 0 ? "DisplayConfirmationCancelable" : "DisplayTimedMessage",
                         sMsg, sTitleKey, sNoShowKey, sNoShowCheckBoxName, nTimeout);
 
-        if (buttonpressed != null && buttonpressed.getName().equals("yes"))
-        {
-            return true;
-        }
-
-        return false;
+        return buttonpressed != null && buttonpressed.getName().equals("yes");
     }
 
     /**
@@ -318,7 +235,7 @@ public class EngineUtils
     }
 
     /**
-     * Show message in a information dialog
+     * Show message in an information dialog
      */
     public static void displayInformationDialog(GameContext context,
                                                  String sMsg)
@@ -327,7 +244,7 @@ public class EngineUtils
     }
 
     /**
-     * Show message in a information dialog
+     * Show message in an information dialog
      */
     public static void displayInformationDialog(GameContext context,
                                                  String sMsg, boolean bModal)
@@ -345,7 +262,7 @@ public class EngineUtils
     }
     
     /**
-     * Show message in a information dialog for current player.  If sNoShowkey
+     * Show message in an information dialog for current player.  If sNoShowkey
      * is not null, then a "don't show this dialog" option is shown
      */
     public static void displayInformationDialog(GameContext context,
@@ -357,7 +274,7 @@ public class EngineUtils
     }
     
     /**
-     * Show message in a information dialog for current player.  If sNoShowkey
+     * Show message in an information dialog for current player.  If sNoShowkey
      * is not null, then a "don't show this dialog" option is shown
      */
     public static void displayInformationDialog(GameContext context,
@@ -370,7 +287,7 @@ public class EngineUtils
     }
     
         /**
-     * Show message in a information dialog for current player.  If sNoShowkey
+     * Show message in an information dialog for current player.  If sNoShowkey
      * is not null, then a "don't show this dialog" option is shown
      */
     public static void displayInformationDialog(GameContext context,
@@ -397,67 +314,6 @@ public class EngineUtils
     }
     
     /**
-     * Return true if the given player has a piece of the given type
-     * in this territory that is visible (i.e., not currently moving)
-     */
-    public static boolean hasVisibleOwnerPiece(Territory t, int nType, GamePlayer player)
-    {   
-        EngineGamePiece gp = (EngineGamePiece) t.getGamePiece(nType, player);
-        
-        if (gp == null) return false;
-        
-        if (gp.getDrawingQuantity() > 0) return true;
-        
-        return false;
-    }
-    
-    /**
-     * Return true if the given territory has a piece of the given type
-     * (owned by the territory owner), with either visible or hidden
-     * quantities (meaning it may have just been purchased)
-     */
-    public static boolean hasPiece(Territory t, int nType)
-    {
-        if (t == null) return false;
-        
-        return t.hasOwnerPiece(nType);
-    }
-    
-    /**
-     * Is there a territory owned by the given playerOwner adjacent
-     * to this territory which contains a piece of the given type
-     * (also owner by the playerOwner) that wasn't just placed
-     */
-    public static boolean isPreExistingAdjacent(Territory t, GamePlayer playerOwner, int nType)
-    {
-        Territory[] adjacentTerritories = t.getAdjacentTerritories();
-        for (Territory adjacentTerritory : adjacentTerritories)
-        {
-            if (adjacentTerritory.getGamePlayer() == playerOwner &&
-                adjacentTerritory.hasOwnerPiece(nType, playerOwner) &&
-                adjacentTerritory.getGamePiece(nType, playerOwner).getQuantity() > 0) return true;
-        }
-        return false;
-    }
-    
-    /**
-     * Return true if the given territory has a piece of the given type
-     * (owned by the territory owner) where the visible quantity is
-     * greater than 0 (meaning it existed before purchasing took place)
-     */
-    public static boolean hasPreExistingPiece(Territory t, int nType)
-    {
-        if (t == null) return false;
-        
-        GamePiece piece = t.getGamePiece(nType, t.getGamePlayer());
-        if (piece == null) return false;
-        
-        if (piece.getQuantity() > 0) return true;
-        
-        return false;
-    }
-    
-    /**
      * Return all pieces of a given type in container.  Should synchronize on container.getMap() around
      * call to this and use of iterator to avoid concurrent modification exceptions and to make
      * sure all pieces you get are still there while you iterate
@@ -473,7 +329,7 @@ public class EngineUtils
             while (iter.hasNext())
             {
                 piece = (GamePiece) iter.next();
-                if (piece.getType().intValue() == nType)
+                if (piece.getType() == nType)
                 {
                     list.add(piece);
                 }
@@ -495,7 +351,7 @@ public class EngineUtils
             while (iter.hasNext())
             {
                 piece = (GamePiece) iter.next();
-                if (piece.getType().intValue() == nType)
+                if (piece.getType() == nType)
                 {
                     nCnt ++;
                 }
@@ -503,104 +359,7 @@ public class EngineUtils
         }
         return nCnt;
     }
-    
-    /**
-     * Return number of tokens of a given type in container owned by given player
-     */
-    public static int getNumTokens(GamePieceContainer container, int nType, GamePlayer player)
-    {
-        GamePiece piece = container.getGamePiece(nType, player);
-        if (piece == null) return 0;
-        
-        return piece.getNumTokens();
-    }
-    
-    // used for online components
-    private static DDLabel ledonline_, ledconnect_;
-    private static ImageIcon ledgreen_;
-    private static ImageIcon ledred_;
-    private static ImageIcon ledyellow_;
-    private static ImageIcon ledyellowoff_;
-    private static String sConnected_;
-    private static String sDisconnected_;
-    
-    /**
-     * Load images/labels for status used in games with online components
-     */
-    public static void initOnline()
-    {
-        ledgreen_ = ImageConfig.getImageIcon("led-green");
-        ledred_ = ImageConfig.getImageIcon("led-red");
-        ledyellow_ = ImageConfig.getImageIcon("led-yellow");
-        ledyellowoff_ = ImageConfig.getImageIcon("led-yellow-off");
-        sConnected_ = PropertyConfig.getMessage("msg.online.ok");
-        sDisconnected_ = PropertyConfig.getMessage("msg.online.dis");
-    }
-    
-    /**
-     * Set leds
-     */
-    public static void setLeds(DDLabel online, DDLabel connect)
-    {
-        ledonline_ = online;
-        ledconnect_ = connect;
-        
-        if (ledonline_ != null) ledonline_.setIcon(ledgreen_);
-        if (ledconnect_!= null) ledconnect_.setIcon(ledyellowoff_);
-    }
-    
-    /**
-     * Set connect status
-     */
-    public static void setOnlineStatusLed(boolean bConnected)
-    {
-        if (ledonline_ == null) return;
-        ledonline_.setIcon(bConnected ? ledgreen_ : ledred_);
-        ledonline_.setToolTipText(bConnected ? sConnected_ : sDisconnected_);
-    }
-    
-    /**
-     * Set connection activity
-     */
-    public static void setConnectActivity()
-    {
-        if (ledconnect_ == null) return;
-        
-        ledconnect_.setIcon(ledyellow_);
-        
-        // sleep in sep thread before turning led off
-        Thread tWait = new Thread(
-            () -> {
-                Utils.sleepMillis(100);
-                // need to invoke later so happens from swing thread
-                SwingUtilities.invokeLater(
-                    () -> {
-                        if (ledconnect_ != null) ledconnect_.setIcon(ledyellowoff_);
-                    }
-                );
-            }
-        );
-        tWait.start();
-    }
-    
-    private static DDButton chat_;
-    
-    /**
-     * Store chat button
-     */
-    public static void setChatButton(DDButton chat)
-    {
-        chat_ = chat;
-    }
-    
-    /**
-     * Get chat button
-     */
-    public static DDButton getChatButton()
-    {
-        return chat_;
-    }
-    
+ 
     /**
      * play background music start, first then loop
      */
@@ -622,34 +381,19 @@ public class EngineUtils
             AudioConfig.startBackgroundMusic(sStart, sLoop, bPlayStart);
         }
     }
-    
-   /**
-     * music loop from gamephase data - loops for audio-start and
-     * audio-loop params.
-     */
-    public static AudioPlayer playMusicLoop(GamePhase gamephase)
-    {
-        String sStart = gamephase.getString("audio-start");
-        String sLoop = gamephase.getString("audio-loop");
-        if (sStart != null && !sStart.equals("NONE") && sLoop != null)
-        {
-            return AudioConfig.playMusicLoop(sStart, sLoop);
-        }
-        return null;
-    }
 
     //
     // cancelable phases
     //
 
-    private static ArrayList cancelables_;
+    private static ArrayList<CancelablePhase> cancelables_;
 
     /**
      * add cancelable phase
      */
     public static synchronized void addCancelable(CancelablePhase phase)
     {
-        if (cancelables_ == null) cancelables_ = new ArrayList();
+        if (cancelables_ == null) cancelables_ = new ArrayList<>();
 
         if (!cancelables_.contains(phase)) cancelables_.add(phase);
     }
@@ -681,11 +425,9 @@ public class EngineUtils
     private static synchronized void cancel()
     {
         CancelablePhase c;
-        ArrayList dup = new ArrayList(cancelables_);
-        int nNum = dup.size();
-        for (int i = 0; i < nNum; i++)
-        {
-            c = (CancelablePhase) dup.get(i);
+        ArrayList<CancelablePhase> dup = new ArrayList<>(cancelables_);
+        for (CancelablePhase cancelablePhase : dup) {
+            c = cancelablePhase;
             c.cancelPhase();
         }
 

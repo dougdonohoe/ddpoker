@@ -54,25 +54,16 @@ import com.donohoedigital.games.poker.ai.AITest;
 import com.donohoedigital.games.poker.ai.RuleEngine;
 import com.donohoedigital.games.poker.ai.V2Player;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class CreateTestCase extends DialogPhase
 {
-    static Logger logger = LogManager.getLogger(CreateTestCase.class);
-
     private PokerGame game_;
-    private PokerTable table_;
-    private HoldemHand hhand_;
     private PokerPlayer player_;
     private ListPanel outcomeList_;
 
@@ -82,9 +73,9 @@ public class CreateTestCase extends DialogPhase
     public void init(GameEngine engine, GameContext context, GamePhase gamephase)
     {
         game_ = (PokerGame) context.getGame();
-        table_ = game_.getCurrentTable();
-        hhand_ = table_.getHoldemHand();
-        player_ = hhand_.getCurrentPlayer();
+        PokerTable table = game_.getCurrentTable();
+        HoldemHand hhand = table.getHoldemHand();
+        player_ = hhand.getCurrentPlayer();
 
         super.init(engine, context, gamephase);
     }
@@ -105,9 +96,7 @@ public class CreateTestCase extends DialogPhase
         base.add(outcomeList_, BorderLayout.CENTER);
         base.setPreferredSize(new Dimension(200, 200));
 
-        this.getMatchingButton("results").addActionListener(
-            e ->
-                AITest.test(context_)
+        this.getMatchingButton("results").addActionListener(_ -> AITest.test(context_)
         );
 
         return base;
@@ -116,7 +105,7 @@ public class CreateTestCase extends DialogPhase
 
     public static class OutcomeItemPanel extends ListItemPanel
     {
-        private DDLabel label_;
+        private final DDLabel label_;
 
         public OutcomeItemPanel(ListPanel panel, Object item, String sStyle)
         {

@@ -50,7 +50,7 @@ public class TableColumn
 
         // name and constructor for name
         private final String sName;
-        private VALIGN(String sName)
+        VALIGN(String sName)
         {
             this.sName = sName;
         }
@@ -71,7 +71,7 @@ public class TableColumn
 
         // name and constructor for name
         private final String sName;
-        private HALIGN(String sName)
+        HALIGN(String sName)
         {
             this.sName = sName;
         }

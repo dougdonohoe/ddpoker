@@ -60,24 +60,6 @@ public class FloatTracker
         computeAverage();
     }
 
-    public void addEntry(Float f)
-    {
-        if (f == null) return;
-
-        float fv = f;
-
-        entries_[next_] = fv;
-
-        next_ = (next_ + 1) % entries_.length;
-
-        if (next_ == 0)
-        {
-            full_ = true;
-        }
-
-        computeAverage();
-    }
-
     public boolean isFull()
     {
         return full_;
@@ -118,14 +100,6 @@ public class FloatTracker
         }
 
         weightedAverage_ = sum / div;
-
-        /*
-        System.out.println("count="+count);
-        System.out.println("start="+start);
-        System.out.println("sum="+sum);
-        System.out.println("div="+div);
-        System.out.println("avg="+weightedAverage_);
-        */
     }
 
     public void clear()

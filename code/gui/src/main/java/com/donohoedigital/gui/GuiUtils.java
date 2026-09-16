@@ -58,7 +58,6 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -146,9 +145,8 @@ public class GuiUtils
     {
         if (o instanceof DDComponent) return (DDComponent) o;
 
-        if (o instanceof Component)
+        if (o instanceof Component c)
         {
-            Component c = (Component) o;
             c = c.getParent();
             while (c != null)
             {
@@ -205,12 +203,13 @@ public class GuiUtils
     /**
      * Print container and all the children of the container
      */
+    @SuppressWarnings("unused")
     public static void printChildren(Container container, int nIndent)
     {
         if (nIndent == 0) {
             logger.debug("===============================================================================================");
         }
-        logger.debug(indent(nIndent) + "Container: " + container);
+        logger.debug("{}Container: {}", indent(nIndent), container);
         Component[] children = container.getComponents();
         for (Component aChildren : children)
         {
@@ -220,36 +219,14 @@ public class GuiUtils
             }
             else
             {
-                logger.debug(indent(nIndent) + "  child: " + aChildren);
+                logger.debug("{}  child: {}", indent(nIndent), aChildren);
             }
         }
     }
 
     private static String indent(int nIndent)
     {
-        StringBuilder indent = new StringBuilder();
-        for (int i = 0; i < nIndent; i++)
-        {
-            indent.append("    ");
-        }
-        return indent.toString();
-    }
-
-    /**
-     * Sets font of all children of container to font (container itself is
-     * not set to prevent infinite loops if called from setFont itself)
-     */
-    public static void setFontChildren(Container container, Font font)
-    {
-        Component[] children = container.getComponents();
-        for (Component aChildren : children)
-        {
-            aChildren.setFont(font);
-            if (aChildren instanceof Container)
-            {
-                setFontChildren((Container) aChildren, font);
-            }
-        }
+        return "    ".repeat(Math.max(0, nIndent));
     }
 
     /**
@@ -265,28 +242,6 @@ public class GuiUtils
             if (aChildren instanceof Container)
             {
                 setBackgroundChildren((Container) aChildren, color);
-            }
-        }
-    }
-
-    /**
-     * Sets foreground of all children of container to color (container itself is
-     * not set to prevent infinite loops if called from setForeground itself).
-     * If the child is a JTextComponent (or subclass), the caret color is also set
-     */
-    public static void setForegroundChildren(Container container, Color color)
-    {
-        Component[] children = container.getComponents();
-        for (Component aChildren : children)
-        {
-            aChildren.setForeground(color);
-            if (aChildren instanceof JTextComponent)
-            {
-                ((JTextComponent) aChildren).setCaretColor(color);
-            }
-            if (aChildren instanceof Container)
-            {
-                setForegroundChildren((Container) aChildren, color);
             }
         }
     }
@@ -322,46 +277,6 @@ public class GuiUtils
             }
         }
     }
-
-    /**
-     * set border on all children
-     */
-    public static void setBorderChildren(Container container, Border border)
-    {
-        Component[] children = container.getComponents();
-        for (Component aChildren : children)
-        {
-            if (aChildren instanceof JComponent)
-            {
-                ((JComponent) aChildren).setBorder(border);
-            }
-            if (aChildren instanceof Container)
-            {
-                setBorderChildren((Container) aChildren, border);
-            }
-        }
-    }
-
-    /**
-     * Set focusable on all children
-     */
-    public static void setFocusableChildren(Container container, boolean b)
-    {
-        Component[] children = container.getComponents();
-        for (Component aChildren : children)
-        {
-            if (aChildren instanceof JComponent)
-            {
-                aChildren.setFocusable(b);
-                aChildren.setFocusTraversalKeysEnabled(b);
-            }
-            if (aChildren instanceof Container)
-            {
-                setFocusableChildren((Container) aChildren, b);
-            }
-        }
-    }
-
     /**
      * Set opaque on all appropriate children
      */
@@ -404,22 +319,6 @@ public class GuiUtils
     }
 
     /**
-     * add mouse listener to all children components
-     */
-    public static void addPropertyChangeListenerChildren(Container container, PropertyChangeListener mouse)
-    {
-        Component[] children = container.getComponents();
-        for (Component aChildren : children)
-        {
-            aChildren.addPropertyChangeListener(mouse);
-            if (aChildren instanceof Container)
-            {
-                addPropertyChangeListenerChildren((Container) aChildren, mouse);
-            }
-        }
-    }
-
-    /**
      * fill array with all DDOptions in the hierarchy
      */
     public static void getDDOptions(Container container, List<DDOption> options)
@@ -427,9 +326,8 @@ public class GuiUtils
         Component[] children = container.getComponents();
         for (Component aChildren : children)
         {
-            if (aChildren instanceof DDOption)
+            if (aChildren instanceof DDOption dd)
             {
-                DDOption dd = (DDOption) aChildren;
                 if (!dd.isIgnored())
                 {
                     options.add(dd);
@@ -731,39 +629,6 @@ public class GuiUtils
     }
 
     /**
-     * Add standard escape key actions to the component - action is
-     * invoked when one of DELETE / BACKSPACE / SPACE are pressed.
-     */
-    public static void addEscapeKeyActions(JComponent comp, AbstractAction action)
-    {
-        addKeyAction(comp, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                     "endmodaldelete", action,
-                     KeyEvent.VK_DELETE, 0);
-        addKeyAction(comp, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                     "endmodalbackspace", action,
-                     KeyEvent.VK_BACK_SPACE, 0);
-        addKeyAction(comp, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                     "endmodalspace", action,
-                     KeyEvent.VK_SPACE, 0);
-    }
-
-    /**
-     * Remove standard escape key actions
-     */
-    public static void removeEscapeKeyActions(JComponent comp)
-    {
-        removeKeyAction(comp, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                        "endmodaldelete",
-                        KeyEvent.VK_DELETE, 0);
-        removeKeyAction(comp, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                        "endmodalbackspace",
-                        KeyEvent.VK_BACK_SPACE, 0);
-        removeKeyAction(comp, JComponent.WHEN_IN_FOCUSED_WINDOW,
-                        "endmodalspace",
-                        KeyEvent.VK_SPACE, 0);
-    }
-
-    /**
      * Method to add a key action to a component using the ActionMap/InputMap
      * way.
      */
@@ -773,17 +638,6 @@ public class GuiUtils
     {
         comp.getActionMap().put(sActionName, action);
         comp.getInputMap(nWhen).put(KeyStroke.getKeyStroke(key, key_mods), sActionName);
-    }
-
-    /**
-     * Remove a key action
-     */
-    public static void removeKeyAction(JComponent comp, int nWhen,
-                                       String sActionName,
-                                       int key, int key_mods)
-    {
-        comp.getActionMap().remove(sActionName);
-        comp.getInputMap(nWhen).remove(KeyStroke.getKeyStroke(key, key_mods));
     }
 
     /**
@@ -935,12 +789,12 @@ public class GuiUtils
 
         public void focusGained(FocusEvent e)
         {
-            logger.debug(sName + " focus gained from " + e.getOppositeComponent());
+            logger.debug("{} focus gained from {}", sName, e.getOppositeComponent());
         }
 
         public void focusLost(FocusEvent e)
         {
-            logger.debug(sName + " focus lost to " + e.getOppositeComponent());
+            logger.debug("{} focus lost to {}", sName, e.getOppositeComponent());
         }
     }
 
@@ -967,7 +821,7 @@ public class GuiUtils
      */
     protected static void log(String sMethod, String sMsg)
     {
-        logger.debug(sMethod + " [" + nextSEQ() + "] " + (sMsg == null ? "" : sMsg));
+        logger.debug("{} [{}] {}", sMethod, nextSEQ(), sMsg == null ? "" : sMsg);
     }
 
     /**
@@ -1019,21 +873,6 @@ public class GuiUtils
     }
 
     /**
-     * get BaseFrame this component is in
-     */
-    public static BaseFrame getBaseFrame(Component c)
-    {
-        if (c == null) return null;
-
-        Container p = c.getParent();
-        while (p != null && !(p instanceof BaseFrame))
-        {
-            p = p.getParent();
-        }
-        return (BaseFrame) p;
-    }
-
-    /**
      * get InternalDialog this component is in
      */
     public static InternalDialog getInternalDialog(Component c)
@@ -1052,16 +891,16 @@ public class GuiUtils
     // DDOption Helper interface
     //
     @SuppressWarnings({"PublicInnerClass"})
-    public static interface CheckListener
+    public interface CheckListener
     {
         void addListeners(List<DDOption> options);
     }
 
     /**
      * Internal frame border - copy to adjust how border is drawn to avoid
-     * white dots at corner
+     * white dots at corner.  NOT UNUSED - created via classname.
      */
-    @SuppressWarnings({"PublicInnerClass"})
+    @SuppressWarnings("unused")
     public static class InternalFrameBorder extends AbstractBorder implements UIResource
     {
 
@@ -1095,20 +934,6 @@ public class GuiUtils
             g.fillRect(0, 0, w - 1, h - 1); // JDD - simpler, no white dots at corners
             g.setColor(background.darker()); // JDD
             g.drawRect(0, 0, w - 1, h - 1); // JDD
-            // Draw outermost lines
-//             g.setColor(Color.red);
-//              g.drawLine( 1, 0, w-2, 0);
-//            g.setColor(Color.blue);
-//              g.drawLine( 0, 1, 0, h-2);
-//            g.setColor(Color.cyan);
-//              g.drawLine( w-1, 1, w-1, h-2);
-//            g.setColor(Color.yellow);
-//              g.drawLine( 1, h-1, w-2, h-1);
-
-            // Draw the bulk of the border
-//              for (int i = 1; i < 5; i++) {
-//	          g.drawRect(x+i,y+i,w-(i*2)-1, h-(i*2)-1);
-//              }
 
             if (c instanceof JInternalFrame &&
                 ((JInternalFrame) c).isResizable())

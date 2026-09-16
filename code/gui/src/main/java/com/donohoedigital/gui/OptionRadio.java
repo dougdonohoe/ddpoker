@@ -54,14 +54,12 @@ import java.awt.event.ActionListener;
  */
 public class OptionRadio extends DDOption implements ActionListener, ChangeListener
 {
-    //static Logger logger = LogManager.getLogger(OptionRadio.class);
-    
-    private DDRadioButton radio_;
-    private String sOptionName_;
+    private final DDRadioButton radio_;
+    private final String sOptionName_;
     private DDLabel leftlabel_;
     protected int nValue_;
-    private boolean bDefault_;
-    private DDOption extra_ = null;
+    private final boolean bDefault_;
+    private final DDOption extra_;
     
     /** 
      * Creates a new instance of OptionRadio 

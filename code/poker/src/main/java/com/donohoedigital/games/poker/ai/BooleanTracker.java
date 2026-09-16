@@ -67,7 +67,7 @@ public class BooleanTracker
     {
         if (b == null) return;
 
-        boolean bv = b.booleanValue();
+        boolean bv = b;
 
         if (entries_[next_] != bv)
         {
@@ -97,11 +97,6 @@ public class BooleanTracker
     public int getCount()
     {
         return entries_.length;
-    }
-
-    public int getCountTrue()
-    {
-        return countTrue_;
     }
 
     public float getPercentTrue(float defPercent)

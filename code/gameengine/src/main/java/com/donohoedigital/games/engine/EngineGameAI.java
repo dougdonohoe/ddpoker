@@ -45,6 +45,8 @@ import com.donohoedigital.games.config.GameAI;
 import com.donohoedigital.games.config.GamePlayer;
 import com.donohoedigital.games.config.Territory;
 
+import java.util.Objects;
+
 /**
  *
  * @author  donohoe
@@ -54,18 +56,12 @@ public abstract class EngineGameAI extends GameAI
 {
     protected GamePlayer gamePlayer_;
     protected Territory[] my_;
-    protected int myNum_ = 0;
 
-    /** 
+    /*
      * Creates a new instance of EngineGameAI.  Stores the current
      * engine and game (so this class needs to be created after a game
      * has been created)
      */
-    public EngineGameAI()
-    {
-        this(true);
-    }
-    
     /**
      * Version which controls whether territory cache is created
      */
@@ -73,7 +69,7 @@ public abstract class EngineGameAI extends GameAI
     {
         // array to hold our territories for perf
         // we use nNum_ to hold length
-        if (bUseTerritoryCache) my_ = new Territory[Territory.getTerritoryArrayCached().length];
+        if (bUseTerritoryCache) my_ = new Territory[Objects.requireNonNull(Territory.getTerritoryArrayCached()).length];
     }
     
     /**
@@ -92,41 +88,6 @@ public abstract class EngineGameAI extends GameAI
         return gamePlayer_;
     }
     
-    /**
-     * Figure out territories owned by player
-     */
-    protected void determineMyTerritories()
-    {
-        Territory[] ts = Territory.getTerritoryArrayCached();
-        myNum_ = 0;
-        for (Territory t : ts)
-        {
-            if (t.getGamePlayer() == gamePlayer_)
-            {
-                my_[myNum_++] = t;
-            }
-        }
-    }
-    
-    /**
-     * Return array of territories belonging to this player - note that
-     * the array only contains getNumMyTerritories() entries, so don't
-     * use the length of the array in a loop!
-     */
-    public Territory[] getMyTerritories()
-    {
-        return my_;
-    }
-    
-    /**
-     * Return number of entries in myTerritories (not equal to length
-     * of array!
-     */
-    public int getNumMyTerritories()
-    {
-        return myNum_;
-    }
-
     //
     // Marshalling code
     //

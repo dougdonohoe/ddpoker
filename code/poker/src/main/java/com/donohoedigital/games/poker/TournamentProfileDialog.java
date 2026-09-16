@@ -43,15 +43,14 @@ import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.comms.DMTypedHashMap;
 import com.donohoedigital.config.ImageConfig;
 import com.donohoedigital.config.PropertyConfig;
-import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.config.GameButton;
-import com.donohoedigital.games.engine.*;
+import com.donohoedigital.games.engine.OptionMenu;
+import com.donohoedigital.games.engine.OptionMenuDialog;
+import com.donohoedigital.games.engine.ProfileList;
 import com.donohoedigital.games.poker.ai.gui.OpponentMixPanel;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.model.TournamentProfile;
 import com.donohoedigital.gui.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -65,24 +64,20 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-import static com.donohoedigital.config.DebugConfig.TESTING;
-
 /**
  * @author Doug Donohoe
  */
 public class TournamentProfileDialog extends OptionMenuDialog implements PropertyChangeListener, ActionListener, FocusListener
 {
-    static Logger logger = LogManager.getLogger(TournamentProfileDialog.class);
-
     static com.donohoedigital.base.Format fPerc = new com.donohoedigital.base.Format("%1.3f");
-    private final javax.swing.border.Border empty_ = null;
+    private final static javax.swing.border.Border empty_ = null;
     private TournamentProfile profile_;
     private PokerGame game_; // used when editing during a tournament
     private final TypedHashMap dummy_ = new TypedHashMap();
     private final TypedHashMap labelignore_ = new TypedHashMap();
     private TypedHashMap orig_;
-    private final ArrayList rebuyOptions_ = new ArrayList();
-    private final ArrayList addonOptions_ = new ArrayList();
+    private final ArrayList<DDOption> rebuyOptions_ = new ArrayList<>();
+    private final ArrayList<DDOption> addonOptions_ = new ArrayList<>();
     private DDPanel base_;
     private DDTextField name_;
     private DDNumberSpinner numPlayers_;
@@ -102,7 +97,6 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     private int nNumSpots_ = 0;
     private DDRadioButton buttonSelected_;
     private DDButton clear_;
-    private ButtonGroup buttonGroup_;
     private DDPanel spotsParent_;
     private JScrollPane spotscroll_;
     private DDLabel total_;
@@ -175,7 +169,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
      */
     private abstract class OptionTab extends DDTabPanel
     {
-        private ArrayList localOptions = new ArrayList();
+        private final ArrayList<DDOption> localOptions = new ArrayList<>();
 
         OptionTab()
         {
@@ -209,12 +203,9 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     /**
      * set map on each option to actual tournament map
      */
-    private void doMapLoad(ArrayList options, boolean bResetToMap)
+    private void doMapLoad(ArrayList<DDOption> options, boolean bResetToMap)
     {
-        DDOption opt;
-        for (int i = 0; i < options.size(); i++)
-        {
-            opt = ((DDOption) options.get(i));
+        for (DDOption opt : options) {
             opt.setMap(profile_.getMap());
             if (bResetToMap) opt.resetToMap();
             else opt.saveToMap();
@@ -256,7 +247,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             // after fixing widths,
             // don't add to option list so we don't reset/set map
             // we do this because profile name not stored in a
-            // map (its a member of BaseProfile)
+            // map (it's a member of BaseProfile)
             ot.setIgnored(true);
         }
 
@@ -306,7 +297,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             GlassButton invitees = new GlassButton("invitees", "Glass");
             invitees.setBorderGap(2, 4, 2, 4);
             invitees.setPreferredSize(new Dimension(75, 15));
-            invitees.addActionListener(e -> {
+            invitees.addActionListener(_ -> {
                 TypedHashMap params = new TypedHashMap();
                 params.setObject(PlayerListDialog.PARAM_PLAYER_LIST, profile_.getInvitees());
                 context_.processPhaseNow("InvitedPlayerList", params);
@@ -448,7 +439,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             numPlayers_ = oi.getSpinner();
 
             // max at table
-            oi = OptionMenu.add(new OptionInteger(null,
+            OptionMenu.add(new OptionInteger(null,
                                                   TournamentProfile.PARAM_TABLE_SEATS,
                                                   STYLE, dummy_, null,
                                                   2,
@@ -512,12 +503,12 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     private class LevelsPanel extends DDPanel implements ListSelectionListener,
                                                          ActionListener
     {
-        private GlassButton insertlevel;
-        private GlassButton insertbreak;
-        private GlassButton delete;
-        private GlassButton verify;
-        private ListPanel levelsList;
-        private LevelsTab tab;
+        private final GlassButton insertlevel;
+        private final GlassButton insertbreak;
+        private final GlassButton delete;
+        private final GlassButton verify;
+        private final ListPanel levelsList;
+        private final LevelsTab tab;
 
         public LevelsPanel(LevelsTab tab)
         {
@@ -615,11 +606,11 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
 
         private void createLevels()
         {
-            ArrayList levelitems = new ArrayList();
+            ArrayList<LevelListItem> levelitems = new ArrayList<>();
             for (int i = 0; i < profile_.getLastLevel(); i++)
             {
                 levelitems.add(new LevelListItem(TournamentProfileDialog.this, i,
-                                                 profile_.isBreak(i + 1)));
+                        profile_.isBreak(i + 1)));
             }
             levelsList.setItems(levelitems);
         }
@@ -663,11 +654,11 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             int index = levelsList.getSelectedIndex() + 1;
 
             LevelListItem item = new LevelListItem(TournamentProfileDialog.this,
-                                                   // use index at end to avoid
-                                                   // over-writing data.  Will
-                                                   // get reset when update() called
-                                                   levelsList.getItems().size(),
-                                                   bBreak);
+                    // use index at end to avoid
+                    // over-writing data.  Will
+                    // get reset when update() called
+                    levelsList.getItems().size(),
+                    bBreak);
             levelsList.insertItem(index, item);
             LevelPanel lp = (LevelPanel) levelsList.getSelectedPanel();
             if (bBreak) lp.minutes.requestFocus();
@@ -677,7 +668,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             // load from map for new break level to get the minutes
             // for regular level, we save blank values to map to
             // init
-            ArrayList newOptions = new ArrayList();
+            ArrayList<DDOption> newOptions = new ArrayList<>();
             GuiUtils.getDDOptions(lp, newOptions);
             doMapLoad(newOptions, bBreak);
             TournamentProfileDialog.this.addListeners(newOptions);
@@ -687,13 +678,10 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         {
             // set dummy map so we won't get storage from focus lost
             LevelPanel panel = (LevelPanel) levelsList.getSelectedPanel();
-            ArrayList options = new ArrayList();
+            ArrayList<DDOption> options = new ArrayList<>();
             GuiUtils.getDDOptions(panel, options);
-            DDOption dd;
-            for (int i = 0; i < options.size(); i++)
-            {
-                dd = ((DDOption) options.get(i));
-                dd.setMap(dummy_);
+            for (DDOption option : options) {
+                option.setMap(dummy_);
             }
 
             // remove listeners too
@@ -726,7 +714,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
     /**
      * track level for use with ListPanel/ListItemPanel support
      */
-    private class LevelListItem
+    private static class LevelListItem
     {
         public int index;
         public TournamentProfileDialog dialog;
@@ -774,10 +762,10 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             TypedHashMap map = dialog.profile_.getMap();
             boolean bDisplayOnly = false;
             if (nNum > 0 && dialog.game_ != null && dialog.game_.getLevel() > nNum &&
-                !(map.getString(TournamentProfile.PARAM_ANTE + nNum, "").length() == 0 &&
-                  map.getString(TournamentProfile.PARAM_SMALL + nNum, "").length() == 0 &&
-                  map.getString(TournamentProfile.PARAM_BIG + nNum, "").length() == 0)
-                    )
+                    !(map.getString(TournamentProfile.PARAM_ANTE + nNum, "").isEmpty() &&
+                            map.getString(TournamentProfile.PARAM_SMALL + nNum, "").isEmpty() &&
+                            map.getString(TournamentProfile.PARAM_BIG + nNum, "").isEmpty())
+            )
             {
                 bDisplayOnly = true;
                 canDelete = false;
@@ -815,7 +803,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly || bBreak)
             {
                 otAnte.setDisplayOnly(true);
-                ante.setBorder(dialog.empty_);
+                ante.setBorder(empty_);
             }
             if (bBreak) ante.setText(PropertyConfig.getMessage("msg.break.edit"));
             if (bBreak || i < 0) otAnte.setIgnored(true);
@@ -828,7 +816,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly || bBreak)
             {
                 otSmall.setDisplayOnly(true);
-                small.setBorder(dialog.empty_);
+                small.setBorder(empty_);
             }
             if (bBreak || i < 0) otSmall.setIgnored(true);
 
@@ -840,7 +828,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly || bBreak)
             {
                 otBig.setDisplayOnly(true);
-                big.setBorder(dialog.empty_);
+                big.setBorder(empty_);
             }
             if (bBreak || i < 0) otBig.setIgnored(true);
 
@@ -852,7 +840,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
             if (bDisplayOnly)
             {
                 otMinutes.setDisplayOnly(true);
-                minutes.setBorder(dialog.empty_);
+                minutes.setBorder(empty_);
             }
             if (i < 0) otMinutes.setIgnored(true);
 
@@ -920,7 +908,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
 
         oi = OptionMenu.add(new OptionInteger(null, TournamentProfile.PARAM_BUYIN, STYLE, dummy_, null, 1, TournamentProfile.MAX_BUY, 70, true), buyin, BorderLayout.WEST);
         buyinCost_ = oi.getSpinner();
-        oi = OptionMenu.add(new OptionInteger(null, TournamentProfile.PARAM_BUYINCHIPS, STYLE, dummy_, null, 1, TournamentProfile.MAX_CHIPS, 70, true), buyin, BorderLayout.CENTER);
+        OptionMenu.add(new OptionInteger(null, TournamentProfile.PARAM_BUYINCHIPS, STYLE, dummy_, null, 1, TournamentProfile.MAX_CHIPS, 70, true), buyin, BorderLayout.CENTER);
 
         return buyin;
     }
@@ -1078,23 +1066,23 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
 
         // options
         OptionRadio radio;
-        buttonGroup_ = new ButtonGroup();
+        ButtonGroup buttonGroup = new ButtonGroup();
         DDPanel allocbase = new DDPanel();
         allocbase.setLayout(new GridLayout(0, 1, 0, -4));
         left.add(allocbase, BorderLayout.NORTH);
 
 
-        radio = OptionMenu.add(new OptionRadio(null, TournamentProfile.PARAM_ALLOC, STYLE, dummy_, "alloc.auto", buttonGroup_, PokerConstants.ALLOC_AUTO, null), allocbase);
+        radio = OptionMenu.add(new OptionRadio(null, TournamentProfile.PARAM_ALLOC, STYLE, dummy_, "alloc.auto", buttonGroup, PokerConstants.ALLOC_AUTO, null), allocbase);
         buttonAuto_ = radio.getRadioButton();
-        radio = OptionMenu.add(new OptionRadio(null, TournamentProfile.PARAM_ALLOC, STYLE, dummy_, "alloc.perc", buttonGroup_, PokerConstants.ALLOC_PERC, null), allocbase);
+        radio = OptionMenu.add(new OptionRadio(null, TournamentProfile.PARAM_ALLOC, STYLE, dummy_, "alloc.perc", buttonGroup, PokerConstants.ALLOC_PERC, null), allocbase);
         buttonPerc_ = radio.getRadioButton();
-        radio = OptionMenu.add(new OptionRadio(null, TournamentProfile.PARAM_ALLOC, STYLE, dummy_, "alloc.amount", buttonGroup_, PokerConstants.ALLOC_AMOUNT, null), allocbase);
+        radio = OptionMenu.add(new OptionRadio(null, TournamentProfile.PARAM_ALLOC, STYLE, dummy_, "alloc.amount", buttonGroup, PokerConstants.ALLOC_AMOUNT, null), allocbase);
         buttonAmount_ = radio.getRadioButton();
 
         // clear button
         clear_ = new GlassButton("clear", "Glass");
         left.add(GuiUtils.NORTH(GuiUtils.CENTER(clear_)), BorderLayout.CENTER);
-        clear_.addActionListener(e ->
+        clear_.addActionListener(_ ->
             clearSpots());
 
         // amount fields
@@ -1162,7 +1150,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         if (buttonSatellite_.isSelected()) nNum = 1;
         DDRadioButton select = getSelectedButton();
 
-        // if no change in # spots or alloction type, skip
+        // if no change in # spots or allocation type, skip
         if (select == null || (nNum == nNumSpots_ && select == buttonSelected_)) return;
 
         // remember new values
@@ -1236,15 +1224,15 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
 
             text = sp.spot.getText();
 
-            if (old == buttonAuto_ && (saveA_[i] == null || saveA_[i].length() == 0)) saveA_[i] = text;
+            if (old == buttonAuto_ && (saveA_[i] == null || saveA_[i].isEmpty())) saveA_[i] = text;
             if (old == buttonAmount_) saveA_[i] = text;
             if (old == buttonPerc_) saveP_[i] = text;
 
-            if (nu == buttonPerc_ && saveP_[i] != null && saveP_[i].length() > 0)
+            if (nu == buttonPerc_ && saveP_[i] != null && !saveP_[i].isEmpty())
             {
                 sp.spot.setText(saveP_[i]);
             }
-            else if (nu == buttonAmount_ && saveA_[i] != null && saveA_[i].length() > 0)
+            else if (nu == buttonAmount_ && saveA_[i] != null && !saveA_[i].isEmpty())
             {
                 sp.spot.setText(saveA_[i]);
             }
@@ -1435,8 +1423,6 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
         if (i >= 0)
         {
             ot = new OptionText(null, sName, sStyle, dummy_, nDigits, sRegExp, nWidth, false);
-            text = ot.getTextField();
-
             // change name used in map now that field has been created
             // and set default value.  Use display level name
             ot.setName(sName + (i + 1));
@@ -1641,7 +1627,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
      */
     private void checkBox(Object o)
     {
-        ArrayList list = null;
+        ArrayList<DDOption> list = null;
         boolean bOn = false;
         if (o == addons_)
         {
@@ -1656,10 +1642,7 @@ public class TournamentProfileDialog extends OptionMenuDialog implements Propert
 
         if (list == null) return;
 
-        DDOption ddOption;
-        for (int i = 0; i < list.size(); i++)
-        {
-            ddOption = ((DDOption) list.get(i));
+        for (DDOption ddOption : list) {
             ddOption.setEnabled(bOn);
             ddOption.saveToMap(); // need to save values to map when enable
         }

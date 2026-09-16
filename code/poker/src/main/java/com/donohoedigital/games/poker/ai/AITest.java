@@ -68,6 +68,7 @@ public class AITest
 
         if (!fDir.exists())
         {
+            //noinspection ResultOfMethodCallIgnored
             fDir.mkdirs();
         }
 
@@ -142,8 +143,7 @@ public class AITest
 
             GlassButton refreshButton = new GlassButton(GuiManager.DEFAULT,  "BrushedMetal");
             refreshButton.setText("Refresh");
-            refreshButton.addActionListener(e ->
-                refresh());
+            refreshButton.addActionListener(_ -> refresh());
             buttons.add(refreshButton);
 
             getContentPane().add(scroll, BorderLayout.CENTER);
@@ -200,8 +200,9 @@ public class AITest
 
             File fDir = getTestCaseDir();
 
-            File[] files = fDir.listFiles((dir, name) -> (name.endsWith(".ddpokersave")));
+            File[] files = fDir.listFiles((_, name) -> (name.endsWith(".ddpokersave")));
 
+            assert files != null;
             Arrays.sort(files);
 
             for (File file : files)
@@ -215,14 +216,14 @@ public class AITest
                     buf.append("IO Exception processing ");
                     buf.append(file.getName());
                     buf.append("<pre><tt>");
-                    buf.append(e.toString());
+                    buf.append(e);
                     buf.append("</tt></pre>");
                     buf.append("<br>");
                 }
             }
 
             buf.append("<table><tr><td colspan=\"3\"><b>Test Case</b></td><td><b>Expected</b></td><td><b>Actual</b></td></tr>");
-            if (errbuf.length() > 0)
+            if (!errbuf.isEmpty())
             {
                 buf.append(errbuf);
                 buf.append("<tr><td colspan=\"5\"><hr></td></tr>");
@@ -247,7 +248,7 @@ public class AITest
             RuleEngine ruleEngine = ((V2Player) pokerAI).getRuleEngine();
             pokerAI.getHandAction(false);
             String actual = (ruleEngine.getStrongestOutcomeName());
-            String expected = new BufferedReader(new FileReader(new File(file.getAbsolutePath() + ".expect"))).readLine();
+            String expected = new BufferedReader(new FileReader(file.getAbsolutePath() + ".expect")).readLine();
             boolean ok = (actual.equals(expected));
             StringBuilder buf = ok ? okbuf : errbuf;
             buf.append("<tr><td><a href=\"");
