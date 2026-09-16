@@ -81,14 +81,6 @@ public class PokerGameboard extends Gameboard
     private Color bottom_ = new Color(20,82,1);
 
     /**
-     * Get delegate
-     */
-    public PokerGameboardDelegate getDelegate()
-    {
-        return delegate_;
-    }
-
-    /**
      * Create new scrollgameboard
      */
     public PokerGameboard(GameEngine engine, GameContext context, GameboardConfig gameconfig,
@@ -255,9 +247,27 @@ public class PokerGameboard extends Gameboard
         }
         else
         {
-            return PropertyConfig.getMessage("msg.playerinfo", player.getDisplayName(game_.isOnlineGame(), false),
+            return PropertyConfig.getMessage("msg.playerinfo", getSeatDisplayName(player),
                                              player.getChipCount());
         }
+    }
+
+    /**
+     * Name shown on the seat label.  When the AI debug display is on ('x' key), the
+     * player's hand strength takes the name's place - the name is still available via
+     * the tooltip and the Player Info dashboard item.  Kept to one line so the label
+     * stays the same size, since it sits above the cards at some seats and below at others.
+     */
+    private String getSeatDisplayName(PokerPlayer player)
+    {
+        if (DEBUG_AI)
+        {
+            // negative means no value (folded, or fewer than three community cards)
+            double hs = player.getHandStrength() * 100;
+            if (hs >= 0) return "HS " + HandStat.fPerc.form(hs) + '%';
+        }
+
+        return player.getDisplayName(game_.isOnlineGame(), false);
     }
 
     /**
@@ -394,7 +404,7 @@ public class PokerGameboard extends Gameboard
                                     break;
 
                                 default:
-                                    ApplicationError.assertTrue(false, "Unhandled last action: " + nLast);
+                                    throw new ApplicationError("Unhandled last action: " + nLast);
                             }
 
 
@@ -496,7 +506,6 @@ public class PokerGameboard extends Gameboard
 
     /**
      * override to repaint resize correctly
-     * @param g1
      */
     @Override
     protected void paintComponent(Graphics g1)
@@ -557,7 +566,7 @@ public class PokerGameboard extends Gameboard
     public static class FauxPokerGameboard extends ImageComponent
     {
         Color top_, bottom_;
-        private Faux2 faux2_;
+        private final Faux2 faux2_;
 
         public FauxPokerGameboard(Color top, Color bottom)
         {

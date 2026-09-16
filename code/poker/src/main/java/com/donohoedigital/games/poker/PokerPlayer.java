@@ -2040,7 +2040,8 @@ public class PokerPlayer extends GamePlayer
 
     /**
      * hand strength - return -1 if this player is folded, or
-     * there is no hand, or if no community cards are out
+     * there is no hand, if no community cards are out, or if this
+     * player's cards are hidden from us
      */
     public float getHandStrength()
     {
@@ -2053,6 +2054,10 @@ public class PokerPlayer extends GamePlayer
         // if too early a round, indicate
         HandSorted comm = hhand.getCommunitySorted();
         if (comm.size() < 3) return -1;
+
+        // in an online game we only get blank cards for hands we aren't allowed to
+        // see, and those can't be scored
+        if (getHand().countCard(Card.BLANK) > 0) return -1;
 
         long fingerprint = comm.fingerprint() | getHand().fingerprint();
         // if already calc'd this round, return it
@@ -2080,8 +2085,9 @@ public class PokerPlayer extends GamePlayer
     private int nLastCalcPotRound_ = -1;
 
     /**
-     * hand strength - return -1 if this player is folded, or
-     * there is no hand, or if no community cards are out
+     * hand potential - return -1 if this player is folded, if there is no
+     * hand, if the round is not the flop or turn, or if this player's cards
+     * are hidden from us
      */
     public float getHandPotential()
     {
@@ -2095,6 +2101,10 @@ public class PokerPlayer extends GamePlayer
         int nRound = hhand.getRound();
         if (nRound != HoldemHand.ROUND_FLOP &&
             nRound != HoldemHand.ROUND_TURN) return -1;
+
+        // in an online game we only get blank cards for hands we aren't allowed to
+        // see, and those can't be scored
+        if (getHand().countCard(Card.BLANK) > 0) return -1;
 
         // if already calced this round, return it
         if (nRound == nLastCalcPotRound_) return nPotential_;
@@ -2126,12 +2136,21 @@ public class PokerPlayer extends GamePlayer
     }
 
     /**
-     * Get effective hand strength
+     * Get effective hand strength - hand strength plus the share of the remaining
+     * losing cases that our potential is expected to turn around.  Returns -1 if
+     * hand strength is unavailable (see getHandStrength).
      */
     public float getEffectiveHandStrength()
     {
         float hs = getHandStrength();
-        return hs + (1 - hs) * getHandPotential();
+        if (hs < 0) return -1;
+
+        // potential is only calculated on the flop and turn.  On the river there are
+        // no cards left to come, so there is no potential to add
+        float hp = getHandPotential();
+        if (hp < 0) hp = 0;
+
+        return hs + (1 - hs) * hp;
     }
 
     // instances for sorting

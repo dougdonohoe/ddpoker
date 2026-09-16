@@ -42,7 +42,6 @@ import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.ErrorCodes;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.DebugConfig;
-import static com.donohoedigital.config.DebugConfig.TESTING;
 import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.engine.DiceRoller;
 import com.donohoedigital.games.poker.ai.HandSelectionScheme;
@@ -58,6 +57,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static com.donohoedigital.config.DebugConfig.TESTING;
 
 /**
  * @author Doug Donohoe
@@ -285,6 +286,11 @@ public class HoldemHand implements DataMarshal
      */
     public void deal()
     {
+        if (TESTING(EngineConstants.TESTING_AI_DEBUG))
+        {
+            logger.debug("New hand starting...");
+        }
+
         setPlayerOrder(false);
 
         startDate_ = System.currentTimeMillis();

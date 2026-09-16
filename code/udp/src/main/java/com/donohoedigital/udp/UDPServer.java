@@ -81,7 +81,7 @@ public class UDPServer extends Thread
     public static boolean DEBUG_CREATE_DESTROY = false;
     public static boolean DEBUG_MTU = false;
 
-    public static final String TESTING_UDP = "testing.debug.udp";
+    public static final String TESTING_UDP = "settings.debug.udp";
 
     // set debug flags
     @SuppressWarnings("ConstantValue")

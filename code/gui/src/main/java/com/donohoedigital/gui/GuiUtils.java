@@ -642,6 +642,17 @@ public class GuiUtils
     }
 
     /**
+     * True if keyboard focus is in a text component.  Actions bound with
+     * WHEN_IN_FOCUSED_WINDOW and no modifier still fire while the user is typing,
+     * so unmodified letter shortcuts need to check this and do nothing.
+     */
+    public static boolean isFocusInTextComponent()
+    {
+        Component focus = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+        return focus instanceof JTextComponent;
+    }
+
+    /**
      * Hyperlink handler
      */
     public static final HyperlinkListener HYPERLINK_HANDLER = new HyperLinkHandler();

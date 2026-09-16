@@ -60,19 +60,11 @@ public class EngineConstants
     public static final String TESTING_PROFILE_OVERRIDE_EMAIL_TO = "settings.debug.profile.email.override.to";
     public static final String TESTING_DEBUG_REPAINT = "settings.debug.repaint";
     public static final String TESTING_DEBUG_REPAINT_DETAILS = "settings.debug.repaint.details";
-    public static final String TESTING_AI_DEBUG = "settings.debug.debug.ai";
+    public static final String TESTING_AI_DEBUG = "settings.debug.ai";
     public static final String TESTING_P2P = "settings.debug.p2p";
     public static final String TESTING_UDP_APP = "settings.debug.udp.app";
     public static final String TESTING_NO_EXTERNAL = "settings.debug.no.external";
 
-    // game options node and defines
-    public static final String PREF_WINDOW_MODE = "windowmode";
-    
-    // window mode options
-    public static final int MODE_ASK = 1;
-    public static final int MODE_WINDOW = 2;
-    public static final int MODE_FULL = 3;
-    
     public static final String PREF_FX = "fx";
     public static final String PREF_FX_VOL = "fxvol";
     public static final String PREF_MUSIC = "music";
