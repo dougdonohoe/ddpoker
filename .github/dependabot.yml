@@ -1,11 +1,35 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
+# Dependabot version updates: routine bumps, opened as PRs.
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
+#
+# Not listed here, on purpose:
+#
+#   docker  -- the Dockerfiles use floating tags (ubuntu, rockylinux:9, runner-latest), so
+#              there is nothing pinned for Dependabot to bump.
+#
+# HSQLDB needs no ignore rule despite being pinned at 1.8.0.10: it is declared under the old
+# hsqldb:hsqldb coordinates, where 1.8.0.10 is the last release, so no bump is ever offered.
 version: 2
+
 updates:
-  - package-ecosystem: "maven" # See documentation for possible values
-    directory: "code" # Location of package manifests
+  - package-ecosystem: maven
+    directory: /code
     schedule:
-      interval: "weekly"
+      interval: weekly
+    # One PR for the routine bumps instead of three or four a week. Grouped by risk rather
+    # than by name: a patch or minor bump is usually a read-and-merge, while a major needs a
+    # look at the changelog, so majors are left to arrive on their own.
+    groups:
+      minor-and-patch:
+        patterns: ['*']
+        update-types: [minor, patch]
+
+  # The workflows pin actions by major version and nothing watched them, so a new major
+  # would go unnoticed until the old one was deprecated. Monthly: these move a few times
+  # a year.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']
