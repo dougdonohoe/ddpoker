@@ -642,12 +642,7 @@ mysql -h 127.0.0.1 -D poker -u poker -pp0k3rdb!
 mysql -h 127.0.0.1 -D pokertest -u pokertest -pp0k3rdb!
 ```
 
-**NOTE 1**: I've seen an issue where the DD Poker tests or servers cannot connect to MySQL
-until at least one command line connection has been made first.  I haven't spent time trying
-to figure out why this is (could be a weird Docker issue).  After restarting MySQL, run the
-two commands above to verify things are working properly.
-
-**NOTE 2**: Yes, it is bad practice to store database passwords in `git`, but keep the database
+**NOTE**: Yes, it is bad practice to store database passwords in `git`, but keep the database
 and servers all used to run on the same machine and in production, the MySQL installation only
 allowed access from localhost, so it wasn't a huge risk.  For development purposes, this
 is also fine.
