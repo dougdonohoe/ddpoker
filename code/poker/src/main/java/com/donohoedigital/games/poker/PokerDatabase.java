@@ -83,6 +83,7 @@ public class PokerDatabase
 
     private static PlayerProfile profile_ = null;
     private static String databaseName_ = null;
+    private static File saveDir_ = null;
 
     static
     {
@@ -174,6 +175,7 @@ public class PokerDatabase
 
         profile_ = profile;
         databaseName_ = databaseName;
+        saveDir_ = saveDir;
     }
 
     private static void initSchema(Connection conn) throws SQLException
@@ -356,21 +358,53 @@ public class PokerDatabase
     {
         if (profile.equals(profile_)) shutdownDatabase();
 
-        File saveDir = GameConfigUtils.getSaveDir();
-        File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
-
-        final String databaseName = getActualDatabaseName(profile);
-
-        File[] files = databaseDir.listFiles((dir, name) -> name.startsWith(databaseName + "."));
-
-        for (File file : files)
-        {
-            file.delete();
-        }
+        deleteFiles(getActualDatabaseName(profile), null);
 
         if (profile.equals(profile_))
         {
             profile_ = null;
+        }
+    }
+
+    /**
+     * Replace the current profile's database with a new, empty one, for when it is too damaged to
+     * use (see TournamentDirector.storeHandHistory()).  The database may be past shutting down cleanly.
+     */
+    public static synchronized void reset()
+    {
+        PlayerProfile profile = profile_;
+        String databaseName = databaseName_;
+        File saveDir = saveDir_;
+        ApplicationError.assertNotNull(profile, "No database to reset");
+
+        try
+        {
+            shutdownDatabase();
+        }
+        catch (ApplicationError e)
+        {
+            logger.warn("Unable to shut down {} before reset: {}", databaseName, e.toStringNoStackTrace());
+        }
+
+        profile_ = null;
+        deleteFiles(databaseName, saveDir);
+        logger.info("Reset hand history database {}", databaseName);
+
+        init(profile, saveDir, databaseName);
+    }
+
+    private static void deleteFiles(String databaseName, File saveDir)
+    {
+        if (saveDir == null) saveDir = GameConfigUtils.getSaveDir();
+        File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
+
+        File[] files = databaseDir.listFiles((dir, name) -> name.startsWith(databaseName + "."));
+        if (files == null) return;
+
+        for (File file : files)
+        {
+            //noinspection ResultOfMethodCallIgnored
+            file.delete();
         }
     }
 
@@ -399,7 +433,8 @@ public class PokerDatabase
         }
     }
 
-    public static int storeHandHistory(HoldemHand hhand)
+    // synchronized with reset(), which runs on the event thread while the TD stores hands
+    public static synchronized int storeHandHistory(HoldemHand hhand)
     {
 /*
         for (int i = 0; i < 100; ++i)

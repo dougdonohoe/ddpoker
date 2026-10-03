@@ -396,16 +396,76 @@ Notes:
   ```
 
   As with the game, `-key` needs `settings.debug.override.key=true` (and `settings.debug.enabled`).
+  See [Hand-history database files](#hand-history-database-files) for how the name is built.
 
 The same hands back `PokerDatabaseSampleHandsTest`, which checks the stored actions, chip
 counts and statistics queries.  To cover a new kind of hand, add it to `SampleHands`; its
 `expectChips(...)` checks who got paid.
 
+### Hand-history database files
+
+Each profile has its own HSQLDB hand-history database in `~/.dd-poker3/save/db`, made of three
+files (`.data`, `.properties`, `.script`) named `poker-<profile number>-<key hash>`
+(`PokerDatabase.getDatabaseName()`):
+
+* **Profile number** - the number in the profile's file name,
+  `~/.dd-poker3/save/profiles/profile.NN.dat`, without leading zeros, so `profile.04.dat` uses
+  `poker-4-...`.  The file's first line starts with the profile's name (`sTest Profile 1:...`).
+  Renaming a profile keeps its history, since the name isn't part of the database name.
+* **Key hash** - `Math.abs(publicUseKey.hashCode())`, where the public use key is
+  `GameEngine.getPublicUseKey()` of the activation key the game is running with: the stored key,
+  or the one passed with `-key`.  Each key therefore gets its own set of databases, so `player1`
+  and `player2` never see the hands played with the stored key, even for the same profile.
+
+To find the hash for a key (after `mvn-package-notests`):
+
+```shell
+jshell --class-path code/common/target/classes /dev/stdin <<'JSH'
+String key = "KEY-23-6569DDEF-258B-470E-8081-9CF251941638-25-4647";
+System.out.println(Math.abs(("P-" + com.donohoedigital.config.Activation.getPublicKey("public", key)).hashCode()))
+/exit
+JSH
+```
+
+That key (`player1`'s) gives `607147845`, and `player2`'s gives `1691683761`.  The stored key
+is in the `reg` preference under `key/poker-3`; on a Mac:
+`defaults read com.donohoedigital.poker3 | grep -A2 '"poker-3/"'`.
+
+Leftovers to know about:
+
+* **Unused databases are never cleaned up.**  Databases made with a key you no longer use, or for
+  a profile whose `profile.NN.dat` is gone, sit there forever and are safe to delete with the
+  game closed.
+* **Deleting a profile** removes only its database for the current key; those for other keys
+  stay.
+* **Numbers can be reused.**  A new profile gets the highest existing number plus one
+  (`GameConfigUtils.getNextSaveNumber()`), so gaps are never filled - but delete the
+  highest-numbered profile and the next one created gets its number, along with any databases
+  still left under it.
+
+The `db/v1` directory holds the original HSQLDB 1.8 files, moved there unchanged by the one-time
+upgrade (`PokerDatabaseMigrator`).
+
 ### `hsqldb.sh` — query a hand-history database
 
 Runs HSQLDB's SqlTool against a client database, for poking at the tables directly.  Close the
-game first, and pass the database file path without its extension:
+game first, and pass any of the database's files (or the path without an extension):
 
 ```shell
-hsqldb.sh "jdbc:hsqldb:file:$HOME/.dd-poker3/save/db/poker-2-1304257217"
+# connect
+hsqldb.sh ~/.dd-poker3/save/db/poker-2-1304257217.script
+
+# run a script - this one corrupts the DB!
+hsqldb.sh ~/.dd-poker3/save/db/poker-2-1304257217.script "ALTER TABLE HAND ALTER COLUMN HND_ID RESTART WITH 1"
+```
+
+The script builds the JDBC URL from the path, and refuses to run if there's no database there,
+since HSQLDB would otherwise create an empty one.  A full `jdbc:hsqldb:file:...` URL works too.
+
+Pass SQL as a second argument to run it and exit instead of prompting.  Changes are committed;
+separate statements with `;` (the last one's is optional).  For example, to break hand storage
+the way a damaged database does - every insert then fails with a unique-constraint violation:
+
+```shell
+hsqldb.sh ~/.dd-poker3/save/db/poker-2-1304257217.script "ALTER TABLE HAND ALTER COLUMN HND_ID RESTART WITH 1"
 ```

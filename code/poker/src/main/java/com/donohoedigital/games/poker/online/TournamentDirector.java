@@ -62,6 +62,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.SwingUtilities;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +113,7 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
     private OnlineManager mgr_;
     private ChatHandler chat_;
     private boolean bOnline_;
+    private boolean bOfferedDatabaseReset_ = false;
 
     // two variables to make code easier to read in places
     private boolean bClient_; // online client
@@ -2481,10 +2483,40 @@ public class TournamentDirector extends BasePhase implements Runnable, GameManag
 
         // store hand history - called here so
         // it happens on client and host
-        if (!game_.getLocalPlayer().isObserver() || bHost_) hhand.storeHandHistory();
+        if (!game_.getLocalPlayer().isObserver() || bHost_) storeHandHistory(hhand);
 
         ret_.setPhaseToRun("TD.Showdown");
         ret_.setRunOnClient(true);
+    }
+
+    /**
+     * Store the hand's history.  A database error doesn't end the tournament: it is logged and,
+     * the first time, the user is offered a reset of the profile's (presumably damaged) database.
+     */
+    private void storeHandHistory(HoldemHand hhand)
+    {
+        try
+        {
+            hhand.storeHandHistory();
+        }
+        catch (ApplicationError ae)
+        {
+            if (!(ae.getException() instanceof SQLException)) throw ae;
+
+            logger.error("Unable to store hand history: {}", Utils.formatExceptionText(ae));
+            if (bOfferedDatabaseReset_) return;
+            bOfferedDatabaseReset_ = true;
+
+            String sMsg = PropertyConfig.getMessage("msg.confirm.resetdb",
+                                                    Utils.encodeHTML(PlayerProfileOptions.getDefaultProfile().getName()),
+                                                    Utils.encodeHTML(ae.getException().getMessage()));
+            SwingUtilities.invokeLater(() -> {
+                if (EngineUtils.displayConfirmationDialog(context_, sMsg, "msg.windowtitle.resetdb", null))
+                {
+                    PokerDatabase.reset();
+                }
+            });
+        }
     }
 
     /**

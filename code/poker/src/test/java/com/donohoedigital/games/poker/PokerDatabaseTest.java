@@ -32,6 +32,7 @@
  */
 package com.donohoedigital.games.poker;
 
+import com.donohoedigital.base.ApplicationError;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.games.poker.engine.PokerConstants;
 import com.donohoedigital.games.poker.model.TournamentHistory;
@@ -41,6 +42,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,8 +56,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests of the client's hsqldb hand-history database.
  *
  * To run queries against a test database pause the debugger before the test ends and
- * use run 'tools/bin/hsqldb.sh [jdbc url]' where [jdbc url] is visible in the console
- * output (jdbc:hsqldb:file:/...).
+ * run 'tools/bin/hsqldb.sh [path]' where [path] is the database path visible in the console
+ * output (jdbc:hsqldb:file:[path]).
  */
 public class PokerDatabaseTest extends AbstractPokerTest
 {
@@ -238,5 +241,57 @@ public class PokerDatabaseTest extends AbstractPokerTest
         assertEquals(3, PokerDatabase.getHandCount("1=1", null));
         assertEquals(1, PokerDatabase.getHandCount("HND_ID > " + saved, null));
         assertTrue(next > saved);
+    }
+
+    /**
+     * A database that fails every insert (here, an identity behind the existing IDs) can be reset
+     */
+    @Test
+    public void testResetAfterStoreFails() throws SQLException
+    {
+        storeHand();
+        storeHand();
+        try (Connection conn = PokerDatabase.getDatabase().getConnection();
+             Statement stmt = conn.createStatement())
+        {
+            stmt.executeUpdate("ALTER TABLE HAND ALTER COLUMN HND_ID RESTART WITH 1");
+        }
+
+        assertStoreFails();
+        PokerDatabase.reset();
+
+        assertEquals(0, PokerDatabase.getHandCount("1=1", null));
+        storeHand();
+        assertEquals(1, PokerDatabase.getHandCount("1=1", null));
+    }
+
+    /**
+     * Files damaged while the profile is in use, so the database can't even be opened or shut down
+     */
+    @Test
+    public void testResetDamagedFiles() throws IOException
+    {
+        storeHand();
+        String databaseName = PokerDatabase.getCurrentDatabaseName();
+        PokerDatabase.shutdownDatabase();
+
+        File script = new File(new File(tempFolder, "db"), databaseName + ".script");
+        try (RandomAccessFile raf = new RandomAccessFile(script, "rw"))
+        {
+            raf.setLength(raf.length() / 2);
+        }
+
+        assertStoreFails();
+        PokerDatabase.reset();
+
+        assertEquals(databaseName, PokerDatabase.getCurrentDatabaseName());
+        storeHand();
+        assertEquals(1, PokerDatabase.getHandCount("1=1", null));
+    }
+
+    private void assertStoreFails()
+    {
+        ApplicationError e = assertThrows(ApplicationError.class, this::storeHand);
+        assertInstanceOf(SQLException.class, e.getException());
     }
 }
