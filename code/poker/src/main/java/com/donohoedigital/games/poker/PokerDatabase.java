@@ -51,6 +51,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
@@ -83,6 +84,7 @@ public class PokerDatabase
 
     private static PlayerProfile profile_ = null;
     private static String databaseName_ = null;
+    private static File saveDir_ = null;
 
     static
     {
@@ -174,6 +176,7 @@ public class PokerDatabase
 
         profile_ = profile;
         databaseName_ = databaseName;
+        saveDir_ = saveDir;
     }
 
     private static void initSchema(Connection conn) throws SQLException
@@ -354,23 +357,71 @@ public class PokerDatabase
 
     public static void delete(PlayerProfile profile)
     {
+        delete(profile, null);
+    }
+
+    /**
+     * Delete the profile's databases - one per activation key it has run with, not just the
+     * current one, so a new profile reusing its number doesn't inherit them (testing version,
+     * pass in saveDir)
+     */
+    static void delete(PlayerProfile profile, File saveDir)
+    {
         if (profile.equals(profile_)) shutdownDatabase();
 
-        File saveDir = GameConfigUtils.getSaveDir();
-        File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
-
-        final String databaseName = getActualDatabaseName(profile);
-
-        File[] files = databaseDir.listFiles((dir, name) -> name.startsWith(databaseName + "."));
-
-        for (File file : files)
-        {
-            file.delete();
-        }
+        // poker-<profile number>-<key hash>.*, for any key hash
+        String prefix = getDatabaseName(profile, null) + "-";
+        deleteFiles(saveDir, (dir, name) -> name.startsWith(prefix));
 
         if (profile.equals(profile_))
         {
             profile_ = null;
+        }
+    }
+
+    /**
+     * Replace the current profile's database with a new, empty one, for when it is too damaged to
+     * use (see TournamentDirector.storeHandHistory()).  The database may be past shutting down cleanly.
+     */
+    public static synchronized void reset()
+    {
+        PlayerProfile profile = profile_;
+        String databaseName = databaseName_;
+        File saveDir = saveDir_;
+        ApplicationError.assertNotNull(profile, "No database to reset");
+
+        try
+        {
+            shutdownDatabase();
+        }
+        catch (ApplicationError e)
+        {
+            // e.g. a damaged script that loads without SA's admin rights, which SHUTDOWN needs.  Left
+            // open, the reconnect below would get the same in-memory database back, files or not.
+            // Ours is the client's only in-process database.
+            logger.warn("Unable to shut down {} before reset, closing it: {}", databaseName, e.toStringNoStackTrace());
+            org.hsqldb.DatabaseManager.closeDatabases(org.hsqldb.Database.CLOSEMODE_IMMEDIATELY);
+        }
+
+        profile_ = null;
+        deleteFiles(saveDir, (dir, name) -> name.startsWith(databaseName + "."));
+        logger.info("Reset hand history database {}", databaseName);
+
+        init(profile, saveDir, databaseName);
+    }
+
+    private static void deleteFiles(File saveDir, FilenameFilter filter)
+    {
+        if (saveDir == null) saveDir = GameConfigUtils.getSaveDir();
+        File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
+
+        File[] files = databaseDir.listFiles(filter);
+        if (files == null) return;
+
+        for (File file : files)
+        {
+            //noinspection ResultOfMethodCallIgnored
+            file.delete();
         }
     }
 
@@ -399,7 +450,8 @@ public class PokerDatabase
         }
     }
 
-    public static int storeHandHistory(HoldemHand hhand)
+    // synchronized with reset(), which runs on the event thread while the TD stores hands
+    public static synchronized int storeHandHistory(HoldemHand hhand)
     {
 /*
         for (int i = 0; i < 100; ++i)

@@ -31,11 +31,44 @@
 # =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # Tool to run SqlTool so can run simple queries against a hsqldb.
-# hsqldb.sh [jdbc url]
-#  [jdbc url] is something like:
+# hsqldb.sh [database] [sql]
+#  [sql], if given, is run and the tool exits, instead of prompting
+#  [database] is any of the database's files, the path without an extension, or a jdbc url:
+#  ~/.dd-poker3/save/db/poker-2-1304257217.script
+#  ~/.dd-poker3/save/db/poker-2-1304257217
 #  jdbc:hsqldb:file:/var/folders/.../poker-database-test/db/poker-1-1088779314
 
-JDBC=$1
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  echo "Usage: $(basename "$0") [database file, path without extension, or jdbc url] [sql to run]"
+  exit 1
+fi
+
+case "$1" in
+  jdbc:*)
+    JDBC=$1
+    ;;
+  *)
+    DB=$1
+    # strip any of the files' extensions (a test database's .tmp directory too)
+    for EXT in data properties script log lck backup tmp; do
+      DB=${DB%.$EXT}
+    done
+    DIR=$(cd "$(dirname "$DB")" 2>/dev/null && pwd) || { echo "No such directory: $(dirname "$DB")"; exit 1; }
+    DB=$DIR/$(basename "$DB")
+    # hsqldb silently creates an empty database if none exists, so check first
+    if [[ ! -f $DB.properties && ! -f $DB.script ]]; then
+      echo "No database at $DB (expected $DB.properties or $DB.script)"
+      exit 1
+    fi
+    # shutdown=true closes the database cleanly on exit, so it doesn't leave .log/.tmp behind
+    JDBC="jdbc:hsqldb:file:$DB;shutdown=true"
+    ;;
+esac
+
+echo "Connecting to $JDBC"
+SQL=()
+# SqlTool needs each statement terminated, and rolls back on exit without autocommit
+[[ -n $2 ]] && SQL=(--autoCommit --sql "${2%;};")
 VERSION=2.7.4
 HSQLDB=~/.m2/repository/org/hsqldb/hsqldb/$VERSION/hsqldb-$VERSION.jar
 SQLTOOL=~/.m2/repository/org/hsqldb/sqltool/$VERSION/sqltool-$VERSION.jar
@@ -43,4 +76,4 @@ SQLTOOL=~/.m2/repository/org/hsqldb/sqltool/$VERSION/sqltool-$VERSION.jar
 # classpath (and allowed, as PokerDatabase does) for the database to open at all
 POKER=${WORK}/ddpoker/code/poker/target/classes
 java -Dhsqldb.method_class_names='com.donohoedigital.games.poker.PokerDatabaseProcs.*' \
-     -cp "$HSQLDB:$SQLTOOL:$POKER" org.hsqldb.cmdline.SqlTool --inlineRc=url=$JDBC,user=sa,password=
+     -cp "$HSQLDB:$SQLTOOL:$POKER" org.hsqldb.cmdline.SqlTool --inlineRc="url=$JDBC,user=sa,password=" "${SQL[@]}"
