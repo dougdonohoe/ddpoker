@@ -46,6 +46,28 @@
 </table>
 <br>
 
+<!-- 3.1.11 -->
+
+<div style="background-color: #1D4A07; text-align: center; padding: 4px;">
+    <strong><span style="color: #FFFF00; font-size: 120%;">Version 3.1.11 - TBD</span></strong>
+</div>
+<ul>
+    <li>
+        Hand history and statistics now use a newer version of their database (HSQLDB 2.7.4).  The first
+        time this version starts, it asks to upgrade your existing hand history, showing progress as it
+        goes.  Your original files are kept, unchanged, in a <tt>v1</tt> folder next to them.
+    </li>
+    <li>
+        Fixed hand history errors on every hand after loading a practice tournament that was saved
+        under a different player profile.  If a profile's hand history was already damaged this way
+        and can't be upgraded, that profile starts with an empty hand history (the old files are
+        still kept in <tt>v1</tt>).
+    </li>
+    <li>
+        Incorporating updates to various software dependencies.
+    </li>
+</ul>
+
 <!-- 3.1.10 -->
 
 <div style="background-color: #1D4A07; text-align: center; padding: 4px;">
