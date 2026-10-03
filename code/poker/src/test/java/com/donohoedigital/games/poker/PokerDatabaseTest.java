@@ -271,7 +271,7 @@ public class PokerDatabaseTest extends AbstractPokerTest
      * Files damaged while the profile is in use: a script cut mid-statement can't be opened at all
      */
     @Test
-    public void testResetUnopenableFiles() throws IOException
+    public void testResetUnopenableFiles() throws IOException, SQLException
     {
         // mid-way through the first CREATE TABLE
         testResetTruncatedScript(script -> script.indexOf("CREATE CACHED TABLE") + 20);
@@ -282,15 +282,22 @@ public class PokerDatabaseTest extends AbstractPokerTest
      * so the database can't be shut down either - reset() has to close it some other way
      */
     @Test
-    public void testResetUnclosableFiles() throws IOException
+    public void testResetUnclosableFiles() throws IOException, SQLException
     {
         testResetTruncatedScript(script -> script.indexOf("\nGRANT ") + 1);
     }
 
-    private void testResetTruncatedScript(ToIntFunction<String> length) throws IOException
+    private void testResetTruncatedScript(ToIntFunction<String> length) throws IOException, SQLException
     {
         storeHand();
         String databaseName = PokerDatabase.getCurrentDatabaseName();
+
+        // the script is compressed unless debug settings are on (PokerDatabase.initDatabase())
+        try (Connection conn = PokerDatabase.getDatabase().getConnection();
+             Statement stmt = conn.createStatement())
+        {
+            stmt.executeUpdate("SET FILES SCRIPT FORMAT TEXT");
+        }
         PokerDatabase.shutdownDatabase();
 
         File script = new File(new File(tempFolder, "db"), databaseName + ".script");
