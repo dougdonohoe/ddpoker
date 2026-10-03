@@ -62,8 +62,6 @@ public class StatisticsViewer extends BasePhase implements ActionListener
     public static final String COL_NAME = "name";
     public static final String COL_ENDDATE = "enddate";
     public static final String COL_TOTALBUYIN = "totalbuyin";
-    public static final String COL_REBUY = "rebuy";
-    public static final String COL_ADDON = "addon";
     public static final String COL_PRIZE = "prize";
     public static final String COL_PROFIT ="profit";
 
@@ -113,7 +111,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
         GlassButton change = new GlassButton("changeprofile", "Glass");
         topinfo.add(change, BorderLayout.EAST);
-        change.addActionListener(e ->
+        change.addActionListener(_ ->
             context_.processPhase("PlayerProfileOptions"));
 
         DDScrollTable scrollOut = new DDScrollTable
@@ -147,7 +145,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
         tabs_ = new DDTabbedPane(style, "BrushedMetal", JTabbedPane.TOP);
         tabs_.setOpaque(false);
-        tabs_.addChangeListener(e ->
+        tabs_.addChangeListener(_ ->
             checkDetailsButton());
 
         base.add(GuiUtils.CENTER(top), BorderLayout.NORTH);
@@ -202,7 +200,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
     private List<TournamentHistory> getFinishes()
     {
         List<TournamentHistory> finishes = profile_.getHistory();
-        finishes.add(0, profile_.getOverallHistory());
+        finishes.addFirst(profile_.getOverallHistory());
         return finishes;
     }
 
@@ -219,7 +217,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
      */
     public void actionPerformed(ActionEvent e)
     {
-        boolean bDelete = false;
+        boolean bDelete;
         if (finishTable_.getSelectedRow() == 0)
         {
             bDelete = PlayerProfileOptions.deleteAllHistory(context_, profile_);
@@ -268,7 +266,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
                 "stats.seeshowdown"
             };
 
-    private static class ByHandModel extends DatabaseQueryTableModel
+    static class ByHandModel extends DatabaseQueryTableModel
     {
         public ByHandModel(String sWhere, String sGroupBy, String sOrderBy, BindArray bindArray, boolean bHands)
         {
@@ -276,7 +274,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
             super(PokerDatabase.getDatabase(),
                     byHandColNames_,
-                    "SELECT " + (bHands ? "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)" : "'??'") + ',' +
+                    "SELECT " + (bHands ? "GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)" : "'??'") + ',' +
                     "COUNT(*),\n" +
                     "CONCAT(SUM(CASE WHEN PLH_END_CHIPS > PLH_START_CHIPS THEN 1.0 ELSE 0 END) * 100 / COUNT(*),'%'),\n" +
                     "CONCAT(SUM(CASE WHEN PLH_END_CHIPS < PLH_START_CHIPS THEN 1.0 ELSE 0 END) * 100 / COUNT(*),'%'),\n" +
@@ -323,7 +321,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
         }
     }
 
-    private class OverallModel extends DefaultTableModel
+    private static class OverallModel extends DefaultTableModel
     {
         @Override
         public boolean isCellEditable(int row, int column)
@@ -530,41 +528,6 @@ public class StatisticsViewer extends BasePhase implements ActionListener
             table_ = scrollTable.getDDTable();
             table_.setTableHeader(null);
             table_.setRowSelectionAllowed(false);
-            /*
-            table_.getSelectionModel().addListSelectionListener(new ListSelectionListener()
-            {
-                public void valueChanged(ListSelectionEvent e)
-                {
-                    checkDetailsButton();
-                }
-            });
-            table_.addMouseListener(new MouseListener()
-            {
-                public void mouseClicked(MouseEvent e)
-                {
-                    if (e.getClickCount() == 2)
-                    {
-                        showDetails();
-                    }
-                }
-
-                public void mousePressed(MouseEvent e)
-                {
-                }
-
-                public void mouseReleased(MouseEvent e)
-                {
-                }
-
-                public void mouseEntered(MouseEvent e)
-                {
-                }
-
-                public void mouseExited(MouseEvent e)
-                {
-                }
-            });
-            */
             scrollTable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
             add(GuiUtils.CENTER(scrollTable), BorderLayout.CENTER);
             refresh();
@@ -592,8 +555,8 @@ public class StatisticsViewer extends BasePhase implements ActionListener
             }
             table_.setModel(new ByHandModel(
                     "TPL_PROFILE_CREATE_DATE=?" + (hist.getGameId() == 0 ? "" : " AND TPL_TOURNAMENT_ID=?"),
-                    "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)",
-                    "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClassRank\"(PLH_CARD_1, PLH_CARD_2) DESC", bindArray, true));
+                    "GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)",
+                    "MAX(GET_HAND_CLASS_RANK(PLH_CARD_1, PLH_CARD_2)) DESC", bindArray, true));
             table_.setExporter(new TableExporter(context_, "byhand"));
         }
 
@@ -643,7 +606,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
                     "WHERE PLH_PLAYER_ID IN (SELECT TPL_ID FROM TOURNAMENT_PLAYER WHERE TPL_PROFILE_CREATE_DATE=?\n" +
                     (hist.getGameId() == 0 ? "" : " AND TPL_TOURNAMENT_ID=?") + ") " +
                     " AND " +
-                    "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)" + rowComparison(rowcount) + ')');
+                    "GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)" + rowComparison(rowcount) + ')');
             params.setObject("bindArray", bindArray);
 
             return params;
@@ -671,7 +634,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
             table_ = scrollTable.getDDTable();
 
-            table_.getSelectionModel().addListSelectionListener(e ->
+            table_.getSelectionModel().addListSelectionListener(_ ->
                 checkDetailsButton());
             table_.addMouseListener(new MouseListener()
             {
@@ -731,13 +694,13 @@ public class StatisticsViewer extends BasePhase implements ActionListener
                 "stats.roundwon"
             };
 
-    private static class ByRoundModel extends DatabaseQueryTableModel
+    static class ByRoundModel extends DatabaseQueryTableModel
     {
         public ByRoundModel(int nRound, String sWhere, String sGroupBy, String sOrderBy, BindArray bindArray)
         {
             super(PokerDatabase.getDatabase(),
-                    byRoundColNames_,
-                    "SELECT \"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)," +
+                    (nRound == HoldemHand.ROUND_PRE_FLOP) ? byRoundPreFlopColNames_ : byRoundColNames_, // no check-raise pre-flop
+                    "SELECT GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)," +
                     "COUNT(*),\n" +
                     "CONCAT(SUM(CASE WHEN BITAND(" + getRoundColumn(nRound) + ',' + PokerDatabase.BIT_CHECK + ") > 0 THEN 1 ELSE 0 END) * 100 / COUNT(*),'%'),\n" +
                     ((nRound == HoldemHand.ROUND_PRE_FLOP) ? "" : "CONCAT(SUM(CASE WHEN BITAND(" + getRoundColumn(nRound) + ',' + PokerDatabase.BIT_CHECK + ") > 0 AND BITAND(" + getRoundColumn(nRound) + ',' + PokerDatabase.BIT_RAISE + ") > 0 THEN 1 ELSE 0 END) * 100 / COUNT(*),'%'),\n") +
@@ -774,19 +737,13 @@ public class StatisticsViewer extends BasePhase implements ActionListener
         }
         public static String getRoundColumn(int nRound)
         {
-            switch (nRound)
-            {
-                case HoldemHand.ROUND_PRE_FLOP:
-                    return "PLH_PREFLOP_ACTIONS";
-                case HoldemHand.ROUND_FLOP:
-                    return "PLH_FLOP_ACTIONS";
-                case HoldemHand.ROUND_TURN:
-                    return "PLH_TURN_ACTIONS";
-                case HoldemHand.ROUND_RIVER:
-                    return "PLH_RIVER_ACTIONS";
-                default:
-                    return null;
-            }
+            return switch (nRound) {
+                case HoldemHand.ROUND_PRE_FLOP -> "PLH_PREFLOP_ACTIONS";
+                case HoldemHand.ROUND_FLOP -> "PLH_FLOP_ACTIONS";
+                case HoldemHand.ROUND_TURN -> "PLH_TURN_ACTIONS";
+                case HoldemHand.ROUND_RIVER -> "PLH_RIVER_ACTIONS";
+                default -> null;
+            };
         }
 
         @Override
@@ -873,8 +830,8 @@ public class StatisticsViewer extends BasePhase implements ActionListener
             }
             table_.setModel(new ByRoundModel(nRound_,
                     "TPL_PROFILE_CREATE_DATE=?" + (hist.getGameId() == 0 ? "" : " AND TPL_TOURNAMENT_ID=?"),
-                    "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)",
-                    "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClassRank\"(PLH_CARD_1, PLH_CARD_2) DESC", bindArray));
+                    "GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)",
+                    "MAX(GET_HAND_CLASS_RANK(PLH_CARD_1, PLH_CARD_2)) DESC", bindArray));
             table_.setExporter(new TableExporter(context_, HoldemHand.getRoundName(nRound_)));
         }
 
@@ -919,22 +876,13 @@ public class StatisticsViewer extends BasePhase implements ActionListener
                     ++rowcount;
                 }
             }
-            /*
-            ArrayList hands = PokerDatabase.getHandIDs("EXISTS (SELECT * FROM PLAYER_HAND\n" +
-                    ByRoundModel.where(nRound_,
-                            "PLH_HAND_ID=HND_ID\n" +
-                    " AND PLH_PLAYER_ID IN (SELECT TPL_ID FROM TOURNAMENT_PLAYER WHERE TPL_PROFILE_CREATE_DATE=?) " +
-                    " AND " +
-                    "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)=?)"),
-                    bindArray);
-            */
             params.setString("where",
                     "HND_ID IN (SELECT PLH_HAND_ID FROM PLAYER_HAND, TOURNAMENT_PLAYER\n" +
                     ByRoundModel.where(nRound_,
                         "PLH_PLAYER_ID IN (SELECT TPL_ID FROM TOURNAMENT_PLAYER WHERE TPL_PROFILE_CREATE_DATE=?" +
                         (hist.getGameId() == 0 ? "" : " AND TPL_TOURNAMENT_ID=?") + ") " +
                         " AND " +
-                        "\"com.donohoedigital.games.poker.PokerDatabaseProcs.getHandClass\"(PLH_CARD_1, PLH_CARD_2)" + rowComparison(rowcount) + ')'
+                        "GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)" + rowComparison(rowcount) + ')'
                     )
             );
             params.setObject("bindArray", bindArray);
@@ -959,7 +907,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
             table_ = scrollTable.getDDTable();
 
-            table_.getSelectionModel().addListSelectionListener(e ->
+            table_.getSelectionModel().addListSelectionListener(_ ->
                 checkDetailsButton());
             table_.addMouseListener(new MouseListener()
             {
@@ -1051,59 +999,38 @@ public class StatisticsViewer extends BasePhase implements ActionListener
 
             String sValue = "[bad column]";
 
-            if (names[colIndex].equals(COL_FINISH))
-            {
-                int finish = getRank(rowIndex);
-                if (finish > 0)
-                {
-                    sValue = PropertyConfig.getMessage(
-                            "msg.finishoutof",
-                            PropertyConfig.getPlace(finish),
-                            h.getNumPlayers());
-                }
-                else if (rowIndex == 0)
-                {
-                    sValue = PropertyConfig.getMessage("msg.summary");
-                }
-                else
-                {
-                    sValue = null;
-                }
-            }
-            else if (names[colIndex].equals(COL_NAME))
-            {
-                sValue = h.getTournamentName();
-            }
-            else if (names[colIndex].equals(COL_ENDDATE))
-            {
-                if (h.getPlace() > 0)
-                {
-                    GameEngine engine = GameEngine.getGameEngine();
-                    String sLocale = null;
-
-                    if (engine != null)
-                    {
-                        sLocale = engine.getLocale();
+            switch (names[colIndex]) {
+                case COL_FINISH -> {
+                    int finish = getRank(rowIndex);
+                    if (finish > 0) {
+                        sValue = PropertyConfig.getMessage(
+                                "msg.finishoutof",
+                                PropertyConfig.getPlace(finish),
+                                h.getNumPlayers());
+                    } else if (rowIndex == 0) {
+                        sValue = PropertyConfig.getMessage("msg.summary");
+                    } else {
+                        sValue = null;
                     }
+                }
+                case COL_NAME -> sValue = h.getTournamentName();
+                case COL_ENDDATE -> {
+                    if (h.getPlace() > 0) {
+                        GameEngine engine = GameEngine.getGameEngine();
+                        String sLocale = null;
 
-                    sValue = PropertyConfig.getDateFormat("msg.format.shortdatetime", sLocale).format(h.getEndDate());
+                        if (engine != null) {
+                            sLocale = engine.getLocale();
+                        }
+
+                        sValue = PropertyConfig.getDateFormat("msg.format.shortdatetime", sLocale).format(h.getEndDate());
+                    } else {
+                        sValue = (rowIndex == 0) ? null : PropertyConfig.getMessage("msg.incomplete");
+                    }
                 }
-                else
-                {
-                    sValue = (rowIndex == 0) ? null : PropertyConfig.getMessage("msg.incomplete");
-                }
-            }
-            else if (names[colIndex].equals(COL_TOTALBUYIN))
-            {
-                sValue = getNumber(h.getTotalSpent(), rowIndex == 0);
-            }
-            else if (names[colIndex].equals(COL_PRIZE))
-            {
-                sValue = getNumber(h.getPrize(), rowIndex == 0);
-            }
-            else if (names[colIndex].equals(COL_PROFIT))
-            {
-                sValue = getNumber(h.getPrize() - h.getTotalSpent(), rowIndex == 0);
+                case COL_TOTALBUYIN -> sValue = getNumber(h.getTotalSpent(), rowIndex == 0);
+                case COL_PRIZE -> sValue = getNumber(h.getPrize(), rowIndex == 0);
+                case COL_PROFIT -> sValue = getNumber(h.getPrize() - h.getTotalSpent(), rowIndex == 0);
             }
 
             return sValue;
@@ -1122,10 +1049,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
         if (rowcount > 1)
         {
             StringBuilder buf = new StringBuilder(" IN (");
-            for (int i = 0; i < rowcount; ++i)
-            {
-                buf.append("?,");
-            }
+            buf.repeat("?,", rowcount);
             buf.setCharAt(buf.length()-1, ')');
             return buf.toString();
         }
@@ -1151,7 +1075,7 @@ public class StatisticsViewer extends BasePhase implements ActionListener
         }
     }
 
-    private class SVLayout extends BorderLayout
+    private static class SVLayout extends BorderLayout
     {
         Component extra;
         ScaleConstraintsFixed scf;

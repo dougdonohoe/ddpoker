@@ -54,6 +54,7 @@ public class PokerConstants
      * needed).
      */
     public static final Version VERSION = latest(
+            new Version(3, 1, 11, true), // release 3.1.11 (HSQLDB 2.7.4)
             new Version(3, 1, 10, true), // release 3.1.10 (test chat, icons, cleanup)
             new Version(3, 1, 9, true), // release 3.1.9 (check for updates)
             new Version(3, 1, 8, true), // release 3.1.8 (HiDPI rendering fixes)

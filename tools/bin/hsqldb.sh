@@ -36,5 +36,11 @@
 #  jdbc:hsqldb:file:/var/folders/.../poker-database-test/db/poker-1-1088779314
 
 JDBC=$1
-JAR=$(find ~/.m2 -name "*hsqldb*.jar")
-java -cp $JAR org.hsqldb.util.SqlTool --inlineRc url=$JDBC,user=sa,password=
+VERSION=2.7.4
+HSQLDB=~/.m2/repository/org/hsqldb/hsqldb/$VERSION/hsqldb-$VERSION.jar
+SQLTOOL=~/.m2/repository/org/hsqldb/sqltool/$VERSION/sqltool-$VERSION.jar
+# The databases define SQL functions backed by PokerDatabaseProcs, so it has to be on the
+# classpath (and allowed, as PokerDatabase does) for the database to open at all
+POKER=${WORK}/ddpoker/code/poker/target/classes
+java -Dhsqldb.method_class_names='com.donohoedigital.games.poker.PokerDatabaseProcs.*' \
+     -cp "$HSQLDB:$SQLTOOL:$POKER" org.hsqldb.cmdline.SqlTool --inlineRc=url=$JDBC,user=sa,password=
