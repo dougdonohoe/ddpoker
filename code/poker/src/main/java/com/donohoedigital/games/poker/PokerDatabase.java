@@ -76,15 +76,22 @@ public class PokerDatabase
     private static final String CLIENT_DATABASE_NAME = "poker";
 
     private static final String DATABASE_DIRECTORY = "db";
-    private static final String DATABASE_DRIVER_CLASS = "org.hsqldb.jdbcDriver";
+    private static final String DATABASE_DRIVER_CLASS = "org.hsqldb.jdbc.JDBCDriver";
     private static final String DATABASE_DRIVER_URL_PREFIX = "jdbc:hsqldb:file:";
     private static final String DATABASE_USERNAME = "sa";
     private static final String DATABASE_PASSWORD = "";
 
     private static PlayerProfile profile_ = null;
+    private static String databaseName_ = null;
 
     static
     {
+        // HSQLDB 2.7.1+ only allows Java routines from classes listed here (see initSchema)
+        if (System.getProperty("hsqldb.method_class_names") == null)
+        {
+            System.setProperty("hsqldb.method_class_names", PokerDatabaseProcs.class.getName() + ".*");
+        }
+
         Runtime.getRuntime().addShutdownHook(new Thread()
         {
             public void run()
@@ -112,6 +119,15 @@ public class PokerDatabase
      */
     static void init(PlayerProfile profile, File saveDir)
     {
+        init(profile, saveDir, (profile == null) ? null : getActualDatabaseName(profile));
+    }
+
+    /**
+     * Perform initialization with the given database name, for tools that run without
+     * the game's license key (see getDatabaseName())
+     */
+    static void init(PlayerProfile profile, File saveDir, String databaseName)
+    {
         if ((profile_ != null) && (!profile_.equals(profile)))
         {
             shutdownDatabase();
@@ -120,6 +136,7 @@ public class PokerDatabase
         if (profile == null)
         {
             profile_ = null;
+            databaseName_ = null;
             return;
         }
 
@@ -131,7 +148,7 @@ public class PokerDatabase
         //logger.debug("init database");
 
         // Initialize the logical database object(s).
-        initDatabase(profile, saveDir);
+        initDatabase(databaseName, saveDir);
 
         // Create the database, schema, etc.
         Database database = getDatabase();
@@ -156,9 +173,43 @@ public class PokerDatabase
         }
 
         profile_ = profile;
+        databaseName_ = databaseName;
     }
 
     private static void initSchema(Connection conn) throws SQLException
+    {
+        createTables(conn);
+        createFunctions(conn);
+    }
+
+    /**
+     * Java functions used by the statistics queries
+     */
+    private static void createFunctions(Connection conn) throws SQLException
+    {
+        Statement stmt = conn.createStatement();
+
+        if (!conn.getMetaData().getFunctions(null, null, "GET_HAND_CLASS").next())
+        {
+            stmt.executeUpdate(
+                    "CREATE FUNCTION GET_HAND_CLASS(CARD1 CHAR(2), CARD2 CHAR(2)) RETURNS VARCHAR(3)\n" +
+                    "LANGUAGE JAVA DETERMINISTIC NO SQL\n" +
+                    "EXTERNAL NAME 'CLASSPATH:" + PokerDatabaseProcs.class.getName() + ".getHandClass'");
+        }
+
+        if (!conn.getMetaData().getFunctions(null, null, "GET_HAND_CLASS_RANK").next())
+        {
+            stmt.executeUpdate(
+                    "CREATE FUNCTION GET_HAND_CLASS_RANK(CARD1 CHAR(2), CARD2 CHAR(2)) RETURNS INTEGER\n" +
+                    "LANGUAGE JAVA DETERMINISTIC NO SQL\n" +
+                    "EXTERNAL NAME 'CLASSPATH:" + PokerDatabaseProcs.class.getName() + ".getHandClassRank'");
+        }
+    }
+
+    /**
+     * Create tables.  Plain DDL that HSQLDB 1.8 also accepts, which lets tests build old databases.
+     */
+    static void createTables(Connection conn) throws SQLException
     {
         Statement stmt = conn.createStatement();
 
@@ -454,7 +505,9 @@ public class PokerDatabase
             {
                 int lastHand = game.getLastHandSaved();
 
-                if (lastHand != 0)
+                // lastHand is a HND_ID from the database the game was saved with.  If that was another
+                // profile's database (or the save predates recording it), the ID means nothing here.
+                if (lastHand != 0 && getCurrentDatabaseName().equals(game.getLastHandSavedDatabase()))
                 {
                     pstmt = conn.prepareStatement(
                             "DELETE FROM PLAYER_ACTION\n" +
@@ -631,9 +684,16 @@ public class PokerDatabase
                     pstmt.setBigDecimal(4, new BigDecimal(player.getChipCountAtStart()));
                     pstmt.setBigDecimal(5, new BigDecimal(player.getChipCount()));
 
-                    for (int i = 0; i < 4 && i < pocket.size(); ++i)
+                    for (int i = 0; i < 4; ++i)
                     {
-                        pstmt.setString(i + 6, toString(pocket.getCard(i)));
+                        if (i < pocket.size())
+                        {
+                            pstmt.setString(i + 6, toString(pocket.getCard(i)));
+                        }
+                        else
+                        {
+                            pstmt.setNull(i + 6, Types.CHAR);
+                        }
                     }
 
                     pstmt.setByte(10, act[seat][HoldemHand.ROUND_PRE_FLOP]);
@@ -693,7 +753,7 @@ public class PokerDatabase
                 pstmt.close();
             }
 
-            game.setLastHandSaved(handID);
+            game.setLastHandSaved(handID, getCurrentDatabaseName());
             return handID;
         }
         catch (SQLException e)
@@ -2511,11 +2571,33 @@ public class PokerDatabase
         return DatabaseManager.getDatabase(CLIENT_DATABASE_NAME);
     }
 
-    private static String getActualDatabaseName(PlayerProfile profile)
+    /**
+     * Directory holding all profiles' databases
+     */
+    public static File getDatabaseDirectory()
+    {
+        return new File(GameConfigUtils.getSaveDir(), DATABASE_DIRECTORY);
+    }
+
+    /**
+     * Name of the database in use, which identifies it among all profiles' databases.
+     */
+    public static String getCurrentDatabaseName()
+    {
+        return databaseName_;
+    }
+
+    static String getActualDatabaseName(PlayerProfile profile)
     {
         GameEngine gameEngine = GameEngine.getGameEngine();
-        String uniqueKey = (gameEngine == null) ? "no-engine" : gameEngine.getPublicUseKey();
+        return getDatabaseName(profile, (gameEngine == null) ? "no-engine" : gameEngine.getPublicUseKey());
+    }
 
+    /**
+     * Database name for a profile, given the game's public use key (GameEngine.getPublicUseKey())
+     */
+    static String getDatabaseName(PlayerProfile profile, String uniqueKey)
+    {
         return CLIENT_DATABASE_NAME +
                ((profile == null) ? "" : ("-" + profile.getFileNum())) +
                ((uniqueKey == null) ? "" : ("-" + Math.abs(uniqueKey.hashCode())));
@@ -2524,14 +2606,13 @@ public class PokerDatabase
     /**
      * Initialize a logical database object.
      */
-    private static void initDatabase(PlayerProfile profile, File saveDir)
+    private static void initDatabase(String databaseName, File saveDir)
     {
         // Format the driver URL using a unique database name.
         if (saveDir == null) {
             saveDir = GameConfigUtils.getSaveDir();
         }
         File databaseDir = new File(saveDir, DATABASE_DIRECTORY);
-        String databaseName = getActualDatabaseName(profile);
 
         File clientPath = new File(databaseDir, databaseName);
         String driverURL = DATABASE_DRIVER_URL_PREFIX + clientPath.getAbsolutePath();
@@ -2550,15 +2631,14 @@ public class PokerDatabase
             Statement stmt = conn.createStatement();
             if (!DebugConfig.isTestingOn())
             {
-                stmt.executeUpdate("SET SCRIPTFORMAT COMPRESSED");
+                stmt.executeUpdate("SET FILES SCRIPT FORMAT COMPRESSED");
             }
             else
             {
-                stmt.executeUpdate("SET SCRIPTFORMAT TEXT");
+                stmt.executeUpdate("SET FILES SCRIPT FORMAT TEXT");
             }
-            stmt.executeUpdate("SET WRITE_DELAY false");
-            stmt.executeUpdate("SET PROPERTY \"sql.enforce_strict_size\" true");
-            stmt.executeUpdate("SET PROPERTY \"hsqldb.cache_scale\" 10");
+            stmt.executeUpdate("SET FILES WRITE DELAY FALSE");
+            stmt.executeUpdate("SET DATABASE SQL SIZE TRUE");
         }
         catch (SQLException e)
         {

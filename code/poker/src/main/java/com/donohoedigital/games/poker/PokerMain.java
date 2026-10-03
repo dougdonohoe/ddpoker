@@ -44,6 +44,7 @@ import com.donohoedigital.base.TypedHashMap;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.comms.*;
 import com.donohoedigital.config.*;
+import com.donohoedigital.games.config.BaseProfile;
 import com.donohoedigital.games.config.EngineConstants;
 import com.donohoedigital.games.config.GameConfigUtils;
 import com.donohoedigital.games.config.GameState;
@@ -65,16 +66,17 @@ import com.donohoedigital.udp.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.net.URL;
 import java.nio.channels.SocketChannel;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 import static com.donohoedigital.config.DebugConfig.TESTING;
@@ -269,6 +271,9 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
         // skip on init if no key
         if (bHeadless_ || getRealLicenseKey() == null) return true;
 
+        // upgrade old databases before anything opens one
+        if (!migrateDatabases()) return false;
+
         // in dev, allow one failure, then wait 3 seconds in case
         // we just killed and restarted right away
         if (DebugConfig.isTestingOn())
@@ -305,6 +310,7 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
                 if (source instanceof SQLException &&
                     sMessage != null && (
                         sMessage.contains("database is already in use") ||
+                        sMessage.contains("Database lock acquisition failure") ||
                         sMessage.contains("File input/output error")))
                 {
                     logger.warn("Another copy running (database already in use).  Showing warning splash.");
@@ -316,6 +322,186 @@ public class PokerMain extends GameEngine implements Peer2PeerControllerInterfac
             throw ae;
         }
         return true;
+    }
+
+    /**
+     * Upgrade HSQLDB 1.8 hand-history databases, if the user agrees.  Returns false (with
+     * a message on the splash screen) if the game can't continue.
+     */
+    private boolean migrateDatabases()
+    {
+        File dbDir = PokerDatabase.getDatabaseDirectory();
+        if (!PokerDatabaseMigrator.needsMigration(dbDir)) return true;
+
+        if (PokerDatabaseMigrator.isInUse(dbDir))
+        {
+            logger.warn("Another copy running (old database in use).  Showing warning splash.");
+            splashscreen_.changeUI(this, PropertyConfig.getMessage("msg.2ndcopy"));
+            return false;
+        }
+
+        String sBackup = new File(dbDir, PokerDatabaseMigrator.BACKUP_DIRECTORY).getAbsolutePath();
+        String sTitle = PropertyConfig.getMessage("msg.dbupgrade.title");
+        if (!showDialog(PropertyConfig.getMessage("msg.dbupgrade.confirm", sBackup), sTitle, true))
+        {
+            logger.warn("Database upgrade declined.");
+            splashscreen_.changeUI(this, PropertyConfig.getMessage("msg.dbupgrade.declined"));
+            return false;
+        }
+
+        Map<String, String> profiles = getProfileNamesByFileNum();
+        UpgradeProgress progress = new UpgradeProgress(sTitle, profiles);
+        PokerDatabaseMigrator.Result result;
+        try
+        {
+            result = PokerDatabaseMigrator.migrate(dbDir, progress);
+        }
+        catch (IOException e)
+        {
+            throw new ApplicationError(e);
+        }
+        finally
+        {
+            progress.close();
+        }
+
+        List<String> failed = new ArrayList<>();
+        for (String database : result.getFailed().keySet())
+        {
+            failed.add(Utils.encodeHTML(getDatabaseLabel(database, profiles)) + " (" + database + ")");
+        }
+        String sMsg = failed.isEmpty() ?
+                      PropertyConfig.getMessage("msg.dbupgrade.done", sBackup) :
+                      PropertyConfig.getMessage("msg.dbupgrade.failed", sBackup, String.join("<BR>", failed));
+        showDialog(sMsg, sTitle, false);
+        return true;
+    }
+
+    /**
+     * Profile names by file number, which database names start with (poker-[file number]-[key hash])
+     */
+    private static Map<String, String> getProfileNamesByFileNum()
+    {
+        Map<String, String> names = new HashMap<>();
+        for (BaseProfile profile : PlayerProfile.getProfileList())
+        {
+            names.put(profile.getFileNum(), profile.getName());
+        }
+        return names;
+    }
+
+    /**
+     * Profile name for a database, or the database name if its profile is gone
+     */
+    private static String getDatabaseLabel(String database, Map<String, String> profiles)
+    {
+        String[] parts = database.split("-");
+        String name = (parts.length > 1) ? profiles.get(parts[1]) : null;
+        return (name == null) ? database : name;
+    }
+
+    /**
+     * Window over the splash screen showing which database is being upgraded.  The upgrade runs
+     * on the startup thread, so the window is updated on the event thread as it goes.
+     */
+    private class UpgradeProgress implements PokerDatabaseMigrator.Progress
+    {
+        private final Map<String, String> profiles_;
+        private JDialog dialog_;
+        private JLabel label_;
+        private JProgressBar bar_;
+
+        UpgradeProgress(String sTitle, Map<String, String> profiles)
+        {
+            profiles_ = profiles;
+            runOnEventThread(() -> {
+                // sized with a placeholder of the same two lines, so the bar is never pushed out of view
+                label_ = new JLabel(PropertyConfig.getMessage("msg.dbupgrade.progress", "-"));
+                label_.setFont(StylesConfig.getFont("DbUpgrade.label", label_.getFont()));
+                bar_ = new JProgressBar();
+                bar_.setStringPainted(true);
+
+                JPanel panel = new JPanel(new BorderLayout(0, 10));
+                panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+                panel.add(label_, BorderLayout.NORTH);
+                panel.add(bar_, BorderLayout.CENTER);
+
+                dialog_ = new JDialog(splashscreen_, sTitle, false);
+                dialog_.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                dialog_.setContentPane(panel);
+                dialog_.pack();
+                dialog_.setSize(Math.max(400, dialog_.getWidth()), dialog_.getHeight());
+                dialog_.setLocationRelativeTo(splashscreen_);
+                dialog_.setVisible(true);
+            });
+        }
+
+        public void migrating(String name, int index, int count)
+        {
+            // the count is in the bar, so the label stays two lines
+            String sMsg = PropertyConfig.getMessage("msg.dbupgrade.progress", Utils.encodeHTML(getDatabaseLabel(name, profiles_)));
+            SwingUtilities.invokeLater(() -> {
+                label_.setText(sMsg);
+                bar_.setMaximum(count);
+                bar_.setValue(index);
+                bar_.setString((index + 1) + " / " + count);
+            });
+        }
+
+        void close()
+        {
+            SwingUtilities.invokeLater(() -> dialog_.dispose());
+        }
+    }
+
+    /**
+     * Run on the event thread and wait for it
+     */
+    private static void runOnEventThread(Runnable run)
+    {
+        if (SwingUtilities.isEventDispatchThread())
+        {
+            run.run();
+            return;
+        }
+
+        try
+        {
+            SwingUtilities.invokeAndWait(run);
+        }
+        catch (InterruptedException e)
+        {
+            Thread.currentThread().interrupt();
+        }
+        catch (InvocationTargetException e)
+        {
+            throw new ApplicationError(e.getCause());
+        }
+    }
+
+    /**
+     * Show a yes/no or information dialog over the splash screen (no engine dialogs exist yet)
+     */
+    private boolean showDialog(String sMsg, String sTitle, boolean bConfirm)
+    {
+        boolean[] yes = new boolean[1];
+        Runnable show = () -> {
+            // a label rather than the string, so it uses our font instead of the look and feel's
+            JLabel message = new JLabel(sMsg);
+            message.setFont(StylesConfig.getFont("DbUpgrade.label", message.getFont()));
+            if (bConfirm)
+            {
+                yes[0] = JOptionPane.showConfirmDialog(splashscreen_, message, sTitle, JOptionPane.YES_NO_OPTION,
+                                                       JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(splashscreen_, message, sTitle, JOptionPane.INFORMATION_MESSAGE);
+            }
+        };
+
+        runOnEventThread(show);
+        return yes[0];
     }
 
     /**

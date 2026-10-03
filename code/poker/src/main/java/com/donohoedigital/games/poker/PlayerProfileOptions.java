@@ -41,7 +41,6 @@ package com.donohoedigital.games.poker;
 import com.donohoedigital.base.Utils;
 import com.donohoedigital.config.PropertyConfig;
 import com.donohoedigital.games.config.BaseProfile;
-import com.donohoedigital.games.config.GameButton;
 import com.donohoedigital.games.config.GamePhase;
 import com.donohoedigital.games.engine.*;
 import com.donohoedigital.games.poker.ai.PlayerType;
@@ -258,6 +257,7 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
 
             if (advisorFile.exists())
             {
+                //noinspection ResultOfMethodCallIgnored
                 advisorFile.delete();
             }
 
@@ -270,6 +270,14 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
      */
     private static PlayerProfile default_ = null;
     
+    /**
+     * Set the default profile without going through prefs or the command line (tests)
+     */
+    static void setDefaultProfileForTest(PlayerProfile profile)
+    {
+        default_ = profile;
+    }
+
     /**
      * Return stored profile based on preference maintained by PlayerProfileList
      */
@@ -299,23 +307,20 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
             if (default_ == null || sCmdlineOverride != null)
             {
                 List<BaseProfile> list = PlayerProfile.getProfileList();
-                PlayerProfile p = null;
+                PlayerProfile p;
                 PlayerProfile choose = null;
                 long lastmod = 0;
-                for (int i = 0; list != null && i < list.size(); i++)
-                {
-                    p = (PlayerProfile) list.get(i);
+                for (BaseProfile baseProfile : list) {
+                    p = (PlayerProfile) baseProfile;
 
-                    if (sCmdlineOverride != null && p.getName().equalsIgnoreCase(sCmdlineOverride))
-                    {
+                    if (p.getName().equalsIgnoreCase(sCmdlineOverride)) {
                         logger.debug("Using profile {} instead of default {}", sCmdlineOverride, (
-                            default_ == null ? "[null]" : default_.getName()));
+                                default_ == null ? "[null]" : default_.getName()));
                         choose = p;
                         break;
                     }
 
-                    if (p.getLastModified() > lastmod)
-                    {
+                    if (p.getLastModified() > lastmod) {
                         choose = p;
                         lastmod = choose.getLastModified();
                     }
@@ -326,9 +331,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.append("-profile: no profile named '").append(sCmdlineOverride).append("'. Available:");
-                    for (int i = 0; list != null && i < list.size(); i++)
-                    {
-                        sb.append("\n  ").append(list.get(i).getName());
+                    for (BaseProfile baseProfile : list) {
+                        sb.append("\n  ").append(baseProfile.getName());
                     }
                     logger.error(sb.toString());
                     System.err.println(sb);
@@ -361,33 +365,8 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
 
         // place the whole thing in the Engine's base panel
         context_.setMainUIComponent(this, menu_, false, profileList_);
-        
-        // check button states and focus
-        checkButtons();
     }
 
-    /**
-     * Returns true
-     */
-    @Override
-    public boolean processButton(GameButton button)
-    {
-        return true;
-    }
-    
-    /**
-     * set buttons enabled/disabled based on selection
-     */
-    private void checkButtons()
-    {
-        // JDD - with re-organization of player profile
-        // stuff, no longer need to enforce that something
-        // is selected when Done button clicked.  The
-        // PokerStartMenu now enforces that a profile exists
-        //boolean bSelected = (selected_ != null);
-        //start_.setEnabled(bSelected);
-    }
-    
     /**
      * profile selected logic
      */
@@ -417,9 +396,6 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
             statsBorder_.setText(PropertyConfig.getMessage("labelborder.stats.label"));
             statsBorder_.repaint();
         }
-
-        // set buttons
-        checkButtons();
     }
 
     /**
@@ -493,7 +469,7 @@ public class PlayerProfileOptions extends BasePhase implements ChangeListener
         GameEngine engine = GameEngine.getGameEngine();
         SimpleDateFormat formatter = PropertyConfig.getDateFormat((engine != null) ? engine.getLocale() : null);
 
-        // NOTE: place is 0 on the cilent until a player finishes.        
+        // NOTE: place is 0 on the client until a player finishes.
         int place = hist.getPlace();
         return PropertyConfig.getMessage(place != 0 ? "msg.hist.info" : "msg.hist.unfinished",
                                          hist.getTournamentName(),

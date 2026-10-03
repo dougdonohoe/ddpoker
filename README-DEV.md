@@ -238,9 +238,11 @@ of DD Poker was written from 2004 to 2007, with sporadic updates after that.  Th
 JDK was 1.5 (aka Java 5).
 
 Amazingly, nearly all of our dependencies (Swing, Hibernate, Wicket, Jetty, Tomcat, log4j, etc.) have been updated 
-to the latest versions that work with Java 25.  The only exception is `HSQLDB`, which we currently
-have at 1.8.0.10. The latest is 2.7.4, but this requires updating existing databases, which
-we don't want to deal with at this time.
+to the latest versions that work with Java 25.  That includes `HSQLDB`, which went from 1.8.0.10
+to 2.7.4.  HSQLDB 2.7 can't open 1.8 databases, so on first launch the client offers to migrate
+existing hand-history databases (`PokerDatabaseMigrator`), keeping the originals in `save/db/v1`.
+The 1.8 jar is bundled as a resource, `hsqldb18/hsqldb-1.8.0.10.jar.bin`, and is only loaded,
+in its own class loader, to read old databases.
 
 The Java itself has had a mechanical catch-up pass as well: anonymous listener classes became
 lambdas and method references, raw `new ArrayList<Foo>()` became the diamond operator, C-style

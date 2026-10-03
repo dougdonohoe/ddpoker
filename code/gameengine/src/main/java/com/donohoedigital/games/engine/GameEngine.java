@@ -146,10 +146,7 @@ public abstract class GameEngine extends BaseApp
         v.setLocale(getLocale());
 
         // figure out prefs key for license information
-        String sVers = "" + v.getMajor();
-        if (v.isAlpha()) sVers += "a" + v.getAlphaBetaVersion();
-        if (v.isBeta()) sVers += "b" + v.getAlphaBetaVersion();
-        sKeyNode_ = "key/" + sAppName + "-" + sVers;
+        sKeyNode_ = getKeyNodeName(sAppName, v);
 
         // BUG 199 - added to specify a different key during testing
         if (TESTING(EngineConstants.TESTING_OVERRIDE_KEY))
@@ -339,6 +336,25 @@ public abstract class GameEngine extends BaseApp
     }
 
     /**
+     * Prefs node (under the app's root node) holding the license key
+     */
+    public static String getKeyNodeName(String sAppName, Version v)
+    {
+        String sVers = "" + v.getMajor();
+        if (v.isAlpha()) sVers += "a" + v.getAlphaBetaVersion();
+        if (v.isBeta()) sVers += "b" + v.getAlphaBetaVersion();
+        return "key/" + sAppName + "-" + sVers;
+    }
+
+    /**
+     * Public use key for a (non-headless) license key
+     */
+    public static String getPublicUseKey(String sRealKey)
+    {
+        return "P-" + Activation.getPublicKey("public", sRealKey);
+    }
+
+    /**
      * Get license key
      */
     public String getRealLicenseKey()
@@ -401,7 +417,7 @@ public abstract class GameEngine extends BaseApp
                 }
                 else
                 {
-                    sLastGen_ = "P-" + Activation.getPublicKey("public", sLastReal_);
+                    sLastGen_ = getPublicUseKey(sLastReal_);
                 }
 
                 //logger.debug("GEN: " + sLastGen_);

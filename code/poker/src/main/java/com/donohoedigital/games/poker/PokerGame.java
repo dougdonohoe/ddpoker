@@ -137,6 +137,7 @@ public class PokerGame extends Game implements PlayerActionListener
     private int nOnlineMode_ = MODE_NONE;
     private PokerTable currentTable_;
     private int lastHandSaved_ = 0;
+    private String lastHandSavedDatabase_ = null;
     private int nNumOut_ = 0;
 
     // clock object used to store seconds remaining, used in tournament/poker night manager
@@ -1085,8 +1086,7 @@ public class PokerGame extends Game implements PlayerActionListener
      */
     public void initTournament(TournamentProfile profile)
     {
-        // id used to uniquely identify a tournament in player profiles
-        id_ = Utils.getCurrentTimeStamp();
+        initId();
         nLevel_ = 0;
         profile_ = profile;
 
@@ -1105,6 +1105,15 @@ public class PokerGame extends Game implements PlayerActionListener
         {
             setupTournament(false, true, profile_.getNumPlayers());
         }
+    }
+
+    /**
+     * New id, used to uniquely identify a tournament in player profiles.  It is also the
+     * tournament's start date (getStartDate()).
+     */
+    void initId()
+    {
+        id_ = Utils.getCurrentTimeStamp();
     }
 
     /**
@@ -1931,6 +1940,9 @@ public class PokerGame extends Game implements PlayerActionListener
         // DD Poker 2.0, FCS
         entry.addToken(nNumOut_);
 
+        // DD Poker 3.0, database lastHandSaved_ is from
+        entry.addToken(lastHandSavedDatabase_);
+
         // done with this entry
         state.addEntry(entry);
 
@@ -2028,6 +2040,9 @@ public class PokerGame extends Game implements PlayerActionListener
         // 2.0 additions
         lastHandSaved_ = entry.removeIntToken();
         nNumOut_ = entry.removeIntToken();
+
+        // 3.0 additions
+        lastHandSavedDatabase_ = entry.hasMoreTokens() ? entry.removeStringToken() : null;
 
         // tables (entry per)
         if (pdetails.getSaveTables() == SaveDetails.SAVE_ALL) tables_.clear(); // make sure empty on full load
@@ -2292,11 +2307,12 @@ public class PokerGame extends Game implements PlayerActionListener
     }
 
     /**
-     * set id of last hand saved
+     * set id of last hand saved, and the database it was saved in
      */
-    public void setLastHandSaved(int handID)
+    public void setLastHandSaved(int handID, String database)
     {
         lastHandSaved_ = handID;
+        lastHandSavedDatabase_ = database;
     }
 
     /**
@@ -2305,6 +2321,14 @@ public class PokerGame extends Game implements PlayerActionListener
     public int getLastHandSaved()
     {
         return lastHandSaved_;
+    }
+
+    /**
+     * Get name of the database the last hand was saved in (null in saves older than 3.0)
+     */
+    public String getLastHandSavedDatabase()
+    {
+        return lastHandSavedDatabase_;
     }
 
     /**
