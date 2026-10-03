@@ -34,19 +34,6 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
-  <!--<persistence-unit name="manager1" transaction-type="JTA">-->
-  <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
-  <!--<jta-data-source>java:/DefaultDS</jta-data-source>-->
-  <!--<mapping-file>ormap.xml</mapping-file>-->
-  <!--<jar-file>MyApp.jar</jar-file>-->
-  <!--<class>org.acme.Employee</class>-->
-  <!--<class>org.acme.Person</class>-->
-  <!--<class>org.acme.Address</class>-->
-  <!--<properties>-->
-  <!--<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>-->
-  <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-  <!--</properties>-->
-  <!--</persistence-unit>-->
 
   <persistence-unit name="poker">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>

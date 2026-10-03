@@ -359,3 +359,53 @@ reset (`reset_dbs.sh poker`), rerunning the `-create` commands restores just the
 Since the `pokerserver` database is hardcoded to `poker` (see `app-context-gameserver.xml`),
 the tool always writes to the local development database.  It needs MySQL running (see
 [README-DEV.md Appendix A](README-DEV.md#appendix-a--database-via-docker)), but not the server.
+
+### `add-sample-hands` — fill a profile's hand history
+
+The *Hand History* and *Statistics* screens only show what you have played.  `add-sample-hands`
+adds a set of typical hold'em hands to a profile's hand-history database, as a new tournament
+named *Sample Hands*:
+
+```shell
+add-sample-hands -name "Test Profile 1"
+```
+
+The hands are defined in `SampleHands` (`poker` module).  Each one is scripted - hole cards,
+board and every action - and played through the real game code (blinds, betting, side pots,
+showdown), then stored the way the game stores a hand.  They are three-handed, with the
+profile's player in the small blind against two computer players, and cover:
+
+* folding pre-flop, on the flop, the turn and the river, and being folded to in the big blind
+* raises, a three-bet, and check-raises on the flop, turn and river
+* all-ins pre-flop, on the flop, turn and river, called and uncalled
+* a short-stacked all-in with a side pot, a split pot, and antes
+
+Notes:
+
+* **Close the game first.**  The game locks the database while it's running.
+* **Run the game once first** if it hasn't run since the HSQLDB upgrade.  The tool won't touch
+  databases still in the old format, which the game upgrades on startup.
+* **Each run adds another tournament**, so running it twice gives you the hands twice.  Delete
+  the tournament on the *Statistics* screen to remove them.
+* **Which database:** each profile's database name includes a hash of the game's activation key.
+  The tool uses the stored key, like the game.  For a client started with `-key`, such as the
+  `player1`/`player2` aliases above, pass the same key so the hands land where that client looks:
+
+  ```shell
+  add-sample-hands -name "Test Profile 1" -key KEY-23-6569DDEF-258B-470E-8081-9CF251941638-25-4647
+  ```
+
+  As with the game, `-key` needs `settings.debug.override.key=true` (and `settings.debug.enabled`).
+
+The same hands back `PokerDatabaseSampleHandsTest`, which checks the stored actions, chip
+counts and statistics queries.  To cover a new kind of hand, add it to `SampleHands`; its
+`expectChips(...)` checks who got paid.
+
+### `hsqldb.sh` — query a hand-history database
+
+Runs HSQLDB's SqlTool against a client database, for poking at the tables directly.  Close the
+game first, and pass the database file path without its extension:
+
+```shell
+hsqldb.sh "jdbc:hsqldb:file:$HOME/.dd-poker3/save/db/poker-2-1304257217"
+```

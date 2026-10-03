@@ -33,77 +33,210 @@
 package com.donohoedigital.games.poker;
 
 import com.donohoedigital.base.Utils;
-import com.donohoedigital.config.ApplicationType;
-import com.donohoedigital.config.ConfigManager;
-import com.donohoedigital.games.poker.model.TournamentProfile;
-
-import java.io.File;
-import java.io.IOException;
+import com.donohoedigital.games.poker.engine.PokerConstants;
+import com.donohoedigital.games.poker.model.TournamentHistory;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /*
- * The purpose of this test is to provide a rudimentary way to very our hsqldb
- * code is working.
+ * Tests of the client's hsqldb hand-history database.
  *
  * To run queries against a test database pause the debugger before the test ends and
  * use run 'tools/bin/hsqldb.sh [jdbc url]' where [jdbc url] is visible in the console
  * output (jdbc:hsqldb:file:/...).
  */
-public class PokerDatabaseTest {
-
+public class PokerDatabaseTest extends AbstractPokerTest
+{
     @TempDir
     File tempFolder;
 
-    /**
-     * Unfortunately, there aren't many unit tests of the core poker logic.  In
-     * fact this test, written in September 2024, is one of the first.  The lack of
-     * testing is evident in that it is hard to create objects/data needed that
-     * comprise a hold'em game.  Much of the code assumes it's running within the
-     * client.  Alas, I'll slowly chip away at this.  In any case, this is a very
-     * basic test to see if hsqldb is working at the most basic level.  It doesn't
-     * verify stuff goes in and comes out of the database properly.
-     */
-    @Test
-    public void testBasics() throws IOException {
+    private PlayerProfile profile_;
+    private PokerTable table_;
+    private PokerPlayer human_;
+
+    @BeforeEach
+    public void setUpDatabase()
+    {
         Utils.setVersionString("-db-test");
-        // init properties like poker client, but headless for test
-        new ConfigManager("poker", ApplicationType.HEADLESS_CLIENT);
+        engine(); // storing players asks the engine for its key; also part of the database name
+        profile_ = profile("poker-database-test", 999);
+        PokerDatabase.init(profile_, tempFolder);
 
-        // we need a player profile
-        File profileFile = new File(tempFolder, "profile.999.dat");
-        //noinspection ResultOfMethodCallIgnored
-        profileFile.createNewFile();
-        PlayerProfile profile = new PlayerProfile("poker-database-test");
+        table_ = table(1);
+        human_ = seat(table_, 0, PokerConstants.PLAYER_ID_HOST, "test-player", 1000);
+        human_.setProfile(profile_);
+        PlayerProfileOptions.setDefaultProfileForTest(profile_);
+        seat(table_, 1, 1, 1000);
+        seat(table_, 2, 2, 1000);
+    }
+
+    @AfterEach
+    public void tearDownDatabase()
+    {
+        PokerDatabase.init(null);
+        PlayerProfileOptions.setDefaultProfileForTest(null);
+    }
+
+    /**
+     * A profile with the given file number, which the database name is built from.  Set directly,
+     * since initFile() numbers from the profiles on disk.
+     */
+    static PlayerProfile profile(String name, int fileNum)
+    {
+        PlayerProfile profile = new PlayerProfile(name)
+        {
+            {
+                file_ = new File("profile." + fileNum + ".dat");
+                sFileName_ = file_.getName();
+            }
+        };
         profile.setEmail("test@test.com");
-        profile.setName("test");
-        profile.initFile();
-        //profile.save(); // Not necessary to actually save it
+        return profile;
+    }
 
-        // we need a database, in a temp place
-        File tempDir = new File(tempFolder, "poker-database-test");
-        //noinspection ResultOfMethodCallIgnored
-        tempDir.mkdirs();
-        PokerDatabase.init(profile, tempDir);
+    private int storeHand()
+    {
+        HoldemHand hhand = startHand(table_);
+        return hhand.storeHandHistory();
+    }
 
-        // we need a game, tournament, poker player, table and hand
-        PokerGame game = new PokerGame(null);
-        TournamentProfile tournament = new TournamentProfile("poker-database-test");
-        game.setProfile(tournament);
-        PokerPlayer player = new PokerPlayer(PokerPlayer.HOST_ID, "test-player", true);
-        game.addPlayer(player);
-        PokerTable table = new PokerTable(game, 1);
-        table.addPlayer(player);
-        HoldemHand hand = new HoldemHand(table);
+    @Test
+    public void testBasics()
+    {
+        HoldemHand hand = new HoldemHand(table_);
         hand.setAnte(5);
 
-        // store hand and fetch it
         int id = hand.storeHandHistory();
         String[] html = PokerDatabase.getHandAsHTML(id, true, true);
         assertTrue(html != null && html.length > 0);
         assertEquals("<HTML><B>Hand 0 - Table 1</B></HTML>", html[0]);
+    }
+
+    @Test
+    public void testStoreAndQuery()
+    {
+        int first = storeHand();
+        int second = storeHand();
+        int third = storeHand();
+        assertTrue(first < second && second < third);
+
+        assertEquals(3, PokerDatabase.getHandCount("1=1", null));
+        assertEquals(1, PokerDatabase.getTournamentCount("1=1", null));
+        assertEquals(List.of(second, third), PokerDatabase.getHandIDs("1=1 ORDER BY HND_ID", null, 1, 2));
+        assertEquals(first, PokerDatabase.getPreviousHandID(game_, second));
+        assertEquals(third, PokerDatabase.getNextHandID(game_, second));
+        assertTrue(PokerDatabase.isPracticeHand(first));
+        assertNotNull(PokerDatabase.getHandForExport(second));
+        assertNotNull(PokerDatabase.getHandListHTML(second));
+        assertTrue(PokerDatabase.getHandAsHTML(second, true, true).length > 0);
+        assertNotNull(PokerDatabase.getOverallHistory(profile_));
+
+        List<TournamentHistory> hist = PokerDatabase.getTournamentHistory(profile_);
+        assertEquals(1, hist.size());
+
+        PokerDatabase.deleteTournament(hist.get(0));
+        assertEquals(0, PokerDatabase.getHandCount("1=1", null));
+        assertTrue(PokerDatabase.getTournamentHistory(profile_).isEmpty());
+    }
+
+    @Test
+    public void testNameChangeAndDeleteAll()
+    {
+        storeHand();
+        human_.setName("renamed");
+        PokerDatabase.playerNameChanged(game_, human_);
+
+        PokerDatabase.deleteAllTournaments(profile_);
+        assertEquals(0, PokerDatabase.getHandCount("1=1", null));
+        assertEquals(0, PokerDatabase.getTournamentCount("1=1", null));
+    }
+
+    /**
+     * The statistics queries call PokerDatabaseProcs through SQL functions
+     */
+    @Test
+    public void testStatisticsQueries() throws SQLException
+    {
+        storeHand();
+        storeHand();
+
+        try (Connection conn = PokerDatabase.getDatabase().getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT PLH_CARD_1, PLH_CARD_2, GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2), " +
+                                              "GET_HAND_CLASS_RANK(PLH_CARD_1, PLH_CARD_2) FROM PLAYER_HAND"))
+        {
+            int rows = 0;
+            while (rs.next())
+            {
+                rows++;
+                assertEquals(PokerDatabaseProcs.getHandClass(rs.getString(1), rs.getString(2)), rs.getString(3));
+                assertEquals(PokerDatabaseProcs.getHandClassRank(rs.getString(1), rs.getString(2)), rs.getInt(4));
+            }
+            assertEquals(6, rows);
+        }
+
+        // same group by/order by the viewer uses
+        String groupBy = "GET_HAND_CLASS(PLH_CARD_1, PLH_CARD_2)";
+        String orderBy = "MAX(GET_HAND_CLASS_RANK(PLH_CARD_1, PLH_CARD_2)) DESC";
+        assertTrue(new StatisticsViewer.ByHandModel(null, groupBy, orderBy, null, true).getRowCount() > 0);
+        assertTrue(new StatisticsViewer.ByHandModel(null, groupBy, orderBy, null, false).getRowCount() > 0);
+        // these hands end at the deal, so give every round an action - a round's rows are only
+        // read (and the model's columns checked against the query's) if there are some
+        try (Connection conn = PokerDatabase.getDatabase().getConnection();
+             Statement stmt = conn.createStatement())
+        {
+            stmt.executeUpdate("UPDATE PLAYER_HAND SET PLH_PREFLOP_ACTIONS=" + PokerDatabase.BIT_CALL +
+                               ", PLH_FLOP_ACTIONS=" + PokerDatabase.BIT_CHECK + ", PLH_TURN_ACTIONS=" + PokerDatabase.BIT_BET +
+                               ", PLH_RIVER_ACTIONS=" + PokerDatabase.BIT_FOLD);
+        }
+        for (int round = HoldemHand.ROUND_PRE_FLOP; round <= HoldemHand.ROUND_RIVER; round++)
+        {
+            assertTrue(new StatisticsViewer.ByRoundModel(round, null, groupBy, orderBy, null).getRowCount() > 0);
+        }
+    }
+
+    /**
+     * Loading a practice save rewinds hands stored after it - but only in the database it was saved in (TODO #13)
+     */
+    @Test
+    public void testRewindOnlyInSameDatabase()
+    {
+        storeHand();
+        int saved = storeHand();
+        assertEquals(PokerDatabase.getCurrentDatabaseName(), game_.getLastHandSavedDatabase());
+        storeHand();
+        storeHand();
+
+        // as if loaded from a save made in another profile's database
+        game_.setLastHandSaved(saved, "poker-1-12345");
+        game_.setDeleteHandsAfterSaveDate(true);
+        storeHand();
+        assertEquals(5, PokerDatabase.getHandCount("1=1", null));
+        assertFalse(game_.isDeleteHandsAfterSaveDate());
+
+        // older save without the database name
+        game_.setLastHandSaved(saved, null);
+        game_.setDeleteHandsAfterSaveDate(true);
+        storeHand();
+        assertEquals(6, PokerDatabase.getHandCount("1=1", null));
+
+        // saved in this database: hands after the save are replaced
+        game_.setLastHandSaved(saved, PokerDatabase.getCurrentDatabaseName());
+        game_.setDeleteHandsAfterSaveDate(true);
+        int next = storeHand();
+        assertEquals(3, PokerDatabase.getHandCount("1=1", null));
+        assertEquals(1, PokerDatabase.getHandCount("HND_ID > " + saved, null));
+        assertTrue(next > saved);
     }
 }

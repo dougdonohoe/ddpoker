@@ -98,6 +98,9 @@
 	<color name="Splash.label.bg" r="0" g="0" b="0"/>
 	 <font name="Splash.label" fontname="Inter-VariableFont_opsz,wght.ttf" pointsize="12"/>
 
+	 <!-- database upgrade dialogs, shown over the splash before the main window exists -->
+	 <font name="DbUpgrade.label" fontname="Inter-VariableFont_opsz,wght.ttf" pointsize="15"/>
+
 	<color name="territory.label.fg" r="255" g="255" b="255"/>
 	 <font name="territory.label" fontname="Inter-VariableFont_opsz,wght.ttf" pointsize="25"/>
 	<color name="territory.label.current" r="255" g="255" b="0"/>

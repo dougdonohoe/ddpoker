@@ -1069,6 +1069,14 @@ public class HoldemHand implements DataMarshal
     }
 
     /**
+     * Replace the shuffled deck, before deal() (tests: stacked decks)
+     */
+    void setDeck(Deck deck)
+    {
+        deck_ = deck;
+    }
+
+    /**
      * Advance round - deal community cards
      */
     @SuppressWarnings("UnusedReturnValue")
