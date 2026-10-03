@@ -436,12 +436,12 @@ Leftovers to know about:
 * **Unused databases are never cleaned up.**  Databases made with a key you no longer use, or for
   a profile whose `profile.NN.dat` is gone, sit there forever and are safe to delete with the
   game closed.
-* **Deleting a profile** removes only its database for the current key; those for other keys
-  stay.
+* **Deleting a profile** in the game removes its databases for every key.  Earlier versions
+  removed only the current key's, so older leftovers may still be there.
 * **Numbers can be reused.**  A new profile gets the highest existing number plus one
   (`GameConfigUtils.getNextSaveNumber()`), so gaps are never filled - but delete the
-  highest-numbered profile and the next one created gets its number, along with any databases
-  still left under it.
+  highest-numbered profile and the next one created gets its number, along with any leftover
+  databases still under it.
 
 The `db/v1` directory holds the original HSQLDB 1.8 files, moved there unchanged by the one-time
 upgrade (`PokerDatabaseMigrator`).
@@ -452,19 +452,16 @@ Runs HSQLDB's SqlTool against a client database, for poking at the tables direct
 game first, and pass any of the database's files (or the path without an extension):
 
 ```shell
-# connect
 hsqldb.sh ~/.dd-poker3/save/db/poker-2-1304257217.script
-
-# run a script - this one corrupts the DB!
-hsqldb.sh ~/.dd-poker3/save/db/poker-2-1304257217.script "ALTER TABLE HAND ALTER COLUMN HND_ID RESTART WITH 1"
 ```
 
 The script builds the JDBC URL from the path, and refuses to run if there's no database there,
 since HSQLDB would otherwise create an empty one.  A full `jdbc:hsqldb:file:...` URL works too.
 
 Pass SQL as a second argument to run it and exit instead of prompting.  Changes are committed;
-separate statements with `;` (the last one's is optional).  For example, to break hand storage
-the way a damaged database does - every insert then fails with a unique-constraint violation:
+separate statements with `;` (the last one's is optional).  For example, this breaks hand
+storage the way a damaged database does - every insert then fails with a unique-constraint
+violation, which is handy for testing the game's offer to reset the database:
 
 ```shell
 hsqldb.sh ~/.dd-poker3/save/db/poker-2-1304257217.script "ALTER TABLE HAND ALTER COLUMN HND_ID RESTART WITH 1"

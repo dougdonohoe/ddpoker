@@ -43,12 +43,14 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.ToIntFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -266,20 +268,36 @@ public class PokerDatabaseTest extends AbstractPokerTest
     }
 
     /**
-     * Files damaged while the profile is in use, so the database can't even be opened or shut down
+     * Files damaged while the profile is in use: a script cut mid-statement can't be opened at all
      */
     @Test
-    public void testResetDamagedFiles() throws IOException
+    public void testResetUnopenableFiles() throws IOException
+    {
+        // mid-way through the first CREATE TABLE
+        testResetTruncatedScript(script -> script.indexOf("CREATE CACHED TABLE") + 20);
+    }
+
+    /**
+     * A script cut between statements opens, but without its trailing GRANTs SA isn't an admin,
+     * so the database can't be shut down either - reset() has to close it some other way
+     */
+    @Test
+    public void testResetUnclosableFiles() throws IOException
+    {
+        testResetTruncatedScript(script -> script.indexOf("\nGRANT ") + 1);
+    }
+
+    private void testResetTruncatedScript(ToIntFunction<String> length) throws IOException
     {
         storeHand();
         String databaseName = PokerDatabase.getCurrentDatabaseName();
         PokerDatabase.shutdownDatabase();
 
         File script = new File(new File(tempFolder, "db"), databaseName + ".script");
-        try (RandomAccessFile raf = new RandomAccessFile(script, "rw"))
-        {
-            raf.setLength(raf.length() / 2);
-        }
+        String text = Files.readString(script.toPath());
+        int cut = length.applyAsInt(text);
+        assertTrue(cut > 0 && cut < text.length(), "cut point not found");
+        Files.writeString(script.toPath(), text.substring(0, cut));
 
         assertStoreFails();
         PokerDatabase.reset();
@@ -287,6 +305,33 @@ public class PokerDatabaseTest extends AbstractPokerTest
         assertEquals(databaseName, PokerDatabase.getCurrentDatabaseName());
         storeHand();
         assertEquals(1, PokerDatabase.getHandCount("1=1", null));
+    }
+
+    /**
+     * Deleting a profile removes its databases for every key, not just the current one
+     */
+    @Test
+    public void testDeleteAllKeys() throws IOException
+    {
+        storeHand();
+        File dbDir = new File(tempFolder, "db");
+        String current = PokerDatabase.getCurrentDatabaseName();
+        assertTrue(new File(dbDir, current + ".script").exists());
+
+        // the profile under other keys, and other profiles whose numbers share a prefix
+        for (String name : List.of("poker-999-111", "poker-999-222", "poker-99-111", "poker-9990-111"))
+        {
+            assertTrue(new File(dbDir, name + ".script").createNewFile());
+            assertTrue(new File(dbDir, name + ".properties").createNewFile());
+        }
+
+        PokerDatabase.delete(profile_, tempFolder);
+
+        String[] left = dbDir.list();
+        assertNotNull(left);
+        Arrays.sort(left);
+        assertArrayEquals(new String[] {"poker-99-111.properties", "poker-99-111.script",
+                                        "poker-9990-111.properties", "poker-9990-111.script"}, left);
     }
 
     private void assertStoreFails()
