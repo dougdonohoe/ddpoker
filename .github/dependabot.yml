@@ -8,6 +8,7 @@
 #
 # The bundled HSQLDB 1.8.0.10 (poker/pom.xml, used only to migrate old databases) needs no
 # ignore rule: it is under the old hsqldb:hsqldb coordinates, where 1.8.0.10 is the last release.
+# The current HSQLDB is only used by the poker client.
 version: 2
 
 updates:
