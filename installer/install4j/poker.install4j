@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="13.0.2" transformSequenceNumber="13">
+<install4j version="13.1.1" transformSequenceNumber="13">
   <directoryPresets config="./custom" />
   <application name="DD Poker 3" applicationId="5571-3951-3041-7888" mediaDir="../builds" mediaFilePattern="ddpoker${compiler:sys.version}" shortName="ddpoker3" publisher="DD Poker" publisherWeb="http://www.ddpoker.com/" version="3.0" allPathsRelative="true" macVolumeId="d24c5a0cf4cff0ab" javaMinVersion="25" javaMaxVersion="25">
     <languages>
@@ -211,6 +211,22 @@ return console.askOkCancel(message, true);
               <formComponent id="19" beanClass="com.install4j.runtime.beans.formcomponents.InstallationDirectoryChooserComponent" useExternalParametrization="true" externalParametrizationName="Installation Directory Chooser" externalParametrizationMode="include">
                 <serializedBean>
                   <property name="requestFocus" type="boolean" value="true" />
+                  <property name="validationScript">
+                    <object class="com.install4j.api.beans.ScriptProperty">
+                      <property name="value" type="string">// The "Uninstall previous installation" action on the Installation screen removes the version
+// already installed in this directory, including files this build no longer ships.  That is more
+// than an overwrite, so confirm it rather than springing it on the user.
+if (!ApplicationRegistry.isUpdateDirectory(context.getInstallationDirectory())) return true;
+
+return Util.showOptionDialog(
+        context.getApplicationName() + " is already installed in this directory.\n\n" +
+        "The existing installation will be removed and replaced.  Your player profiles, saved " +
+        "games and hand histories are stored separately and will not be touched.\n\n" +
+        "Do you want to proceed?",
+        new String[]{"Proceed", "Choose another directory"},
+        JOptionPane.QUESTION_MESSAGE) == 0;</property>
+                    </object>
+                  </property>
                 </serializedBean>
                 <externalParametrizationPropertyNames>
                   <propertyName>suggestAppDir</propertyName>
@@ -339,6 +355,7 @@ return true;
           </screen>
           <screen id="11" beanClass="com.install4j.runtime.beans.screens.InstallationScreen" rollbackBarrier="true">
             <actions>
+              <action name="Uninstall previous installation" id="203" beanClass="com.install4j.runtime.beans.actions.UninstallPreviousAction" commentSet="true" comment="Removes the version already installed here, including files this build no longer ships. The launcher classpath is a scan of the installation directory, so a leftover jar lands on the classpath and can shadow the one we do ship - an obsolete HSQLDB 1.8 jar left behind by 3.1.10 shadowed 2.7.4 and broke 3.1.11 that way." />
               <action id="12" beanClass="com.install4j.runtime.beans.actions.InstallFilesAction" failureStrategy="quit" errorMessage="${i18n:FileCorrupted}" />
               <action id="13" beanClass="com.install4j.runtime.beans.actions.desktop.CreateDefaultStartMenuEntriesAction" actionElevationType="elevated">
                 <serializedBean>
