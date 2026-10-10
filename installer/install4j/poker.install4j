@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="13.0.2" transformSequenceNumber="13">
+<install4j version="13.1.1" transformSequenceNumber="13">
   <directoryPresets config="./custom" />
   <application name="DD Poker 3" applicationId="5571-3951-3041-7888" mediaDir="../builds" mediaFilePattern="ddpoker${compiler:sys.version}" shortName="ddpoker3" publisher="DD Poker" publisherWeb="http://www.ddpoker.com/" version="3.0" allPathsRelative="true" macVolumeId="d24c5a0cf4cff0ab" javaMinVersion="25" javaMaxVersion="25">
     <languages>
@@ -213,7 +213,7 @@ return console.askOkCancel(message, true);
                   <property name="requestFocus" type="boolean" value="true" />
                   <property name="validationScript">
                     <object class="com.install4j.api.beans.ScriptProperty">
-                      <property name="value" type="string">// The &quot;Uninstall previous installation&quot; action on the Installation screen removes the version
+                      <property name="value" type="string">// The "Uninstall previous installation" action on the Installation screen removes the version
 // already installed in this directory, including files this build no longer ships.  That is more
 // than an overwrite, so confirm it rather than springing it on the user.
 if (!ApplicationRegistry.isUpdateDirectory(context.getInstallationDirectory())) return true;
