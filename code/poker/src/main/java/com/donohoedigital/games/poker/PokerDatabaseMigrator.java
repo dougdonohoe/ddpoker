@@ -38,6 +38,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
@@ -150,15 +151,6 @@ public class PokerDatabaseMigrator
             if (now - lock.lastModified() < LOCK_STALE_MILLIS) return true;
         }
         return false;
-    }
-
-    /**
-     * Migrate all HSQLDB 1.8 databases in the given directory.  A database that fails is moved to
-     * the backup directory like the rest, so the game starts that profile with an empty database.
-     */
-    public static Result migrate(File dbDir) throws IOException
-    {
-        return migrate(dbDir, null);
     }
 
     /**
@@ -434,6 +426,7 @@ public class PokerDatabaseMigrator
         private final File jar_;
         private final URLClassLoader loader_;
         private final Driver driver_;
+        private final boolean jarCaches_;
 
         Hsqldb18() throws IOException
         {
@@ -444,6 +437,12 @@ public class PokerDatabaseMigrator
                 if (in == null) throw new FileNotFoundException("Missing resource " + HSQLDB18_RESOURCE);
                 Files.copy(in, jar_.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
+
+            // HSQLDB 1.8 reads from its own jar through a jar: URL.  Cached, that JarFile stays open
+            // after the loader is closed, and Windows won't delete an open file - so don't cache
+            // while 1.8 is loaded (restored in close())
+            jarCaches_ = URLConnection.getDefaultUseCaches("jar");
+            URLConnection.setDefaultUseCaches("jar", false);
 
             loader_ = new URLClassLoader(new URL[]{jar_.toURI().toURL()}, ClassLoader.getPlatformClassLoader());
             try
@@ -487,6 +486,7 @@ public class PokerDatabaseMigrator
             }
             finally
             {
+                URLConnection.setDefaultUseCaches("jar", jarCaches_);
                 if (!jar_.delete()) logger.debug("Unable to delete {}", jar_);
             }
         }
