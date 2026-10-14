@@ -41,9 +41,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.MalformedInputException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.sql.Connection;
@@ -53,6 +54,8 @@ import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.ToIntFunction;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -294,30 +297,32 @@ public class PokerDatabaseTest extends AbstractPokerTest
         storeHand();
         String databaseName = PokerDatabase.getCurrentDatabaseName();
 
-        // the script is compressed unless debug settings are on (PokerDatabase.initDatabase())
-        try (Connection conn = PokerDatabase.getDatabase().getConnection();
-             Statement stmt = conn.createStatement())
-        {
-            stmt.executeUpdate("SET FILES SCRIPT FORMAT TEXT");
-        }
         PokerDatabase.shutdownDatabase();
 
-        File dbDir = new File(tempFolder, "db");
-        File script = new File(dbDir, databaseName + ".script");
-        String text;
-        try
+        // The script is gzipped unless debug settings are on (PokerDatabase.initDatabase()), so cut it
+        // in whatever format it's in.  Switching with SET FILES SCRIPT FORMAT makes hsqldb run a
+        // checkpoint on its timer thread, which races the SHUTDOWN and leaves the files inconsistent.
+        File script = new File(new File(tempFolder, "db"), databaseName + ".script");
+        byte[] bytes = Files.readAllBytes(script.toPath());
+        boolean gzipped = bytes.length > 1 && (bytes[0] & 0xff) == 0x1f && (bytes[1] & 0xff) == 0x8b;
+        if (gzipped)
         {
-            text = Files.readString(script.toPath());
+            try (GZIPInputStream in = new GZIPInputStream(new ByteArrayInputStream(bytes)))
+            {
+                bytes = in.readAllBytes();
+            }
         }
-        catch (MalformedInputException e)
-        {
-            // intermittent in CI - the script is still compressed after the shutdown above
-            fail("Script not text after SET FILES SCRIPT FORMAT TEXT + SHUTDOWN\n" + describeFiles(dbDir, databaseName), e);
-            return;
-        }
+
+        String text = new String(bytes, StandardCharsets.ISO_8859_1);
         int cut = length.applyAsInt(text);
         assertTrue(cut > 0 && cut < text.length(), "cut point not found");
-        Files.writeString(script.toPath(), text.substring(0, cut));
+        bytes = text.substring(0, cut).getBytes(StandardCharsets.ISO_8859_1);
+
+        try (OutputStream out = gzipped ? new GZIPOutputStream(Files.newOutputStream(script.toPath()))
+                                        : Files.newOutputStream(script.toPath()))
+        {
+            out.write(bytes);
+        }
 
         assertStoreFails();
         PokerDatabase.reset();
@@ -352,33 +357,6 @@ public class PokerDatabaseTest extends AbstractPokerTest
         Arrays.sort(left);
         assertArrayEquals(new String[] {"poker-99-111.properties", "poker-99-111.script",
                                         "poker-9990-111.properties", "poker-9990-111.script"}, left);
-    }
-
-    /**
-     * The database's files with sizes, its .properties and the first bytes of its .script (1f 8b = gzip)
-     */
-    private static String describeFiles(File dbDir, String databaseName) throws IOException
-    {
-        StringBuilder sb = new StringBuilder();
-        String[] names = dbDir.list();
-        if (names != null) Arrays.sort(names);
-        for (String name : names == null ? new String[0] : names)
-        {
-            sb.append("  ").append(name).append(" (").append(new File(dbDir, name).length()).append(" bytes)\n");
-        }
-
-        File props = new File(dbDir, databaseName + ".properties");
-        if (props.exists()) sb.append(".properties:\n").append(Files.readString(props.toPath(), StandardCharsets.ISO_8859_1));
-
-        File script = new File(dbDir, databaseName + ".script");
-        if (script.exists())
-        {
-            byte[] bytes = Files.readAllBytes(script.toPath());
-            sb.append(".script starts:");
-            for (int i = 0; i < Math.min(16, bytes.length); i++) sb.append(String.format(" %02x", bytes[i]));
-            sb.append('\n');
-        }
-        return sb.toString();
     }
 
     private void assertStoreFails()
