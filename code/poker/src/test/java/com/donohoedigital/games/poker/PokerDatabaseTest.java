@@ -43,6 +43,8 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.MalformedInputException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -300,8 +302,19 @@ public class PokerDatabaseTest extends AbstractPokerTest
         }
         PokerDatabase.shutdownDatabase();
 
-        File script = new File(new File(tempFolder, "db"), databaseName + ".script");
-        String text = Files.readString(script.toPath());
+        File dbDir = new File(tempFolder, "db");
+        File script = new File(dbDir, databaseName + ".script");
+        String text;
+        try
+        {
+            text = Files.readString(script.toPath());
+        }
+        catch (MalformedInputException e)
+        {
+            // intermittent in CI - the script is still compressed after the shutdown above
+            fail("Script not text after SET FILES SCRIPT FORMAT TEXT + SHUTDOWN\n" + describeFiles(dbDir, databaseName), e);
+            return;
+        }
         int cut = length.applyAsInt(text);
         assertTrue(cut > 0 && cut < text.length(), "cut point not found");
         Files.writeString(script.toPath(), text.substring(0, cut));
@@ -339,6 +352,33 @@ public class PokerDatabaseTest extends AbstractPokerTest
         Arrays.sort(left);
         assertArrayEquals(new String[] {"poker-99-111.properties", "poker-99-111.script",
                                         "poker-9990-111.properties", "poker-9990-111.script"}, left);
+    }
+
+    /**
+     * The database's files with sizes, its .properties and the first bytes of its .script (1f 8b = gzip)
+     */
+    private static String describeFiles(File dbDir, String databaseName) throws IOException
+    {
+        StringBuilder sb = new StringBuilder();
+        String[] names = dbDir.list();
+        if (names != null) Arrays.sort(names);
+        for (String name : names == null ? new String[0] : names)
+        {
+            sb.append("  ").append(name).append(" (").append(new File(dbDir, name).length()).append(" bytes)\n");
+        }
+
+        File props = new File(dbDir, databaseName + ".properties");
+        if (props.exists()) sb.append(".properties:\n").append(Files.readString(props.toPath(), StandardCharsets.ISO_8859_1));
+
+        File script = new File(dbDir, databaseName + ".script");
+        if (script.exists())
+        {
+            byte[] bytes = Files.readAllBytes(script.toPath());
+            sb.append(".script starts:");
+            for (int i = 0; i < Math.min(16, bytes.length); i++) sb.append(String.format(" %02x", bytes[i]));
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 
     private void assertStoreFails()
