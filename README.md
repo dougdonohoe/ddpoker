@@ -113,7 +113,7 @@ release.
 DD Poker 1.0 was originally released (and sold in boxes!) in 
 June 2004 under the name 
 _DD Tournament Poker No Limit Texas Hold'em_ and 
-later re-released in early 2005 as _DD Tournament Poker 2005 Collector's 
+later re-released as _DD Tournament Poker 2005 Collector's 
 Edition_, featuring Annie Duke on the box.  The game featured 
 Limit, Pot-Limit and No-Limit Texas Hold'em against computer
 components, a poker clock, but no online play.
@@ -137,7 +137,7 @@ open-sourced (this very repo).  It continues to be modernized and
 is kept up to date with the latest Java SDKs and libraries.
 
 See [whatsnew.html](code/poker/src/main/resources/config/poker/help/whatsnew.html) 
-for a detailed release history starting with version 2.0.
+for a detailed release history starting with version 1.0.
 
 ## Why Open Source?
 
