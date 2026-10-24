@@ -132,6 +132,10 @@ adding only minor new features while removing license-key
 validation logic. It continued to be updated sporadically until 
 it was shutdown in July 2017.
 
+DD Poker 3.1 was released in August 2024, when it was
+open-sourced (this very repo).  It continues to be modernized and
+is kept up to date with the latest Java SDKs and libraries.
+
 See [whatsnew.html](code/poker/src/main/resources/config/poker/help/whatsnew.html) 
 for a detailed release history starting with version 2.0.
 
