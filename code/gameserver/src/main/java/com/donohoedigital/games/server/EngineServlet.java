@@ -1309,7 +1309,6 @@ public abstract class EngineServlet extends BaseServlet
         }
         else
         {
-
             // if message file changed, load it
             synchronized (MSG_FILE_SYNC)
             {

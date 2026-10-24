@@ -137,13 +137,10 @@ To run the desktop poker game, either run `PokerMain` in IntelliJ or use the scr
 poker
 ```
 
-If you want to run the game using your personal servers, you'll need to set go
+If you want to run the game using your personal servers, you'll need to go
 to _Options → Online → Public Online Servers_ and check the **Enabled** checkbox and
 enter the server information in the two fields.  See below for details on running the
 servers.
-
-If you start `poker` with `enabled=true`, but your servers are not running, you may see a
-several-second delay on startup as a connection attempt is made and freezes the UI until it times out.
 
 ## Development
 

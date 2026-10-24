@@ -257,7 +257,8 @@ public class PokerStartMenu extends StartMenu
         // Only do server code if enabled
         boolean enabled = PokerUtils.isOptionOn(EngineConstants.OPTION_ONLINE_ENABLED);
 
-        // Preform message check the first time the start menu is displayed.
+        // Perform message check the first time the start menu is displayed.  Runs off the EDT
+        // so a down server doesn't stall the start menu while the connection times out.
         if (enabled && messageCheck && profile_ != null && PokerUtils.isOptionOn(PokerConstants.OPTION_AUTO_CHECK_UPDATE))
         {
             String LASTMSG_KEY = "lastmsg";
@@ -266,14 +267,17 @@ public class PokerStartMenu extends StartMenu
             Preferences prefs = DDOption.getOptionPrefs(engine_.getPrefsNodeName() + "/ddmsg");
             long last = prefs.getLong(LASTMSG_KEY, 0);
 
-            EngineMessage msg = DDMessageCheck.checkUpdate(context_, last, profile_.getName());
+            DDMessageCheck.checkUpdateAsync(last, profile_.getName(), msg -> {
+                if (msg == null || msg.getString(EngineMessage.PARAM_DDMSG) == null) return;
 
-            if (msg != null && msg.getString(EngineMessage.PARAM_DDMSG) != null)
-            {
+                // user may have moved on while the request was in flight - don't interrupt them,
+                // and don't record the message so it is shown next launch
+                if (context_.getCurrentUIPhase() != this) return;
+
                 prefs.putLong(LASTMSG_KEY, msg.getLong(EngineMessage.PARAM_DDMSG_ID));
                 String userMessage = msg.getString(EngineMessage.PARAM_DDMSG);
                 PokerUtils.displayInformationDialog(context_, userMessage, "msg.windowtitle.ddmsgMessage", null);
-            }
+            });
         }
 
         messageCheck = false;

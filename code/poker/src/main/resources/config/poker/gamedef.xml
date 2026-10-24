@@ -761,11 +761,6 @@
     <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.validateProfile"/>
   </phase>
 
-  <phase name="DDMessageCheck" class="com.donohoedigital.games.engine.DDMessageCheck" extends="UserRegistrationSend"
-         cache="false">
-    <param name="dialog-windowtitle-prop" strvalue="msg.windowtitle.ddmsgCheck"/>
-  </phase>
-
   <phase name="InitializeGame" class="com.donohoedigital.games.engine.InitializeGame">
     <param name="style" strvalue="InitGame"/>
     <param name="label" strvalue="initgame"/>
