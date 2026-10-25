@@ -136,7 +136,7 @@ DD Poker 3.1 was released in August 2024, when it was
 open-sourced (this very repo).  It continues to be modernized and
 is kept up to date with the latest Java SDKs and libraries.
 
-See [whatsnew.html](code/poker/src/main/resources/config/poker/help/whatsnew.html) 
+See [whatsnew.html](https://static.ddpoker.com/gamehelp/help/whatsnew.html) 
 for a detailed release history starting with version 1.0.
 
 ## Why Open Source?
