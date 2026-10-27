@@ -72,7 +72,7 @@
     <servlet.api.version>6.1.0</servlet.api.version>
     <tomcat.version>11.0.27</tomcat.version>
     <spring.version>6.2.19</spring.version>
-    <hibernate.version>6.6.58.Final</hibernate.version>
+    <hibernate.version>6.6.59.Final</hibernate.version>
     <hsqldb.version>2.7.4</hsqldb.version>
     <jetty.version>12.1.14</jetty.version>
     <junit.version>6.1.3</junit.version>
@@ -141,7 +141,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.6.1</version>
         <configuration>
           <systemPropertyVariables>
             <!-- Keep a test run out of the developer's real home directory.  Everything
