@@ -95,7 +95,7 @@ public class MyProfile extends OnlinePokerPage
         boolean hasUser = user != null;
 
         // title
-        add(new StringLabel("titleName", hasUser ? user.getDisplayName() : null).setVisible(hasUser).setRenderBodyOnly(true));
+        add(new StringLabel("titleName", hasUser ? " - " + user.getDisplayName() : null).setVisible(hasUser).setRenderBodyOnly(true));
         add(new StringLabel("name", hasUser ? user.getDisplayName() : null).setVisible(hasUser));
         add(new StringLabel("email", hasUser ? user.getEmail() : null).setVisible(hasUser));
 

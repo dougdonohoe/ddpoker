@@ -613,24 +613,23 @@ div.form label {
 }
 
 li.form-style1-ERROR {
-    background-color: red;
-    color: white;
+    color: #8b0000;
     text-align: left;
-    padding: 5px;
+    padding: 0 5px 5px 25px;
+    margin-left: 10px;
 }
 
 li.form-style2-ERROR {
     color: red;
-    text-align: center;
+    text-align: left;
 }
 
 li.form-style2-INFO {
     color: green;
-    text-align: center;
+    text-align: left;
 }
 
 li.form-style3-ERROR {
-    list-style: disc;
     color: red;
     text-align: left;
 }
@@ -1076,7 +1075,7 @@ div.host-search span.gap {
 }
 
 li {
-    background-image: url( images/spade.jpg );
+    background-image: url( images/spade.png );
     background-repeat: no-repeat;
     background-position: 0 0;
     padding-bottom: 3px;
@@ -1193,13 +1192,6 @@ p.titlelink {
 
 div.legacy-details {
     padding-top: 1rem;
-}
-
-div.legacy-details ol li {
-    list-style: decimal;
-    list-style-position: outside;
-    padding-bottom: .25em;
-    margin-left: 0;
 }
 
 div.legacy-details li {
@@ -1337,10 +1329,7 @@ td.myprofile {
 }
 
 .myprofile-desc li {
-    padding-left: 10px;
     padding-bottom: 4px;
-    list-style: disc;
-    list-style-position: inside;
 }
 
 div.pw-form {
