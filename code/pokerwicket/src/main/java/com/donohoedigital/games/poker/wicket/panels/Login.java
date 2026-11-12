@@ -71,6 +71,13 @@ public class Login extends VoidPanel implements JavascriptHideable
             {
                 Login.this.visibleToUser = !new LoginUtils((BasePage<?>) getPage()).loginFromPage(name, password, remember);
             }
+
+            @Override
+            protected void onError()
+            {
+                // keep panel open so validation errors are seen
+                Login.this.visibleToUser = true;
+            }
         };
         add(form);
 

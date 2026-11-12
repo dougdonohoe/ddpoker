@@ -39,7 +39,6 @@ import com.donohoedigital.wicket.behaviors.HideShowSwapLabel;
 import com.donohoedigital.wicket.components.VoidContainer;
 import com.donohoedigital.wicket.components.VoidPanel;
 import com.donohoedigital.wicket.labels.StringLabel;
-import com.donohoedigital.wicket.models.StringModel;
 import com.donohoedigital.wicket.pages.BasePage;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.Link;
@@ -79,7 +78,7 @@ public class CurrentProfile extends VoidPanel
         add(loginPanel);
 
         // login link and label
-        loginLabel = new StringLabel("loginLabel", new StringModel("Login"));
+        loginLabel = new StringLabel("loginLabel", () -> loginPanel.isVisibleToUser() ? "Cancel" : "Login");
         WebMarkupContainer link = getLoginLink("loginLink");
         add(link.setVisible(!loggedIn && !loginVisibleAtStart));
         link.add(loginLabel);

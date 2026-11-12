@@ -128,7 +128,7 @@ public class History extends OnlinePokerPage
         boolean hasUser = user != null;
 
         // title
-        add(new StringLabel("titleName", hasUser ? user.getDisplayName() : null).setVisible(hasUser).setRenderBodyOnly(true));
+        add(new StringLabel("titleName", hasUser ? " - " + user.getDisplayName() : null).setVisible(hasUser).setRenderBodyOnly(true));
         add(new StringLabel("name", hasUser ? user.getDisplayName() : null).setVisible(hasUser));
         add(new WebMarkupContainer("retired").setVisible(hasUser && user.isRetired()));
 
