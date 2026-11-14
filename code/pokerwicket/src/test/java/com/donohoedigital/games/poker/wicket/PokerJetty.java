@@ -37,7 +37,7 @@ import com.donohoedigital.config.ApplicationType;
 import com.donohoedigital.config.LoggingConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jetty.ee10.webapp.WebAppContext;
+import org.eclipse.jetty.ee11.webapp.WebAppContext;
 import org.eclipse.jetty.server.Server;
 
 /**

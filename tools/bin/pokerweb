@@ -50,8 +50,8 @@ if [ -z "$JETTY_VERSION" ]; then
 fi
 # need to specify test classes and jetty/servlet jars (since in test scope)
 export EXTRA_CLASSPATH=code/pokerwicket/target/test-classes:\
-~/.m2/repository/org/eclipse/jetty/ee10/jetty-ee10-servlet/$JETTY_VERSION/jetty-ee10-servlet-$JETTY_VERSION.jar:\
-~/.m2/repository/org/eclipse/jetty/ee10/jetty-ee10-webapp/$JETTY_VERSION/jetty-ee10-webapp-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/ee11/jetty-ee11-servlet/$JETTY_VERSION/jetty-ee11-servlet-$JETTY_VERSION.jar:\
+~/.m2/repository/org/eclipse/jetty/ee11/jetty-ee11-webapp/$JETTY_VERSION/jetty-ee11-webapp-$JETTY_VERSION.jar:\
 ~/.m2/repository/org/eclipse/jetty/ee/jetty-ee/$JETTY_VERSION/jetty-ee-$JETTY_VERSION.jar:\
 ~/.m2/repository/org/eclipse/jetty/ee/jetty-ee-webapp/$JETTY_VERSION/jetty-ee-webapp-$JETTY_VERSION.jar:\
 ~/.m2/repository/org/eclipse/jetty/jetty-server/$JETTY_VERSION/jetty-server-$JETTY_VERSION.jar:\

@@ -70,7 +70,6 @@ public class BannedKey implements BaseModel<Long>, Comparable<BannedKey>
     private String comment;
 
     @Column(name = "ban_create_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
     public Long getId()

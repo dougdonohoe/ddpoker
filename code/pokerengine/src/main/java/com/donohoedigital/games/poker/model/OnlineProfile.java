@@ -220,7 +220,6 @@ public class OnlineProfile implements BaseModel<Long>
     }
 
     @Column(name = "wpr_create_date", updatable = false, nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreateDate()
     {
         return data_.getLongAsDate(PROFILE_CREATE_DATE);
@@ -232,7 +231,6 @@ public class OnlineProfile implements BaseModel<Long>
     }
 
     @Column(name = "wpr_modify_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getModifyDate()
     {
         return data_.getLongAsDate(PROFILE_MODIFY_DATE);

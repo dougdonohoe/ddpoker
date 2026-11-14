@@ -85,7 +85,6 @@ public class TournamentHistory implements BaseModel<Long>, DataMarshal, SimpleXM
     private int playerType;
 
     @Column(name = "whi_end_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
