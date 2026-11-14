@@ -30,10 +30,10 @@
   doug [at] donohoe [dot] info.
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 -->
-<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
-             version="1.0">
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
 
   <persistence-unit name="poker">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
@@ -55,11 +55,6 @@
       <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1/pokertest?allowPublicKeyRetrieval=true&amp;useSSL=false"/>
       <property name="hibernate.connection.username" value="pokertest"/>
       <property name="hibernate.connection.password" value="p0k3rdb!"/>
-      <property name="hibernate.c3p0.min_size" value="1"/>
-      <property name="hibernate.c3p0.max_size" value="5"/>
-      <property name="hibernate.c3p0.timeout" value="300"/>
-      <property name="hibernate.c3p0.max_statements" value="50"/>
-      <property name="hibernate.c3p0.idle_test_period" value="3000"/>
       <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
     </properties>
   </persistence-unit>
