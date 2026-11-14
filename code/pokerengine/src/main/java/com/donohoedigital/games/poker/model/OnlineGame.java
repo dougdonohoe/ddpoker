@@ -180,7 +180,6 @@ public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
     }
 
     @Column(name = "wgm_start_date", nullable = true)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getStartDate()
     {
         return data_.getLongAsDate(WAN_START_DATE);
@@ -192,7 +191,6 @@ public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
     }
 
     @Column(name = "wgm_end_date", nullable = true)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getEndDate()
     {
         return data_.getLongAsDate(WAN_END_DATE);
@@ -204,7 +202,6 @@ public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
     }
 
     @Column(name = "wgm_create_date", updatable = false, nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreateDate()
     {
         return data_.getLongAsDate(WAN_CREATE_DATE);
@@ -216,7 +213,6 @@ public class OnlineGame implements BaseModel<Long>, SimpleXMLEncodable
     }
 
     @Column(name = "wgm_modify_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     public Date getModifyDate()
     {
         return data_.getLongAsDate(WAN_MODIFY_DATE);

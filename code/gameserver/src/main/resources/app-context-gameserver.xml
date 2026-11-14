@@ -103,8 +103,8 @@
   </bean>
 
   <!-- post-process for @PersistenceContext and exception translation -->
-  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" depends-on="loggingConfig"/>
-  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" depends-on="loggingConfig"/>
+  <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+  <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
   <!-- common beans -->
   <bean name="regAnalyzer" class="com.donohoedigital.games.server.RegAnalyzer" lazy-init="true"/>

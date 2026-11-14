@@ -83,7 +83,6 @@ public class Registration implements BaseModel<Long>
     private Integer port;
 
     @Column(name = "reg_server_time", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date serverTime;
 
     @Column(name = "reg_java_version", nullable = true)

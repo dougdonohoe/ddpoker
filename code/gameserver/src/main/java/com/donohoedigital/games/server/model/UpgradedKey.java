@@ -61,11 +61,9 @@ public class UpgradedKey implements BaseModel<Long>
     private int count;
 
     @Column(name = "upg_create_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
     @Column(name = "upg_modify_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date modifyDate;
 
     public Long getId()
